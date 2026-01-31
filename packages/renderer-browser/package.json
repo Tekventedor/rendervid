@@ -1,7 +1,7 @@
 {
-  "name": "@rendervid/core",
+  "name": "@rendervid/renderer-browser",
   "version": "0.1.0",
-  "description": "Core engine, types, and validation for Rendervid",
+  "description": "Browser-based renderer for Rendervid",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -22,20 +22,18 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "ajv": "^8.17.0",
-    "ajv-formats": "^3.0.0"
+    "@rendervid/core": "workspace:*",
+    "html2canvas": "^1.4.1",
+    "mp4-muxer": "^5.1.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "tsup": "^8.0.0",
     "typescript": "^5.7.0"
   },
   "peerDependencies": {
-    "react": ">=18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    }
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   }
 }

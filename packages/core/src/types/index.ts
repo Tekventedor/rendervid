@@ -114,6 +114,7 @@ export type {
   ComponentInfo,
   CustomComponentDefinition,
   ComponentSourceType,
+  ComponentType,
 } from './component';
 
 // Schema

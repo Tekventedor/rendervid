@@ -166,17 +166,23 @@ export interface ElementCapability {
 }
 
 /**
+ * Generic component type for registry (framework-agnostic).
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ComponentType = (props: any) => unknown;
+
+/**
  * Default component registry implementation.
  */
 class DefaultComponentRegistry implements ComponentRegistry {
   private components = new Map<string, {
-    component: React.ComponentType<unknown>;
+    component: ComponentType;
     info: ComponentInfo;
   }>();
 
   register(
     name: string,
-    component: React.ComponentType<unknown>,
+    component: ComponentType,
     schema?: JSONSchema7
   ): void {
     this.components.set(name, {
@@ -185,7 +191,7 @@ class DefaultComponentRegistry implements ComponentRegistry {
     });
   }
 
-  get(name: string): React.ComponentType<unknown> | undefined {
+  get(name: string): ComponentType | undefined {
     return this.components.get(name)?.component;
   }
 

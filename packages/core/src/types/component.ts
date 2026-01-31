@@ -79,23 +79,30 @@ export interface ComponentInfo {
 }
 
 /**
+ * Generic component type (framework-agnostic).
+ * In practice, this will be React.ComponentType<unknown>.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ComponentType = (props: any) => unknown;
+
+/**
  * Component registry interface.
  */
 export interface ComponentRegistry {
   /**
-   * Register a React component.
+   * Register a component.
    * @param name - Unique component name
-   * @param component - React component
+   * @param component - Component function
    * @param schema - Optional props schema
    */
-  register(name: string, component: React.ComponentType<unknown>, schema?: JSONSchema7): void;
+  register(name: string, component: ComponentType, schema?: JSONSchema7): void;
 
   /**
    * Get a registered component by name.
    * @param name - Component name
    * @returns The component or undefined if not found
    */
-  get(name: string): React.ComponentType<unknown> | undefined;
+  get(name: string): ComponentType | undefined;
 
   /**
    * List all registered components.
