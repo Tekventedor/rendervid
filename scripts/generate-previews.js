@@ -193,8 +193,8 @@ function generateHTML(template, frame, viewportWidth, viewportHeight) {
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:${viewportWidth}px;height:${viewportHeight}px;overflow:hidden;background:#000}
-.viewport{width:${viewportWidth}px;height:${viewportHeight}px;display:flex;align-items:center;justify-content:center}
-.canvas{position:relative;width:${width}px;height:${height}px;background:#000;font-family:Inter,sans-serif;transform:scale(${scale});transform-origin:center}
+.viewport{width:${viewportWidth}px;height:${viewportHeight}px;position:relative;overflow:hidden;background:#000}
+.canvas{position:absolute;top:0;left:0;width:${width}px;height:${height}px;background:#000;font-family:Inter,sans-serif;transform:scale(${scale});transform-origin:top left}
 </style>
 </head>
 <body>
