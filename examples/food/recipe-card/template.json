@@ -1,24 +1,118 @@
 {
   "name": "Recipe Card",
-  "description": "Recipe introduction card for cooking videos.",
-  "version": "1.0.0",
+  "description": "Recipe introduction card for cooking videos with food image.",
+  "version": "1.1.0",
   "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 6 },
   "inputs": [
+    { "key": "foodImage", "type": "image", "label": "Food Image", "description": "URL to the recipe food image", "required": true, "default": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800" },
     { "key": "category", "type": "string", "label": "Category", "required": false, "default": "ITALIAN CUISINE" },
     { "key": "recipeName", "type": "string", "label": "Recipe Name", "required": true, "default": "Homemade Pasta Carbonara" },
     { "key": "prepTime", "type": "string", "label": "Prep Time", "required": false, "default": "Prep: 15 min" },
     { "key": "cookTime", "type": "string", "label": "Cook Time", "required": false, "default": "Cook: 20 min" },
     { "key": "difficulty", "type": "string", "label": "Difficulty", "required": false, "default": "Easy" }
   ],
-  "defaults": { "category": "ITALIAN CUISINE", "recipeName": "Homemade Pasta Carbonara", "prepTime": "Prep: 15 min", "cookTime": "Cook: 20 min", "difficulty": "Easy" },
-  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 180, "layers": [
-    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1c1917" } },
-    { "id": "card-bg", "type": "shape", "position": { "x": 560, "y": 240 }, "size": { "width": 800, "height": 600 }, "opacity": 0.95, "props": { "shape": "rectangle", "fill": "#ffffff" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 20, "duration": 25 }] },
-    { "id": "category", "type": "text", "position": { "x": 660, "y": 300 }, "size": { "width": 600, "height": 40 }, "props": { "text": "{{category}}", "fontSize": 20, "fontWeight": "600", "color": "#d97706", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 20 }] },
-    { "id": "name", "type": "text", "position": { "x": 610, "y": 420 }, "size": { "width": 700, "height": 120 }, "props": { "text": "{{recipeName}}", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 45, "duration": 25 }] },
-    { "id": "divider", "type": "shape", "position": { "x": 760, "y": 560 }, "size": { "width": 400, "height": 3 }, "props": { "shape": "rectangle", "fill": "#d97706" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 55, "duration": 20 }] },
-    { "id": "prep", "type": "text", "position": { "x": 635, "y": 620 }, "size": { "width": 250, "height": 40 }, "props": { "text": "{{prepTime}}", "fontSize": 22, "color": "#6b7280", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 20 }] },
-    { "id": "cook", "type": "text", "position": { "x": 1035, "y": 620 }, "size": { "width": 250, "height": 40 }, "props": { "text": "{{cookTime}}", "fontSize": 22, "color": "#6b7280", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 65, "duration": 20 }] },
-    { "id": "difficulty", "type": "text", "position": { "x": 810, "y": 720 }, "size": { "width": 300, "height": 40 }, "props": { "text": "{{difficulty}}", "fontSize": 24, "fontWeight": "600", "color": "#16a34a", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 70, "duration": 20 }] }
-  ]}]}
+  "defaults": {
+    "foodImage": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800",
+    "category": "ITALIAN CUISINE",
+    "recipeName": "Homemade Pasta Carbonara",
+    "prepTime": "Prep: 15 min",
+    "cookTime": "Cook: 20 min",
+    "difficulty": "Easy"
+  },
+  "composition": {
+    "scenes": [{
+      "id": "main",
+      "startFrame": 0,
+      "endFrame": 180,
+      "layers": [
+        {
+          "id": "bg",
+          "type": "shape",
+          "position": { "x": 0, "y": 0 },
+          "size": { "width": 1920, "height": 1080 },
+          "props": { "shape": "rectangle", "fill": "#1c1917" }
+        },
+        {
+          "id": "food-image",
+          "type": "image",
+          "position": { "x": 60, "y": 90 },
+          "size": { "width": 800, "height": 900 },
+          "props": {
+            "src": "{{foodImage}}",
+            "fit": "cover",
+            "borderRadius": 20
+          },
+          "animations": [
+            { "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 30 },
+            { "type": "continuous", "effect": "zoomIn", "scale": 1.05, "duration": 180 }
+          ]
+        },
+        {
+          "id": "card-bg",
+          "type": "shape",
+          "position": { "x": 920, "y": 140 },
+          "size": { "width": 920, "height": 800 },
+          "opacity": 0.98,
+          "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 },
+          "animations": [{ "type": "entrance", "effect": "slideInRight", "delay": 10, "duration": 30 }]
+        },
+        {
+          "id": "category",
+          "type": "text",
+          "position": { "x": 970, "y": 220 },
+          "size": { "width": 820, "height": 40 },
+          "props": { "text": "{{category}}", "fontSize": 24, "fontWeight": "600", "color": "#d97706", "textAlign": "center" },
+          "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 35, "duration": 20 }]
+        },
+        {
+          "id": "name",
+          "type": "text",
+          "position": { "x": 970, "y": 320 },
+          "size": { "width": 820, "height": 180 },
+          "props": { "text": "{{recipeName}}", "fontSize": 64, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" },
+          "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 40, "duration": 25 }]
+        },
+        {
+          "id": "divider",
+          "type": "shape",
+          "position": { "x": 1130, "y": 520 },
+          "size": { "width": 500, "height": 4 },
+          "props": { "shape": "rectangle", "fill": "#d97706" },
+          "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 50, "duration": 20 }]
+        },
+        {
+          "id": "prep-icon",
+          "type": "text",
+          "position": { "x": 1020, "y": 580 },
+          "size": { "width": 350, "height": 50 },
+          "props": { "text": "{{prepTime}}", "fontSize": 28, "fontWeight": "500", "color": "#6b7280", "textAlign": "center" },
+          "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 20 }]
+        },
+        {
+          "id": "cook-icon",
+          "type": "text",
+          "position": { "x": 1390, "y": 580 },
+          "size": { "width": 350, "height": 50 },
+          "props": { "text": "{{cookTime}}", "fontSize": 28, "fontWeight": "500", "color": "#6b7280", "textAlign": "center" },
+          "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 20 }]
+        },
+        {
+          "id": "difficulty-badge-bg",
+          "type": "shape",
+          "position": { "x": 1230, "y": 680 },
+          "size": { "width": 300, "height": 60 },
+          "props": { "shape": "rectangle", "fill": "#16a34a", "borderRadius": 30 },
+          "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 65, "duration": 20 }]
+        },
+        {
+          "id": "difficulty",
+          "type": "text",
+          "position": { "x": 1230, "y": 695 },
+          "size": { "width": 300, "height": 40 },
+          "props": { "text": "{{difficulty}}", "fontSize": 26, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" },
+          "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 20 }]
+        }
+      ]
+    }]
+  }
 }

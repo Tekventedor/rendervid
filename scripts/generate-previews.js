@@ -193,6 +193,11 @@ function generateHTML(template, frame, viewportWidth, viewportHeight) {
       css += `display:flex;align-items:center;`;
       css += `justify-content:${textAlign === 'center' ? 'center' : textAlign === 'right' ? 'flex-end' : 'flex-start'};`;
       inner = `<span>${text || ''}</span>`;
+    } else if (type === 'image' && props) {
+      const { src, fit = 'cover', borderRadius } = props;
+      css += `overflow:hidden;`;
+      if (borderRadius) css += `border-radius:${borderRadius}px;`;
+      inner = `<img src="${src}" style="width:100%;height:100%;object-fit:${fit};" crossorigin="anonymous" />`;
     }
 
     return `<div id="${id}" style="${css}">${inner}</div>`;
