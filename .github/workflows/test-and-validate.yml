@@ -1,0 +1,83 @@
+name: Test and Validate
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Run type checking
+        run: pnpm typecheck
+
+      - name: Run linter
+        run: pnpm lint
+
+      - name: Run all tests
+        run: pnpm test
+
+      - name: Validate example templates
+        run: node scripts/examples-cli.js validate
+
+  validate-examples:
+    name: Validate Examples
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build core package
+        run: pnpm build --filter @rendervid/core
+
+      - name: List examples
+        run: node scripts/examples-cli.js list
+
+      - name: Validate all examples
+        run: node scripts/examples-cli.js validate
+
+      - name: Run example tests
+        run: pnpm test:examples

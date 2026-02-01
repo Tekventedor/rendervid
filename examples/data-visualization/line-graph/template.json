@@ -1,0 +1,385 @@
+{
+  "name": "Line Graph",
+  "description": "Animated line graph with trend visualization.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Chart Title",
+      "required": true,
+      "default": "Growth Over Time"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "required": false,
+      "default": "Monthly Active Users"
+    },
+    {
+      "key": "metric",
+      "type": "string",
+      "label": "Key Metric",
+      "required": false,
+      "default": "+127%"
+    },
+    {
+      "key": "metricLabel",
+      "type": "string",
+      "label": "Metric Label",
+      "required": false,
+      "default": "Year over Year"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#10b981"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0f172a"
+    }
+  ],
+  "defaults": {
+    "title": "Growth Over Time",
+    "subtitle": "Monthly Active Users",
+    "metric": "+127%",
+    "metricLabel": "Year over Year",
+    "primaryColor": "#10b981",
+    "backgroundColor": "#0f172a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 160, "y": 80 },
+            "size": { "width": 800, "height": 70 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 48,
+              "fontWeight": "bold",
+              "color": "#f8fafc",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 160, "y": 155 },
+            "size": { "width": 600, "height": 40 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 24,
+              "fontWeight": "normal",
+              "color": "#94a3b8",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "chart-area",
+            "type": "shape",
+            "position": { "x": 160, "y": 280 },
+            "size": { "width": 1200, "height": 500 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b",
+              "borderRadius": 16
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "grid-line-1",
+            "type": "shape",
+            "position": { "x": 200, "y": 380 },
+            "size": { "width": 1120, "height": 1 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#64748b"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "grid-line-2",
+            "type": "shape",
+            "position": { "x": 200, "y": 480 },
+            "size": { "width": 1120, "height": 1 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#64748b"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 40,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "grid-line-3",
+            "type": "shape",
+            "position": { "x": 200, "y": 580 },
+            "size": { "width": 1120, "height": 1 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#64748b"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 45,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "grid-line-4",
+            "type": "shape",
+            "position": { "x": 200, "y": 680 },
+            "size": { "width": 1120, "height": 1 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#64748b"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "trend-line",
+            "type": "shape",
+            "position": { "x": 200, "y": 650 },
+            "size": { "width": 1100, "height": 6 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}",
+              "borderRadius": 3
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 55,
+                "duration": 50,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "trend-dot-1",
+            "type": "shape",
+            "position": { "x": 280, "y": 620 },
+            "size": { "width": 16, "height": 16 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 70,
+                "duration": 15,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "trend-dot-2",
+            "type": "shape",
+            "position": { "x": 560, "y": 540 },
+            "size": { "width": 16, "height": 16 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 80,
+                "duration": 15,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "trend-dot-3",
+            "type": "shape",
+            "position": { "x": 840, "y": 460 },
+            "size": { "width": 16, "height": 16 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 90,
+                "duration": 15,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "trend-dot-4",
+            "type": "shape",
+            "position": { "x": 1120, "y": 360 },
+            "size": { "width": 16, "height": 16 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 100,
+                "duration": 15,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "metric-card",
+            "type": "shape",
+            "position": { "x": 1450, "y": 280 },
+            "size": { "width": 320, "height": 200 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b",
+              "borderRadius": 16
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInRight",
+                "delay": 70,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "metric-value",
+            "type": "text",
+            "position": { "x": 1470, "y": 330 },
+            "size": { "width": 280, "height": 80 },
+            "props": {
+              "text": "{{metric}}",
+              "fontSize": 56,
+              "fontWeight": "800",
+              "color": "{{primaryColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 90,
+                "duration": 20,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "metric-label",
+            "type": "text",
+            "position": { "x": 1470, "y": 420 },
+            "size": { "width": 280, "height": 40 },
+            "props": {
+              "text": "{{metricLabel}}",
+              "fontSize": 20,
+              "fontWeight": "500",
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 100,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

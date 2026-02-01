@@ -1,0 +1,435 @@
+{
+  "name": "Progress Dashboard",
+  "description": "Dashboard with animated progress indicators and KPIs.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Dashboard Title",
+      "required": true,
+      "default": "Q4 Performance"
+    },
+    {
+      "key": "kpi1Label",
+      "type": "string",
+      "label": "KPI 1 Label",
+      "required": false,
+      "default": "Revenue Target"
+    },
+    {
+      "key": "kpi1Value",
+      "type": "string",
+      "label": "KPI 1 Value",
+      "required": false,
+      "default": "87%"
+    },
+    {
+      "key": "kpi2Label",
+      "type": "string",
+      "label": "KPI 2 Label",
+      "required": false,
+      "default": "Customer Satisfaction"
+    },
+    {
+      "key": "kpi2Value",
+      "type": "string",
+      "label": "KPI 2 Value",
+      "required": false,
+      "default": "94%"
+    },
+    {
+      "key": "kpi3Label",
+      "type": "string",
+      "label": "KPI 3 Label",
+      "required": false,
+      "default": "Team Efficiency"
+    },
+    {
+      "key": "kpi3Value",
+      "type": "string",
+      "label": "KPI 3 Value",
+      "required": false,
+      "default": "78%"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0a0a0a"
+    }
+  ],
+  "defaults": {
+    "title": "Q4 Performance",
+    "kpi1Label": "Revenue Target",
+    "kpi1Value": "87%",
+    "kpi2Label": "Customer Satisfaction",
+    "kpi2Value": "94%",
+    "kpi3Label": "Team Efficiency",
+    "kpi3Value": "78%",
+    "backgroundColor": "#0a0a0a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 160, "y": 80 },
+            "size": { "width": 1600, "height": 80 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#fafafa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "card1",
+            "type": "shape",
+            "position": { "x": 160, "y": 220 },
+            "size": { "width": 500, "height": 340 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#18181b",
+              "borderRadius": 24
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 15,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "kpi1-label",
+            "type": "text",
+            "position": { "x": 200, "y": 260 },
+            "size": { "width": 420, "height": 40 },
+            "props": {
+              "text": "{{kpi1Label}}",
+              "fontSize": 22,
+              "fontWeight": "500",
+              "color": "#a1a1aa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "kpi1-value",
+            "type": "text",
+            "position": { "x": 200, "y": 320 },
+            "size": { "width": 420, "height": 100 },
+            "props": {
+              "text": "{{kpi1Value}}",
+              "fontSize": 72,
+              "fontWeight": "800",
+              "color": "#3b82f6",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 45,
+                "duration": 25,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "progress1-track",
+            "type": "shape",
+            "position": { "x": 200, "y": 460 },
+            "size": { "width": 420, "height": 12 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#27272a",
+              "borderRadius": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 55,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "progress1-fill",
+            "type": "shape",
+            "position": { "x": 200, "y": 460 },
+            "size": { "width": 365, "height": 12 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#3b82f6",
+              "borderRadius": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 60,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "card2",
+            "type": "shape",
+            "position": { "x": 710, "y": 220 },
+            "size": { "width": 500, "height": 340 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#18181b",
+              "borderRadius": 24
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 25,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "kpi2-label",
+            "type": "text",
+            "position": { "x": 750, "y": 260 },
+            "size": { "width": 420, "height": 40 },
+            "props": {
+              "text": "{{kpi2Label}}",
+              "fontSize": 22,
+              "fontWeight": "500",
+              "color": "#a1a1aa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 45,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "kpi2-value",
+            "type": "text",
+            "position": { "x": 750, "y": 320 },
+            "size": { "width": 420, "height": 100 },
+            "props": {
+              "text": "{{kpi2Value}}",
+              "fontSize": 72,
+              "fontWeight": "800",
+              "color": "#22c55e",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 55,
+                "duration": 25,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "progress2-track",
+            "type": "shape",
+            "position": { "x": 750, "y": 460 },
+            "size": { "width": 420, "height": 12 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#27272a",
+              "borderRadius": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 65,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "progress2-fill",
+            "type": "shape",
+            "position": { "x": 750, "y": 460 },
+            "size": { "width": 395, "height": 12 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#22c55e",
+              "borderRadius": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 70,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "card3",
+            "type": "shape",
+            "position": { "x": 1260, "y": 220 },
+            "size": { "width": 500, "height": 340 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#18181b",
+              "borderRadius": 24
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 35,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "kpi3-label",
+            "type": "text",
+            "position": { "x": 1300, "y": 260 },
+            "size": { "width": 420, "height": 40 },
+            "props": {
+              "text": "{{kpi3Label}}",
+              "fontSize": 22,
+              "fontWeight": "500",
+              "color": "#a1a1aa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 55,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "kpi3-value",
+            "type": "text",
+            "position": { "x": 1300, "y": 320 },
+            "size": { "width": 420, "height": 100 },
+            "props": {
+              "text": "{{kpi3Value}}",
+              "fontSize": 72,
+              "fontWeight": "800",
+              "color": "#f59e0b",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 65,
+                "duration": 25,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "progress3-track",
+            "type": "shape",
+            "position": { "x": 1300, "y": 460 },
+            "size": { "width": 420, "height": 12 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#27272a",
+              "borderRadius": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 75,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "progress3-fill",
+            "type": "shape",
+            "position": { "x": 1300, "y": 460 },
+            "size": { "width": 328, "height": 12 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#f59e0b",
+              "borderRadius": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 80,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

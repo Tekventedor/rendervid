@@ -1,0 +1,246 @@
+{
+  "name": "Logo Reveal",
+  "description": "Animated logo reveal with dramatic entrance effects.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "brandName",
+      "type": "string",
+      "label": "Brand Name",
+      "required": true,
+      "default": "BRAND"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "required": false,
+      "default": "Your tagline here"
+    },
+    {
+      "key": "style",
+      "type": "string",
+      "label": "Style",
+      "required": false,
+      "default": "minimal"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#3b82f6"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#030712"
+    }
+  ],
+  "defaults": {
+    "brandName": "BRAND",
+    "tagline": "Your tagline here",
+    "style": "minimal",
+    "primaryColor": "#3b82f6",
+    "backgroundColor": "#030712"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "glow-ring",
+            "type": "shape",
+            "position": { "x": 660, "y": 240 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{primaryColor}}" },
+                  { "offset": 0.5, "color": "{{primaryColor}}" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "line-left",
+            "type": "shape",
+            "position": { "x": 0, "y": 537 },
+            "size": { "width": 700, "height": 6 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 20,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "line-right",
+            "type": "shape",
+            "position": { "x": 1220, "y": 537 },
+            "size": { "width": 700, "height": 6 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInRight",
+                "delay": 20,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "brand-name",
+            "type": "text",
+            "position": { "x": 160, "y": 450 },
+            "size": { "width": 1600, "height": 180 },
+            "props": {
+              "text": "{{brandName}}",
+              "fontSize": 140,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 16
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 35,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "tagline",
+            "type": "text",
+            "position": { "x": 160, "y": 640 },
+            "size": { "width": 1600, "height": 50 },
+            "props": {
+              "text": "{{tagline}}",
+              "fontSize": 28,
+              "fontWeight": "normal",
+              "color": "#6b7280",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "particles-1",
+            "type": "shape",
+            "position": { "x": 400, "y": 300 },
+            "size": { "width": 8, "height": 8 },
+            "opacity": 0.6,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "particles-2",
+            "type": "shape",
+            "position": { "x": 1500, "y": 400 },
+            "size": { "width": 6, "height": 6 },
+            "opacity": 0.5,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 55,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "particles-3",
+            "type": "shape",
+            "position": { "x": 300, "y": 700 },
+            "size": { "width": 10, "height": 10 },
+            "opacity": 0.4,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

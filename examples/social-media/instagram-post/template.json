@@ -1,0 +1,204 @@
+{
+  "name": "Instagram Post",
+  "description": "Square video template optimized for Instagram feed posts.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1080,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "headline",
+      "type": "string",
+      "label": "Headline",
+      "description": "Main text",
+      "required": true,
+      "default": "Did You Know?"
+    },
+    {
+      "key": "body",
+      "type": "string",
+      "label": "Body Text",
+      "description": "Main content text",
+      "required": false,
+      "default": "This is an interesting fact that your audience will love to learn about."
+    },
+    {
+      "key": "handle",
+      "type": "string",
+      "label": "Handle",
+      "description": "Your social handle",
+      "required": false,
+      "default": "@yourbrand"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#6366f1"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0f172a"
+    }
+  ],
+  "defaults": {
+    "headline": "Did You Know?",
+    "body": "This is an interesting fact that your audience will love to learn about.",
+    "handle": "@yourbrand",
+    "primaryColor": "#6366f1",
+    "backgroundColor": "#0f172a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1080, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "accent-corner",
+            "type": "shape",
+            "position": { "x": -100, "y": -100 },
+            "size": { "width": 400, "height": 400 },
+            "opacity": 0.15,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "border-top",
+            "type": "shape",
+            "position": { "x": 60, "y": 60 },
+            "size": { "width": 960, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 0,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "headline",
+            "type": "text",
+            "position": { "x": 60, "y": 120 },
+            "size": { "width": 960, "height": 100 },
+            "props": {
+              "text": "{{headline}}",
+              "fontSize": 64,
+              "fontWeight": "bold",
+              "color": "#f8fafc",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 15,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "body",
+            "type": "text",
+            "position": { "x": 60, "y": 300 },
+            "size": { "width": 960, "height": 500 },
+            "props": {
+              "text": "{{body}}",
+              "fontSize": 36,
+              "fontWeight": "normal",
+              "color": "#cbd5e1",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "lineHeight": 1.5
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "handle-line",
+            "type": "shape",
+            "position": { "x": 60, "y": 960 },
+            "size": { "width": 40, "height": 3 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 50,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "handle",
+            "type": "text",
+            "position": { "x": 115, "y": 948 },
+            "size": { "width": 400, "height": 40 },
+            "props": {
+              "text": "{{handle}}",
+              "fontSize": 24,
+              "fontWeight": "500",
+              "color": "#64748b",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 55,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

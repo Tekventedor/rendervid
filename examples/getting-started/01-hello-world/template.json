@@ -1,0 +1,93 @@
+{
+  "name": "Hello World",
+  "description": "The simplest Rendervid template - animated text on a colored background.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 3
+  },
+  "inputs": [
+    {
+      "key": "message",
+      "type": "string",
+      "label": "Message",
+      "description": "The text to display",
+      "required": true,
+      "default": "Hello, World!"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "description": "The background color",
+      "required": false,
+      "default": "#1a1a2e"
+    },
+    {
+      "key": "textColor",
+      "type": "color",
+      "label": "Text Color",
+      "description": "The text color",
+      "required": false,
+      "default": "#ffffff"
+    }
+  ],
+  "defaults": {
+    "message": "Hello, World!",
+    "backgroundColor": "#1a1a2e",
+    "textColor": "#ffffff"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 90,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "message",
+            "type": "text",
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 200 },
+            "props": {
+              "text": "{{message}}",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "{{textColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 45,
+                "duration": 30
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

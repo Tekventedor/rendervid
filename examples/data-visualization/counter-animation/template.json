@@ -1,0 +1,304 @@
+{
+  "name": "Counter Animation",
+  "description": "Animated counting numbers for statistics and metrics.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title",
+      "required": false,
+      "default": "Our Impact"
+    },
+    {
+      "key": "stat1Value",
+      "type": "string",
+      "label": "Stat 1 Value",
+      "required": false,
+      "default": "10M+"
+    },
+    {
+      "key": "stat1Label",
+      "type": "string",
+      "label": "Stat 1 Label",
+      "required": false,
+      "default": "Users"
+    },
+    {
+      "key": "stat2Value",
+      "type": "string",
+      "label": "Stat 2 Value",
+      "required": false,
+      "default": "150+"
+    },
+    {
+      "key": "stat2Label",
+      "type": "string",
+      "label": "Stat 2 Label",
+      "required": false,
+      "default": "Countries"
+    },
+    {
+      "key": "stat3Value",
+      "type": "string",
+      "label": "Stat 3 Value",
+      "required": false,
+      "default": "99.9%"
+    },
+    {
+      "key": "stat3Label",
+      "type": "string",
+      "label": "Stat 3 Label",
+      "required": false,
+      "default": "Uptime"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#06b6d4"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0f172a"
+    }
+  ],
+  "defaults": {
+    "title": "Our Impact",
+    "stat1Value": "10M+",
+    "stat1Label": "Users",
+    "stat2Value": "150+",
+    "stat2Label": "Countries",
+    "stat3Value": "99.9%",
+    "stat3Label": "Uptime",
+    "primaryColor": "#06b6d4",
+    "backgroundColor": "#0f172a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 160, "y": 150 },
+            "size": { "width": 1600, "height": 80 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#f8fafc",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "stat1-value",
+            "type": "text",
+            "position": { "x": 160, "y": 400 },
+            "size": { "width": 480, "height": 150 },
+            "props": {
+              "text": "{{stat1Value}}",
+              "fontSize": 96,
+              "fontWeight": "800",
+              "color": "{{primaryColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 20,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "stat1-label",
+            "type": "text",
+            "position": { "x": 160, "y": 560 },
+            "size": { "width": 480, "height": 50 },
+            "props": {
+              "text": "{{stat1Label}}",
+              "fontSize": 28,
+              "fontWeight": "500",
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 40,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "divider1",
+            "type": "shape",
+            "position": { "x": 680, "y": 400 },
+            "size": { "width": 2, "height": 200 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#64748b"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 55,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "stat2-value",
+            "type": "text",
+            "position": { "x": 720, "y": 400 },
+            "size": { "width": 480, "height": 150 },
+            "props": {
+              "text": "{{stat2Value}}",
+              "fontSize": 96,
+              "fontWeight": "800",
+              "color": "#8b5cf6",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 35,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "stat2-label",
+            "type": "text",
+            "position": { "x": 720, "y": 560 },
+            "size": { "width": 480, "height": 50 },
+            "props": {
+              "text": "{{stat2Label}}",
+              "fontSize": 28,
+              "fontWeight": "500",
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 55,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "divider2",
+            "type": "shape",
+            "position": { "x": 1240, "y": 400 },
+            "size": { "width": 2, "height": 200 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#64748b"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 70,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "stat3-value",
+            "type": "text",
+            "position": { "x": 1280, "y": 400 },
+            "size": { "width": 480, "height": 150 },
+            "props": {
+              "text": "{{stat3Value}}",
+              "fontSize": 96,
+              "fontWeight": "800",
+              "color": "#22c55e",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 50,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "stat3-label",
+            "type": "text",
+            "position": { "x": 1280, "y": 560 },
+            "size": { "width": 480, "height": 50 },
+            "props": {
+              "text": "{{stat3Label}}",
+              "fontSize": 28,
+              "fontWeight": "500",
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 70,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

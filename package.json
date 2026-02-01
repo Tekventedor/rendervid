@@ -4,7 +4,7 @@
   "private": true,
   "description": "Stateless video/image rendering engine with JSON templates and React component support",
   "author": "QualityUnit",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/QualityUnit/rendervid.git"
@@ -14,6 +14,7 @@
     "dev": "pnpm -r --parallel dev",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
+    "test:examples": "vitest run --config examples/vitest.config.ts",
     "lint": "eslint packages --ext .ts,.tsx",
     "lint:fix": "eslint packages --ext .ts,.tsx --fix",
     "format": "prettier --write \"packages/**/*.{ts,tsx,json}\"",
@@ -21,7 +22,11 @@
     "clean": "pnpm -r clean && rm -rf node_modules",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "examples:list": "node scripts/examples-cli.js list",
+    "examples:render": "node scripts/examples-cli.js render",
+    "examples:validate": "node scripts/examples-cli.js validate",
+    "examples:generate-previews": "node scripts/examples-cli.js generate-previews"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

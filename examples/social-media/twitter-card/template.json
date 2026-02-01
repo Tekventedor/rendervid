@@ -1,0 +1,153 @@
+{
+  "name": "Twitter Card",
+  "description": "Image optimized for Twitter/X cards and posts.",
+  "version": "1.0.0",
+  "output": {
+    "type": "image",
+    "width": 1200,
+    "height": 628
+  },
+  "inputs": [
+    {
+      "key": "headline",
+      "type": "string",
+      "label": "Headline",
+      "description": "Main text",
+      "required": true,
+      "default": "Big News!"
+    },
+    {
+      "key": "body",
+      "type": "string",
+      "label": "Body",
+      "description": "Supporting text",
+      "required": false,
+      "default": "We have something exciting to share with you."
+    },
+    {
+      "key": "handle",
+      "type": "string",
+      "label": "Handle",
+      "description": "Your Twitter handle",
+      "required": false,
+      "default": "@yourbrand"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#1d9bf0"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#15202b"
+    }
+  ],
+  "defaults": {
+    "headline": "Big News!",
+    "body": "We have something exciting to share with you.",
+    "handle": "@yourbrand",
+    "primaryColor": "#1d9bf0",
+    "backgroundColor": "#15202b"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 1,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1200, "height": 628 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "pattern-1",
+            "type": "shape",
+            "position": { "x": 900, "y": -100 },
+            "size": { "width": 400, "height": 400 },
+            "opacity": 0.1,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            }
+          },
+          {
+            "id": "pattern-2",
+            "type": "shape",
+            "position": { "x": 1000, "y": 350 },
+            "size": { "width": 300, "height": 300 },
+            "opacity": 0.08,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            }
+          },
+          {
+            "id": "accent-line",
+            "type": "shape",
+            "position": { "x": 60, "y": 120 },
+            "size": { "width": 60, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            }
+          },
+          {
+            "id": "headline",
+            "type": "text",
+            "position": { "x": 60, "y": 160 },
+            "size": { "width": 800, "height": 120 },
+            "props": {
+              "text": "{{headline}}",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#f7f9f9",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            }
+          },
+          {
+            "id": "body",
+            "type": "text",
+            "position": { "x": 60, "y": 300 },
+            "size": { "width": 800, "height": 150 },
+            "props": {
+              "text": "{{body}}",
+              "fontSize": 28,
+              "fontWeight": "normal",
+              "color": "#8b98a5",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "lineHeight": 1.4
+            }
+          },
+          {
+            "id": "handle",
+            "type": "text",
+            "position": { "x": 60, "y": 540 },
+            "size": { "width": 400, "height": 40 },
+            "props": {
+              "text": "{{handle}}",
+              "fontSize": 22,
+              "fontWeight": "500",
+              "color": "{{primaryColor}}",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

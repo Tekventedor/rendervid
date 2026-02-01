@@ -1,0 +1,240 @@
+{
+  "name": "Testimonial Video",
+  "description": "Customer testimonial with quote, author info, and star rating.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 7
+  },
+  "inputs": [
+    {
+      "key": "quote",
+      "type": "string",
+      "label": "Quote",
+      "required": true,
+      "default": "This product completely transformed how we work. The results have been incredible!"
+    },
+    {
+      "key": "authorName",
+      "type": "string",
+      "label": "Author Name",
+      "required": true,
+      "default": "Sarah Johnson"
+    },
+    {
+      "key": "authorTitle",
+      "type": "string",
+      "label": "Author Title",
+      "required": false,
+      "default": "CEO, TechCorp Inc."
+    },
+    {
+      "key": "rating",
+      "type": "number",
+      "label": "Star Rating (1-5)",
+      "required": false,
+      "default": 5
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#fbbf24"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0c0a09"
+    }
+  ],
+  "defaults": {
+    "quote": "This product completely transformed how we work. The results have been incredible!",
+    "authorName": "Sarah Johnson",
+    "authorTitle": "CEO, TechCorp Inc.",
+    "rating": 5,
+    "primaryColor": "#fbbf24",
+    "backgroundColor": "#0c0a09"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 210,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "{{backgroundColor}}" },
+                  { "offset": 1, "color": "#1c1917" }
+                ],
+                "angle": 135
+              }
+            }
+          },
+          {
+            "id": "card",
+            "type": "shape",
+            "position": { "x": 160, "y": 190 },
+            "size": { "width": 1600, "height": 700 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1c1917",
+              "borderRadius": 24
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "quote-mark",
+            "type": "text",
+            "position": { "x": 220, "y": 220 },
+            "size": { "width": 100, "height": 120 },
+            "props": {
+              "text": "\"",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "{{primaryColor}}",
+              "textAlign": "left",
+              "fontFamily": "Georgia, serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 20,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "quote",
+            "type": "text",
+            "position": { "x": 220, "y": 340 },
+            "size": { "width": 1480, "height": 250 },
+            "props": {
+              "text": "{{quote}}",
+              "fontSize": 42,
+              "fontWeight": "normal",
+              "color": "#fafaf9",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "lineHeight": 1.5
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "stars",
+            "type": "text",
+            "position": { "x": 220, "y": 620 },
+            "size": { "width": 200, "height": 40 },
+            "props": {
+              "text": "★★★★★",
+              "fontSize": 32,
+              "color": "{{primaryColor}}",
+              "textAlign": "left"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 70,
+                "duration": 20,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "divider",
+            "type": "shape",
+            "position": { "x": 220, "y": 700 },
+            "size": { "width": 60, "height": 3 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 85,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "author-name",
+            "type": "text",
+            "position": { "x": 220, "y": 730 },
+            "size": { "width": 600, "height": 50 },
+            "props": {
+              "text": "{{authorName}}",
+              "fontSize": 28,
+              "fontWeight": "bold",
+              "color": "#fafaf9",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 95,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "author-title",
+            "type": "text",
+            "position": { "x": 220, "y": 780 },
+            "size": { "width": 600, "height": 40 },
+            "props": {
+              "text": "{{authorTitle}}",
+              "fontSize": 20,
+              "fontWeight": "normal",
+              "color": "#78716c",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 105,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

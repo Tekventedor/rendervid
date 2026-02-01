@@ -1,0 +1,162 @@
+{
+  "name": "First Image",
+  "description": "Generate a social media image with text overlay - perfect for thumbnails and posts.",
+  "version": "1.0.0",
+  "output": {
+    "type": "image",
+    "width": 1200,
+    "height": 630
+  },
+  "inputs": [
+    {
+      "key": "headline",
+      "type": "string",
+      "label": "Headline",
+      "description": "Main text on the image",
+      "required": true,
+      "default": "Your Amazing Content"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "description": "Supporting text",
+      "required": false,
+      "default": "Click to learn more"
+    },
+    {
+      "key": "brandName",
+      "type": "string",
+      "label": "Brand Name",
+      "description": "Your brand or author name",
+      "required": false,
+      "default": "Your Brand"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "description": "Main accent color",
+      "required": false,
+      "default": "#8b5cf6"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "description": "Image background color",
+      "required": false,
+      "default": "#18181b"
+    }
+  ],
+  "defaults": {
+    "headline": "Your Amazing Content",
+    "tagline": "Click to learn more",
+    "brandName": "Your Brand",
+    "primaryColor": "#8b5cf6",
+    "backgroundColor": "#18181b"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 1,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1200, "height": 630 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "{{backgroundColor}}" },
+                  { "offset": 1, "color": "#27272a" }
+                ],
+                "angle": 135
+              }
+            }
+          },
+          {
+            "id": "accent-blob",
+            "type": "shape",
+            "position": { "x": 900, "y": 350 },
+            "size": { "width": 400, "height": 400 },
+            "opacity": 0.15,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            }
+          },
+          {
+            "id": "accent-blob-2",
+            "type": "shape",
+            "position": { "x": -50, "y": -50 },
+            "size": { "width": 300, "height": 300 },
+            "opacity": 0.1,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            }
+          },
+          {
+            "id": "headline",
+            "type": "text",
+            "position": { "x": 60, "y": 220 },
+            "size": { "width": 900, "height": 150 },
+            "props": {
+              "text": "{{headline}}",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#fafafa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "lineHeight": 1.2
+            }
+          },
+          {
+            "id": "tagline",
+            "type": "text",
+            "position": { "x": 60, "y": 390 },
+            "size": { "width": 800, "height": 40 },
+            "props": {
+              "text": "{{tagline}}",
+              "fontSize": 24,
+              "fontWeight": "normal",
+              "color": "#a1a1aa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            }
+          },
+          {
+            "id": "brand-line",
+            "type": "shape",
+            "position": { "x": 60, "y": 540 },
+            "size": { "width": 40, "height": 3 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            }
+          },
+          {
+            "id": "brand-name",
+            "type": "text",
+            "position": { "x": 115, "y": 530 },
+            "size": { "width": 300, "height": 30 },
+            "props": {
+              "text": "{{brandName}}",
+              "fontSize": 18,
+              "fontWeight": "500",
+              "color": "#71717a",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

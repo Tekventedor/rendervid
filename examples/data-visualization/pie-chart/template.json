@@ -1,0 +1,373 @@
+{
+  "name": "Pie Chart",
+  "description": "Animated pie chart with segment reveals.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Chart Title",
+      "required": true,
+      "default": "Revenue Distribution"
+    },
+    {
+      "key": "segment1Label",
+      "type": "string",
+      "label": "Segment 1 Label",
+      "required": false,
+      "default": "Product Sales"
+    },
+    {
+      "key": "segment1Value",
+      "type": "string",
+      "label": "Segment 1 Value",
+      "required": false,
+      "default": "45%"
+    },
+    {
+      "key": "segment2Label",
+      "type": "string",
+      "label": "Segment 2 Label",
+      "required": false,
+      "default": "Services"
+    },
+    {
+      "key": "segment2Value",
+      "type": "string",
+      "label": "Segment 2 Value",
+      "required": false,
+      "default": "35%"
+    },
+    {
+      "key": "segment3Label",
+      "type": "string",
+      "label": "Segment 3 Label",
+      "required": false,
+      "default": "Licensing"
+    },
+    {
+      "key": "segment3Value",
+      "type": "string",
+      "label": "Segment 3 Value",
+      "required": false,
+      "default": "20%"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#09090b"
+    }
+  ],
+  "defaults": {
+    "title": "Revenue Distribution",
+    "segment1Label": "Product Sales",
+    "segment1Value": "45%",
+    "segment2Label": "Services",
+    "segment2Value": "35%",
+    "segment3Label": "Licensing",
+    "segment3Value": "20%",
+    "backgroundColor": "#09090b"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 160, "y": 80 },
+            "size": { "width": 1600, "height": 80 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 48,
+              "fontWeight": "bold",
+              "color": "#fafafa",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "chart-ring",
+            "type": "shape",
+            "position": { "x": 460, "y": 240 },
+            "size": { "width": 500, "height": 500 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#27272a"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 15,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "segment1",
+            "type": "shape",
+            "position": { "x": 485, "y": 265 },
+            "size": { "width": 450, "height": 450 },
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#3b82f6" },
+                  { "offset": 1, "color": "#1d4ed8" }
+                ],
+                "angle": 135
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 35,
+                "duration": 25,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "chart-center",
+            "type": "shape",
+            "position": { "x": 560, "y": 340 },
+            "size": { "width": 300, "height": 300 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{backgroundColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 55,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "legend1-dot",
+            "type": "shape",
+            "position": { "x": 1100, "y": 300 },
+            "size": { "width": 20, "height": 20 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#3b82f6"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 60,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "legend1-label",
+            "type": "text",
+            "position": { "x": 1140, "y": 295 },
+            "size": { "width": 300, "height": 35 },
+            "props": {
+              "text": "{{segment1Label}}",
+              "fontSize": 22,
+              "fontWeight": "500",
+              "color": "#fafafa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 65,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "legend1-value",
+            "type": "text",
+            "position": { "x": 1450, "y": 295 },
+            "size": { "width": 100, "height": 35 },
+            "props": {
+              "text": "{{segment1Value}}",
+              "fontSize": 22,
+              "fontWeight": "bold",
+              "color": "#3b82f6",
+              "textAlign": "right",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 70,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "legend2-dot",
+            "type": "shape",
+            "position": { "x": 1100, "y": 380 },
+            "size": { "width": 20, "height": 20 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#8b5cf6"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 75,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "legend2-label",
+            "type": "text",
+            "position": { "x": 1140, "y": 375 },
+            "size": { "width": 300, "height": 35 },
+            "props": {
+              "text": "{{segment2Label}}",
+              "fontSize": 22,
+              "fontWeight": "500",
+              "color": "#fafafa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 80,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "legend2-value",
+            "type": "text",
+            "position": { "x": 1450, "y": 375 },
+            "size": { "width": 100, "height": 35 },
+            "props": {
+              "text": "{{segment2Value}}",
+              "fontSize": 22,
+              "fontWeight": "bold",
+              "color": "#8b5cf6",
+              "textAlign": "right",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 85,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "legend3-dot",
+            "type": "shape",
+            "position": { "x": 1100, "y": 460 },
+            "size": { "width": 20, "height": 20 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#22c55e"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 90,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "legend3-label",
+            "type": "text",
+            "position": { "x": 1140, "y": 455 },
+            "size": { "width": 300, "height": 35 },
+            "props": {
+              "text": "{{segment3Label}}",
+              "fontSize": 22,
+              "fontWeight": "500",
+              "color": "#fafafa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 95,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "legend3-value",
+            "type": "text",
+            "position": { "x": 1450, "y": 455 },
+            "size": { "width": 100, "height": 35 },
+            "props": {
+              "text": "{{segment3Value}}",
+              "fontSize": 22,
+              "fontWeight": "bold",
+              "color": "#22c55e",
+              "textAlign": "right",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 100,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

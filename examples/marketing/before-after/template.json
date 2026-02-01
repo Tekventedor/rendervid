@@ -1,0 +1,276 @@
+{
+  "name": "Before After Comparison",
+  "description": "Before/after transformation showcase - perfect for fitness, design, or software demos.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "beforeLabel",
+      "type": "string",
+      "label": "Before Label",
+      "required": false,
+      "default": "BEFORE"
+    },
+    {
+      "key": "afterLabel",
+      "type": "string",
+      "label": "After Label",
+      "required": false,
+      "default": "AFTER"
+    },
+    {
+      "key": "headline",
+      "type": "string",
+      "label": "Headline",
+      "required": false,
+      "default": "The Transformation"
+    },
+    {
+      "key": "ctaText",
+      "type": "string",
+      "label": "CTA Text",
+      "required": false,
+      "default": "Get Started Today"
+    },
+    {
+      "key": "beforeColor",
+      "type": "color",
+      "label": "Before Color",
+      "required": false,
+      "default": "#71717a"
+    },
+    {
+      "key": "afterColor",
+      "type": "color",
+      "label": "After Color",
+      "required": false,
+      "default": "#22c55e"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#09090b"
+    }
+  ],
+  "defaults": {
+    "beforeLabel": "BEFORE",
+    "afterLabel": "AFTER",
+    "headline": "The Transformation",
+    "ctaText": "Get Started Today",
+    "beforeColor": "#71717a",
+    "afterColor": "#22c55e",
+    "backgroundColor": "#09090b"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "before",
+        "startFrame": 0,
+        "endFrame": 75,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "before-box",
+            "type": "shape",
+            "position": { "x": 360, "y": 240 },
+            "size": { "width": 1200, "height": 600 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#18181b",
+              "borderRadius": 16
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "before-label",
+            "type": "text",
+            "position": { "x": 360, "y": 480 },
+            "size": { "width": 1200, "height": 120 },
+            "props": {
+              "text": "{{beforeLabel}}",
+              "fontSize": 96,
+              "fontWeight": "800",
+              "color": "{{beforeColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "after",
+        "startFrame": 75,
+        "endFrame": 150,
+        "transition": {
+          "type": "wipe",
+          "duration": 20,
+          "direction": "right"
+        },
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "after-glow",
+            "type": "shape",
+            "position": { "x": 460, "y": 140 },
+            "size": { "width": 1000, "height": 800 },
+            "opacity": 0.1,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{afterColor}}"
+            }
+          },
+          {
+            "id": "after-box",
+            "type": "shape",
+            "position": { "x": 360, "y": 240 },
+            "size": { "width": 1200, "height": 600 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#18181b" },
+                  { "offset": 1, "color": "#14532d" }
+                ],
+                "angle": 135
+              },
+              "borderRadius": 16
+            }
+          },
+          {
+            "id": "after-label",
+            "type": "text",
+            "position": { "x": 360, "y": 480 },
+            "size": { "width": 1200, "height": 120 },
+            "props": {
+              "text": "{{afterLabel}}",
+              "fontSize": 96,
+              "fontWeight": "800",
+              "color": "{{afterColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25,
+                "easing": "easeOutBack"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cta",
+        "startFrame": 150,
+        "endFrame": 180,
+        "transition": {
+          "type": "fade",
+          "duration": 15
+        },
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "headline",
+            "type": "text",
+            "position": { "x": 160, "y": 400 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "{{headline}}",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "cta",
+            "type": "text",
+            "position": { "x": 160, "y": 530 },
+            "size": { "width": 1600, "height": 50 },
+            "props": {
+              "text": "{{ctaText}}",
+              "fontSize": 32,
+              "fontWeight": "500",
+              "color": "{{afterColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

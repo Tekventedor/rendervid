@@ -1,0 +1,179 @@
+{
+  "name": "YouTube Thumbnail",
+  "description": "Eye-catching thumbnail optimized for YouTube videos.",
+  "version": "1.0.0",
+  "output": {
+    "type": "image",
+    "width": 1280,
+    "height": 720
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title",
+      "description": "Main thumbnail text (keep it short!)",
+      "required": true,
+      "default": "10 TIPS"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "description": "Secondary text",
+      "required": false,
+      "default": "You Need to Know"
+    },
+    {
+      "key": "badge",
+      "type": "string",
+      "label": "Badge Text",
+      "description": "Small badge text (e.g., 'NEW', '2024')",
+      "required": false,
+      "default": "NEW"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#ef4444"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#18181b"
+    }
+  ],
+  "defaults": {
+    "title": "10 TIPS",
+    "subtitle": "You Need to Know",
+    "badge": "NEW",
+    "primaryColor": "#ef4444",
+    "backgroundColor": "#18181b"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 1,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1280, "height": 720 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "{{backgroundColor}}" },
+                  { "offset": 1, "color": "#27272a" }
+                ],
+                "angle": 135
+              }
+            }
+          },
+          {
+            "id": "accent-bar",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 20, "height": 720 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            }
+          },
+          {
+            "id": "glow",
+            "type": "shape",
+            "position": { "x": 800, "y": 200 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{primaryColor}}" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            }
+          },
+          {
+            "id": "badge-bg",
+            "type": "shape",
+            "position": { "x": 60, "y": 50 },
+            "size": { "width": 100, "height": 40 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}",
+              "borderRadius": 8
+            }
+          },
+          {
+            "id": "badge-text",
+            "type": "text",
+            "position": { "x": 60, "y": 58 },
+            "size": { "width": 100, "height": 30 },
+            "props": {
+              "text": "{{badge}}",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 60, "y": 200 },
+            "size": { "width": 800, "height": 250 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 140,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": -4
+            }
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 60, "y": 450 },
+            "size": { "width": 700, "height": 80 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 48,
+              "fontWeight": "500",
+              "color": "#a1a1aa",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            }
+          },
+          {
+            "id": "arrow",
+            "type": "text",
+            "position": { "x": 1100, "y": 300 },
+            "size": { "width": 120, "height": 120 },
+            "props": {
+              "text": "→",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "{{primaryColor}}",
+              "textAlign": "center"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

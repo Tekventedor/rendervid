@@ -1,0 +1,234 @@
+{
+  "name": "Instagram Story",
+  "description": "Vertical video template optimized for Instagram Stories and Reels.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "headline",
+      "type": "string",
+      "label": "Headline",
+      "description": "Main text (keep it short)",
+      "required": true,
+      "default": "New Drop"
+    },
+    {
+      "key": "subheadline",
+      "type": "string",
+      "label": "Subheadline",
+      "description": "Supporting text",
+      "required": false,
+      "default": "Limited Edition"
+    },
+    {
+      "key": "ctaText",
+      "type": "string",
+      "label": "Call to Action",
+      "description": "CTA button text",
+      "required": false,
+      "default": "Swipe Up"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#ec4899"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0f0f0f"
+    }
+  ],
+  "defaults": {
+    "headline": "New Drop",
+    "subheadline": "Limited Edition",
+    "ctaText": "Swipe Up",
+    "primaryColor": "#ec4899",
+    "backgroundColor": "#0f0f0f"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1080, "height": 1920 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "{{backgroundColor}}" },
+                  { "offset": 0.5, "color": "#1a1a1a" },
+                  { "offset": 1, "color": "{{backgroundColor}}" }
+                ],
+                "angle": 180
+              }
+            }
+          },
+          {
+            "id": "glow-top",
+            "type": "shape",
+            "position": { "x": 200, "y": -200 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{primaryColor}}" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "glow-bottom",
+            "type": "shape",
+            "position": { "x": 300, "y": 1400 },
+            "size": { "width": 500, "height": 500 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{primaryColor}}" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "headline",
+            "type": "text",
+            "position": { "x": 60, "y": 800 },
+            "size": { "width": 960, "height": 200 },
+            "props": {
+              "text": "{{headline}}",
+              "fontSize": 96,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": -2
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 20,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subheadline",
+            "type": "text",
+            "position": { "x": 60, "y": 1000 },
+            "size": { "width": 960, "height": 60 },
+            "props": {
+              "text": "{{subheadline}}",
+              "fontSize": 32,
+              "fontWeight": "normal",
+              "color": "#a1a1aa",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 40,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "cta-bg",
+            "type": "shape",
+            "position": { "x": 340, "y": 1650 },
+            "size": { "width": 400, "height": 60 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}",
+              "borderRadius": 30
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 60,
+                "duration": 20,
+                "easing": "easeOutBack"
+              },
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 120,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "cta-text",
+            "type": "text",
+            "position": { "x": 340, "y": 1665 },
+            "size": { "width": 400, "height": 40 },
+            "from": 65,
+            "props": {
+              "text": "{{ctaText}}",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 2
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 65,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "name": "Product Showcase",
+  "description": "Feature your product with stunning visuals, key features, and pricing.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
+  "inputs": [
+    {
+      "key": "productName",
+      "type": "string",
+      "label": "Product Name",
+      "required": true,
+      "default": "Premium Headphones"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "required": false,
+      "default": "Experience Pure Sound"
+    },
+    {
+      "key": "price",
+      "type": "string",
+      "label": "Price",
+      "required": false,
+      "default": "$299"
+    },
+    {
+      "key": "feature1",
+      "type": "string",
+      "label": "Feature 1",
+      "required": false,
+      "default": "Active Noise Cancellation"
+    },
+    {
+      "key": "feature2",
+      "type": "string",
+      "label": "Feature 2",
+      "required": false,
+      "default": "40-Hour Battery Life"
+    },
+    {
+      "key": "feature3",
+      "type": "string",
+      "label": "Feature 3",
+      "required": false,
+      "default": "Premium Materials"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#8b5cf6"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#09090b"
+    }
+  ],
+  "defaults": {
+    "productName": "Premium Headphones",
+    "tagline": "Experience Pure Sound",
+    "price": "$299",
+    "feature1": "Active Noise Cancellation",
+    "feature2": "40-Hour Battery Life",
+    "feature3": "Premium Materials",
+    "primaryColor": "#8b5cf6",
+    "backgroundColor": "#09090b"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "intro",
+        "startFrame": 0,
+        "endFrame": 90,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#1a1a2e" },
+                  { "offset": 1, "color": "{{backgroundColor}}" }
+                ]
+              }
+            }
+          },
+          {
+            "id": "product-glow",
+            "type": "shape",
+            "position": { "x": 710, "y": 290 },
+            "size": { "width": 500, "height": 500 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{primaryColor}}" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "product-name",
+            "type": "text",
+            "position": { "x": 560, "y": 400 },
+            "size": { "width": 800, "height": 100 },
+            "props": {
+              "text": "{{productName}}",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 15,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "tagline",
+            "type": "text",
+            "position": { "x": 560, "y": 510 },
+            "size": { "width": 800, "height": 60 },
+            "props": {
+              "text": "{{tagline}}",
+              "fontSize": 32,
+              "fontWeight": "normal",
+              "color": "#a1a1aa",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 40,
+                "duration": 25
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "features",
+        "startFrame": 90,
+        "endFrame": 180,
+        "transition": {
+          "type": "fade",
+          "duration": 15
+        },
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "features-title",
+            "type": "text",
+            "position": { "x": 100, "y": 100 },
+            "size": { "width": 400, "height": 50 },
+            "props": {
+              "text": "KEY FEATURES",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "color": "{{primaryColor}}",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "feature-1",
+            "type": "text",
+            "position": { "x": 100, "y": 200 },
+            "size": { "width": 800, "height": 80 },
+            "props": {
+              "text": "{{feature1}}",
+              "fontSize": 48,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 10,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "feature-2",
+            "type": "text",
+            "position": { "x": 100, "y": 320 },
+            "size": { "width": 800, "height": 80 },
+            "props": {
+              "text": "{{feature2}}",
+              "fontSize": 48,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 25,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "feature-3",
+            "type": "text",
+            "position": { "x": 100, "y": 440 },
+            "size": { "width": 800, "height": 80 },
+            "props": {
+              "text": "{{feature3}}",
+              "fontSize": 48,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 40,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "pricing",
+        "startFrame": 180,
+        "endFrame": 240,
+        "transition": {
+          "type": "fade",
+          "duration": 15
+        },
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "price",
+            "type": "text",
+            "position": { "x": 560, "y": 400 },
+            "size": { "width": 800, "height": 150 },
+            "props": {
+              "text": "{{price}}",
+              "fontSize": 120,
+              "fontWeight": "800",
+              "color": "{{primaryColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "cta",
+            "type": "text",
+            "position": { "x": 560, "y": 560 },
+            "size": { "width": 800, "height": 50 },
+            "props": {
+              "text": "Shop Now",
+              "fontSize": 32,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

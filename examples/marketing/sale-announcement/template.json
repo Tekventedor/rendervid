@@ -1,0 +1,264 @@
+{
+  "name": "Sale Announcement",
+  "description": "Flash sale or discount announcement with urgency-driven design.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "discount",
+      "type": "string",
+      "label": "Discount",
+      "required": true,
+      "default": "50% OFF"
+    },
+    {
+      "key": "headline",
+      "type": "string",
+      "label": "Headline",
+      "required": true,
+      "default": "FLASH SALE"
+    },
+    {
+      "key": "subheadline",
+      "type": "string",
+      "label": "Subheadline",
+      "required": false,
+      "default": "Limited Time Only"
+    },
+    {
+      "key": "ctaText",
+      "type": "string",
+      "label": "CTA Text",
+      "required": false,
+      "default": "SHOP NOW"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#ef4444"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0a0a0a"
+    }
+  ],
+  "defaults": {
+    "discount": "50% OFF",
+    "headline": "FLASH SALE",
+    "subheadline": "Limited Time Only",
+    "ctaText": "SHOP NOW",
+    "primaryColor": "#ef4444",
+    "backgroundColor": "#0a0a0a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "burst-1",
+            "type": "shape",
+            "position": { "x": -200, "y": -200 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 30,
+                "easing": "easeOutExpo"
+              }
+            ]
+          },
+          {
+            "id": "burst-2",
+            "type": "shape",
+            "position": { "x": 1500, "y": 600 },
+            "size": { "width": 500, "height": 500 },
+            "opacity": 0.15,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 10,
+                "duration": 30,
+                "easing": "easeOutExpo"
+              }
+            ]
+          },
+          {
+            "id": "discount-badge",
+            "type": "shape",
+            "position": { "x": 710, "y": 150 },
+            "size": { "width": 500, "height": 200 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "bounceIn",
+                "delay": 15,
+                "duration": 30
+              },
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 90,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "discount-text",
+            "type": "text",
+            "position": { "x": 710, "y": 195 },
+            "size": { "width": 500, "height": 120 },
+            "from": 20,
+            "props": {
+              "text": "{{discount}}",
+              "fontSize": 80,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 20,
+                "duration": 25,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "headline",
+            "type": "text",
+            "position": { "x": 160, "y": 420 },
+            "size": { "width": 1600, "height": 150 },
+            "props": {
+              "text": "{{headline}}",
+              "fontSize": 120,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 40,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subheadline",
+            "type": "text",
+            "position": { "x": 160, "y": 600 },
+            "size": { "width": 1600, "height": 60 },
+            "props": {
+              "text": "{{subheadline}}",
+              "fontSize": 36,
+              "fontWeight": "normal",
+              "color": "#a1a1aa",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "cta-bg",
+            "type": "shape",
+            "position": { "x": 760, "y": 750 },
+            "size": { "width": 400, "height": 70 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff",
+              "borderRadius": 35
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 80,
+                "duration": 20,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "cta-text",
+            "type": "text",
+            "position": { "x": 760, "y": 770 },
+            "size": { "width": 400, "height": 40 },
+            "from": 85,
+            "props": {
+              "text": "{{ctaText}}",
+              "fontSize": 24,
+              "fontWeight": "bold",
+              "color": "{{backgroundColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 2
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 85,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

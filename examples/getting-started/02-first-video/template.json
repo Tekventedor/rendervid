@@ -1,0 +1,184 @@
+{
+  "name": "First Video",
+  "description": "A complete 5-second video with title, subtitle, and professional animations.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title",
+      "description": "Main headline text",
+      "required": true,
+      "default": "Welcome to Rendervid"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "description": "Supporting text below the title",
+      "required": false,
+      "default": "Create stunning videos programmatically"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "description": "Accent color for decorative elements",
+      "required": false,
+      "default": "#3b82f6"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "description": "Video background color",
+      "required": false,
+      "default": "#0f172a"
+    }
+  ],
+  "defaults": {
+    "title": "Welcome to Rendervid",
+    "subtitle": "Create stunning videos programmatically",
+    "primaryColor": "#3b82f6",
+    "backgroundColor": "#0f172a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "{{backgroundColor}}" },
+                  { "offset": 1, "color": "#1e293b" }
+                ],
+                "angle": 135
+              }
+            }
+          },
+          {
+            "id": "accent-line-top",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "accent-circle",
+            "type": "shape",
+            "position": { "x": 1600, "y": 700 },
+            "size": { "width": 500, "height": 500 },
+            "opacity": 0.1,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 10,
+                "duration": 40,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 120, "y": 420 },
+            "size": { "width": 1680, "height": 120 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 80,
+              "fontWeight": "bold",
+              "color": "#f8fafc",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 15,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 120, "y": 560 },
+            "size": { "width": 1680, "height": 60 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 32,
+              "fontWeight": "normal",
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "accent-line-bottom",
+            "type": "shape",
+            "position": { "x": 760, "y": 650 },
+            "size": { "width": 400, "height": 3 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 50,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

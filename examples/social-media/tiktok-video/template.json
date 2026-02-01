@@ -1,0 +1,240 @@
+{
+  "name": "TikTok Video",
+  "description": "Vertical video template optimized for TikTok with trendy animations.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration": 8
+  },
+  "inputs": [
+    {
+      "key": "hookText",
+      "type": "string",
+      "label": "Hook Text",
+      "description": "Opening text to grab attention",
+      "required": true,
+      "default": "Wait for it..."
+    },
+    {
+      "key": "mainText",
+      "type": "string",
+      "label": "Main Text",
+      "description": "Main message",
+      "required": true,
+      "default": "The secret is..."
+    },
+    {
+      "key": "revealText",
+      "type": "string",
+      "label": "Reveal Text",
+      "description": "The payoff text",
+      "required": true,
+      "default": "Consistency!"
+    },
+    {
+      "key": "handle",
+      "type": "string",
+      "label": "Handle",
+      "description": "Your TikTok handle",
+      "required": false,
+      "default": "@yourtiktok"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#00f2ea"
+    },
+    {
+      "key": "secondaryColor",
+      "type": "color",
+      "label": "Secondary Color",
+      "required": false,
+      "default": "#ff0050"
+    }
+  ],
+  "defaults": {
+    "hookText": "Wait for it...",
+    "mainText": "The secret is...",
+    "revealText": "Consistency!",
+    "handle": "@yourtiktok",
+    "primaryColor": "#00f2ea",
+    "secondaryColor": "#ff0050"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "hook",
+        "startFrame": 0,
+        "endFrame": 90,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1080, "height": 1920 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000000"
+            }
+          },
+          {
+            "id": "hook-text",
+            "type": "text",
+            "position": { "x": 60, "y": 860 },
+            "size": { "width": 960, "height": 200 },
+            "props": {
+              "text": "{{hookText}}",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "bounceIn",
+                "delay": 10,
+                "duration": 30
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 70,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "main",
+        "startFrame": 90,
+        "endFrame": 180,
+        "transition": {
+          "type": "fade",
+          "duration": 10
+        },
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1080, "height": 1920 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "{{primaryColor}}" },
+                  { "offset": 1, "color": "{{secondaryColor}}" }
+                ],
+                "angle": 135
+              }
+            }
+          },
+          {
+            "id": "main-text",
+            "type": "text",
+            "position": { "x": 60, "y": 860 },
+            "size": { "width": 960, "height": 200 },
+            "props": {
+              "text": "{{mainText}}",
+              "fontSize": 64,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "reveal",
+        "startFrame": 180,
+        "endFrame": 240,
+        "transition": {
+          "type": "zoom",
+          "duration": 15
+        },
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1080, "height": 1920 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000000"
+            }
+          },
+          {
+            "id": "reveal-text",
+            "type": "text",
+            "position": { "x": 60, "y": 800 },
+            "size": { "width": 960, "height": 300 },
+            "props": {
+              "text": "{{revealText}}",
+              "fontSize": 96,
+              "fontWeight": "800",
+              "color": "{{primaryColor}}",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25,
+                "easing": "easeOutBack"
+              },
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 30,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "handle",
+            "type": "text",
+            "position": { "x": 60, "y": 1700 },
+            "size": { "width": 960, "height": 50 },
+            "props": {
+              "text": "{{handle}}",
+              "fontSize": 28,
+              "fontWeight": "500",
+              "color": "#71717a",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

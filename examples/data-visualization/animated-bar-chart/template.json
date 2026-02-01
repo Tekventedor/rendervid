@@ -1,0 +1,383 @@
+{
+  "name": "Animated Bar Chart",
+  "description": "Animated horizontal bar chart with staggered bar reveals.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Chart Title",
+      "required": true,
+      "default": "Market Share 2024"
+    },
+    {
+      "key": "label1",
+      "type": "string",
+      "label": "Label 1",
+      "required": false,
+      "default": "Product A"
+    },
+    {
+      "key": "value1",
+      "type": "number",
+      "label": "Value 1 (%)",
+      "required": false,
+      "default": 45
+    },
+    {
+      "key": "label2",
+      "type": "string",
+      "label": "Label 2",
+      "required": false,
+      "default": "Product B"
+    },
+    {
+      "key": "value2",
+      "type": "number",
+      "label": "Value 2 (%)",
+      "required": false,
+      "default": 30
+    },
+    {
+      "key": "label3",
+      "type": "string",
+      "label": "Label 3",
+      "required": false,
+      "default": "Product C"
+    },
+    {
+      "key": "value3",
+      "type": "number",
+      "label": "Value 3 (%)",
+      "required": false,
+      "default": 25
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#3b82f6"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0f172a"
+    }
+  ],
+  "defaults": {
+    "title": "Market Share 2024",
+    "label1": "Product A",
+    "value1": 45,
+    "label2": "Product B",
+    "value2": 30,
+    "label3": "Product C",
+    "value3": 25,
+    "primaryColor": "#3b82f6",
+    "backgroundColor": "#0f172a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 160, "y": 80 },
+            "size": { "width": 1600, "height": 80 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#f8fafc",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "bar1-label",
+            "type": "text",
+            "position": { "x": 160, "y": 250 },
+            "size": { "width": 200, "height": 40 },
+            "props": {
+              "text": "{{label1}}",
+              "fontSize": 24,
+              "fontWeight": "500",
+              "color": "#94a3b8",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 20,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "bar1-track",
+            "type": "shape",
+            "position": { "x": 380, "y": 250 },
+            "size": { "width": 1200, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b",
+              "borderRadius": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "bar1-fill",
+            "type": "shape",
+            "position": { "x": 380, "y": 250 },
+            "size": { "width": 540, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}",
+              "borderRadius": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 30,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "bar1-value",
+            "type": "text",
+            "position": { "x": 940, "y": 258 },
+            "size": { "width": 100, "height": 40 },
+            "from": 50,
+            "props": {
+              "text": "45%",
+              "fontSize": 24,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "bar2-label",
+            "type": "text",
+            "position": { "x": 160, "y": 380 },
+            "size": { "width": 200, "height": 40 },
+            "props": {
+              "text": "{{label2}}",
+              "fontSize": 24,
+              "fontWeight": "500",
+              "color": "#94a3b8",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "bar2-track",
+            "type": "shape",
+            "position": { "x": 380, "y": 380 },
+            "size": { "width": 1200, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b",
+              "borderRadius": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 30,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "bar2-fill",
+            "type": "shape",
+            "position": { "x": 380, "y": 380 },
+            "size": { "width": 360, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#8b5cf6",
+              "borderRadius": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 50,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "bar2-value",
+            "type": "text",
+            "position": { "x": 760, "y": 388 },
+            "size": { "width": 100, "height": 40 },
+            "from": 70,
+            "props": {
+              "text": "30%",
+              "fontSize": 24,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 70,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "bar3-label",
+            "type": "text",
+            "position": { "x": 160, "y": 510 },
+            "size": { "width": 200, "height": 40 },
+            "props": {
+              "text": "{{label3}}",
+              "fontSize": 24,
+              "fontWeight": "500",
+              "color": "#94a3b8",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "bar3-track",
+            "type": "shape",
+            "position": { "x": 380, "y": 510 },
+            "size": { "width": 1200, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b",
+              "borderRadius": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 45,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "bar3-fill",
+            "type": "shape",
+            "position": { "x": 380, "y": 510 },
+            "size": { "width": 300, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#22c55e",
+              "borderRadius": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 70,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "bar3-value",
+            "type": "text",
+            "position": { "x": 700, "y": 518 },
+            "size": { "width": 100, "height": 40 },
+            "from": 90,
+            "props": {
+              "text": "25%",
+              "fontSize": 24,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 90,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
