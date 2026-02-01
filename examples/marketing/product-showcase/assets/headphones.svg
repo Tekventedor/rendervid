@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="headphoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#6366f1"/>
+    </linearGradient>
+  </defs>
+  <!-- Headband -->
+  <path d="M40 100 Q40 40 100 40 Q160 40 160 100" stroke="url(#headphoneGrad)" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <!-- Left ear cup -->
+  <rect x="25" y="90" width="35" height="55" rx="10" fill="url(#headphoneGrad)"/>
+  <rect x="30" y="95" width="25" height="45" rx="7" fill="#1a1a2e"/>
+  <!-- Right ear cup -->
+  <rect x="140" y="90" width="35" height="55" rx="10" fill="url(#headphoneGrad)"/>
+  <rect x="145" y="95" width="25" height="45" rx="7" fill="#1a1a2e"/>
+  <!-- Cushions -->
+  <ellipse cx="42" cy="117" rx="8" ry="18" fill="#2d2d4a"/>
+  <ellipse cx="158" cy="117" rx="8" ry="18" fill="#2d2d4a"/>
+</svg>
