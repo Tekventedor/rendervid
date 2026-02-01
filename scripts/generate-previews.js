@@ -13,7 +13,21 @@ const { execSync } = require('child_process');
 const puppeteer = require('puppeteer');
 
 const EXAMPLES_DIR = path.join(__dirname, '..', 'examples');
-const CATEGORIES = ['getting-started', 'social-media', 'marketing', 'data-visualization'];
+const CATEGORIES = [
+  'getting-started',
+  'social-media',
+  'marketing',
+  'data-visualization',
+  'advanced',
+  'ecommerce',
+  'events',
+  'content',
+  'education',
+  'real-estate',
+  'streaming',
+  'fitness',
+  'food',
+];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-frames');
 
 const GIF_FRAME_COUNT = 30;
