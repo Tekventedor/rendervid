@@ -27,6 +27,7 @@ const CATEGORIES = [
   'streaming',
   'fitness',
   'food',
+  'showcase',
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-frames');
 

@@ -1,0 +1,112 @@
+{
+  "name": "All Easing Functions Showcase",
+  "description": "Demonstrates all available easing functions in Rendervid.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 20 },
+  "inputs": [],
+  "defaults": {},
+  "composition": {
+    "scenes": [
+      {
+        "id": "linear", "startFrame": 0, "endFrame": 60,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#f97316" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 45, "easing": "linear" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "linear", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Constant speed, no acceleration", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeInOut", "startFrame": 60, "endFrame": 120,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#eab308" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 45, "easing": "easeInOutCubic" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeInOutCubic", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Slow start and end, fast middle", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeOut", "startFrame": 120, "endFrame": 180,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#22c55e" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 45, "easing": "easeOutQuart" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeOutQuart", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Fast start, gradual deceleration", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeIn", "startFrame": 180, "endFrame": 240,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#3b82f6" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 45, "easing": "easeInQuart" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeInQuart", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Slow start, gradual acceleration", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeOutBack", "startFrame": 240, "endFrame": 300,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#8b5cf6" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 45, "easing": "easeOutBack" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeOutBack", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Overshoot then settle", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeOutElastic", "startFrame": 300, "endFrame": 360,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#ec4899" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 50, "easing": "easeOutElastic" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeOutElastic", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Spring-like bounce effect", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeOutBounce", "startFrame": 360, "endFrame": 420,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#ef4444" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 50, "easing": "easeOutBounce" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeOutBounce", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Ball bouncing effect", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeInExpo", "startFrame": 420, "endFrame": 480,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#14b8a6" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 45, "easing": "easeInExpo" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeInExpo", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Exponential acceleration", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeOutCirc", "startFrame": 480, "endFrame": 540,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#0ea5e9" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 45, "easing": "easeOutCirc" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeOutCirc", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Circular deceleration curve", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "easeInOutSine", "startFrame": 540, "endFrame": 600,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0c0a09" } },
+          { "id": "track", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 1600, "height": 100 }, "props": { "shape": "rectangle", "fill": "#292524", "borderRadius": 50 } },
+          { "id": "ball", "type": "shape", "position": { "x": 160, "y": 490 }, "size": { "width": 100, "height": 100 }, "props": { "shape": "ellipse", "fill": "#a3e635" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 45, "easing": "easeInOutSine" }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 700 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "easeInOutSine", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Gentle sinusoidal ease", "fontSize": 24, "color": "#a8a29e", "textAlign": "center" } }
+        ]
+      }
+    ]
+  }
+}

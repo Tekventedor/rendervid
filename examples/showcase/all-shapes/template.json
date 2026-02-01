@@ -1,0 +1,66 @@
+{
+  "name": "All Shapes Showcase",
+  "description": "Demonstrates all available shape types in Rendervid.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 12 },
+  "inputs": [],
+  "defaults": {},
+  "composition": {
+    "scenes": [
+      {
+        "id": "rectangle", "startFrame": 0, "endFrame": 60,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
+          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "SHAPE TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
+          { "id": "shape", "type": "shape", "position": { "x": 660, "y": 350 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#3b82f6", "borderRadius": 20 }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 750 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Rectangle", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] }
+        ]
+      },
+      {
+        "id": "rounded", "startFrame": 60, "endFrame": 120,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
+          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "SHAPE TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
+          { "id": "shape", "type": "shape", "position": { "x": 660, "y": 350 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#8b5cf6", "borderRadius": 50 }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 750 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Rounded Rectangle", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] }
+        ]
+      },
+      {
+        "id": "ellipse", "startFrame": 120, "endFrame": 180,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
+          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "SHAPE TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
+          { "id": "shape", "type": "shape", "position": { "x": 610, "y": 290 }, "size": { "width": 700, "height": 400 }, "props": { "shape": "ellipse", "fill": "#ec4899" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 750 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Ellipse", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] }
+        ]
+      },
+      {
+        "id": "circle", "startFrame": 180, "endFrame": 240,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
+          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "SHAPE TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
+          { "id": "shape", "type": "shape", "position": { "x": 710, "y": 290 }, "size": { "width": 500, "height": 500 }, "props": { "shape": "ellipse", "fill": "#f97316" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 850 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Circle", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] }
+        ]
+      },
+      {
+        "id": "gradient-linear", "startFrame": 240, "endFrame": 300,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
+          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "GRADIENT TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
+          { "id": "shape", "type": "shape", "position": { "x": 660, "y": 350 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] }, "borderRadius": 20 }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 750 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Linear Gradient", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] }
+        ]
+      },
+      {
+        "id": "gradient-radial", "startFrame": 300, "endFrame": 360,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
+          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "GRADIENT TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
+          { "id": "shape", "type": "shape", "position": { "x": 710, "y": 290 }, "size": { "width": 500, "height": 500 }, "props": { "shape": "ellipse", "gradient": { "type": "radial", "colors": [{ "color": "#fbbf24", "offset": 0 }, { "color": "#f97316", "offset": 0.5 }, { "color": "#dc2626", "offset": 1 }] } }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 850 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Radial Gradient", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] }
+        ]
+      }
+    ]
+  }
+}

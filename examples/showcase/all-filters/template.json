@@ -1,0 +1,92 @@
+{
+  "name": "All Filters Showcase",
+  "description": "Demonstrates all available filter effects in Rendervid.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 15 },
+  "inputs": [],
+  "defaults": {},
+  "composition": {
+    "scenes": [
+      {
+        "id": "normal", "startFrame": 0, "endFrame": 45,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } } },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 20 }] },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Normal", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 20 }] }
+        ]
+      },
+      {
+        "id": "blur", "startFrame": 45, "endFrame": 90,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } } },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 }, "filters": [{ "type": "blur", "value": 8 }] },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Blur (8px)", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "brightness", "startFrame": 90, "endFrame": 135,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } } },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 }, "filters": [{ "type": "brightness", "value": 150 }] },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Brightness", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "contrast", "startFrame": 135, "endFrame": 180,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } } },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#888888", "borderRadius": 20 }, "filters": [{ "type": "contrast", "value": 200 }] },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Contrast", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "grayscale", "startFrame": 180, "endFrame": 225,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } }, "filters": [{ "type": "grayscale", "value": 100 }] },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 } },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Grayscale", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "sepia", "startFrame": 225, "endFrame": 270,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } }, "filters": [{ "type": "sepia", "value": 100 }] },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 } },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Sepia", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "hue-rotate", "startFrame": 270, "endFrame": 315,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } }, "filters": [{ "type": "hue-rotate", "value": 180 }] },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 } },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Hue Rotate", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "invert", "startFrame": 315, "endFrame": 360,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } }, "filters": [{ "type": "invert", "value": 100 }] },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#000000", "borderRadius": 20 } },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Invert", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "saturate", "startFrame": 360, "endFrame": 405,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } }, "filters": [{ "type": "saturate", "value": 300 }] },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 } },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Saturate", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "drop-shadow", "startFrame": 405, "endFrame": 450,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#667eea", "offset": 0 }, { "color": "#764ba2", "offset": 1 }] } } },
+          { "id": "box", "type": "shape", "position": { "x": 660, "y": 340 }, "size": { "width": 600, "height": 300 }, "props": { "shape": "rectangle", "fill": "#ffffff", "borderRadius": 20 }, "filters": [{ "type": "drop-shadow", "value": "0 25px 50px rgba(0,0,0,0.5)" }] },
+          { "id": "title", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 80 }, "props": { "text": "Drop Shadow", "fontSize": 48, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" } }
+        ]
+      }
+    ]
+  }
+}

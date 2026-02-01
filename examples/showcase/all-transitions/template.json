@@ -1,0 +1,64 @@
+{
+  "name": "All Scene Transitions Showcase",
+  "description": "Demonstrates all available scene transition effects in Rendervid.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 15 },
+  "inputs": [],
+  "defaults": {},
+  "composition": {
+    "scenes": [
+      {
+        "id": "intro", "startFrame": 0, "endFrame": 60,
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#3b82f6" } },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 440 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Scene Transitions", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+          { "id": "subtitle", "type": "text", "position": { "x": 160, "y": 580 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "Smooth transitions between scenes", "fontSize": 32, "color": "#bfdbfe", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 25 }] }
+        ]
+      },
+      {
+        "id": "fade", "startFrame": 60, "endFrame": 150,
+        "transition": { "type": "fade", "duration": 30 },
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#8b5cf6" } },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 440 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Fade Transition", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 580 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "Smooth crossfade between scenes", "fontSize": 32, "color": "#ddd6fe", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "slide-left", "startFrame": 150, "endFrame": 240,
+        "transition": { "type": "slide", "direction": "left", "duration": 30 },
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#ec4899" } },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 440 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Slide Left", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 580 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "New scene slides in from right", "fontSize": 32, "color": "#fbcfe8", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "slide-up", "startFrame": 240, "endFrame": 330,
+        "transition": { "type": "slide", "direction": "up", "duration": 30 },
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#f97316" } },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 440 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Slide Up", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 580 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "New scene slides in from bottom", "fontSize": 32, "color": "#fed7aa", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "zoom", "startFrame": 330, "endFrame": 420,
+        "transition": { "type": "zoom", "duration": 30 },
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#22c55e" } },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 440 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Zoom Transition", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
+          { "id": "desc", "type": "text", "position": { "x": 160, "y": 580 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "Scale in/out effect", "fontSize": 32, "color": "#bbf7d0", "textAlign": "center" } }
+        ]
+      },
+      {
+        "id": "end", "startFrame": 420, "endFrame": 450,
+        "transition": { "type": "fade", "duration": 15 },
+        "layers": [
+          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
+          { "id": "title", "type": "text", "position": { "x": 160, "y": 480 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "The End", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } }
+        ]
+      }
+    ]
+  }
+}

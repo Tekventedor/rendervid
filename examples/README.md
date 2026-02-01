@@ -147,6 +147,19 @@ Templates for restaurants and food content:
 | ![](./food/daily-special/preview.gif) | [daily-special](./food/daily-special/) | Today's special promotion | Video |
 | ![](./food/recipe-card/preview.gif) | [recipe-card](./food/recipe-card/) | Recipe title card | Video |
 
+### Showcase
+Feature demonstrations showcasing all framework capabilities:
+
+| Preview | Example | Description | Output |
+|---------|---------|-------------|--------|
+| ![](./showcase/all-fonts/preview.gif) | [all-fonts](./showcase/all-fonts/) | All 16 available fonts | Video |
+| ![](./showcase/all-animations/preview.gif) | [all-animations](./showcase/all-animations/) | All entrance, exit & emphasis animations | Video |
+| ![](./showcase/all-easing/preview.gif) | [all-easing](./showcase/all-easing/) | All 31 easing functions | Video |
+| ![](./showcase/all-filters/preview.gif) | [all-filters](./showcase/all-filters/) | All filter effects | Video |
+| ![](./showcase/all-shapes/preview.gif) | [all-shapes](./showcase/all-shapes/) | All shape types & gradients | Video |
+| ![](./showcase/all-layer-types/preview.gif) | [all-layer-types](./showcase/all-layer-types/) | All 8 layer types | Video |
+| ![](./showcase/all-transitions/preview.gif) | [all-transitions](./showcase/all-transitions/) | All scene transitions | Video |
+
 ## CLI Commands
 
 ### List Examples
