@@ -4,7 +4,7 @@ Square video template optimized for Instagram feed posts.
 
 ## Preview
 
-![Preview](preview.gif)
+![Preview](preview.png)
 
 ## Description
 

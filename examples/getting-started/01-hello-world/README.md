@@ -4,7 +4,7 @@ The simplest Rendervid template - your first animated video!
 
 ## Preview
 
-![Preview](preview.gif)
+![Preview](preview.png)
 
 ## Description
 

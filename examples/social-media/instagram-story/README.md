@@ -4,7 +4,7 @@ Vertical video template optimized for Instagram Stories and Reels.
 
 ## Preview
 
-![Preview](preview.gif)
+![Preview](preview.png)
 
 ## Description
 

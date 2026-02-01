@@ -102,7 +102,7 @@ example-name/
 ├── README.md           # Tutorial and documentation
 ├── template.json       # The Rendervid template
 ├── render.ts           # Render script
-├── preview.gif         # Animated preview (auto-generated)
+├── preview.png         # Animated preview (auto-generated)
 ├── preview.png         # Static preview frame (auto-generated)
 └── variations/         # Optional: alternative configurations
     ├── dark.json
