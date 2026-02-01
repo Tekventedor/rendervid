@@ -167,6 +167,20 @@ Explore our collection of ready-to-use templates:
 
 See the [examples directory](./examples/) for more details and usage instructions.
 
+## MCP Server
+
+Enable AI agents (Claude, Cursor, Windsurf, Google Antigravite) to generate videos and images using the [Model Context Protocol](https://modelcontextprotocol.io/) server.
+
+The MCP server exposes 6 tools:
+- **render_video** - Generate videos from templates
+- **render_image** - Generate images/frames
+- **validate_template** - Validate template JSON
+- **get_capabilities** - Discover available features
+- **list_examples** - Browse 50+ example templates
+- **get_example** - Load specific examples
+
+See the [MCP server directory](./mcp/) for installation and usage instructions.
+
 ## Development
 
 ```bash

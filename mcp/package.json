@@ -1,0 +1,40 @@
+{
+  "name": "@rendervid/mcp-server",
+  "version": "0.1.0",
+  "description": "Model Context Protocol server for Rendervid - enables AI agents to generate videos and images",
+  "type": "module",
+  "bin": {
+    "rendervid-mcp": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod +x build/index.js",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "test": "node test-server.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "rendervid",
+    "video-generation",
+    "ai",
+    "claude"
+  ],
+  "author": "QualityUnit",
+  "license": "SEE LICENSE IN ../LICENSE",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@rendervid/core": "workspace:*",
+    "@rendervid/renderer-node": "workspace:*",
+    "zod": "^3.24.1",
+    "zod-to-json-schema": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
