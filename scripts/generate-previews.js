@@ -198,6 +198,12 @@ function generateHTML(template, frame, viewportWidth, viewportHeight) {
       css += `overflow:hidden;`;
       if (borderRadius) css += `border-radius:${borderRadius}px;`;
       inner = `<img src="${src}" style="width:100%;height:100%;object-fit:${fit};" crossorigin="anonymous" />`;
+    } else if (type === 'video' && props) {
+      const { src, fit = 'cover', borderRadius } = props;
+      css += `overflow:hidden;`;
+      if (borderRadius) css += `border-radius:${borderRadius}px;`;
+      // For preview, use video element - Puppeteer will capture the current frame
+      inner = `<video src="${src}" style="width:100%;height:100%;object-fit:${fit};" autoplay muted loop crossorigin="anonymous"></video>`;
     }
 
     return `<div id="${id}" style="${css}">${inner}</div>`;
