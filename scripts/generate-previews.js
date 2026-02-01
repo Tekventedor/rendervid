@@ -22,6 +22,35 @@ const GIF_FRAME_COUNT = 24; // Number of frames in the GIF
 const GIF_DELAY = 8; // Delay between frames (in 1/100s, 8 = 80ms = ~12fps)
 
 /**
+ * Replace all template variables {{key}} with values from defaults
+ */
+function replaceTemplateVariables(obj, defaults) {
+  if (!defaults) return obj;
+
+  if (typeof obj === 'string') {
+    let result = obj;
+    for (const [key, value] of Object.entries(defaults)) {
+      result = result.replace(new RegExp(`\\{\\{${key}\\}\\}`, 'g'), String(value));
+    }
+    return result;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(item => replaceTemplateVariables(item, defaults));
+  }
+
+  if (obj && typeof obj === 'object') {
+    const result = {};
+    for (const [key, value] of Object.entries(obj)) {
+      result[key] = replaceTemplateVariables(value, defaults);
+    }
+    return result;
+  }
+
+  return obj;
+}
+
+/**
  * Collect all example templates
  */
 function collectExamples() {
@@ -141,10 +170,10 @@ function getInitialState(effect) {
       return { opacity: 0, translateY: -50 };
     case 'slideInLeft':
     case 'slideOutRight':
-      return { opacity: 0, translateX: -50 };
+      return { opacity: 0, translateX: -100 };
     case 'slideInRight':
     case 'slideOutLeft':
-      return { opacity: 0, translateX: 50 };
+      return { opacity: 0, translateX: 100 };
     case 'scaleIn':
     case 'scaleOut':
       return { opacity: 0, scale: 0.5 };
@@ -199,10 +228,25 @@ function interpolateState(from, to, progress) {
  */
 function generatePreviewHTML(template, currentFrame = 0) {
   const { width, height, fps = 30 } = template.output;
-  const scene = template.composition.scenes[0];
-  const layers = scene?.layers || [];
 
-  const layerElements = layers
+  // Get the current scene based on frame
+  const scenes = template.composition.scenes || [];
+  let currentScene = scenes[0];
+
+  for (const scene of scenes) {
+    if (currentFrame >= scene.startFrame && currentFrame < scene.endFrame) {
+      currentScene = scene;
+      break;
+    }
+  }
+
+  const layers = currentScene?.layers || [];
+
+  // Replace template variables with defaults
+  const defaults = template.defaults || {};
+  const processedLayers = replaceTemplateVariables(layers, defaults);
+
+  const layerElements = processedLayers
     .map((layer) => {
       const { id, type, position, size, opacity, props, animations = [] } = layer;
       const x = position?.x || 0;
@@ -211,13 +255,16 @@ function generatePreviewHTML(template, currentFrame = 0) {
       const h = size?.height || 100;
       let op = opacity !== undefined ? opacity : 1;
 
-      // Calculate animation state
+      // Calculate animation state relative to scene start
+      const sceneStartFrame = currentScene?.startFrame || 0;
+      const relativeFrame = currentFrame - sceneStartFrame;
+
       let translateX = 0;
       let translateY = 0;
       let scale = 1;
 
       for (const animation of animations) {
-        const state = getAnimationState(animation, currentFrame, fps);
+        const state = getAnimationState(animation, relativeFrame, fps);
         if (state.opacity !== undefined) op *= state.opacity;
         if (state.translateX) translateX += state.translateX;
         if (state.translateY) translateY += state.translateY;
@@ -246,7 +293,11 @@ function generatePreviewHTML(template, currentFrame = 0) {
 
         if (gradient) {
           const colors = gradient.colors || [];
-          const colorStops = colors.map((c) => `${c.color} ${c.offset * 100}%`).join(', ');
+          const colorStops = colors.map((c) => {
+            // Handle "transparent" color
+            const color = c.color === 'transparent' ? 'rgba(0,0,0,0)' : c.color;
+            return `${color} ${c.offset * 100}%`;
+          }).join(', ');
 
           if (gradient.type === 'linear') {
             const angle = gradient.angle || 0;
@@ -271,7 +322,7 @@ function generatePreviewHTML(template, currentFrame = 0) {
         style += `
         font-size: ${fontSize || 16}px;
         font-weight: ${fontWeight || 'normal'};
-        color: ${color || '#000'};
+        color: ${color || '#fff'};
         text-align: ${textAlign || 'left'};
         font-family: ${fontFamily || 'Inter, system-ui, sans-serif'};
         display: flex;
@@ -286,22 +337,15 @@ function generatePreviewHTML(template, currentFrame = 0) {
           style += `line-height: ${lineHeight};`;
         }
 
-        // Replace template variables with default values
-        let displayText = text || '';
-        if (template.defaults) {
-          for (const [key, value] of Object.entries(template.defaults)) {
-            displayText = displayText.replace(`{{${key}}}`, String(value));
-          }
-        }
-        // Remove any remaining template variables
-        displayText = displayText.replace(/\{\{[^}]+\}\}/g, '');
-
-        content = `<span>${displayText}</span>`;
+        content = `<span>${text || ''}</span>`;
       }
 
       return `<div id="${id}" style="${style}">${content}</div>`;
     })
     .join('\n');
+
+  // Get background color from scene or use default
+  const bgColor = currentScene?.backgroundColor || '#000';
 
   return `
 <!DOCTYPE html>
@@ -328,7 +372,7 @@ function generatePreviewHTML(template, currentFrame = 0) {
       position: relative;
       width: ${width}px;
       height: ${height}px;
-      background: #000;
+      background: ${bgColor};
     }
   </style>
 </head>
@@ -348,8 +392,13 @@ async function generatePNGPreview(browser, example) {
   const { template, dir } = example;
   const { width, height } = template.output;
 
+  // Scale down large images
+  const scale = Math.min(1, 800 / Math.max(width, height));
+  const scaledWidth = Math.round(width * scale);
+  const scaledHeight = Math.round(height * scale);
+
   const page = await browser.newPage();
-  await page.setViewport({ width, height, deviceScaleFactor: 1 });
+  await page.setViewport({ width: scaledWidth, height: scaledHeight, deviceScaleFactor: 1 });
 
   const html = generatePreviewHTML(template, 9999); // High frame = all animations complete
   await page.setContent(html, { waitUntil: 'networkidle0' });
@@ -484,7 +533,7 @@ async function main() {
 
   // Clean up temp directory
   if (fs.existsSync(TEMP_DIR)) {
-    fs.rmdirSync(TEMP_DIR, { recursive: true });
+    fs.rmSync(TEMP_DIR, { recursive: true });
   }
 
   console.log('\n' + '='.repeat(50));
