@@ -1,0 +1,23 @@
+{
+  "name": "Quote Card",
+  "description": "Eye-catching quote card for sharing inspirational quotes on social media.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1080, "height": 1080, "fps": 30, "duration": 6 },
+  "inputs": [
+    { "key": "quote", "type": "string", "label": "Quote", "required": true, "default": "The only way to do great work is to love what you do." },
+    { "key": "author", "type": "string", "label": "Author", "required": false, "default": "- Steve Jobs" },
+    { "key": "backgroundColor", "type": "color", "label": "Background Color", "required": false, "default": "#7c3aed" }
+  ],
+  "defaults": { "quote": "The only way to do great work is to love what you do.", "author": "- Steve Jobs", "backgroundColor": "#7c3aed" },
+  "composition": {
+    "scenes": [{
+      "id": "main", "startFrame": 0, "endFrame": 180,
+      "layers": [
+        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1080, "height": 1080 }, "props": { "shape": "rectangle", "fill": "{{backgroundColor}}" } },
+        { "id": "quote-open", "type": "text", "position": { "x": 150, "y": 250 }, "size": { "width": 100, "height": 100 }, "opacity": 0.3, "props": { "text": "\"", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 25 }] },
+        { "id": "quote", "type": "text", "position": { "x": 90, "y": 400 }, "size": { "width": 900, "height": 300 }, "props": { "text": "{{quote}}", "fontSize": 52, "fontWeight": "500", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 20, "duration": 30 }] },
+        { "id": "author", "type": "text", "position": { "x": 190, "y": 780 }, "size": { "width": 700, "height": 60 }, "props": { "text": "{{author}}", "fontSize": 36, "fontWeight": "300", "color": "#e9d5ff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 45, "duration": 25 }] }
+      ]
+    }]
+  }
+}

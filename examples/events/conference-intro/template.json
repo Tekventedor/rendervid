@@ -1,0 +1,28 @@
+{
+  "name": "Conference Intro",
+  "description": "Professional speaker introduction card for conferences, panels, and presentations.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 6 },
+  "inputs": [
+    { "key": "conferenceName", "type": "string", "label": "Conference Name", "required": false, "default": "TECH SUMMIT 2024" },
+    { "key": "speakerName", "type": "string", "label": "Speaker Name", "required": true, "default": "Michael Roberts" },
+    { "key": "speakerTitle", "type": "string", "label": "Speaker Title", "required": true, "default": "Chief Technology Officer" },
+    { "key": "company", "type": "string", "label": "Company", "required": false, "default": "Innovate Labs" },
+    { "key": "sessionTitle", "type": "string", "label": "Session Title", "required": false, "default": "The Future of Cloud Architecture" }
+  ],
+  "defaults": { "conferenceName": "TECH SUMMIT 2024", "speakerName": "Michael Roberts", "speakerTitle": "Chief Technology Officer", "company": "Innovate Labs", "sessionTitle": "The Future of Cloud Architecture" },
+  "composition": {
+    "scenes": [{
+      "id": "main", "startFrame": 0, "endFrame": 180,
+      "layers": [
+        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1e293b" } },
+        { "id": "accent", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 20, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#3b82f6" }, "animations": [{ "type": "entrance", "effect": "slideInDown", "delay": 0, "duration": 20 }] },
+        { "id": "conference", "type": "text", "position": { "x": 750, "y": 180 }, "size": { "width": 800, "height": 50 }, "props": { "text": "{{conferenceName}}", "fontSize": 28, "fontWeight": "600", "color": "#3b82f6", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 15, "duration": 25 }] },
+        { "id": "name", "type": "text", "position": { "x": 750, "y": 340 }, "size": { "width": 800, "height": 100 }, "props": { "text": "{{speakerName}}", "fontSize": 72, "fontWeight": "bold", "color": "#ffffff", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 25, "duration": 25 }] },
+        { "id": "title", "type": "text", "position": { "x": 750, "y": 460 }, "size": { "width": 800, "height": 50 }, "props": { "text": "{{speakerTitle}}", "fontSize": 32, "color": "#94a3b8", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 20 }] },
+        { "id": "company", "type": "text", "position": { "x": 750, "y": 530 }, "size": { "width": 800, "height": 40 }, "props": { "text": "{{company}}", "fontSize": 28, "color": "#64748b", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 20 }] },
+        { "id": "session", "type": "text", "position": { "x": 750, "y": 700 }, "size": { "width": 800, "height": 80 }, "props": { "text": "{{sessionTitle}}", "fontSize": 36, "fontWeight": "500", "color": "#e2e8f0", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 55, "duration": 25 }] }
+      ]
+    }]
+  }
+}

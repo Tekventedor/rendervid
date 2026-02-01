@@ -1,0 +1,20 @@
+{
+  "name": "Stream Starting",
+  "description": "Professional 'Starting Soon' screen for live streams.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 8 },
+  "inputs": [
+    { "key": "statusText", "type": "string", "label": "Status Text", "required": true, "default": "STARTING SOON" },
+    { "key": "streamTitle", "type": "string", "label": "Stream Title", "required": false, "default": "Let's Play: New Game Release" },
+    { "key": "socialHandle", "type": "string", "label": "Social Handle", "required": false, "default": "@YourChannel" }
+  ],
+  "defaults": { "statusText": "STARTING SOON", "streamTitle": "Let's Play: New Game Release", "socialHandle": "@YourChannel" },
+  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 240, "layers": [
+    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f0f23" } },
+    { "id": "accent", "type": "shape", "position": { "x": 0, "y": 900 }, "size": { "width": 1920, "height": 180 }, "opacity": 0.3, "props": { "shape": "rectangle", "fill": "#7c3aed" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 20, "duration": 30 }] },
+    { "id": "status", "type": "text", "position": { "x": 460, "y": 450 }, "size": { "width": 1000, "height": 120 }, "props": { "text": "{{statusText}}", "fontSize": 72, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 30, "duration": 30 }] },
+    { "id": "loading-bg", "type": "shape", "position": { "x": 560, "y": 600 }, "size": { "width": 800, "height": 8 }, "opacity": 0.3, "props": { "shape": "rectangle", "fill": "#7c3aed" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 20 }] },
+    { "id": "title", "type": "text", "position": { "x": 360, "y": 700 }, "size": { "width": 1200, "height": 60 }, "props": { "text": "{{streamTitle}}", "fontSize": 32, "color": "#a78bfa", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 60, "duration": 25 }] },
+    { "id": "social", "type": "text", "position": { "x": 660, "y": 900 }, "size": { "width": 600, "height": 50 }, "props": { "text": "{{socialHandle}}", "fontSize": 28, "color": "#6b7280", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 25 }] }
+  ]}]}
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Daily Special",
+  "description": "Today's special promotion with limited-time offer messaging.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1080, "height": 1920, "fps": 30, "duration": 6 },
+  "inputs": [
+    { "key": "badgeText", "type": "string", "label": "Badge Text", "required": false, "default": "TODAY ONLY" },
+    { "key": "day", "type": "string", "label": "Day", "required": false, "default": "TUESDAY SPECIAL" },
+    { "key": "dishName", "type": "string", "label": "Dish Name", "required": true, "default": "Gourmet Burger & Fries" },
+    { "key": "price", "type": "string", "label": "Price", "required": true, "default": "$14.99" }
+  ],
+  "defaults": { "badgeText": "TODAY ONLY", "day": "TUESDAY SPECIAL", "dishName": "Gourmet Burger & Fries", "price": "$14.99" },
+  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 180, "layers": [
+    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1080, "height": 1920 }, "props": { "shape": "rectangle", "fill": "#fef3c7" } },
+    { "id": "badge-bg", "type": "shape", "position": { "x": 80, "y": 80 }, "size": { "width": 300, "height": 80 }, "props": { "shape": "rectangle", "fill": "#dc2626" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 20 }] },
+    { "id": "badge", "type": "text", "position": { "x": 80, "y": 105 }, "size": { "width": 300, "height": 40 }, "props": { "text": "{{badgeText}}", "fontSize": 28, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] },
+    { "id": "content-bg", "type": "shape", "position": { "x": 0, "y": 1000 }, "size": { "width": 1080, "height": 920 }, "props": { "shape": "rectangle", "fill": "#ffffff" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 25, "duration": 25 }] },
+    { "id": "day", "type": "text", "position": { "x": 240, "y": 1080 }, "size": { "width": 600, "height": 50 }, "props": { "text": "{{day}}", "fontSize": 28, "fontWeight": "600", "color": "#d97706", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 20 }] },
+    { "id": "name", "type": "text", "position": { "x": 90, "y": 1180 }, "size": { "width": 900, "height": 100 }, "props": { "text": "{{dishName}}", "fontSize": 56, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 45, "duration": 25 }] },
+    { "id": "price-bg", "type": "shape", "position": { "x": 340, "y": 1400 }, "size": { "width": 400, "height": 120 }, "props": { "shape": "rectangle", "fill": "#16a34a" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 55, "duration": 25 }] },
+    { "id": "price", "type": "text", "position": { "x": 365, "y": 1440 }, "size": { "width": 350, "height": 60 }, "props": { "text": "{{price}}", "fontSize": 48, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 65, "duration": 20 }] }
+  ]}]}
+}

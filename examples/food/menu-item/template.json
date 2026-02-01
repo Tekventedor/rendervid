@@ -1,0 +1,20 @@
+{
+  "name": "Menu Item",
+  "description": "Restaurant dish showcase with price.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1080, "height": 1080, "fps": 30, "duration": 6 },
+  "inputs": [
+    { "key": "category", "type": "string", "label": "Category", "required": false, "default": "SIGNATURE DISH" },
+    { "key": "dishName", "type": "string", "label": "Dish Name", "required": true, "default": "Truffle Risotto" },
+    { "key": "description", "type": "string", "label": "Description", "required": false, "default": "Arborio rice, black truffle, parmesan, white wine" },
+    { "key": "price", "type": "string", "label": "Price", "required": true, "default": "$28" }
+  ],
+  "defaults": { "category": "SIGNATURE DISH", "dishName": "Truffle Risotto", "description": "Arborio rice, black truffle, parmesan, white wine", "price": "$28" },
+  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 180, "layers": [
+    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1080, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1c1917" } },
+    { "id": "category", "type": "text", "position": { "x": 340, "y": 720 }, "size": { "width": 400, "height": 40 }, "props": { "text": "{{category}}", "fontSize": 20, "fontWeight": "600", "color": "#d97706", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 25, "duration": 20 }] },
+    { "id": "name", "type": "text", "position": { "x": 90, "y": 800 }, "size": { "width": 900, "height": 80 }, "props": { "text": "{{dishName}}", "fontSize": 48, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 35, "duration": 25 }] },
+    { "id": "desc", "type": "text", "position": { "x": 140, "y": 900 }, "size": { "width": 800, "height": 50 }, "props": { "text": "{{description}}", "fontSize": 22, "color": "#a8a29e", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 20 }] },
+    { "id": "price", "type": "text", "position": { "x": 390, "y": 990 }, "size": { "width": 300, "height": 50 }, "props": { "text": "{{price}}", "fontSize": 36, "fontWeight": "bold", "color": "#d97706", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 60, "duration": 20 }] }
+  ]}]}
+}

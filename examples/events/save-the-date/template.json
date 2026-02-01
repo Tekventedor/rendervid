@@ -1,0 +1,29 @@
+{
+  "name": "Save The Date",
+  "description": "Elegant invitation-style announcement for weddings, events, or important dates.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 8 },
+  "inputs": [
+    { "key": "names", "type": "string", "label": "Names", "required": true, "default": "Emma & James" },
+    { "key": "eventType", "type": "string", "label": "Event Type", "required": false, "default": "Wedding Celebration" },
+    { "key": "eventDate", "type": "string", "label": "Event Date", "required": true, "default": "September 15, 2024" },
+    { "key": "venue", "type": "string", "label": "Venue", "required": false, "default": "The Grand Ballroom, New York City" }
+  ],
+  "defaults": { "names": "Emma & James", "eventType": "Wedding Celebration", "eventDate": "September 15, 2024", "venue": "The Grand Ballroom, New York City" },
+  "composition": {
+    "scenes": [{
+      "id": "main", "startFrame": 0, "endFrame": 240,
+      "layers": [
+        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#fdf2f8" } },
+        { "id": "border-top", "type": "shape", "position": { "x": 100, "y": 80 }, "size": { "width": 1720, "height": 4 }, "props": { "shape": "rectangle", "fill": "#be185d" }, "animations": [{ "type": "entrance", "effect": "slideInRight", "delay": 0, "duration": 25 }] },
+        { "id": "border-bottom", "type": "shape", "position": { "x": 100, "y": 996 }, "size": { "width": 1720, "height": 4 }, "props": { "shape": "rectangle", "fill": "#be185d" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 25 }] },
+        { "id": "save-label", "type": "text", "position": { "x": 660, "y": 180 }, "size": { "width": 600, "height": 60 }, "props": { "text": "SAVE THE DATE", "fontSize": 32, "fontWeight": "600", "color": "#be185d", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 20, "duration": 25 }] },
+        { "id": "names", "type": "text", "position": { "x": 260, "y": 340 }, "size": { "width": 1400, "height": 120 }, "props": { "text": "{{names}}", "fontSize": 72, "fontWeight": "300", "color": "#1f2937", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 35, "duration": 30 }] },
+        { "id": "divider", "type": "shape", "position": { "x": 810, "y": 480 }, "size": { "width": 300, "height": 2 }, "props": { "shape": "rectangle", "fill": "#be185d" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 50, "duration": 25 }] },
+        { "id": "event-type", "type": "text", "position": { "x": 560, "y": 540 }, "size": { "width": 800, "height": 60 }, "props": { "text": "{{eventType}}", "fontSize": 28, "color": "#6b7280", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 25 }] },
+        { "id": "date", "type": "text", "position": { "x": 460, "y": 660 }, "size": { "width": 1000, "height": 80 }, "props": { "text": "{{eventDate}}", "fontSize": 56, "fontWeight": "500", "color": "#1f2937", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 65, "duration": 25 }] },
+        { "id": "venue", "type": "text", "position": { "x": 360, "y": 800 }, "size": { "width": 1200, "height": 60 }, "props": { "text": "{{venue}}", "fontSize": 26, "color": "#9ca3af", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 75, "duration": 25 }] }
+      ]
+    }]
+  }
+}

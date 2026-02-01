@@ -1,0 +1,220 @@
+{
+  "name": "Kinetic Typography",
+  "description": "Dynamic text animations with words appearing, moving, and transforming.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "word1",
+      "type": "string",
+      "label": "Word 1",
+      "required": true,
+      "default": "THINK"
+    },
+    {
+      "key": "word2",
+      "type": "string",
+      "label": "Word 2 (Main)",
+      "required": true,
+      "default": "BIGGER"
+    },
+    {
+      "key": "word3",
+      "type": "string",
+      "label": "Word 3",
+      "required": true,
+      "default": "CREATE"
+    },
+    {
+      "key": "word4",
+      "type": "string",
+      "label": "Word 4",
+      "required": false,
+      "default": "TOGETHER"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "required": false,
+      "default": "Innovation starts with imagination"
+    }
+  ],
+  "defaults": {
+    "word1": "THINK",
+    "word2": "BIGGER",
+    "word3": "CREATE",
+    "word4": "TOGETHER",
+    "tagline": "Innovation starts with imagination"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000000"
+            }
+          },
+          {
+            "id": "word1",
+            "type": "text",
+            "position": { "x": 160, "y": 250 },
+            "size": { "width": 1600, "height": 150 },
+            "props": {
+              "text": "{{word1}}",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ef4444",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInRight",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "word2",
+            "type": "text",
+            "position": { "x": 160, "y": 380 },
+            "size": { "width": 1600, "height": 180 },
+            "props": {
+              "text": "{{word2}}",
+              "fontSize": 140,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 15,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "word3",
+            "type": "text",
+            "position": { "x": 160, "y": 540 },
+            "size": { "width": 1600, "height": 120 },
+            "props": {
+              "text": "{{word3}}",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#3b82f6",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 30,
+                "duration": 25,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "word4",
+            "type": "text",
+            "position": { "x": 160, "y": 680 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "{{word4}}",
+              "fontSize": 80,
+              "fontWeight": "600",
+              "color": "#22c55e",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 45,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "accent-line-left",
+            "type": "shape",
+            "position": { "x": 400, "y": 520 },
+            "size": { "width": 300, "height": 8 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ef4444"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInRight",
+                "delay": 55,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "accent-line-right",
+            "type": "shape",
+            "position": { "x": 1220, "y": 520 },
+            "size": { "width": 300, "height": 8 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#3b82f6"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 55,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "tagline",
+            "type": "text",
+            "position": { "x": 360, "y": 920 },
+            "size": { "width": 1200, "height": 60 },
+            "props": {
+              "text": "{{tagline}}",
+              "fontSize": 28,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 70,
+                "duration": 25
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

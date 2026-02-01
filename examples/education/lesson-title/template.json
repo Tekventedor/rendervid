@@ -1,0 +1,20 @@
+{
+  "name": "Lesson Title",
+  "description": "Chapter or lesson title card for educational videos.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5 },
+  "inputs": [
+    { "key": "lessonNumber", "type": "string", "label": "Lesson Number", "required": true, "default": "03" },
+    { "key": "lessonTitle", "type": "string", "label": "Lesson Title", "required": true, "default": "Variables & Data Types" },
+    { "key": "duration", "type": "string", "label": "Duration", "required": false, "default": "15 minutes" }
+  ],
+  "defaults": { "lessonNumber": "03", "lessonTitle": "Variables & Data Types", "duration": "15 minutes" },
+  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 150, "layers": [
+    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0ea5e9" } },
+    { "id": "number-bg", "type": "shape", "position": { "x": 100, "y": 400 }, "size": { "width": 200, "height": 200 }, "props": { "shape": "rectangle", "fill": "#ffffff" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+    { "id": "number", "type": "text", "position": { "x": 100, "y": 460 }, "size": { "width": 200, "height": 100 }, "props": { "text": "{{lessonNumber}}", "fontSize": 72, "fontWeight": "bold", "color": "#0ea5e9", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 20, "duration": 20 }] },
+    { "id": "label", "type": "text", "position": { "x": 350, "y": 400 }, "size": { "width": 300, "height": 40 }, "props": { "text": "LESSON", "fontSize": 24, "fontWeight": "600", "color": "#bae6fd", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 25, "duration": 20 }] },
+    { "id": "title", "type": "text", "position": { "x": 350, "y": 480 }, "size": { "width": 1200, "height": 120 }, "props": { "text": "{{lessonTitle}}", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 30, "duration": 25 }] },
+    { "id": "duration", "type": "text", "position": { "x": 350, "y": 640 }, "size": { "width": 300, "height": 40 }, "props": { "text": "{{duration}}", "fontSize": 22, "color": "#e0f2fe", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 45, "duration": 20 }] }
+  ]}]}
+}

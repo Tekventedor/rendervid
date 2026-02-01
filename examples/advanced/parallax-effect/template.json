@@ -1,0 +1,208 @@
+{
+  "name": "Parallax Effect",
+  "description": "Multi-layer composition with different animation speeds creating a stunning depth illusion.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Main Title",
+      "required": true,
+      "default": "DISCOVER MORE"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "required": false,
+      "default": "Experience the depth of motion"
+    },
+    {
+      "key": "ctaText",
+      "type": "string",
+      "label": "CTA Text",
+      "required": false,
+      "default": "Learn More Today"
+    },
+    {
+      "key": "accentColor",
+      "type": "color",
+      "label": "Accent Color",
+      "required": false,
+      "default": "#e94560"
+    }
+  ],
+  "defaults": {
+    "title": "DISCOVER MORE",
+    "subtitle": "Experience the depth of motion",
+    "ctaText": "Learn More Today",
+    "accentColor": "#e94560"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "bg-color",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a2e"
+            }
+          },
+          {
+            "id": "bg-shape-1",
+            "type": "shape",
+            "position": { "x": -200, "y": 600 },
+            "size": { "width": 800, "height": 500 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#16213e"
+            },
+            "animations": [
+              {
+                "type": "continuous",
+                "effect": "panRight",
+                "distance": 100,
+                "duration": 240
+              }
+            ]
+          },
+          {
+            "id": "bg-shape-2",
+            "type": "shape",
+            "position": { "x": 1400, "y": 400 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f3460"
+            },
+            "animations": [
+              {
+                "type": "continuous",
+                "effect": "panLeft",
+                "distance": 150,
+                "duration": 240
+              }
+            ]
+          },
+          {
+            "id": "midground-shape",
+            "type": "shape",
+            "position": { "x": 200, "y": 300 },
+            "size": { "width": 500, "height": 500 },
+            "opacity": 0.4,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#16213e"
+            },
+            "animations": [
+              {
+                "type": "continuous",
+                "effect": "panRight",
+                "distance": 200,
+                "duration": 240
+              }
+            ]
+          },
+          {
+            "id": "foreground-bar",
+            "type": "shape",
+            "position": { "x": 0, "y": 950 },
+            "size": { "width": 1920, "height": 150 },
+            "opacity": 0.9,
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{accentColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 30,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 260, "y": 400 },
+            "size": { "width": 1400, "height": 150 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 15,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 360, "y": 520 },
+            "size": { "width": 1200, "height": 80 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 36,
+              "color": "#e2e8f0",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "cta",
+            "type": "text",
+            "position": { "x": 560, "y": 990 },
+            "size": { "width": 800, "height": 60 },
+            "props": {
+              "text": "{{ctaText}}",
+              "fontSize": 32,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 45,
+                "duration": 25
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

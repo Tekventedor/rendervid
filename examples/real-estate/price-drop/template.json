@@ -1,0 +1,23 @@
+{
+  "name": "Price Drop",
+  "description": "Real estate price reduction announcement.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 6 },
+  "inputs": [
+    { "key": "oldPrice", "type": "string", "label": "Old Price", "required": true, "default": "Was $950,000" },
+    { "key": "newPrice", "type": "string", "label": "New Price", "required": true, "default": "$875,000" },
+    { "key": "savings", "type": "string", "label": "Savings", "required": false, "default": "SAVE $75,000" },
+    { "key": "address", "type": "string", "label": "Address", "required": false, "default": "1234 Oak Street, Beverly Hills, CA" }
+  ],
+  "defaults": { "oldPrice": "Was $950,000", "newPrice": "$875,000", "savings": "SAVE $75,000", "address": "1234 Oak Street, Beverly Hills, CA" },
+  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 180, "layers": [
+    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
+    { "id": "alert-bg", "type": "shape", "position": { "x": 510, "y": 180 }, "size": { "width": 900, "height": 720 }, "opacity": 0.95, "props": { "shape": "rectangle", "fill": "#dc2626" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
+    { "id": "label", "type": "text", "position": { "x": 610, "y": 250 }, "size": { "width": 700, "height": 80 }, "props": { "text": "PRICE DROP", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInDown", "delay": 20, "duration": 25 }] },
+    { "id": "arrow", "type": "text", "position": { "x": 860, "y": 350 }, "size": { "width": 200, "height": 80 }, "props": { "text": "↓", "fontSize": 80, "fontWeight": "bold", "color": "#fbbf24", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 35, "duration": 20 }] },
+    { "id": "old", "type": "text", "position": { "x": 660, "y": 450 }, "size": { "width": 600, "height": 50 }, "opacity": 0.7, "props": { "text": "{{oldPrice}}", "fontSize": 36, "color": "#fecaca", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 45, "duration": 20 }] },
+    { "id": "new", "type": "text", "position": { "x": 610, "y": 520 }, "size": { "width": 700, "height": 100 }, "props": { "text": "{{newPrice}}", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 50, "duration": 25 }] },
+    { "id": "savings", "type": "text", "position": { "x": 660, "y": 650 }, "size": { "width": 600, "height": 50 }, "props": { "text": "{{savings}}", "fontSize": 32, "fontWeight": "600", "color": "#fbbf24", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 60, "duration": 20 }] },
+    { "id": "address", "type": "text", "position": { "x": 560, "y": 760 }, "size": { "width": 800, "height": 40 }, "props": { "text": "{{address}}", "fontSize": 24, "color": "#fecaca", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 20 }] }
+  ]}]}
+}

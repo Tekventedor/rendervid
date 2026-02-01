@@ -1,0 +1,172 @@
+{
+  "name": "Image Slideshow",
+  "description": "Create a beautiful slideshow with smooth fade transitions between images.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 12
+  },
+  "inputs": [
+    {
+      "key": "image1",
+      "type": "image",
+      "label": "First Image",
+      "description": "URL to the first image",
+      "required": true,
+      "default": "https://flowhunt.io/blog/ai-automation.jpg"
+    },
+    {
+      "key": "image2",
+      "type": "image",
+      "label": "Second Image",
+      "description": "URL to the second image",
+      "required": true,
+      "default": "https://flowhunt.io/blog/chatbot-guide.jpg"
+    },
+    {
+      "key": "image3",
+      "type": "image",
+      "label": "Third Image",
+      "description": "URL to the third image",
+      "required": true,
+      "default": "https://flowhunt.io/blog/workflow-automation.jpg"
+    }
+  ],
+  "defaults": {
+    "image1": "https://flowhunt.io/blog/ai-automation.jpg",
+    "image2": "https://flowhunt.io/blog/chatbot-guide.jpg",
+    "image3": "https://flowhunt.io/blog/workflow-automation.jpg"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "slide-1",
+        "startFrame": 0,
+        "endFrame": 120,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000000"
+            }
+          },
+          {
+            "id": "image-1",
+            "type": "image",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "src": "{{image1}}",
+              "fit": "cover"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 30
+              },
+              {
+                "type": "continuous",
+                "effect": "zoomIn",
+                "scale": 1.1,
+                "duration": 120
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "slide-2",
+        "startFrame": 120,
+        "endFrame": 240,
+        "transition": {
+          "type": "fade",
+          "duration": 30
+        },
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000000"
+            }
+          },
+          {
+            "id": "image-2",
+            "type": "image",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "src": "{{image2}}",
+              "fit": "cover"
+            },
+            "animations": [
+              {
+                "type": "continuous",
+                "effect": "zoomIn",
+                "scale": 1.1,
+                "duration": 120
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "slide-3",
+        "startFrame": 240,
+        "endFrame": 360,
+        "transition": {
+          "type": "fade",
+          "duration": 30
+        },
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000000"
+            }
+          },
+          {
+            "id": "image-3",
+            "type": "image",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "src": "{{image3}}",
+              "fit": "cover"
+            },
+            "animations": [
+              {
+                "type": "continuous",
+                "effect": "zoomIn",
+                "scale": 1.1,
+                "duration": 120
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 90,
+                "duration": 30
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

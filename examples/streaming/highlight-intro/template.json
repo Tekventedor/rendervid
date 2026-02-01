@@ -1,0 +1,20 @@
+{
+  "name": "Highlight Intro",
+  "description": "Dynamic intro for gaming highlights and montages.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5 },
+  "inputs": [
+    { "key": "gameTitle", "type": "string", "label": "Game Title", "required": true, "default": "APEX LEGENDS" },
+    { "key": "highlightType", "type": "string", "label": "Highlight Type", "required": true, "default": "BEST PLAYS" },
+    { "key": "playerName", "type": "string", "label": "Player Name", "required": false, "default": "by ProGamer123" }
+  ],
+  "defaults": { "gameTitle": "APEX LEGENDS", "highlightType": "BEST PLAYS", "playerName": "by ProGamer123" },
+  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 150, "layers": [
+    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#000000" } },
+    { "id": "stripe1", "type": "shape", "position": { "x": 100, "y": -100 }, "size": { "width": 200, "height": 1280 }, "rotation": 15, "opacity": 0.5, "props": { "shape": "rectangle", "fill": "#ef4444" }, "animations": [{ "type": "entrance", "effect": "slideInDown", "delay": 0, "duration": 20 }] },
+    { "id": "stripe2", "type": "shape", "position": { "x": 1620, "y": -100 }, "size": { "width": 200, "height": 1280 }, "rotation": -15, "opacity": 0.5, "props": { "shape": "rectangle", "fill": "#3b82f6" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 0, "duration": 20 }] },
+    { "id": "game", "type": "text", "position": { "x": 260, "y": 320 }, "size": { "width": 1400, "height": 80 }, "props": { "text": "{{gameTitle}}", "fontSize": 64, "fontWeight": "bold", "color": "#ef4444", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 15, "duration": 25 }] },
+    { "id": "type", "type": "text", "position": { "x": 260, "y": 450 }, "size": { "width": 1400, "height": 120 }, "props": { "text": "{{highlightType}}", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 25, "duration": 25 }] },
+    { "id": "player", "type": "text", "position": { "x": 560, "y": 650 }, "size": { "width": 800, "height": 50 }, "props": { "text": "{{playerName}}", "fontSize": 36, "color": "#a1a1aa", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 40, "duration": 25 }] }
+  ]}]}
+}

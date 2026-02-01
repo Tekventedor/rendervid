@@ -1,0 +1,326 @@
+{
+  "name": "Pricing Table",
+  "description": "Animated pricing comparison with 3 tiers and staggered entrance animations.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
+  "inputs": [
+    {
+      "key": "headerTitle",
+      "type": "string",
+      "label": "Header Title",
+      "required": true,
+      "default": "Choose Your Plan"
+    },
+    {
+      "key": "tier1Name",
+      "type": "string",
+      "label": "Tier 1 Name",
+      "required": true,
+      "default": "Starter"
+    },
+    {
+      "key": "tier1Price",
+      "type": "string",
+      "label": "Tier 1 Price",
+      "required": true,
+      "default": "$9/mo"
+    },
+    {
+      "key": "tier2Name",
+      "type": "string",
+      "label": "Tier 2 Name",
+      "required": true,
+      "default": "Professional"
+    },
+    {
+      "key": "tier2Price",
+      "type": "string",
+      "label": "Tier 2 Price",
+      "required": true,
+      "default": "$29/mo"
+    },
+    {
+      "key": "tier3Name",
+      "type": "string",
+      "label": "Tier 3 Name",
+      "required": true,
+      "default": "Enterprise"
+    },
+    {
+      "key": "tier3Price",
+      "type": "string",
+      "label": "Tier 3 Price",
+      "required": true,
+      "default": "$99/mo"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#3b82f6"
+    }
+  ],
+  "defaults": {
+    "headerTitle": "Choose Your Plan",
+    "tier1Name": "Starter",
+    "tier1Price": "$9/mo",
+    "tier2Name": "Professional",
+    "tier2Price": "$29/mo",
+    "tier3Name": "Enterprise",
+    "tier3Price": "$99/mo",
+    "primaryColor": "#3b82f6"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 360, "y": 60 },
+            "size": { "width": 1200, "height": 100 },
+            "props": {
+              "text": "{{headerTitle}}",
+              "fontSize": 64,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInDown",
+                "delay": 0,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "tier1-bg",
+            "type": "shape",
+            "position": { "x": 80, "y": 200 },
+            "size": { "width": 520, "height": 700 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b",
+              "cornerRadius": 16
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 20,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "tier1-name",
+            "type": "text",
+            "position": { "x": 90, "y": 260 },
+            "size": { "width": 500, "height": 60 },
+            "props": {
+              "text": "{{tier1Name}}",
+              "fontSize": 36,
+              "fontWeight": "600",
+              "color": "#e2e8f0",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 40,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "tier1-price",
+            "type": "text",
+            "position": { "x": 90, "y": 340 },
+            "size": { "width": 500, "height": 100 },
+            "props": {
+              "text": "{{tier1Price}}",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "{{primaryColor}}",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 50,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "tier2-bg",
+            "type": "shape",
+            "position": { "x": 660, "y": 180 },
+            "size": { "width": 600, "height": 740 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}",
+              "cornerRadius": 16
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 30,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "popular-badge",
+            "type": "text",
+            "position": { "x": 760, "y": 210 },
+            "size": { "width": 400, "height": 40 },
+            "props": {
+              "text": "MOST POPULAR",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 55,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "tier2-name",
+            "type": "text",
+            "position": { "x": 710, "y": 280 },
+            "size": { "width": 500, "height": 60 },
+            "props": {
+              "text": "{{tier2Name}}",
+              "fontSize": 36,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "tier2-price",
+            "type": "text",
+            "position": { "x": 710, "y": 360 },
+            "size": { "width": 500, "height": 100 },
+            "props": {
+              "text": "{{tier2Price}}",
+              "fontSize": 64,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 60,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "tier3-bg",
+            "type": "shape",
+            "position": { "x": 1320, "y": 200 },
+            "size": { "width": 520, "height": 700 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b",
+              "cornerRadius": 16
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 40,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "tier3-name",
+            "type": "text",
+            "position": { "x": 1330, "y": 260 },
+            "size": { "width": 500, "height": 60 },
+            "props": {
+              "text": "{{tier3Name}}",
+              "fontSize": 36,
+              "fontWeight": "600",
+              "color": "#e2e8f0",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "tier3-price",
+            "type": "text",
+            "position": { "x": 1330, "y": 340 },
+            "size": { "width": 500, "height": 100 },
+            "props": {
+              "text": "{{tier3Price}}",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "{{primaryColor}}",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 70,
+                "duration": 25
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

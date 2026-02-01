@@ -1,0 +1,28 @@
+{
+  "name": "Flash Sale",
+  "description": "High-energy flash sale announcement with countdown timer and urgency messaging.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 6 },
+  "inputs": [
+    { "key": "discount", "type": "string", "label": "Discount", "required": true, "default": "50%" },
+    { "key": "productName", "type": "string", "label": "Product/Category", "required": true, "default": "ALL ELECTRONICS" },
+    { "key": "timer", "type": "string", "label": "Timer", "required": true, "default": "02:45:30" },
+    { "key": "cta", "type": "string", "label": "CTA", "required": false, "default": "SHOP NOW" }
+  ],
+  "defaults": { "discount": "50%", "productName": "ALL ELECTRONICS", "timer": "02:45:30", "cta": "SHOP NOW" },
+  "composition": {
+    "scenes": [{
+      "id": "main", "startFrame": 0, "endFrame": 180,
+      "layers": [
+        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#dc2626" } },
+        { "id": "flash-badge", "type": "text", "position": { "x": 660, "y": 120 }, "size": { "width": 600, "height": 80 }, "props": { "text": "FLASH SALE", "fontSize": 48, "fontWeight": "bold", "color": "#fbbf24", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 20 }] },
+        { "id": "discount", "type": "text", "position": { "x": 460, "y": 300 }, "size": { "width": 1000, "height": 200 }, "props": { "text": "{{discount}}", "fontSize": 180, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 10, "duration": 25 }] },
+        { "id": "off", "type": "text", "position": { "x": 760, "y": 480 }, "size": { "width": 400, "height": 80 }, "props": { "text": "OFF", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 25, "duration": 20 }] },
+        { "id": "product", "type": "text", "position": { "x": 360, "y": 600 }, "size": { "width": 1200, "height": 60 }, "props": { "text": "{{productName}}", "fontSize": 40, "color": "#fef3c7", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 35, "duration": 20 }] },
+        { "id": "timer-bg", "type": "shape", "position": { "x": 660, "y": 750 }, "size": { "width": 600, "height": 100 }, "opacity": 0.3, "props": { "shape": "rectangle", "fill": "#000000" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 40, "duration": 20 }] },
+        { "id": "timer", "type": "text", "position": { "x": 660, "y": 780 }, "size": { "width": 600, "height": 60 }, "props": { "text": "{{timer}}", "fontSize": 52, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 45, "duration": 20 }] },
+        { "id": "cta", "type": "text", "position": { "x": 660, "y": 920 }, "size": { "width": 600, "height": 50 }, "props": { "text": "{{cta}}", "fontSize": 28, "fontWeight": "600", "color": "#fbbf24", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 55, "duration": 20 }] }
+      ]
+    }]
+  }
+}

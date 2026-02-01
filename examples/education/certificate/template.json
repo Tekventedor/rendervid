@@ -1,0 +1,24 @@
+{
+  "name": "Certificate",
+  "description": "Achievement certificate for course completion or awards.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 8 },
+  "inputs": [
+    { "key": "certificateType", "type": "string", "label": "Certificate Type", "required": false, "default": "of Completion" },
+    { "key": "recipientName", "type": "string", "label": "Recipient Name", "required": true, "default": "John Smith" },
+    { "key": "achievement", "type": "string", "label": "Achievement", "required": true, "default": "for successfully completing the Advanced Web Development Course" },
+    { "key": "date", "type": "string", "label": "Date", "required": false, "default": "January 15, 2024" }
+  ],
+  "defaults": { "certificateType": "of Completion", "recipientName": "John Smith", "achievement": "for successfully completing the Advanced Web Development Course", "date": "January 15, 2024" },
+  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 240, "layers": [
+    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#fef3c7" } },
+    { "id": "inner", "type": "shape", "position": { "x": 100, "y": 80 }, "size": { "width": 1720, "height": 920 }, "props": { "shape": "rectangle", "fill": "#ffffff" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 20 }] },
+    { "id": "border", "type": "shape", "position": { "x": 130, "y": 110 }, "size": { "width": 1660, "height": 860 }, "props": { "shape": "rectangle", "fill": "#d97706" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 15, "duration": 25 }] },
+    { "id": "content", "type": "shape", "position": { "x": 140, "y": 120 }, "size": { "width": 1640, "height": 840 }, "props": { "shape": "rectangle", "fill": "#ffffff" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 25, "duration": 20 }] },
+    { "id": "label", "type": "text", "position": { "x": 560, "y": 180 }, "size": { "width": 800, "height": 50 }, "props": { "text": "CERTIFICATE", "fontSize": 32, "fontWeight": "600", "color": "#d97706", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 35, "duration": 20 }] },
+    { "id": "type", "type": "text", "position": { "x": 560, "y": 250 }, "size": { "width": 800, "height": 60 }, "props": { "text": "{{certificateType}}", "fontSize": 48, "fontWeight": "bold", "color": "#1f2937", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 40, "duration": 25 }] },
+    { "id": "recipient", "type": "text", "position": { "x": 260, "y": 450 }, "size": { "width": 1400, "height": 80 }, "props": { "text": "{{recipientName}}", "fontSize": 64, "fontWeight": "bold", "color": "#1e3a8a", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 50, "duration": 25 }] },
+    { "id": "achievement", "type": "text", "position": { "x": 360, "y": 620 }, "size": { "width": 1200, "height": 80 }, "props": { "text": "{{achievement}}", "fontSize": 28, "color": "#4b5563", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 25 }] },
+    { "id": "date", "type": "text", "position": { "x": 760, "y": 800 }, "size": { "width": 400, "height": 40 }, "props": { "text": "{{date}}", "fontSize": 20, "color": "#6b7280", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 70, "duration": 20 }] }
+  ]}]}
+}

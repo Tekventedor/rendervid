@@ -28,6 +28,7 @@ Simple examples to learn the basics:
 | [01-hello-world](./getting-started/01-hello-world/) | Minimal text animation | Video |
 | [02-first-video](./getting-started/02-first-video/) | Simple 5-second video with text | Video |
 | [03-first-image](./getting-started/03-first-image/) | Social media image generator | Image |
+| [04-image-slideshow](./getting-started/04-image-slideshow/) | Slideshow with fade transitions | Video |
 
 ### Social Media
 Ready-to-use templates for social platforms:
@@ -51,6 +52,7 @@ Templates for marketing and promotional content:
 | [testimonial-video](./marketing/testimonial-video/) | Customer testimonial | Video |
 | [before-after](./marketing/before-after/) | Before/after comparison | Video |
 | [logo-reveal](./marketing/logo-reveal/) | Animated logo reveal | Video |
+| [pricing-table](./marketing/pricing-table/) | 3-tier pricing comparison | Video |
 
 ### Data Visualization
 Animated data visualizations:
@@ -62,6 +64,88 @@ Animated data visualizations:
 | [pie-chart](./data-visualization/pie-chart/) | Pie chart reveal | Video |
 | [counter-animation](./data-visualization/counter-animation/) | Counting numbers | Video |
 | [progress-dashboard](./data-visualization/progress-dashboard/) | Progress indicators | Video |
+
+### Advanced
+Advanced animation techniques:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [parallax-effect](./advanced/parallax-effect/) | Multi-layer depth illusion | Video |
+| [kinetic-typography](./advanced/kinetic-typography/) | Dynamic text animations | Video |
+
+### E-commerce
+Templates for online stores and sales:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [flash-sale](./ecommerce/flash-sale/) | Urgency countdown sale | Video |
+| [product-launch](./ecommerce/product-launch/) | New product announcement | Video |
+| [product-comparison](./ecommerce/product-comparison/) | Side-by-side comparison | Video |
+| [discount-reveal](./ecommerce/discount-reveal/) | Promo code reveal | Video |
+
+### Events
+Templates for event announcements:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [event-countdown](./events/event-countdown/) | Days/hours/minutes countdown | Video |
+| [save-the-date](./events/save-the-date/) | Elegant invitation style | Video |
+| [webinar-promo](./events/webinar-promo/) | Speaker + topic + date | Video |
+| [conference-intro](./events/conference-intro/) | Speaker introduction card | Video |
+
+### Content Creation
+Templates for content creators:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [podcast-teaser](./content/podcast-teaser/) | Episode preview with waveform | Video |
+| [blog-promo](./content/blog-promo/) | Blog post promotion | Video |
+| [quote-card](./content/quote-card/) | Inspirational quote design | Video |
+| [news-headline](./content/news-headline/) | Breaking news style | Video |
+
+### Education
+Templates for educational content:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [course-intro](./education/course-intro/) | Course title + instructor | Video |
+| [lesson-title](./education/lesson-title/) | Chapter/lesson title card | Video |
+| [certificate](./education/certificate/) | Achievement certificate | Video |
+
+### Real Estate
+Templates for property listings:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [property-listing](./real-estate/property-listing/) | Property details card | Video |
+| [price-drop](./real-estate/price-drop/) | Price reduction alert | Video |
+| [open-house](./real-estate/open-house/) | Open house announcement | Video |
+
+### Streaming
+Templates for streamers and gamers:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [stream-starting](./streaming/stream-starting/) | "Starting Soon" screen | Video |
+| [end-screen](./streaming/end-screen/) | Subscribe/follow CTA | Video |
+| [highlight-intro](./streaming/highlight-intro/) | Game highlight intro | Video |
+
+### Fitness
+Templates for fitness content:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [workout-timer](./fitness/workout-timer/) | Exercise interval timer | Video |
+| [progress-tracker](./fitness/progress-tracker/) | Weekly/monthly progress | Video |
+
+### Food & Restaurant
+Templates for restaurants and food content:
+
+| Example | Description | Output |
+|---------|-------------|--------|
+| [menu-item](./food/menu-item/) | Dish showcase with price | Video |
+| [daily-special](./food/daily-special/) | Today's special promotion | Video |
+| [recipe-card](./food/recipe-card/) | Recipe title card | Video |
 
 ## CLI Commands
 

@@ -1,0 +1,23 @@
+{
+  "name": "Progress Tracker",
+  "description": "Weekly or monthly fitness progress visualization.",
+  "version": "1.0.0",
+  "output": { "type": "video", "width": 1080, "height": 1080, "fps": 30, "duration": 8 },
+  "inputs": [
+    { "key": "header", "type": "string", "label": "Header", "required": true, "default": "Weekly Progress" },
+    { "key": "period", "type": "string", "label": "Period", "required": false, "default": "Week 4 of 12" },
+    { "key": "mainStatValue", "type": "string", "label": "Main Stat Value", "required": true, "default": "-8 lbs" },
+    { "key": "mainStatLabel", "type": "string", "label": "Main Stat Label", "required": false, "default": "Total Weight Lost" },
+    { "key": "motivation", "type": "string", "label": "Motivation", "required": false, "default": "Keep pushing! You're doing great!" }
+  ],
+  "defaults": { "header": "Weekly Progress", "period": "Week 4 of 12", "mainStatValue": "-8 lbs", "mainStatLabel": "Total Weight Lost", "motivation": "Keep pushing! You're doing great!" },
+  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 240, "layers": [
+    { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1080, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1e293b" } },
+    { "id": "header", "type": "text", "position": { "x": 90, "y": 80 }, "size": { "width": 900, "height": 60 }, "props": { "text": "{{header}}", "fontSize": 48, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInDown", "delay": 0, "duration": 25 }] },
+    { "id": "period", "type": "text", "position": { "x": 240, "y": 160 }, "size": { "width": 600, "height": 40 }, "props": { "text": "{{period}}", "fontSize": 24, "color": "#94a3b8", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 20, "duration": 20 }] },
+    { "id": "stat-bg", "type": "shape", "position": { "x": 290, "y": 280 }, "size": { "width": 500, "height": 250 }, "props": { "shape": "rectangle", "fill": "#22c55e" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 30, "duration": 25 }] },
+    { "id": "stat-value", "type": "text", "position": { "x": 315, "y": 360 }, "size": { "width": 450, "height": 100 }, "props": { "text": "{{mainStatValue}}", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 45, "duration": 25 }] },
+    { "id": "stat-label", "type": "text", "position": { "x": 340, "y": 470 }, "size": { "width": 400, "height": 40 }, "props": { "text": "{{mainStatLabel}}", "fontSize": 24, "color": "#bbf7d0", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 20 }] },
+    { "id": "motivation", "type": "text", "position": { "x": 140, "y": 900 }, "size": { "width": 800, "height": 60 }, "props": { "text": "{{motivation}}", "fontSize": 28, "fontWeight": "600", "color": "#22c55e", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 25 }] }
+  ]}]}
+}
