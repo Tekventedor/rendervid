@@ -101,12 +101,10 @@ Each example follows this structure:
 example-name/
 ├── README.md           # Tutorial and documentation
 ├── template.json       # The Rendervid template
-├── render.ts           # Render script
-├── preview.png         # Animated preview (auto-generated)
-├── preview.png         # Static preview frame (auto-generated)
-└── variations/         # Optional: alternative configurations
-    ├── dark.json
-    └── light.json
+├── preview.gif         # Animated preview for videos (auto-generated)
+├── preview.png         # Static preview for images (auto-generated)
+└── assets/             # Optional: SVG images, fonts, etc.
+    └── icon.svg
 ```
 
 ## Creating Your Own Examples

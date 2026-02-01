@@ -32,10 +32,12 @@
     "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "canvas": "^3.2.1",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-react": "^7.37.0",
     "eslint-plugin-react-hooks": "^5.0.0",
+    "gif-encoder-2": "^1.0.5",
     "prettier": "^3.4.0",
     "puppeteer": "^22.15.0",
     "tsup": "^8.0.0",
@@ -44,7 +46,10 @@
     "vitest": "^3.0.0"
   },
   "pnpm": {
-    "overrides": {}
+    "overrides": {},
+    "ignoredBuiltDependencies": [
+      "canvas"
+    ]
   },
   "engines": {
     "node": ">=20.0.0",

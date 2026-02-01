@@ -122,6 +122,51 @@ fadeOut, fadeOutUp, fadeOutDown, slideOutUp, slideOutDown, scaleOut, zoomOut, ro
 ### Emphasis
 pulse, shake, bounce, swing, wobble, flash, rubberBand, heartbeat, float, spin
 
+## Examples
+
+Explore our collection of ready-to-use templates:
+
+### Getting Started
+
+| Example | Description | Preview |
+|---------|-------------|---------|
+| [Hello World](./examples/getting-started/01-hello-world/) | Minimal text animation | ![](./examples/getting-started/01-hello-world/preview.gif) |
+| [First Video](./examples/getting-started/02-first-video/) | 5-second video with text | ![](./examples/getting-started/02-first-video/preview.gif) |
+| [First Image](./examples/getting-started/03-first-image/) | Social media image | ![](./examples/getting-started/03-first-image/preview.png) |
+
+### Social Media
+
+| Example | Dimensions | Platform |
+|---------|------------|----------|
+| [Instagram Story](./examples/social-media/instagram-story/) | 1080x1920 | Instagram Stories |
+| [Instagram Post](./examples/social-media/instagram-post/) | 1080x1080 | Instagram Feed |
+| [TikTok Video](./examples/social-media/tiktok-video/) | 1080x1920 | TikTok |
+| [YouTube Thumbnail](./examples/social-media/youtube-thumbnail/) | 1280x720 | YouTube |
+| [Twitter Card](./examples/social-media/twitter-card/) | 1200x630 | Twitter/X |
+| [LinkedIn Banner](./examples/social-media/linkedin-banner/) | 1584x396 | LinkedIn |
+
+### Marketing
+
+| Example | Description |
+|---------|-------------|
+| [Product Showcase](./examples/marketing/product-showcase/) | Feature product with details |
+| [Sale Announcement](./examples/marketing/sale-announcement/) | Promotional sale video |
+| [Testimonial Video](./examples/marketing/testimonial-video/) | Customer testimonial |
+| [Before & After](./examples/marketing/before-after/) | Before/after comparison |
+| [Logo Reveal](./examples/marketing/logo-reveal/) | Animated logo reveal |
+
+### Data Visualization
+
+| Example | Description |
+|---------|-------------|
+| [Animated Bar Chart](./examples/data-visualization/animated-bar-chart/) | Animated bar chart |
+| [Line Graph](./examples/data-visualization/line-graph/) | Animated line graph |
+| [Pie Chart](./examples/data-visualization/pie-chart/) | Pie chart reveal |
+| [Counter Animation](./examples/data-visualization/counter-animation/) | Counting numbers |
+| [Progress Dashboard](./examples/data-visualization/progress-dashboard/) | Progress indicators |
+
+See the [examples directory](./examples/) for more details and usage instructions.
+
 ## Development
 
 ```bash
@@ -140,7 +185,7 @@ pnpm typecheck
 
 ## License
 
-MIT
+[FlowHunt Attribution License](./LICENSE) - Free for commercial and personal use with attribution
 
 ## Contributing
 

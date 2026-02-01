@@ -4,7 +4,7 @@ A complete 5-second video with title, subtitle, and professional animations.
 
 ## Preview
 
-![Preview](preview.png)
+![Preview](preview.gif)
 
 ## Description
 

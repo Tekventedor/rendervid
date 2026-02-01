@@ -4,7 +4,7 @@ Vertical video with trendy multi-scene animations for TikTok.
 
 ## Preview
 
-![Preview](preview.png)
+![Preview](preview.gif)
 
 ## Features
 
