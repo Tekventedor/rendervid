@@ -36,9 +36,9 @@
     }
   ],
   "defaults": {
-    "image1": "https://flowhunt.io/blog/ai-automation.jpg",
-    "image2": "https://flowhunt.io/blog/chatbot-guide.jpg",
-    "image3": "https://flowhunt.io/blog/workflow-automation.jpg"
+    "image1": "https://www.photomaticai.com/images/ai-generated-images/models_ideogram-v2a_ai-image-generator_sleek-desig_Futuristic_3D_Workspace_Design.webp",
+    "image2": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2_ai-image-generator_cinematic-3d_Futuristic_City_Skyline_at_Sunset.webp",
+    "image3": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2-turbo_ai-image-generator_abstra_Surreal_Abstract_Film_Dreamscape.webp"
   },
   "composition": {
     "scenes": [
