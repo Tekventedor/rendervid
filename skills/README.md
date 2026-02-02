@@ -215,16 +215,372 @@ The validator provides detailed error messages with paths to help fix issues qui
 
 ## Installation
 
-See the [main MCP server documentation](../mcp/README.md) for installation instructions.
+### Quick Start
 
-## Usage
+1. **Prerequisites**
+   ```bash
+   # Install FFmpeg (required for video rendering)
+   brew install ffmpeg  # macOS
+   sudo apt install ffmpeg  # Ubuntu/Debian
+   choco install ffmpeg  # Windows
+   ```
 
-Each skill is designed to be used by AI agents through the MCP protocol. The skills can be:
+2. **Build the MCP Server**
+   ```bash
+   cd mcp
+   pnpm install
+   pnpm build
+   ```
 
-1. **Discovered** using `get_capabilities`
-2. **Explored** using `list_examples`
-3. **Used** through the rendering tools
-4. **Validated** using `validate_template`
+3. **Configure Your AI Editor** (see sections below)
+
+For detailed installation instructions, see the [main MCP server documentation](../mcp/README.md).
+
+---
+
+## Using Rendervid Skills in AI Editors
+
+The Rendervid MCP server enables you to generate videos and images using natural language in your favorite AI editor. Here's how to set it up:
+
+### Claude Desktop
+
+1. **Open Claude Desktop config file:**
+   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2. **Add Rendervid MCP server:**
+   ```json
+   {
+     "mcpServers": {
+       "rendervid": {
+         "command": "node",
+         "args": ["/absolute/path/to/rendervid/mcp/build/index.js"]
+       }
+     }
+   }
+   ```
+
+3. **Restart Claude Desktop**
+
+4. **Test it:**
+   ```
+   "What Rendervid tools do you have?"
+   "Create a 5-second Instagram story with text 'Hello World'"
+   ```
+
+---
+
+### Cursor
+
+1. **Open Cursor Settings** (Cmd/Ctrl + ,)
+
+2. **Search for "MCP"** or navigate to Features → Model Context Protocol
+
+3. **Add configuration:**
+   ```json
+   {
+     "mcpServers": {
+       "rendervid": {
+         "command": "node",
+         "args": ["/absolute/path/to/rendervid/mcp/build/index.js"]
+       }
+     }
+   }
+   ```
+
+4. **Restart Cursor**
+
+5. **Usage:**
+   - Use the @ symbol to reference Rendervid tools
+   - Or simply ask in natural language: "Generate a YouTube thumbnail"
+
+---
+
+### Windsurf
+
+1. **Open Windsurf Settings**
+
+2. **Navigate to MCP Servers section**
+
+3. **Add server configuration:**
+   - **Name**: Rendervid
+   - **Command**: `node`
+   - **Args**: `/absolute/path/to/rendervid/mcp/build/index.js`
+
+4. **Save and restart Windsurf**
+
+5. **Test:**
+   ```
+   "List available social media templates"
+   "Create a TikTok video template"
+   ```
+
+---
+
+### Cline / Roo Cline
+
+1. **Open Cline Settings** (gear icon in Cline panel)
+
+2. **Go to MCP Servers tab**
+
+3. **Add new server:**
+   ```json
+   {
+     "rendervid": {
+       "command": "node",
+       "args": ["/absolute/path/to/rendervid/mcp/build/index.js"]
+     }
+   }
+   ```
+
+4. **Restart VS Code**
+
+---
+
+### Continue.dev
+
+1. **Open Continue config** (`~/.continue/config.json`)
+
+2. **Add to `mcpServers` section:**
+   ```json
+   {
+     "mcpServers": {
+       "rendervid": {
+         "command": "node",
+         "args": ["/absolute/path/to/rendervid/mcp/build/index.js"]
+       }
+     }
+   }
+   ```
+
+3. **Restart Continue extension**
+
+---
+
+## Common Usage Patterns
+
+Once configured, you can use Rendervid skills in natural language:
+
+### Discovery
+```
+"Show me what Rendervid can do"
+"What animation presets are available?"
+"List all layer types"
+```
+
+### Browse Examples
+```
+"Show me social media templates"
+"What marketing video templates exist?"
+"List all example categories"
+```
+
+### Generate Videos
+```
+"Create a 5-second Instagram story with 'Summer Sale' and blue background"
+"Generate a YouTube thumbnail for 'Best Practices 2024'"
+"Make a TikTok video with animated text 'New Product Launch'"
+```
+
+### Generate Images
+```
+"Create a PNG thumbnail with 'Tutorial' text"
+"Generate a social media image for Instagram"
+"Make a product showcase image"
+```
+
+### Validate Templates
+```
+"Validate this template: [paste JSON]"
+"Check if this template is correct"
+```
+
+### Load Examples
+```
+"Load the Instagram story example"
+"Show me the animated bar chart template"
+"Get the product showcase template"
+```
+
+---
+
+## How It Works
+
+Each skill is designed to be used by AI agents through the MCP protocol:
+
+1. **Discovery** - Use `get_capabilities` to learn what's possible
+2. **Exploration** - Use `list_examples` to browse 50+ templates
+3. **Loading** - Use `get_example` to load specific templates
+4. **Validation** - Use `validate_template` to check templates
+5. **Rendering** - Use `render_video` or `render_image` to create content
+
+The AI agent automatically:
+- Understands your natural language request
+- Selects the appropriate tool(s)
+- Constructs the required JSON
+- Calls the MCP server
+- Presents the results
+
+---
+
+## Example Workflows
+
+### Create Social Media Content
+```
+User: "I need an Instagram story for a flash sale"
+
+AI uses:
+1. list_examples({ category: "social-media" })
+2. get_example({ examplePath: "social-media/instagram-story" })
+3. render_video({
+     template: {...},
+     inputs: { title: "Flash Sale", subtitle: "50% Off!" },
+     format: "mp4"
+   })
+```
+
+### Generate Data Visualization
+```
+User: "Create an animated bar chart showing Q1 sales"
+
+AI uses:
+1. get_example({ examplePath: "data-visualization/animated-bar-chart" })
+2. Modifies template with sales data
+3. render_video({ template, inputs, format: "mp4" })
+```
+
+### Validate Custom Template
+```
+User: "Check if my template is valid: [JSON]"
+
+AI uses:
+1. validate_template({ template: {...} })
+2. Reports any errors or warnings
+3. Suggests fixes if needed
+```
+
+---
+
+## Troubleshooting
+
+### Tools Not Showing Up
+
+1. **Check server path is absolute:**
+   ```bash
+   # Find absolute path
+   cd /path/to/rendervid/mcp
+   pwd
+   # Use output in config
+   ```
+
+2. **Verify server builds:**
+   ```bash
+   cd mcp
+   pnpm build
+   node build/index.js  # Should start without errors
+   ```
+
+3. **Check logs:**
+   - **Claude Desktop**: `~/Library/Logs/Claude/mcp-server-rendervid.log`
+   - **Cursor**: Check VS Code developer tools console
+   - **Windsurf**: Check application logs
+
+### FFmpeg Not Found
+
+```bash
+# Install FFmpeg
+brew install ffmpeg  # macOS
+sudo apt install ffmpeg  # Ubuntu
+choco install ffmpeg  # Windows
+
+# Verify installation
+ffmpeg -version
+```
+
+### Node Version Issues
+
+The MCP server requires Node.js 20+:
+
+```bash
+# Check version
+node --version
+
+# If too old, upgrade
+nvm install 22
+nvm use 22
+```
+
+Then update your MCP config to use the full Node.js path:
+```json
+{
+  "command": "/path/to/node/v22/bin/node",
+  "args": ["/absolute/path/to/rendervid/mcp/build/index.js"]
+}
+```
+
+---
+
+## Advanced Usage
+
+### Custom Output Paths
+
+```
+"Generate a video and save it to ~/Videos/output.mp4"
+```
+
+The AI agent will use the `outputPath` parameter.
+
+### Quality Control
+
+```
+"Create a high-quality 4K video"
+"Generate a draft quality video for preview"
+```
+
+The AI agent will adjust `quality` and dimensions.
+
+### Multiple Formats
+
+```
+"Generate both MP4 and GIF versions"
+```
+
+The AI agent will call `render_video` twice with different formats.
+
+---
+
+## Skills Workflow
+
+```
+┌─────────────────────────────────────────────┐
+│  User Request (Natural Language)            │
+│  "Create an Instagram story"                │
+└────────────────┬────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────┐
+│  AI Agent (Claude, Cursor, etc.)            │
+│  - Understands intent                       │
+│  - Selects appropriate MCP tool             │
+│  - Constructs parameters                    │
+└────────────────┬────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────┐
+│  Rendervid MCP Server                       │
+│  - Validates input                          │
+│  - Executes tool (render_video, etc.)       │
+│  - Returns result                           │
+└────────────────┬────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────┐
+│  Result Presented to User                   │
+│  - Video file path                          │
+│  - Dimensions, duration, file size          │
+│  - Preview or success message               │
+└─────────────────────────────────────────────┘
+```
 
 ## Documentation Structure
 
