@@ -1,31 +1,6 @@
 ---
 name: validate_template
-description: Validate a Rendervid template JSON structure.
-
-This tool performs comprehensive validation of a template to ensure it's properly formatted and ready for rendering.
-
-Validation checks include:
-- Template structure (name, output, composition)
-- Output configuration (type, dimensions, fps, duration)
-- Input definitions (keys, types, defaults)
-- Scene structure (IDs, frame ranges)
-- Layer configuration (types, positions, sizes, props)
-- Animation definitions (types, effects, timing, easing)
-- Component references and props
-- Data consistency (frame ranges, input references)
-
-Returns:
-- valid: boolean indicating if template is valid
-- errors: array of validation errors (if any)
-- warnings: array of validation warnings (if any)
-
-Use this before rendering to catch issues early, or when:
-- Creating new templates
-- Modifying existing templates
-- Debugging template issues
-- Verifying AI-generated templates
-
-The validator provides detailed error messages with paths to help fix issues quickly.
+description: "Validate a Rendervid template JSON structure."
 tags: [validation, quality, templates, generation, json, mcp, rendervid]
 category: validation
 ---

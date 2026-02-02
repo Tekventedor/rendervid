@@ -2,7 +2,7 @@
 
 Auto-generated documentation for the Rendervid Model Context Protocol (MCP) server.
 
-**Generated:** 2026-02-02T05:32:57.407Z
+**Generated:** 2026-02-02T05:40:05.602Z
 
 ## Overview
 

@@ -1,33 +1,6 @@
 ---
 name: list_examples
-description: Browse the collection of 50+ ready-to-use Rendervid template examples.
-
-This tool lists available example templates organized by category. Each example includes:
-- name: Template name
-- category: Category (getting-started, social-media, marketing, etc.)
-- path: Path to use with get_example tool
-- description: What the template does
-- outputType: 'video' or 'image'
-- dimensions: Output resolution (e.g., "1920x1080")
-
-**Categories:**
-- getting-started: Simple examples to learn basics (Hello World, First Video, etc.)
-- social-media: Platform-specific templates (Instagram, TikTok, YouTube, Twitter, LinkedIn)
-- marketing: Promotional content (Product Showcase, Sale Announcement, Testimonials, Logo Reveal)
-- data-visualization: Animated charts (Bar Chart, Line Graph, Pie Chart, Counter, Dashboard)
-- ecommerce: Online store content (Flash Sale, Product Launch, Comparison, Discount)
-- events: Event announcements (Countdown, Save the Date, Webinar, Conference)
-- content: Creator content (Podcast Teaser, Blog Promo, Quote Card, News Headline)
-- education: Educational content (Course Intro, Lesson Title, Certificate)
-- real-estate: Property listings (Listing, Price Drop, Open House)
-- streaming: Streamer content (Stream Starting, End Screen, Highlight Intro)
-- fitness: Fitness content (Workout Timer, Progress Tracker)
-- food: Restaurant content (Menu Item, Daily Special, Recipe Card)
-- advanced: Advanced techniques (Parallax, Kinetic Typography)
-- showcase: Feature demonstrations (All Fonts, All Animations, All Easing, etc.)
-
-Use the category parameter to filter by category, or omit to see all examples.
-After finding an example, use get_example to load its template and customize it.
+description: "Browse the collection of 50+ ready-to-use Rendervid template examples."
 tags: [templates, examples, mcp, rendervid]
 category: examples
 ---

@@ -153,6 +153,17 @@ function generateHTML(template, frame, viewportWidth, viewportHeight) {
   const sceneFrame = frame - (scene.startFrame || 0);
   const layers = replaceVars(scene.layers || [], defaults);
 
+  // Build font imports
+  const fontFamilies = new Set(['Inter']);
+  for (const layer of layers) {
+    if (layer.type === 'text' && layer.props?.fontFamily) {
+      fontFamilies.add(layer.props.fontFamily);
+    }
+  }
+  const fontImports = Array.from(fontFamilies)
+    .map(f => `family=${f.replace(/\s+/g, '+')}:wght@400;500;600;700;800`)
+    .join('&');
+
   const elements = layers.map(layer => {
     const { id, type, position, size, props, opacity = 1, animations } = layer;
     const x = position?.x || 0;
@@ -215,7 +226,7 @@ function generateHTML(template, frame, viewportWidth, viewportHeight) {
 <head>
 <meta charset="UTF-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?${fontImports}&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:${viewportWidth}px;height:${viewportHeight}px;overflow:hidden;background:#000}

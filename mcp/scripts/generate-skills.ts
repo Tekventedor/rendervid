@@ -159,9 +159,12 @@ function formatSchemaAsTable(schema: any): string {
 function generateSkillMarkdown(tool: ToolDefinition, metadata: SkillMetadata): string {
   const { jsdoc, examples } = extractSourceMetadata(metadata.name);
 
+  // Extract first sentence for frontmatter description
+  const shortDescription = tool.description.split('\n')[0].replace(/[:\n\r]/g, ' ').trim();
+
   let content = `---
 name: ${tool.name}
-description: ${tool.description}
+description: "${shortDescription}"
 tags: [${metadata.tags.join(', ')}]
 category: ${metadata.category}
 ---

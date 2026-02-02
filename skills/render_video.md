@@ -1,36 +1,6 @@
 ---
 name: render_video
-description: Generate a video file from a Rendervid JSON template.
-
-This tool renders a complete video by:
-1. Accepting a Rendervid template (JSON structure defining scenes, layers, animations)
-2. Merging provided input values with template defaults
-3. Rendering all frames using a headless browser
-4. Encoding frames into a video file using FFmpeg
-
-The template uses a declarative JSON format that describes:
-- Output dimensions, FPS, and duration
-- Dynamic inputs (variables that can be customized)
-- Scenes with layers (text, images, shapes, video, audio)
-- Animations (entrance, exit, emphasis effects with 40+ presets)
-- Easing functions (30+ options for smooth motion)
-
-Common use cases:
-- Social media content (Instagram stories, TikTok videos, YouTube thumbnails)
-- Marketing videos (product showcases, sale announcements, testimonials)
-- Data visualizations (animated charts, graphs, dashboards)
-- Educational content (course intros, lesson titles)
-
-The output path will be created automatically. You can specify format, quality, and FPS.
-Rendering progress is reported with frame counts and time estimates.
-
-Example template structure:
-{
-  "name": "My Video",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5 },
-  "inputs": [{ "key": "title", "type": "string", "label": "Title", "default": "Hello" }],
-  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 150, "layers": [...] }] }
-}
+description: "Generate a video file from a Rendervid JSON template."
 tags: [video, rendering, templates, generation, json, mcp, rendervid]
 category: rendering
 ---

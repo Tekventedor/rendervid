@@ -1,32 +1,6 @@
 ---
 name: render_image
-description: Generate a single image from a Rendervid template.
-
-This tool renders a static image by:
-1. Accepting a Rendervid template (same JSON structure as video templates)
-2. Rendering a specific frame (default: frame 0)
-3. Exporting as PNG, JPEG, or WebP
-
-Ideal for:
-- Social media images (Instagram posts, Twitter cards, LinkedIn banners)
-- Thumbnails (YouTube, blog posts, video covers)
-- Static graphics (quotes, announcements, infographics)
-- Previewing video frames
-
-You can use the same template for both video and image output.
-For video templates, specify which frame to capture (0-based index).
-For image templates (output.type: "image"), the frame parameter is ignored.
-
-The template format is identical to video templates, supporting:
-- Multiple layers (text, images, shapes)
-- Animations (will be evaluated at the specified frame)
-- Dynamic inputs
-- Full styling capabilities
-
-Example use:
-- Render frame 0 of a video template as a thumbnail
-- Generate social media post images with custom text
-- Create preview images for video content
+description: "Generate a single image from a Rendervid template."
 tags: [image, rendering, templates, generation, json, mcp, rendervid]
 category: rendering
 ---
