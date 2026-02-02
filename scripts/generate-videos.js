@@ -222,7 +222,57 @@ function getAnimationState(animations, frame, layerProps) {
 }
 
 /**
- * Generate HTML for a single frame
+ * Check if template uses custom components
+ */
+function hasCustomComponents(template) {
+  const scenes = template.composition?.scenes || [];
+  for (const scene of scenes) {
+    const layers = scene.layers || [];
+    for (const layer of layers) {
+      if (layer.type === 'custom') {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Generate HTML using the browser renderer (for templates with custom components)
+ */
+function generateHTMLWithRenderer(template, frame, viewportWidth, viewportHeight) {
+  const { width, height } = template.output;
+  const scale = Math.min(viewportWidth / width, viewportHeight / height);
+  const bundlePath = path.join(__dirname, '..', 'packages', 'renderer-node', 'dist', 'browser-renderer.global.js');
+  const bundleCode = fs.readFileSync(bundlePath, 'utf-8');
+
+  return `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:${viewportWidth}px;height:${viewportHeight}px;overflow:hidden;background:#000}
+.viewport{width:${viewportWidth}px;height:${viewportHeight}px;position:relative;overflow:hidden;background:#000}
+#root{position:absolute;top:0;left:0;width:${width}px;height:${height}px;transform:scale(${scale});transform-origin:top left}
+</style>
+</head>
+<body>
+<div class="viewport">
+  <div id="root"></div>
+</div>
+<script>
+${bundleCode}
+window.RENDERVID_TEMPLATE = ${JSON.stringify(template)};
+window.RENDERVID_CURRENT_FRAME = ${frame};
+window.RENDERVID_INPUTS = {};
+</script>
+</body>
+</html>`;
+}
+
+/**
+ * Generate HTML for a single frame (for templates without custom components)
  */
 function generateHTML(template, frame, viewportWidth, viewportHeight, exampleDir) {
   const { width, height } = template.output;
@@ -430,18 +480,33 @@ async function generateVideo(browser, example) {
   const timings = { setContent: 0, screenshot: 0 };
   const startRender = Date.now();
 
+  // Check if template uses custom components
+  const usesCustomComponents = hasCustomComponents(template);
+
   // Render all frames
   for (let frame = 0; frame < totalFrames; frame++) {
-    const html = generateHTML(template, frame, out.width, out.height, dir);
+    const html = usesCustomComponents
+      ? generateHTMLWithRenderer(template, frame, out.width, out.height)
+      : generateHTML(template, frame, out.width, out.height, dir);
 
     // Only wait for network on first frame (fonts load), then use faster strategy
     const t1 = Date.now();
     if (frame === 0) {
       await page.setContent(html, { waitUntil: 'networkidle0' });
-      await new Promise(r => setTimeout(r, 1000)); // Extra wait for fonts on first frame
+      if (usesCustomComponents) {
+        // Wait for the renderer to be ready
+        await page.waitForFunction(() => window.RENDERVID_READY === true, { timeout: 5000 });
+        await new Promise(r => setTimeout(r, 500)); // Extra wait for first render
+      } else {
+        await new Promise(r => setTimeout(r, 1000)); // Extra wait for fonts on first frame
+      }
     } else {
       await page.setContent(html, { waitUntil: 'domcontentloaded' });
-      // No delay needed - browser is ready immediately after domcontentloaded
+      if (usesCustomComponents) {
+        // Wait for the renderer to be ready and render the frame
+        await page.waitForFunction(() => window.RENDERVID_READY === true, { timeout: 5000 });
+        await new Promise(r => setTimeout(r, 50)); // Small wait for React to render
+      }
     }
     timings.setContent += Date.now() - t1;
 
