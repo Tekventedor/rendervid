@@ -18,6 +18,8 @@ export type AnimationMode = 'sync' | 'oneByOne' | 'delayed';
 export interface SVGDrawingProps extends AnimatedProps {
   /** SVG content as children */
   children?: React.ReactNode;
+  /** SVG content as HTML string */
+  svgContent?: string;
   /** SVG file URL */
   src?: string;
   /** Duration in seconds to complete drawing */
@@ -74,6 +76,49 @@ function approximatePathLength(d: string): number {
 
   // Estimate based on number of commands and coordinate points
   return commands.length * 20 + numbers.length * 5;
+}
+
+/**
+ * Extract paths from HTML string
+ */
+function extractPathsFromString(svgContent: string): Array<{
+  d: string;
+  originalProps: any;
+  estimatedLength: number;
+}> {
+  const paths: Array<{ d: string; originalProps: any; estimatedLength: number }> = [];
+
+  // Extract path elements with d attribute
+  const pathRegex = /<path[^>]*d="([^"]*)"[^>]*>/g;
+  let match;
+
+  while ((match = pathRegex.exec(svgContent)) !== null) {
+    const d = match[1];
+    const estimatedLength = approximatePathLength(d);
+    paths.push({
+      d,
+      originalProps: {},
+      estimatedLength,
+    });
+  }
+
+  // Also handle circle and rect elements by converting them to paths
+  const circleRegex = /<circle[^>]*cx="([^"]*)"[^>]*cy="([^"]*)"[^>]*r="([^"]*)"[^>]*>/g;
+  while ((match = circleRegex.exec(svgContent)) !== null) {
+    const cx = parseFloat(match[1]);
+    const cy = parseFloat(match[2]);
+    const r = parseFloat(match[3]);
+    // Convert circle to path
+    const d = `M ${cx - r},${cy} a ${r},${r} 0 1,0 ${r * 2},0 a ${r},${r} 0 1,0 -${r * 2},0`;
+    const estimatedLength = 2 * Math.PI * r;
+    paths.push({
+      d,
+      originalProps: {},
+      estimatedLength,
+    });
+  }
+
+  return paths;
 }
 
 /**
@@ -212,6 +257,7 @@ function calculateStrokeDashOffset(
  */
 export function SVGDrawing({
   children,
+  svgContent,
   src,
   duration,
   mode = 'sync',
@@ -233,13 +279,16 @@ export function SVGDrawing({
   const rawProgress = Math.min(1, frame / totalFrames);
   const progress = applyEasing(rawProgress, easing);
 
-  // Extract paths from children
+  // Extract paths from svgContent string or children
   const paths = useMemo(() => {
+    if (svgContent) {
+      return extractPathsFromString(svgContent);
+    }
     if (children) {
       return extractPaths(children);
     }
     return [];
-  }, [children]);
+  }, [svgContent, children]);
 
   // If src is provided, show a message (actual loading would require async)
   if (src && !children) {
@@ -302,6 +351,13 @@ export function SVGDrawing({
 
   // Find viewBox from original SVG if not provided
   let effectiveViewBox = viewBox;
+  if (!effectiveViewBox && svgContent) {
+    // Extract viewBox from svgContent string
+    const viewBoxMatch = svgContent.match(/viewBox="([^"]*)"/);
+    if (viewBoxMatch) {
+      effectiveViewBox = viewBoxMatch[1];
+    }
+  }
   if (!effectiveViewBox && children) {
     React.Children.forEach(children, (child) => {
       if (React.isValidElement(child) && child.type === 'svg' && child.props.viewBox) {
