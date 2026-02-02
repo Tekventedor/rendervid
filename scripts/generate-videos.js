@@ -390,27 +390,37 @@ async function generateVideo(browser, example) {
 
   console.log(`     Rendering ${totalFrames} frames...`);
 
+  const timings = { setContent: 0, screenshot: 0 };
+  const startRender = Date.now();
+
   // Render all frames
   for (let frame = 0; frame < totalFrames; frame++) {
     const html = generateHTML(template, frame, out.width, out.height);
 
     // Only wait for network on first frame (fonts load), then use faster strategy
+    const t1 = Date.now();
     if (frame === 0) {
       await page.setContent(html, { waitUntil: 'networkidle0' });
       await new Promise(r => setTimeout(r, 1000)); // Extra wait for fonts on first frame
     } else {
       await page.setContent(html, { waitUntil: 'domcontentloaded' });
-      await new Promise(r => setTimeout(r, 50)); // Small delay for rendering
+      // No delay needed - browser is ready immediately after domcontentloaded
     }
+    timings.setContent += Date.now() - t1;
 
-    const framePath = path.join(frameDir, `frame-${String(frame).padStart(5, '0')}.png`);
-    await page.screenshot({ path: framePath });
+    const framePath = path.join(frameDir, `frame-${String(frame).padStart(5, '0')}.jpg`);
+    const t2 = Date.now();
+    await page.screenshot({ path: framePath, type: 'jpeg', quality: 90 });
+    timings.screenshot += Date.now() - t2;
 
     // Progress indicator
     if ((frame + 1) % Math.ceil(totalFrames / 10) === 0) {
       process.stdout.write(`     ${Math.round((frame + 1) / totalFrames * 100)}%\n`);
     }
   }
+
+  const renderTime = Date.now() - startRender;
+  console.log(`     Render time: ${(renderTime / 1000).toFixed(1)}s (setContent: ${(timings.setContent / 1000).toFixed(1)}s, screenshot: ${(timings.screenshot / 1000).toFixed(1)}s)`);
 
   await page.close();
 
@@ -420,20 +430,26 @@ async function generateVideo(browser, example) {
   console.log(`     Encoding MP4...`);
 
   // First encode video without audio
+  const encodeStart = Date.now();
   execSync(
-    `ffmpeg -y -framerate ${fps} -i "${frameDir}/frame-%05d.png" -c:v libx264 -pix_fmt yuv420p -crf 23 -preset medium "${tempVideoPath}"`,
+    `ffmpeg -y -framerate ${fps} -i "${frameDir}/frame-%05d.jpg" -c:v libx264 -pix_fmt yuv420p -crf 23 -preset ultrafast "${tempVideoPath}"`,
     { stdio: 'pipe' }
   );
+  const encodeTime = Date.now() - encodeStart;
+  console.log(`     Encode time: ${(encodeTime / 1000).toFixed(1)}s`);
 
   // Add background music (loop if needed, fade out at end)
   const videoDuration = duration;
   if (fs.existsSync(AUDIO_FILE)) {
     console.log(`     Adding audio...`);
+    const audioStart = Date.now();
     try {
       execSync(
         `ffmpeg -y -i "${tempVideoPath}" -stream_loop -1 -i "${AUDIO_FILE}" -c:v copy -c:a aac -b:a 128k -t ${videoDuration} -af "afade=t=out:st=${videoDuration - 0.5}:d=0.5" -shortest "${videoPath}"`,
         { stdio: 'pipe' }
       );
+      const audioTime = Date.now() - audioStart;
+      console.log(`     Audio time: ${(audioTime / 1000).toFixed(1)}s`);
     } catch (e) {
       // If audio fails, just copy the video without audio
       fs.copyFileSync(tempVideoPath, videoPath);
