@@ -31,8 +31,8 @@ const CATEGORIES = [
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-frames');
 
-const GIF_FRAME_COUNT = 30;
-const GIF_DELAY = 6;
+const GIF_MAX_FRAMES = 120; // Max frames in GIF for file size
+const GIF_MAX_DURATION = 8; // Max GIF duration in seconds
 const MAX_DIMENSION = 400;
 
 /**
@@ -266,6 +266,10 @@ async function generatePNG(browser, example) {
 
 /**
  * Generate animated GIF for video templates
+ *
+ * The GIF plays at the same speed as the video (or a portion of it for long videos).
+ * - For videos <= GIF_MAX_DURATION seconds: shows entire video at correct speed
+ * - For longer videos: shows first GIF_MAX_DURATION seconds at correct speed
  */
 async function generateGIF(browser, example) {
   const { template, dir, name } = example;
@@ -273,7 +277,17 @@ async function generateGIF(browser, example) {
   const out = getOutputSize(width, height, MAX_DIMENSION);
 
   const totalFrames = fps * duration;
-  const frameStep = Math.max(1, Math.floor(totalFrames / GIF_FRAME_COUNT));
+
+  // Calculate GIF parameters to maintain correct playback speed
+  const gifDuration = Math.min(duration, GIF_MAX_DURATION);
+  const gifFrameCount = Math.min(fps * gifDuration, GIF_MAX_FRAMES);
+
+  // frameStep: how many video frames to skip between each GIF frame
+  const frameStep = Math.max(1, Math.floor((fps * gifDuration) / gifFrameCount));
+
+  // delay: time between GIF frames in 1/100th seconds
+  // To maintain correct speed: delay = frameStep * (100 / fps)
+  const gifDelay = Math.round(frameStep * 100 / fps);
 
   const frameDir = path.join(TEMP_DIR, name);
   fs.mkdirSync(frameDir, { recursive: true });
@@ -282,8 +296,12 @@ async function generateGIF(browser, example) {
   await page.setViewport({ width: out.width, height: out.height });
 
   const framePaths = [];
-  for (let i = 0; i < GIF_FRAME_COUNT; i++) {
+  const actualFrameCount = Math.ceil((fps * gifDuration) / frameStep);
+
+  for (let i = 0; i < actualFrameCount; i++) {
     const frame = i * frameStep;
+    if (frame >= totalFrames) break;
+
     const html = generateHTML(template, frame, out.width, out.height);
     await page.setContent(html, { waitUntil: 'networkidle0' });
 
@@ -291,7 +309,7 @@ async function generateGIF(browser, example) {
       await new Promise(r => setTimeout(r, 500)); // Wait for fonts on first frame
     }
 
-    const framePath = path.join(frameDir, `frame-${String(i).padStart(3, '0')}.png`);
+    const framePath = path.join(frameDir, `frame-${String(i).padStart(4, '0')}.png`);
     await page.screenshot({ path: framePath });
     framePaths.push(framePath);
   }
@@ -300,9 +318,9 @@ async function generateGIF(browser, example) {
 
   const previewPath = path.join(dir, 'preview.gif');
   try {
-    execSync(`magick -delay ${GIF_DELAY} -loop 0 "${frameDir}/frame-*.png" "${previewPath}"`, { stdio: 'pipe' });
+    execSync(`magick -delay ${gifDelay} -loop 0 "${frameDir}/frame-*.png" "${previewPath}"`, { stdio: 'pipe' });
   } catch {
-    execSync(`convert -delay ${GIF_DELAY} -loop 0 "${frameDir}/frame-*.png" "${previewPath}"`, { stdio: 'pipe' });
+    execSync(`convert -delay ${gifDelay} -loop 0 "${frameDir}/frame-*.png" "${previewPath}"`, { stdio: 'pipe' });
   }
 
   // Cleanup
