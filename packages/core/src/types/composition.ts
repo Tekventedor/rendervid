@@ -3,7 +3,24 @@ import type { Layer } from './layer';
 /**
  * Scene transition types.
  */
-export type TransitionType = 'cut' | 'fade' | 'slide' | 'wipe' | 'zoom';
+export type TransitionType =
+  | 'cut'           // Instant switch
+  | 'fade'          // Crossfade
+  | 'slide'         // Slide in direction
+  | 'wipe'          // Wipe in direction
+  | 'zoom'          // Zoom in/out
+  | 'rotate'        // Rotate transition
+  | 'flip'          // 3D flip effect
+  | 'blur'          // Blur transition
+  | 'circle'        // Circular reveal
+  | 'push'          // Push transition
+  | 'crosszoom'     // Cross zoom effect
+  | 'glitch'        // Glitch effect
+  | 'dissolve'      // Dissolve effect
+  | 'cube'          // 3D cube rotation
+  | 'swirl'         // Swirl/spiral effect
+  | 'diagonal-wipe' // Diagonal wipe
+  | 'iris';         // Iris in/out
 
 /**
  * Transition direction.

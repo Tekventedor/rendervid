@@ -1288,6 +1288,108 @@ function TransitionRenderer({
         }
         return { clipPath: `inset(0 ${offset}% 0 0)` };
       }
+      case "rotate": {
+        const angle = progress * 90;
+        const scale = 1 - progress * 0.5;
+        return {
+          transform: `rotate(${angle}deg) scale(${scale})`,
+          opacity: 1 - progress,
+          transformOrigin: "center center"
+        };
+      }
+      case "flip": {
+        const angle = progress * 90;
+        const isHorizontal = direction === "left" || direction === "right";
+        return {
+          transform: isHorizontal ? `perspective(1000px) rotateY(${angle}deg)` : `perspective(1000px) rotateX(${angle}deg)`,
+          opacity: progress > 0.5 ? 0 : 1,
+          transformOrigin: "center center"
+        };
+      }
+      case "blur": {
+        const blurAmount = progress * 20;
+        return {
+          filter: `blur(${blurAmount}px)`,
+          opacity: 1 - progress
+        };
+      }
+      case "circle": {
+        const radius = 150 * (1 - progress);
+        return {
+          clipPath: `circle(${radius}% at 50% 50%)`
+        };
+      }
+      case "push": {
+        const offset = progress * 100;
+        if (direction === "left") {
+          return { transform: `translateX(-${offset}%)` };
+        } else if (direction === "right") {
+          return { transform: `translateX(${offset}%)` };
+        } else if (direction === "up") {
+          return { transform: `translateY(-${offset}%)` };
+        } else if (direction === "down") {
+          return { transform: `translateY(${offset}%)` };
+        }
+        return { transform: `translateX(-${offset}%)` };
+      }
+      case "crosszoom": {
+        const scale = 1 + progress * 0.5;
+        return {
+          transform: `scale(${scale})`,
+          opacity: 1 - progress
+        };
+      }
+      case "glitch": {
+        const seed = Math.floor(progress * 100);
+        const offsetX = (seed * 9301 + 49297) % 233280 / 233280 * 20 - 10;
+        const offsetY = (seed * 421 + 2038074743) % 2147483647 / 2147483647 * 20 - 10;
+        return {
+          transform: `translate(${offsetX}px, ${offsetY}px)`,
+          opacity: 1 - progress,
+          filter: progress > 0.3 ? `hue-rotate(${progress * 360}deg)` : "none"
+        };
+      }
+      case "dissolve": {
+        const pixelSize = Math.floor(progress * 20);
+        return {
+          filter: pixelSize > 0 ? `blur(${pixelSize}px)` : "none",
+          opacity: 1 - progress
+        };
+      }
+      case "cube": {
+        const angle = progress * 90;
+        const isHorizontal = direction === "left" || direction === "right";
+        const rotateDir = direction === "left" || direction === "up" ? -1 : 1;
+        return {
+          transform: isHorizontal ? `perspective(2000px) rotateY(${angle * rotateDir}deg) translateZ(-500px)` : `perspective(2000px) rotateX(${angle * rotateDir}deg) translateZ(-500px)`,
+          transformOrigin: "center center",
+          opacity: progress > 0.5 ? 0 : 1
+        };
+      }
+      case "swirl": {
+        const angle = progress * 180;
+        const scale = 1 - progress;
+        return {
+          transform: `rotate(${angle}deg) scale(${scale})`,
+          opacity: 1 - progress,
+          filter: `blur(${progress * 10}px)`
+        };
+      }
+      case "diagonal-wipe": {
+        const offset = progress * 150;
+        if (direction === "left") {
+          return { clipPath: `polygon(0 0, ${100 - offset}% 0, 0 ${100 - offset}%, 0 0)` };
+        } else if (direction === "right") {
+          return { clipPath: `polygon(100% 0, 100% ${100 - offset}%, ${offset}% 100%, 100% 100%, 100% 0)` };
+        }
+        return { clipPath: `polygon(0 0, ${100 - offset}% 0, 0 ${100 - offset}%, 0 0)` };
+      }
+      case "iris": {
+        const radius = 100 * (1 - progress);
+        return {
+          clipPath: `circle(${radius}% at 50% 50%)`
+        };
+      }
       case "cut":
       default:
         return progress > 0.5 ? { opacity: 0 } : {};
@@ -1322,6 +1424,107 @@ function TransitionRenderer({
       }
       case "wipe": {
         return {};
+      }
+      case "rotate": {
+        const angle = (1 - progress) * -90;
+        const scale = 0.5 + progress * 0.5;
+        return {
+          transform: `rotate(${angle}deg) scale(${scale})`,
+          opacity: progress,
+          transformOrigin: "center center"
+        };
+      }
+      case "flip": {
+        const angle = (1 - progress) * -90;
+        const isHorizontal = direction === "left" || direction === "right";
+        return {
+          transform: isHorizontal ? `perspective(1000px) rotateY(${angle}deg)` : `perspective(1000px) rotateX(${angle}deg)`,
+          opacity: progress > 0.5 ? 1 : 0,
+          transformOrigin: "center center"
+        };
+      }
+      case "blur": {
+        const blurAmount = (1 - progress) * 20;
+        return {
+          filter: `blur(${blurAmount}px)`,
+          opacity: progress
+        };
+      }
+      case "circle": {
+        const radius = 150 * progress;
+        return {
+          clipPath: `circle(${radius}% at 50% 50%)`
+        };
+      }
+      case "push": {
+        const offset = (1 - progress) * 100;
+        if (direction === "left") {
+          return { transform: `translateX(${offset}%)` };
+        } else if (direction === "right") {
+          return { transform: `translateX(-${offset}%)` };
+        } else if (direction === "up") {
+          return { transform: `translateY(${offset}%)` };
+        } else if (direction === "down") {
+          return { transform: `translateY(-${offset}%)` };
+        }
+        return { transform: `translateX(${offset}%)` };
+      }
+      case "crosszoom": {
+        const scale = 0.5 + progress * 0.5;
+        return {
+          transform: `scale(${scale})`,
+          opacity: progress
+        };
+      }
+      case "glitch": {
+        const seed = Math.floor(progress * 100);
+        const offsetX = (seed * 9301 + 49297) % 233280 / 233280 * 20 - 10;
+        const offsetY = (seed * 421 + 2038074743) % 2147483647 / 2147483647 * 20 - 10;
+        return {
+          transform: progress > 0.7 ? `translate(${offsetX}px, ${offsetY}px)` : "none",
+          opacity: progress
+        };
+      }
+      case "dissolve": {
+        const pixelSize = Math.floor((1 - progress) * 20);
+        return {
+          filter: pixelSize > 0 ? `blur(${pixelSize}px)` : "none",
+          opacity: progress
+        };
+      }
+      case "cube": {
+        const angle = (1 - progress) * -90;
+        const isHorizontal = direction === "left" || direction === "right";
+        const rotateDir = direction === "left" || direction === "up" ? -1 : 1;
+        return {
+          transform: isHorizontal ? `perspective(2000px) rotateY(${angle * rotateDir}deg) translateZ(-500px)` : `perspective(2000px) rotateX(${angle * rotateDir}deg) translateZ(-500px)`,
+          transformOrigin: "center center",
+          opacity: progress > 0.5 ? 1 : 0
+        };
+      }
+      case "swirl": {
+        const angle = (1 - progress) * -180;
+        const scale = progress;
+        return {
+          transform: `rotate(${angle}deg) scale(${scale})`,
+          opacity: progress,
+          filter: `blur(${(1 - progress) * 10}px)`
+        };
+      }
+      case "diagonal-wipe": {
+        const offset = (1 - progress) * 150;
+        if (direction === "left") {
+          return { clipPath: `polygon(100% 100%, ${offset}% 100%, 100% ${offset}%, 100% 100%)` };
+        } else if (direction === "right") {
+          return { clipPath: `polygon(0 100%, 0 ${offset}%, ${100 - offset}% 100%, 0 100%)` };
+        }
+        return { clipPath: `polygon(100% 100%, ${offset}% 100%, 100% ${offset}%, 100% 100%)` };
+      }
+      case "iris": {
+        const radius = 100 * progress;
+        return {
+          clipPath: `circle(${radius}% at 50% 50%)`
+        };
       }
       case "cut":
       default:

@@ -805,7 +805,7 @@ type Layer = ImageLayer | VideoLayer | TextLayer | ShapeLayer | AudioLayer | Gro
 /**
  * Scene transition types.
  */
-type TransitionType = 'cut' | 'fade' | 'slide' | 'wipe' | 'zoom';
+type TransitionType = 'cut' | 'fade' | 'slide' | 'wipe' | 'zoom' | 'rotate' | 'flip' | 'blur' | 'circle' | 'push' | 'crosszoom' | 'glitch' | 'dissolve' | 'cube' | 'swirl' | 'diagonal-wipe' | 'iris';
 /**
  * Transition direction.
  */
