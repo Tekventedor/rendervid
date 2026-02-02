@@ -314,10 +314,14 @@ async function generateGIF(browser, example) {
     if (frame >= totalFrames) break;
 
     const html = generateHTML(template, frame, out.width, out.height);
-    await page.setContent(html, { waitUntil: 'networkidle0' });
 
+    // Only wait for network on first frame (fonts load), then use faster strategy
     if (i === 0) {
-      await new Promise(r => setTimeout(r, 500)); // Wait for fonts on first frame
+      await page.setContent(html, { waitUntil: 'networkidle0' });
+      await new Promise(r => setTimeout(r, 500)); // Extra wait for fonts on first frame
+    } else {
+      await page.setContent(html, { waitUntil: 'domcontentloaded' });
+      await new Promise(r => setTimeout(r, 50)); // Small delay for rendering
     }
 
     const framePath = path.join(frameDir, `frame-${String(i).padStart(4, '0')}.png`);
