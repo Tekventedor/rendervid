@@ -12,33 +12,33 @@
   "inputs": [
     {
       "key": "image1",
-      "type": "image",
+      "type": "string",
       "label": "First Image",
       "description": "URL to the first image",
       "required": true,
-      "default": "https://www.photomaticai.com/images/ai-generated-images/models_ideogram-v2a_ai-image-generator_sleek-desig_Futuristic_3D_Workspace_Design.webp"
+      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_flux-dev_ai-image-generator_soft-retro_1970s_Soft_Retro_Living_Room.webp"
     },
     {
       "key": "image2",
-      "type": "image",
+      "type": "string",
       "label": "Second Image",
       "description": "URL to the second image",
       "required": true,
-      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2_ai-image-generator_cinematic-3d_Futuristic_City_Skyline_at_Sunset.webp"
+      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v3-balanced_ai-image-generator_pen_Whimsical_Pencil_Cityscape.webp"
     },
     {
       "key": "image3",
-      "type": "image",
+      "type": "string",
       "label": "Third Image",
       "description": "URL to the third image",
       "required": true,
-      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2-turbo_ai-image-generator_abstra_Surreal_Abstract_Film_Dreamscape.webp"
+      "default": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp"
     }
   ],
   "defaults": {
-    "image1": "https://www.photomaticai.com/images/ai-generated-images/models_ideogram-v2a_ai-image-generator_sleek-desig_Futuristic_3D_Workspace_Design.webp",
-    "image2": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2_ai-image-generator_cinematic-3d_Futuristic_City_Skyline_at_Sunset.webp",
-    "image3": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2-turbo_ai-image-generator_abstra_Surreal_Abstract_Film_Dreamscape.webp"
+    "image1": "https://www.photomaticai.com/images/processed/ai-generated-images/models_flux-dev_ai-image-generator_soft-retro_1970s_Soft_Retro_Living_Room.webp",
+    "image2": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v3-balanced_ai-image-generator_pen_Whimsical_Pencil_Cityscape.webp",
+    "image3": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp"
   },
   "composition": {
     "scenes": [

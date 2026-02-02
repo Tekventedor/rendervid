@@ -502,21 +502,31 @@ async function generateVideo(browser, example) {
   const usesBrowserRenderer = usesCustomComponents || usesSceneTransitions;
 
   // Render all frames
+  // Track current scene to detect scene changes
+  let currentSceneId = null;
+
   for (let frame = 0; frame < totalFrames; frame++) {
     const html = usesBrowserRenderer
       ? generateHTMLWithRenderer(template, frame, out.width, out.height)
       : generateHTML(template, frame, out.width, out.height, dir);
 
-    // Only wait for network on first frame (fonts load), then use faster strategy
+    // Detect scene change (need to wait for images to load)
+    const currentScene = template.composition.scenes.find(
+      s => frame >= (s.startFrame || 0) && frame < (s.endFrame || totalFrames)
+    );
+    const sceneChanged = currentScene && currentScene.id !== currentSceneId;
+    if (currentScene) currentSceneId = currentScene.id;
+
+    // Wait for network on first frame and scene changes (images need to load)
     const t1 = Date.now();
-    if (frame === 0) {
+    if (frame === 0 || sceneChanged) {
       await page.setContent(html, { waitUntil: 'networkidle0' });
       if (usesBrowserRenderer) {
         // Wait for the renderer to be ready
         await page.waitForFunction(() => window.RENDERVID_READY === true, { timeout: 5000 });
         await new Promise(r => setTimeout(r, 500)); // Extra wait for first render
       } else {
-        await new Promise(r => setTimeout(r, 1000)); // Extra wait for fonts on first frame
+        await new Promise(r => setTimeout(r, 1000)); // Extra wait for fonts/images
       }
     } else {
       await page.setContent(html, { waitUntil: 'domcontentloaded' });
