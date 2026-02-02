@@ -1,0 +1,177 @@
+{
+  "name": "3D Sphere Animation",
+  "description": "A wireframe sphere with smooth rotation and futuristic styling, perfect for tech and sci-fi content.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title Text",
+      "required": false,
+      "default": "FUTURISTIC TECH"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle Text",
+      "required": false,
+      "default": "Next Generation 3D"
+    },
+    {
+      "key": "sphereColor",
+      "type": "color",
+      "label": "Sphere Color",
+      "required": false,
+      "default": "#00ffff"
+    },
+    {
+      "key": "accentColor",
+      "type": "color",
+      "label": "Accent Color",
+      "required": false,
+      "default": "#ff00ff"
+    }
+  ],
+  "defaults": {
+    "title": "FUTURISTIC TECH",
+    "subtitle": "Next Generation 3D",
+    "sphereColor": "#00ffff",
+    "accentColor": "#ff00ff"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0f"
+            }
+          },
+          {
+            "id": "bg-gradient-1",
+            "type": "shape",
+            "position": { "x": -100, "y": -100 },
+            "size": { "width": 800, "height": 800 },
+            "opacity": 0.1,
+            "props": {
+              "shape": "circle",
+              "fill": "{{accentColor}}"
+            }
+          },
+          {
+            "id": "bg-gradient-2",
+            "type": "shape",
+            "position": { "x": 1220, "y": 380 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.08,
+            "props": {
+              "shape": "circle",
+              "fill": "{{sphereColor}}"
+            }
+          },
+          {
+            "id": "three-scene",
+            "type": "ThreeScene",
+            "position": { "x": 510, "y": 240 },
+            "size": { "width": 600, "height": 600 },
+            "props": {
+              "geometry": "sphere",
+              "color": "{{sphereColor}}",
+              "wireframe": true,
+              "rotation": { "x": 0.2, "y": 0.4, "z": 0 },
+              "scale": 2,
+              "cameraDistance": 700,
+              "lighting": "ambient"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 360, "y": 120 },
+            "size": { "width": 1200, "height": 100 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 84,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 12
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInDown",
+                "delay": 20,
+                "duration": 25,
+                "easing": "easeOutQuad"
+              }
+            ]
+          },
+          {
+            "id": "title-accent",
+            "type": "shape",
+            "position": { "x": 860, "y": 205 },
+            "size": { "width": 200, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{accentColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 40,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 560, "y": 880 },
+            "size": { "width": 800, "height": 80 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 36,
+              "fontWeight": "300",
+              "color": "{{sphereColor}}",
+              "textAlign": "center",
+              "letterSpacing": 4
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 45,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

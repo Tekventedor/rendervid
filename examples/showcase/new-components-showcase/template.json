@@ -1,0 +1,521 @@
+{
+  "name": "New Components Showcase",
+  "description": "Comprehensive showcase combining all new components: AuroraBackground, WaveBackground, ParticleSystem, MetaBalls, GlitchEffect, ThreeScene, SVGDrawing, and TypewriterEffect in one impressive 9-second video.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 9
+  },
+  "inputs": [],
+  "defaults": {},
+  "composition": {
+    "scenes": [
+      {
+        "id": "scene1-aurora-particles",
+        "startFrame": 0,
+        "endFrame": 45,
+        "layers": [
+          {
+            "id": "aurora-bg",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "AuroraBackground",
+              "props": {
+                "colors": ["#667eea", "#764ba2", "#f093fb", "#4facfe", "#00f2fe"],
+                "speed": 1,
+                "blur": 40,
+                "opacity": 0.6
+              }
+            }
+          },
+          {
+            "id": "particles-overlay",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "ParticleSystem",
+              "props": {
+                "count": 100,
+                "size": 8,
+                "color": ["#ffffff", "#ff0080", "#00ffff"],
+                "speed": 1,
+                "direction": "random",
+                "opacity": 0.9,
+                "wrap": true,
+                "fadeIn": true,
+                "connections": true,
+                "connectionDistance": 150,
+                "width": 1920,
+                "height": 1080
+              }
+            }
+          },
+          {
+            "id": "scene1-title",
+            "type": "text",
+            "position": { "x": 460, "y": 400 },
+            "size": { "width": 1000, "height": 200 },
+            "props": {
+              "text": "AURORA\nPARTICLES",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 6,
+              "lineHeight": 1.2,
+              "textShadow": "0 0 40px rgba(102, 126, 234, 0.8)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 20,
+                "easing": "easeOut"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 35,
+                "duration": 10
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "scene2-wave-typewriter",
+        "startFrame": 45,
+        "endFrame": 90,
+        "layers": [
+          {
+            "id": "dark-bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a1f"
+            }
+          },
+          {
+            "id": "wave-bg",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "WaveBackground",
+              "props": {
+                "colors": ["#4facfe", "#00f2fe", "#43e97b"],
+                "waveCount": 3,
+                "amplitude": 60,
+                "frequency": 0.02,
+                "speed": 0.8,
+                "direction": "bottom",
+                "opacity": 0.7
+              }
+            }
+          },
+          {
+            "id": "scene2-container",
+            "type": "shape",
+            "position": { "x": 360, "y": 340 },
+            "size": { "width": 1200, "height": 400 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(10, 10, 31, 0.8)",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 15,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "typewriter-text",
+            "type": "custom",
+            "position": { "x": 410, "y": 420 },
+            "size": { "width": 1100, "height": 250 },
+            "customComponent": {
+              "name": "TypewriterEffect",
+              "props": {
+                "text": "The future is here.\nFrame-perfect animations.\nBuilt for video.",
+                "speed": 15,
+                "cursor": true,
+                "cursorStyle": "bar",
+                "cursorColor": "#00f2fe",
+                "fontSize": 48,
+                "color": "#ffffff",
+                "fontFamily": "monospace",
+                "lineHeight": 1.6,
+                "startDelay": 15,
+                "soundPulse": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "scene3-metaballs",
+        "startFrame": 90,
+        "endFrame": 135,
+        "layers": [
+          {
+            "id": "metaballs-bg",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "MetaBalls",
+              "props": {
+                "count": 6,
+                "colors": ["#ff0080", "#00ffff", "#ffff00"],
+                "size": 120,
+                "speed": 1.2,
+                "blur": 50,
+                "movement": "orbit",
+                "backgroundColor": "#000000"
+              }
+            }
+          },
+          {
+            "id": "scene3-title",
+            "type": "text",
+            "position": { "x": 460, "y": 450 },
+            "size": { "width": 1000, "height": 180 },
+            "props": {
+              "text": "METABALLS",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 12,
+              "textShadow": "0 0 60px rgba(255, 0, 128, 0.9), 0 0 100px rgba(76, 0, 255, 0.6)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOut"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 35,
+                "duration": 10
+              }
+            ]
+          },
+          {
+            "id": "scene3-subtitle",
+            "type": "text",
+            "position": { "x": 560, "y": 620 },
+            "size": { "width": 800, "height": 60 },
+            "props": {
+              "text": "Organic Fluid Motion",
+              "fontSize": 32,
+              "color": "#ffffff",
+              "textAlign": "center",
+              "opacity": 0.8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 15
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 35,
+                "duration": 10
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "scene4-glitch",
+        "startFrame": 135,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "glitch-bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "glitch-text-container",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "GlitchEffect",
+              "props": {
+                "type": "rgb-split",
+                "intensity": 0.7,
+                "frequency": 0.15,
+                "duration": 120
+              }
+            }
+          },
+          {
+            "id": "scene4-title",
+            "type": "text",
+            "position": { "x": 360, "y": 420 },
+            "size": { "width": 1200, "height": 240 },
+            "props": {
+              "text": "GLITCH\nEFFECT",
+              "fontSize": 110,
+              "fontWeight": "bold",
+              "color": "#00ff00",
+              "textAlign": "center",
+              "letterSpacing": 8,
+              "lineHeight": 1.2,
+              "fontFamily": "monospace"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "zoomIn",
+                "delay": 0,
+                "duration": 15,
+                "easing": "easeOut"
+              }
+            ]
+          },
+          {
+            "id": "scene4-subtitle",
+            "type": "text",
+            "position": { "x": 560, "y": 680 },
+            "size": { "width": 800, "height": 60 },
+            "props": {
+              "text": "Digital Distortion",
+              "fontSize": 28,
+              "color": "#00ff00",
+              "textAlign": "center",
+              "opacity": 0.7,
+              "fontFamily": "monospace"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "scene5-threejs",
+        "startFrame": 180,
+        "endFrame": 225,
+        "layers": [
+          {
+            "id": "three-bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a2e"
+            }
+          },
+          {
+            "id": "three-scene",
+            "type": "custom",
+            "position": { "x": 560, "y": 190 },
+            "size": { "width": 800, "height": 600 },
+            "customComponent": {
+              "name": "ThreeScene",
+              "props": {
+                "geometry": "box",
+                "color": "#7c3aed",
+                "wireframe": false,
+                "rotation": { "x": 0.5, "y": 1, "z": 0.3 },
+                "scale": 2.5,
+                "cameraDistance": 600,
+                "lighting": "directional"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "scene5-title",
+            "type": "text",
+            "position": { "x": 460, "y": 850 },
+            "size": { "width": 1000, "height": 100 },
+            "props": {
+              "text": "3D GRAPHICS",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 15,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "scene5-subtitle",
+            "type": "text",
+            "position": { "x": 560, "y": 950 },
+            "size": { "width": 800, "height": 60 },
+            "props": {
+              "text": "Powered by Three.js",
+              "fontSize": 28,
+              "color": "#a0a0a0",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "scene6-svg-drawing",
+        "startFrame": 225,
+        "endFrame": 270,
+        "layers": [
+          {
+            "id": "svg-bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a1f"
+            }
+          },
+          {
+            "id": "svg-drawing",
+            "type": "custom",
+            "position": { "x": 660, "y": 290 },
+            "size": { "width": 600, "height": 400 },
+            "customComponent": {
+              "name": "SVGDrawing",
+              "props": {
+                "duration": 1.5,
+                "mode": "oneByOne",
+                "strokeColor": "#00ffff",
+                "strokeWidth": 4,
+                "delay": 0.1,
+                "easing": "ease-in-out",
+                "viewBox": "0 0 200 200",
+                "svgContent": "<svg viewBox=\"0 0 200 200\"><path d=\"M100,30 L130,90 L100,150 L70,90 Z\" /><circle cx=\"100\" cy=\"100\" r=\"60\" /><path d=\"M40,100 L160,100 M100,40 L100,160\" /></svg>"
+              }
+            }
+          },
+          {
+            "id": "scene6-title",
+            "type": "text",
+            "position": { "x": 360, "y": 760 },
+            "size": { "width": 1200, "height": 120 },
+            "props": {
+              "text": "SVG DRAWING",
+              "fontSize": 80,
+              "fontWeight": "bold",
+              "color": "#00ffff",
+              "textAlign": "center",
+              "letterSpacing": 10,
+              "textShadow": "0 0 30px rgba(0, 255, 255, 0.6)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 5,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "scene6-subtitle",
+            "type": "text",
+            "position": { "x": 560, "y": 890 },
+            "size": { "width": 800, "height": 60 },
+            "props": {
+              "text": "Animated Vector Graphics",
+              "fontSize": 32,
+              "color": "#ffffff",
+              "textAlign": "center",
+              "opacity": 0.8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "final-logo",
+            "type": "text",
+            "position": { "x": 460, "y": 180 },
+            "size": { "width": 1000, "height": 80 },
+            "props": {
+              "text": "RENDERVID",
+              "fontSize": 52,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 6,
+              "opacity": 0.6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

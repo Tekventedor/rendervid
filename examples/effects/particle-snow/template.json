@@ -1,0 +1,270 @@
+{
+  "name": "Particle Snow Effect",
+  "description": "Gentle falling snow particles with winter-themed text overlay, perfect for seasonal content.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "message",
+      "type": "string",
+      "label": "Message Text",
+      "required": true,
+      "default": "Winter Wonderland"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle Text",
+      "required": false,
+      "default": "Season's Greetings"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#1a2332"
+    },
+    {
+      "key": "snowIntensity",
+      "type": "number",
+      "label": "Snow Intensity",
+      "required": false,
+      "default": 120
+    }
+  ],
+  "defaults": {
+    "message": "Winter Wonderland",
+    "subtitle": "Season's Greetings",
+    "backgroundColor": "#1a2332",
+    "snowIntensity": 120
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "snow-scene",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "angle": 180,
+                "colors": [
+                  { "offset": 0, "color": "{{backgroundColor}}" },
+                  { "offset": 1, "color": "#0f1419" }
+                ]
+              }
+            }
+          },
+          {
+            "id": "snow-large",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "particle-system",
+              "props": {
+                "frame": 0,
+                "fps": 30,
+                "count": "{{snowIntensity}}",
+                "type": "circle",
+                "color": "#ffffff",
+                "size": [2, 5],
+                "speed": [0.5, 1.5],
+                "direction": "down",
+                "opacity": [0.3, 0.8],
+                "wrap": true,
+                "fadeIn": true,
+                "width": 1920,
+                "height": 1080,
+                "seed": 500
+              }
+            }
+          },
+          {
+            "id": "snow-small",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "particle-system",
+              "props": {
+                "frame": 0,
+                "fps": 30,
+                "count": 80,
+                "type": "circle",
+                "color": "#ffffff",
+                "size": [1, 2],
+                "speed": [0.3, 0.8],
+                "direction": "down",
+                "opacity": [0.2, 0.5],
+                "wrap": true,
+                "fadeIn": true,
+                "width": 1920,
+                "height": 1080,
+                "seed": 600
+              }
+            }
+          },
+          {
+            "id": "snowflakes",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "particle-system",
+              "props": {
+                "frame": 0,
+                "fps": 30,
+                "count": 30,
+                "type": "star",
+                "color": "#e0f2fe",
+                "size": [3, 7],
+                "speed": [0.4, 1],
+                "direction": "down",
+                "opacity": [0.4, 0.9],
+                "wrap": true,
+                "fadeIn": true,
+                "width": 1920,
+                "height": 1080,
+                "seed": 700
+              }
+            }
+          },
+          {
+            "id": "content-background",
+            "type": "shape",
+            "position": { "x": 260, "y": 380 },
+            "size": { "width": 1400, "height": 320 },
+            "opacity": 0.15,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff",
+              "borderRadius": 30
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 30,
+                "duration": 35
+              }
+            ]
+          },
+          {
+            "id": "message",
+            "type": "text",
+            "position": { "x": 160, "y": 420 },
+            "size": { "width": 1600, "height": 120 },
+            "props": {
+              "text": "{{message}}",
+              "fontSize": 88,
+              "fontWeight": "700",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 8,
+              "textShadow": {
+                "color": "rgba(0, 0, 0, 0.5)",
+                "blur": 20,
+                "offsetX": 0,
+                "offsetY": 4
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInDown",
+                "delay": 45,
+                "duration": 35,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 160, "y": 560 },
+            "size": { "width": 1600, "height": 60 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 36,
+              "fontWeight": "normal",
+              "color": "#d1e7f5",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 6,
+              "textShadow": {
+                "color": "rgba(0, 0, 0, 0.4)",
+                "blur": 10,
+                "offsetX": 0,
+                "offsetY": 2
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 70,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "decorative-snowflake-left",
+            "type": "shape",
+            "position": { "x": 340, "y": 480 },
+            "size": { "width": 50, "height": 50 },
+            "opacity": 0.6,
+            "props": {
+              "shape": "star",
+              "fill": "#ffffff",
+              "points": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "rotateIn",
+                "delay": 60,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "decorative-snowflake-right",
+            "type": "shape",
+            "position": { "x": 1530, "y": 480 },
+            "size": { "width": 50, "height": 50 },
+            "opacity": 0.6,
+            "props": {
+              "shape": "star",
+              "fill": "#ffffff",
+              "points": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "rotateIn",
+                "delay": 60,
+                "duration": 30
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

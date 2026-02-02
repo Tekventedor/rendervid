@@ -1,0 +1,192 @@
+{
+  "name": "MetaBalls Intro",
+  "description": "Fluid metaballs animation with vibrant colors and orbital movement, perfect for modern intros and creative content.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title Text",
+      "required": false,
+      "default": "CREATIVE STUDIO"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle Text",
+      "required": false,
+      "default": "Where Ideas Flow"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#ff0080"
+    },
+    {
+      "key": "secondaryColor",
+      "type": "color",
+      "label": "Secondary Color",
+      "required": false,
+      "default": "#7928ca"
+    },
+    {
+      "key": "tertiaryColor",
+      "type": "color",
+      "label": "Tertiary Color",
+      "required": false,
+      "default": "#4c00ff"
+    }
+  ],
+  "defaults": {
+    "title": "CREATIVE STUDIO",
+    "subtitle": "Where Ideas Flow",
+    "primaryColor": "#ff0080",
+    "secondaryColor": "#7928ca",
+    "tertiaryColor": "#4c00ff"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "metaballs",
+            "type": "MetaBalls",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "count": 6,
+              "colors": ["{{primaryColor}}", "{{secondaryColor}}", "{{tertiaryColor}}"],
+              "size": 100,
+              "speed": 0.8,
+              "blur": 50,
+              "movement": "orbit",
+              "backgroundColor": "#0a0014"
+            }
+          },
+          {
+            "id": "overlay-top",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 200 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "fill": "linear-gradient(to bottom, #0a0014 0%, transparent 100%)"
+            }
+          },
+          {
+            "id": "overlay-bottom",
+            "type": "shape",
+            "position": { "x": 0, "y": 880 },
+            "size": { "width": 1920, "height": 200 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "fill": "linear-gradient(to top, #0a0014 0%, transparent 100%)"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 360, "y": 420 },
+            "size": { "width": 1200, "height": 120 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 96,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 10,
+              "textShadow": "0 4px 20px rgba(0, 0, 0, 0.8)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 20,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "title-underline",
+            "type": "shape",
+            "position": { "x": 760, "y": 545 },
+            "size": { "width": 400, "height": 6 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{primaryColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 45,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 560, "y": 570 },
+            "size": { "width": 800, "height": 70 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 38,
+              "fontWeight": "300",
+              "color": "#e0e0e0",
+              "textAlign": "center",
+              "letterSpacing": 4,
+              "textShadow": "0 2px 15px rgba(0, 0, 0, 0.8)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "cta",
+            "type": "text",
+            "position": { "x": 710, "y": 900 },
+            "size": { "width": 500, "height": 50 },
+            "props": {
+              "text": "Experience the Flow",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 3,
+              "textShadow": "0 2px 10px rgba(0, 0, 0, 0.8)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 75,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

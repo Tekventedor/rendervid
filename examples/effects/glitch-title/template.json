@@ -1,0 +1,40 @@
+{
+  "name": "Glitch Title",
+  "description": "Cyberpunk-style title card with dramatic RGB split and scramble glitch effects. Perfect for tech content, gaming videos, or edgy introductions.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Main Title",
+      "required": true,
+      "default": "SYSTEM BREACH"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "required": false,
+      "default": "Access Granted"
+    },
+    {
+      "key": "accentColor",
+      "type": "color",
+      "label": "Accent Color",
+      "required": false,
+      "default": "#00ff00"
+    }
+  ],
+  "defaults": {
+    "title": "SYSTEM BREACH",
+    "subtitle": "Access Granted",
+    "accentColor": "#00ff00"
+  }
+}

@@ -1,6 +1,7 @@
 // Engine
 export {
   RendervidEngine,
+  getDefaultRegistry,
   type EngineOptions,
   type EngineCapabilities,
   type ElementCapability,

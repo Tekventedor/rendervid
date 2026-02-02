@@ -1,0 +1,56 @@
+{
+  "name": "Glitch Transition",
+  "description": "Multi-layer text composition with different glitch frequencies and types creating a dynamic, chaotic visual experience.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "line1",
+      "type": "string",
+      "label": "Line 1",
+      "required": true,
+      "default": "DIGITAL"
+    },
+    {
+      "key": "line2",
+      "type": "string",
+      "label": "Line 2 (Main)",
+      "required": true,
+      "default": "CHAOS"
+    },
+    {
+      "key": "line3",
+      "type": "string",
+      "label": "Line 3",
+      "required": true,
+      "default": "THEORY"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "required": false,
+      "default": "Where order meets disorder"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0a0a0a"
+    }
+  ],
+  "defaults": {
+    "line1": "DIGITAL",
+    "line2": "CHAOS",
+    "line3": "THEORY",
+    "tagline": "Where order meets disorder",
+    "backgroundColor": "#0a0a0a"
+  }
+}

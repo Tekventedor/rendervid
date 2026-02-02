@@ -7,6 +7,20 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { TemplateRenderer } from '@rendervid/renderer-browser';
 import type { Template } from '@rendervid/core';
+import { getDefaultRegistry } from '@rendervid/core';
+
+// Import all custom components from @rendervid/components
+import {
+  AuroraBackground,
+  WaveBackground,
+  ParticleSystem,
+  GlitchEffect,
+  ThreeScene,
+  LottieAnimation,
+  SVGDrawing,
+  TypewriterEffect,
+  MetaBalls,
+} from '@rendervid/components';
 
 // Extend window interface
 declare global {
@@ -28,6 +42,24 @@ declare global {
     return;
   }
 
+  // Get the default registry and register all custom components
+  const registry = getDefaultRegistry();
+
+  // Register background components
+  registry.register('AuroraBackground', AuroraBackground as never);
+  registry.register('WaveBackground', WaveBackground as never);
+
+  // Register effect components
+  registry.register('ParticleSystem', ParticleSystem as never);
+  registry.register('GlitchEffect', GlitchEffect as never);
+  registry.register('ThreeScene', ThreeScene as never);
+  registry.register('LottieAnimation', LottieAnimation as never);
+  registry.register('SVGDrawing', SVGDrawing as never);
+  registry.register('TypewriterEffect', TypewriterEffect as never);
+  registry.register('MetaBalls', MetaBalls as never);
+
+  console.log('Registered custom components:', registry.list().map(c => c.name));
+
   // Create React root
   const root = createRoot(rootElement);
   window.__rendervidRoot = root;
@@ -46,7 +78,7 @@ declare global {
 
     const { width, height, fps = 30 } = template.output;
 
-    // Render the template at the current frame
+    // Render the template at the current frame with the registry
     root.render(
       <React.StrictMode>
         <TemplateRenderer
@@ -56,6 +88,7 @@ declare global {
           width={width}
           height={height}
           isPlaying={false}
+          registry={registry}
         />
       </React.StrictMode>
     );

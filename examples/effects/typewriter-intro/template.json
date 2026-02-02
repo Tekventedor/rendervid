@@ -1,0 +1,223 @@
+{
+  "name": "Typewriter Intro",
+  "description": "Classic terminal-style typewriter intro with retro computer aesthetic and cursor animation.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
+  "inputs": [
+    {
+      "key": "line1",
+      "type": "string",
+      "label": "First Line",
+      "required": true,
+      "default": "SYSTEM BOOT SEQUENCE"
+    },
+    {
+      "key": "line2",
+      "type": "string",
+      "label": "Second Line",
+      "required": true,
+      "default": "INITIALIZING COMPONENTS..."
+    },
+    {
+      "key": "line3",
+      "type": "string",
+      "label": "Third Line",
+      "required": true,
+      "default": "WELCOME TO THE MATRIX"
+    },
+    {
+      "key": "cursorColor",
+      "type": "color",
+      "label": "Cursor Color",
+      "required": false,
+      "default": "#00ff00"
+    }
+  ],
+  "defaults": {
+    "line1": "SYSTEM BOOT SEQUENCE",
+    "line2": "INITIALIZING COMPONENTS...",
+    "line3": "WELCOME TO THE MATRIX",
+    "cursorColor": "#00ff00"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "terminal-border",
+            "type": "shape",
+            "position": { "x": 160, "y": 190 },
+            "size": { "width": 1600, "height": 700 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "transparent",
+              "stroke": "#00ff00",
+              "strokeWidth": 2
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "terminal-header",
+            "type": "shape",
+            "position": { "x": 160, "y": 190 },
+            "size": { "width": 1600, "height": 60 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#00ff0022"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "terminal-title",
+            "type": "text",
+            "position": { "x": 180, "y": 200 },
+            "size": { "width": 1560, "height": 40 },
+            "props": {
+              "text": "TERMINAL v1.0.0",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "color": "#00ff00",
+              "fontFamily": "monospace",
+              "textAlign": "left"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "prompt",
+            "type": "text",
+            "position": { "x": 200, "y": 300 },
+            "size": { "width": 100, "height": 40 },
+            "props": {
+              "text": "> ",
+              "fontSize": 32,
+              "fontWeight": "bold",
+              "color": "#00ff00",
+              "fontFamily": "monospace",
+              "textAlign": "left"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "line1",
+            "type": "typewriter",
+            "position": { "x": 250, "y": 300 },
+            "size": { "width": 1400, "height": 50 },
+            "props": {
+              "text": "{{line1}}",
+              "fontSize": 32,
+              "color": "#00ff00",
+              "fontFamily": "monospace",
+              "speed": "normal",
+              "cursor": true,
+              "cursorStyle": "block",
+              "cursorColor": "{{cursorColor}}",
+              "startDelay": 40
+            }
+          },
+          {
+            "id": "line2",
+            "type": "typewriter",
+            "position": { "x": 200, "y": 400 },
+            "size": { "width": 1500, "height": 50 },
+            "props": {
+              "text": "{{line2}}",
+              "fontSize": 32,
+              "color": "#00cc00",
+              "fontFamily": "monospace",
+              "speed": "fast",
+              "cursor": true,
+              "cursorStyle": "block",
+              "cursorColor": "{{cursorColor}}",
+              "startDelay": 110
+            }
+          },
+          {
+            "id": "line3",
+            "type": "typewriter",
+            "position": { "x": 200, "y": 500 },
+            "size": { "width": 1500, "height": 50 },
+            "props": {
+              "text": "{{line3}}",
+              "fontSize": 36,
+              "fontWeight": "bold",
+              "color": "#00ff00",
+              "fontFamily": "monospace",
+              "speed": "slow",
+              "cursor": true,
+              "cursorStyle": "block",
+              "cursorColor": "{{cursorColor}}",
+              "startDelay": 160,
+              "soundPulse": true
+            }
+          },
+          {
+            "id": "scan-line",
+            "type": "shape",
+            "position": { "x": 160, "y": 190 },
+            "size": { "width": 1600, "height": 2 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#00ff00"
+            },
+            "animations": [
+              {
+                "type": "continuous",
+                "effect": "panDown",
+                "distance": 700,
+                "duration": 240
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

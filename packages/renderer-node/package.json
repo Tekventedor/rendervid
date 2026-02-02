@@ -25,6 +25,7 @@
   "dependencies": {
     "@rendervid/core": "workspace:*",
     "@rendervid/renderer-browser": "workspace:*",
+    "@rendervid/components": "workspace:*",
     "puppeteer": "^22.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "react": "^19.0.0",

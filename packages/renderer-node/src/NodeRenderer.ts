@@ -1,8 +1,8 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import os from 'os';
-import { getCompositionDuration } from '@rendervid/core';
-import type { Template } from '@rendervid/core';
+import { getCompositionDuration, getDefaultRegistry } from '@rendervid/core';
+import type { Template, ComponentRegistry } from '@rendervid/core';
 import { FrameCapturer, createFrameCapturer } from './frame-capturer';
 import { FFmpegEncoder, createFFmpegEncoder } from './ffmpeg-encoder';
 import type {
@@ -14,16 +14,35 @@ import type {
   RenderProgress,
 } from './types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type CustomComponentType = (props: any) => unknown;
+
 /**
  * Node.js renderer using Puppeteer and FFmpeg
  */
 export class NodeRenderer {
   private options: NodeRendererOptions;
   private ffmpegEncoder: FFmpegEncoder;
+  private registry: ComponentRegistry;
 
   constructor(options: NodeRendererOptions = {}) {
     this.options = options;
     this.ffmpegEncoder = createFFmpegEncoder(options.ffmpeg);
+    this.registry = options.registry || getDefaultRegistry();
+  }
+
+  /**
+   * Get the component registry.
+   */
+  getRegistry(): ComponentRegistry {
+    return this.registry;
+  }
+
+  /**
+   * Register a custom component.
+   */
+  registerComponent(name: string, component: CustomComponentType): void {
+    this.registry.register(name, component);
   }
 
   /**
@@ -176,6 +195,7 @@ export class NodeRenderer {
           inputs,
           puppeteerOptions,
           renderWaitTime,
+          registry: this.registry,
         });
         await capturer.initialize();
         capturers.push(capturer);
@@ -421,6 +441,7 @@ export class NodeRenderer {
         inputs,
         puppeteerOptions,
         renderWaitTime,
+        registry: this.registry,
       });
       await capturer.initialize();
 
@@ -506,6 +527,7 @@ export class NodeRenderer {
         inputs,
         puppeteerOptions,
         renderWaitTime,
+        registry: this.registry,
       });
       await capturer.initialize();
 

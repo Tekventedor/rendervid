@@ -1,6 +1,6 @@
 import type { Browser, Page } from 'puppeteer';
 import puppeteer from 'puppeteer';
-import type { Template } from '@rendervid/core';
+import type { Template, ComponentRegistry } from '@rendervid/core';
 import type { PuppeteerLaunchOptions } from './types';
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -17,6 +17,8 @@ export interface FrameCapturerConfig {
   puppeteerOptions?: PuppeteerLaunchOptions;
   /** Time to wait after rendering before capturing (ms, default: 50) */
   renderWaitTime?: number;
+  /** Custom component registry */
+  registry?: ComponentRegistry;
 }
 
 /**
@@ -85,12 +87,15 @@ export class FrameCapturer {
    * Generate the HTML for rendering
    */
   private generateRenderHTML(): string {
-    const { template, inputs = {} } = this.config;
+    const { template, inputs = {}, registry } = this.config;
     const { width, height } = template.output;
 
     // Serialize template and inputs for the renderer
     const templateJson = JSON.stringify(template);
     const inputsJson = JSON.stringify(inputs);
+
+    // Serialize registry component info (not the actual components, as they need to be injected separately)
+    const registryInfo = registry ? JSON.stringify(registry.list().map(c => c.name)) : '[]';
 
     return `
 <!DOCTYPE html>
@@ -124,6 +129,8 @@ export class FrameCapturer {
     window.RENDERVID_TEMPLATE = ${templateJson};
     window.RENDERVID_INPUTS = ${inputsJson};
     window.RENDERVID_CURRENT_FRAME = 0;
+    window.RENDERVID_REGISTRY_COMPONENTS = ${registryInfo};
+    window.RENDERVID_CUSTOM_COMPONENTS = {};
 
     // Render function that will be called for each frame
     window.renderFrame = function(frame) {
@@ -181,6 +188,9 @@ export class FrameCapturer {
       // Inject the renderer code
       await this.page.addScriptTag({ content: rendererCode });
 
+      // Inject custom components from registry
+      await this.injectCustomComponents();
+
       // Add debugging info to the page
       await this.page.evaluate(`console.log('Browser renderer injected successfully')`);
     } catch (error) {
@@ -188,6 +198,34 @@ export class FrameCapturer {
         `Failed to load browser renderer bundle: ${error instanceof Error ? error.message : String(error)}`
       );
     }
+  }
+
+  /**
+   * Inject custom components from the registry into the page.
+   * Note: This requires components to be serializable or pre-bundled.
+   * For now, we'll inject component names and the renderer will need to handle them.
+   */
+  private async injectCustomComponents(): Promise<void> {
+    if (!this.page) {
+      throw new Error('Frame capturer not initialized');
+    }
+
+    const { registry } = this.config;
+    if (!registry) {
+      return;
+    }
+
+    // For Node.js environment, we can't directly serialize React components
+    // The components need to be available in the browser bundle or injected as code strings
+    // This is a placeholder for future implementation where components can be bundled
+    // For now, we'll just make sure the registry info is available
+    await this.page.evaluate(`
+      (function() {
+        // Components will be available through the global RENDERVID_CUSTOM_COMPONENTS
+        // This will be populated by the application code that registers components
+        console.log('Custom components ready:', window.RENDERVID_REGISTRY_COMPONENTS);
+      })();
+    `);
   }
 
   /**

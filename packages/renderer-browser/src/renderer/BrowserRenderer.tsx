@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import type { Template, Scene } from '@rendervid/core';
+import type { Template, Scene, ComponentRegistry } from '@rendervid/core';
+import { getDefaultRegistry } from '@rendervid/core';
 import { TemplateRenderer, calculateTotalFrames } from './SceneRenderer';
 import { createFrameCapturer } from '../encoder/capturer';
 import { createWebCodecsEncoder, isWebCodecsSupported } from '../encoder/webcodecs';
@@ -13,7 +14,7 @@ export interface BrowserRendererOptions {
   /** Target container element */
   container?: HTMLElement;
   /** Custom component registry */
-  registry?: Map<string, CustomComponentType>;
+  registry?: ComponentRegistry;
   /** Whether to use WebCodecs (falls back to MediaRecorder if unavailable) */
   preferWebCodecs?: boolean;
 }
@@ -92,10 +93,12 @@ export class BrowserRenderer {
   private container: HTMLElement;
   private root: Root | null = null;
   private isRendering = false;
+  private registry: ComponentRegistry;
 
   constructor(options: BrowserRendererOptions = {}) {
     this.options = options;
     this.container = options.container || this.createContainer();
+    this.registry = options.registry || getDefaultRegistry();
   }
 
   private createContainer(): HTMLElement {
@@ -109,6 +112,21 @@ export class BrowserRenderer {
     `;
     document.body.appendChild(container);
     return container;
+  }
+
+  /**
+   * Get the component registry.
+   */
+  getRegistry(): ComponentRegistry {
+    return this.registry;
+  }
+
+  /**
+   * Register a custom component.
+   */
+  registerComponent(name: string, component: CustomComponentType): void {
+    // Cast React component to generic ComponentType
+    this.registry.register(name, component as unknown as import('@rendervid/core').ComponentType);
   }
 
   /**
@@ -425,7 +443,7 @@ export class BrowserRenderer {
           width={width}
           height={height}
           isPlaying={false}
-          registry={this.options.registry}
+          registry={this.registry}
         />
       );
 
@@ -489,7 +507,7 @@ export class BrowserRenderer {
             width={width}
             height={height}
             isPlaying={false}
-            registry={this.options.registry}
+            registry={this.registry}
           />
         );
 

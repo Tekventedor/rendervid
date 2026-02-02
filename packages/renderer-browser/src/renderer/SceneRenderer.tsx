@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Scene } from '@rendervid/core';
+import type { Scene, ComponentRegistry } from '@rendervid/core';
 import { LayerRenderer } from '../layers/LayerRenderer';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,7 +19,7 @@ export interface SceneRendererProps {
   /** Whether the scene is playing (for audio/video sync) */
   isPlaying?: boolean;
   /** Custom component registry */
-  registry?: Map<string, CustomComponentType>;
+  registry?: ComponentRegistry;
 }
 
 /**
@@ -27,6 +27,25 @@ export interface SceneRendererProps {
  */
 function getSceneDuration(scene: Scene): number {
   return scene.endFrame - scene.startFrame;
+}
+
+/**
+ * Convert ComponentRegistry to Map for backward compatibility with LayerRenderer.
+ */
+function registryToMap(registry?: ComponentRegistry): Map<string, CustomComponentType> | undefined {
+  if (!registry) return undefined;
+
+  const map = new Map<string, CustomComponentType>();
+  const components = registry.list();
+
+  for (const info of components) {
+    const component = registry.get(info.name);
+    if (component) {
+      map.set(info.name, component as CustomComponentType);
+    }
+  }
+
+  return map;
 }
 
 /**
@@ -43,6 +62,9 @@ export function SceneRenderer({
 }: SceneRendererProps) {
   // sceneDuration should be in frames, not seconds
   const sceneDuration = getSceneDuration(scene);
+
+  // Convert registry to map for LayerRenderer
+  const registryMap = React.useMemo(() => registryToMap(registry), [registry]);
 
   // Resolve scene background style
   const backgroundStyle: React.CSSProperties = {};
@@ -78,7 +100,7 @@ export function SceneRenderer({
           fps={fps}
           sceneDuration={sceneDuration}
           isPlaying={isPlaying}
-          registry={registry}
+          registry={registryMap}
         />
       ))}
     </div>
@@ -99,7 +121,7 @@ export interface TemplateRendererProps {
   /** Whether the scene is playing */
   isPlaying?: boolean;
   /** Custom component registry */
-  registry?: Map<string, CustomComponentType>;
+  registry?: ComponentRegistry;
 }
 
 /**

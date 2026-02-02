@@ -214,6 +214,22 @@ class DefaultComponentRegistry implements ComponentRegistry {
 }
 
 /**
+ * Global default registry instance.
+ */
+let globalRegistry: ComponentRegistry | null = null;
+
+/**
+ * Get the default global component registry.
+ * Creates one if it doesn't exist.
+ */
+export function getDefaultRegistry(): ComponentRegistry {
+  if (!globalRegistry) {
+    globalRegistry = new DefaultComponentRegistry();
+  }
+  return globalRegistry;
+}
+
+/**
  * Rendervid Engine.
  *
  * Main entry point for the Rendervid library.

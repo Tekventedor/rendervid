@@ -65,6 +65,40 @@ Animated data visualizations:
 | ![](./data-visualization/counter-animation/preview.gif) | [counter-animation](./data-visualization/counter-animation/) | Counting numbers | Video |
 | ![](./data-visualization/progress-dashboard/preview.gif) | [progress-dashboard](./data-visualization/progress-dashboard/) | Progress indicators | Video |
 
+### Backgrounds
+Stunning background effects using AuroraBackground and WaveBackground components:
+
+| Preview | Example | Description | Output |
+|---------|---------|-------------|--------|
+| ![](./backgrounds/aurora-intro/preview.gif) | [aurora-intro](./backgrounds/aurora-intro/) | Northern lights aurora intro | Video |
+| ![](./backgrounds/wave-ocean/preview.gif) | [wave-ocean](./backgrounds/wave-ocean/) | Serene ocean wave background | Video |
+| ![](./backgrounds/wave-energy/preview.gif) | [wave-energy](./backgrounds/wave-energy/) | High-energy dual wave effect | Video |
+
+### 3D Graphics
+3D rendering examples using ThreeScene component:
+
+| Preview | Example | Description | Output |
+|---------|---------|-------------|--------|
+| ![](./3d/rotating-cube/preview.gif) | [rotating-cube](./3d/rotating-cube/) | 3D rotating cube with lighting | Video |
+| ![](./3d/sphere-animation/preview.gif) | [sphere-animation](./3d/sphere-animation/) | Animated 3D sphere | Video |
+
+### Effects
+Visual effects using ParticleSystem, MetaBalls, GlitchEffect, SVGDrawing, and TypewriterEffect:
+
+| Preview | Example | Description | Output |
+|---------|---------|-------------|--------|
+| ![](./effects/particle-intro/preview.gif) | [particle-intro](./effects/particle-intro/) | Particle-based intro animation | Video |
+| ![](./effects/particle-explosion/preview.gif) | [particle-explosion](./effects/particle-explosion/) | Particle explosion effect | Video |
+| ![](./effects/particle-snow/preview.gif) | [particle-snow](./effects/particle-snow/) | Falling snow particles | Video |
+| ![](./effects/metaballs-intro/preview.gif) | [metaballs-intro](./effects/metaballs-intro/) | Fluid metaballs intro | Video |
+| ![](./effects/glitch-title/preview.gif) | [glitch-title](./effects/glitch-title/) | Glitch effect on title | Video |
+| ![](./effects/glitch-reveal/preview.gif) | [glitch-reveal](./effects/glitch-reveal/) | Glitchy reveal animation | Video |
+| ![](./effects/glitch-transition/preview.gif) | [glitch-transition](./effects/glitch-transition/) | Glitch scene transition | Video |
+| ![](./effects/svg-logo-reveal/preview.gif) | [svg-logo-reveal](./effects/svg-logo-reveal/) | SVG drawing logo reveal | Video |
+| ![](./effects/typewriter-intro/preview.gif) | [typewriter-intro](./effects/typewriter-intro/) | Typewriter text intro | Video |
+| ![](./effects/typewriter-code/preview.gif) | [typewriter-code](./effects/typewriter-code/) | Code typing effect | Video |
+| ![](./effects/typewriter-story/preview.gif) | [typewriter-story](./effects/typewriter-story/) | Story text with typewriter | Video |
+
 ### Advanced
 Advanced animation techniques:
 
@@ -152,6 +186,7 @@ Feature demonstrations showcasing all framework capabilities:
 
 | Preview | Example | Description | Output |
 |---------|---------|-------------|--------|
+| ![](./showcase/new-components-showcase/preview.gif) | [new-components-showcase](./showcase/new-components-showcase/) | 8 new components in one 9-second demo | Video |
 | ![](./showcase/all-fonts/preview.gif) | [all-fonts](./showcase/all-fonts/) | All 16 available fonts | Video |
 | ![](./showcase/all-animations/preview.gif) | [all-animations](./showcase/all-animations/) | All entrance, exit & emphasis animations | Video |
 | ![](./showcase/all-easing/preview.gif) | [all-easing](./showcase/all-easing/) | All 31 easing functions | Video |

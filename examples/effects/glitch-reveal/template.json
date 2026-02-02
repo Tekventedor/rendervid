@@ -1,0 +1,48 @@
+{
+  "name": "Glitch Reveal",
+  "description": "Dramatic reveal effect where text starts heavily glitched and gradually becomes clear through multiple glitch type transitions.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "text",
+      "type": "string",
+      "label": "Initial Text",
+      "required": true,
+      "default": "TRANSMISSION INCOMING"
+    },
+    {
+      "key": "finalText",
+      "type": "string",
+      "label": "Final Text",
+      "required": true,
+      "default": "MESSAGE DECODED"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#000000"
+    },
+    {
+      "key": "textColor",
+      "type": "color",
+      "label": "Text Color",
+      "required": false,
+      "default": "#ffffff"
+    }
+  ],
+  "defaults": {
+    "text": "TRANSMISSION INCOMING",
+    "finalText": "MESSAGE DECODED",
+    "backgroundColor": "#000000",
+    "textColor": "#ffffff"
+  }
+}

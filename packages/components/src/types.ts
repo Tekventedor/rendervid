@@ -273,3 +273,181 @@ export interface ContainerProps extends BaseComponentProps {
   /** Gap between children */
   gap?: number | string;
 }
+
+/**
+ * Aurora Background props
+ */
+export interface AuroraBackgroundProps extends AnimatedProps {
+  /** Array of gradient colors (2-5 colors recommended) */
+  colors?: string[];
+  /** Animation speed multiplier (higher = faster) */
+  speed?: number;
+  /** Blur intensity in pixels */
+  blur?: number;
+  /** Overall opacity of the effect */
+  opacity?: number;
+  /** Width of the container */
+  width?: number | string;
+  /** Height of the container */
+  height?: number | string;
+}
+
+/**
+ * Wave Background props
+ */
+export interface WaveBackgroundProps extends AnimatedProps {
+  /** Array of gradient colors for the waves */
+  colors?: string[];
+  /** Number of wave layers (1-3) */
+  waveCount?: number;
+  /** Wave amplitude in pixels */
+  amplitude?: number;
+  /** Wave frequency (higher = more waves per width) */
+  frequency?: number;
+  /** Animation speed multiplier */
+  speed?: number;
+  /** Wave direction */
+  direction?: 'top' | 'bottom' | 'both';
+  /** Wave opacity (0-1) */
+  opacity?: number;
+  /** Container width */
+  width?: number | string;
+  /** Container height */
+  height?: number | string;
+}
+
+/**
+ * ParticleSystem props
+ */
+export interface ParticleSystemProps extends AnimatedProps {
+  /** Number of particles to render */
+  count?: number;
+  /** Particle shape type */
+  type?: 'circle' | 'square' | 'star' | 'image';
+  /** Particle color (or array of colors for random selection) */
+  color?: string | string[];
+  /** Particle size in pixels (or range [min, max]) */
+  size?: number | [number, number];
+  /** Particle movement speed (pixels per frame) */
+  speed?: number | [number, number];
+  /** Particle movement direction */
+  direction?: 'up' | 'down' | 'left' | 'right' | 'random' | 'radial' | 'static';
+  /** Particle opacity (0-1) */
+  opacity?: number | [number, number];
+  /** Particle lifetime in frames (0 = infinite) */
+  lifetime?: number;
+  /** Width of the particle system container */
+  width?: number;
+  /** Height of the particle system container */
+  height?: number;
+  /** Enable particle wrapping at edges */
+  wrap?: boolean;
+  /** Enable fade-in effect */
+  fadeIn?: boolean;
+  /** Enable fade-out effect */
+  fadeOut?: boolean;
+  /** Enable particle connections */
+  connections?: boolean;
+  /** Maximum distance for connections in pixels */
+  connectionDistance?: number;
+  /** Connection line color */
+  connectionColor?: string;
+  /** Connection line opacity */
+  connectionOpacity?: number;
+  /** Connection line width */
+  connectionWidth?: number;
+  /** Particle effect type */
+  effect?: 'gravity' | 'attraction' | 'repulsion' | 'connections' | 'none';
+  /** Effect strength (for gravity, attraction, repulsion) */
+  effectStrength?: number;
+  /** Effect center point [x, y] for attraction/repulsion (0-1 normalized) */
+  effectCenter?: [number, number];
+  /** Image URL (when type is 'image') */
+  imageUrl?: string;
+  /** Random seed for deterministic particle generation */
+  seed?: number;
+}
+
+/**
+ * 3D vector type
+ */
+export interface Vector3 {
+  x: number;
+  y: number;
+  z: number;
+}
+
+/**
+ * ThreeScene component props for 3D rendering
+ */
+export interface ThreeSceneProps extends AnimatedProps {
+  /** Geometry type */
+  geometry: 'box' | 'sphere' | 'torus' | 'plane';
+  /** Fill color */
+  color?: string;
+  /** Wireframe mode */
+  wireframe?: boolean;
+  /** Rotation speed in radians per second for each axis */
+  rotation?: Partial<Vector3>;
+  /** Position offset from center */
+  position?: Partial<Vector3>;
+  /** Scale multiplier */
+  scale?: number;
+  /** Camera distance from origin */
+  cameraDistance?: number;
+  /** Lighting mode */
+  lighting?: 'ambient' | 'directional' | 'none';
+  /** Width of the scene */
+  width?: number;
+  /** Height of the scene */
+  height?: number;
+}
+
+/**
+ * Lottie animation data type (standard Lottie JSON format)
+ */
+export interface LottieAnimationData {
+  v?: string; // Bodymovin version
+  fr?: number; // Frame rate
+  ip?: number; // In point (start frame)
+  op?: number; // Out point (end frame)
+  w?: number; // Width
+  h?: number; // Height
+  assets?: unknown[];
+  layers?: unknown[];
+  [key: string]: unknown;
+}
+
+/**
+ * LottieAnimation component props
+ */
+export interface LottieAnimationProps extends AnimatedProps {
+  /** Lottie JSON animation data (inline) */
+  animationData?: LottieAnimationData;
+  /** URL to Lottie JSON file */
+  src?: string;
+  /** Playback speed multiplier (default: 1) */
+  speed?: number;
+  /** Loop animation (default: true) */
+  loop?: boolean;
+  /** Autoplay (for video rendering, controlled by frame prop) */
+  autoplay?: boolean;
+  /** Width of animation container */
+  width?: number | string;
+  /** Height of animation container */
+  height?: number | string;
+}
+
+/**
+ * Glitch effect props
+ */
+export interface GlitchEffectProps extends AnimatedProps {
+  /** Type of glitch effect */
+  type: "slice" | "shift" | "rgb-split" | "noise" | "scramble";
+  /** Intensity of the glitch (0-1) */
+  intensity?: number;
+  /** Number of glitches per second */
+  frequency?: number;
+  /** Duration of each glitch in milliseconds */
+  duration?: number;
+}

@@ -25,10 +25,18 @@ export default defineConfig([
     splitting: false,
     // Bundle React and ReactDOM since they need to be available in the browser
     external: [],
-    noExternal: ['react', 'react-dom', '@rendervid/renderer-browser', '@rendervid/core'],
+    noExternal: ['react', 'react-dom', '@rendervid/renderer-browser', '@rendervid/core', '@rendervid/components'],
     esbuildOptions(options) {
       // Ensure globalName is set for IIFE format
       options.globalName = 'RendervidBrowserRenderer';
+
+      // Use automatic JSX runtime (matches component packages)
+      // This ensures consistent JSX transformation across all bundled code
+      options.jsx = 'automatic';
+
+      // Ensure React modules are deduplicated
+      options.conditions = ['module', 'import', 'default'];
+      options.mainFields = ['module', 'main'];
     },
   },
 ]);

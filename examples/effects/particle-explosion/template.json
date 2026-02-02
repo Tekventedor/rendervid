@@ -1,0 +1,226 @@
+{
+  "name": "Particle Explosion Effect",
+  "description": "Dramatic explosion effect with radial particles bursting from the center, followed by text reveal.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "message",
+      "type": "string",
+      "label": "Message Text",
+      "required": true,
+      "default": "BOOM!"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle Text",
+      "required": false,
+      "default": "Make an Impact"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0a0a0a"
+    }
+  ],
+  "defaults": {
+    "message": "BOOM!",
+    "subtitle": "Make an Impact",
+    "backgroundColor": "#0a0a0a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "explosion",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "center-glow",
+            "type": "shape",
+            "position": { "x": 660, "y": 240 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.4,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#ffffff" },
+                  { "offset": 0.3, "color": "#ff6b6b" },
+                  { "offset": 0.6, "color": "#ffd93d" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 40,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "explosion-particles-red",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "particle-system",
+              "props": {
+                "frame": 0,
+                "fps": 30,
+                "count": 60,
+                "type": "circle",
+                "color": "#ff6b6b",
+                "size": [3, 8],
+                "speed": [3, 6],
+                "direction": "radial",
+                "opacity": [0.6, 1],
+                "fadeIn": false,
+                "fadeOut": true,
+                "lifetime": 90,
+                "width": 1920,
+                "height": 1080,
+                "seed": 100
+              }
+            }
+          },
+          {
+            "id": "explosion-particles-yellow",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "particle-system",
+              "props": {
+                "frame": 0,
+                "fps": 30,
+                "count": 50,
+                "type": "star",
+                "color": "#ffd93d",
+                "size": [4, 10],
+                "speed": [2, 5],
+                "direction": "radial",
+                "opacity": [0.5, 0.9],
+                "fadeIn": false,
+                "fadeOut": true,
+                "lifetime": 80,
+                "width": 1920,
+                "height": 1080,
+                "seed": 200
+              }
+            }
+          },
+          {
+            "id": "explosion-particles-orange",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "particle-system",
+              "props": {
+                "frame": 0,
+                "fps": 30,
+                "count": 40,
+                "type": "square",
+                "color": "#ff9500",
+                "size": [2, 6],
+                "speed": [4, 7],
+                "direction": "radial",
+                "opacity": [0.7, 1],
+                "fadeIn": false,
+                "fadeOut": true,
+                "lifetime": 70,
+                "width": 1920,
+                "height": 1080,
+                "seed": 300
+              }
+            }
+          },
+          {
+            "id": "message",
+            "type": "text",
+            "position": { "x": 160, "y": 400 },
+            "size": { "width": 1600, "height": 140 },
+            "props": {
+              "text": "{{message}}",
+              "fontSize": 120,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 20,
+              "textShadow": {
+                "color": "rgba(255, 107, 107, 0.6)",
+                "blur": 30,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 25,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 160, "y": 560 },
+            "size": { "width": 1600, "height": 50 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 28,
+              "fontWeight": "600",
+              "color": "#cccccc",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 25
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

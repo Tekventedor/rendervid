@@ -1,0 +1,127 @@
+{
+  "name": "3D Rotating Cube",
+  "description": "A 3D rotating cube with customizable colors and rotation speed, showcasing ThreeScene component capabilities.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title Text",
+      "required": false,
+      "default": "3D CUBE"
+    },
+    {
+      "key": "cubeColor",
+      "type": "color",
+      "label": "Cube Color",
+      "required": false,
+      "default": "#4c00ff"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#1a1a2e"
+    }
+  ],
+  "defaults": {
+    "title": "3D CUBE",
+    "cubeColor": "#4c00ff",
+    "backgroundColor": "#1a1a2e"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "three-scene",
+            "type": "ThreeScene",
+            "position": { "x": 760, "y": 290 },
+            "size": { "width": 400, "height": 400 },
+            "props": {
+              "geometry": "box",
+              "color": "{{cubeColor}}",
+              "wireframe": false,
+              "rotation": { "x": 0.5, "y": 1, "z": 0.3 },
+              "scale": 1.5,
+              "cameraDistance": 600,
+              "lighting": "directional"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 10,
+                "duration": 20,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 460, "y": 780 },
+            "size": { "width": 1000, "height": 120 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 25,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 560, "y": 880 },
+            "size": { "width": 800, "height": 60 },
+            "props": {
+              "text": "Powered by ThreeScene",
+              "fontSize": 28,
+              "color": "#a0a0a0",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 15
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

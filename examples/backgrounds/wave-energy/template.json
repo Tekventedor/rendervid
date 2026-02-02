@@ -1,0 +1,79 @@
+{
+  "name": "Wave Energy",
+  "description": "High-energy wave background with vibrant purple/pink colors and waves from both top and bottom. Perfect for tech, gaming, and energetic content.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Main Title (First Line)",
+      "required": true,
+      "default": "UNLEASH"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle (Second Line)",
+      "required": true,
+      "default": "THE POWER"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "required": false,
+      "default": "Next Generation Technology"
+    },
+    {
+      "key": "waveColors",
+      "type": "array",
+      "label": "Wave Colors",
+      "required": false,
+      "default": ["#8b5cf6", "#d946ef", "#ec4899"],
+      "description": "Array of hex color codes for wave layers"
+    },
+    {
+      "key": "waveSpeed",
+      "type": "number",
+      "label": "Wave Speed",
+      "required": false,
+      "default": 0.8,
+      "min": 0.3,
+      "max": 2.0
+    },
+    {
+      "key": "waveCount",
+      "type": "number",
+      "label": "Wave Count",
+      "required": false,
+      "default": 3,
+      "min": 1,
+      "max": 3
+    },
+    {
+      "key": "amplitude",
+      "type": "number",
+      "label": "Wave Amplitude",
+      "required": false,
+      "default": 70,
+      "min": 40,
+      "max": 120
+    }
+  ],
+  "defaults": {
+    "title": "UNLEASH",
+    "subtitle": "THE POWER",
+    "tagline": "Next Generation Technology",
+    "waveColors": ["#8b5cf6", "#d946ef", "#ec4899"],
+    "waveSpeed": 0.8,
+    "waveCount": 3,
+    "amplitude": 70
+  }
+}

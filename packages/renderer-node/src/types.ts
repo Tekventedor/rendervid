@@ -1,4 +1,4 @@
-import type { Template } from '@rendervid/core';
+import type { Template, ComponentRegistry } from '@rendervid/core';
 
 /**
  * Options for video rendering
@@ -172,4 +172,6 @@ export interface NodeRendererOptions {
   tempDir?: string;
   /** Number of concurrent browser instances for parallel rendering (default: 1) */
   concurrency?: number;
+  /** Custom component registry */
+  registry?: ComponentRegistry;
 }

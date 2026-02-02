@@ -1,0 +1,71 @@
+{
+  "name": "Aurora Intro",
+  "description": "Stunning northern lights aurora background with animated title and subtitle. Perfect for elegant introductions and brand presentations.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Main Title",
+      "required": true,
+      "default": "WELCOME"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "required": false,
+      "default": "Experience the Magic"
+    },
+    {
+      "key": "auroraColors",
+      "type": "array",
+      "label": "Aurora Colors",
+      "required": false,
+      "default": ["#667eea", "#764ba2", "#f093fb", "#4facfe", "#00f2fe"],
+      "description": "Array of hex color codes for the aurora effect"
+    },
+    {
+      "key": "speed",
+      "type": "number",
+      "label": "Aurora Speed",
+      "required": false,
+      "default": 0.8,
+      "min": 0.1,
+      "max": 2.0
+    },
+    {
+      "key": "blur",
+      "type": "number",
+      "label": "Blur Amount",
+      "required": false,
+      "default": 40,
+      "min": 10,
+      "max": 80
+    },
+    {
+      "key": "opacity",
+      "type": "number",
+      "label": "Aurora Opacity",
+      "required": false,
+      "default": 0.6,
+      "min": 0.1,
+      "max": 1.0
+    }
+  ],
+  "defaults": {
+    "title": "WELCOME",
+    "subtitle": "Experience the Magic",
+    "auroraColors": ["#667eea", "#764ba2", "#f093fb", "#4facfe", "#00f2fe"],
+    "speed": 0.8,
+    "blur": 40,
+    "opacity": 0.6
+  }
+}
