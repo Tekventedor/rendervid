@@ -1,0 +1,551 @@
+{
+  "name": "New Text Animations Showcase",
+  "description": "Showcase of 8 new text animation components: ScrambleText, FlipText, FuzzyText, NeonText, TextTrail, LetterMorph, MorphText, and DistortText",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 18
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "scramble-scene",
+        "startFrame": 0,
+        "endFrame": 67,
+        "layers": [
+          {
+            "id": "bg1",
+            "type": "shape",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "title1",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "ScrambleText",
+              "fontSize": 42,
+              "fontWeight": "600",
+              "color": "#888888",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "scramble1",
+            "type": "custom",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1600, "height": 200 },
+            "customComponent": {
+              "name": "ScrambleText",
+              "props": {
+                "text": "MATRIX DECODING",
+                "fontSize": 72,
+                "fontWeight": "bold",
+                "color": "#00ff88",
+                "textAlign": "center",
+                "fontFamily": "monospace",
+                "duration": 60,
+                "mode": "sequential",
+                "charset": "alphanumeric",
+                "scrambleIterations": 4,
+                "delay": 0
+              }
+            }
+          },
+          {
+            "id": "watermark1",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "opacity": 0.7
+            }
+          }
+        ]
+      },
+      {
+        "id": "flip-scene",
+        "startFrame": 68,
+        "endFrame": 135,
+        "layers": [
+          {
+            "id": "bg2",
+            "type": "shape",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "title2",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "FlipText",
+              "fontSize": 42,
+              "fontWeight": "600",
+              "color": "#888888",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "flip1",
+            "type": "custom",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1600, "height": 200 },
+            "customComponent": {
+              "name": "FlipText",
+              "props": {
+                "text": "3D CARD FLIP",
+                "fontSize": 80,
+                "fontWeight": "bold",
+                "color": "#ff0080",
+                "textAlign": "center",
+                "mode": "letters",
+                "axis": "y",
+                "direction": "forward",
+                "duration": 60,
+                "stagger": 3,
+                "perspective": 1000,
+                "delay": 0
+              }
+            }
+          },
+          {
+            "id": "watermark2",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "opacity": 0.7
+            }
+          }
+        ]
+      },
+      {
+        "id": "fuzzy-scene",
+        "startFrame": 136,
+        "endFrame": 203,
+        "layers": [
+          {
+            "id": "bg3",
+            "type": "shape",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "title3",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "FuzzyText",
+              "fontSize": 42,
+              "fontWeight": "600",
+              "color": "#888888",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "fuzzy1",
+            "type": "custom",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1600, "height": 200 },
+            "customComponent": {
+              "name": "FuzzyText",
+              "props": {
+                "text": "FOCUS REVEAL",
+                "fontSize": 80,
+                "fontWeight": "bold",
+                "color": "#00d9ff",
+                "textAlign": "center",
+                "mode": "letters",
+                "startBlur": 20,
+                "endBlur": 0,
+                "startOpacity": 0,
+                "endOpacity": 1,
+                "duration": 60,
+                "staggerDelay": 2,
+                "easing": "ease-out",
+                "delay": 0
+              }
+            }
+          },
+          {
+            "id": "watermark3",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "opacity": 0.7
+            }
+          }
+        ]
+      },
+      {
+        "id": "neon-scene",
+        "startFrame": 204,
+        "endFrame": 271,
+        "layers": [
+          {
+            "id": "bg4",
+            "type": "shape",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "title4",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "NeonText",
+              "fontSize": 42,
+              "fontWeight": "600",
+              "color": "#888888",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "neon1",
+            "type": "custom",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1600, "height": 200 },
+            "customComponent": {
+              "name": "NeonText",
+              "props": {
+                "text": "NEON LIGHTS",
+                "fontSize": 90,
+                "fontWeight": "bold",
+                "color": "#ff00ff",
+                "textAlign": "center",
+                "mode": "pulse",
+                "intensity": 1,
+                "speed": 1.5,
+                "backgroundGlow": true,
+                "backgroundGlowIntensity": 0.4,
+                "delay": 0
+              }
+            }
+          },
+          {
+            "id": "watermark4",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "opacity": 0.7
+            }
+          }
+        ]
+      },
+      {
+        "id": "trail-scene",
+        "startFrame": 272,
+        "endFrame": 339,
+        "layers": [
+          {
+            "id": "bg5",
+            "type": "shape",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "title5",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "TextTrail",
+              "fontSize": 42,
+              "fontWeight": "600",
+              "color": "#888888",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "trail1",
+            "type": "custom",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1600, "height": 200 },
+            "customComponent": {
+              "name": "TextTrail",
+              "props": {
+                "text": "VELOCITY",
+                "fontSize": 90,
+                "fontWeight": "bold",
+                "color": "#ffdd00",
+                "textAlign": "center",
+                "direction": "right",
+                "trailLength": 10,
+                "trailSpacing": 8,
+                "animate": true,
+                "speed": 1.5,
+                "blur": 2,
+                "startOpacity": 1,
+                "endOpacity": 0.1,
+                "delay": 0
+              }
+            }
+          },
+          {
+            "id": "watermark5",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "opacity": 0.7
+            }
+          }
+        ]
+      },
+      {
+        "id": "lettermorph-scene",
+        "startFrame": 340,
+        "endFrame": 407,
+        "layers": [
+          {
+            "id": "bg6",
+            "type": "shape",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "title6",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "LetterMorph",
+              "fontSize": 42,
+              "fontWeight": "600",
+              "color": "#888888",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "lettermorph1",
+            "type": "custom",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1600, "height": 200 },
+            "customComponent": {
+              "name": "LetterMorph",
+              "props": {
+                "startText": "HELLO",
+                "endText": "WORLD",
+                "fontSize": 90,
+                "fontWeight": "bold",
+                "color": "#00ffaa",
+                "textAlign": "center",
+                "fontFamily": "monospace",
+                "mode": "sequential",
+                "duration": 60,
+                "stagger": 6,
+                "scrambleDuration": 15,
+                "easing": "ease-out",
+                "delay": 0
+              }
+            }
+          },
+          {
+            "id": "watermark6",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "opacity": 0.7
+            }
+          }
+        ]
+      },
+      {
+        "id": "morph-scene",
+        "startFrame": 408,
+        "endFrame": 475,
+        "layers": [
+          {
+            "id": "bg7",
+            "type": "shape",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "title7",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "MorphText",
+              "fontSize": 42,
+              "fontWeight": "600",
+              "color": "#888888",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "morph1",
+            "type": "custom",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1600, "height": 200 },
+            "customComponent": {
+              "name": "MorphText",
+              "props": {
+                "texts": ["AMAZING", "STUNNING", "BRILLIANT"],
+                "fontSize": 80,
+                "fontWeight": "bold",
+                "color": "#fdcb6e",
+                "textAlign": "center",
+                "morphDuration": 20,
+                "pauseDuration": 15,
+                "loop": true,
+                "easing": "ease-in-out",
+                "blurIntensity": 6,
+                "delay": 0
+              }
+            }
+          },
+          {
+            "id": "watermark7",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "opacity": 0.7
+            }
+          }
+        ]
+      },
+      {
+        "id": "distort-scene",
+        "startFrame": 476,
+        "endFrame": 540,
+        "layers": [
+          {
+            "id": "bg8",
+            "type": "shape",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "title8",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1600, "height": 100 },
+            "props": {
+              "text": "DistortText",
+              "fontSize": 42,
+              "fontWeight": "600",
+              "color": "#888888",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "distort1",
+            "type": "custom",
+            "position": { "x": 960, "y": 540 },
+            "size": { "width": 1600, "height": 200 },
+            "customComponent": {
+              "name": "DistortText",
+              "props": {
+                "text": "WAVE MOTION",
+                "fontSize": 80,
+                "fontWeight": "bold",
+                "color": "#00ffff",
+                "textAlign": "center",
+                "distortionType": "wave",
+                "amplitude": 12,
+                "frequency": 0.4,
+                "speed": 2.5,
+                "delay": 0
+              }
+            }
+          },
+          {
+            "id": "watermark8",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "opacity": 0.7
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
