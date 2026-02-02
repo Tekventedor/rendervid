@@ -9,6 +9,7 @@ export default defineConfig([
     splitting: false,
     sourcemap: true,
     clean: true,
+    shims: true, // Add shims for __dirname and other Node.js globals in ESM
     external: ['puppeteer', 'fluent-ffmpeg', 'react', 'react-dom'],
   },
   // Browser bundle for injection into Puppeteer
