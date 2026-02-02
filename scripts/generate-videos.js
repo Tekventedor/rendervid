@@ -28,6 +28,9 @@ const CATEGORIES = [
   'fitness',
   'food',
   'showcase',
+  '3d',
+  'backgrounds',
+  'effects',
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-video-frames');
 const AUDIO_FILE = path.join(__dirname, '..', 'examples', 'showcase', 'background-music.mp3');
