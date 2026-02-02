@@ -334,10 +334,48 @@ async function generateGIF(browser, example) {
  * Main function
  */
 async function main() {
+  const args = process.argv.slice(2);
+  const forceRegenerate = args.includes('--force');
+
   console.log('\n📸 Generating Previews\n' + '='.repeat(40));
 
-  const examples = collectExamples();
-  console.log(`Found ${examples.length} examples\n`);
+  let examples = collectExamples();
+  console.log(`Found ${examples.length} examples`);
+
+  // If --force flag is used, delete existing preview files
+  if (forceRegenerate) {
+    console.log('🗑️  Force mode: Deleting existing preview files...\n');
+    for (const example of examples) {
+      const previewGif = path.join(example.dir, 'preview.gif');
+      const previewPng = path.join(example.dir, 'preview.png');
+      if (fs.existsSync(previewGif)) fs.unlinkSync(previewGif);
+      if (fs.existsSync(previewPng)) fs.unlinkSync(previewPng);
+    }
+  } else {
+    // Skip examples that already have preview files
+    const examplesWithoutPreviews = examples.filter(example => {
+      const isVideo = example.template.output.type === 'video';
+      const previewPath = isVideo
+        ? path.join(example.dir, 'preview.gif')
+        : path.join(example.dir, 'preview.png');
+      return !fs.existsSync(previewPath);
+    });
+
+    const skipped = examples.length - examplesWithoutPreviews.length;
+    if (skipped > 0) {
+      console.log(`⏭️  Skipping ${skipped} examples with existing previews`);
+      console.log('   (use --force to regenerate all)\n');
+    } else {
+      console.log('');
+    }
+
+    examples = examplesWithoutPreviews;
+  }
+
+  if (examples.length === 0) {
+    console.log('✅ All previews already exist. Nothing to generate.\n');
+    return;
+  }
 
   fs.mkdirSync(TEMP_DIR, { recursive: true });
 

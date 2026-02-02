@@ -451,7 +451,8 @@ async function generateVideo(browser, example) {
  */
 async function main() {
   const args = process.argv.slice(2);
-  const specificExample = args[0];
+  const forceRegenerate = args.includes('--force');
+  const specificExample = args.find(arg => !arg.startsWith('--'));
 
   console.log('\n🎬 Generating Videos\n' + '='.repeat(50));
 
@@ -469,7 +470,37 @@ async function main() {
     }
   }
 
-  console.log(`Found ${examples.length} video examples\n`);
+  console.log(`Found ${examples.length} video examples`);
+
+  // If --force flag is used, delete existing video files
+  if (forceRegenerate) {
+    console.log('🗑️  Force mode: Deleting existing output.mp4 files...\n');
+    for (const example of examples) {
+      const videoPath = path.join(example.dir, 'output.mp4');
+      if (fs.existsSync(videoPath)) fs.unlinkSync(videoPath);
+    }
+  } else {
+    // Skip examples that already have video files
+    const examplesWithoutVideos = examples.filter(example => {
+      const videoPath = path.join(example.dir, 'output.mp4');
+      return !fs.existsSync(videoPath);
+    });
+
+    const skipped = examples.length - examplesWithoutVideos.length;
+    if (skipped > 0) {
+      console.log(`⏭️  Skipping ${skipped} examples with existing videos`);
+      console.log('   (use --force to regenerate all)\n');
+    } else {
+      console.log('');
+    }
+
+    examples = examplesWithoutVideos;
+  }
+
+  if (examples.length === 0) {
+    console.log('✅ All videos already exist. Nothing to generate.\n');
+    return;
+  }
 
   fs.mkdirSync(TEMP_DIR, { recursive: true });
 
