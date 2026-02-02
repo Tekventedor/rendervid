@@ -69,6 +69,31 @@
             }
           },
           {
+            "id": "podcast-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1080,
+              "height": 450
+            },
+            "opacity": 0.4,
+            "props": {
+              "src": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2-turbo_ai-image-generator_abstra_Surreal_Abstract_Film_Dreamscape.webp",
+              "fit": "cover"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 30
+              }
+            ]
+          },
+          {
             "id": "waveform-bg",
             "type": "shape",
             "position": {

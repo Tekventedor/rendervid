@@ -61,6 +61,23 @@
             }
           },
           {
+            "id": "bg-pattern",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1080,
+              "height": 1080
+            },
+            "opacity": 0.15,
+            "props": {
+              "src": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp",
+              "fit": "cover"
+            }
+          },
+          {
             "id": "quote-open",
             "type": "text",
             "position": {
