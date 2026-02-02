@@ -2,12 +2,43 @@
   "name": "Product Launch",
   "description": "Dramatic new product announcement with video background and reveal animation.",
   "version": "1.1.0",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 8 },
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
   "inputs": [
-    { "key": "backgroundVideo", "type": "video", "label": "Background Video", "description": "URL or path to background video", "required": false, "default": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" },
-    { "key": "productName", "type": "string", "label": "Product Name", "required": true, "default": "NEXUS PRO" },
-    { "key": "tagline", "type": "string", "label": "Tagline", "required": false, "default": "The future of productivity is here" },
-    { "key": "launchDate", "type": "string", "label": "Launch Date", "required": false, "default": "Available March 15, 2024" }
+    {
+      "key": "backgroundVideo",
+      "type": "video",
+      "label": "Background Video",
+      "description": "URL or path to background video",
+      "required": false,
+      "default": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+    },
+    {
+      "key": "productName",
+      "type": "string",
+      "label": "Product Name",
+      "required": true,
+      "default": "NEXUS PRO"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "required": false,
+      "default": "The future of productivity is here"
+    },
+    {
+      "key": "launchDate",
+      "type": "string",
+      "label": "Launch Date",
+      "required": false,
+      "default": "Available March 15, 2024"
+    }
   ],
   "defaults": {
     "backgroundVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
@@ -16,93 +47,242 @@
     "launchDate": "Available March 15, 2024"
   },
   "composition": {
-    "scenes": [{
-      "id": "main",
-      "startFrame": 0,
-      "endFrame": 240,
-      "layers": [
-        {
-          "id": "bg-color",
-          "type": "shape",
-          "position": { "x": 0, "y": 0 },
-          "size": { "width": 1920, "height": 1080 },
-          "props": { "shape": "rectangle", "fill": "#0a0a0a" }
-        },
-        {
-          "id": "bg-video",
-          "type": "video",
-          "position": { "x": 0, "y": 0 },
-          "size": { "width": 1920, "height": 1080 },
-          "opacity": 0.4,
-          "props": {
-            "src": "{{backgroundVideo}}",
-            "fit": "cover",
-            "loop": true,
-            "muted": true
-          },
-          "animations": [
-            { "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 30 }
-          ]
-        },
-        {
-          "id": "overlay",
-          "type": "shape",
-          "position": { "x": 0, "y": 0 },
-          "size": { "width": 1920, "height": 1080 },
-          "opacity": 0.6,
-          "props": {
-            "shape": "rectangle",
-            "gradient": {
-              "type": "radial",
-              "colors": [
-                { "color": "transparent", "offset": 0 },
-                { "color": "#0a0a0a", "offset": 1 }
-              ]
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "bg-color",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
             }
+          },
+          {
+            "id": "featured-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 100
+            },
+            "size": {
+              "width": 800,
+              "height": 800
+            },
+            "props": {
+              "src": "product.jpg",
+              "fit": "cover"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 5,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "bg-video",
+            "type": "video",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "opacity": 0.4,
+            "props": {
+              "src": "{{backgroundVideo}}",
+              "fit": "cover",
+              "loop": true,
+              "muted": true
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "overlay",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "opacity": 0.6,
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  {
+                    "color": "transparent",
+                    "offset": 0
+                  },
+                  {
+                    "color": "#0a0a0a",
+                    "offset": 1
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "glow",
+            "type": "shape",
+            "position": {
+              "x": 560,
+              "y": 340
+            },
+            "size": {
+              "width": 800,
+              "height": 400
+            },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#3b82f6"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 40
+              }
+            ]
+          },
+          {
+            "id": "intro",
+            "type": "text",
+            "position": {
+              "x": 660,
+              "y": 200
+            },
+            "size": {
+              "width": 600,
+              "height": 60
+            },
+            "props": {
+              "text": "INTRODUCING",
+              "fontSize": 32,
+              "fontWeight": "600",
+              "color": "#3b82f6",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "name",
+            "type": "text",
+            "position": {
+              "x": 260,
+              "y": 350
+            },
+            "size": {
+              "width": 1400,
+              "height": 150
+            },
+            "props": {
+              "text": "{{productName}}",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 25,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "tagline",
+            "type": "text",
+            "position": {
+              "x": 360,
+              "y": 550
+            },
+            "size": {
+              "width": 1200,
+              "height": 80
+            },
+            "props": {
+              "text": "{{tagline}}",
+              "fontSize": 36,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 45,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "date",
+            "type": "text",
+            "position": {
+              "x": 560,
+              "y": 800
+            },
+            "size": {
+              "width": 800,
+              "height": 60
+            },
+            "props": {
+              "text": "{{launchDate}}",
+              "fontSize": 28,
+              "fontWeight": "600",
+              "color": "#3b82f6",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 25
+              }
+            ]
           }
-        },
-        {
-          "id": "glow",
-          "type": "shape",
-          "position": { "x": 560, "y": 340 },
-          "size": { "width": 800, "height": 400 },
-          "opacity": 0.3,
-          "props": { "shape": "rectangle", "fill": "#3b82f6" },
-          "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 40 }]
-        },
-        {
-          "id": "intro",
-          "type": "text",
-          "position": { "x": 660, "y": 200 },
-          "size": { "width": 600, "height": 60 },
-          "props": { "text": "INTRODUCING", "fontSize": 32, "fontWeight": "600", "color": "#3b82f6", "textAlign": "center" },
-          "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 25 }]
-        },
-        {
-          "id": "name",
-          "type": "text",
-          "position": { "x": 260, "y": 350 },
-          "size": { "width": 1400, "height": 150 },
-          "props": { "text": "{{productName}}", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" },
-          "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 25, "duration": 30 }]
-        },
-        {
-          "id": "tagline",
-          "type": "text",
-          "position": { "x": 360, "y": 550 },
-          "size": { "width": 1200, "height": 80 },
-          "props": { "text": "{{tagline}}", "fontSize": 36, "color": "#94a3b8", "textAlign": "center" },
-          "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 45, "duration": 25 }]
-        },
-        {
-          "id": "date",
-          "type": "text",
-          "position": { "x": 560, "y": 800 },
-          "size": { "width": 800, "height": 60 },
-          "props": { "text": "{{launchDate}}", "fontSize": 28, "fontWeight": "600", "color": "#3b82f6", "textAlign": "center" },
-          "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 25 }]
-        }
-      ]
-    }]
+        ]
+      }
+    ]
   }
 }

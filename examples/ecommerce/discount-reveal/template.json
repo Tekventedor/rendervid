@@ -2,26 +2,255 @@
   "name": "Discount Reveal",
   "description": "Animated discount code reveal with suspense and excitement.",
   "version": "1.0.0",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 6 },
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
   "inputs": [
-    { "key": "offerLabel", "type": "string", "label": "Offer Label", "required": false, "default": "EXCLUSIVE OFFER" },
-    { "key": "discountValue", "type": "string", "label": "Discount Value", "required": true, "default": "25% OFF" },
-    { "key": "discountCode", "type": "string", "label": "Discount Code", "required": true, "default": "SAVE25" },
-    { "key": "validity", "type": "string", "label": "Validity", "required": false, "default": "Valid until December 31st" }
+    {
+      "key": "offerLabel",
+      "type": "string",
+      "label": "Offer Label",
+      "required": false,
+      "default": "EXCLUSIVE OFFER"
+    },
+    {
+      "key": "discountValue",
+      "type": "string",
+      "label": "Discount Value",
+      "required": true,
+      "default": "25% OFF"
+    },
+    {
+      "key": "discountCode",
+      "type": "string",
+      "label": "Discount Code",
+      "required": true,
+      "default": "SAVE25"
+    },
+    {
+      "key": "validity",
+      "type": "string",
+      "label": "Validity",
+      "required": false,
+      "default": "Valid until December 31st"
+    }
   ],
-  "defaults": { "offerLabel": "EXCLUSIVE OFFER", "discountValue": "25% OFF", "discountCode": "SAVE25", "validity": "Valid until December 31st" },
+  "defaults": {
+    "offerLabel": "EXCLUSIVE OFFER",
+    "discountValue": "25% OFF",
+    "discountCode": "SAVE25",
+    "validity": "Valid until December 31st"
+  },
   "composition": {
-    "scenes": [{
-      "id": "main", "startFrame": 0, "endFrame": 180,
-      "layers": [
-        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#7c3aed" } },
-        { "id": "label", "type": "text", "position": { "x": 560, "y": 200 }, "size": { "width": 800, "height": 60 }, "props": { "text": "{{offerLabel}}", "fontSize": 36, "fontWeight": "600", "color": "#fbbf24", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 20 }] },
-        { "id": "value", "type": "text", "position": { "x": 460, "y": 350 }, "size": { "width": 1000, "height": 150 }, "props": { "text": "{{discountValue}}", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 15, "duration": 25 }] },
-        { "id": "code-label", "type": "text", "position": { "x": 660, "y": 530 }, "size": { "width": 600, "height": 50 }, "props": { "text": "USE CODE", "fontSize": 28, "color": "#c4b5fd", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 35, "duration": 20 }] },
-        { "id": "code-bg", "type": "shape", "position": { "x": 560, "y": 600 }, "size": { "width": 800, "height": 120 }, "props": { "shape": "rectangle", "fill": "#ffffff" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 40, "duration": 20 }] },
-        { "id": "code", "type": "text", "position": { "x": 585, "y": 640 }, "size": { "width": 750, "height": 80 }, "props": { "text": "{{discountCode}}", "fontSize": 64, "fontWeight": "bold", "color": "#7c3aed", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 20 }] },
-        { "id": "validity", "type": "text", "position": { "x": 560, "y": 780 }, "size": { "width": 800, "height": 50 }, "props": { "text": "{{validity}}", "fontSize": 26, "color": "#e9d5ff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 60, "duration": 20 }] }
-      ]
-    }]
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#7c3aed"
+            }
+          },
+          {
+            "id": "featured-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 120
+            },
+            "size": {
+              "width": 800,
+              "height": 700
+            },
+            "props": {
+              "src": "sunglasses.jpg",
+              "fit": "cover"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 5,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "label",
+            "type": "text",
+            "position": {
+              "x": 560,
+              "y": 200
+            },
+            "size": {
+              "width": 800,
+              "height": 60
+            },
+            "props": {
+              "text": "{{offerLabel}}",
+              "fontSize": 36,
+              "fontWeight": "600",
+              "color": "#fbbf24",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "value",
+            "type": "text",
+            "position": {
+              "x": 460,
+              "y": 350
+            },
+            "size": {
+              "width": 1000,
+              "height": 150
+            },
+            "props": {
+              "text": "{{discountValue}}",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 15,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "code-label",
+            "type": "text",
+            "position": {
+              "x": 660,
+              "y": 530
+            },
+            "size": {
+              "width": 600,
+              "height": 50
+            },
+            "props": {
+              "text": "USE CODE",
+              "fontSize": 28,
+              "color": "#c4b5fd",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "code-bg",
+            "type": "shape",
+            "position": {
+              "x": 560,
+              "y": 600
+            },
+            "size": {
+              "width": 800,
+              "height": 120
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 40,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "code",
+            "type": "text",
+            "position": {
+              "x": 585,
+              "y": 640
+            },
+            "size": {
+              "width": 750,
+              "height": 80
+            },
+            "props": {
+              "text": "{{discountCode}}",
+              "fontSize": 64,
+              "fontWeight": "bold",
+              "color": "#7c3aed",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "validity",
+            "type": "text",
+            "position": {
+              "x": 560,
+              "y": 780
+            },
+            "size": {
+              "width": 800,
+              "height": 50
+            },
+            "props": {
+              "text": "{{validity}}",
+              "fontSize": 26,
+              "color": "#e9d5ff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 60,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

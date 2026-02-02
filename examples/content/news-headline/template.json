@@ -2,26 +2,254 @@
   "name": "News Headline",
   "description": "Breaking news style announcement with bold typography.",
   "version": "1.0.0",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 6 },
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
   "inputs": [
-    { "key": "badge", "type": "string", "label": "Badge", "required": false, "default": "BREAKING NEWS" },
-    { "key": "headline", "type": "string", "label": "Headline", "required": true, "default": "Major Tech Company Announces Revolutionary AI Platform" },
-    { "key": "subheadline", "type": "string", "label": "Subheadline", "required": false, "default": "Industry experts predict significant impact on global markets" },
-    { "key": "source", "type": "string", "label": "Source", "required": false, "default": "TECH NEWS" }
+    {
+      "key": "badge",
+      "type": "string",
+      "label": "Badge",
+      "required": false,
+      "default": "BREAKING NEWS"
+    },
+    {
+      "key": "headline",
+      "type": "string",
+      "label": "Headline",
+      "required": true,
+      "default": "Major Tech Company Announces Revolutionary AI Platform"
+    },
+    {
+      "key": "subheadline",
+      "type": "string",
+      "label": "Subheadline",
+      "required": false,
+      "default": "Industry experts predict significant impact on global markets"
+    },
+    {
+      "key": "source",
+      "type": "string",
+      "label": "Source",
+      "required": false,
+      "default": "TECH NEWS"
+    }
   ],
-  "defaults": { "badge": "BREAKING NEWS", "headline": "Major Tech Company Announces Revolutionary AI Platform", "subheadline": "Industry experts predict significant impact on global markets", "source": "TECH NEWS" },
+  "defaults": {
+    "badge": "BREAKING NEWS",
+    "headline": "Major Tech Company Announces Revolutionary AI Platform",
+    "subheadline": "Industry experts predict significant impact on global markets",
+    "source": "TECH NEWS"
+  },
   "composition": {
-    "scenes": [{
-      "id": "main", "startFrame": 0, "endFrame": 180,
-      "layers": [
-        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-        { "id": "top-bar", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 80 }, "props": { "shape": "rectangle", "fill": "#dc2626" }, "animations": [{ "type": "entrance", "effect": "slideInDown", "delay": 0, "duration": 15 }] },
-        { "id": "badge", "type": "text", "position": { "x": 760, "y": 25 }, "size": { "width": 400, "height": 50 }, "props": { "text": "{{badge}}", "fontSize": 28, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 20 }] },
-        { "id": "headline-bg", "type": "shape", "position": { "x": 100, "y": 380 }, "size": { "width": 1720, "height": 250 }, "opacity": 0.9, "props": { "shape": "rectangle", "fill": "#000000" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 20, "duration": 25 }] },
-        { "id": "headline", "type": "text", "position": { "x": 160, "y": 450 }, "size": { "width": 1600, "height": 150 }, "props": { "text": "{{headline}}", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 35, "duration": 25 }] },
-        { "id": "subheadline", "type": "text", "position": { "x": 260, "y": 700 }, "size": { "width": 1400, "height": 60 }, "props": { "text": "{{subheadline}}", "fontSize": 32, "color": "#94a3b8", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 50, "duration": 25 }] },
-        { "id": "source", "type": "text", "position": { "x": 100, "y": 950 }, "size": { "width": 400, "height": 40 }, "props": { "text": "{{source}}", "fontSize": 24, "fontWeight": "600", "color": "#3b82f6", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 20 }] }
-      ]
-    }]
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "featured-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 600
+            },
+            "props": {
+              "src": "newspaper.jpg",
+              "fit": "cover"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 5,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "top-bar",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 80
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#dc2626"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInDown",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "badge",
+            "type": "text",
+            "position": {
+              "x": 760,
+              "y": 25
+            },
+            "size": {
+              "width": 400,
+              "height": 50
+            },
+            "props": {
+              "text": "{{badge}}",
+              "fontSize": 28,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "headline-bg",
+            "type": "shape",
+            "position": {
+              "x": 100,
+              "y": 380
+            },
+            "size": {
+              "width": 1720,
+              "height": 250
+            },
+            "opacity": 0.9,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000000"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 20,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "headline",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 450
+            },
+            "size": {
+              "width": 1600,
+              "height": 150
+            },
+            "props": {
+              "text": "{{headline}}",
+              "fontSize": 64,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "subheadline",
+            "type": "text",
+            "position": {
+              "x": 260,
+              "y": 700
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "{{subheadline}}",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 50,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "source",
+            "type": "text",
+            "position": {
+              "x": 100,
+              "y": 950
+            },
+            "size": {
+              "width": 400,
+              "height": 40
+            },
+            "props": {
+              "text": "{{source}}",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#3b82f6",
+              "textAlign": "left"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

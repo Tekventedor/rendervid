@@ -12,6 +12,7 @@
   "defaults": { "listingType": "FOR SALE", "price": "$875,000", "address": "1234 Oak Street, Beverly Hills, CA", "details": "4 Beds • 3 Baths • 2,850 sqft" },
   "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 240, "layers": [
     { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1f2937" } },
+    { "id": "property-image", "type": "image", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 700 }, "props": { "src": "property.jpg", "fit": "cover" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 5, "duration": 30 }] },
     { "id": "badge-bg", "type": "shape", "position": { "x": 80, "y": 80 }, "size": { "width": 200, "height": 60 }, "props": { "shape": "rectangle", "fill": "#dc2626" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 20 }] },
     { "id": "badge", "type": "text", "position": { "x": 80, "y": 95 }, "size": { "width": 200, "height": 40 }, "props": { "text": "{{listingType}}", "fontSize": 24, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] },
     { "id": "info-bg", "type": "shape", "position": { "x": 0, "y": 700 }, "size": { "width": 1920, "height": 380 }, "opacity": 0.95, "props": { "shape": "rectangle", "fill": "#ffffff" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 25, "duration": 25 }] },
