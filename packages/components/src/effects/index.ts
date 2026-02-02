@@ -43,3 +43,24 @@ export type { LottieAnimationProps, LottieAnimationData } from './LottieAnimatio
 
 export { MetaBalls } from './MetaBalls';
 export type { MetaBallsProps, MovementPattern } from './MetaBalls';
+
+export { BlurText } from './BlurText';
+export type { BlurTextProps, BlurEasing, BlurMode } from './BlurText';
+
+export { WaveText } from './WaveText';
+export type { WaveTextProps, WaveDirection } from './WaveText';
+
+export { StaggerText } from './StaggerText';
+export type { StaggerTextProps, StaggerEasing, StaggerAnimation } from './StaggerText';
+
+export { BounceText } from './BounceText';
+export type { BounceTextProps, BounceMode, BounceDirection } from './BounceText';
+
+export { RevealText } from './RevealText';
+export type { RevealTextProps, RevealEasing, RevealMode, RevealStyle, RevealDirection } from './RevealText';
+
+export { ShinyText } from './ShinyText';
+export type { ShinyTextProps, ShineDirection } from './ShinyText';
+
+export { SplitText } from './SplitText';
+export type { SplitTextProps, SplitTextEasing, SplitTextMode, SplitTextAnimation } from './SplitText';

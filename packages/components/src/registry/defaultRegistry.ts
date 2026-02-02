@@ -14,7 +14,7 @@ import {
   Rotate,
 } from '../components';
 import { AuroraBackground, WaveBackground } from '../backgrounds';
-import { SVGDrawing, TypewriterEffect, GlitchEffect, MetaBalls, ParticleSystem, LottieAnimation, ThreeScene } from '../effects';
+import { SVGDrawing, TypewriterEffect, GlitchEffect, MetaBalls, ParticleSystem, LottieAnimation, ThreeScene, BlurText, WaveText, StaggerText, RevealText, BounceText, SplitText } from '../effects';
 
 /**
  * Create and return the default component registry with all built-in components
@@ -427,6 +427,148 @@ export function createDefaultRegistry(): ComponentRegistry {
       lighting: 'directional',
       width: 400,
       height: 400,
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(BlurText, {
+    id: 'blur-text',
+    name: 'Blur Text',
+    description: 'Text animation that transitions from blurred to clear with multiple reveal modes',
+    category: 'effect',
+    tags: ['blur', 'text', 'animation', 'reveal', 'typography', 'focus'],
+    animated: true,
+    exampleProps: {
+      text: 'Hello World',
+      frame: 0,
+      fps: 30,
+      startBlur: 10,
+      endBlur: 0,
+      duration: 60,
+      delay: 0,
+      mode: 'whole',
+      easing: 'ease-out',
+      fontSize: 48,
+      color: '#ffffff',
+      fontFamily: 'Arial, sans-serif',
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(WaveText, {
+    id: 'wave-text',
+    name: 'Wave Text',
+    description: 'Text animation where characters move in a continuous wave pattern using sine function',
+    category: 'effect',
+    tags: ['wave', 'text', 'animation', 'motion', 'sine', 'oscillate', 'typography'],
+    animated: true,
+    exampleProps: {
+      text: 'Hello World',
+      frame: 0,
+      fps: 30,
+      amplitude: 20,
+      frequency: 0.5,
+      speed: 2,
+      direction: 'vertical',
+      fontSize: 48,
+      color: '#ffffff',
+      fontFamily: 'Arial, sans-serif',
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(StaggerText, {
+    id: 'stagger-text',
+    name: 'Stagger Text',
+    description: 'Text animation where characters appear one by one with staggered timing and customizable entrance effects',
+    category: 'effect',
+    tags: ['stagger', 'text', 'animation', 'entrance', 'sequential', 'reveal', 'typography'],
+    animated: true,
+    exampleProps: {
+      text: 'Hello World',
+      frame: 0,
+      fps: 30,
+      stagger: 3,
+      animation: 'fade',
+      duration: 15,
+      easing: 'ease-out',
+      delay: 0,
+      fontSize: 48,
+      color: '#ffffff',
+      fontFamily: 'Arial, sans-serif',
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(BounceText, {
+    id: 'bounce-text',
+    name: 'Bounce Text',
+    description: 'Text animation where text bounces into place with elastic easing and overshoot effect',
+    category: 'effect',
+    tags: ['bounce', 'text', 'animation', 'elastic', 'spring', 'entrance', 'typography'],
+    animated: true,
+    exampleProps: {
+      text: 'Hello World',
+      frame: 0,
+      fps: 30,
+      mode: 'whole',
+      direction: 'up',
+      duration: 60,
+      bounces: 3,
+      stagger: 2,
+      delay: 0,
+      fontSize: 48,
+      color: '#ffffff',
+      fontFamily: 'Arial, sans-serif',
+    },
+    version: '0.1.0',
+  });
+
+
+  registry.register(RevealText, {
+    id: 'reveal-text',
+    name: 'Reveal Text',
+    description: 'Progressive text reveal animation with multiple styles (fade, wipe, slide) and directional control',
+    category: 'effect',
+    tags: ['reveal', 'text', 'animation', 'progressive', 'fade', 'wipe', 'slide', 'typography'],
+    animated: true,
+    exampleProps: {
+      text: 'Hello World',
+      frame: 0,
+      fps: 30,
+      mode: 'words',
+      revealStyle: 'fade',
+      duration: 30,
+      stagger: 5,
+      direction: 'left',
+      delay: 0,
+      easing: 'ease-out',
+      fontSize: 48,
+      color: '#ffffff',
+      fontFamily: 'Arial, sans-serif',
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(SplitText, {
+    id: 'split-text',
+    name: 'Split Text',
+    description: 'Text animation where characters or words split apart and animate independently with various transform effects',
+    category: 'effect',
+    tags: ['split', 'text', 'animation', 'transform', 'explode', 'fan', 'typography'],
+    animated: true,
+    exampleProps: {
+      text: 'Hello World',
+      frame: 0,
+      fps: 30,
+      mode: 'letters',
+      animation: 'splitUp',
+      duration: 60,
+      stagger: 2,
+      easing: 'ease-out',
+      fontSize: 48,
+      color: '#ffffff',
+      fontFamily: 'Arial, sans-serif',
     },
     version: '0.1.0',
   });

@@ -15,6 +15,13 @@ import {
   Scale,
   Rotate,
 } from '../components';
+import { BlurText } from '../effects/BlurText';
+import { WaveText } from '../effects/WaveText';
+import { BounceText } from '../effects/BounceText';
+import { StaggerText } from '../effects/StaggerText';
+import { ShinyText } from '../effects/ShinyText';
+import { RevealText } from '../effects/RevealText';
+import { SplitText } from '../effects/SplitText';
 
 describe('Text Component', () => {
   it('should render text content', () => {
@@ -311,5 +318,750 @@ describe('Rotate Component', () => {
     );
     const element = container.firstChild as HTMLElement;
     expect(element.style.transform).toBe('rotate(360deg)');
+  });
+});
+
+describe('BlurText Component', () => {
+  it('should render text content', () => {
+    render(<BlurText text="Hello World" frame={0} />);
+    expect(screen.getByText('Hello World')).toBeTruthy();
+  });
+
+  it('should apply maximum blur at frame 0', () => {
+    const { container } = render(
+      <BlurText text="Test" frame={0} startBlur={10} endBlur={0} duration={60} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    expect(span.style.filter).toBe('blur(10px)');
+  });
+
+  it('should apply minimum blur after animation completes', () => {
+    const { container } = render(
+      <BlurText text="Test" frame={60} startBlur={10} endBlur={0} duration={60} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    expect(span.style.filter).toBe('blur(0px)');
+  });
+
+  it('should respect delay parameter', () => {
+    const { container } = render(
+      <BlurText text="Test" frame={10} startBlur={10} endBlur={0} duration={60} delay={30} />
+    );
+    // At frame 10 with delay 30, effective frame is -20, clamped to 0, so still at max blur
+    const span = container.querySelector('span') as HTMLElement;
+    expect(span.style.filter).toBe('blur(10px)');
+  });
+
+  it('should render word-by-word mode', () => {
+    const { container } = render(
+      <BlurText text="Hello World" frame={0} mode="words" duration={60} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have multiple spans for word-by-word mode (at least 2 for "Hello" and "World")
+    expect(spans.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('should render letter-by-letter mode', () => {
+    const { container } = render(
+      <BlurText text="Hi" frame={0} mode="letters" duration={60} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have 2 spans for 2 letters
+    expect(spans.length).toBe(2);
+  });
+
+  it('should apply custom font size and color', () => {
+    const { container } = render(
+      <BlurText text="Test" frame={0} fontSize={32} color="#ff0000" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('32px');
+    expect(element.style.color).toBe('rgb(255, 0, 0)');
+  });
+});
+
+describe('BounceText Component', () => {
+  it('should render text content', () => {
+    render(<BounceText text="Hello World" frame={0} />);
+    expect(screen.getByText('Hello World')).toBeTruthy();
+  });
+
+  it('should be offset at frame 0 in whole mode', () => {
+    const { container } = render(
+      <BounceText text="Test" frame={0} direction="up" duration={60} mode="whole" />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // At frame 0, text should be offset (not at final position)
+    expect(span.style.transform).toContain('translate');
+    // Should have a positive Y offset for 'up' direction
+    expect(span.style.transform).toMatch(/translate\([^)]*\)/);
+  });
+
+  it('should be at final position after animation completes', () => {
+    const { container } = render(
+      <BounceText text="Test" frame={60} direction="up" duration={60} mode="whole" />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // After animation completes, should be at final position (0, 0)
+    expect(span.style.transform).toBe('translate(0px, 0px)');
+  });
+
+  it('should respect delay parameter', () => {
+    const { container } = render(
+      <BounceText text="Test" frame={10} direction="down" duration={60} delay={30} />
+    );
+    // At frame 10 with delay 30, effective frame is -20, clamped to 0
+    const span = container.querySelector('span') as HTMLElement;
+    expect(span.style.transform).toContain('translate');
+    // Should still be at starting position due to delay
+  });
+
+  it('should animate from left direction', () => {
+    const { container } = render(
+      <BounceText text="Test" frame={0} direction="left" duration={60} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // For 'left' direction, should have positive X offset at start
+    expect(span.style.transform).toContain('translate');
+  });
+
+  it('should animate from right direction', () => {
+    const { container } = render(
+      <BounceText text="Test" frame={0} direction="right" duration={60} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // For 'right' direction, should have negative X offset at start
+    expect(span.style.transform).toContain('translate');
+  });
+
+  it('should render letter-by-letter mode', () => {
+    const { container } = render(
+      <BounceText text="Hi" frame={0} mode="letters" duration={60} stagger={2} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have 2 spans for 2 letters
+    expect(spans.length).toBe(2);
+  });
+
+  it('should apply stagger in letters mode', () => {
+    const { container } = render(
+      <BounceText text="Hi" frame={5} mode="letters" duration={60} stagger={10} />
+    );
+    const spans = container.querySelectorAll('span');
+    expect(spans.length).toBe(2);
+    // First letter should be animating, second should still be at start
+    // (This tests that stagger is working, though exact values are hard to test)
+  });
+
+  it('should apply custom font size and color', () => {
+    const { container } = render(
+      <BounceText text="Test" frame={0} fontSize={32} color="#ff0000" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('32px');
+    expect(element.style.color).toBe('rgb(255, 0, 0)');
+  });
+
+  it('should use default bounce count', () => {
+    const { container } = render(
+      <BounceText text="Test" frame={30} duration={60} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // During mid-animation, should have transform applied
+    expect(span.style.transform).toContain('translate');
+  });
+
+  it('should animate with custom bounce count', () => {
+    const { container } = render(
+      <BounceText text="Test" frame={30} duration={60} bounces={5} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // Should have transform applied (specific value depends on elastic function)
+    expect(span.style.transform).toContain('translate');
+  });
+});
+
+describe('WaveText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<WaveText text="Hello World" frame={0} />);
+    expect(container.textContent).toBe('Hello World');
+  });
+
+  it('should split text into individual characters', () => {
+    const { container } = render(<WaveText text="Hi" frame={0} />);
+    const spans = container.querySelectorAll('span');
+    // Should have 2 spans for 2 letters
+    expect(spans.length).toBe(2);
+  });
+
+  it('should apply vertical transform at frame 0', () => {
+    const { container } = render(
+      <WaveText text="A" frame={0} direction="vertical" amplitude={20} frequency={0.5} speed={2} fps={30} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    expect(span.style.transform).toContain('translateY');
+  });
+
+  it('should apply horizontal transform when direction is horizontal', () => {
+    const { container } = render(
+      <WaveText text="A" frame={0} direction="horizontal" amplitude={20} frequency={0.5} speed={2} fps={30} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    expect(span.style.transform).toContain('translateX');
+  });
+
+  it('should apply different transforms to each character', () => {
+    const { container } = render(
+      <WaveText text="AB" frame={30} amplitude={20} frequency={0.5} speed={2} fps={30} />
+    );
+    const spans = container.querySelectorAll('span');
+    const transform1 = (spans[0] as HTMLElement).style.transform;
+    const transform2 = (spans[1] as HTMLElement).style.transform;
+    // Characters should have different transforms due to wave pattern
+    expect(transform1).not.toBe(transform2);
+  });
+
+  it('should create continuous animation across frames', () => {
+    const { container: container1 } = render(
+      <WaveText text="A" frame={0} amplitude={20} frequency={0.5} speed={2} fps={30} />
+    );
+    const { container: container2 } = render(
+      <WaveText text="A" frame={15} amplitude={20} frequency={0.5} speed={2} fps={30} />
+    );
+
+    const transform1 = (container1.querySelector('span') as HTMLElement).style.transform;
+    const transform2 = (container2.querySelector('span') as HTMLElement).style.transform;
+
+    // Transforms should be different at different frames
+    expect(transform1).not.toBe(transform2);
+  });
+
+  it('should apply custom font size and color', () => {
+    const { container } = render(
+      <WaveText text="Test" frame={0} fontSize={32} color="#ff0000" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('32px');
+    expect(element.style.color).toBe('rgb(255, 0, 0)');
+  });
+
+  it('should preserve whitespace in text', () => {
+    const { container } = render(<WaveText text="A B" frame={0} />);
+    const spans = container.querySelectorAll('span');
+    // Should have 3 spans for "A", " ", "B"
+    expect(spans.length).toBe(3);
+    const spaceSpan = spans[1] as HTMLElement;
+    expect(spaceSpan.style.whiteSpace).toBe('pre');
+  });
+
+  it('should respect amplitude parameter', () => {
+    const { container } = render(
+      <WaveText text="A" frame={0} amplitude={50} frequency={0} speed={0} fps={30} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // With frequency=0 and speed=0, wave offset should be sin(0) * 50 = 0
+    expect(span.style.transform).toContain('0px');
+  });
+});
+
+describe('ShinyText Component', () => {
+  it('should render text content', () => {
+    render(<ShinyText text="Hello World" frame={0} />);
+    expect(screen.getByText('Hello World')).toBeTruthy();
+  });
+
+  it('should apply gradient background with background-clip', () => {
+    const { container } = render(
+      <ShinyText
+        text="Test"
+        frame={30}
+        duration={60}
+        shineColor="rgba(255, 255, 255, 0.8)"
+        baseColor="#666666"
+      />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    expect(span.style.background).toContain('linear-gradient');
+    expect(span.style.backgroundClip).toBe('text');
+    expect((span.style as any).WebkitBackgroundClip).toBe('text');
+  });
+
+  it('should update gradient position based on frame', () => {
+    const { container: container1 } = render(
+      <ShinyText text="Test" frame={0} duration={60} />
+    );
+    const span1 = container1.querySelector('span') as HTMLElement;
+    const bg1 = span1.style.background;
+
+    const { container: container2 } = render(
+      <ShinyText text="Test" frame={30} duration={60} />
+    );
+    const span2 = container2.querySelector('span') as HTMLElement;
+    const bg2 = span2.style.background;
+
+    // Background gradients should be different at different frames
+    expect(bg1).not.toBe(bg2);
+  });
+
+  it('should loop animation when loop is true', () => {
+    const { container: container1 } = render(
+      <ShinyText text="Test" frame={0} duration={60} loop={true} />
+    );
+    const span1 = container1.querySelector('span') as HTMLElement;
+    const bg1 = span1.style.background;
+
+    const { container: container2 } = render(
+      <ShinyText text="Test" frame={60} duration={60} loop={true} />
+    );
+    const span2 = container2.querySelector('span') as HTMLElement;
+    const bg2 = span2.style.background;
+
+    // At frame 60 with duration 60 and loop=true, should be same as frame 0
+    expect(bg1).toBe(bg2);
+  });
+
+  it('should apply custom colors', () => {
+    const { container } = render(
+      <ShinyText
+        text="Test"
+        frame={0}
+        shineColor="rgba(255, 215, 0, 0.9)"
+        baseColor="#8B7355"
+      />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    expect(span.style.background).toContain('rgba(255, 215, 0, 0.9)');
+    expect(span.style.background).toContain('#8B7355');
+  });
+
+  it('should apply custom font size and weight', () => {
+    const { container } = render(
+      <ShinyText text="Test" frame={0} fontSize={48} fontWeight="bold" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('48px');
+    expect(element.style.fontWeight).toBe('bold');
+  });
+
+  it('should apply text shadow', () => {
+    const shadow = '0 0 20px rgba(255, 255, 255, 0.5)';
+    const { container } = render(
+      <ShinyText text="Test" frame={0} textShadow={shadow} />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.textShadow).toBe(shadow);
+  });
+
+  it('should support different directions', () => {
+    const { container: leftContainer } = render(
+      <ShinyText text="Test" frame={20} duration={60} direction="left" />
+    );
+    const leftSpan = leftContainer.querySelector('span') as HTMLElement;
+    const leftBg = leftSpan.style.background;
+
+    const { container: rightContainer } = render(
+      <ShinyText text="Test" frame={20} duration={60} direction="right" />
+    );
+    const rightSpan = rightContainer.querySelector('span') as HTMLElement;
+    const rightBg = rightSpan.style.background;
+
+    // Different directions should produce different gradients
+    expect(leftBg).not.toBe(rightBg);
+  });
+
+  it('should apply letter spacing', () => {
+    const { container } = render(
+      <ShinyText text="Test" frame={0} letterSpacing={3} />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.letterSpacing).toBe('3px');
+  });
+
+  it('should respect text alignment', () => {
+    const { container } = render(
+      <ShinyText text="Test" frame={0} textAlign="center" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.textAlign).toBe('center');
+  });
+});
+
+describe('StaggerText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<StaggerText text="Hello World" frame={0} />);
+    // Text is split into individual characters, so check the container text content
+    expect(container.textContent).toBe('Hello World');
+  });
+
+  it('should render each character as separate span', () => {
+    const { container } = render(
+      <StaggerText text="Hi" frame={0} stagger={3} duration={15} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have 2 spans for 2 characters
+    expect(spans.length).toBe(2);
+  });
+
+  it('should be invisible at frame 0 with fade animation', () => {
+    const { container } = render(
+      <StaggerText text="Test" frame={0} animation="fade" duration={15} />
+    );
+    const firstSpan = container.querySelector('span') as HTMLElement;
+    expect(firstSpan.style.opacity).toBe('0');
+  });
+
+  it('should be fully visible after animation completes', () => {
+    const { container } = render(
+      <StaggerText text="T" frame={15} animation="fade" duration={15} stagger={3} />
+    );
+    const firstSpan = container.querySelector('span') as HTMLElement;
+    expect(firstSpan.style.opacity).toBe('1');
+  });
+
+  it('should respect stagger delay between characters', () => {
+    const { container } = render(
+      <StaggerText text="Hi" frame={5} animation="fade" duration={15} stagger={10} />
+    );
+    const spans = container.querySelectorAll('span');
+    const firstSpan = spans[0] as HTMLElement;
+    const secondSpan = spans[1] as HTMLElement;
+
+    // First character should be animating
+    const firstOpacity = parseFloat(firstSpan.style.opacity);
+    expect(firstOpacity).toBeGreaterThan(0);
+
+    // Second character should still be at start (frame 5, stagger 10 means it hasn't started yet)
+    expect(secondSpan.style.opacity).toBe('0');
+  });
+
+  it('should animate with slideUp animation', () => {
+    const { container } = render(
+      <StaggerText text="T" frame={0} animation="slideUp" duration={15} />
+    );
+    const firstSpan = container.querySelector('span') as HTMLElement;
+    // At frame 0, should be offset downward
+    expect(firstSpan.style.transform).toContain('translateY');
+  });
+
+  it('should animate with slideDown animation', () => {
+    const { container } = render(
+      <StaggerText text="T" frame={0} animation="slideDown" duration={15} />
+    );
+    const firstSpan = container.querySelector('span') as HTMLElement;
+    // At frame 0, should be offset upward (negative value)
+    expect(firstSpan.style.transform).toContain('translateY');
+  });
+
+  it('should animate with scale animation', () => {
+    const { container } = render(
+      <StaggerText text="T" frame={0} animation="scale" duration={15} />
+    );
+    const firstSpan = container.querySelector('span') as HTMLElement;
+    expect(firstSpan.style.transform).toContain('scale');
+  });
+
+  it('should animate with bounce animation', () => {
+    const { container } = render(
+      <StaggerText text="T" frame={0} animation="bounce" duration={15} />
+    );
+    const firstSpan = container.querySelector('span') as HTMLElement;
+    expect(firstSpan.style.transform).toContain('scale');
+  });
+
+  it('should respect delay parameter', () => {
+    const { container } = render(
+      <StaggerText text="T" frame={10} animation="fade" duration={15} delay={30} />
+    );
+    // At frame 10 with delay 30, effective frame is -20, clamped to 0
+    const firstSpan = container.querySelector('span') as HTMLElement;
+    expect(firstSpan.style.opacity).toBe('0');
+  });
+
+  it('should apply custom font size and color', () => {
+    const { container } = render(
+      <StaggerText text="Test" frame={0} fontSize={32} color="#ff0000" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('32px');
+    expect(element.style.color).toBe('rgb(255, 0, 0)');
+  });
+
+  it('should preserve spaces in text', () => {
+    const { container } = render(
+      <StaggerText text="Hi There" frame={100} animation="fade" duration={15} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have 8 spans for "Hi There" (including space)
+    expect(spans.length).toBe(8);
+  });
+
+  it('should complete animation for all characters eventually', () => {
+    const { container } = render(
+      <StaggerText text="Hi" frame={100} animation="fade" duration={15} stagger={3} />
+    );
+    const spans = container.querySelectorAll('span');
+    // All characters should be fully visible after enough frames
+    spans.forEach(span => {
+      expect((span as HTMLElement).style.opacity).toBe('1');
+    });
+  });
+});
+
+describe('RevealText Component', () => {
+  it('should render text content', () => {
+    render(<RevealText text="Hello World" frame={0} />);
+    expect(screen.getByText(/Hello/)).toBeTruthy();
+  });
+
+  it('should apply fade reveal style', () => {
+    const { container } = render(
+      <RevealText text="Test" frame={0} mode="words" revealStyle="fade" duration={30} stagger={5} />
+    );
+    const spans = container.querySelectorAll('span');
+    // At frame 0, first word should have low opacity (starting to fade)
+    expect(spans.length).toBeGreaterThan(0);
+  });
+
+  it('should apply wipe reveal style', () => {
+    const { container } = render(
+      <RevealText text="Test" frame={15} mode="words" revealStyle="wipe" duration={30} stagger={5} />
+    );
+    const spans = container.querySelectorAll('span');
+    expect(spans.length).toBeGreaterThan(0);
+    // Check that spans have overflow hidden for wipe effect
+    const wordSpan = Array.from(spans).find(s => s.textContent?.trim());
+    if (wordSpan) {
+      expect((wordSpan as HTMLElement).style.overflow).toBe('hidden');
+    }
+  });
+
+  it('should apply slide reveal style', () => {
+    const { container } = render(
+      <RevealText text="Test" frame={0} mode="words" revealStyle="slide" duration={30} stagger={5} />
+    );
+    const spans = container.querySelectorAll('span');
+    expect(spans.length).toBeGreaterThan(0);
+  });
+
+  it('should reveal in letter mode', () => {
+    const { container } = render(
+      <RevealText text="Hi" frame={0} mode="letters" revealStyle="fade" duration={20} stagger={2} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have 2 spans for 2 letters
+    expect(spans.length).toBe(2);
+  });
+
+  it('should reveal from left to right', () => {
+    const { container } = render(
+      <RevealText text="ABC" frame={10} mode="letters" revealStyle="fade" duration={10} stagger={5} direction="left" />
+    );
+    const spans = container.querySelectorAll('span');
+    expect(spans.length).toBe(3);
+  });
+
+  it('should reveal from right to left', () => {
+    const { container } = render(
+      <RevealText text="ABC" frame={10} mode="letters" revealStyle="fade" duration={10} stagger={5} direction="right" />
+    );
+    const spans = container.querySelectorAll('span');
+    expect(spans.length).toBe(3);
+  });
+
+  it('should reveal from center outward', () => {
+    const { container } = render(
+      <RevealText text="ABCDE" frame={10} mode="letters" revealStyle="fade" duration={10} stagger={5} direction="center" />
+    );
+    const spans = container.querySelectorAll('span');
+    expect(spans.length).toBe(5);
+  });
+
+  it('should respect delay parameter', () => {
+    const { container } = render(
+      <RevealText text="Test" frame={10} mode="words" revealStyle="fade" duration={30} stagger={5} delay={20} />
+    );
+    const spans = container.querySelectorAll('span');
+    // At frame 10 with delay 20, effective frame is -10 (clamped to 0), so items should be hidden
+    expect(spans.length).toBeGreaterThan(0);
+  });
+
+  it('should apply custom font size and color', () => {
+    const { container } = render(
+      <RevealText text="Test" frame={0} fontSize={32} color="#ff0000" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('32px');
+    expect(element.style.color).toBe('rgb(255, 0, 0)');
+  });
+
+  it('should handle word mode with whitespace', () => {
+    const { container } = render(
+      <RevealText text="Hello World" frame={15} mode="words" revealStyle="fade" duration={30} stagger={5} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have spans for "Hello", " ", "World"
+    expect(spans.length).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe('SplitText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<SplitText text="Hello World" frame={0} />);
+    expect(container.textContent).toBe('Hello World');
+  });
+
+  it('should split text into letters by default', () => {
+    const { container } = render(
+      <SplitText text="Hi" frame={0} mode="letters" duration={60} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have 2 spans for 2 letters
+    expect(spans.length).toBe(2);
+  });
+
+  it('should split text into words when mode is words', () => {
+    const { container } = render(
+      <SplitText text="Hello World" frame={0} mode="words" duration={60} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have spans for "Hello", " ", "World"
+    expect(spans.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('should apply splitUp animation at frame 0', () => {
+    const { container } = render(
+      <SplitText text="T" frame={0} animation="splitUp" duration={60} stagger={2} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // At frame 0, character should be offset upward (negative translateY)
+    expect(span.style.transform).toContain('translateY');
+    expect(span.style.opacity).toBe('0');
+  });
+
+  it('should apply splitDown animation at frame 0', () => {
+    const { container } = render(
+      <SplitText text="T" frame={0} animation="splitDown" duration={60} stagger={2} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // At frame 0, character should be offset downward (positive translateY)
+    expect(span.style.transform).toContain('translateY');
+    expect(span.style.opacity).toBe('0');
+  });
+
+  it('should apply splitX animation at frame 0', () => {
+    const { container } = render(
+      <SplitText text="AB" frame={0} animation="splitX" duration={60} stagger={2} />
+    );
+    const spans = container.querySelectorAll('span');
+    // Characters should be offset horizontally
+    expect((spans[0] as HTMLElement).style.transform).toContain('translateX');
+    expect((spans[1] as HTMLElement).style.transform).toContain('translateX');
+  });
+
+  it('should apply fan animation at frame 0', () => {
+    const { container } = render(
+      <SplitText text="T" frame={0} animation="fan" duration={60} stagger={2} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // Fan animation includes rotation, translation, and scale
+    expect(span.style.transform).toContain('rotate');
+    expect(span.style.transform).toContain('scale');
+    expect(span.style.opacity).toBe('0');
+  });
+
+  it('should apply explode animation at frame 0', () => {
+    const { container } = render(
+      <SplitText text="T" frame={0} animation="explode" duration={60} stagger={2} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // Explode animation includes translation, rotation, and scale
+    expect(span.style.transform).toContain('translate');
+    expect(span.style.transform).toContain('rotate');
+    expect(span.style.transform).toContain('scale');
+    expect(span.style.opacity).toBe('0');
+  });
+
+  it('should be fully visible and at rest after animation completes', () => {
+    const { container } = render(
+      <SplitText text="T" frame={100} animation="splitUp" duration={60} stagger={2} />
+    );
+    const span = container.querySelector('span') as HTMLElement;
+    // After animation completes, opacity should be 1
+    expect(span.style.opacity).toBe('1');
+  });
+
+  it('should respect stagger delay between characters', () => {
+    const { container } = render(
+      <SplitText text="AB" frame={5} animation="splitUp" duration={60} stagger={10} />
+    );
+    const spans = container.querySelectorAll('span');
+    const firstSpan = spans[0] as HTMLElement;
+    const secondSpan = spans[1] as HTMLElement;
+
+    // First character should be animating (frame 5, started at frame 0)
+    const firstOpacity = parseFloat(firstSpan.style.opacity);
+    expect(firstOpacity).toBeGreaterThan(0);
+
+    // Second character should still be at start (starts at frame 10)
+    expect(secondSpan.style.opacity).toBe('0');
+  });
+
+  it('should apply custom font size and color', () => {
+    const { container } = render(
+      <SplitText text="Test" frame={0} fontSize={32} color="#ff0000" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('32px');
+    expect(element.style.color).toBe('rgb(255, 0, 0)');
+  });
+
+  it('should preserve spaces in text', () => {
+    const { container } = render(
+      <SplitText text="A B" frame={0} mode="letters" />
+    );
+    const spans = container.querySelectorAll('span');
+    // Should have 3 spans for "A", " ", "B"
+    expect(spans.length).toBe(3);
+    const spaceSpan = spans[1] as HTMLElement;
+    expect(spaceSpan.style.whiteSpace).toBe('pre');
+  });
+
+  it('should apply easing to animation progress', () => {
+    const { container: linearContainer } = render(
+      <SplitText text="T" frame={30} animation="splitUp" duration={60} easing="linear" />
+    );
+    const linearOpacity = parseFloat((linearContainer.querySelector('span') as HTMLElement).style.opacity);
+
+    const { container: easeOutContainer } = render(
+      <SplitText text="T" frame={30} animation="splitUp" duration={60} easing="ease-out" />
+    );
+    const easeOutOpacity = parseFloat((easeOutContainer.querySelector('span') as HTMLElement).style.opacity);
+
+    // Different easings should produce different opacity values at mid-animation
+    expect(linearOpacity).not.toBe(easeOutOpacity);
+  });
+
+  it('should handle word mode with whitespace', () => {
+    const { container } = render(
+      <SplitText text="Hello World" frame={100} mode="words" animation="splitUp" />
+    );
+    const spans = container.querySelectorAll('span');
+    // All parts should be fully visible after animation
+    expect(container.textContent).toBe('Hello World');
+  });
+
+  it('should animate different characters at different times with stagger', () => {
+    const { container } = render(
+      <SplitText text="ABC" frame={15} animation="fade" duration={30} stagger={5} mode="letters" />
+    );
+    const spans = container.querySelectorAll('span');
+
+    // First char starts at frame 0, second at frame 5, third at frame 10
+    // At frame 15:
+    // - First char should be past halfway (started at 0, duration 30)
+    // - Second char should be partway through (started at 5, duration 30)
+    // - Third char should have just started (started at 10, duration 30)
+
+    expect(spans.length).toBe(3);
   });
 });

@@ -451,3 +451,321 @@ export interface GlitchEffectProps extends AnimatedProps {
   /** Duration of each glitch in milliseconds */
   duration?: number;
 }
+
+/**
+ * Blur text animation mode
+ */
+export type BlurMode = 'whole' | 'words' | 'letters';
+
+/**
+ * Blur text easing type
+ */
+export type BlurEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+/**
+ * BlurText component props
+ */
+export interface BlurTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Starting blur amount in pixels */
+  startBlur?: number;
+  /** Ending blur amount in pixels */
+  endBlur?: number;
+  /** Duration of the animation in frames */
+  duration?: number;
+  /** Delay before starting animation in frames */
+  delay?: number;
+  /** Animation mode - whole text, word by word, or letter by letter */
+  mode?: BlurMode;
+  /** Easing function */
+  easing?: BlurEasing;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+}
+
+/**
+ * Split text animation mode
+ */
+export type SplitTextMode = 'words' | 'letters';
+
+/**
+ * Split text animation types
+ */
+export type SplitTextAnimation = 'splitUp' | 'splitDown' | 'splitX' | 'fan' | 'explode';
+
+/**
+ * Split text easing type
+ */
+export type SplitTextEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+/**
+ * SplitText component props
+ */
+export interface SplitTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Animation mode - split by words or letters */
+  mode?: SplitTextMode;
+  /** Type of split animation */
+  animation?: SplitTextAnimation;
+  /** Duration of the animation in frames */
+  duration?: number;
+  /** Frames between each character/word starting animation */
+  stagger?: number;
+  /** Easing function */
+  easing?: SplitTextEasing;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+}
+
+/**
+ * Wave text direction type
+ */
+export type WaveDirection = 'vertical' | 'horizontal';
+
+/**
+ * WaveText component props
+ */
+export interface WaveTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Wave amplitude in pixels */
+  amplitude?: number;
+  /** Wave frequency (wave density) */
+  frequency?: number;
+  /** Animation speed multiplier */
+  speed?: number;
+  /** Direction of wave motion */
+  direction?: WaveDirection;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+}
+
+/**
+ * Stagger text animation type
+ */
+export type StaggerAnimation = 'fade' | 'slideUp' | 'slideDown' | 'scale' | 'bounce';
+
+/**
+ * Stagger text easing type
+ */
+export type StaggerEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+/**
+ * StaggerText component props
+ */
+export interface StaggerTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Frames between characters */
+  stagger?: number;
+  /** Animation type for character entrance */
+  animation?: StaggerAnimation;
+  /** Duration per character in frames */
+  duration?: number;
+  /** Easing function */
+  easing?: StaggerEasing;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+  /** Delay before starting animation in frames */
+  delay?: number;
+}
+
+/**
+ * Bounce text animation mode
+ */
+export type BounceMode = 'whole' | 'letters';
+
+/**
+ * Bounce direction
+ */
+export type BounceDirection = 'up' | 'down' | 'left' | 'right';
+
+/**
+ * BounceText component props
+ */
+export interface BounceTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Animation mode - whole text or letter by letter */
+  mode?: BounceMode;
+  /** Direction from which text bounces in */
+  direction?: BounceDirection;
+  /** Duration of the animation in frames */
+  duration?: number;
+  /** Number of bounces during animation */
+  bounces?: number;
+  /** Stagger delay between letters in frames (only for letters mode) */
+  stagger?: number;
+  /** Delay before starting animation in frames */
+  delay?: number;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+}
+
+/**
+ * Shine direction type
+ */
+export type ShineDirection = 'left' | 'right';
+
+/**
+ * ShinyText component props
+ */
+export interface ShinyTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Shine highlight color */
+  shineColor?: string;
+  /** Base text color */
+  baseColor?: string;
+  /** Duration of one sweep in frames */
+  duration?: number;
+  /** Loop the shine animation */
+  loop?: boolean;
+  /** Direction of shine sweep */
+  direction?: ShineDirection;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+}
+
+/**
+ * Reveal text animation mode
+ */
+export type RevealMode = 'words' | 'letters';
+
+/**
+ * Reveal text style
+ */
+export type RevealStyle = 'fade' | 'wipe' | 'slide';
+
+/**
+ * Reveal text direction
+ */
+export type RevealDirection = 'left' | 'right' | 'center';
+
+/**
+ * Reveal text easing type
+ */
+export type RevealEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+/**
+ * RevealText component props
+ */
+export interface RevealTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Animation mode - word by word or letter by letter */
+  mode?: RevealMode;
+  /** Reveal style - fade, wipe, or slide */
+  revealStyle?: RevealStyle;
+  /** Duration of the animation in frames */
+  duration?: number;
+  /** Stagger delay between each item in frames */
+  stagger?: number;
+  /** Direction of reveal for center-based reveals */
+  direction?: RevealDirection;
+  /** Delay before starting animation in frames */
+  delay?: number;
+  /** Easing function */
+  easing?: RevealEasing;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+}
+
