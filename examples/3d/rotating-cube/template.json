@@ -62,7 +62,7 @@
           },
           {
             "id": "three-scene",
-            "type": "ThreeScene",
+            "type": "custom",
             "position": {
               "x": 760,
               "y": 290
@@ -71,18 +71,23 @@
               "width": 400,
               "height": 400
             },
-            "props": {
-              "geometry": "box",
-              "color": "{{cubeColor}}",
-              "wireframe": false,
-              "rotation": {
-                "x": 0.5,
-                "y": 1,
-                "z": 0.3
-              },
-              "scale": 1.5,
-              "cameraDistance": 600,
-              "lighting": "directional"
+            "customComponent": {
+              "name": "three-scene",
+              "props": {
+                "frame": 0,
+                "fps": 30,
+                "geometry": "box",
+                "color": "{{cubeColor}}",
+                "wireframe": false,
+                "rotation": {
+                  "x": 0.5,
+                  "y": 1,
+                  "z": 0.3
+                },
+                "scale": 1.5,
+                "cameraDistance": 600,
+                "lighting": "directional"
+              }
             },
             "animations": [
               {
