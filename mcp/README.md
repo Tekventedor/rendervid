@@ -453,6 +453,40 @@ case 'my_tool':
 
 3. Rebuild and test
 
+4. **Generate documentation:**
+```bash
+pnpm generate:skills
+```
+
+This automatically creates skill documentation in `/skills/` from your tool definition.
+
+### Auto-Generating Skills Documentation
+
+The MCP server includes an auto-documentation generator that creates skills documentation from source code:
+
+**What it generates:**
+- Individual skill Markdown files (one per tool)
+- Skills registry JSON (machine-readable format)
+- README with categorized overview
+
+**How it works:**
+1. Reads tool definitions from `mcp/src/tools/`
+2. Extracts Zod schemas and converts to JSON Schema
+3. Parses JSDoc comments for detailed descriptions
+4. Generates Markdown in Remotion skills format
+5. Outputs to `/skills/` directory at repository root
+
+**To regenerate documentation:**
+```bash
+cd mcp
+pnpm generate:skills
+```
+
+**Integration with CI:**
+- GitHub Actions automatically regenerates docs on source changes
+- See `.github/workflows/generate-docs.yml`
+- Commits are marked with `[skip ci]` to prevent loops
+
 ### Best Practices
 
 1. **No stdout usage** - All logging must go to stderr

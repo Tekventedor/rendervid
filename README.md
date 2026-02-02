@@ -201,6 +201,28 @@ pnpm typecheck
 
 [FlowHunt Attribution License](./LICENSE) - Free for commercial and personal use with attribution
 
+## Skills Documentation
+
+Auto-generated MCP skills documentation is available in the [`/skills/`](./skills/) directory:
+
+- **Individual skill docs**: Detailed documentation for each MCP tool
+- **Skills registry**: Machine-readable JSON format for programmatic access
+- **Examples**: Usage examples and best practices
+
+To regenerate skills documentation:
+```bash
+cd mcp
+pnpm build
+pnpm generate:skills
+```
+
+Or use the convenience script:
+```bash
+./scripts/generate-all-docs.sh
+```
+
+Skills documentation is automatically updated when MCP server source code changes via GitHub Actions.
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for development guidelines.

@@ -8,10 +8,12 @@
   },
   "scripts": {
     "build": "tsc && chmod +x build/index.js",
+    "build:with-docs": "pnpm build && pnpm generate:skills",
     "dev": "tsc --watch",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf build",
-    "test": "node test-server.js"
+    "test": "node test-server.js",
+    "generate:skills": "tsc scripts/generate-skills.ts --module es2022 --target es2022 --moduleResolution bundler --outDir build/scripts && node build/scripts/generate-skills.js"
   },
   "keywords": [
     "mcp",

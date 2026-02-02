@@ -1,0 +1,403 @@
+{
+  "server": "rendervid-mcp-server",
+  "version": "0.1.0",
+  "generated": "2026-02-02T05:32:57.406Z",
+  "description": "Model Context Protocol server for Rendervid - enables AI agents to generate videos and images",
+  "skills": [
+    {
+      "name": "get_capabilities",
+      "description": "Discover all available features and capabilities of the Rendervid engine.\n\nThis tool returns a comprehensive overview of what Rendervid can do, including:\n\n**Layer Types:**\n- text: Rich text with typography, fonts, alignment\n- image: Display images with fit options (cover, contain, fill)\n- video: Play video clips with timing controls\n- shape: Rectangles, ellipses, polygons, stars, paths\n- audio: Background music and sound effects\n- group: Container for organizing layers\n- lottie: Lottie animations\n- custom: Custom React components\n\n**Animation Presets (40+):**\n- Entrance: fadeIn, slideIn, zoomIn, bounceIn, rotateIn, etc.\n- Exit: fadeOut, slideOut, zoomOut, bounceOut, rotateOut, etc.\n- Emphasis: pulse, shake, bounce, swing, wobble, flash, etc.\n\n**Easing Functions (30+):**\n- Linear, ease, easeIn, easeOut, easeInOut\n- Cubic bezier variants (Quad, Cubic, Quart, Quint, Sine, Expo, Circ, Back, Elastic, Bounce)\n- Custom cubic-bezier and spring functions\n\n**Output Formats:**\n- Video: MP4, WebM, MOV, GIF\n- Image: PNG, JPEG, WebP\n- Codecs: H.264, H.265, VP8, VP9, AV1, ProRes\n\n**Styling Features:**\n- Blend modes (multiply, screen, overlay, etc.)\n- Filters (blur, brightness, grayscale, etc.)\n- Fonts (built-in, Google Fonts, custom fonts)\n- Tailwind CSS support\n\nUse this to understand what's possible when creating templates, especially for AI-generated content.\nThe capabilities object includes detailed schemas and examples for each element type.",
+      "category": "discovery",
+      "tags": [
+        "discovery",
+        "metadata",
+        "templates",
+        "generation",
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "get_example",
+      "description": "Load a specific example template by path.\n\nThis tool retrieves a complete example template including:\n- template: The full Rendervid JSON template ready to use\n- readme: Documentation explaining how the template works (if available)\n- path: The example path for reference\n\nThe template can be used immediately with render_video or render_image tools.\nYou can also modify the template's inputs or structure before rendering.\n\n**Example paths format:**\ncategory/example-name\n\n**Common examples:**\n- getting-started/01-hello-world: Simplest template, animated text\n- getting-started/02-first-video: Basic 5-second video\n- social-media/instagram-story: 1080x1920 Instagram story template\n- social-media/youtube-thumbnail: 1280x720 YouTube thumbnail\n- marketing/product-showcase: Product feature video\n- data-visualization/animated-bar-chart: Animated bar chart\n\n**Using the template:**\n1. Load example: get_example({ examplePath: \"category/name\" })\n2. Review template structure and inputs\n3. Customize inputs with your own values\n4. Render with render_video or render_image\n\n**Customizing:**\nTemplates have an \"inputs\" array defining what can be customized.\nEach input has a key, type, label, and default value.\nPass your custom values to the inputs parameter when rendering.\n\nExample:\n{\n  \"inputs\": [\n    { \"key\": \"title\", \"type\": \"string\", \"default\": \"Hello\" },\n    { \"key\": \"color\", \"type\": \"color\", \"default\": \"#3B82F6\" }\n  ]\n}\n\nRender with: { inputs: { title: \"My Title\", color: \"#FF0000\" } }",
+      "category": "examples",
+      "tags": [
+        "templates",
+        "examples",
+        "json",
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "examplePath": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "examplePath"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "list_examples",
+      "description": "Browse the collection of 50+ ready-to-use Rendervid template examples.\n\nThis tool lists available example templates organized by category. Each example includes:\n- name: Template name\n- category: Category (getting-started, social-media, marketing, etc.)\n- path: Path to use with get_example tool\n- description: What the template does\n- outputType: 'video' or 'image'\n- dimensions: Output resolution (e.g., \"1920x1080\")\n\n**Categories:**\n- getting-started: Simple examples to learn basics (Hello World, First Video, etc.)\n- social-media: Platform-specific templates (Instagram, TikTok, YouTube, Twitter, LinkedIn)\n- marketing: Promotional content (Product Showcase, Sale Announcement, Testimonials, Logo Reveal)\n- data-visualization: Animated charts (Bar Chart, Line Graph, Pie Chart, Counter, Dashboard)\n- ecommerce: Online store content (Flash Sale, Product Launch, Comparison, Discount)\n- events: Event announcements (Countdown, Save the Date, Webinar, Conference)\n- content: Creator content (Podcast Teaser, Blog Promo, Quote Card, News Headline)\n- education: Educational content (Course Intro, Lesson Title, Certificate)\n- real-estate: Property listings (Listing, Price Drop, Open House)\n- streaming: Streamer content (Stream Starting, End Screen, Highlight Intro)\n- fitness: Fitness content (Workout Timer, Progress Tracker)\n- food: Restaurant content (Menu Item, Daily Special, Recipe Card)\n- advanced: Advanced techniques (Parallax, Kinetic Typography)\n- showcase: Feature demonstrations (All Fonts, All Animations, All Easing, etc.)\n\nUse the category parameter to filter by category, or omit to see all examples.\nAfter finding an example, use get_example to load its template and customize it.",
+      "category": "examples",
+      "tags": [
+        "templates",
+        "examples",
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "render_image",
+      "description": "Generate a single image from a Rendervid template.\n\nThis tool renders a static image by:\n1. Accepting a Rendervid template (same JSON structure as video templates)\n2. Rendering a specific frame (default: frame 0)\n3. Exporting as PNG, JPEG, or WebP\n\nIdeal for:\n- Social media images (Instagram posts, Twitter cards, LinkedIn banners)\n- Thumbnails (YouTube, blog posts, video covers)\n- Static graphics (quotes, announcements, infographics)\n- Previewing video frames\n\nYou can use the same template for both video and image output.\nFor video templates, specify which frame to capture (0-based index).\nFor image templates (output.type: \"image\"), the frame parameter is ignored.\n\nThe template format is identical to video templates, supporting:\n- Multiple layers (text, images, shapes)\n- Animations (will be evaluated at the specified frame)\n- Dynamic inputs\n- Full styling capabilities\n\nExample use:\n- Render frame 0 of a video template as a thumbnail\n- Generate social media post images with custom text\n- Create preview images for video content",
+      "category": "rendering",
+      "tags": [
+        "image",
+        "rendering",
+        "templates",
+        "generation",
+        "json",
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "output": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "video",
+                      "image"
+                    ]
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  "fps": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  "duration": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "type",
+                  "width",
+                  "height"
+                ],
+                "additionalProperties": false
+              },
+              "inputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "default": {}
+                  },
+                  "required": [
+                    "key",
+                    "type",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "defaults": {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              "composition": {
+                "type": "object",
+                "properties": {
+                  "scenes": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "scenes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "name",
+              "output",
+              "composition"
+            ],
+            "additionalProperties": false
+          },
+          "inputs": {
+            "type": "object",
+            "additionalProperties": {},
+            "default": {}
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "png",
+              "jpeg",
+              "webp"
+            ],
+            "default": "png"
+          },
+          "quality": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 90
+          },
+          "frame": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        },
+        "required": [
+          "template",
+          "outputPath"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "render_video",
+      "description": "Generate a video file from a Rendervid JSON template.\n\nThis tool renders a complete video by:\n1. Accepting a Rendervid template (JSON structure defining scenes, layers, animations)\n2. Merging provided input values with template defaults\n3. Rendering all frames using a headless browser\n4. Encoding frames into a video file using FFmpeg\n\nThe template uses a declarative JSON format that describes:\n- Output dimensions, FPS, and duration\n- Dynamic inputs (variables that can be customized)\n- Scenes with layers (text, images, shapes, video, audio)\n- Animations (entrance, exit, emphasis effects with 40+ presets)\n- Easing functions (30+ options for smooth motion)\n\nCommon use cases:\n- Social media content (Instagram stories, TikTok videos, YouTube thumbnails)\n- Marketing videos (product showcases, sale announcements, testimonials)\n- Data visualizations (animated charts, graphs, dashboards)\n- Educational content (course intros, lesson titles)\n\nThe output path will be created automatically. You can specify format, quality, and FPS.\nRendering progress is reported with frame counts and time estimates.\n\nExample template structure:\n{\n  \"name\": \"My Video\",\n  \"output\": { \"type\": \"video\", \"width\": 1920, \"height\": 1080, \"fps\": 30, \"duration\": 5 },\n  \"inputs\": [{ \"key\": \"title\", \"type\": \"string\", \"label\": \"Title\", \"default\": \"Hello\" }],\n  \"composition\": { \"scenes\": [{ \"id\": \"main\", \"startFrame\": 0, \"endFrame\": 150, \"layers\": [...] }] }\n}",
+      "category": "rendering",
+      "tags": [
+        "video",
+        "rendering",
+        "templates",
+        "generation",
+        "json",
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "output": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "video",
+                      "image"
+                    ]
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  "fps": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  "duration": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "type",
+                  "width",
+                  "height"
+                ],
+                "additionalProperties": false
+              },
+              "inputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "default": {}
+                  },
+                  "required": [
+                    "key",
+                    "type",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "defaults": {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              "composition": {
+                "type": "object",
+                "properties": {
+                  "scenes": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "scenes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "name",
+              "output",
+              "composition"
+            ],
+            "additionalProperties": false
+          },
+          "inputs": {
+            "type": "object",
+            "additionalProperties": {},
+            "default": {}
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "mp4",
+              "webm",
+              "mov",
+              "gif"
+            ],
+            "default": "mp4"
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "standard",
+              "high",
+              "lossless"
+            ],
+            "default": "high"
+          },
+          "fps": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "template",
+          "outputPath"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "validate_template",
+      "description": "Validate a Rendervid template JSON structure.\n\nThis tool performs comprehensive validation of a template to ensure it's properly formatted and ready for rendering.\n\nValidation checks include:\n- Template structure (name, output, composition)\n- Output configuration (type, dimensions, fps, duration)\n- Input definitions (keys, types, defaults)\n- Scene structure (IDs, frame ranges)\n- Layer configuration (types, positions, sizes, props)\n- Animation definitions (types, effects, timing, easing)\n- Component references and props\n- Data consistency (frame ranges, input references)\n\nReturns:\n- valid: boolean indicating if template is valid\n- errors: array of validation errors (if any)\n- warnings: array of validation warnings (if any)\n\nUse this before rendering to catch issues early, or when:\n- Creating new templates\n- Modifying existing templates\n- Debugging template issues\n- Verifying AI-generated templates\n\nThe validator provides detailed error messages with paths to help fix issues quickly.",
+      "category": "validation",
+      "tags": [
+        "validation",
+        "quality",
+        "templates",
+        "generation",
+        "json",
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "template": {}
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ]
+}
