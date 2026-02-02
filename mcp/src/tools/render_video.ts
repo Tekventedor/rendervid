@@ -14,6 +14,12 @@ export const renderVideoTool = {
   name: 'render_video',
   description: `Generate a video file from a Rendervid JSON template.
 
+OUTPUT PATH REQUIREMENTS:
+- macOS: Use ~/Downloads/, ~/Desktop/, or ~/Documents/
+- Example: outputPath: "~/Downloads/my-video.mp4"
+- Paths like /home/claude/ will be auto-corrected to Downloads folder
+- File is saved locally and accessible in Finder
+
 CRITICAL TEMPLATE RULES (Follow exactly to avoid errors):
 
 1. TIMING IS IN FRAMES, NOT SECONDS
@@ -145,16 +151,41 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
 
     // Validate and fix output path for macOS
     let outputPath = input.outputPath;
+    let pathWasCorrected = false;
+    let pathCorrectionMessage = '';
+
+    // Expand tilde in path
+    if (outputPath.startsWith('~/')) {
+      outputPath = path.join(os.homedir(), outputPath.slice(2));
+    }
+
     if (os.platform() === 'darwin' && outputPath.startsWith('/home/')) {
       // On macOS, /home/ paths don't exist - convert to proper macOS path
       const filename = path.basename(outputPath);
-      const tempDir = path.join(os.tmpdir(), 'rendervid-output');
-      outputPath = path.join(tempDir, filename);
+      const pathParts = outputPath.split('/').filter(Boolean);
+
+      // Try to detect common user directories
+      if (pathParts.includes('Downloads')) {
+        outputPath = path.join(os.homedir(), 'Downloads', filename);
+        pathCorrectionMessage = `Path corrected: /home/claude/Downloads → ${os.homedir()}/Downloads`;
+      } else if (pathParts.includes('Desktop')) {
+        outputPath = path.join(os.homedir(), 'Desktop', filename);
+        pathCorrectionMessage = `Path corrected: /home/claude/Desktop → ${os.homedir()}/Desktop`;
+      } else if (pathParts.includes('Documents')) {
+        outputPath = path.join(os.homedir(), 'Documents', filename);
+        pathCorrectionMessage = `Path corrected: /home/claude/Documents → ${os.homedir()}/Documents`;
+      } else {
+        // Default to Downloads
+        outputPath = path.join(os.homedir(), 'Downloads', filename);
+        pathCorrectionMessage = `Path corrected: ${input.outputPath} → ${outputPath} (using Downloads folder)`;
+      }
+
+      pathWasCorrected = true;
 
       logger.warn('Invalid path detected and corrected', {
         originalPath: input.outputPath,
         correctedPath: outputPath,
-        reason: 'macOS does not use /home/ paths. Using temporary directory instead.',
+        reason: 'macOS does not use /home/ paths. Converted to proper macOS user directory.',
       });
     }
 
@@ -233,7 +264,7 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
       renderTime: `${(result.renderTime / 1000).toFixed(2)}s`,
     });
 
-    return JSON.stringify({
+    const response: any = {
       success: true,
       message: `Video rendered successfully to ${result.outputPath}`,
       output: {
@@ -247,7 +278,19 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
         renderTime: result.renderTime,
         renderTimeFormatted: `${(result.renderTime / 1000).toFixed(2)}s`,
       },
-    }, null, 2);
+    };
+
+    // Add path correction info if applicable
+    if (pathWasCorrected) {
+      response.pathInfo = {
+        corrected: true,
+        message: pathCorrectionMessage,
+        actualPath: result.outputPath,
+        note: 'File saved to your macOS user directory. You can find it in Finder.',
+      };
+    }
+
+    return JSON.stringify(response, null, 2);
   } catch (error) {
     logger.error('Video render failed', { error });
 
