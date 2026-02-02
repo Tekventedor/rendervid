@@ -1203,6 +1203,13 @@ var DefaultComponentRegistry = class {
     return this.components.has(name);
   }
 };
+var globalRegistry = null;
+function getDefaultRegistry() {
+  if (!globalRegistry) {
+    globalRegistry = new DefaultComponentRegistry();
+  }
+  return globalRegistry;
+}
 var RendervidEngine = class {
   options;
   _components;
@@ -1597,6 +1604,6 @@ function filtersToCSS(filters) {
   return filters.map(filterToCSS).filter(Boolean).join(" ");
 }
 
-export { RendervidEngine, compileAnimation, createCubicBezier, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCompositionDuration, getEasing, getLayerSchema, getPreset, getPresetsByType, getPropertiesAtFrame, getSceneAtFrame, getTemplateSchema, getValueAtFrame, interpolate, parseEasing, templateSchema, validateInputs, validateSceneOrder, validateTemplate };
+export { RendervidEngine, compileAnimation, createCubicBezier, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCompositionDuration, getDefaultRegistry, getEasing, getLayerSchema, getPreset, getPresetsByType, getPropertiesAtFrame, getSceneAtFrame, getTemplateSchema, getValueAtFrame, interpolate, parseEasing, templateSchema, validateInputs, validateSceneOrder, validateTemplate };
 //# sourceMappingURL=index.mjs.map
 //# sourceMappingURL=index.mjs.map

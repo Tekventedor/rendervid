@@ -1,6 +1,6 @@
-import { useMemo, useRef, useEffect, useState } from 'react';
-import { generatePresetKeyframes, getPropertiesAtFrame } from '@rendervid/core';
-import { jsx, jsxs } from 'react/jsx-runtime';
+import React4, { useMemo, useRef, useEffect, useState } from 'react';
+import { generatePresetKeyframes, getPropertiesAtFrame, getDefaultRegistry } from '@rendervid/core';
+import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { createRoot } from 'react-dom/client';
 import html2canvas from 'html2canvas';
 import { ArrayBufferTarget, Muxer } from 'mp4-muxer';
@@ -1079,6 +1079,18 @@ __export(SceneRenderer_exports, {
 function getSceneDuration(scene) {
   return scene.endFrame - scene.startFrame;
 }
+function registryToMap(registry) {
+  if (!registry) return void 0;
+  const map = /* @__PURE__ */ new Map();
+  const components = registry.list();
+  for (const info of components) {
+    const component = registry.get(info.name);
+    if (component) {
+      map.set(info.name, component);
+    }
+  }
+  return map;
+}
 function SceneRenderer({
   scene,
   frame,
@@ -1089,6 +1101,7 @@ function SceneRenderer({
   registry
 }) {
   const sceneDuration = getSceneDuration(scene);
+  const registryMap = React4.useMemo(() => registryToMap(registry), [registry]);
   const backgroundStyle = {};
   if (scene.backgroundColor) {
     backgroundStyle.backgroundColor = scene.backgroundColor;
@@ -1119,7 +1132,7 @@ function SceneRenderer({
           fps,
           sceneDuration,
           isPlaying,
-          registry
+          registry: registryMap
         },
         layer.id
       ))
@@ -1136,11 +1149,25 @@ function TemplateRenderer({
   registry
 }) {
   let currentScene = null;
+  let nextScene = null;
   let localFrame = frame;
-  for (const scene of scenes) {
+  let transitionProgress = 0;
+  let transitionType = null;
+  let transitionDirection = void 0;
+  for (let i = 0; i < scenes.length; i++) {
+    const scene = scenes[i];
     if (frame >= scene.startFrame && frame < scene.endFrame) {
       currentScene = scene;
       localFrame = frame - scene.startFrame;
+      if (scene.transition && scene.transition.duration > 0 && i < scenes.length - 1) {
+        const transitionStart = scene.endFrame - scene.transition.duration;
+        if (frame >= transitionStart && frame < scene.endFrame) {
+          nextScene = scenes[i + 1];
+          transitionType = scene.transition.type;
+          transitionDirection = scene.transition.direction;
+          transitionProgress = (frame - transitionStart) / scene.transition.duration;
+        }
+      }
       break;
     }
   }
@@ -1163,18 +1190,196 @@ function TemplateRenderer({
       }
     );
   }
+  if (!nextScene || !transitionType) {
+    return /* @__PURE__ */ jsx(
+      SceneRenderer,
+      {
+        scene: currentScene,
+        frame: localFrame,
+        fps,
+        width,
+        height,
+        isPlaying,
+        registry
+      }
+    );
+  }
+  const nextLocalFrame = 0;
   return /* @__PURE__ */ jsx(
-    SceneRenderer,
+    "div",
     {
-      scene: currentScene,
-      frame: localFrame,
-      fps,
-      width,
-      height,
-      isPlaying,
-      registry
+      style: {
+        position: "relative",
+        width,
+        height,
+        overflow: "hidden"
+      },
+      children: /* @__PURE__ */ jsx(
+        TransitionRenderer,
+        {
+          outgoingScene: currentScene,
+          incomingScene: nextScene,
+          outgoingFrame: localFrame,
+          incomingFrame: nextLocalFrame,
+          progress: transitionProgress,
+          transitionType,
+          direction: transitionDirection,
+          fps,
+          width,
+          height,
+          isPlaying,
+          registry
+        }
+      )
     }
   );
+}
+function TransitionRenderer({
+  outgoingScene,
+  incomingScene,
+  outgoingFrame,
+  incomingFrame,
+  progress,
+  transitionType,
+  direction = "left",
+  fps,
+  width,
+  height,
+  isPlaying,
+  registry
+}) {
+  const getTransitionStyle = () => {
+    switch (transitionType) {
+      case "fade": {
+        return {
+          opacity: 1 - progress
+        };
+      }
+      case "slide": {
+        const offset = progress * 100;
+        if (direction === "left") {
+          return { transform: `translateX(-${offset}%)` };
+        } else if (direction === "right") {
+          return { transform: `translateX(${offset}%)` };
+        } else if (direction === "up") {
+          return { transform: `translateY(-${offset}%)` };
+        } else if (direction === "down") {
+          return { transform: `translateY(${offset}%)` };
+        }
+        return { transform: `translateX(-${offset}%)` };
+      }
+      case "zoom": {
+        const scale = 1 - progress;
+        return {
+          transform: `scale(${scale})`,
+          opacity: scale
+        };
+      }
+      case "wipe": {
+        const offset = progress * 100;
+        if (direction === "left") {
+          return { clipPath: `inset(0 ${offset}% 0 0)` };
+        } else if (direction === "right") {
+          return { clipPath: `inset(0 0 0 ${offset}%)` };
+        } else if (direction === "up") {
+          return { clipPath: `inset(0 0 ${offset}% 0)` };
+        } else if (direction === "down") {
+          return { clipPath: `inset(${offset}% 0 0 0)` };
+        }
+        return { clipPath: `inset(0 ${offset}% 0 0)` };
+      }
+      case "cut":
+      default:
+        return progress > 0.5 ? { opacity: 0 } : {};
+    }
+  };
+  const getIncomingStyle = () => {
+    switch (transitionType) {
+      case "fade": {
+        return {
+          opacity: progress
+        };
+      }
+      case "slide": {
+        const offset = (1 - progress) * 100;
+        if (direction === "left") {
+          return { transform: `translateX(${offset}%)` };
+        } else if (direction === "right") {
+          return { transform: `translateX(-${offset}%)` };
+        } else if (direction === "up") {
+          return { transform: `translateY(${offset}%)` };
+        } else if (direction === "down") {
+          return { transform: `translateY(-${offset}%)` };
+        }
+        return { transform: `translateX(${offset}%)` };
+      }
+      case "zoom": {
+        const scale = progress;
+        return {
+          transform: `scale(${scale})`,
+          opacity: scale
+        };
+      }
+      case "wipe": {
+        return {};
+      }
+      case "cut":
+      default:
+        return progress > 0.5 ? {} : { opacity: 0 };
+    }
+  };
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          ...getTransitionStyle()
+        },
+        children: /* @__PURE__ */ jsx(
+          SceneRenderer,
+          {
+            scene: outgoingScene,
+            frame: outgoingFrame,
+            fps,
+            width,
+            height,
+            isPlaying,
+            registry
+          }
+        )
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          ...getIncomingStyle()
+        },
+        children: /* @__PURE__ */ jsx(
+          SceneRenderer,
+          {
+            scene: incomingScene,
+            frame: incomingFrame,
+            fps,
+            width,
+            height,
+            isPlaying,
+            registry
+          }
+        )
+      }
+    )
+  ] });
 }
 function calculateTotalDuration(scenes) {
   if (scenes.length === 0) return 0;
@@ -1537,9 +1742,11 @@ var BrowserRenderer = class {
   container;
   root = null;
   isRendering = false;
+  registry;
   constructor(options = {}) {
     this.options = options;
     this.container = options.container || this.createContainer();
+    this.registry = options.registry || getDefaultRegistry();
   }
   createContainer() {
     const container = document.createElement("div");
@@ -1552,6 +1759,18 @@ var BrowserRenderer = class {
     `;
     document.body.appendChild(container);
     return container;
+  }
+  /**
+   * Get the component registry.
+   */
+  getRegistry() {
+    return this.registry;
+  }
+  /**
+   * Register a custom component.
+   */
+  registerComponent(name, component) {
+    this.registry.register(name, component);
   }
   /**
    * Check if WebCodecs is supported for high-quality encoding.
@@ -1770,7 +1989,7 @@ var BrowserRenderer = class {
             width,
             height,
             isPlaying: false,
-            registry: this.options.registry
+            registry: this.registry
           }
         )
       );
@@ -1823,7 +2042,7 @@ var BrowserRenderer = class {
               width,
               height,
               isPlaying: false,
-              registry: this.options.registry
+              registry: this.registry
             }
           )
         );

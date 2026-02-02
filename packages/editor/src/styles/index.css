@@ -1,0 +1,75 @@
+/* Rendervid Editor Styles */
+
+.rendervid-video-editor * {
+  box-sizing: border-box;
+}
+
+.rendervid-video-editor button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.rendervid-video-editor button:active:not(:disabled) {
+  opacity: 0.8;
+}
+
+.rendervid-video-editor input[type="number"],
+.rendervid-video-editor input[type="text"],
+.rendervid-video-editor textarea,
+.rendervid-video-editor select {
+  font-family: inherit;
+}
+
+.rendervid-video-editor input[type="number"]:focus,
+.rendervid-video-editor input[type="text"]:focus,
+.rendervid-video-editor textarea:focus,
+.rendervid-video-editor select:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: -2px;
+}
+
+/* Scrollbar styles */
+.rendervid-video-editor ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.rendervid-video-editor ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.rendervid-video-editor ::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 5px;
+}
+
+.rendervid-video-editor ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Timeline styles */
+.rendervid-timeline {
+  user-select: none;
+}
+
+.timeline-track {
+  position: relative;
+}
+
+/* Preview styles */
+.rendervid-preview {
+  position: relative;
+}
+
+.rendervid-preview canvas {
+  image-rendering: crisp-edges;
+}
+
+/* Layer panel styles */
+.rendervid-layer-panel {
+  user-select: none;
+}
+
+/* Property panel styles */
+.rendervid-property-panel {
+  user-select: none;
+}

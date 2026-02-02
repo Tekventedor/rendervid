@@ -1210,6 +1210,13 @@ var DefaultComponentRegistry = class {
     return this.components.has(name);
   }
 };
+var globalRegistry = null;
+function getDefaultRegistry() {
+  if (!globalRegistry) {
+    globalRegistry = new DefaultComponentRegistry();
+  }
+  return globalRegistry;
+}
 var RendervidEngine = class {
   options;
   _components;
@@ -1614,6 +1621,7 @@ exports.generatePresetKeyframes = generatePresetKeyframes;
 exports.getAllEasingNames = getAllEasingNames;
 exports.getAllPresetNames = getAllPresetNames;
 exports.getCompositionDuration = getCompositionDuration;
+exports.getDefaultRegistry = getDefaultRegistry;
 exports.getEasing = getEasing;
 exports.getLayerSchema = getLayerSchema;
 exports.getPreset = getPreset;

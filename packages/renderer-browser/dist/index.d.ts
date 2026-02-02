@@ -1,14 +1,14 @@
 import React, { CSSProperties } from 'react';
-import { Template, Scene, ImageLayer as ImageLayer$1, TextLayer as TextLayer$1, VideoLayer as VideoLayer$1, ShapeLayer as ShapeLayer$1, AudioLayer as AudioLayer$1, GroupLayer as GroupLayer$1, LottieLayer as LottieLayer$1, CustomLayer as CustomLayer$1, Layer, AnimatableProperties, LayerStyle, ResolvedStyle } from '@rendervid/core';
+import { ComponentRegistry, Template, Scene, ImageLayer as ImageLayer$1, TextLayer as TextLayer$1, VideoLayer as VideoLayer$1, ShapeLayer as ShapeLayer$1, AudioLayer as AudioLayer$1, GroupLayer as GroupLayer$1, LottieLayer as LottieLayer$1, CustomLayer as CustomLayer$1, Layer, AnimatableProperties, LayerStyle, ResolvedStyle } from '@rendervid/core';
 export { ResolvedStyle } from '@rendervid/core';
 import * as react_jsx_runtime from 'react/jsx-runtime';
 
-type CustomComponentType$4 = React.ComponentType<any>;
+type CustomComponentType$3 = React.ComponentType<any>;
 interface BrowserRendererOptions {
     /** Target container element */
     container?: HTMLElement;
     /** Custom component registry */
-    registry?: Map<string, CustomComponentType$4>;
+    registry?: ComponentRegistry;
     /** Whether to use WebCodecs (falls back to MediaRecorder if unavailable) */
     preferWebCodecs?: boolean;
 }
@@ -81,8 +81,17 @@ declare class BrowserRenderer {
     private container;
     private root;
     private isRendering;
+    private registry;
     constructor(options?: BrowserRendererOptions);
     private createContainer;
+    /**
+     * Get the component registry.
+     */
+    getRegistry(): ComponentRegistry;
+    /**
+     * Register a custom component.
+     */
+    registerComponent(name: string, component: CustomComponentType$3): void;
     /**
      * Check if WebCodecs is supported for high-quality encoding.
      */
@@ -108,7 +117,6 @@ declare class BrowserRenderer {
  */
 declare function createBrowserRenderer(options?: BrowserRendererOptions): BrowserRenderer;
 
-type CustomComponentType$3 = React.ComponentType<any>;
 interface SceneRendererProps {
     /** Scene to render */
     scene: Scene;
@@ -123,7 +131,7 @@ interface SceneRendererProps {
     /** Whether the scene is playing (for audio/video sync) */
     isPlaying?: boolean;
     /** Custom component registry */
-    registry?: Map<string, CustomComponentType$3>;
+    registry?: ComponentRegistry;
 }
 /**
  * Renders a complete scene with all its layers.
@@ -143,10 +151,10 @@ interface TemplateRendererProps {
     /** Whether the scene is playing */
     isPlaying?: boolean;
     /** Custom component registry */
-    registry?: Map<string, CustomComponentType$3>;
+    registry?: ComponentRegistry;
 }
 /**
- * Renders the appropriate scene based on the current frame.
+ * Renders the appropriate scene based on the current frame with transition support.
  */
 declare function TemplateRenderer({ scenes, frame, fps, width, height, isPlaying, registry, }: TemplateRendererProps): react_jsx_runtime.JSX.Element;
 /**
