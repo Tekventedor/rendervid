@@ -31,8 +31,7 @@ const CATEGORIES = [
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-frames');
 
-const GIF_MAX_FRAMES = 120; // Max frames in GIF for file size
-const GIF_MAX_DURATION = 8; // Max GIF duration in seconds
+const GIF_MAX_FRAMES = 240; // Max frames in GIF for file size (increased for full videos)
 const MAX_DIMENSION = 400;
 
 /**
@@ -290,11 +289,12 @@ async function generateGIF(browser, example) {
   const totalFrames = fps * duration;
 
   // Calculate GIF parameters to maintain correct playback speed
-  const gifDuration = Math.min(duration, GIF_MAX_DURATION);
-  const gifFrameCount = Math.min(fps * gifDuration, GIF_MAX_FRAMES);
+  // Show full video duration, but limit total frames for file size
+  const gifDuration = duration;
+  const gifFrameCount = Math.min(totalFrames, GIF_MAX_FRAMES);
 
   // frameStep: how many video frames to skip between each GIF frame
-  const frameStep = Math.max(1, Math.floor((fps * gifDuration) / gifFrameCount));
+  const frameStep = Math.max(1, Math.floor(totalFrames / gifFrameCount));
 
   // delay: time between GIF frames in 1/100th seconds
   // To maintain correct speed: delay = frameStep * (100 / fps)
