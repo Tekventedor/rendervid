@@ -2,6 +2,10 @@
 
 A comprehensive showcase demonstrating all 8 new text animation components from the react-bits collection.
 
+## Preview
+
+![Preview](preview.gif)
+
 ## Duration
 18 seconds (540 frames at 30fps)
 

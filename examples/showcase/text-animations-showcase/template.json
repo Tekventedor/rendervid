@@ -18,8 +18,14 @@
           {
             "id": "bg1",
             "type": "shape",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
@@ -28,8 +34,14 @@
           {
             "id": "title1",
             "type": "text",
-            "position": { "x": 960, "y": 200 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "ScrambleText",
               "fontSize": 42,
@@ -41,8 +53,14 @@
           {
             "id": "scramble1",
             "type": "custom",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "customComponent": {
               "name": "ScrambleText",
               "props": {
@@ -63,8 +81,14 @@
           {
             "id": "watermark1",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -84,8 +108,14 @@
           {
             "id": "bg2",
             "type": "shape",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
@@ -94,8 +124,14 @@
           {
             "id": "title2",
             "type": "text",
-            "position": { "x": 960, "y": 200 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "FlipText",
               "fontSize": 42,
@@ -107,8 +143,14 @@
           {
             "id": "flip1",
             "type": "custom",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "customComponent": {
               "name": "FlipText",
               "props": {
@@ -130,8 +172,14 @@
           {
             "id": "watermark2",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -151,8 +199,14 @@
           {
             "id": "bg3",
             "type": "shape",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
@@ -161,8 +215,14 @@
           {
             "id": "title3",
             "type": "text",
-            "position": { "x": 960, "y": 200 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "FuzzyText",
               "fontSize": 42,
@@ -174,8 +234,14 @@
           {
             "id": "fuzzy1",
             "type": "custom",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "customComponent": {
               "name": "FuzzyText",
               "props": {
@@ -199,8 +265,14 @@
           {
             "id": "watermark3",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -220,8 +292,14 @@
           {
             "id": "bg4",
             "type": "shape",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
@@ -230,8 +308,14 @@
           {
             "id": "title4",
             "type": "text",
-            "position": { "x": 960, "y": 200 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "NeonText",
               "fontSize": 42,
@@ -243,8 +327,14 @@
           {
             "id": "neon1",
             "type": "custom",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "customComponent": {
               "name": "NeonText",
               "props": {
@@ -265,8 +355,14 @@
           {
             "id": "watermark4",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -286,8 +382,14 @@
           {
             "id": "bg5",
             "type": "shape",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
@@ -296,8 +398,14 @@
           {
             "id": "title5",
             "type": "text",
-            "position": { "x": 960, "y": 200 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "TextTrail",
               "fontSize": 42,
@@ -309,8 +417,14 @@
           {
             "id": "trail1",
             "type": "custom",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "customComponent": {
               "name": "TextTrail",
               "props": {
@@ -334,8 +448,14 @@
           {
             "id": "watermark5",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -355,8 +475,14 @@
           {
             "id": "bg6",
             "type": "shape",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
@@ -365,8 +491,14 @@
           {
             "id": "title6",
             "type": "text",
-            "position": { "x": 960, "y": 200 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "LetterMorph",
               "fontSize": 42,
@@ -378,8 +510,14 @@
           {
             "id": "lettermorph1",
             "type": "custom",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "customComponent": {
               "name": "LetterMorph",
               "props": {
@@ -402,8 +540,14 @@
           {
             "id": "watermark6",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -423,8 +567,14 @@
           {
             "id": "bg7",
             "type": "shape",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
@@ -433,8 +583,14 @@
           {
             "id": "title7",
             "type": "text",
-            "position": { "x": 960, "y": 200 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "MorphText",
               "fontSize": 42,
@@ -446,12 +602,22 @@
           {
             "id": "morph1",
             "type": "custom",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "customComponent": {
               "name": "MorphText",
               "props": {
-                "texts": ["AMAZING", "STUNNING", "BRILLIANT"],
+                "texts": [
+                  "AMAZING",
+                  "STUNNING",
+                  "BRILLIANT"
+                ],
                 "fontSize": 80,
                 "fontWeight": "bold",
                 "color": "#fdcb6e",
@@ -468,8 +634,14 @@
           {
             "id": "watermark7",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -489,8 +661,14 @@
           {
             "id": "bg8",
             "type": "shape",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
@@ -499,8 +677,14 @@
           {
             "id": "title8",
             "type": "text",
-            "position": { "x": 960, "y": 200 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "DistortText",
               "fontSize": 42,
@@ -512,8 +696,14 @@
           {
             "id": "distort1",
             "type": "custom",
-            "position": { "x": 960, "y": 540 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "customComponent": {
               "name": "DistortText",
               "props": {
@@ -533,8 +723,14 @@
           {
             "id": "watermark8",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
