@@ -4,6 +4,8 @@ import { createNodeRenderer } from '@rendervid/renderer-node';
 import type { Template } from '@rendervid/core';
 import { RenderVideoInputSchema } from '../types.js';
 import { createLogger } from '../utils/logger.js';
+import * as os from 'os';
+import * as path from 'path';
 
 const logger = createLogger('render_video');
 
@@ -48,8 +50,23 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
     // Validate input
     const input = RenderVideoInputSchema.parse(args);
 
+    // Validate and fix output path for macOS
+    let outputPath = input.outputPath;
+    if (os.platform() === 'darwin' && outputPath.startsWith('/home/')) {
+      // On macOS, /home/ paths don't exist - convert to proper macOS path
+      const filename = path.basename(outputPath);
+      const tempDir = path.join(os.tmpdir(), 'rendervid-output');
+      outputPath = path.join(tempDir, filename);
+
+      logger.warn('Invalid path detected and corrected', {
+        originalPath: input.outputPath,
+        correctedPath: outputPath,
+        reason: 'macOS does not use /home/ paths. Using temporary directory instead.',
+      });
+    }
+
     logger.info('Starting video render', {
-      outputPath: input.outputPath,
+      outputPath: outputPath,
       format: input.format,
       quality: input.quality,
     });
@@ -70,7 +87,7 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
     const result = await renderer.renderVideo({
       template: input.template as Template,
       inputs: mergedInputs,
-      outputPath: input.outputPath,
+      outputPath: outputPath,
       codec: codecSettings.codec,
       quality: codecSettings.quality,
       renderWaitTime: input.renderWaitTime,
