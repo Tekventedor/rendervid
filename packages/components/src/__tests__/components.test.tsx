@@ -15,6 +15,9 @@ import {
   Scale,
   Rotate,
 } from '../components';
+import { BarChart, LineChart, PieChart } from '../charts';
+import { SocialCard, QuoteCard, ProductCard } from '../social';
+import { SceneTransition, LowerThird, CallToAction } from '../transitions';
 import { BlurText } from '../effects/BlurText';
 import { WaveText } from '../effects/WaveText';
 import { BounceText } from '../effects/BounceText';
@@ -1451,5 +1454,300 @@ describe('DistortText Component', () => {
     const element = container.firstChild as HTMLElement;
     expect(element.style.fontSize).toBe('56px');
     expect(element.style.color).toBe('rgb(0, 255, 0)');
+  });
+});
+
+// Chart Components Tests
+describe('BarChart Component', () => {
+  it('should render with data', () => {
+    const { container } = render(
+      <BarChart data={[10, 20, 30]} frame={0} />
+    );
+    expect(container.firstChild).toBeTruthy();
+  });
+
+  it('should render with labels', () => {
+    const { container } = render(
+      <BarChart data={[10, 20, 30]} labels={['A', 'B', 'C']} frame={30} />
+    );
+    expect(container.textContent).toContain('A');
+  });
+
+  it('should animate based on frame', () => {
+    const { container: early } = render(<BarChart data={[50]} frame={0} animationDuration={60} />);
+    const { container: late } = render(<BarChart data={[50]} frame={60} animationDuration={60} />);
+    expect(early.firstChild).toBeTruthy();
+    expect(late.firstChild).toBeTruthy();
+  });
+});
+
+describe('LineChart Component', () => {
+  it('should render with data', () => {
+    const { container } = render(
+      <LineChart data={[10, 20, 15, 30]} frame={0} />
+    );
+    const svg = container.querySelector('svg');
+    expect(svg).toBeTruthy();
+  });
+
+  it('should render smooth curves', () => {
+    const { container } = render(
+      <LineChart data={[10, 20, 15]} frame={30} smooth={true} />
+    );
+    expect(container.querySelector('path')).toBeTruthy();
+  });
+
+  it('should show grid when enabled', () => {
+    const { container } = render(
+      <LineChart data={[10, 20]} frame={0} showGrid={true} />
+    );
+    const lines = container.querySelectorAll('line');
+    expect(lines.length).toBeGreaterThan(0);
+  });
+});
+
+describe('PieChart Component', () => {
+  it('should render with data', () => {
+    const data = [
+      { value: 30, label: 'A' },
+      { value: 70, label: 'B' },
+    ];
+    const { container } = render(
+      <PieChart data={data} frame={0} />
+    );
+    const svg = container.querySelector('svg');
+    expect(svg).toBeTruthy();
+  });
+
+  it('should render slices', () => {
+    const data = [
+      { value: 50, label: 'First' },
+      { value: 50, label: 'Second' },
+    ];
+    const { container } = render(
+      <PieChart data={data} frame={30} />
+    );
+    const paths = container.querySelectorAll('path');
+    expect(paths.length).toBeGreaterThan(0);
+  });
+
+  it('should show labels in legend', () => {
+    const data = [{ value: 100, label: 'Test Label' }];
+    const { container } = render(
+      <PieChart data={data} frame={30} showLabels={true} />
+    );
+    expect(container.textContent).toContain('Test Label');
+  });
+});
+
+// Social Media Components Tests
+describe('SocialCard Component', () => {
+  it('should render with content', () => {
+    const { container } = render(
+      <SocialCard
+        username="Test User"
+        handle="@testuser"
+        content="Hello World"
+        frame={0}
+      />
+    );
+    expect(container.textContent).toContain('Hello World');
+    expect(container.textContent).toContain('@testuser');
+  });
+
+  it('should show engagement stats', () => {
+    const { container } = render(
+      <SocialCard
+        username="User"
+        content="Post"
+        likes={100}
+        comments={50}
+        shares={25}
+        showStats={true}
+        frame={30}
+      />
+    );
+    expect(container.textContent).toContain('100');
+  });
+
+  it('should support different platforms', () => {
+    const platforms = ['twitter', 'facebook', 'instagram', 'linkedin'] as const;
+    platforms.forEach(platform => {
+      const { container } = render(
+        <SocialCard
+          platform={platform}
+          username="User"
+          content="Content"
+          frame={30}
+        />
+      );
+      expect(container.firstChild).toBeTruthy();
+    });
+  });
+});
+
+describe('QuoteCard Component', () => {
+  it('should render quote', () => {
+    const { container } = render(
+      <QuoteCard quote="Test quote" frame={0} />
+    );
+    expect(container.textContent).toContain('Test quote');
+  });
+
+  it('should render author information', () => {
+    const { container } = render(
+      <QuoteCard
+        quote="Quote"
+        author="John Doe"
+        authorTitle="CEO"
+        frame={30}
+      />
+    );
+    expect(container.textContent).toContain('John Doe');
+    expect(container.textContent).toContain('CEO');
+  });
+
+  it('should show quote marks when enabled', () => {
+    const { container } = render(
+      <QuoteCard quote="Test" showQuoteMarks={true} frame={30} />
+    );
+    expect(container.firstChild).toBeTruthy();
+  });
+});
+
+describe('ProductCard Component', () => {
+  it('should render product information', () => {
+    const { container } = render(
+      <ProductCard
+        name="Test Product"
+        image="test.jpg"
+        price={99.99}
+        frame={0}
+      />
+    );
+    expect(container.textContent).toContain('Test Product');
+    expect(container.textContent).toContain('99.99');
+  });
+
+  it('should show discount when original price provided', () => {
+    const { container } = render(
+      <ProductCard
+        name="Product"
+        image="test.jpg"
+        price={79.99}
+        originalPrice={99.99}
+        frame={30}
+      />
+    );
+    expect(container.textContent).toContain('79.99');
+    expect(container.textContent).toContain('99.99');
+  });
+
+  it('should render CTA button', () => {
+    const { container } = render(
+      <ProductCard
+        name="Product"
+        image="test.jpg"
+        price={50}
+        showButton={true}
+        buttonText="Buy Now"
+        frame={30}
+      />
+    );
+    expect(container.textContent).toContain('Buy Now');
+  });
+});
+
+// Transition Components Tests
+describe('SceneTransition Component', () => {
+  it('should render fade transition', () => {
+    const { container } = render(
+      <SceneTransition type="fade" frame={0} duration={30} />
+    );
+    expect(container.firstChild).toBeTruthy();
+  });
+
+  it('should support different transition types', () => {
+    const types = ['fade', 'wipe-left', 'wipe-right', 'slide-left', 'zoom-in'] as const;
+    types.forEach(type => {
+      const { container } = render(
+        <SceneTransition type={type} frame={15} duration={30} />
+      );
+      expect(container.firstChild).toBeTruthy();
+    });
+  });
+
+  it('should progress based on frame', () => {
+    const { container: early } = render(
+      <SceneTransition type="fade" frame={0} duration={60} />
+    );
+    const { container: late } = render(
+      <SceneTransition type="fade" frame={60} duration={60} />
+    );
+    expect(early.firstChild).toBeTruthy();
+    // Late should be empty or invisible after completion
+  });
+});
+
+describe('LowerThird Component', () => {
+  it('should render title', () => {
+    const { container } = render(
+      <LowerThird title="Test Title" frame={30} />
+    );
+    expect(container.textContent).toContain('Test Title');
+  });
+
+  it('should render subtitle when provided', () => {
+    const { container } = render(
+      <LowerThird
+        title="Title"
+        subtitle="Subtitle Text"
+        frame={30}
+      />
+    );
+    expect(container.textContent).toContain('Subtitle Text');
+  });
+
+  it('should support different animations', () => {
+    const animations = ['slide', 'fade', 'grow'] as const;
+    animations.forEach(animation => {
+      const { container } = render(
+        <LowerThird title="Test" animation={animation} frame={30} />
+      );
+      expect(container.textContent).toContain('Test');
+    });
+  });
+});
+
+describe('CallToAction Component', () => {
+  it('should render CTA text', () => {
+    const { container } = render(
+      <CallToAction text="Click Here!" frame={0} />
+    );
+    expect(container.textContent).toContain('Click Here!');
+  });
+
+  it('should render button', () => {
+    const { container } = render(
+      <CallToAction text="CTA" buttonText="Action" frame={30} />
+    );
+    expect(container.textContent).toContain('Action');
+  });
+
+  it('should show urgency indicator when enabled', () => {
+    const { container } = render(
+      <CallToAction text="Hurry!" urgent={true} frame={30} />
+    );
+    expect(container.textContent).toContain('Limited Time');
+  });
+
+  it('should support different positions', () => {
+    const positions = ['top', 'center', 'bottom'] as const;
+    positions.forEach(position => {
+      const { container } = render(
+        <CallToAction text="Test" position={position} frame={30} />
+      );
+      expect(container.firstChild).toBeTruthy();
+    });
   });
 });

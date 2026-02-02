@@ -38,6 +38,9 @@ import {
   MorphText,
   DistortText
 } from '../effects';
+import { BarChart, LineChart, PieChart } from '../charts';
+import { SocialCard, QuoteCard, ProductCard } from '../social';
+import { SceneTransition, LowerThird, CallToAction } from '../transitions';
 
 /**
  * Create and return the default component registry with all built-in components
@@ -800,6 +803,196 @@ export function createDefaultRegistry(): ComponentRegistry {
       fontSize: 48,
       color: '#ffffff',
       fontFamily: 'Arial, sans-serif',
+    },
+    version: '0.1.0',
+  });
+
+  // Chart components
+  registry.register(BarChart, {
+    id: 'bar-chart',
+    name: 'Bar Chart',
+    description: 'Animated bar chart with configurable colors, labels, and easing',
+    category: 'effect',
+    tags: ['chart', 'bar', 'graph', 'data', 'visualization', 'animation'],
+    animated: true,
+    exampleProps: {
+      data: [65, 45, 80, 55, 90],
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+      frame: 0,
+      fps: 30,
+      width: 800,
+      height: 400,
+      showValues: true,
+      showLabels: true,
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(LineChart, {
+    id: 'line-chart',
+    name: 'Line Chart',
+    description: 'Animated line chart with drawing animation and smooth curves',
+    category: 'effect',
+    tags: ['chart', 'line', 'graph', 'data', 'visualization', 'animation', 'curve'],
+    animated: true,
+    exampleProps: {
+      data: [30, 50, 45, 70, 60, 85],
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      frame: 0,
+      fps: 30,
+      width: 800,
+      height: 400,
+      smooth: true,
+      showGrid: true,
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(PieChart, {
+    id: 'pie-chart',
+    name: 'Pie Chart',
+    description: 'Animated pie/donut chart with slices and legend',
+    category: 'effect',
+    tags: ['chart', 'pie', 'donut', 'graph', 'data', 'visualization', 'animation'],
+    animated: true,
+    exampleProps: {
+      data: [
+        { value: 35, label: 'Category A', color: '#3b82f6' },
+        { value: 25, label: 'Category B', color: '#ef4444' },
+        { value: 40, label: 'Category C', color: '#10b981' },
+      ],
+      frame: 0,
+      fps: 30,
+      size: 400,
+      showLabels: true,
+      showPercentages: true,
+    },
+    version: '0.1.0',
+  });
+
+  // Social media components
+  registry.register(SocialCard, {
+    id: 'social-card',
+    name: 'Social Card',
+    description: 'Social media post card with platform branding and engagement stats',
+    category: 'media',
+    tags: ['social', 'card', 'post', 'twitter', 'facebook', 'instagram', 'animation'],
+    animated: true,
+    exampleProps: {
+      platform: 'twitter',
+      username: 'John Doe',
+      handle: '@johndoe',
+      content: 'Check out this amazing new feature!',
+      likes: 1250,
+      comments: 89,
+      shares: 234,
+      frame: 0,
+      fps: 30,
+      width: 600,
+      height: 400,
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(QuoteCard, {
+    id: 'quote-card',
+    name: 'Quote Card',
+    description: 'Elegant quote card with author information and styling',
+    category: 'media',
+    tags: ['quote', 'card', 'text', 'author', 'testimonial', 'animation'],
+    animated: true,
+    exampleProps: {
+      quote: 'The only way to do great work is to love what you do.',
+      author: 'Steve Jobs',
+      authorTitle: 'Co-founder of Apple',
+      frame: 0,
+      fps: 30,
+      width: 800,
+      height: 500,
+      showQuoteMarks: true,
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(ProductCard, {
+    id: 'product-card',
+    name: 'Product Card',
+    description: 'Product showcase card with image, price, rating, and CTA button',
+    category: 'media',
+    tags: ['product', 'card', 'ecommerce', 'shop', 'price', 'animation'],
+    animated: true,
+    exampleProps: {
+      name: 'Premium Headphones',
+      description: 'High-quality wireless headphones with noise cancellation',
+      image: 'https://example.com/product.jpg',
+      price: 299.99,
+      originalPrice: 399.99,
+      rating: 4.5,
+      reviews: 127,
+      frame: 0,
+      fps: 30,
+      width: 400,
+      height: 600,
+      showButton: true,
+    },
+    version: '0.1.0',
+  });
+
+  // Transition components
+  registry.register(SceneTransition, {
+    id: 'scene-transition',
+    name: 'Scene Transition',
+    description: 'Scene transition effects (fade, wipe, slide, circle)',
+    category: 'effect',
+    tags: ['transition', 'scene', 'fade', 'wipe', 'slide', 'animation', 'effect'],
+    animated: true,
+    exampleProps: {
+      type: 'fade',
+      duration: 30,
+      frame: 0,
+      fps: 30,
+      width: 1920,
+      height: 1080,
+      color: '#000000',
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(LowerThird, {
+    id: 'lower-third',
+    name: 'Lower Third',
+    description: 'Lower third overlay for video titles and captions',
+    category: 'effect',
+    tags: ['lower-third', 'overlay', 'title', 'caption', 'subtitle', 'animation'],
+    animated: true,
+    exampleProps: {
+      title: 'Breaking News',
+      subtitle: 'Live coverage from downtown',
+      frame: 0,
+      fps: 30,
+      bottomOffset: 100,
+      animation: 'slide',
+      showDuration: 100,
+    },
+    version: '0.1.0',
+  });
+
+  registry.register(CallToAction, {
+    id: 'call-to-action',
+    name: 'Call to Action',
+    description: 'Call-to-action component with button and optional urgency indicator',
+    category: 'effect',
+    tags: ['cta', 'button', 'action', 'overlay', 'animation', 'marketing'],
+    animated: true,
+    exampleProps: {
+      text: 'Limited Time Offer!',
+      subtitle: 'Get 50% off your first purchase',
+      buttonText: 'Shop Now',
+      frame: 0,
+      fps: 30,
+      position: 'center',
+      animation: 'slide-up',
+      urgent: true,
     },
     version: '0.1.0',
   });

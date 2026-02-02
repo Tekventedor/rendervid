@@ -20,6 +20,27 @@ export {
   WaveBackground,
 } from './backgrounds';
 
+// Charts
+export {
+  BarChart,
+  LineChart,
+  PieChart,
+} from './charts';
+
+// Social Media
+export {
+  SocialCard,
+  QuoteCard,
+  ProductCard,
+} from './social';
+
+// Transitions
+export {
+  SceneTransition,
+  LowerThird,
+  CallToAction,
+} from './transitions';
+
 // Effects
 export {
   ThreeScene,
@@ -153,3 +174,25 @@ export type {
   Vector3,
   GlitchEffectProps,
 } from './types';
+
+// Chart Types
+export type {
+  BarChartProps,
+  LineChartProps,
+  PieChartProps,
+  PieChartData,
+} from './charts';
+
+// Social Media Types
+export type {
+  SocialCardProps,
+  QuoteCardProps,
+  ProductCardProps,
+} from './social';
+
+// Transition Types
+export type {
+  SceneTransitionProps,
+  LowerThirdProps,
+  CallToActionProps,
+} from './transitions';

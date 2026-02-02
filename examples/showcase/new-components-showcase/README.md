@@ -2,6 +2,10 @@
 
 A comprehensive 9-second showcase video demonstrating all of Rendervid's latest advanced components in one impressive composition. This template combines multiple visual effects with smooth transitions to create a professional, visually stunning demo.
 
+## Preview
+
+![Preview](preview.gif)
+
 ## Overview
 
 **Duration:** 9 seconds (270 frames at 30fps)
