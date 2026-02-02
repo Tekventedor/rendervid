@@ -116,21 +116,16 @@ COMPLETE TEMPLATE STRUCTURE:
   }
 }
 
-LAYER TYPES:
-- text: Text with fontSize, fontWeight, color, textAlign, fontFamily
-- image: Image with src (URL), fit ("cover"|"contain"|"fill")
-- shape: Shape with shape ("rectangle"|"ellipse"|"triangle"|"star"), fill, stroke
-- video: Video with src (URL), volume, loop
-- custom: Custom component with customComponent.name and customComponent.props
+NEED MORE DETAILS? Use these tools for just-in-time documentation:
+- get_component_docs({ componentType: "text" }) - Detailed component/layer documentation
+- get_animation_docs({ animationType: "entrance" }) - Animation effects reference
+- get_easing_docs({ category: "out" }) - Easing functions guide
+- get_capabilities({}) - Full list of available features
+- list_examples({}) - Browse example templates
 
-ANIMATION EFFECTS:
-- entrance: fadeIn, fadeInUp, fadeInDown, slideInUp, slideInDown, scaleIn, zoomIn
-- exit: fadeOut, fadeOutUp, fadeOutDown, slideOutUp, slideOutDown, scaleOut, zoomOut
-- emphasis: pulse, shake, bounce, swing, wobble, flash
-
-EASING FUNCTIONS:
-linear, easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic, easeInOutCubic,
-easeInQuart, easeOutQuart, easeInOutQuart, easeInBack, easeOutBack, easeInOutBack
+LAYER TYPES: text, image, shape, video, audio, custom
+ANIMATION TYPES: entrance, exit, emphasis
+EASING CATEGORIES: basic, in, out (recommended), inout, back, bounce, elastic
 
 COMMON MISTAKES TO AVOID:
 ❌ Using seconds for animation timing (use frames!)
@@ -346,6 +341,16 @@ function generateValidationSuggestions(errors: Array<{ path?: string; message: s
   for (const error of errors) {
     const path = error.path || '';
     const message = error.message.toLowerCase();
+
+    // Check for duplicate layer IDs
+    if (message.includes('duplicate') || message.includes('unique') || message.includes('id')) {
+      suggestions.push('DUPLICATE LAYER IDS: Each layer must have a unique ID within ALL scenes. Use descriptive IDs like "scene1-background", "scene2-background" instead of just "background".');
+    }
+
+    // Check for unused inputs
+    if (message.includes('unused') || message.includes('not used')) {
+      suggestions.push('UNUSED INPUTS: All input variables must be used in the template with {{variableName}} syntax. Either use them in layer props or remove them from the inputs array.');
+    }
 
     // Provide helpful suggestions based on common errors
     if (message.includes('required') && path.includes('output')) {

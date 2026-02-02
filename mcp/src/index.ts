@@ -13,6 +13,9 @@ import { validateTemplateTool, executeValidateTemplate } from './tools/validate_
 import { getCapabilitiesTool, executeGetCapabilities } from './tools/get_capabilities.js';
 import { listExamplesTool, executeListExamples } from './tools/list_examples.js';
 import { getExampleTool, executeGetExample } from './tools/get_example.js';
+import { getComponentDocsTool, executeGetComponentDocs } from './tools/get_component_docs.js';
+import { getAnimationDocsTool, executeGetAnimationDocs } from './tools/get_animation_docs.js';
+import { getEasingDocsTool, executeGetEasingDocs } from './tools/get_easing_docs.js';
 
 const logger = createLogger('mcp-server');
 
@@ -54,6 +57,9 @@ class RendervidMcpServer {
           getCapabilitiesTool,
           listExamplesTool,
           getExampleTool,
+          getComponentDocsTool,
+          getAnimationDocsTool,
+          getEasingDocsTool,
         ],
       };
     });
@@ -90,6 +96,18 @@ class RendervidMcpServer {
 
           case 'get_example':
             result = await executeGetExample(args);
+            break;
+
+          case 'get_component_docs':
+            result = await executeGetComponentDocs(args);
+            break;
+
+          case 'get_animation_docs':
+            result = await executeGetAnimationDocs(args);
+            break;
+
+          case 'get_easing_docs':
+            result = await executeGetEasingDocs(args);
             break;
 
           default:
@@ -157,6 +175,9 @@ class RendervidMcpServer {
         'get_capabilities',
         'list_examples',
         'get_example',
+        'get_component_docs',
+        'get_animation_docs',
+        'get_easing_docs',
       ],
     });
   }
