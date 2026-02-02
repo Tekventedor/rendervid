@@ -41,6 +41,7 @@ vi.mock('puppeteer', () => ({
         setContent: vi.fn().mockResolvedValue(undefined),
         addScriptTag: vi.fn().mockResolvedValue(undefined),
         evaluate: vi.fn().mockResolvedValue(undefined),
+        waitForFunction: vi.fn().mockResolvedValue(undefined),
         screenshot: vi.fn().mockResolvedValue(Buffer.from('fake-image')),
       }),
       close: vi.fn().mockResolvedValue(undefined),

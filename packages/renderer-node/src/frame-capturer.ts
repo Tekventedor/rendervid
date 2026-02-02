@@ -2,6 +2,8 @@ import type { Browser, Page } from 'puppeteer';
 import puppeteer from 'puppeteer';
 import type { Template } from '@rendervid/core';
 import type { PuppeteerLaunchOptions } from './types';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 /**
  * Configuration for the frame capturer
@@ -13,6 +15,8 @@ export interface FrameCapturerConfig {
   inputs?: Record<string, unknown>;
   /** Puppeteer launch options */
   puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Time to wait after rendering before capturing (ms, default: 50) */
+  renderWaitTime?: number;
 }
 
 /**
@@ -23,9 +27,11 @@ export class FrameCapturer {
   private page: Page | null = null;
   private config: FrameCapturerConfig;
   private initialized = false;
+  private renderWaitTime: number;
 
   constructor(config: FrameCapturerConfig) {
     this.config = config;
+    this.renderWaitTime = config.renderWaitTime ?? 50;
   }
 
   /**
@@ -62,6 +68,14 @@ export class FrameCapturer {
     const html = this.generateRenderHTML();
     await this.page.setContent(html, {
       waitUntil: 'networkidle0',
+    });
+
+    // Inject the browser renderer bundle
+    await this.injectBrowserRenderer();
+
+    // Wait for renderer to be ready
+    await this.page.waitForFunction('window.RENDERVID_READY === true', {
+      timeout: 10000,
     });
 
     this.initialized = true;
@@ -128,7 +142,56 @@ export class FrameCapturer {
   }
 
   /**
-   * Inject the renderer code into the page
+   * Inject the browser renderer bundle into the page
+   */
+  private async injectBrowserRenderer(): Promise<void> {
+    if (!this.page) {
+      throw new Error('Frame capturer not initialized');
+    }
+
+    try {
+      // Try multiple potential paths for the bundle
+      const possiblePaths = [
+        join(__dirname, 'browser-renderer.global.js'),
+        join(__dirname, '..', 'dist', 'browser-renderer.global.js'),
+        join(process.cwd(), 'node_modules', '@rendervid', 'renderer-node', 'dist', 'browser-renderer.global.js'),
+      ];
+
+      let rendererCode: string | null = null;
+      let usedPath: string | null = null;
+
+      for (const bundlePath of possiblePaths) {
+        try {
+          rendererCode = readFileSync(bundlePath, 'utf-8');
+          usedPath = bundlePath;
+          break;
+        } catch {
+          // Try next path
+          continue;
+        }
+      }
+
+      if (!rendererCode) {
+        throw new Error(
+          `Browser renderer bundle not found. Tried paths:\n${possiblePaths.join('\n')}\n` +
+          'Make sure to build the package with: pnpm build'
+        );
+      }
+
+      // Inject the renderer code
+      await this.page.addScriptTag({ content: rendererCode });
+
+      // Add debugging info to the page
+      await this.page.evaluate(`console.log('Browser renderer injected successfully')`);
+    } catch (error) {
+      throw new Error(
+        `Failed to load browser renderer bundle: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  }
+
+  /**
+   * Inject custom renderer code into the page (for advanced use cases)
    */
   async injectRenderer(rendererCode: string): Promise<void> {
     if (!this.page) {
@@ -147,14 +210,30 @@ export class FrameCapturer {
     }
 
     // Call the render function for this frame
-    await this.page.evaluate(`
-      if (window.renderFrame) {
-        window.renderFrame(${frame});
+    await this.page.evaluate((frameNum) => {
+      // @ts-expect-error - window extensions are defined in the browser context
+      if (window.__rendervidRenderFrame) {
+        // @ts-expect-error - window extensions are defined in the browser context
+        window.__rendervidRenderFrame(frameNum);
+        // @ts-expect-error - window extensions are defined in the browser context
+      } else if (window.renderFrame) {
+        // Fallback for custom renderer
+        // @ts-expect-error - window extensions are defined in the browser context
+        window.renderFrame(frameNum);
       }
-    `);
+    }, frame);
 
-    // Wait a tick for React to render
-    await this.page.evaluate(`new Promise((r) => requestAnimationFrame(() => r()))`);
+    // Wait for React to complete rendering
+    // Use string template to avoid TypeScript type-checking browser APIs
+    await this.page.evaluate(`
+      new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTimeout(resolve, ${this.renderWaitTime});
+          });
+        });
+      })
+    `);
 
     // Take screenshot
     const screenshot = await this.page.screenshot({
@@ -179,14 +258,30 @@ export class FrameCapturer {
     }
 
     // Call the render function for this frame
-    await this.page.evaluate(`
-      if (window.renderFrame) {
-        window.renderFrame(${frame});
+    await this.page.evaluate((frameNum) => {
+      // @ts-expect-error - window extensions are defined in the browser context
+      if (window.__rendervidRenderFrame) {
+        // @ts-expect-error - window extensions are defined in the browser context
+        window.__rendervidRenderFrame(frameNum);
+        // @ts-expect-error - window extensions are defined in the browser context
+      } else if (window.renderFrame) {
+        // Fallback for custom renderer
+        // @ts-expect-error - window extensions are defined in the browser context
+        window.renderFrame(frameNum);
       }
-    `);
+    }, frame);
 
-    // Wait a tick for React to render
-    await this.page.evaluate(`new Promise((r) => requestAnimationFrame(() => r()))`);
+    // Wait for React to complete rendering
+    // Use string template to avoid TypeScript type-checking browser APIs
+    await this.page.evaluate(`
+      new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTimeout(resolve, ${this.renderWaitTime});
+          });
+        });
+      })
+    `);
 
     // Take screenshot
     const screenshot = await this.page.screenshot({

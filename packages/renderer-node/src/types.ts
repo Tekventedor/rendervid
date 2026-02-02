@@ -11,7 +11,7 @@ export interface VideoRenderOptions {
   /** Output file path */
   outputPath: string;
   /** Video codec (default: 'libx264') */
-  codec?: 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'prores';
+  codec?: 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'libaom-av1' | 'prores';
   /** Video format (default: derived from outputPath extension) */
   format?: 'mp4' | 'webm' | 'mov' | 'gif';
   /** Video quality CRF (0-51, lower is better quality, default: 23) */
@@ -30,10 +30,16 @@ export interface VideoRenderOptions {
   keepTempFiles?: boolean;
   /** Puppeteer launch options */
   puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Time to wait after rendering before capturing (ms, default: 50) */
+  renderWaitTime?: number;
   /** Progress callback */
   onProgress?: (progress: RenderProgress) => void;
   /** Frame rendered callback */
   onFrame?: (frame: number, total: number) => void;
+  /** Number of concurrent browser instances for parallel rendering (default: 1) */
+  concurrency?: number;
+  /** Use streaming mode (pipe frames directly to FFmpeg without writing to disk) (default: false) */
+  useStreaming?: boolean;
 }
 
 /**
@@ -54,6 +60,8 @@ export interface ImageRenderOptions {
   frame?: number;
   /** Puppeteer launch options */
   puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Time to wait after rendering before capturing (ms, default: 50) */
+  renderWaitTime?: number;
 }
 
 /**
@@ -78,6 +86,8 @@ export interface SequenceRenderOptions {
   endFrame?: number;
   /** Puppeteer launch options */
   puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Time to wait after rendering before capturing (ms, default: 50) */
+  renderWaitTime?: number;
   /** Progress callback */
   onProgress?: (progress: RenderProgress) => void;
 }
@@ -160,4 +170,6 @@ export interface NodeRendererOptions {
   puppeteerOptions?: PuppeteerLaunchOptions;
   /** Default temporary directory */
   tempDir?: string;
+  /** Number of concurrent browser instances for parallel rendering (default: 1) */
+  concurrency?: number;
 }

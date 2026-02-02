@@ -1,6 +1,7 @@
 import ffmpeg from 'fluent-ffmpeg';
 import { createWriteStream, promises as fs } from 'fs';
 import path from 'path';
+import { spawn } from 'child_process';
 import type { FFmpegConfig, RenderProgress } from './types';
 
 /**
@@ -18,7 +19,7 @@ export interface EncodeOptions {
   /** Height */
   height: number;
   /** Video codec */
-  codec?: 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'prores';
+  codec?: 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'libaom-av1' | 'prores';
   /** Quality CRF (0-51) */
   quality?: number;
   /** Pixel format */
@@ -100,12 +101,31 @@ export class FFmpegEncoder {
       let command = ffmpeg()
         .input(inputPattern)
         .inputFPS(fps)
-        .videoCodec(codec)
-        .outputOptions([
+        .videoCodec(codec);
+
+      // Configure codec-specific options
+      const outputOptions: string[] = [];
+
+      if (codec === 'libaom-av1') {
+        // AV1 specific options
+        outputOptions.push(
+          `-crf ${quality}`,
+          `-b:v 0`, // Use constant quality mode
+          `-cpu-used 4`, // Encoding speed (0-8, higher is faster)
+          `-row-mt 1`, // Enable row-based multithreading
+          `-pix_fmt ${pixelFormat}`
+        );
+      } else {
+        // Default options for other codecs
+        outputOptions.push(
           `-crf ${quality}`,
           `-pix_fmt ${pixelFormat}`,
-          `-preset medium`,
-        ])
+          `-preset medium`
+        );
+      }
+
+      command = command
+        .outputOptions(outputOptions)
         .size(`${width}x${height}`);
 
       // Add audio if provided
@@ -145,6 +165,146 @@ export class FFmpegEncoder {
           resolve();
         })
         .run();
+    });
+  }
+
+  /**
+   * Encode frames to video using streaming (pipe frames directly to FFmpeg stdin)
+   */
+  async encodeToVideoStream(
+    frameIterator: AsyncIterableIterator<Buffer>,
+    options: Omit<EncodeOptions, 'inputPattern'>
+  ): Promise<void> {
+    const {
+      outputPath,
+      fps,
+      width,
+      height,
+      codec = 'libx264',
+      quality = 23,
+      pixelFormat = 'yuv420p',
+      audioFile,
+      audioCodec = 'aac',
+      audioBitrate = '128k',
+      onProgress,
+      startTime = Date.now(),
+      totalFrames = 0,
+    } = options;
+
+    return new Promise((resolve, reject) => {
+      // Build FFmpeg command arguments
+      const args: string[] = [
+        '-f', 'image2pipe',
+        '-c:v', 'png',
+        '-r', fps.toString(),
+        '-i', 'pipe:0', // Read from stdin
+      ];
+
+      // Add audio if provided
+      if (audioFile && audioCodec !== 'none') {
+        args.push('-i', audioFile);
+        args.push('-c:a', audioCodec);
+        args.push('-b:a', audioBitrate);
+      }
+
+      // Add video codec and options
+      args.push('-c:v', codec);
+
+      // Codec-specific options
+      if (codec === 'libaom-av1') {
+        args.push(
+          '-crf', quality.toString(),
+          '-b:v', '0',
+          '-cpu-used', '4',
+          '-row-mt', '1',
+          '-pix_fmt', pixelFormat
+        );
+      } else {
+        args.push(
+          '-crf', quality.toString(),
+          '-pix_fmt', pixelFormat,
+          '-preset', 'medium'
+        );
+      }
+
+      args.push(
+        '-s', `${width}x${height}`,
+        '-y', // Overwrite output file
+        outputPath
+      );
+
+      // Spawn FFmpeg process
+      const ffmpegPath = this.config.ffmpegPath || 'ffmpeg';
+      const process = spawn(ffmpegPath, args);
+
+      let currentFrame = 0;
+      let encoding = true;
+
+      // Handle stderr for progress reporting
+      process.stderr.on('data', (data: Buffer) => {
+        const output = data.toString();
+
+        // Parse frame number from FFmpeg output
+        const frameMatch = output.match(/frame=\s*(\d+)/);
+        if (frameMatch && onProgress && totalFrames > 0) {
+          currentFrame = parseInt(frameMatch[1], 10);
+          const elapsed = (Date.now() - startTime) / 1000;
+          const percent = (currentFrame / totalFrames) * 100;
+          const fps = currentFrame / elapsed;
+          const remainingFrames = totalFrames - currentFrame;
+          const eta = fps > 0 ? remainingFrames / fps : undefined;
+
+          onProgress({
+            phase: 'encoding',
+            currentFrame,
+            totalFrames,
+            percent: Math.min(100, percent),
+            eta,
+            elapsed,
+            fps,
+          });
+        }
+      });
+
+      // Handle process errors
+      process.on('error', (err) => {
+        encoding = false;
+        reject(new Error(`FFmpeg process error: ${err.message}`));
+      });
+
+      process.on('exit', (code) => {
+        encoding = false;
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error(`FFmpeg exited with code ${code}`));
+        }
+      });
+
+      // Pipe frames to FFmpeg stdin
+      (async () => {
+        try {
+          for await (const frameBuffer of frameIterator) {
+            if (!encoding) break;
+
+            // Write frame to stdin
+            const written = process.stdin.write(frameBuffer);
+
+            // If buffer is full, wait for drain event
+            if (!written) {
+              await new Promise<void>((resolve) => {
+                process.stdin.once('drain', resolve);
+              });
+            }
+          }
+
+          // Close stdin to signal end of input
+          process.stdin.end();
+        } catch (err) {
+          reject(err);
+          process.kill();
+        }
+      })();
     });
   }
 

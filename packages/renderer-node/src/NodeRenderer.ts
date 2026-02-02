@@ -27,6 +27,109 @@ export class NodeRenderer {
   }
 
   /**
+   * Create an async generator that yields frame buffers
+   */
+  private async *createFrameStream(
+    capturers: FrameCapturer[],
+    totalFrames: number,
+    callbacks?: {
+      onFrame?: (frame: number, total: number) => void;
+      onProgress?: (progress: RenderProgress) => void;
+      startTime?: number;
+    }
+  ): AsyncGenerator<Buffer> {
+    const { onFrame, onProgress, startTime = Date.now() } = callbacks || {};
+    const numCapturers = capturers.length;
+    let completedFrames = 0;
+    const renderStartTime = Date.now();
+
+    if (numCapturers === 1) {
+      // Sequential rendering
+      const capturer = capturers[0];
+      for (let frame = 0; frame < totalFrames; frame++) {
+        const frameBuffer = await capturer.captureFrame(frame);
+        yield frameBuffer;
+
+        completedFrames++;
+        if (onFrame) {
+          onFrame(frame, totalFrames);
+        }
+
+        if (onProgress) {
+          const elapsed = (Date.now() - startTime) / 1000;
+          const fps = completedFrames / (Date.now() - renderStartTime) * 1000;
+          const remainingFrames = totalFrames - completedFrames;
+          const eta = fps > 0 ? remainingFrames / fps : undefined;
+
+          onProgress({
+            phase: 'rendering',
+            currentFrame: completedFrames,
+            totalFrames,
+            percent: (completedFrames / totalFrames) * 50,
+            eta,
+            elapsed,
+            fps,
+          });
+        }
+      }
+    } else {
+      // Parallel rendering - we need to maintain frame order
+      const frameBuffers: Map<number, Buffer> = new Map();
+      let nextFrameToYield = 0;
+      let currentFrame = 0;
+
+      while (nextFrameToYield < totalFrames) {
+        // Start batch of parallel captures
+        const batch: Array<{ frame: number; capturerIndex: number }> = [];
+        while (batch.length < numCapturers && currentFrame < totalFrames) {
+          batch.push({ frame: currentFrame, capturerIndex: batch.length });
+          currentFrame++;
+        }
+
+        // Capture batch in parallel
+        await Promise.all(
+          batch.map(async ({ frame, capturerIndex }) => {
+            const capturer = capturers[capturerIndex];
+            const frameBuffer = await capturer.captureFrame(frame);
+            frameBuffers.set(frame, frameBuffer);
+
+            if (onFrame) {
+              onFrame(frame, totalFrames);
+            }
+          })
+        );
+
+        // Yield frames in order
+        while (frameBuffers.has(nextFrameToYield)) {
+          const frameBuffer = frameBuffers.get(nextFrameToYield)!;
+          frameBuffers.delete(nextFrameToYield);
+          yield frameBuffer;
+
+          completedFrames++;
+          nextFrameToYield++;
+
+          if (onProgress) {
+            const elapsed = (Date.now() - startTime) / 1000;
+            const fps = completedFrames / (Date.now() - renderStartTime) * 1000;
+            const remainingFrames = totalFrames - completedFrames;
+            const eta = fps > 0 ? remainingFrames / fps : undefined;
+
+            onProgress({
+              phase: 'rendering',
+              currentFrame: completedFrames,
+              totalFrames,
+              percent: (completedFrames / totalFrames) * 50,
+              eta,
+              elapsed,
+              fps,
+            });
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Render a video from a template
    */
   async renderVideo(options: VideoRenderOptions): Promise<RenderResult> {
@@ -43,8 +146,11 @@ export class NodeRenderer {
       tempDir,
       keepTempFiles = false,
       puppeteerOptions = this.options.puppeteerOptions,
+      renderWaitTime,
       onProgress,
       onFrame,
+      concurrency = this.options.concurrency || 1,
+      useStreaming = false,
     } = options;
 
     const { width, height, fps = 30 } = template.output;
@@ -54,24 +160,26 @@ export class NodeRenderer {
       throw new Error('Template has no frames to render');
     }
 
-    // Create temp directory
-    const workDir = tempDir || await fs.mkdtemp(path.join(os.tmpdir(), 'rendervid-'));
-    const framesDir = path.join(workDir, 'frames');
-    await fs.mkdir(framesDir, { recursive: true });
-
     // Ensure output directory exists
     await fs.mkdir(path.dirname(outputPath), { recursive: true });
 
-    let capturer: FrameCapturer | null = null;
+    const capturers: FrameCapturer[] = [];
+    let workDir: string | undefined;
+    let framesDir: string | undefined;
 
     try {
-      // Initialize frame capturer
-      capturer = createFrameCapturer({
-        template,
-        inputs,
-        puppeteerOptions,
-      });
-      await capturer.initialize();
+      // Initialize frame capturers (multiple for parallel rendering)
+      const numCapturers = Math.min(concurrency, totalFrames);
+      for (let i = 0; i < numCapturers; i++) {
+        const capturer = createFrameCapturer({
+          template,
+          inputs,
+          puppeteerOptions,
+          renderWaitTime,
+        });
+        await capturer.initialize();
+        capturers.push(capturer);
+      }
 
       // Report preparing phase
       if (onProgress) {
@@ -84,70 +192,160 @@ export class NodeRenderer {
         });
       }
 
-      // Capture all frames
-      for (let frame = 0; frame < totalFrames; frame++) {
-        const frameBuffer = await capturer.captureFrame(frame);
-        const framePath = path.join(framesDir, `frame-${frame.toString().padStart(6, '0')}.png`);
-        await fs.writeFile(framePath, frameBuffer);
+      if (useStreaming) {
+        // Streaming mode - pipe frames directly to FFmpeg
+        const frameStream = this.createFrameStream(capturers, totalFrames, {
+          onFrame,
+          onProgress,
+          startTime,
+        });
 
-        if (onFrame) {
-          onFrame(frame, totalFrames);
+        await this.ffmpegEncoder.encodeToVideoStream(frameStream, {
+          outputPath,
+          fps,
+          width,
+          height,
+          codec,
+          quality,
+          pixelFormat,
+          audioCodec,
+          audioBitrate,
+          onProgress: onProgress ? (progress) => {
+            onProgress({
+              ...progress,
+              percent: 50 + (progress.percent * 0.5), // 50-100% for encoding
+            });
+          } : undefined,
+          startTime,
+          totalFrames,
+        });
+
+        // Close all capturers
+        await Promise.all(capturers.map(c => c.close()));
+        capturers.length = 0;
+      } else {
+        // Non-streaming mode - write frames to disk first
+        workDir = tempDir || await fs.mkdtemp(path.join(os.tmpdir(), 'rendervid-'));
+        framesDir = path.join(workDir, 'frames');
+        await fs.mkdir(framesDir, { recursive: true });
+
+        // Capture frames in parallel
+        let completedFrames = 0;
+        const renderStartTime = Date.now();
+
+        if (numCapturers === 1) {
+          // Single capturer - sequential rendering (original behavior)
+          const capturer = capturers[0];
+          for (let frame = 0; frame < totalFrames; frame++) {
+            const frameBuffer = await capturer.captureFrame(frame);
+            const framePath = path.join(framesDir, `frame-${frame.toString().padStart(6, '0')}.png`);
+            await fs.writeFile(framePath, frameBuffer);
+
+            completedFrames++;
+            if (onFrame) {
+              onFrame(frame, totalFrames);
+            }
+
+            if (onProgress) {
+              const elapsed = (Date.now() - startTime) / 1000;
+              const fps = completedFrames / (Date.now() - renderStartTime) * 1000;
+              const remainingFrames = totalFrames - completedFrames;
+              const eta = fps > 0 ? remainingFrames / fps : undefined;
+
+              onProgress({
+                phase: 'rendering',
+                currentFrame: completedFrames,
+                totalFrames,
+                percent: (completedFrames / totalFrames) * 50, // 50% for rendering
+                eta,
+                elapsed,
+                fps,
+              });
+            }
+          }
+        } else {
+          // Parallel rendering with multiple capturers
+          let currentFrame = 0;
+
+          while (currentFrame < totalFrames) {
+            // Create batch of frames to process
+            const batch: Array<{ frame: number; capturerIndex: number }> = [];
+            for (let i = 0; i < numCapturers && currentFrame < totalFrames; i++) {
+              batch.push({ frame: currentFrame, capturerIndex: i });
+              currentFrame++;
+            }
+
+            // Process batch in parallel
+            await Promise.all(
+              batch.map(async ({ frame, capturerIndex }) => {
+                const capturer = capturers[capturerIndex];
+                const frameBuffer = await capturer.captureFrame(frame);
+                const framePath = path.join(framesDir!, `frame-${frame.toString().padStart(6, '0')}.png`);
+                await fs.writeFile(framePath, frameBuffer);
+
+                completedFrames++;
+                if (onFrame) {
+                  onFrame(frame, totalFrames);
+                }
+
+                if (onProgress) {
+                  const elapsed = (Date.now() - startTime) / 1000;
+                  const fps = completedFrames / (Date.now() - renderStartTime) * 1000;
+                  const remainingFrames = totalFrames - completedFrames;
+                  const eta = fps > 0 ? remainingFrames / fps : undefined;
+
+                  onProgress({
+                    phase: 'rendering',
+                    currentFrame: completedFrames,
+                    totalFrames,
+                    percent: (completedFrames / totalFrames) * 50, // 50% for rendering
+                    eta,
+                    elapsed,
+                    fps,
+                  });
+                }
+              })
+            );
+          }
         }
 
-        if (onProgress) {
-          const elapsed = (Date.now() - startTime) / 1000;
-          const fps = frame / elapsed;
-          const remainingFrames = totalFrames - frame - 1;
-          const eta = fps > 0 ? remainingFrames / fps : undefined;
+        // Close all capturers
+        await Promise.all(capturers.map(c => c.close()));
+        capturers.length = 0;
 
-          onProgress({
-            phase: 'rendering',
-            currentFrame: frame + 1,
-            totalFrames,
-            percent: ((frame + 1) / totalFrames) * 50, // 50% for rendering
-            eta,
-            elapsed,
-            fps,
-          });
+        // Encode frames to video with FFmpeg
+        const framePattern = path.join(framesDir, 'frame-%06d.png');
+
+        await this.ffmpegEncoder.encodeToVideo({
+          inputPattern: framePattern,
+          outputPath,
+          fps,
+          width,
+          height,
+          codec,
+          quality,
+          pixelFormat,
+          audioCodec,
+          audioBitrate,
+          onProgress: onProgress ? (progress) => {
+            onProgress({
+              ...progress,
+              percent: 50 + (progress.percent * 0.5), // 50-100% for encoding
+            });
+          } : undefined,
+          startTime,
+          totalFrames,
+        });
+
+        // Clean up temp files
+        if (!keepTempFiles && workDir) {
+          await fs.rm(workDir, { recursive: true, force: true });
         }
       }
-
-      // Close capturer
-      await capturer.close();
-      capturer = null;
-
-      // Encode frames to video with FFmpeg
-      const framePattern = path.join(framesDir, 'frame-%06d.png');
-
-      await this.ffmpegEncoder.encodeToVideo({
-        inputPattern: framePattern,
-        outputPath,
-        fps,
-        width,
-        height,
-        codec,
-        quality,
-        pixelFormat,
-        audioCodec,
-        audioBitrate,
-        onProgress: onProgress ? (progress) => {
-          onProgress({
-            ...progress,
-            percent: 50 + (progress.percent * 0.5), // 50-100% for encoding
-          });
-        } : undefined,
-        startTime,
-        totalFrames,
-      });
 
       // Get file stats
       const fileSize = await this.ffmpegEncoder.getFileSize(outputPath);
       const duration = totalFrames / fps;
-
-      // Clean up temp files
-      if (!keepTempFiles) {
-        await fs.rm(workDir, { recursive: true, force: true });
-      }
 
       // Report completion
       if (onProgress) {
@@ -172,10 +370,8 @@ export class NodeRenderer {
       };
     } catch (error) {
       // Clean up on error
-      if (capturer) {
-        await capturer.close().catch(() => {});
-      }
-      if (!keepTempFiles && tempDir !== workDir) {
+      await Promise.all(capturers.map(c => c.close().catch(() => {})));
+      if (!keepTempFiles && workDir && tempDir !== workDir) {
         await fs.rm(workDir, { recursive: true, force: true }).catch(() => {});
       }
 
@@ -204,6 +400,7 @@ export class NodeRenderer {
       quality = 90,
       frame = 0,
       puppeteerOptions = this.options.puppeteerOptions,
+      renderWaitTime,
     } = options;
 
     const { width, height } = template.output;
@@ -223,6 +420,7 @@ export class NodeRenderer {
         template,
         inputs,
         puppeteerOptions,
+        renderWaitTime,
       });
       await capturer.initialize();
 
@@ -282,6 +480,7 @@ export class NodeRenderer {
       quality = 90,
       startFrame = 0,
       puppeteerOptions = this.options.puppeteerOptions,
+      renderWaitTime,
       onProgress,
     } = options;
 
@@ -306,6 +505,7 @@ export class NodeRenderer {
         template,
         inputs,
         puppeteerOptions,
+        renderWaitTime,
       });
       await capturer.initialize();
 
