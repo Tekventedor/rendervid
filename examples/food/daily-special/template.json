@@ -12,6 +12,7 @@
   "defaults": { "badgeText": "TODAY ONLY", "day": "TUESDAY SPECIAL", "dishName": "Gourmet Burger & Fries", "price": "$14.99" },
   "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 180, "layers": [
     { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1080, "height": 1920 }, "props": { "shape": "rectangle", "fill": "#fef3c7" } },
+    { "id": "food-image", "type": "image", "position": { "x": 140, "y": 300 }, "size": { "width": 800, "height": 600 }, "props": { "src": "food_recept.jpg", "fit": "cover", "borderRadius": 30 }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 5, "duration": 25 }] },
     { "id": "badge-bg", "type": "shape", "position": { "x": 80, "y": 80 }, "size": { "width": 300, "height": 80 }, "props": { "shape": "rectangle", "fill": "#dc2626" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 20 }] },
     { "id": "badge", "type": "text", "position": { "x": 80, "y": 105 }, "size": { "width": 300, "height": 40 }, "props": { "text": "{{badgeText}}", "fontSize": 28, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] },
     { "id": "content-bg", "type": "shape", "position": { "x": 0, "y": 1000 }, "size": { "width": 1080, "height": 920 }, "props": { "shape": "rectangle", "fill": "#ffffff" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 25, "duration": 25 }] },

@@ -4,7 +4,7 @@
   "version": "1.1.0",
   "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 6 },
   "inputs": [
-    { "key": "foodImage", "type": "image", "label": "Food Image", "description": "URL to the recipe food image", "required": true, "default": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800" },
+    { "key": "foodImage", "type": "image", "label": "Food Image", "description": "Path to the recipe food image", "required": true, "default": "food_recept.jpg" },
     { "key": "category", "type": "string", "label": "Category", "required": false, "default": "ITALIAN CUISINE" },
     { "key": "recipeName", "type": "string", "label": "Recipe Name", "required": true, "default": "Homemade Pasta Carbonara" },
     { "key": "prepTime", "type": "string", "label": "Prep Time", "required": false, "default": "Prep: 15 min" },
@@ -12,7 +12,7 @@
     { "key": "difficulty", "type": "string", "label": "Difficulty", "required": false, "default": "Easy" }
   ],
   "defaults": {
-    "foodImage": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800",
+    "foodImage": "food_recept.jpg",
     "category": "ITALIAN CUISINE",
     "recipeName": "Homemade Pasta Carbonara",
     "prepTime": "Prep: 15 min",
