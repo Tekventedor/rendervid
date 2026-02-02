@@ -472,7 +472,9 @@ async function generateVideo(browser, example) {
 async function main() {
   const args = process.argv.slice(2);
   const forceRegenerate = args.includes('--force');
-  const specificExample = args.find(arg => !arg.startsWith('--'));
+  const parallelArg = args.find(arg => arg.startsWith('--parallel'));
+  const parallelCount = parallelArg ? parseInt(parallelArg.split('=')[1] || '5') : 1;
+  const specificExample = args.find(arg => !arg.startsWith('--') && !arg.includes('parallel'));
 
   console.log('\n🎬 Generating Videos\n' + '='.repeat(50));
 
@@ -524,25 +526,48 @@ async function main() {
 
   fs.mkdirSync(TEMP_DIR, { recursive: true });
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
-  });
-
-  let success = 0;
-
-  for (const example of examples) {
-    console.log(`  📹 ${example.path}`);
-    try {
-      const videoPath = await generateVideo(browser, example);
-      console.log(`     ✅ Created ${path.basename(videoPath)}`);
-      success++;
-    } catch (e) {
-      console.error(`     ❌ Error: ${e.message}`);
-    }
+  if (parallelCount > 1) {
+    console.log(`⚡ Running ${parallelCount} parallel instances\n`);
   }
 
-  await browser.close();
+  // Create browser instances for parallel processing
+  const browsers = await Promise.all(
+    Array.from({ length: parallelCount }, () =>
+      puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
+      })
+    )
+  );
+
+  let success = 0;
+  let current = 0;
+
+  // Process examples in parallel batches
+  const processExample = async (example, browserIndex) => {
+    console.log(`  📹 ${example.path}`);
+    try {
+      const videoPath = await generateVideo(browsers[browserIndex], example);
+      console.log(`     ✅ Created ${path.basename(videoPath)}`);
+      return true;
+    } catch (e) {
+      console.error(`     ❌ Error: ${e.message}`);
+      return false;
+    }
+  };
+
+  // Process in batches
+  while (current < examples.length) {
+    const batch = examples.slice(current, current + parallelCount);
+    const results = await Promise.all(
+      batch.map((example, index) => processExample(example, index))
+    );
+    success += results.filter(Boolean).length;
+    current += parallelCount;
+  }
+
+  // Close all browsers
+  await Promise.all(browsers.map(browser => browser.close()));
 
   if (fs.existsSync(TEMP_DIR)) {
     fs.rmSync(TEMP_DIR, { recursive: true });
