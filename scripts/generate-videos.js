@@ -238,6 +238,19 @@ function hasCustomComponents(template) {
 }
 
 /**
+ * Check if template uses scene transitions
+ */
+function hasSceneTransitions(template) {
+  const scenes = template.composition?.scenes || [];
+  for (const scene of scenes) {
+    if (scene.transition && scene.transition.duration > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Generate HTML using the browser renderer (for templates with custom components)
  */
 function generateHTMLWithRenderer(template, frame, viewportWidth, viewportHeight) {
@@ -480,12 +493,14 @@ async function generateVideo(browser, example) {
   const timings = { setContent: 0, screenshot: 0 };
   const startRender = Date.now();
 
-  // Check if template uses custom components
+  // Check if template uses custom components or scene transitions
   const usesCustomComponents = hasCustomComponents(template);
+  const usesSceneTransitions = hasSceneTransitions(template);
+  const usesBrowserRenderer = usesCustomComponents || usesSceneTransitions;
 
   // Render all frames
   for (let frame = 0; frame < totalFrames; frame++) {
-    const html = usesCustomComponents
+    const html = usesBrowserRenderer
       ? generateHTMLWithRenderer(template, frame, out.width, out.height)
       : generateHTML(template, frame, out.width, out.height, dir);
 
@@ -493,7 +508,7 @@ async function generateVideo(browser, example) {
     const t1 = Date.now();
     if (frame === 0) {
       await page.setContent(html, { waitUntil: 'networkidle0' });
-      if (usesCustomComponents) {
+      if (usesBrowserRenderer) {
         // Wait for the renderer to be ready
         await page.waitForFunction(() => window.RENDERVID_READY === true, { timeout: 5000 });
         await new Promise(r => setTimeout(r, 500)); // Extra wait for first render
@@ -502,7 +517,7 @@ async function generateVideo(browser, example) {
       }
     } else {
       await page.setContent(html, { waitUntil: 'domcontentloaded' });
-      if (usesCustomComponents) {
+      if (usesBrowserRenderer) {
         // Wait for the renderer to be ready and render the frame
         await page.waitForFunction(() => window.RENDERVID_READY === true, { timeout: 5000 });
         await new Promise(r => setTimeout(r, 50)); // Small wait for React to render
