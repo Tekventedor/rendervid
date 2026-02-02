@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { createNodeRenderer } from '@rendervid/renderer-node';
 import type { Template } from '@rendervid/core';
+import { RendervidEngine } from '@rendervid/core';
 import { RenderVideoInputSchema } from '../types.js';
 import { createLogger } from '../utils/logger.js';
 import * as os from 'os';
@@ -62,6 +63,34 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
         originalPath: input.outputPath,
         correctedPath: outputPath,
         reason: 'macOS does not use /home/ paths. Using temporary directory instead.',
+      });
+    }
+
+    // Validate template before rendering
+    logger.info('Validating template');
+    const engine = new RendervidEngine();
+    const validation = engine.validateTemplate(input.template);
+
+    if (!validation.valid) {
+      logger.warn('Template validation failed', {
+        errorCount: validation.errors?.length || 0,
+      });
+
+      return JSON.stringify({
+        success: false,
+        error: 'Template validation failed. Please fix the errors and try again.',
+        validation: {
+          errors: validation.errors || [],
+          warnings: validation.warnings || [],
+          suggestions: generateValidationSuggestions(validation.errors || []),
+        },
+      }, null, 2);
+    }
+
+    if (validation.warnings && validation.warnings.length > 0) {
+      logger.info('Template has warnings', {
+        warningCount: validation.warnings.length,
+        warnings: validation.warnings,
       });
     }
 
@@ -150,13 +179,23 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
     }
 
     if (error instanceof z.ZodError) {
+      const validationErrors = error.errors.map(e => ({
+        path: e.path.join('.'),
+        message: e.message,
+        received: (e as any).received,
+      }));
+
       return JSON.stringify({
         success: false,
-        error: 'Invalid input parameters',
-        validationErrors: error.errors.map(e => ({
-          path: e.path.join('.'),
-          message: e.message,
-        })),
+        error: 'Invalid input parameters. Please fix the errors below and try again.',
+        validationErrors,
+        help: {
+          outputPath: 'Must be a string path where the video file will be saved',
+          format: 'Must be one of: mp4, webm, mov, gif',
+          quality: 'Must be one of: draft, standard, high, lossless',
+          template: 'Must be a valid Rendervid template object with name, output, and composition',
+          inputs: 'Optional object mapping input keys to values',
+        },
       }, null, 2);
     }
 
@@ -202,4 +241,73 @@ function formatFileSize(bytes: number | undefined): string {
   }
 
   return `${size.toFixed(2)} ${units[unitIndex]}`;
+}
+
+function generateValidationSuggestions(errors: Array<{ path?: string; message: string }>): string[] {
+  const suggestions: string[] = [];
+
+  for (const error of errors) {
+    const path = error.path || '';
+    const message = error.message.toLowerCase();
+
+    // Provide helpful suggestions based on common errors
+    if (message.includes('required') && path.includes('output')) {
+      suggestions.push('Ensure output object has required properties: type, width, height. For video output, also include fps and duration.');
+    }
+
+    if (message.includes('composition')) {
+      suggestions.push('Check that composition object exists and has a scenes array with at least one scene.');
+    }
+
+    if (message.includes('scene') && message.includes('frame')) {
+      suggestions.push('Verify scene frame ranges: startFrame must be less than endFrame. Calculate endFrame = fps * duration for the scene.');
+    }
+
+    if (message.includes('layer')) {
+      suggestions.push('Each layer must have: id (unique string), type (text/image/shape/video/audio/custom), position {x, y}, and size {width, height}.');
+    }
+
+    if (message.includes('animation')) {
+      suggestions.push('Animation structure: type (entrance/exit/emphasis), effect (fadeIn/slideUp/etc), startFrame, endFrame, easing (optional).');
+    }
+
+    if (message.includes('input') && !message.includes('invalid')) {
+      suggestions.push('Input definitions need: key (string), type (string/number/boolean/color), label (string), and optional default value.');
+    }
+
+    if (message.includes('fps')) {
+      suggestions.push('FPS must be a positive integer, typically 24, 30, or 60 for video output.');
+    }
+
+    if (message.includes('duration')) {
+      suggestions.push('Duration must be a positive number in seconds. Total frames = fps * duration.');
+    }
+
+    if (message.includes('width') || message.includes('height')) {
+      suggestions.push('Width and height must be positive integers (pixels). Common resolutions: 1920x1080 (Full HD), 1280x720 (HD), 3840x2160 (4K).');
+    }
+
+    if (message.includes('position')) {
+      suggestions.push('Position requires x and y coordinates (numbers). Origin (0,0) is top-left corner.');
+    }
+
+    if (message.includes('size')) {
+      suggestions.push('Size requires width and height (positive numbers). Dimensions are in pixels.');
+    }
+
+    if (message.includes('color')) {
+      suggestions.push('Color formats: "#RRGGBB" hex, "rgb(r,g,b)", "rgba(r,g,b,a)", or CSS color names.');
+    }
+
+    if (message.includes('font')) {
+      suggestions.push('Use built-in fonts (Inter, Roboto, etc.) or any Google Fonts name. Set fontFamily property on text layers.');
+    }
+
+    if (message.includes('src') || message.includes('url')) {
+      suggestions.push('Image/video src must be a valid URL (http/https) or local file path. Ensure the resource is accessible.');
+    }
+  }
+
+  // Remove duplicates
+  return [...new Set(suggestions)];
 }
