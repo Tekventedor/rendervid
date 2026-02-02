@@ -16,11 +16,28 @@
         "endFrame": 67,
         "layers": [
           {
+            "id": "bg-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "src": "https://www.photomaticai.com/images/styles/pixel-art_Pixel_Art_Style.webp",
+              "fit": "cover",
+              "opacity": 0.15
+            }
+          },
+          {
             "id": "bg1",
             "type": "shape",
             "position": {
-              "x": 960,
-              "y": 540
+              "x": 0,
+              "y": 0
             },
             "size": {
               "width": 1920,
@@ -28,7 +45,8 @@
             },
             "props": {
               "shape": "rectangle",
-              "fill": "#0a0a0a"
+              "fill": "#0a0a0a",
+              "opacity": 0.85
             }
           },
           {
