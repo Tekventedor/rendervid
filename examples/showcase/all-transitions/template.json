@@ -16,13 +16,22 @@
         "startFrame": 0,
         "endFrame": 90,
         "backgroundColor": "#3b82f6",
-        "transition": { "type": "cut", "duration": 0 },
+        "transition": {
+          "type": "cut",
+          "duration": 0
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 440 },
-            "size": { "width": 1600, "height": 200 },
+            "position": {
+              "x": 160,
+              "y": 440
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
             "props": {
               "text": "29 Scene Transitions",
               "fontSize": 96,
@@ -34,8 +43,14 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": { "x": 960, "y": 600 },
-            "size": { "width": 1600, "height": 80 },
+            "position": {
+              "x": 160,
+              "y": 600
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
             "props": {
               "text": "Complete showcase of all transition types",
               "fontSize": 32,
@@ -46,8 +61,14 @@
           {
             "id": "watermark",
             "type": "text",
-            "position": { "x": 1720, "y": 20 },
-            "size": { "width": 180, "height": 60 },
+            "position": {
+              "x": 1720,
+              "y": 20
+            },
+            "size": {
+              "width": 180,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 14,
@@ -64,21 +85,47 @@
         "startFrame": 90,
         "endFrame": 150,
         "backgroundColor": "#8b5cf6",
-        "transition": { "type": "fade", "duration": 30 },
+        "transition": {
+          "type": "fade",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "CUT", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "CUT",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Instant switch (no animation)", "fontSize": 28, "color": "#e9d5ff", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Instant switch (no animation)",
+              "fontSize": 28,
+              "color": "#e9d5ff",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -87,21 +134,48 @@
         "startFrame": 150,
         "endFrame": 210,
         "backgroundColor": "#ec4899",
-        "transition": { "type": "slide", "duration": 30, "direction": "left" },
+        "transition": {
+          "type": "slide",
+          "duration": 30,
+          "direction": "left"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "FADE", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "FADE",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Crossfade opacity transition", "fontSize": 28, "color": "#fce7f3", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Crossfade opacity transition",
+              "fontSize": 28,
+              "color": "#fce7f3",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -110,21 +184,48 @@
         "startFrame": 210,
         "endFrame": 270,
         "backgroundColor": "#f59e0b",
-        "transition": { "type": "slide", "duration": 30, "direction": "right" },
+        "transition": {
+          "type": "slide",
+          "duration": 30,
+          "direction": "right"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "SLIDE LEFT", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "SLIDE LEFT",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Scene slides in from right →", "fontSize": 28, "color": "#fef3c7", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Scene slides in from right →",
+              "fontSize": 28,
+              "color": "#fef3c7",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -133,21 +234,48 @@
         "startFrame": 270,
         "endFrame": 330,
         "backgroundColor": "#10b981",
-        "transition": { "type": "slide", "duration": 30, "direction": "up" },
+        "transition": {
+          "type": "slide",
+          "duration": 30,
+          "direction": "up"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "SLIDE RIGHT", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "SLIDE RIGHT",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Scene slides in from left ←", "fontSize": 28, "color": "#d1fae5", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Scene slides in from left ←",
+              "fontSize": 28,
+              "color": "#d1fae5",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -156,21 +284,48 @@
         "startFrame": 330,
         "endFrame": 390,
         "backgroundColor": "#06b6d4",
-        "transition": { "type": "slide", "duration": 30, "direction": "down" },
+        "transition": {
+          "type": "slide",
+          "duration": 30,
+          "direction": "down"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "SLIDE UP", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "SLIDE UP",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Scene slides in from bottom ↑", "fontSize": 28, "color": "#cffafe", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Scene slides in from bottom ↑",
+              "fontSize": 28,
+              "color": "#cffafe",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -179,21 +334,47 @@
         "startFrame": 390,
         "endFrame": 450,
         "backgroundColor": "#6366f1",
-        "transition": { "type": "zoom", "duration": 30 },
+        "transition": {
+          "type": "zoom",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "SLIDE DOWN", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "SLIDE DOWN",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Scene slides in from top ↓", "fontSize": 28, "color": "#e0e7ff", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Scene slides in from top ↓",
+              "fontSize": 28,
+              "color": "#e0e7ff",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -202,21 +383,48 @@
         "startFrame": 450,
         "endFrame": 510,
         "backgroundColor": "#ef4444",
-        "transition": { "type": "wipe", "duration": 30, "direction": "left" },
+        "transition": {
+          "type": "wipe",
+          "duration": 30,
+          "direction": "left"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "ZOOM", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "ZOOM",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Scale in/out with opacity", "fontSize": 28, "color": "#fee2e2", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Scale in/out with opacity",
+              "fontSize": 28,
+              "color": "#fee2e2",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -225,21 +433,48 @@
         "startFrame": 510,
         "endFrame": 570,
         "backgroundColor": "#a855f7",
-        "transition": { "type": "wipe", "duration": 30, "direction": "right" },
+        "transition": {
+          "type": "wipe",
+          "duration": 30,
+          "direction": "right"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "WIPE LEFT", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "WIPE LEFT",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Directional wipe from right", "fontSize": 28, "color": "#f3e8ff", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Directional wipe from right",
+              "fontSize": 28,
+              "color": "#f3e8ff",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -248,21 +483,48 @@
         "startFrame": 570,
         "endFrame": 630,
         "backgroundColor": "#14b8a6",
-        "transition": { "type": "wipe", "duration": 30, "direction": "up" },
+        "transition": {
+          "type": "wipe",
+          "duration": 30,
+          "direction": "up"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "WIPE RIGHT", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "WIPE RIGHT",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Directional wipe from left", "fontSize": 28, "color": "#ccfbf1", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Directional wipe from left",
+              "fontSize": 28,
+              "color": "#ccfbf1",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -271,21 +533,48 @@
         "startFrame": 630,
         "endFrame": 690,
         "backgroundColor": "#f97316",
-        "transition": { "type": "wipe", "duration": 30, "direction": "down" },
+        "transition": {
+          "type": "wipe",
+          "duration": 30,
+          "direction": "down"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "WIPE UP", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "WIPE UP",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Directional wipe from bottom", "fontSize": 28, "color": "#ffedd5", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Directional wipe from bottom",
+              "fontSize": 28,
+              "color": "#ffedd5",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -294,21 +583,47 @@
         "startFrame": 690,
         "endFrame": 750,
         "backgroundColor": "#84cc16",
-        "transition": { "type": "rotate", "duration": 30 },
+        "transition": {
+          "type": "rotate",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "WIPE DOWN", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "WIPE DOWN",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Directional wipe from top", "fontSize": 28, "color": "#ecfccb", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Directional wipe from top",
+              "fontSize": 28,
+              "color": "#ecfccb",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -317,21 +632,48 @@
         "startFrame": 750,
         "endFrame": 810,
         "backgroundColor": "#eab308",
-        "transition": { "type": "flip", "duration": 30, "direction": "left" },
+        "transition": {
+          "type": "flip",
+          "duration": 30,
+          "direction": "left"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "ROTATE", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "ROTATE",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Rotate out/in with scale", "fontSize": 28, "color": "#fef9c3", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Rotate out/in with scale",
+              "fontSize": 28,
+              "color": "#fef9c3",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -340,21 +682,48 @@
         "startFrame": 810,
         "endFrame": 870,
         "backgroundColor": "#0ea5e9",
-        "transition": { "type": "flip", "duration": 30, "direction": "up" },
+        "transition": {
+          "type": "flip",
+          "duration": 30,
+          "direction": "up"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "FLIP H", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "FLIP H",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "3D horizontal flip effect", "fontSize": 28, "color": "#e0f2fe", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "3D horizontal flip effect",
+              "fontSize": 28,
+              "color": "#e0f2fe",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -363,21 +732,47 @@
         "startFrame": 870,
         "endFrame": 930,
         "backgroundColor": "#8b5cf6",
-        "transition": { "type": "blur", "duration": 30 },
+        "transition": {
+          "type": "blur",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "FLIP V", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "FLIP V",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "3D vertical flip effect", "fontSize": 28, "color": "#ede9fe", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "3D vertical flip effect",
+              "fontSize": 28,
+              "color": "#ede9fe",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -386,21 +781,47 @@
         "startFrame": 930,
         "endFrame": 990,
         "backgroundColor": "#ec4899",
-        "transition": { "type": "circle", "duration": 30 },
+        "transition": {
+          "type": "circle",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "BLUR", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "BLUR",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Blur out/in transition", "fontSize": 28, "color": "#fce7f3", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Blur out/in transition",
+              "fontSize": 28,
+              "color": "#fce7f3",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -409,21 +830,48 @@
         "startFrame": 990,
         "endFrame": 1050,
         "backgroundColor": "#f59e0b",
-        "transition": { "type": "push", "duration": 30, "direction": "left" },
+        "transition": {
+          "type": "push",
+          "duration": 30,
+          "direction": "left"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "CIRCLE", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "CIRCLE",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Circular reveal transition", "fontSize": 28, "color": "#fef3c7", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Circular reveal transition",
+              "fontSize": 28,
+              "color": "#fef3c7",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -432,21 +880,48 @@
         "startFrame": 1050,
         "endFrame": 1110,
         "backgroundColor": "#10b981",
-        "transition": { "type": "push", "duration": 30, "direction": "right" },
+        "transition": {
+          "type": "push",
+          "duration": 30,
+          "direction": "right"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "PUSH LEFT", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "PUSH LEFT",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Push scene from right", "fontSize": 28, "color": "#d1fae5", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Push scene from right",
+              "fontSize": 28,
+              "color": "#d1fae5",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -455,21 +930,48 @@
         "startFrame": 1110,
         "endFrame": 1170,
         "backgroundColor": "#06b6d4",
-        "transition": { "type": "push", "duration": 30, "direction": "up" },
+        "transition": {
+          "type": "push",
+          "duration": 30,
+          "direction": "up"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "PUSH RIGHT", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "PUSH RIGHT",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Push scene from left", "fontSize": 28, "color": "#cffafe", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Push scene from left",
+              "fontSize": 28,
+              "color": "#cffafe",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -478,21 +980,48 @@
         "startFrame": 1170,
         "endFrame": 1230,
         "backgroundColor": "#6366f1",
-        "transition": { "type": "push", "duration": 30, "direction": "down" },
+        "transition": {
+          "type": "push",
+          "duration": 30,
+          "direction": "down"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "PUSH UP", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "PUSH UP",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Push scene from bottom", "fontSize": 28, "color": "#e0e7ff", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Push scene from bottom",
+              "fontSize": 28,
+              "color": "#e0e7ff",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -501,21 +1030,47 @@
         "startFrame": 1230,
         "endFrame": 1290,
         "backgroundColor": "#ef4444",
-        "transition": { "type": "crosszoom", "duration": 30 },
+        "transition": {
+          "type": "crosszoom",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "PUSH DOWN", "fontSize": 100, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "PUSH DOWN",
+              "fontSize": 100,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Push scene from top", "fontSize": 28, "color": "#fee2e2", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Push scene from top",
+              "fontSize": 28,
+              "color": "#fee2e2",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -524,21 +1079,47 @@
         "startFrame": 1290,
         "endFrame": 1350,
         "backgroundColor": "#a855f7",
-        "transition": { "type": "glitch", "duration": 30 },
+        "transition": {
+          "type": "glitch",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "CROSSZOOM", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "CROSSZOOM",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Cross zoom in/out effect", "fontSize": 28, "color": "#f3e8ff", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Cross zoom in/out effect",
+              "fontSize": 28,
+              "color": "#f3e8ff",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -547,21 +1128,47 @@
         "startFrame": 1350,
         "endFrame": 1410,
         "backgroundColor": "#14b8a6",
-        "transition": { "type": "dissolve", "duration": 30 },
+        "transition": {
+          "type": "dissolve",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "GLITCH", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "GLITCH",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Digital glitch distortion", "fontSize": 28, "color": "#ccfbf1", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Digital glitch distortion",
+              "fontSize": 28,
+              "color": "#ccfbf1",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -570,21 +1177,48 @@
         "startFrame": 1410,
         "endFrame": 1470,
         "backgroundColor": "#f97316",
-        "transition": { "type": "cube", "duration": 30, "direction": "left" },
+        "transition": {
+          "type": "cube",
+          "duration": 30,
+          "direction": "left"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "DISSOLVE", "fontSize": 110, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "DISSOLVE",
+              "fontSize": 110,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Pixelated dissolve effect", "fontSize": 28, "color": "#ffedd5", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Pixelated dissolve effect",
+              "fontSize": 28,
+              "color": "#ffedd5",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -593,21 +1227,48 @@
         "startFrame": 1470,
         "endFrame": 1530,
         "backgroundColor": "#84cc16",
-        "transition": { "type": "cube", "duration": 30, "direction": "up" },
+        "transition": {
+          "type": "cube",
+          "duration": 30,
+          "direction": "up"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "CUBE H", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "CUBE H",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "3D cube horizontal rotation", "fontSize": 28, "color": "#ecfccb", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "3D cube horizontal rotation",
+              "fontSize": 28,
+              "color": "#ecfccb",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -616,21 +1277,47 @@
         "startFrame": 1530,
         "endFrame": 1590,
         "backgroundColor": "#eab308",
-        "transition": { "type": "swirl", "duration": 30 },
+        "transition": {
+          "type": "swirl",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "CUBE V", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "CUBE V",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "3D cube vertical rotation", "fontSize": 28, "color": "#fef9c3", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "3D cube vertical rotation",
+              "fontSize": 28,
+              "color": "#fef9c3",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -639,21 +1326,48 @@
         "startFrame": 1590,
         "endFrame": 1650,
         "backgroundColor": "#0ea5e9",
-        "transition": { "type": "diagonal-wipe", "duration": 30, "direction": "left" },
+        "transition": {
+          "type": "diagonal-wipe",
+          "duration": 30,
+          "direction": "left"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "SWIRL", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "SWIRL",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Swirl/spiral rotation effect", "fontSize": 28, "color": "#e0f2fe", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Swirl/spiral rotation effect",
+              "fontSize": 28,
+              "color": "#e0f2fe",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -662,21 +1376,48 @@
         "startFrame": 1650,
         "endFrame": 1710,
         "backgroundColor": "#8b5cf6",
-        "transition": { "type": "diagonal-wipe", "duration": 30, "direction": "right" },
+        "transition": {
+          "type": "diagonal-wipe",
+          "duration": 30,
+          "direction": "right"
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "DIAGONAL ↙", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "DIAGONAL ↙",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Diagonal wipe top-left to bottom-right", "fontSize": 28, "color": "#ede9fe", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Diagonal wipe top-left to bottom-right",
+              "fontSize": 28,
+              "color": "#ede9fe",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -685,21 +1426,47 @@
         "startFrame": 1710,
         "endFrame": 1770,
         "backgroundColor": "#ec4899",
-        "transition": { "type": "iris", "duration": 30 },
+        "transition": {
+          "type": "iris",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "DIAGONAL ↘", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "DIAGONAL ↘",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Diagonal wipe top-right to bottom-left", "fontSize": 28, "color": "#fce7f3", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Diagonal wipe top-right to bottom-left",
+              "fontSize": 28,
+              "color": "#fce7f3",
+              "textAlign": "center"
+            }
           }
         ]
       },
@@ -708,21 +1475,47 @@
         "startFrame": 1770,
         "endFrame": 1800,
         "backgroundColor": "#3b82f6",
-        "transition": { "type": "fade", "duration": 30 },
+        "transition": {
+          "type": "fade",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 480 },
-            "size": { "width": 1600, "height": 120 },
-            "props": { "text": "IRIS", "fontSize": 120, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }
+            "position": {
+              "x": 160,
+              "y": 480
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "IRIS",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": { "x": 960, "y": 620 },
-            "size": { "width": 1400, "height": 60 },
-            "props": { "text": "Iris in/out circle effect", "fontSize": 28, "color": "#dbeafe", "textAlign": "center" }
+            "position": {
+              "x": 260,
+              "y": 620
+            },
+            "size": {
+              "width": 1400,
+              "height": 60
+            },
+            "props": {
+              "text": "Iris in/out circle effect",
+              "fontSize": 28,
+              "color": "#dbeafe",
+              "textAlign": "center"
+            }
           }
         ]
       }
