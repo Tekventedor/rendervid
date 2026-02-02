@@ -1,6 +1,6 @@
 # All Filters Showcase
 
-Demonstrates all available filter effects in Rendervid.
+Side-by-side comparison demonstrating all available filter effects in Rendervid.
 
 ## Preview
 
@@ -12,20 +12,29 @@ Demonstrates all available filter effects in Rendervid.
 pnpm run examples:render showcase/all-filters
 ```
 
+## What's Different
+
+This example now shows:
+- **Side-by-side comparison**: Original on the left, filtered version on the right
+- **Clear visual separation**: Vertical divider and labeled sections
+- **Rich test content**: Colorful gradients, shapes, and patterns to show filter effects clearly
+- **Dark background**: Better contrast to see the filtered elements
+- **Filter parameters**: Each scene displays the exact filter values being applied
+
 ## Featured Filters
 
-| Filter | Description | Values |
-|--------|-------------|--------|
-| blur | Gaussian blur | 0-100px |
-| brightness | Adjust brightness | 0-200 (100=normal) |
-| contrast | Adjust contrast | 0-200 (100=normal) |
-| grayscale | Remove color | 0-100% |
-| sepia | Vintage effect | 0-100% |
-| hue-rotate | Shift colors | 0-360deg |
-| invert | Invert colors | 0-100% |
-| saturate | Color intensity | 0-300+ (100=normal) |
-| drop-shadow | CSS shadow | x y blur color |
+| Filter | Example Value | Description |
+|--------|--------------|-------------|
+| blur | 10px | Gaussian blur effect |
+| brightness | 160 | Adjust brightness (100=normal) |
+| contrast | 200 | Adjust contrast (100=normal) |
+| grayscale | 100% | Convert to black and white |
+| sepia | 100% | Vintage brown tone effect |
+| hue-rotate | 180deg | Shift color wheel |
+| invert | 100% | Invert all colors |
+| saturate | 300 | Color intensity (100=normal) |
+| drop-shadow | 0 25px 50px | CSS-style shadow effect |
 
 ## Duration
 
-- 10 filters × 1.5 seconds = 15 seconds total
+- 10 scenes × 1.5 seconds = 15 seconds total

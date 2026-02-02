@@ -35,3 +35,11 @@ pnpm-debug.log*
 
 # OS
 Thumbs.db
+
+# Test outputs
+test-*.js
+test-*.mp4
+test-*.png
+test-*.gif
+test-page.html
+.temp-video-frames/
