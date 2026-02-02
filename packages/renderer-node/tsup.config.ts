@@ -1,11 +1,34 @@
 import { defineConfig } from 'tsup';
 
-export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['cjs', 'esm'],
-  dts: true,
-  splitting: false,
-  sourcemap: true,
-  clean: true,
-  external: ['puppeteer', 'fluent-ffmpeg', 'react', 'react-dom'],
-});
+export default defineConfig([
+  // Main package build
+  {
+    entry: ['src/index.ts'],
+    format: ['cjs', 'esm'],
+    dts: true,
+    splitting: false,
+    sourcemap: true,
+    clean: true,
+    external: ['puppeteer', 'fluent-ffmpeg', 'react', 'react-dom'],
+  },
+  // Browser bundle for injection into Puppeteer
+  {
+    entry: {
+      'browser-renderer': 'src/browser-bundle.tsx',
+    },
+    format: ['iife'],
+    outDir: 'dist',
+    platform: 'browser',
+    target: 'es2020',
+    minify: true,
+    sourcemap: false,
+    splitting: false,
+    // Bundle React and ReactDOM since they need to be available in the browser
+    external: [],
+    noExternal: ['react', 'react-dom', '@rendervid/renderer-browser', '@rendervid/core'],
+    esbuildOptions(options) {
+      // Ensure globalName is set for IIFE format
+      options.globalName = 'RendervidBrowserRenderer';
+    },
+  },
+]);

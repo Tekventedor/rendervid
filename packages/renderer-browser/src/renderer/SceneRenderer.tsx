@@ -41,7 +41,8 @@ export function SceneRenderer({
   isPlaying = true,
   registry,
 }: SceneRendererProps) {
-  const sceneDuration = getSceneDuration(scene) / fps;
+  // sceneDuration should be in frames, not seconds
+  const sceneDuration = getSceneDuration(scene);
 
   // Resolve scene background style
   const backgroundStyle: React.CSSProperties = {};

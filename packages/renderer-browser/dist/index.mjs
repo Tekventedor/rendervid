@@ -1088,7 +1088,7 @@ function SceneRenderer({
   isPlaying = true,
   registry
 }) {
-  const sceneDuration = getSceneDuration(scene) / fps;
+  const sceneDuration = getSceneDuration(scene);
   const backgroundStyle = {};
   if (scene.backgroundColor) {
     backgroundStyle.backgroundColor = scene.backgroundColor;
