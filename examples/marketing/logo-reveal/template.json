@@ -63,8 +63,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -73,17 +79,32 @@
           {
             "id": "glow-ring",
             "type": "shape",
-            "position": { "x": 660, "y": 240 },
-            "size": { "width": 600, "height": 600 },
+            "position": {
+              "x": 660,
+              "y": 240
+            },
+            "size": {
+              "width": 600,
+              "height": 600
+            },
             "opacity": 0.2,
             "props": {
               "shape": "ellipse",
               "gradient": {
                 "type": "radial",
                 "colors": [
-                  { "offset": 0, "color": "{{primaryColor}}" },
-                  { "offset": 0.5, "color": "{{primaryColor}}" },
-                  { "offset": 1, "color": "transparent" }
+                  {
+                    "offset": 0,
+                    "color": "{{primaryColor}}"
+                  },
+                  {
+                    "offset": 0.5,
+                    "color": "{{primaryColor}}"
+                  },
+                  {
+                    "offset": 1,
+                    "color": "transparent"
+                  }
                 ]
               }
             },
@@ -100,8 +121,14 @@
           {
             "id": "line-left",
             "type": "shape",
-            "position": { "x": 0, "y": 537 },
-            "size": { "width": 700, "height": 6 },
+            "position": {
+              "x": 0,
+              "y": 537
+            },
+            "size": {
+              "width": 700,
+              "height": 6
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}"
@@ -119,8 +146,14 @@
           {
             "id": "line-right",
             "type": "shape",
-            "position": { "x": 1220, "y": 537 },
-            "size": { "width": 700, "height": 6 },
+            "position": {
+              "x": 1220,
+              "y": 537
+            },
+            "size": {
+              "width": 700,
+              "height": 6
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}"
@@ -138,8 +171,14 @@
           {
             "id": "brand-name",
             "type": "text",
-            "position": { "x": 160, "y": 450 },
-            "size": { "width": 1600, "height": 180 },
+            "position": {
+              "x": 160,
+              "y": 450
+            },
+            "size": {
+              "width": 1600,
+              "height": 180
+            },
             "props": {
               "text": "{{brandName}}",
               "fontSize": 140,
@@ -162,8 +201,14 @@
           {
             "id": "tagline",
             "type": "text",
-            "position": { "x": 160, "y": 640 },
-            "size": { "width": 1600, "height": 50 },
+            "position": {
+              "x": 160,
+              "y": 640
+            },
+            "size": {
+              "width": 1600,
+              "height": 50
+            },
             "props": {
               "text": "{{tagline}}",
               "fontSize": 28,
@@ -185,8 +230,14 @@
           {
             "id": "particles-1",
             "type": "shape",
-            "position": { "x": 400, "y": 300 },
-            "size": { "width": 8, "height": 8 },
+            "position": {
+              "x": 400,
+              "y": 300
+            },
+            "size": {
+              "width": 8,
+              "height": 8
+            },
             "opacity": 0.6,
             "props": {
               "shape": "ellipse",
@@ -204,8 +255,14 @@
           {
             "id": "particles-2",
             "type": "shape",
-            "position": { "x": 1500, "y": 400 },
-            "size": { "width": 6, "height": 6 },
+            "position": {
+              "x": 1500,
+              "y": 400
+            },
+            "size": {
+              "width": 6,
+              "height": 6
+            },
             "opacity": 0.5,
             "props": {
               "shape": "ellipse",
@@ -223,8 +280,14 @@
           {
             "id": "particles-3",
             "type": "shape",
-            "position": { "x": 300, "y": 700 },
-            "size": { "width": 10, "height": 10 },
+            "position": {
+              "x": 300,
+              "y": 700
+            },
+            "size": {
+              "width": 10,
+              "height": 10
+            },
             "opacity": 0.4,
             "props": {
               "shape": "ellipse",
@@ -238,6 +301,28 @@
                 "duration": 15
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

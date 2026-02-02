@@ -71,15 +71,27 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "gradient": {
                 "type": "linear",
                 "colors": [
-                  { "offset": 0, "color": "{{backgroundColor}}" },
-                  { "offset": 1, "color": "#1c1917" }
+                  {
+                    "offset": 0,
+                    "color": "{{backgroundColor}}"
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#1c1917"
+                  }
                 ],
                 "angle": 135
               }
@@ -88,8 +100,14 @@
           {
             "id": "card",
             "type": "shape",
-            "position": { "x": 160, "y": 190 },
-            "size": { "width": 1600, "height": 700 },
+            "position": {
+              "x": 160,
+              "y": 190
+            },
+            "size": {
+              "width": 1600,
+              "height": 700
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#1c1917",
@@ -108,8 +126,14 @@
           {
             "id": "quote-mark",
             "type": "text",
-            "position": { "x": 220, "y": 220 },
-            "size": { "width": 100, "height": 120 },
+            "position": {
+              "x": 220,
+              "y": 220
+            },
+            "size": {
+              "width": 100,
+              "height": 120
+            },
             "props": {
               "text": "\"",
               "fontSize": 120,
@@ -130,8 +154,14 @@
           {
             "id": "quote",
             "type": "text",
-            "position": { "x": 220, "y": 340 },
-            "size": { "width": 1480, "height": 250 },
+            "position": {
+              "x": 220,
+              "y": 340
+            },
+            "size": {
+              "width": 1480,
+              "height": 250
+            },
             "props": {
               "text": "{{quote}}",
               "fontSize": 42,
@@ -153,8 +183,14 @@
           {
             "id": "stars",
             "type": "text",
-            "position": { "x": 220, "y": 620 },
-            "size": { "width": 200, "height": 40 },
+            "position": {
+              "x": 220,
+              "y": 620
+            },
+            "size": {
+              "width": 200,
+              "height": 40
+            },
             "props": {
               "text": "★★★★★",
               "fontSize": 32,
@@ -174,8 +210,14 @@
           {
             "id": "divider",
             "type": "shape",
-            "position": { "x": 220, "y": 700 },
-            "size": { "width": 60, "height": 3 },
+            "position": {
+              "x": 220,
+              "y": 700
+            },
+            "size": {
+              "width": 60,
+              "height": 3
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}"
@@ -192,8 +234,14 @@
           {
             "id": "author-name",
             "type": "text",
-            "position": { "x": 220, "y": 730 },
-            "size": { "width": 600, "height": 50 },
+            "position": {
+              "x": 220,
+              "y": 730
+            },
+            "size": {
+              "width": 600,
+              "height": 50
+            },
             "props": {
               "text": "{{authorName}}",
               "fontSize": 28,
@@ -214,8 +262,14 @@
           {
             "id": "author-title",
             "type": "text",
-            "position": { "x": 220, "y": 780 },
-            "size": { "width": 600, "height": 40 },
+            "position": {
+              "x": 220,
+              "y": 780
+            },
+            "size": {
+              "width": 600,
+              "height": 40
+            },
             "props": {
               "text": "{{authorTitle}}",
               "fontSize": 20,
@@ -232,6 +286,28 @@
                 "duration": 20
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

@@ -71,8 +71,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -81,8 +87,14 @@
           {
             "id": "burst-1",
             "type": "shape",
-            "position": { "x": -200, "y": -200 },
-            "size": { "width": 600, "height": 600 },
+            "position": {
+              "x": -200,
+              "y": -200
+            },
+            "size": {
+              "width": 600,
+              "height": 600
+            },
             "opacity": 0.2,
             "props": {
               "shape": "ellipse",
@@ -101,8 +113,14 @@
           {
             "id": "burst-2",
             "type": "shape",
-            "position": { "x": 1500, "y": 600 },
-            "size": { "width": 500, "height": 500 },
+            "position": {
+              "x": 1500,
+              "y": 600
+            },
+            "size": {
+              "width": 500,
+              "height": 500
+            },
             "opacity": 0.15,
             "props": {
               "shape": "ellipse",
@@ -121,8 +139,14 @@
           {
             "id": "discount-badge",
             "type": "shape",
-            "position": { "x": 710, "y": 150 },
-            "size": { "width": 500, "height": 200 },
+            "position": {
+              "x": 710,
+              "y": 150
+            },
+            "size": {
+              "width": 500,
+              "height": 200
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}",
@@ -146,8 +170,14 @@
           {
             "id": "discount-text",
             "type": "text",
-            "position": { "x": 710, "y": 195 },
-            "size": { "width": 500, "height": 120 },
+            "position": {
+              "x": 710,
+              "y": 195
+            },
+            "size": {
+              "width": 500,
+              "height": 120
+            },
             "from": 20,
             "props": {
               "text": "{{discount}}",
@@ -170,8 +200,14 @@
           {
             "id": "headline",
             "type": "text",
-            "position": { "x": 160, "y": 420 },
-            "size": { "width": 1600, "height": 150 },
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 150
+            },
             "props": {
               "text": "{{headline}}",
               "fontSize": 120,
@@ -194,8 +230,14 @@
           {
             "id": "subheadline",
             "type": "text",
-            "position": { "x": 160, "y": 600 },
-            "size": { "width": 1600, "height": 60 },
+            "position": {
+              "x": 160,
+              "y": 600
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
             "props": {
               "text": "{{subheadline}}",
               "fontSize": 36,
@@ -216,8 +258,14 @@
           {
             "id": "cta-bg",
             "type": "shape",
-            "position": { "x": 760, "y": 750 },
-            "size": { "width": 400, "height": 70 },
+            "position": {
+              "x": 760,
+              "y": 750
+            },
+            "size": {
+              "width": 400,
+              "height": 70
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#ffffff",
@@ -236,8 +284,14 @@
           {
             "id": "cta-text",
             "type": "text",
-            "position": { "x": 760, "y": 770 },
-            "size": { "width": 400, "height": 40 },
+            "position": {
+              "x": 760,
+              "y": 770
+            },
+            "size": {
+              "width": 400,
+              "height": 40
+            },
             "from": 85,
             "props": {
               "text": "{{ctaText}}",
@@ -256,6 +310,28 @@
                 "duration": 15
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

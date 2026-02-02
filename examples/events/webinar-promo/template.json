@@ -2,29 +2,313 @@
   "name": "Webinar Promo",
   "description": "Professional webinar announcement featuring speaker, topic, and date.",
   "version": "1.0.0",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 8 },
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
   "inputs": [
-    { "key": "topic", "type": "string", "label": "Topic", "required": true, "default": "Mastering AI for Business Growth" },
-    { "key": "description", "type": "string", "label": "Description", "required": false, "default": "Learn how to leverage AI tools to scale your business" },
-    { "key": "speakerName", "type": "string", "label": "Speaker Name", "required": false, "default": "Dr. Sarah Chen" },
-    { "key": "date", "type": "string", "label": "Date", "required": true, "default": "March 20, 2024" },
-    { "key": "time", "type": "string", "label": "Time", "required": false, "default": "2:00 PM EST" }
+    {
+      "key": "topic",
+      "type": "string",
+      "label": "Topic",
+      "required": true,
+      "default": "Mastering AI for Business Growth"
+    },
+    {
+      "key": "description",
+      "type": "string",
+      "label": "Description",
+      "required": false,
+      "default": "Learn how to leverage AI tools to scale your business"
+    },
+    {
+      "key": "speakerName",
+      "type": "string",
+      "label": "Speaker Name",
+      "required": false,
+      "default": "Dr. Sarah Chen"
+    },
+    {
+      "key": "date",
+      "type": "string",
+      "label": "Date",
+      "required": true,
+      "default": "March 20, 2024"
+    },
+    {
+      "key": "time",
+      "type": "string",
+      "label": "Time",
+      "required": false,
+      "default": "2:00 PM EST"
+    }
   ],
-  "defaults": { "topic": "Mastering AI for Business Growth", "description": "Learn how to leverage AI tools to scale your business", "speakerName": "Dr. Sarah Chen", "date": "March 20, 2024", "time": "2:00 PM EST" },
+  "defaults": {
+    "topic": "Mastering AI for Business Growth",
+    "description": "Learn how to leverage AI tools to scale your business",
+    "speakerName": "Dr. Sarah Chen",
+    "date": "March 20, 2024",
+    "time": "2:00 PM EST"
+  },
   "composition": {
-    "scenes": [{
-      "id": "main", "startFrame": 0, "endFrame": 240,
-      "layers": [
-        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-        { "id": "accent", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 800, "height": 1080 }, "opacity": 0.1, "props": { "shape": "rectangle", "fill": "#3b82f6" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 30 }] },
-        { "id": "live", "type": "text", "position": { "x": 100, "y": 120 }, "size": { "width": 200, "height": 50 }, "props": { "text": "LIVE WEBINAR", "fontSize": 20, "fontWeight": "bold", "color": "#ef4444", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 15, "duration": 20 }] },
-        { "id": "topic", "type": "text", "position": { "x": 110, "y": 300 }, "size": { "width": 1000, "height": 150 }, "props": { "text": "{{topic}}", "fontSize": 64, "fontWeight": "bold", "color": "#ffffff", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 25, "duration": 25 }] },
-        { "id": "description", "type": "text", "position": { "x": 110, "y": 480 }, "size": { "width": 900, "height": 80 }, "props": { "text": "{{description}}", "fontSize": 28, "color": "#94a3b8", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 25 }] },
-        { "id": "speaker", "type": "text", "position": { "x": 110, "y": 620 }, "size": { "width": 500, "height": 50 }, "props": { "text": "{{speakerName}}", "fontSize": 24, "fontWeight": "600", "color": "#ffffff", "textAlign": "left" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 20 }] },
-        { "id": "date-bg", "type": "shape", "position": { "x": 100, "y": 750 }, "size": { "width": 500, "height": 100 }, "props": { "shape": "rectangle", "fill": "#3b82f6" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 55, "duration": 25 }] },
-        { "id": "date", "type": "text", "position": { "x": 150, "y": 780 }, "size": { "width": 400, "height": 40 }, "props": { "text": "{{date}}", "fontSize": 24, "fontWeight": "600", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 65, "duration": 20 }] },
-        { "id": "time", "type": "text", "position": { "x": 150, "y": 820 }, "size": { "width": 400, "height": 30 }, "props": { "text": "{{time}}", "fontSize": 18, "color": "#bfdbfe", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 20 }] }
-      ]
-    }]
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "accent",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 800,
+              "height": 1080
+            },
+            "opacity": 0.1,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#3b82f6"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 0,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "live",
+            "type": "text",
+            "position": {
+              "x": 100,
+              "y": 120
+            },
+            "size": {
+              "width": 200,
+              "height": 50
+            },
+            "props": {
+              "text": "LIVE WEBINAR",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "color": "#ef4444",
+              "textAlign": "left"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 15,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "topic",
+            "type": "text",
+            "position": {
+              "x": 110,
+              "y": 300
+            },
+            "size": {
+              "width": 1000,
+              "height": 150
+            },
+            "props": {
+              "text": "{{topic}}",
+              "fontSize": 64,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "left"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 25,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "description",
+            "type": "text",
+            "position": {
+              "x": 110,
+              "y": 480
+            },
+            "size": {
+              "width": 900,
+              "height": 80
+            },
+            "props": {
+              "text": "{{description}}",
+              "fontSize": 28,
+              "color": "#94a3b8",
+              "textAlign": "left"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 40,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "speaker",
+            "type": "text",
+            "position": {
+              "x": 110,
+              "y": 620
+            },
+            "size": {
+              "width": 500,
+              "height": 50
+            },
+            "props": {
+              "text": "{{speakerName}}",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "left"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "date-bg",
+            "type": "shape",
+            "position": {
+              "x": 100,
+              "y": 750
+            },
+            "size": {
+              "width": 500,
+              "height": 100
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#3b82f6"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 55,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "date",
+            "type": "text",
+            "position": {
+              "x": 150,
+              "y": 780
+            },
+            "size": {
+              "width": 400,
+              "height": 40
+            },
+            "props": {
+              "text": "{{date}}",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 65,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "time",
+            "type": "text",
+            "position": {
+              "x": 150,
+              "y": 820
+            },
+            "size": {
+              "width": 400,
+              "height": 30
+            },
+            "props": {
+              "text": "{{time}}",
+              "fontSize": 18,
+              "color": "#bfdbfe",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 70,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
   }
 }

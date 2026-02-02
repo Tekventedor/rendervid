@@ -2,25 +2,228 @@
   "name": "Podcast Teaser",
   "description": "Episode preview with audio waveform visual effect.",
   "version": "1.0.0",
-  "output": { "type": "video", "width": 1080, "height": 1080, "fps": 30, "duration": 8 },
+  "output": {
+    "type": "video",
+    "width": 1080,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
   "inputs": [
-    { "key": "podcastName", "type": "string", "label": "Podcast Name", "required": true, "default": "TECH TALKS" },
-    { "key": "episodeTitle", "type": "string", "label": "Episode Title", "required": true, "default": "The Future of AI in Marketing" },
-    { "key": "guestName", "type": "string", "label": "Guest Name", "required": false, "default": "with Sarah Johnson, CMO at TechCorp" },
-    { "key": "cta", "type": "string", "label": "CTA", "required": false, "default": "Listen Now" }
+    {
+      "key": "podcastName",
+      "type": "string",
+      "label": "Podcast Name",
+      "required": true,
+      "default": "TECH TALKS"
+    },
+    {
+      "key": "episodeTitle",
+      "type": "string",
+      "label": "Episode Title",
+      "required": true,
+      "default": "The Future of AI in Marketing"
+    },
+    {
+      "key": "guestName",
+      "type": "string",
+      "label": "Guest Name",
+      "required": false,
+      "default": "with Sarah Johnson, CMO at TechCorp"
+    },
+    {
+      "key": "cta",
+      "type": "string",
+      "label": "CTA",
+      "required": false,
+      "default": "Listen Now"
+    }
   ],
-  "defaults": { "podcastName": "TECH TALKS", "episodeTitle": "The Future of AI in Marketing", "guestName": "with Sarah Johnson, CMO at TechCorp", "cta": "Listen Now" },
+  "defaults": {
+    "podcastName": "TECH TALKS",
+    "episodeTitle": "The Future of AI in Marketing",
+    "guestName": "with Sarah Johnson, CMO at TechCorp",
+    "cta": "Listen Now"
+  },
   "composition": {
-    "scenes": [{
-      "id": "main", "startFrame": 0, "endFrame": 240,
-      "layers": [
-        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1080, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#18181b" } },
-        { "id": "waveform-bg", "type": "shape", "position": { "x": 90, "y": 480 }, "size": { "width": 900, "height": 80 }, "opacity": 0.3, "props": { "shape": "rectangle", "fill": "#3b82f6" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 25 }] },
-        { "id": "podcast-name", "type": "text", "position": { "x": 90, "y": 620 }, "size": { "width": 900, "height": 60 }, "props": { "text": "{{podcastName}}", "fontSize": 36, "fontWeight": "600", "color": "#3b82f6", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 40, "duration": 25 }] },
-        { "id": "episode", "type": "text", "position": { "x": 90, "y": 720 }, "size": { "width": 900, "height": 100 }, "props": { "text": "{{episodeTitle}}", "fontSize": 42, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 25 }] },
-        { "id": "guest", "type": "text", "position": { "x": 140, "y": 860 }, "size": { "width": 800, "height": 50 }, "props": { "text": "{{guestName}}", "fontSize": 26, "color": "#a1a1aa", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 25 }] },
-        { "id": "cta", "type": "text", "position": { "x": 240, "y": 980 }, "size": { "width": 600, "height": 50 }, "props": { "text": "{{cta}}", "fontSize": 24, "fontWeight": "600", "color": "#3b82f6", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 70, "duration": 25 }] }
-      ]
-    }]
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1080,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#18181b"
+            }
+          },
+          {
+            "id": "waveform-bg",
+            "type": "shape",
+            "position": {
+              "x": 90,
+              "y": 480
+            },
+            "size": {
+              "width": 900,
+              "height": 80
+            },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#3b82f6"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 30,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "podcast-name",
+            "type": "text",
+            "position": {
+              "x": 90,
+              "y": 620
+            },
+            "size": {
+              "width": 900,
+              "height": 60
+            },
+            "props": {
+              "text": "{{podcastName}}",
+              "fontSize": 36,
+              "fontWeight": "600",
+              "color": "#3b82f6",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 40,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "episode",
+            "type": "text",
+            "position": {
+              "x": 90,
+              "y": 720
+            },
+            "size": {
+              "width": 900,
+              "height": 100
+            },
+            "props": {
+              "text": "{{episodeTitle}}",
+              "fontSize": 42,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "guest",
+            "type": "text",
+            "position": {
+              "x": 140,
+              "y": 860
+            },
+            "size": {
+              "width": 800,
+              "height": 50
+            },
+            "props": {
+              "text": "{{guestName}}",
+              "fontSize": 26,
+              "color": "#a1a1aa",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "cta",
+            "type": "text",
+            "position": {
+              "x": 240,
+              "y": 980
+            },
+            "size": {
+              "width": 600,
+              "height": 50
+            },
+            "props": {
+              "text": "{{cta}}",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#3b82f6",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 70,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
   }
 }

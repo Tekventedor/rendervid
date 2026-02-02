@@ -2,137 +2,1615 @@
   "name": "All Fonts Showcase",
   "description": "Showcases all available fonts, each displayed for 1.5 seconds.",
   "version": "1.0.0",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 24 },
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 24
+  },
   "inputs": [],
   "defaults": {},
   "composition": {
     "scenes": [
       {
-        "id": "font-1", "startFrame": 0, "endFrame": 45,
+        "id": "font-1",
+        "startFrame": 0,
+        "endFrame": 45,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Inter", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Inter" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Inter" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Inter",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Inter"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-2", "startFrame": 45, "endFrame": 90,
+        "id": "font-2",
+        "startFrame": 45,
+        "endFrame": 90,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Poppins", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Poppins" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Poppins" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Poppins",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Poppins"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Poppins"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-3", "startFrame": 90, "endFrame": 135,
+        "id": "font-3",
+        "startFrame": 90,
+        "endFrame": 135,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Playfair Display", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Playfair Display" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Playfair Display" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Playfair Display",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Playfair Display"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Playfair Display"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-4", "startFrame": 135, "endFrame": 180,
+        "id": "font-4",
+        "startFrame": 135,
+        "endFrame": 180,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Space Grotesk", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Space Grotesk" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Space Grotesk" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Space Grotesk",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Space Grotesk"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Space Grotesk"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-5", "startFrame": 180, "endFrame": 225,
+        "id": "font-5",
+        "startFrame": 180,
+        "endFrame": 225,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Bebas Neue", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Bebas Neue" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Bebas Neue" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Bebas Neue",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Bebas Neue"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Bebas Neue"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-6", "startFrame": 225, "endFrame": 270,
+        "id": "font-6",
+        "startFrame": 225,
+        "endFrame": 270,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Orbitron", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Orbitron" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Orbitron" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Orbitron",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Orbitron"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Orbitron"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-7", "startFrame": 270, "endFrame": 315,
+        "id": "font-7",
+        "startFrame": 270,
+        "endFrame": 315,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "JetBrains Mono", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "JetBrains Mono" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "const hello = 'world';", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "JetBrains Mono" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "JetBrains Mono",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "JetBrains Mono"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "const hello = 'world';",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "JetBrains Mono"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-8", "startFrame": 315, "endFrame": 360,
+        "id": "font-8",
+        "startFrame": 315,
+        "endFrame": 360,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Cormorant Garamond", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Cormorant Garamond" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Cormorant Garamond" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Cormorant Garamond",
+              "fontSize": 80,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Cormorant Garamond"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Cormorant Garamond"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-9", "startFrame": 360, "endFrame": 405,
+        "id": "font-9",
+        "startFrame": 360,
+        "endFrame": 405,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Nunito", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Nunito" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Nunito" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Nunito",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Nunito"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Nunito"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-10", "startFrame": 405, "endFrame": 450,
+        "id": "font-10",
+        "startFrame": 405,
+        "endFrame": 450,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "DM Sans", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "DM Sans" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "DM Sans" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "DM Sans",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "DM Sans"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "DM Sans"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-11", "startFrame": 450, "endFrame": 495,
+        "id": "font-11",
+        "startFrame": 450,
+        "endFrame": 495,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Plus Jakarta Sans", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Plus Jakarta Sans" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Plus Jakarta Sans" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Plus Jakarta Sans",
+              "fontSize": 80,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Plus Jakarta Sans"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Plus Jakarta Sans"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-12", "startFrame": 495, "endFrame": 540,
+        "id": "font-12",
+        "startFrame": 495,
+        "endFrame": 540,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Outfit", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Outfit" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Outfit" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Outfit",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Outfit"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Outfit"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-13", "startFrame": 540, "endFrame": 585,
+        "id": "font-13",
+        "startFrame": 540,
+        "endFrame": 585,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Sora", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Sora" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Sora" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Sora",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Sora"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Sora"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-14", "startFrame": 585, "endFrame": 630,
+        "id": "font-14",
+        "startFrame": 585,
+        "endFrame": 630,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Quicksand", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Quicksand" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "The quick brown fox jumps over the lazy dog", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Quicksand" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Quicksand",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Quicksand"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "The quick brown fox jumps over the lazy dog",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Quicksand"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-15", "startFrame": 630, "endFrame": 675,
+        "id": "font-15",
+        "startFrame": 630,
+        "endFrame": 675,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "Fira Code", "fontSize": 96, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "Fira Code" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "=> !== === () => {}", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "Fira Code" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "Fira Code",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Fira Code"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "=> !== === () => {}",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "Fira Code"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "font-16", "startFrame": 675, "endFrame": 720,
+        "id": "font-16",
+        "startFrame": 675,
+        "endFrame": 720,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 420 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "IBM Plex Mono", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center", "fontFamily": "IBM Plex Mono" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }] },
-          { "id": "sample", "type": "text", "position": { "x": 160, "y": 560 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "function render() { return true; }", "fontSize": 32, "color": "#94a3b8", "textAlign": "center", "fontFamily": "IBM Plex Mono" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }] }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 420
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "IBM Plex Mono",
+              "fontSize": 80,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "IBM Plex Mono"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 560
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "function render() { return true; }",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center",
+              "fontFamily": "IBM Plex Mono"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       }
     ]

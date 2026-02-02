@@ -79,8 +79,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -89,8 +95,14 @@
           {
             "id": "before-box",
             "type": "shape",
-            "position": { "x": 360, "y": 240 },
-            "size": { "width": 1200, "height": 600 },
+            "position": {
+              "x": 360,
+              "y": 240
+            },
+            "size": {
+              "width": 1200,
+              "height": 600
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#18181b",
@@ -109,8 +121,14 @@
           {
             "id": "before-label",
             "type": "text",
-            "position": { "x": 360, "y": 480 },
-            "size": { "width": 1200, "height": 120 },
+            "position": {
+              "x": 360,
+              "y": 480
+            },
+            "size": {
+              "width": 1200,
+              "height": 120
+            },
             "props": {
               "text": "{{beforeLabel}}",
               "fontSize": 96,
@@ -128,6 +146,28 @@
                 "duration": 20
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       },
@@ -144,8 +184,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -154,8 +200,14 @@
           {
             "id": "after-glow",
             "type": "shape",
-            "position": { "x": 460, "y": 140 },
-            "size": { "width": 1000, "height": 800 },
+            "position": {
+              "x": 460,
+              "y": 140
+            },
+            "size": {
+              "width": 1000,
+              "height": 800
+            },
             "opacity": 0.1,
             "props": {
               "shape": "ellipse",
@@ -165,15 +217,27 @@
           {
             "id": "after-box",
             "type": "shape",
-            "position": { "x": 360, "y": 240 },
-            "size": { "width": 1200, "height": 600 },
+            "position": {
+              "x": 360,
+              "y": 240
+            },
+            "size": {
+              "width": 1200,
+              "height": 600
+            },
             "props": {
               "shape": "rectangle",
               "gradient": {
                 "type": "linear",
                 "colors": [
-                  { "offset": 0, "color": "#18181b" },
-                  { "offset": 1, "color": "#14532d" }
+                  {
+                    "offset": 0,
+                    "color": "#18181b"
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#14532d"
+                  }
                 ],
                 "angle": 135
               },
@@ -183,8 +247,14 @@
           {
             "id": "after-label",
             "type": "text",
-            "position": { "x": 360, "y": 480 },
-            "size": { "width": 1200, "height": 120 },
+            "position": {
+              "x": 360,
+              "y": 480
+            },
+            "size": {
+              "width": 1200,
+              "height": 120
+            },
             "props": {
               "text": "{{afterLabel}}",
               "fontSize": 96,
@@ -203,6 +273,28 @@
                 "easing": "easeOutBack"
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       },
@@ -218,8 +310,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -228,8 +326,14 @@
           {
             "id": "headline",
             "type": "text",
-            "position": { "x": 160, "y": 400 },
-            "size": { "width": 1600, "height": 100 },
+            "position": {
+              "x": 160,
+              "y": 400
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
             "props": {
               "text": "{{headline}}",
               "fontSize": 72,
@@ -250,8 +354,14 @@
           {
             "id": "cta",
             "type": "text",
-            "position": { "x": 160, "y": 530 },
-            "size": { "width": 1600, "height": 50 },
+            "position": {
+              "x": 160,
+              "y": 530
+            },
+            "size": {
+              "width": 1600,
+              "height": 50
+            },
             "props": {
               "text": "{{ctaText}}",
               "fontSize": 32,
@@ -268,6 +378,28 @@
                 "duration": 15
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

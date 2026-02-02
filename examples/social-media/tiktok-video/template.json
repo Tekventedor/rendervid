@@ -75,8 +75,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1080, "height": 1920 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1080,
+              "height": 1920
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#000000"
@@ -85,8 +91,14 @@
           {
             "id": "hook-text",
             "type": "text",
-            "position": { "x": 60, "y": 860 },
-            "size": { "width": 960, "height": 200 },
+            "position": {
+              "x": 60,
+              "y": 860
+            },
+            "size": {
+              "width": 960,
+              "height": 200
+            },
             "props": {
               "text": "{{hookText}}",
               "fontSize": 72,
@@ -109,6 +121,28 @@
                 "duration": 15
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       },
@@ -124,15 +158,27 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1080, "height": 1920 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1080,
+              "height": 1920
+            },
             "props": {
               "shape": "rectangle",
               "gradient": {
                 "type": "linear",
                 "colors": [
-                  { "offset": 0, "color": "{{primaryColor}}" },
-                  { "offset": 1, "color": "{{secondaryColor}}" }
+                  {
+                    "offset": 0,
+                    "color": "{{primaryColor}}"
+                  },
+                  {
+                    "offset": 1,
+                    "color": "{{secondaryColor}}"
+                  }
                 ],
                 "angle": 135
               }
@@ -141,8 +187,14 @@
           {
             "id": "main-text",
             "type": "text",
-            "position": { "x": 60, "y": 860 },
-            "size": { "width": 960, "height": 200 },
+            "position": {
+              "x": 60,
+              "y": 860
+            },
+            "size": {
+              "width": 960,
+              "height": 200
+            },
             "props": {
               "text": "{{mainText}}",
               "fontSize": 64,
@@ -160,6 +212,28 @@
                 "easing": "easeOutCubic"
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       },
@@ -175,8 +249,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1080, "height": 1920 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1080,
+              "height": 1920
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#000000"
@@ -185,8 +265,14 @@
           {
             "id": "reveal-text",
             "type": "text",
-            "position": { "x": 60, "y": 800 },
-            "size": { "width": 960, "height": 300 },
+            "position": {
+              "x": 60,
+              "y": 800
+            },
+            "size": {
+              "width": 960,
+              "height": 300
+            },
             "props": {
               "text": "{{revealText}}",
               "fontSize": 96,
@@ -214,8 +300,14 @@
           {
             "id": "handle",
             "type": "text",
-            "position": { "x": 60, "y": 1700 },
-            "size": { "width": 960, "height": 50 },
+            "position": {
+              "x": 60,
+              "y": 1700
+            },
+            "size": {
+              "width": 960,
+              "height": 50
+            },
             "props": {
               "text": "{{handle}}",
               "fontSize": 28,
@@ -232,6 +324,28 @@
                 "duration": 15
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

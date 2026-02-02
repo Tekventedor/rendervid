@@ -2,84 +2,1185 @@
   "name": "All Layer Types Showcase",
   "description": "Demonstrates all available layer types in Rendervid.",
   "version": "1.0.0",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 12 },
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 12
+  },
   "inputs": [],
   "defaults": {},
   "composition": {
     "scenes": [
       {
-        "id": "shape-layer", "startFrame": 0, "endFrame": 60,
+        "id": "shape-layer",
+        "startFrame": 0,
+        "endFrame": 60,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1e293b" } },
-          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "LAYER TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
-          { "id": "demo", "type": "shape", "position": { "x": 660, "y": 300 }, "size": { "width": 600, "height": 400 }, "props": { "shape": "rectangle", "gradient": { "type": "linear", "angle": 135, "colors": [{ "color": "#3b82f6", "offset": 0 }, { "color": "#8b5cf6", "offset": 1 }] }, "borderRadius": 30 }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Shape Layer", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }] },
-          { "id": "desc", "type": "text", "position": { "x": 160, "y": 880 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Rectangles, circles, gradients, and custom shapes", "fontSize": 24, "color": "#94a3b8", "textAlign": "center" } }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b"
+            }
+          },
+          {
+            "id": "label",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 150
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "LAYER TYPE",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#64748b",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "demo",
+            "type": "shape",
+            "position": {
+              "x": 660,
+              "y": 300
+            },
+            "size": {
+              "width": 600,
+              "height": 400
+            },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "angle": 135,
+                "colors": [
+                  {
+                    "color": "#3b82f6",
+                    "offset": 0
+                  },
+                  {
+                    "color": "#8b5cf6",
+                    "offset": 1
+                  }
+                ]
+              },
+              "borderRadius": 30
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 800
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "Shape Layer",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "desc",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 880
+            },
+            "size": {
+              "width": 1600,
+              "height": 40
+            },
+            "props": {
+              "text": "Rectangles, circles, gradients, and custom shapes",
+              "fontSize": 24,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "text-layer", "startFrame": 60, "endFrame": 120,
+        "id": "text-layer",
+        "startFrame": 60,
+        "endFrame": 120,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1e293b" } },
-          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "LAYER TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
-          { "id": "demo1", "type": "text", "position": { "x": 160, "y": 320 }, "size": { "width": 1600, "height": 100 }, "props": { "text": "Bold Headline", "fontSize": 72, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInUp", "delay": 0, "duration": 25 }] },
-          { "id": "demo2", "type": "text", "position": { "x": 160, "y": 450 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "Supporting text with different styles", "fontSize": 32, "color": "#94a3b8", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 25 }] },
-          { "id": "demo3", "type": "text", "position": { "x": 160, "y": 540 }, "size": { "width": 1600, "height": 50 }, "props": { "text": "const code = 'monospace';", "fontSize": 28, "color": "#22d3ee", "textAlign": "center", "fontFamily": "JetBrains Mono" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 20, "duration": 25 }] },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Text Layer", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
-          { "id": "desc", "type": "text", "position": { "x": 160, "y": 880 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Rich typography with fonts, weights, and styles", "fontSize": 24, "color": "#94a3b8", "textAlign": "center" } }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b"
+            }
+          },
+          {
+            "id": "label",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 150
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "LAYER TYPE",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#64748b",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "demo1",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 320
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
+            "props": {
+              "text": "Bold Headline",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "demo2",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 450
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "Supporting text with different styles",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "demo3",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 540
+            },
+            "size": {
+              "width": 1600,
+              "height": 50
+            },
+            "props": {
+              "text": "const code = 'monospace';",
+              "fontSize": 28,
+              "color": "#22d3ee",
+              "textAlign": "center",
+              "fontFamily": "JetBrains Mono"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 20,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 800
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "Text Layer",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "desc",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 880
+            },
+            "size": {
+              "width": 1600,
+              "height": 40
+            },
+            "props": {
+              "text": "Rich typography with fonts, weights, and styles",
+              "fontSize": 24,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "image-layer", "startFrame": 120, "endFrame": 180,
+        "id": "image-layer",
+        "startFrame": 120,
+        "endFrame": 180,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1e293b" } },
-          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "LAYER TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
-          { "id": "demo", "type": "image", "position": { "x": 560, "y": 280 }, "size": { "width": 800, "height": 450 }, "props": { "src": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800", "fit": "cover", "borderRadius": 20 }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Image Layer", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
-          { "id": "desc", "type": "text", "position": { "x": 160, "y": 880 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Photos and graphics with fit modes", "fontSize": 24, "color": "#94a3b8", "textAlign": "center" } }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b"
+            }
+          },
+          {
+            "id": "label",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 150
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "LAYER TYPE",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#64748b",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "demo",
+            "type": "image",
+            "position": {
+              "x": 560,
+              "y": 280
+            },
+            "size": {
+              "width": 800,
+              "height": 450
+            },
+            "props": {
+              "src": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
+              "fit": "cover",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 800
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "Image Layer",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "desc",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 880
+            },
+            "size": {
+              "width": 1600,
+              "height": 40
+            },
+            "props": {
+              "text": "Photos and graphics with fit modes",
+              "fontSize": 24,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "video-layer", "startFrame": 180, "endFrame": 240,
+        "id": "video-layer",
+        "startFrame": 180,
+        "endFrame": 240,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1e293b" } },
-          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "LAYER TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
-          { "id": "demo", "type": "video", "position": { "x": 560, "y": 280 }, "size": { "width": 800, "height": 450 }, "props": { "src": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", "fit": "cover", "loop": true, "muted": true }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 0, "duration": 25 }] },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Video Layer", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
-          { "id": "desc", "type": "text", "position": { "x": 160, "y": 880 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Video playback with loop and timing control", "fontSize": 24, "color": "#94a3b8", "textAlign": "center" } }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b"
+            }
+          },
+          {
+            "id": "label",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 150
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "LAYER TYPE",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#64748b",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "demo",
+            "type": "video",
+            "position": {
+              "x": 560,
+              "y": 280
+            },
+            "size": {
+              "width": 800,
+              "height": 450
+            },
+            "props": {
+              "src": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+              "fit": "cover",
+              "loop": true,
+              "muted": true
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 800
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "Video Layer",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "desc",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 880
+            },
+            "size": {
+              "width": 1600,
+              "height": 40
+            },
+            "props": {
+              "text": "Video playback with loop and timing control",
+              "fontSize": 24,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "group-layer", "startFrame": 240, "endFrame": 300,
+        "id": "group-layer",
+        "startFrame": 240,
+        "endFrame": 300,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1e293b" } },
-          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "LAYER TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
-          { "id": "card1", "type": "shape", "position": { "x": 260, "y": 300 }, "size": { "width": 400, "height": 400 }, "props": { "shape": "rectangle", "fill": "#22c55e", "borderRadius": 20 }, "animations": [{ "type": "entrance", "effect": "slideInLeft", "delay": 0, "duration": 25 }] },
-          { "id": "card2", "type": "shape", "position": { "x": 760, "y": 300 }, "size": { "width": 400, "height": 400 }, "props": { "shape": "rectangle", "fill": "#eab308", "borderRadius": 20 }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 10, "duration": 25 }] },
-          { "id": "card3", "type": "shape", "position": { "x": 1260, "y": 300 }, "size": { "width": 400, "height": 400 }, "props": { "shape": "rectangle", "fill": "#ef4444", "borderRadius": 20 }, "animations": [{ "type": "entrance", "effect": "slideInRight", "delay": 20, "duration": 25 }] },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Group Layer", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
-          { "id": "desc", "type": "text", "position": { "x": 160, "y": 880 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Organize and animate multiple layers together", "fontSize": 24, "color": "#94a3b8", "textAlign": "center" } }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b"
+            }
+          },
+          {
+            "id": "label",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 150
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "LAYER TYPE",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#64748b",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "card1",
+            "type": "shape",
+            "position": {
+              "x": 260,
+              "y": 300
+            },
+            "size": {
+              "width": 400,
+              "height": 400
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#22c55e",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInLeft",
+                "delay": 0,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "card2",
+            "type": "shape",
+            "position": {
+              "x": 760,
+              "y": 300
+            },
+            "size": {
+              "width": 400,
+              "height": 400
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#eab308",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 10,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "card3",
+            "type": "shape",
+            "position": {
+              "x": 1260,
+              "y": 300
+            },
+            "size": {
+              "width": 400,
+              "height": 400
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ef4444",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInRight",
+                "delay": 20,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 800
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "Group Layer",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "desc",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 880
+            },
+            "size": {
+              "width": 1600,
+              "height": 40
+            },
+            "props": {
+              "text": "Organize and animate multiple layers together",
+              "fontSize": 24,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       },
       {
-        "id": "audio-layer", "startFrame": 300, "endFrame": 360,
+        "id": "audio-layer",
+        "startFrame": 300,
+        "endFrame": 360,
         "layers": [
-          { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#1e293b" } },
-          { "id": "label", "type": "text", "position": { "x": 160, "y": 150 }, "size": { "width": 1600, "height": 60 }, "props": { "text": "LAYER TYPE", "fontSize": 24, "fontWeight": "600", "color": "#64748b", "textAlign": "center" } },
-          { "id": "wave1", "type": "shape", "position": { "x": 360, "y": 440 }, "size": { "width": 40, "height": 200 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 0, "duration": 30, "loop": -1 }] },
-          { "id": "wave2", "type": "shape", "position": { "x": 460, "y": 390 }, "size": { "width": 40, "height": 300 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 5, "duration": 30, "loop": -1 }] },
-          { "id": "wave3", "type": "shape", "position": { "x": 560, "y": 340 }, "size": { "width": 40, "height": 400 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 10, "duration": 30, "loop": -1 }] },
-          { "id": "wave4", "type": "shape", "position": { "x": 660, "y": 290 }, "size": { "width": 40, "height": 500 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 0, "duration": 30, "loop": -1 }] },
-          { "id": "wave5", "type": "shape", "position": { "x": 760, "y": 340 }, "size": { "width": 40, "height": 400 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 15, "duration": 30, "loop": -1 }] },
-          { "id": "wave6", "type": "shape", "position": { "x": 860, "y": 390 }, "size": { "width": 40, "height": 300 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 5, "duration": 30, "loop": -1 }] },
-          { "id": "wave7", "type": "shape", "position": { "x": 960, "y": 290 }, "size": { "width": 40, "height": 500 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 10, "duration": 30, "loop": -1 }] },
-          { "id": "wave8", "type": "shape", "position": { "x": 1060, "y": 340 }, "size": { "width": 40, "height": 400 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 0, "duration": 30, "loop": -1 }] },
-          { "id": "wave9", "type": "shape", "position": { "x": 1160, "y": 390 }, "size": { "width": 40, "height": 300 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 15, "duration": 30, "loop": -1 }] },
-          { "id": "wave10", "type": "shape", "position": { "x": 1260, "y": 290 }, "size": { "width": 40, "height": 500 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 5, "duration": 30, "loop": -1 }] },
-          { "id": "wave11", "type": "shape", "position": { "x": 1360, "y": 340 }, "size": { "width": 40, "height": 400 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 10, "duration": 30, "loop": -1 }] },
-          { "id": "wave12", "type": "shape", "position": { "x": 1460, "y": 440 }, "size": { "width": 40, "height": 200 }, "props": { "shape": "rectangle", "fill": "#a855f7", "borderRadius": 20 }, "animations": [{ "type": "emphasis", "effect": "pulse", "delay": 0, "duration": 30, "loop": -1 }] },
-          { "id": "title", "type": "text", "position": { "x": 160, "y": 800 }, "size": { "width": 1600, "height": 80 }, "props": { "text": "Audio Layer", "fontSize": 56, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" } },
-          { "id": "desc", "type": "text", "position": { "x": 160, "y": 880 }, "size": { "width": 1600, "height": 40 }, "props": { "text": "Background music and sound effects with volume control", "fontSize": 24, "color": "#94a3b8", "textAlign": "center" } }
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e293b"
+            }
+          },
+          {
+            "id": "label",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 150
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "LAYER TYPE",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "color": "#64748b",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "wave1",
+            "type": "shape",
+            "position": {
+              "x": 360,
+              "y": 440
+            },
+            "size": {
+              "width": 40,
+              "height": 200
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 0,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave2",
+            "type": "shape",
+            "position": {
+              "x": 460,
+              "y": 390
+            },
+            "size": {
+              "width": 40,
+              "height": 300
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 5,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave3",
+            "type": "shape",
+            "position": {
+              "x": 560,
+              "y": 340
+            },
+            "size": {
+              "width": 40,
+              "height": 400
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 10,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave4",
+            "type": "shape",
+            "position": {
+              "x": 660,
+              "y": 290
+            },
+            "size": {
+              "width": 40,
+              "height": 500
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 0,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave5",
+            "type": "shape",
+            "position": {
+              "x": 760,
+              "y": 340
+            },
+            "size": {
+              "width": 40,
+              "height": 400
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 15,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave6",
+            "type": "shape",
+            "position": {
+              "x": 860,
+              "y": 390
+            },
+            "size": {
+              "width": 40,
+              "height": 300
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 5,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave7",
+            "type": "shape",
+            "position": {
+              "x": 960,
+              "y": 290
+            },
+            "size": {
+              "width": 40,
+              "height": 500
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 10,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave8",
+            "type": "shape",
+            "position": {
+              "x": 1060,
+              "y": 340
+            },
+            "size": {
+              "width": 40,
+              "height": 400
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 0,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave9",
+            "type": "shape",
+            "position": {
+              "x": 1160,
+              "y": 390
+            },
+            "size": {
+              "width": 40,
+              "height": 300
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 15,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave10",
+            "type": "shape",
+            "position": {
+              "x": 1260,
+              "y": 290
+            },
+            "size": {
+              "width": 40,
+              "height": 500
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 5,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave11",
+            "type": "shape",
+            "position": {
+              "x": 1360,
+              "y": 340
+            },
+            "size": {
+              "width": 40,
+              "height": 400
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 10,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "wave12",
+            "type": "shape",
+            "position": {
+              "x": 1460,
+              "y": 440
+            },
+            "size": {
+              "width": 40,
+              "height": 200
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#a855f7",
+              "borderRadius": 20
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 0,
+                "duration": 30,
+                "loop": -1
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 800
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "Audio Layer",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "desc",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 880
+            },
+            "size": {
+              "width": 1600,
+              "height": 40
+            },
+            "props": {
+              "text": "Background music and sound effects with volume control",
+              "fontSize": 24,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
         ]
       }
     ]

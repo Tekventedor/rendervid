@@ -64,15 +64,27 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1584, "height": 396 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1584,
+              "height": 396
+            },
             "props": {
               "shape": "rectangle",
               "gradient": {
                 "type": "linear",
                 "colors": [
-                  { "offset": 0, "color": "{{backgroundColor}}" },
-                  { "offset": 1, "color": "#2d333b" }
+                  {
+                    "offset": 0,
+                    "color": "{{backgroundColor}}"
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#2d333b"
+                  }
                 ],
                 "angle": 90
               }
@@ -81,15 +93,27 @@
           {
             "id": "accent-bar",
             "type": "shape",
-            "position": { "x": 0, "y": 390 },
-            "size": { "width": 1584, "height": 6 },
+            "position": {
+              "x": 0,
+              "y": 390
+            },
+            "size": {
+              "width": 1584,
+              "height": 6
+            },
             "props": {
               "shape": "rectangle",
               "gradient": {
                 "type": "linear",
                 "colors": [
-                  { "offset": 0, "color": "{{primaryColor}}" },
-                  { "offset": 1, "color": "#0077b5" }
+                  {
+                    "offset": 0,
+                    "color": "{{primaryColor}}"
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#0077b5"
+                  }
                 ],
                 "angle": 90
               }
@@ -98,8 +122,14 @@
           {
             "id": "pattern",
             "type": "shape",
-            "position": { "x": 1200, "y": -100 },
-            "size": { "width": 500, "height": 500 },
+            "position": {
+              "x": 1200,
+              "y": -100
+            },
+            "size": {
+              "width": 500,
+              "height": 500
+            },
             "opacity": 0.08,
             "props": {
               "shape": "ellipse",
@@ -109,8 +139,14 @@
           {
             "id": "company-name",
             "type": "text",
-            "position": { "x": 80, "y": 100 },
-            "size": { "width": 800, "height": 80 },
+            "position": {
+              "x": 80,
+              "y": 100
+            },
+            "size": {
+              "width": 800,
+              "height": 80
+            },
             "props": {
               "text": "{{companyName}}",
               "fontSize": 52,
@@ -123,8 +159,14 @@
           {
             "id": "tagline",
             "type": "text",
-            "position": { "x": 80, "y": 190 },
-            "size": { "width": 700, "height": 50 },
+            "position": {
+              "x": 80,
+              "y": 190
+            },
+            "size": {
+              "width": 700,
+              "height": 50
+            },
             "props": {
               "text": "{{tagline}}",
               "fontSize": 24,
@@ -137,8 +179,14 @@
           {
             "id": "cta-bg",
             "type": "shape",
-            "position": { "x": 80, "y": 270 },
-            "size": { "width": 180, "height": 44 },
+            "position": {
+              "x": 80,
+              "y": 270
+            },
+            "size": {
+              "width": 180,
+              "height": 44
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}",
@@ -148,8 +196,14 @@
           {
             "id": "cta-text",
             "type": "text",
-            "position": { "x": 80, "y": 280 },
-            "size": { "width": 180, "height": 30 },
+            "position": {
+              "x": 80,
+              "y": 280
+            },
+            "size": {
+              "width": 180,
+              "height": 30
+            },
             "props": {
               "text": "{{ctaText}}",
               "fontSize": 16,
@@ -157,6 +211,28 @@
               "color": "#ffffff",
               "textAlign": "center",
               "fontFamily": "Inter, system-ui, sans-serif"
+            }
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
             }
           }
         ]

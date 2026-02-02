@@ -71,8 +71,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -81,8 +87,14 @@
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 160, "y": 80 },
-            "size": { "width": 800, "height": 70 },
+            "position": {
+              "x": 160,
+              "y": 80
+            },
+            "size": {
+              "width": 800,
+              "height": 70
+            },
             "props": {
               "text": "{{title}}",
               "fontSize": 48,
@@ -103,8 +115,14 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": { "x": 160, "y": 155 },
-            "size": { "width": 600, "height": 40 },
+            "position": {
+              "x": 160,
+              "y": 155
+            },
+            "size": {
+              "width": 600,
+              "height": 40
+            },
             "props": {
               "text": "{{subtitle}}",
               "fontSize": 24,
@@ -125,8 +143,14 @@
           {
             "id": "chart-area",
             "type": "shape",
-            "position": { "x": 160, "y": 280 },
-            "size": { "width": 1200, "height": 500 },
+            "position": {
+              "x": 160,
+              "y": 280
+            },
+            "size": {
+              "width": 1200,
+              "height": 500
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#1e293b",
@@ -144,8 +168,14 @@
           {
             "id": "grid-line-1",
             "type": "shape",
-            "position": { "x": 200, "y": 380 },
-            "size": { "width": 1120, "height": 1 },
+            "position": {
+              "x": 200,
+              "y": 380
+            },
+            "size": {
+              "width": 1120,
+              "height": 1
+            },
             "opacity": 0.2,
             "props": {
               "shape": "rectangle",
@@ -163,8 +193,14 @@
           {
             "id": "grid-line-2",
             "type": "shape",
-            "position": { "x": 200, "y": 480 },
-            "size": { "width": 1120, "height": 1 },
+            "position": {
+              "x": 200,
+              "y": 480
+            },
+            "size": {
+              "width": 1120,
+              "height": 1
+            },
             "opacity": 0.2,
             "props": {
               "shape": "rectangle",
@@ -182,8 +218,14 @@
           {
             "id": "grid-line-3",
             "type": "shape",
-            "position": { "x": 200, "y": 580 },
-            "size": { "width": 1120, "height": 1 },
+            "position": {
+              "x": 200,
+              "y": 580
+            },
+            "size": {
+              "width": 1120,
+              "height": 1
+            },
             "opacity": 0.2,
             "props": {
               "shape": "rectangle",
@@ -201,8 +243,14 @@
           {
             "id": "grid-line-4",
             "type": "shape",
-            "position": { "x": 200, "y": 680 },
-            "size": { "width": 1120, "height": 1 },
+            "position": {
+              "x": 200,
+              "y": 680
+            },
+            "size": {
+              "width": 1120,
+              "height": 1
+            },
             "opacity": 0.2,
             "props": {
               "shape": "rectangle",
@@ -220,8 +268,14 @@
           {
             "id": "trend-line",
             "type": "shape",
-            "position": { "x": 200, "y": 650 },
-            "size": { "width": 1100, "height": 6 },
+            "position": {
+              "x": 200,
+              "y": 650
+            },
+            "size": {
+              "width": 1100,
+              "height": 6
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}",
@@ -240,8 +294,14 @@
           {
             "id": "trend-dot-1",
             "type": "shape",
-            "position": { "x": 280, "y": 620 },
-            "size": { "width": 16, "height": 16 },
+            "position": {
+              "x": 280,
+              "y": 620
+            },
+            "size": {
+              "width": 16,
+              "height": 16
+            },
             "props": {
               "shape": "ellipse",
               "fill": "{{primaryColor}}"
@@ -259,8 +319,14 @@
           {
             "id": "trend-dot-2",
             "type": "shape",
-            "position": { "x": 560, "y": 540 },
-            "size": { "width": 16, "height": 16 },
+            "position": {
+              "x": 560,
+              "y": 540
+            },
+            "size": {
+              "width": 16,
+              "height": 16
+            },
             "props": {
               "shape": "ellipse",
               "fill": "{{primaryColor}}"
@@ -278,8 +344,14 @@
           {
             "id": "trend-dot-3",
             "type": "shape",
-            "position": { "x": 840, "y": 460 },
-            "size": { "width": 16, "height": 16 },
+            "position": {
+              "x": 840,
+              "y": 460
+            },
+            "size": {
+              "width": 16,
+              "height": 16
+            },
             "props": {
               "shape": "ellipse",
               "fill": "{{primaryColor}}"
@@ -297,8 +369,14 @@
           {
             "id": "trend-dot-4",
             "type": "shape",
-            "position": { "x": 1120, "y": 360 },
-            "size": { "width": 16, "height": 16 },
+            "position": {
+              "x": 1120,
+              "y": 360
+            },
+            "size": {
+              "width": 16,
+              "height": 16
+            },
             "props": {
               "shape": "ellipse",
               "fill": "{{primaryColor}}"
@@ -316,8 +394,14 @@
           {
             "id": "metric-card",
             "type": "shape",
-            "position": { "x": 1450, "y": 280 },
-            "size": { "width": 320, "height": 200 },
+            "position": {
+              "x": 1450,
+              "y": 280
+            },
+            "size": {
+              "width": 320,
+              "height": 200
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#1e293b",
@@ -336,8 +420,14 @@
           {
             "id": "metric-value",
             "type": "text",
-            "position": { "x": 1470, "y": 330 },
-            "size": { "width": 280, "height": 80 },
+            "position": {
+              "x": 1470,
+              "y": 330
+            },
+            "size": {
+              "width": 280,
+              "height": 80
+            },
             "props": {
               "text": "{{metric}}",
               "fontSize": 56,
@@ -359,8 +449,14 @@
           {
             "id": "metric-label",
             "type": "text",
-            "position": { "x": 1470, "y": 420 },
-            "size": { "width": 280, "height": 40 },
+            "position": {
+              "x": 1470,
+              "y": 420
+            },
+            "size": {
+              "width": 280,
+              "height": 40
+            },
             "props": {
               "text": "{{metricLabel}}",
               "fontSize": 20,
@@ -377,6 +473,28 @@
                 "duration": 20
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

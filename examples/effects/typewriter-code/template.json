@@ -71,8 +71,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#1e1e1e"
@@ -81,8 +87,14 @@
           {
             "id": "editor-window",
             "type": "shape",
-            "position": { "x": 260, "y": 140 },
-            "size": { "width": 1400, "height": 800 },
+            "position": {
+              "x": 260,
+              "y": 140
+            },
+            "size": {
+              "width": 1400,
+              "height": 800
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#252526",
@@ -100,8 +112,14 @@
           {
             "id": "editor-titlebar",
             "type": "shape",
-            "position": { "x": 260, "y": 140 },
-            "size": { "width": 1400, "height": 50 },
+            "position": {
+              "x": 260,
+              "y": 140
+            },
+            "size": {
+              "width": 1400,
+              "height": 50
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#323233",
@@ -119,8 +137,14 @@
           {
             "id": "window-buttons",
             "type": "shape",
-            "position": { "x": 280, "y": 157 },
-            "size": { "width": 16, "height": 16 },
+            "position": {
+              "x": 280,
+              "y": 157
+            },
+            "size": {
+              "width": 16,
+              "height": 16
+            },
             "props": {
               "shape": "circle",
               "fill": "#ff5f56"
@@ -137,8 +161,14 @@
           {
             "id": "window-button-2",
             "type": "shape",
-            "position": { "x": 308, "y": 157 },
-            "size": { "width": 16, "height": 16 },
+            "position": {
+              "x": 308,
+              "y": 157
+            },
+            "size": {
+              "width": 16,
+              "height": 16
+            },
             "props": {
               "shape": "circle",
               "fill": "#ffbd2e"
@@ -155,8 +185,14 @@
           {
             "id": "window-button-3",
             "type": "shape",
-            "position": { "x": 336, "y": 157 },
-            "size": { "width": 16, "height": 16 },
+            "position": {
+              "x": 336,
+              "y": 157
+            },
+            "size": {
+              "width": 16,
+              "height": 16
+            },
             "props": {
               "shape": "circle",
               "fill": "#27c93f"
@@ -173,8 +209,14 @@
           {
             "id": "file-title",
             "type": "text",
-            "position": { "x": 860, "y": 148 },
-            "size": { "width": 200, "height": 32 },
+            "position": {
+              "x": 860,
+              "y": 148
+            },
+            "size": {
+              "width": 200,
+              "height": 32
+            },
             "props": {
               "text": "{{title}}",
               "fontSize": 16,
@@ -194,8 +236,14 @@
           {
             "id": "line-numbers-bg",
             "type": "shape",
-            "position": { "x": 260, "y": 190 },
-            "size": { "width": 70, "height": 750 },
+            "position": {
+              "x": 260,
+              "y": 190
+            },
+            "size": {
+              "width": 70,
+              "height": 750
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#1e1e1e"
@@ -212,8 +260,14 @@
           {
             "id": "line-number-1",
             "type": "text",
-            "position": { "x": 270, "y": 240 },
-            "size": { "width": 50, "height": 30 },
+            "position": {
+              "x": 270,
+              "y": 240
+            },
+            "size": {
+              "width": 50,
+              "height": 30
+            },
             "props": {
               "text": "1",
               "fontSize": 18,
@@ -233,8 +287,14 @@
           {
             "id": "line-number-2",
             "type": "text",
-            "position": { "x": 270, "y": 290 },
-            "size": { "width": 50, "height": 30 },
+            "position": {
+              "x": 270,
+              "y": 290
+            },
+            "size": {
+              "width": 50,
+              "height": 30
+            },
             "props": {
               "text": "2",
               "fontSize": 18,
@@ -254,8 +314,14 @@
           {
             "id": "line-number-3",
             "type": "text",
-            "position": { "x": 270, "y": 340 },
-            "size": { "width": 50, "height": 30 },
+            "position": {
+              "x": 270,
+              "y": 340
+            },
+            "size": {
+              "width": 50,
+              "height": 30
+            },
             "props": {
               "text": "3",
               "fontSize": 18,
@@ -275,8 +341,14 @@
           {
             "id": "line-number-4",
             "type": "text",
-            "position": { "x": 270, "y": 390 },
-            "size": { "width": 50, "height": 30 },
+            "position": {
+              "x": 270,
+              "y": 390
+            },
+            "size": {
+              "width": 50,
+              "height": 30
+            },
             "props": {
               "text": "4",
               "fontSize": 18,
@@ -296,8 +368,14 @@
           {
             "id": "code-line-1",
             "type": "typewriter",
-            "position": { "x": 350, "y": 240 },
-            "size": { "width": 1200, "height": 40 },
+            "position": {
+              "x": 350,
+              "y": 240
+            },
+            "size": {
+              "width": 1200,
+              "height": 40
+            },
             "props": {
               "text": "{{codeLine1}}",
               "fontSize": 24,
@@ -313,8 +391,14 @@
           {
             "id": "code-line-2",
             "type": "typewriter",
-            "position": { "x": 350, "y": 290 },
-            "size": { "width": 1200, "height": 40 },
+            "position": {
+              "x": 350,
+              "y": 290
+            },
+            "size": {
+              "width": 1200,
+              "height": 40
+            },
             "props": {
               "text": "{{codeLine2}}",
               "fontSize": 24,
@@ -330,8 +414,14 @@
           {
             "id": "code-line-3",
             "type": "typewriter",
-            "position": { "x": 350, "y": 340 },
-            "size": { "width": 1200, "height": 40 },
+            "position": {
+              "x": 350,
+              "y": 340
+            },
+            "size": {
+              "width": 1200,
+              "height": 40
+            },
             "props": {
               "text": "{{codeLine3}}",
               "fontSize": 24,
@@ -347,8 +437,14 @@
           {
             "id": "code-line-4",
             "type": "typewriter",
-            "position": { "x": 350, "y": 390 },
-            "size": { "width": 1200, "height": 40 },
+            "position": {
+              "x": 350,
+              "y": 390
+            },
+            "size": {
+              "width": 1200,
+              "height": 40
+            },
             "props": {
               "text": "{{codeLine4}}",
               "fontSize": 24,
@@ -365,8 +461,14 @@
           {
             "id": "status-bar",
             "type": "shape",
-            "position": { "x": 260, "y": 916 },
-            "size": { "width": 1400, "height": 24 },
+            "position": {
+              "x": 260,
+              "y": 916
+            },
+            "size": {
+              "width": 1400,
+              "height": 24
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#007acc"
@@ -375,14 +477,42 @@
           {
             "id": "status-text",
             "type": "text",
-            "position": { "x": 280, "y": 918 },
-            "size": { "width": 200, "height": 20 },
+            "position": {
+              "x": 280,
+              "y": 918
+            },
+            "size": {
+              "width": 200,
+              "height": 20
+            },
             "props": {
               "text": "JavaScript",
               "fontSize": 13,
               "color": "#ffffff",
               "fontFamily": "monospace",
               "textAlign": "left"
+            }
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
             }
           }
         ]

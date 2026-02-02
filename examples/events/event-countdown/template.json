@@ -2,28 +2,309 @@
   "name": "Event Countdown",
   "description": "Countdown timer display for upcoming events, launches, or announcements.",
   "version": "1.0.0",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 8 },
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
   "inputs": [
-    { "key": "eventTitle", "type": "string", "label": "Event Title", "required": true, "default": "BIG SALE EVENT" },
-    { "key": "days", "type": "string", "label": "Days", "required": true, "default": "07" },
-    { "key": "hours", "type": "string", "label": "Hours", "required": true, "default": "12" },
-    { "key": "minutes", "type": "string", "label": "Minutes", "required": true, "default": "30" }
+    {
+      "key": "eventTitle",
+      "type": "string",
+      "label": "Event Title",
+      "required": true,
+      "default": "BIG SALE EVENT"
+    },
+    {
+      "key": "days",
+      "type": "string",
+      "label": "Days",
+      "required": true,
+      "default": "07"
+    },
+    {
+      "key": "hours",
+      "type": "string",
+      "label": "Hours",
+      "required": true,
+      "default": "12"
+    },
+    {
+      "key": "minutes",
+      "type": "string",
+      "label": "Minutes",
+      "required": true,
+      "default": "30"
+    }
   ],
-  "defaults": { "eventTitle": "BIG SALE EVENT", "days": "07", "hours": "12", "minutes": "30" },
+  "defaults": {
+    "eventTitle": "BIG SALE EVENT",
+    "days": "07",
+    "hours": "12",
+    "minutes": "30"
+  },
   "composition": {
-    "scenes": [{
-      "id": "main", "startFrame": 0, "endFrame": 240,
-      "layers": [
-        { "id": "bg", "type": "shape", "position": { "x": 0, "y": 0 }, "size": { "width": 1920, "height": 1080 }, "props": { "shape": "rectangle", "fill": "#0f172a" } },
-        { "id": "title", "type": "text", "position": { "x": 160, "y": 200 }, "size": { "width": 1600, "height": 120 }, "props": { "text": "{{eventTitle}}", "fontSize": 80, "fontWeight": "bold", "color": "#ffffff", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "slideInDown", "delay": 0, "duration": 30 }] },
-        { "id": "coming-in", "type": "text", "position": { "x": 560, "y": 380 }, "size": { "width": 800, "height": 60 }, "props": { "text": "COMING IN", "fontSize": 48, "fontWeight": "600", "color": "#94a3b8", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 25, "duration": 25 }] },
-        { "id": "days", "type": "text", "position": { "x": 380, "y": 520 }, "size": { "width": 300, "height": 150 }, "props": { "text": "{{days}}", "fontSize": 96, "fontWeight": "bold", "color": "#3b82f6", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 40, "duration": 25 }] },
-        { "id": "days-label", "type": "text", "position": { "x": 380, "y": 680 }, "size": { "width": 300, "height": 40 }, "props": { "text": "DAYS", "fontSize": 32, "color": "#94a3b8", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 20 }] },
-        { "id": "hours", "type": "text", "position": { "x": 810, "y": 520 }, "size": { "width": 300, "height": 150 }, "props": { "text": "{{hours}}", "fontSize": 96, "fontWeight": "bold", "color": "#3b82f6", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 45, "duration": 25 }] },
-        { "id": "hours-label", "type": "text", "position": { "x": 810, "y": 680 }, "size": { "width": 300, "height": 40 }, "props": { "text": "HOURS", "fontSize": 32, "color": "#94a3b8", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 20 }] },
-        { "id": "minutes", "type": "text", "position": { "x": 1240, "y": 520 }, "size": { "width": 300, "height": 150 }, "props": { "text": "{{minutes}}", "fontSize": 96, "fontWeight": "bold", "color": "#3b82f6", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 50, "duration": 25 }] },
-        { "id": "minutes-label", "type": "text", "position": { "x": 1240, "y": 680 }, "size": { "width": 300, "height": 40 }, "props": { "text": "MINUTES", "fontSize": 32, "color": "#94a3b8", "textAlign": "center" }, "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 20 }] }
-      ]
-    }]
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 120
+            },
+            "props": {
+              "text": "{{eventTitle}}",
+              "fontSize": 80,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInDown",
+                "delay": 0,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "coming-in",
+            "type": "text",
+            "position": {
+              "x": 560,
+              "y": 380
+            },
+            "size": {
+              "width": 800,
+              "height": 60
+            },
+            "props": {
+              "text": "COMING IN",
+              "fontSize": 48,
+              "fontWeight": "600",
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "days",
+            "type": "text",
+            "position": {
+              "x": 380,
+              "y": 520
+            },
+            "size": {
+              "width": 300,
+              "height": 150
+            },
+            "props": {
+              "text": "{{days}}",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#3b82f6",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 40,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "days-label",
+            "type": "text",
+            "position": {
+              "x": 380,
+              "y": 680
+            },
+            "size": {
+              "width": 300,
+              "height": 40
+            },
+            "props": {
+              "text": "DAYS",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 50,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "hours",
+            "type": "text",
+            "position": {
+              "x": 810,
+              "y": 520
+            },
+            "size": {
+              "width": 300,
+              "height": 150
+            },
+            "props": {
+              "text": "{{hours}}",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#3b82f6",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 45,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "hours-label",
+            "type": "text",
+            "position": {
+              "x": 810,
+              "y": 680
+            },
+            "size": {
+              "width": 300,
+              "height": 40
+            },
+            "props": {
+              "text": "HOURS",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 55,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "minutes",
+            "type": "text",
+            "position": {
+              "x": 1240,
+              "y": 520
+            },
+            "size": {
+              "width": 300,
+              "height": 150
+            },
+            "props": {
+              "text": "{{minutes}}",
+              "fontSize": 96,
+              "fontWeight": "bold",
+              "color": "#3b82f6",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 50,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "minutes-label",
+            "type": "text",
+            "position": {
+              "x": 1240,
+              "y": 680
+            },
+            "size": {
+              "width": 300,
+              "height": 40
+            },
+            "props": {
+              "text": "MINUTES",
+              "fontSize": 32,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 60,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
   }
 }

@@ -87,8 +87,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0f172a"
@@ -97,8 +103,14 @@
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 360, "y": 60 },
-            "size": { "width": 1200, "height": 100 },
+            "position": {
+              "x": 360,
+              "y": 60
+            },
+            "size": {
+              "width": 1200,
+              "height": 100
+            },
             "props": {
               "text": "{{headerTitle}}",
               "fontSize": 64,
@@ -118,8 +130,14 @@
           {
             "id": "tier1-bg",
             "type": "shape",
-            "position": { "x": 80, "y": 200 },
-            "size": { "width": 520, "height": 700 },
+            "position": {
+              "x": 80,
+              "y": 200
+            },
+            "size": {
+              "width": 520,
+              "height": 700
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#1e293b",
@@ -137,8 +155,14 @@
           {
             "id": "tier1-name",
             "type": "text",
-            "position": { "x": 90, "y": 260 },
-            "size": { "width": 500, "height": 60 },
+            "position": {
+              "x": 90,
+              "y": 260
+            },
+            "size": {
+              "width": 500,
+              "height": 60
+            },
             "props": {
               "text": "{{tier1Name}}",
               "fontSize": 36,
@@ -158,8 +182,14 @@
           {
             "id": "tier1-price",
             "type": "text",
-            "position": { "x": 90, "y": 340 },
-            "size": { "width": 500, "height": 100 },
+            "position": {
+              "x": 90,
+              "y": 340
+            },
+            "size": {
+              "width": 500,
+              "height": 100
+            },
             "props": {
               "text": "{{tier1Price}}",
               "fontSize": 56,
@@ -179,8 +209,14 @@
           {
             "id": "tier2-bg",
             "type": "shape",
-            "position": { "x": 660, "y": 180 },
-            "size": { "width": 600, "height": 740 },
+            "position": {
+              "x": 660,
+              "y": 180
+            },
+            "size": {
+              "width": 600,
+              "height": 740
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}",
@@ -198,8 +234,14 @@
           {
             "id": "popular-badge",
             "type": "text",
-            "position": { "x": 760, "y": 210 },
-            "size": { "width": 400, "height": 40 },
+            "position": {
+              "x": 760,
+              "y": 210
+            },
+            "size": {
+              "width": 400,
+              "height": 40
+            },
             "props": {
               "text": "MOST POPULAR",
               "fontSize": 18,
@@ -219,8 +261,14 @@
           {
             "id": "tier2-name",
             "type": "text",
-            "position": { "x": 710, "y": 280 },
-            "size": { "width": 500, "height": 60 },
+            "position": {
+              "x": 710,
+              "y": 280
+            },
+            "size": {
+              "width": 500,
+              "height": 60
+            },
             "props": {
               "text": "{{tier2Name}}",
               "fontSize": 36,
@@ -240,8 +288,14 @@
           {
             "id": "tier2-price",
             "type": "text",
-            "position": { "x": 710, "y": 360 },
-            "size": { "width": 500, "height": 100 },
+            "position": {
+              "x": 710,
+              "y": 360
+            },
+            "size": {
+              "width": 500,
+              "height": 100
+            },
             "props": {
               "text": "{{tier2Price}}",
               "fontSize": 64,
@@ -261,8 +315,14 @@
           {
             "id": "tier3-bg",
             "type": "shape",
-            "position": { "x": 1320, "y": 200 },
-            "size": { "width": 520, "height": 700 },
+            "position": {
+              "x": 1320,
+              "y": 200
+            },
+            "size": {
+              "width": 520,
+              "height": 700
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#1e293b",
@@ -280,8 +340,14 @@
           {
             "id": "tier3-name",
             "type": "text",
-            "position": { "x": 1330, "y": 260 },
-            "size": { "width": 500, "height": 60 },
+            "position": {
+              "x": 1330,
+              "y": 260
+            },
+            "size": {
+              "width": 500,
+              "height": 60
+            },
             "props": {
               "text": "{{tier3Name}}",
               "fontSize": 36,
@@ -301,8 +367,14 @@
           {
             "id": "tier3-price",
             "type": "text",
-            "position": { "x": 1330, "y": 340 },
-            "size": { "width": 500, "height": 100 },
+            "position": {
+              "x": 1330,
+              "y": 340
+            },
+            "size": {
+              "width": 500,
+              "height": 100
+            },
             "props": {
               "text": "{{tier3Price}}",
               "fontSize": 56,
@@ -318,6 +390,28 @@
                 "duration": 25
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

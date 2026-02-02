@@ -59,15 +59,27 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "gradient": {
                 "type": "linear",
                 "colors": [
-                  { "offset": 0, "color": "{{backgroundColor}}" },
-                  { "offset": 1, "color": "#1e293b" }
+                  {
+                    "offset": 0,
+                    "color": "{{backgroundColor}}"
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#1e293b"
+                  }
                 ],
                 "angle": 135
               }
@@ -76,8 +88,14 @@
           {
             "id": "accent-line-top",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 4 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 4
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}"
@@ -95,8 +113,14 @@
           {
             "id": "accent-circle",
             "type": "shape",
-            "position": { "x": 1600, "y": 700 },
-            "size": { "width": 500, "height": 500 },
+            "position": {
+              "x": 1600,
+              "y": 700
+            },
+            "size": {
+              "width": 500,
+              "height": 500
+            },
             "opacity": 0.1,
             "props": {
               "shape": "ellipse",
@@ -115,8 +139,14 @@
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 120, "y": 420 },
-            "size": { "width": 1680, "height": 120 },
+            "position": {
+              "x": 120,
+              "y": 420
+            },
+            "size": {
+              "width": 1680,
+              "height": 120
+            },
             "props": {
               "text": "{{title}}",
               "fontSize": 80,
@@ -138,8 +168,14 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": { "x": 120, "y": 560 },
-            "size": { "width": 1680, "height": 60 },
+            "position": {
+              "x": 120,
+              "y": 560
+            },
+            "size": {
+              "width": 1680,
+              "height": 60
+            },
             "props": {
               "text": "{{subtitle}}",
               "fontSize": 32,
@@ -161,8 +197,14 @@
           {
             "id": "accent-line-bottom",
             "type": "shape",
-            "position": { "x": 760, "y": 650 },
-            "size": { "width": 400, "height": 3 },
+            "position": {
+              "x": 760,
+              "y": 650
+            },
+            "size": {
+              "width": 400,
+              "height": 3
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}"
@@ -176,6 +218,28 @@
                 "easing": "easeOutCubic"
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

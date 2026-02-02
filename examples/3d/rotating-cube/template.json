@@ -47,8 +47,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -57,13 +63,23 @@
           {
             "id": "three-scene",
             "type": "ThreeScene",
-            "position": { "x": 760, "y": 290 },
-            "size": { "width": 400, "height": 400 },
+            "position": {
+              "x": 760,
+              "y": 290
+            },
+            "size": {
+              "width": 400,
+              "height": 400
+            },
             "props": {
               "geometry": "box",
               "color": "{{cubeColor}}",
               "wireframe": false,
-              "rotation": { "x": 0.5, "y": 1, "z": 0.3 },
+              "rotation": {
+                "x": 0.5,
+                "y": 1,
+                "z": 0.3
+              },
               "scale": 1.5,
               "cameraDistance": 600,
               "lighting": "directional"
@@ -81,8 +97,14 @@
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 460, "y": 780 },
-            "size": { "width": 1000, "height": 120 },
+            "position": {
+              "x": 460,
+              "y": 780
+            },
+            "size": {
+              "width": 1000,
+              "height": 120
+            },
             "props": {
               "text": "{{title}}",
               "fontSize": 72,
@@ -103,8 +125,14 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": { "x": 560, "y": 880 },
-            "size": { "width": 800, "height": 60 },
+            "position": {
+              "x": 560,
+              "y": 880
+            },
+            "size": {
+              "width": 800,
+              "height": 60
+            },
             "props": {
               "text": "Powered by ThreeScene",
               "fontSize": 28,
@@ -119,6 +147,28 @@
                 "duration": 15
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }

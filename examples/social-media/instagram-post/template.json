@@ -66,8 +66,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1080, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1080,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -76,8 +82,14 @@
           {
             "id": "accent-corner",
             "type": "shape",
-            "position": { "x": -100, "y": -100 },
-            "size": { "width": 400, "height": 400 },
+            "position": {
+              "x": -100,
+              "y": -100
+            },
+            "size": {
+              "width": 400,
+              "height": 400
+            },
             "opacity": 0.15,
             "props": {
               "shape": "ellipse",
@@ -96,8 +108,14 @@
           {
             "id": "border-top",
             "type": "shape",
-            "position": { "x": 60, "y": 60 },
-            "size": { "width": 960, "height": 4 },
+            "position": {
+              "x": 60,
+              "y": 60
+            },
+            "size": {
+              "width": 960,
+              "height": 4
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}"
@@ -114,8 +132,14 @@
           {
             "id": "headline",
             "type": "text",
-            "position": { "x": 60, "y": 120 },
-            "size": { "width": 960, "height": 100 },
+            "position": {
+              "x": 60,
+              "y": 120
+            },
+            "size": {
+              "width": 960,
+              "height": 100
+            },
             "props": {
               "text": "{{headline}}",
               "fontSize": 64,
@@ -137,8 +161,14 @@
           {
             "id": "body",
             "type": "text",
-            "position": { "x": 60, "y": 300 },
-            "size": { "width": 960, "height": 500 },
+            "position": {
+              "x": 60,
+              "y": 300
+            },
+            "size": {
+              "width": 960,
+              "height": 500
+            },
             "props": {
               "text": "{{body}}",
               "fontSize": 36,
@@ -160,8 +190,14 @@
           {
             "id": "handle-line",
             "type": "shape",
-            "position": { "x": 60, "y": 960 },
-            "size": { "width": 40, "height": 3 },
+            "position": {
+              "x": 60,
+              "y": 960
+            },
+            "size": {
+              "width": 40,
+              "height": 3
+            },
             "props": {
               "shape": "rectangle",
               "fill": "{{primaryColor}}"
@@ -178,8 +214,14 @@
           {
             "id": "handle",
             "type": "text",
-            "position": { "x": 115, "y": 948 },
-            "size": { "width": 400, "height": 40 },
+            "position": {
+              "x": 115,
+              "y": 948
+            },
+            "size": {
+              "width": 400,
+              "height": 40
+            },
             "props": {
               "text": "{{handle}}",
               "fontSize": 24,
@@ -196,6 +238,28 @@
                 "duration": 20
               }
             ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
           }
         ]
       }
