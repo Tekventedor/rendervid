@@ -125,7 +125,7 @@ export interface TemplateRendererProps {
 }
 
 /**
- * Renders the appropriate scene based on the current frame.
+ * Renders the appropriate scene based on the current frame with transition support.
  */
 export function TemplateRenderer({
   scenes,
@@ -136,14 +136,32 @@ export function TemplateRenderer({
   isPlaying = true,
   registry,
 }: TemplateRendererProps) {
-  // Find the current scene based on frame
+  // Find the current scene and check for transitions
   let currentScene: Scene | null = null;
+  let nextScene: Scene | null = null;
+  let currentSceneIndex = -1;
   let localFrame = frame;
+  let transitionProgress = 0;
+  let transitionType: string | null = null;
+  let transitionDirection: string | undefined = undefined;
 
-  for (const scene of scenes) {
+  for (let i = 0; i < scenes.length; i++) {
+    const scene = scenes[i];
     if (frame >= scene.startFrame && frame < scene.endFrame) {
       currentScene = scene;
+      currentSceneIndex = i;
       localFrame = frame - scene.startFrame;
+
+      // Check if we're in a transition period
+      if (scene.transition && scene.transition.duration > 0 && i < scenes.length - 1) {
+        const transitionStart = scene.endFrame - scene.transition.duration;
+        if (frame >= transitionStart && frame < scene.endFrame) {
+          nextScene = scenes[i + 1];
+          transitionType = scene.transition.type;
+          transitionDirection = scene.transition.direction;
+          transitionProgress = (frame - transitionStart) / scene.transition.duration;
+        }
+      }
       break;
     }
   }
@@ -169,16 +187,208 @@ export function TemplateRenderer({
     );
   }
 
+  // If no transition, render single scene
+  if (!nextScene || !transitionType) {
+    return (
+      <SceneRenderer
+        scene={currentScene}
+        frame={localFrame}
+        fps={fps}
+        width={width}
+        height={height}
+        isPlaying={isPlaying}
+        registry={registry}
+      />
+    );
+  }
+
+  // Render transition between two scenes
+  const nextLocalFrame = 0; // Next scene starts at frame 0
+
   return (
-    <SceneRenderer
-      scene={currentScene}
-      frame={localFrame}
-      fps={fps}
-      width={width}
-      height={height}
-      isPlaying={isPlaying}
-      registry={registry}
-    />
+    <div
+      style={{
+        position: 'relative',
+        width,
+        height,
+        overflow: 'hidden',
+      }}
+    >
+      <TransitionRenderer
+        outgoingScene={currentScene}
+        incomingScene={nextScene}
+        outgoingFrame={localFrame}
+        incomingFrame={nextLocalFrame}
+        progress={transitionProgress}
+        transitionType={transitionType}
+        direction={transitionDirection}
+        fps={fps}
+        width={width}
+        height={height}
+        isPlaying={isPlaying}
+        registry={registry}
+      />
+    </div>
+  );
+}
+
+interface TransitionRendererProps {
+  outgoingScene: Scene;
+  incomingScene: Scene;
+  outgoingFrame: number;
+  incomingFrame: number;
+  progress: number;
+  transitionType: string;
+  direction?: string;
+  fps: number;
+  width: number;
+  height: number;
+  isPlaying: boolean;
+  registry?: ComponentRegistry;
+}
+
+function TransitionRenderer({
+  outgoingScene,
+  incomingScene,
+  outgoingFrame,
+  incomingFrame,
+  progress,
+  transitionType,
+  direction = 'left',
+  fps,
+  width,
+  height,
+  isPlaying,
+  registry,
+}: TransitionRendererProps) {
+  const getTransitionStyle = (): React.CSSProperties => {
+    switch (transitionType) {
+      case 'fade': {
+        return {
+          opacity: 1 - progress,
+        };
+      }
+      case 'slide': {
+        const offset = progress * 100;
+        if (direction === 'left') {
+          return { transform: `translateX(-${offset}%)` };
+        } else if (direction === 'right') {
+          return { transform: `translateX(${offset}%)` };
+        } else if (direction === 'up') {
+          return { transform: `translateY(-${offset}%)` };
+        } else if (direction === 'down') {
+          return { transform: `translateY(${offset}%)` };
+        }
+        return { transform: `translateX(-${offset}%)` };
+      }
+      case 'zoom': {
+        const scale = 1 - progress;
+        return {
+          transform: `scale(${scale})`,
+          opacity: scale,
+        };
+      }
+      case 'wipe': {
+        const offset = progress * 100;
+        if (direction === 'left') {
+          return { clipPath: `inset(0 ${offset}% 0 0)` };
+        } else if (direction === 'right') {
+          return { clipPath: `inset(0 0 0 ${offset}%)` };
+        } else if (direction === 'up') {
+          return { clipPath: `inset(0 0 ${offset}% 0)` };
+        } else if (direction === 'down') {
+          return { clipPath: `inset(${offset}% 0 0 0)` };
+        }
+        return { clipPath: `inset(0 ${offset}% 0 0)` };
+      }
+      case 'cut':
+      default:
+        return progress > 0.5 ? { opacity: 0 } : {};
+    }
+  };
+
+  const getIncomingStyle = (): React.CSSProperties => {
+    switch (transitionType) {
+      case 'fade': {
+        return {
+          opacity: progress,
+        };
+      }
+      case 'slide': {
+        const offset = (1 - progress) * 100;
+        if (direction === 'left') {
+          return { transform: `translateX(${offset}%)` };
+        } else if (direction === 'right') {
+          return { transform: `translateX(-${offset}%)` };
+        } else if (direction === 'up') {
+          return { transform: `translateY(${offset}%)` };
+        } else if (direction === 'down') {
+          return { transform: `translateY(-${offset}%)` };
+        }
+        return { transform: `translateX(${offset}%)` };
+      }
+      case 'zoom': {
+        const scale = progress;
+        return {
+          transform: `scale(${scale})`,
+          opacity: scale,
+        };
+      }
+      case 'wipe': {
+        return {}; // Wipe only affects outgoing scene
+      }
+      case 'cut':
+      default:
+        return progress > 0.5 ? {} : { opacity: 0 };
+    }
+  };
+
+  return (
+    <>
+      {/* Outgoing scene */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          ...getTransitionStyle(),
+        }}
+      >
+        <SceneRenderer
+          scene={outgoingScene}
+          frame={outgoingFrame}
+          fps={fps}
+          width={width}
+          height={height}
+          isPlaying={isPlaying}
+          registry={registry}
+        />
+      </div>
+
+      {/* Incoming scene */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          ...getIncomingStyle(),
+        }}
+      >
+        <SceneRenderer
+          scene={incomingScene}
+          frame={incomingFrame}
+          fps={fps}
+          width={width}
+          height={height}
+          isPlaying={isPlaying}
+          registry={registry}
+        />
+      </div>
+    </>
   );
 }
 

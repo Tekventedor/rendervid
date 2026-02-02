@@ -1,34 +1,30 @@
 {
   "name": "All Scene Transitions Showcase",
-  "description": "Demonstrates different transition concepts between scenes.",
+  "description": "Demonstrates all scene transition types: cut, fade, slide, wipe, and zoom.",
   "version": "1.0.0",
   "output": {
     "type": "video",
     "width": 1920,
     "height": 1080,
     "fps": 30,
-    "duration": 16
+    "duration": 18
   },
-  "inputs": [],
-  "defaults": {},
   "composition": {
     "scenes": [
       {
         "id": "intro",
         "startFrame": 0,
         "endFrame": 90,
+        "transition": {
+          "type": "cut",
+          "duration": 0
+        },
         "layers": [
           {
             "id": "bg",
             "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
             "props": {
               "shape": "rectangle",
               "fill": "#3b82f6"
@@ -37,14 +33,8 @@
           {
             "id": "title",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 120 },
             "props": {
               "text": "Scene Transitions",
               "fontSize": 96,
@@ -64,16 +54,10 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 580
-            },
-            "size": {
-              "width": 1600,
-              "height": 60
-            },
+            "position": { "x": 160, "y": 580 },
+            "size": { "width": 1600, "height": 60 },
             "props": {
-              "text": "Watch how each scene changes differently",
+              "text": "Watch how scenes change with different transitions",
               "fontSize": 32,
               "color": "#bfdbfe",
               "textAlign": "center"
@@ -90,14 +74,8 @@
           {
             "id": "watermark",
             "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -105,105 +83,60 @@
               "color": "#ffffff",
               "textAlign": "right",
               "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+              "opacity": 0.7
             }
           }
         ]
       },
       {
-        "id": "intro-exit",
-        "startFrame": 60,
-        "endFrame": 90,
+        "id": "cut",
+        "startFrame": 90,
+        "endFrame": 180,
+        "transition": {
+          "type": "fade",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "bg",
             "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
             "props": {
               "shape": "rectangle",
-              "fill": "#3b82f6"
-            },
-            "animations": [
-              {
-                "type": "exit",
-                "effect": "fadeOut",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
+              "fill": "#8b5cf6"
+            }
           },
           {
             "id": "title",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 120 },
             "props": {
-              "text": "Scene Transitions",
+              "text": "CUT",
               "fontSize": 96,
               "fontWeight": "bold",
               "color": "#ffffff",
               "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "exit",
-                "effect": "fadeOut",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
+            }
           },
           {
-            "id": "subtitle",
+            "id": "desc",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 580
-            },
-            "size": {
-              "width": 1600,
-              "height": 60
-            },
+            "position": { "x": 160, "y": 580 },
+            "size": { "width": 1600, "height": 60 },
             "props": {
-              "text": "Watch how each scene changes differently",
+              "text": "Instant switch between scenes (no transition)",
               "fontSize": 32,
-              "color": "#bfdbfe",
+              "color": "#ddd6fe",
               "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "exit",
-                "effect": "fadeOut",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
+            }
           },
           {
             "id": "watermark",
             "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -211,108 +144,61 @@
               "color": "#ffffff",
               "textAlign": "right",
               "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+              "opacity": 0.7
             }
           }
         ]
       },
       {
         "id": "fade",
-        "startFrame": 60,
-        "endFrame": 180,
+        "startFrame": 180,
+        "endFrame": 270,
+        "transition": {
+          "type": "slide",
+          "duration": 30,
+          "direction": "left"
+        },
         "layers": [
           {
             "id": "bg",
             "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
             "props": {
               "shape": "rectangle",
-              "fill": "#8b5cf6"
-            },
-            "opacity": 0,
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
+              "fill": "#ec4899"
+            }
           },
           {
             "id": "title",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 120 },
             "props": {
               "text": "FADE",
               "fontSize": 96,
               "fontWeight": "bold",
               "color": "#ffffff",
               "textAlign": "center"
-            },
-            "opacity": 0,
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 15,
-                "duration": 25
-              }
-            ]
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 580
-            },
-            "size": {
-              "width": 1600,
-              "height": 60
-            },
+            "position": { "x": 160, "y": 580 },
+            "size": { "width": 1600, "height": 60 },
             "props": {
               "text": "Crossfade: opacity from 0% to 100%",
               "fontSize": 32,
-              "color": "#ddd6fe",
+              "color": "#fbcfe8",
               "textAlign": "center"
-            },
-            "opacity": 0,
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 20,
-                "duration": 25
-              }
-            ]
+            }
           },
           {
             "id": "watermark",
             "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -320,169 +206,61 @@
               "color": "#ffffff",
               "textAlign": "right",
               "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
-          }
-        ]
-      },
-      {
-        "id": "fade-exit",
-        "startFrame": 150,
-        "endFrame": 180,
-        "layers": [
-          {
-            "id": "bg",
-            "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
-            "props": {
-              "shape": "rectangle",
-              "fill": "#8b5cf6"
-            }
-          },
-          {
-            "id": "title",
-            "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
-            "props": {
-              "text": "FADE",
-              "fontSize": 96,
-              "fontWeight": "bold",
-              "color": "#ffffff",
-              "textAlign": "center"
-            }
-          },
-          {
-            "id": "watermark",
-            "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
-            "props": {
-              "text": "RenderVid by\nFlowHunt.io",
-              "fontSize": 16,
-              "fontWeight": "600",
-              "color": "#ffffff",
-              "textAlign": "right",
-              "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+              "opacity": 0.7
             }
           }
         ]
       },
       {
         "id": "slide-left",
-        "startFrame": 150,
-        "endFrame": 270,
+        "startFrame": 270,
+        "endFrame": 360,
+        "transition": {
+          "type": "slide",
+          "duration": 30,
+          "direction": "up"
+        },
         "layers": [
           {
             "id": "bg",
             "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
             "props": {
               "shape": "rectangle",
-              "fill": "#ec4899"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "slideInRight",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
+              "fill": "#f97316"
+            }
           },
           {
             "id": "title",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 120 },
             "props": {
               "text": "SLIDE LEFT",
               "fontSize": 96,
               "fontWeight": "bold",
               "color": "#ffffff",
               "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "slideInRight",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 580
-            },
-            "size": {
-              "width": 1600,
-              "height": 60
-            },
+            "position": { "x": 160, "y": 580 },
+            "size": { "width": 1600, "height": 60 },
             "props": {
               "text": "Scene slides in from right →",
               "fontSize": 32,
-              "color": "#fbcfe8",
+              "color": "#fed7aa",
               "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "slideInRight",
-                "delay": 5,
-                "duration": 30
-              }
-            ]
+            }
           },
           {
             "id": "watermark",
             "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -490,169 +268,60 @@
               "color": "#ffffff",
               "textAlign": "right",
               "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
-          }
-        ]
-      },
-      {
-        "id": "slide-left-exit",
-        "startFrame": 240,
-        "endFrame": 270,
-        "layers": [
-          {
-            "id": "bg",
-            "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
-            "props": {
-              "shape": "rectangle",
-              "fill": "#ec4899"
-            }
-          },
-          {
-            "id": "title",
-            "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
-            "props": {
-              "text": "SLIDE LEFT",
-              "fontSize": 96,
-              "fontWeight": "bold",
-              "color": "#ffffff",
-              "textAlign": "center"
-            }
-          },
-          {
-            "id": "watermark",
-            "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
-            "props": {
-              "text": "RenderVid by\nFlowHunt.io",
-              "fontSize": 16,
-              "fontWeight": "600",
-              "color": "#ffffff",
-              "textAlign": "right",
-              "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+              "opacity": 0.7
             }
           }
         ]
       },
       {
         "id": "slide-up",
-        "startFrame": 240,
-        "endFrame": 360,
+        "startFrame": 360,
+        "endFrame": 450,
+        "transition": {
+          "type": "zoom",
+          "duration": 30
+        },
         "layers": [
           {
             "id": "bg",
             "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
             "props": {
               "shape": "rectangle",
-              "fill": "#f97316"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "slideInUp",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
+              "fill": "#22c55e"
+            }
           },
           {
             "id": "title",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 120 },
             "props": {
               "text": "SLIDE UP",
               "fontSize": 96,
               "fontWeight": "bold",
               "color": "#ffffff",
               "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "slideInUp",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
+            }
           },
           {
             "id": "desc",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 580
-            },
-            "size": {
-              "width": 1600,
-              "height": 60
-            },
+            "position": { "x": 160, "y": 580 },
+            "size": { "width": 1600, "height": 60 },
             "props": {
               "text": "Scene slides in from bottom ↑",
               "fontSize": 32,
-              "color": "#fed7aa",
+              "color": "#bbf7d0",
               "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "slideInUp",
-                "delay": 5,
-                "duration": 30
-              }
-            ]
+            }
           },
           {
             "id": "watermark",
             "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -660,398 +329,67 @@
               "color": "#ffffff",
               "textAlign": "right",
               "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
-          }
-        ]
-      },
-      {
-        "id": "slide-up-exit",
-        "startFrame": 330,
-        "endFrame": 360,
-        "layers": [
-          {
-            "id": "bg",
-            "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
-            "props": {
-              "shape": "rectangle",
-              "fill": "#f97316"
-            }
-          },
-          {
-            "id": "title",
-            "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
-            "props": {
-              "text": "SLIDE UP",
-              "fontSize": 96,
-              "fontWeight": "bold",
-              "color": "#ffffff",
-              "textAlign": "center"
-            }
-          },
-          {
-            "id": "watermark",
-            "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
-            "props": {
-              "text": "RenderVid by\nFlowHunt.io",
-              "fontSize": 16,
-              "fontWeight": "600",
-              "color": "#ffffff",
-              "textAlign": "right",
-              "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+              "opacity": 0.7
             }
           }
         ]
       },
       {
         "id": "zoom",
-        "startFrame": 330,
-        "endFrame": 450,
-        "layers": [
-          {
-            "id": "bg",
-            "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
-            "props": {
-              "shape": "rectangle",
-              "fill": "#22c55e"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "zoomIn",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
-          },
-          {
-            "id": "circle",
-            "type": "shape",
-            "position": {
-              "x": 810,
-              "y": 390
-            },
-            "size": {
-              "width": 300,
-              "height": 300
-            },
-            "props": {
-              "shape": "ellipse",
-              "fill": "#ffffff"
-            },
-            "opacity": 0.2,
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "zoomIn",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
-          },
-          {
-            "id": "title",
-            "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
-            "props": {
-              "text": "ZOOM IN",
-              "fontSize": 96,
-              "fontWeight": "bold",
-              "color": "#ffffff",
-              "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "zoomIn",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
-          },
-          {
-            "id": "desc",
-            "type": "text",
-            "position": {
-              "x": 160,
-              "y": 580
-            },
-            "size": {
-              "width": 1600,
-              "height": 60
-            },
-            "props": {
-              "text": "Scene scales from 0% to 100%",
-              "fontSize": 32,
-              "color": "#bbf7d0",
-              "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "zoomIn",
-                "delay": 5,
-                "duration": 30
-              }
-            ]
-          },
-          {
-            "id": "watermark",
-            "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
-            "props": {
-              "text": "RenderVid by\nFlowHunt.io",
-              "fontSize": 16,
-              "fontWeight": "600",
-              "color": "#ffffff",
-              "textAlign": "right",
-              "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
-          }
-        ]
-      },
-      {
-        "id": "zoom-exit",
-        "startFrame": 420,
-        "endFrame": 450,
-        "layers": [
-          {
-            "id": "bg",
-            "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
-            "props": {
-              "shape": "rectangle",
-              "fill": "#22c55e"
-            },
-            "animations": [
-              {
-                "type": "exit",
-                "effect": "zoomOut",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
-          },
-          {
-            "id": "circle",
-            "type": "shape",
-            "position": {
-              "x": 810,
-              "y": 390
-            },
-            "size": {
-              "width": 300,
-              "height": 300
-            },
-            "props": {
-              "shape": "ellipse",
-              "fill": "#ffffff"
-            },
-            "opacity": 0.2,
-            "animations": [
-              {
-                "type": "exit",
-                "effect": "zoomOut",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
-          },
-          {
-            "id": "title",
-            "type": "text",
-            "position": {
-              "x": 160,
-              "y": 440
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
-            "props": {
-              "text": "ZOOM OUT",
-              "fontSize": 96,
-              "fontWeight": "bold",
-              "color": "#ffffff",
-              "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "exit",
-                "effect": "zoomOut",
-                "delay": 0,
-                "duration": 30
-              }
-            ]
-          },
-          {
-            "id": "desc",
-            "type": "text",
-            "position": {
-              "x": 160,
-              "y": 580
-            },
-            "size": {
-              "width": 1600,
-              "height": 60
-            },
-            "props": {
-              "text": "Scene scales from 100% to 0%",
-              "fontSize": 32,
-              "color": "#bbf7d0",
-              "textAlign": "center"
-            },
-            "animations": [
-              {
-                "type": "exit",
-                "effect": "zoomOut",
-                "delay": 5,
-                "duration": 30
-              }
-            ]
-          },
-          {
-            "id": "watermark",
-            "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
-            "props": {
-              "text": "RenderVid by\nFlowHunt.io",
-              "fontSize": 16,
-              "fontWeight": "600",
-              "color": "#ffffff",
-              "textAlign": "right",
-              "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
-          }
-        ]
-      },
-      {
-        "id": "end",
         "startFrame": 450,
-        "endFrame": 480,
+        "endFrame": 540,
         "layers": [
           {
             "id": "bg",
             "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
             "props": {
               "shape": "rectangle",
-              "fill": "#0f172a"
+              "fill": "#06b6d4"
+            }
+          },
+          {
+            "id": "circle",
+            "type": "shape",
+            "position": { "x": 810, "y": 390 },
+            "size": { "width": 300, "height": 300 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#ffffff",
+              "opacity": 0.2
             }
           },
           {
             "id": "title",
             "type": "text",
-            "position": {
-              "x": 160,
-              "y": 480
-            },
-            "size": {
-              "width": 1600,
-              "height": 120
-            },
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 120 },
             "props": {
-              "text": "Each Transition is Different",
-              "fontSize": 72,
+              "text": "ZOOM",
+              "fontSize": 96,
               "fontWeight": "bold",
               "color": "#ffffff",
               "textAlign": "center"
-            },
-            "opacity": 0,
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 0,
-                "duration": 20
-              }
-            ]
+            }
+          },
+          {
+            "id": "desc",
+            "type": "text",
+            "position": { "x": 160, "y": 580 },
+            "size": { "width": 1600, "height": 60 },
+            "props": {
+              "text": "Scene zooms in or out with scale effect",
+              "fontSize": 32,
+              "color": "#cffafe",
+              "textAlign": "center"
+            }
           },
           {
             "id": "watermark",
             "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -1059,8 +397,7 @@
               "color": "#ffffff",
               "textAlign": "right",
               "lineHeight": 1.3,
-              "opacity": 0.7,
-              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+              "opacity": 0.7
             }
           }
         ]
