@@ -224,7 +224,7 @@ function getAnimationState(animations, frame, layerProps) {
 /**
  * Generate HTML for a single frame
  */
-function generateHTML(template, frame, viewportWidth, viewportHeight) {
+function generateHTML(template, frame, viewportWidth, viewportHeight, exampleDir) {
   const { width, height } = template.output;
   const scale = Math.min(viewportWidth / width, viewportHeight / height);
   const defaults = template.defaults || {};
@@ -338,12 +338,22 @@ function generateHTML(template, frame, viewportWidth, viewportHeight) {
       const { src, fit = 'cover', borderRadius } = props;
       css += `overflow:hidden;`;
       if (borderRadius) css += `border-radius:${borderRadius}px;`;
-      inner = `<img src="${src}" style="width:100%;height:100%;object-fit:${fit};" crossorigin="anonymous" />`;
+      // Convert relative paths to absolute file:// URLs
+      let imgSrc = src;
+      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('file://')) {
+        imgSrc = 'file://' + path.resolve(exampleDir, src);
+      }
+      inner = `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:${fit};" crossorigin="anonymous" />`;
     } else if (type === 'video' && props) {
       const { src, fit = 'cover', borderRadius } = props;
       css += `overflow:hidden;`;
       if (borderRadius) css += `border-radius:${borderRadius}px;`;
-      inner = `<video src="${src}" style="width:100%;height:100%;object-fit:${fit};" autoplay muted loop crossorigin="anonymous"></video>`;
+      // Convert relative paths to absolute file:// URLs
+      let videoSrc = src;
+      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('file://')) {
+        videoSrc = 'file://' + path.resolve(exampleDir, src);
+      }
+      inner = `<video src="${videoSrc}" style="width:100%;height:100%;object-fit:${fit};" autoplay muted loop crossorigin="anonymous"></video>`;
     }
 
     return `<div id="${id}" style="${css}">${inner}</div>`;
@@ -413,7 +423,7 @@ async function generateVideo(browser, example) {
 
   // Render all frames
   for (let frame = 0; frame < totalFrames; frame++) {
-    const html = generateHTML(template, frame, out.width, out.height);
+    const html = generateHTML(template, frame, out.width, out.height, dir);
 
     // Only wait for network on first frame (fonts load), then use faster strategy
     const t1 = Date.now();
