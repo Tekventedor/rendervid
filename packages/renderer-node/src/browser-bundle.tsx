@@ -20,6 +20,21 @@ import {
   SVGDrawing,
   TypewriterEffect,
   MetaBalls,
+  BlurText,
+  WaveText,
+  StaggerText,
+  RevealText,
+  BounceText,
+  SplitText,
+  ShinyText,
+  ScrambleText,
+  FlipText,
+  FuzzyText,
+  NeonText,
+  TextTrail,
+  LetterMorph,
+  MorphText,
+  DistortText,
 } from '@rendervid/components';
 
 // Extend window interface
@@ -57,6 +72,23 @@ declare global {
   registry.register('SVGDrawing', SVGDrawing as never);
   registry.register('TypewriterEffect', TypewriterEffect as never);
   registry.register('MetaBalls', MetaBalls as never);
+
+  // Register text animation components
+  registry.register('BlurText', BlurText as never);
+  registry.register('WaveText', WaveText as never);
+  registry.register('StaggerText', StaggerText as never);
+  registry.register('RevealText', RevealText as never);
+  registry.register('BounceText', BounceText as never);
+  registry.register('SplitText', SplitText as never);
+  registry.register('ShinyText', ShinyText as never);
+  registry.register('ScrambleText', ScrambleText as never);
+  registry.register('FlipText', FlipText as never);
+  registry.register('FuzzyText', FuzzyText as never);
+  registry.register('NeonText', NeonText as never);
+  registry.register('TextTrail', TextTrail as never);
+  registry.register('LetterMorph', LetterMorph as never);
+  registry.register('MorphText', MorphText as never);
+  registry.register('DistortText', DistortText as never);
 
   console.log('Registered custom components:', registry.list().map(c => c.name));
 

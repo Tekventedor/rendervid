@@ -712,6 +712,66 @@ export interface ShinyTextProps extends AnimatedProps {
 }
 
 /**
+ * Flip text animation mode
+ */
+export type FlipTextMode = 'words' | 'letters';
+
+/**
+ * Flip text axis
+ */
+export type FlipAxis = 'x' | 'y' | 'both';
+
+/**
+ * Flip text direction
+ */
+export type FlipDirection = 'forward' | 'backward';
+
+/**
+ * Flip text easing type
+ */
+export type FlipTextEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+/**
+ * FlipText component props
+ */
+export interface FlipTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Animation mode - split by words or letters */
+  mode?: FlipTextMode;
+  /** Flip axis (x = horizontal, y = vertical, both = diagonal) */
+  axis?: FlipAxis;
+  /** Flip direction (forward = 0-180deg, backward = 180-0deg) */
+  direction?: FlipDirection;
+  /** Duration of the animation in frames */
+  duration?: number;
+  /** Frames between each character/word starting animation */
+  stagger?: number;
+  /** Easing function */
+  easing?: FlipTextEasing;
+  /** Perspective distance in pixels for 3D effect */
+  perspective?: number;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+  /** Delay before starting animation in frames */
+  delay?: number;
+}
+
+/**
  * Reveal text animation mode
  */
 export type RevealMode = 'words' | 'letters';
@@ -769,3 +829,175 @@ export interface RevealTextProps extends AnimatedProps {
   textShadow?: string;
 }
 
+/**
+ * Scramble text animation mode
+ */
+export type ScrambleMode = 'whole' | 'sequential';
+
+/**
+ * Scramble text easing type
+ */
+export type ScrambleEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+/**
+ * Character set for scrambling
+ */
+export type ScrambleCharset = 'letters' | 'numbers' | 'symbols' | 'alphanumeric' | 'all';
+
+/**
+ * ScrambleText component props
+ */
+export interface ScrambleTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Duration of the animation in frames */
+  duration?: number;
+  /** Delay before starting animation in frames */
+  delay?: number;
+  /** Animation mode - scramble all at once or character by character */
+  mode?: ScrambleMode;
+  /** Character set to use for scrambling */
+  charset?: ScrambleCharset;
+  /** Number of scramble iterations per character before revealing */
+  scrambleIterations?: number;
+  /** Easing function */
+  easing?: ScrambleEasing;
+  /** Random seed for deterministic scrambling */
+  seed?: number;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+}
+
+/**
+ * Distortion type for text effects
+ */
+export type DistortionType = 'wave' | 'ripple' | 'glitch' | 'skew';
+
+/**
+ * DistortText component props
+ */
+export interface DistortTextProps extends AnimatedProps {
+  /** Text to display */
+  text: string;
+  /** Type of distortion effect */
+  distortionType?: DistortionType;
+  /** Distortion amplitude (intensity) */
+  amplitude?: number;
+  /** Distortion frequency (wave density) */
+  frequency?: number;
+  /** Animation speed multiplier */
+  speed?: number;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+}
+/**
+ * Morph easing type
+ */
+export type MorphEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+/**
+ * Morph mode - how letters should morph
+ */
+export type MorphMode = 'sequential' | 'simultaneous';
+
+/**
+ * MorphText component props
+ */
+export interface MorphTextProps extends AnimatedProps {
+  /** Array of text strings to morph between */
+  texts: string[];
+  /** Duration of each morph transition in frames */
+  morphDuration?: number;
+  /** Pause duration between morphs in frames */
+  pauseDuration?: number;
+  /** Loop through texts continuously */
+  loop?: boolean;
+  /** Easing function for transitions */
+  easing?: MorphEasing;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+  /** Blur intensity during morph (in pixels) */
+  blurIntensity?: number;
+}
+
+/**
+ * LetterMorph component props
+ */
+export interface LetterMorphProps extends AnimatedProps {
+  /** Starting text */
+  startText: string;
+  /** Ending text */
+  endText: string;
+  /** Morph mode - sequential (one letter at a time) or simultaneous (all at once) */
+  mode?: MorphMode;
+  /** Duration of the entire morph animation in frames */
+  duration?: number;
+  /** Number of frames between each character starting to morph (sequential mode only) */
+  stagger?: number;
+  /** Duration of scramble phase per character in frames */
+  scrambleDuration?: number;
+  /** Easing function */
+  easing?: MorphEasing;
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Text color */
+  color?: string;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: string | number;
+  /** Line height */
+  lineHeight?: number | string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  /** Letter spacing in pixels */
+  letterSpacing?: number;
+  /** Text shadow */
+  textShadow?: string;
+  /** Delay before starting animation in frames */
+  delay?: number;
+  /** Random seed for deterministic scrambling */
+  seed?: number;
+}

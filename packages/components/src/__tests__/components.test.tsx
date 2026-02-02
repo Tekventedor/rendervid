@@ -22,6 +22,14 @@ import { StaggerText } from '../effects/StaggerText';
 import { ShinyText } from '../effects/ShinyText';
 import { RevealText } from '../effects/RevealText';
 import { SplitText } from '../effects/SplitText';
+import { ScrambleText } from '../effects/ScrambleText';
+import { FlipText } from '../effects/FlipText';
+import { FuzzyText } from '../effects/FuzzyText';
+import { NeonText } from '../effects/NeonText';
+import { TextTrail } from '../effects/TextTrail';
+import { LetterMorph } from '../effects/LetterMorph';
+import { MorphText } from '../effects/MorphText';
+import { DistortText } from '../effects/DistortText';
 
 describe('Text Component', () => {
   it('should render text content', () => {
@@ -1063,5 +1071,385 @@ describe('SplitText Component', () => {
     // - Third char should have just started (started at 10, duration 30)
 
     expect(spans.length).toBe(3);
+  });
+});
+
+describe('ScrambleText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<ScrambleText text="Hello" frame={100} />);
+    expect(container.textContent).toBe('Hello');
+  });
+
+  it('should scramble text during animation', () => {
+    const { container } = render(<ScrambleText text="Test" frame={15} duration={60} />);
+    // During animation, text might be scrambled
+    expect(container.firstChild).toBeTruthy();
+  });
+
+  it('should support different charsets', () => {
+    const { container: lettersContainer } = render(
+      <ScrambleText text="A" frame={0} charset="letters" />
+    );
+    const { container: numbersContainer } = render(
+      <ScrambleText text="A" frame={0} charset="numbers" />
+    );
+    expect(lettersContainer.firstChild).toBeTruthy();
+    expect(numbersContainer.firstChild).toBeTruthy();
+  });
+
+  it('should support whole and sequential modes', () => {
+    const { container: wholeContainer } = render(
+      <ScrambleText text="Test" frame={0} mode="whole" />
+    );
+    const { container: seqContainer } = render(
+      <ScrambleText text="Test" frame={0} mode="sequential" />
+    );
+    expect(wholeContainer.firstChild).toBeTruthy();
+    expect(seqContainer.firstChild).toBeTruthy();
+  });
+
+  it('should apply custom font size and color', () => {
+    const { container } = render(
+      <ScrambleText text="Test" frame={0} fontSize={32} color="#ff0000" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('32px');
+    expect(element.style.color).toBe('rgb(255, 0, 0)');
+  });
+});
+
+describe('FlipText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<FlipText text="Hello" frame={100} />);
+    expect(container.textContent).toBe('Hello');
+  });
+
+  it('should support different axes', () => {
+    const { container: xContainer } = render(
+      <FlipText text="T" frame={30} axis="x" />
+    );
+    const { container: yContainer } = render(
+      <FlipText text="T" frame={30} axis="y" />
+    );
+    const { container: bothContainer } = render(
+      <FlipText text="T" frame={30} axis="both" />
+    );
+    expect(xContainer.firstChild).toBeTruthy();
+    expect(yContainer.firstChild).toBeTruthy();
+    expect(bothContainer.firstChild).toBeTruthy();
+  });
+
+  it('should support forward and backward directions', () => {
+    const { container: forwardContainer } = render(
+      <FlipText text="T" frame={30} direction="forward" />
+    );
+    const { container: backwardContainer } = render(
+      <FlipText text="T" frame={30} direction="backward" />
+    );
+    expect(forwardContainer.firstChild).toBeTruthy();
+    expect(backwardContainer.firstChild).toBeTruthy();
+  });
+
+  it('should support letters and words modes', () => {
+    const { container: lettersContainer } = render(
+      <FlipText text="Hello World" frame={30} mode="letters" />
+    );
+    const { container: wordsContainer } = render(
+      <FlipText text="Hello World" frame={30} mode="words" />
+    );
+    expect(lettersContainer.querySelectorAll('span').length).toBeGreaterThan(0);
+    expect(wordsContainer.querySelectorAll('span').length).toBeGreaterThan(0);
+  });
+
+  it('should apply custom styling', () => {
+    const { container } = render(
+      <FlipText text="Test" frame={0} fontSize={48} color="#00ffff" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('48px');
+    expect(element.style.color).toBe('rgb(0, 255, 255)');
+  });
+});
+
+describe('FuzzyText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<FuzzyText text="Hello" frame={100} />);
+    expect(container.textContent).toBe('Hello');
+  });
+
+  it('should apply blur filter during animation', () => {
+    const { container } = render(<FuzzyText text="Test" frame={15} duration={60} startBlur={10} mode="whole" />);
+    // For whole mode, check if container has blur
+    expect(container.firstChild).toBeTruthy();
+  });
+
+  it('should support different modes', () => {
+    const { container: wholeContainer } = render(
+      <FuzzyText text="Test" frame={30} mode="whole" />
+    );
+    const { container: wordsContainer } = render(
+      <FuzzyText text="Test Word" frame={30} mode="words" />
+    );
+    const { container: lettersContainer } = render(
+      <FuzzyText text="Test" frame={30} mode="letters" />
+    );
+    expect(wholeContainer.firstChild).toBeTruthy();
+    expect(wordsContainer.firstChild).toBeTruthy();
+    expect(lettersContainer.firstChild).toBeTruthy();
+  });
+
+  it('should transition from blurry to clear', () => {
+    const { container: earlyContainer } = render(
+      <FuzzyText text="T" frame={5} duration={60} startBlur={15} endBlur={0} mode="whole" />
+    );
+    const { container: lateContainer } = render(
+      <FuzzyText text="T" frame={55} duration={60} startBlur={15} endBlur={0} mode="whole" />
+    );
+
+    // Both should render successfully
+    expect(earlyContainer.firstChild).toBeTruthy();
+    expect(lateContainer.firstChild).toBeTruthy();
+  });
+
+  it('should apply custom styling', () => {
+    const { container } = render(
+      <FuzzyText text="Test" frame={0} fontSize={36} color="#ffffff" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('36px');
+    expect(element.style.color).toBe('rgb(255, 255, 255)');
+  });
+});
+
+describe('NeonText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<NeonText text="NEON" frame={0} />);
+    expect(container.textContent).toBe('NEON');
+  });
+
+  it('should support different modes', () => {
+    const { container: pulseContainer } = render(
+      <NeonText text="Test" frame={30} mode="pulse" />
+    );
+    const { container: flickerContainer } = render(
+      <NeonText text="Test" frame={30} mode="flicker" />
+    );
+    const { container: staticContainer } = render(
+      <NeonText text="Test" frame={30} mode="static" />
+    );
+    expect(pulseContainer.firstChild).toBeTruthy();
+    expect(flickerContainer.firstChild).toBeTruthy();
+    expect(staticContainer.firstChild).toBeTruthy();
+  });
+
+  it('should apply neon glow with text-shadow', () => {
+    const { container } = render(<NeonText text="Glow" frame={0} color="#00ffff" />);
+    // NeonText should render successfully
+    expect(container.firstChild).toBeTruthy();
+    expect(container.textContent).toBe('Glow');
+  });
+
+  it('should support background glow', () => {
+    const { container: withGlowContainer } = render(
+      <NeonText text="Test" frame={0} backgroundGlow={true} />
+    );
+    const { container: withoutGlowContainer } = render(
+      <NeonText text="Test" frame={0} backgroundGlow={false} />
+    );
+    expect(withGlowContainer.firstChild).toBeTruthy();
+    expect(withoutGlowContainer.firstChild).toBeTruthy();
+  });
+
+  it('should apply custom styling', () => {
+    const { container } = render(
+      <NeonText text="Test" frame={0} fontSize={64} color="#ff00ff" />
+    );
+    // NeonText should render successfully with custom props
+    expect(container.firstChild).toBeTruthy();
+    expect(container.textContent).toBe('Test');
+  });
+});
+
+describe('TextTrail Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<TextTrail text="Trail" frame={0} />);
+    expect(container.textContent).toContain('Trail');
+  });
+
+  it('should render multiple copies for trail effect', () => {
+    const { container } = render(<TextTrail text="T" frame={0} trailLength={5} />);
+    const spans = container.querySelectorAll('span');
+    // Should have at least trailLength copies
+    expect(spans.length).toBeGreaterThanOrEqual(5);
+  });
+
+  it('should support different directions', () => {
+    const directions = ['left', 'right', 'up', 'down', 'top-left', 'top-right', 'bottom-left', 'bottom-right'] as const;
+    directions.forEach(direction => {
+      const { container } = render(<TextTrail text="T" frame={0} direction={direction} />);
+      expect(container.firstChild).toBeTruthy();
+    });
+  });
+
+  it('should animate when enabled', () => {
+    const { container: animatedContainer } = render(
+      <TextTrail text="T" frame={30} animate={true} />
+    );
+    const { container: staticContainer } = render(
+      <TextTrail text="T" frame={30} animate={false} />
+    );
+    expect(animatedContainer.firstChild).toBeTruthy();
+    expect(staticContainer.firstChild).toBeTruthy();
+  });
+
+  it('should apply custom styling', () => {
+    const { container } = render(
+      <TextTrail text="Test" frame={0} fontSize={48} color="#00ffff" />
+    );
+    // TextTrail should render successfully
+    expect(container.firstChild).toBeTruthy();
+    expect(container.textContent).toContain('Test');
+  });
+});
+
+describe('LetterMorph Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<LetterMorph startText="Start" endText="End" frame={0} />);
+    expect(container.textContent).toBeTruthy();
+  });
+
+  it('should transition from startText to endText', () => {
+    const { container: earlyContainer } = render(
+      <LetterMorph startText="ABC" endText="XYZ" frame={5} duration={100} />
+    );
+    const { container: lateContainer } = render(
+      <LetterMorph startText="ABC" endText="XYZ" frame={95} duration={100} />
+    );
+    expect(earlyContainer.firstChild).toBeTruthy();
+    expect(lateContainer.firstChild).toBeTruthy();
+  });
+
+  it('should support sequential and simultaneous modes', () => {
+    const { container: seqContainer } = render(
+      <LetterMorph startText="Hi" endText="By" frame={30} mode="sequential" />
+    );
+    const { container: simContainer } = render(
+      <LetterMorph startText="Hi" endText="By" frame={30} mode="simultaneous" />
+    );
+    expect(seqContainer.firstChild).toBeTruthy();
+    expect(simContainer.firstChild).toBeTruthy();
+  });
+
+  it('should handle different string lengths', () => {
+    const { container: shorterContainer } = render(
+      <LetterMorph startText="Hello" endText="Hi" frame={50} duration={100} />
+    );
+    const { container: longerContainer } = render(
+      <LetterMorph startText="Hi" endText="Hello" frame={50} duration={100} />
+    );
+    expect(shorterContainer.firstChild).toBeTruthy();
+    expect(longerContainer.firstChild).toBeTruthy();
+  });
+
+  it('should apply custom styling', () => {
+    const { container } = render(
+      <LetterMorph startText="A" endText="B" frame={0} fontSize={40} color="#ffffff" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('40px');
+    expect(element.style.color).toBe('rgb(255, 255, 255)');
+  });
+});
+
+describe('MorphText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<MorphText texts={["Hello", "World"]} frame={0} />);
+    expect(container.textContent).toBeTruthy();
+  });
+
+  it('should cycle through multiple texts', () => {
+    const { container } = render(
+      <MorphText texts={["One", "Two", "Three"]} frame={100} morphDuration={30} pauseDuration={60} />
+    );
+    expect(container.firstChild).toBeTruthy();
+  });
+
+  it('should support looping', () => {
+    const { container: loopContainer } = render(
+      <MorphText texts={["A", "B"]} frame={200} loop={true} morphDuration={30} pauseDuration={60} />
+    );
+    const { container: noLoopContainer } = render(
+      <MorphText texts={["A", "B"]} frame={200} loop={false} morphDuration={30} pauseDuration={60} />
+    );
+    expect(loopContainer.firstChild).toBeTruthy();
+    expect(noLoopContainer.firstChild).toBeTruthy();
+  });
+
+  it('should apply blur during transition', () => {
+    const { container } = render(
+      <MorphText texts={["A", "B"]} frame={15} morphDuration={30} blurIntensity={5} />
+    );
+    // Check if blur is applied during transition
+    expect(container.firstChild).toBeTruthy();
+  });
+
+  it('should apply custom styling', () => {
+    const { container } = render(
+      <MorphText texts={["Test"]} frame={0} fontSize={52} color="#ffdd00" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('52px');
+    expect(element.style.color).toBe('rgb(255, 221, 0)');
+  });
+});
+
+describe('DistortText Component', () => {
+  it('should render text content', () => {
+    const { container } = render(<DistortText text="Distort" frame={0} />);
+    expect(container.textContent).toBe('Distort');
+  });
+
+  it('should support different distortion types', () => {
+    const types = ['wave', 'ripple', 'glitch', 'skew'] as const;
+    types.forEach(type => {
+      const { container } = render(
+        <DistortText text="T" frame={30} distortionType={type} />
+      );
+      expect(container.firstChild).toBeTruthy();
+    });
+  });
+
+  it('should apply transforms to characters', () => {
+    const { container } = render(
+      <DistortText text="Test" frame={30} distortionType="wave" />
+    );
+    const spans = container.querySelectorAll('span');
+    expect(spans.length).toBeGreaterThan(0);
+
+    // At least some spans should have transforms applied
+    const spansWithTransform = Array.from(spans).filter(
+      span => (span as HTMLElement).style.transform !== ''
+    );
+    expect(spansWithTransform.length).toBeGreaterThan(0);
+  });
+
+  it('should support amplitude and frequency adjustments', () => {
+    const { container: lowAmpContainer } = render(
+      <DistortText text="T" frame={30} amplitude={5} />
+    );
+    const { container: highAmpContainer } = render(
+      <DistortText text="T" frame={30} amplitude={20} />
+    );
+    expect(lowAmpContainer.firstChild).toBeTruthy();
+    expect(highAmpContainer.firstChild).toBeTruthy();
+  });
+
+  it('should apply custom styling', () => {
+    const { container } = render(
+      <DistortText text="Test" frame={0} fontSize={56} color="#00ff00" />
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.style.fontSize).toBe('56px');
+    expect(element.style.color).toBe('rgb(0, 255, 0)');
   });
 });

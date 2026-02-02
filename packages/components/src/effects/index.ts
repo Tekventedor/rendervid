@@ -45,6 +45,9 @@ export { MetaBalls } from './MetaBalls';
 export type { MetaBallsProps, MovementPattern } from './MetaBalls';
 
 export { BlurText } from './BlurText';
+
+export { FuzzyText } from './FuzzyText';
+export type { FuzzyTextProps, FuzzyEasing, FuzzyMode } from './FuzzyText';
 export type { BlurTextProps, BlurEasing, BlurMode } from './BlurText';
 
 export { WaveText } from './WaveText';
@@ -64,3 +67,25 @@ export type { ShinyTextProps, ShineDirection } from './ShinyText';
 
 export { SplitText } from './SplitText';
 export type { SplitTextProps, SplitTextEasing, SplitTextMode, SplitTextAnimation } from './SplitText';
+
+export { FlipText } from './FlipText';
+export type { FlipTextProps, FlipTextEasing, FlipTextMode, FlipAxis, FlipDirection } from './FlipText';
+
+export { ScrambleText } from './ScrambleText';
+export type { ScrambleTextProps, ScrambleEasing, ScrambleMode, ScrambleCharset } from './ScrambleText';
+
+export { TextTrail } from './TextTrail';
+export type { TextTrailProps, TrailDirection } from './TextTrail';
+
+export { NeonText } from './NeonText';
+export type { NeonTextProps, NeonAnimationMode } from './NeonText';
+
+export { DistortText } from './DistortText';
+export type { DistortTextProps, DistortionType } from './DistortText';
+
+export { MorphText } from './MorphText';
+export type { MorphTextProps, MorphEasing } from './MorphText';
+
+export { LetterMorph } from './LetterMorph';
+export type { LetterMorphProps, MorphMode } from './LetterMorph';
+export type { MorphEasing as LetterMorphEasing } from './LetterMorph';
