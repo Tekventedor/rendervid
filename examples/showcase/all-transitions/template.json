@@ -15,12 +15,29 @@
         "id": "intro",
         "startFrame": 0,
         "endFrame": 90,
-        "backgroundColor": "#3b82f6",
+        "backgroundColor": "#0a0a1f",
         "transition": {
           "type": "cut",
           "duration": 0
         },
         "layers": [
+          {
+            "id": "bg-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "src": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2_ai-image-generator_cinematic-3d_Futuristic_City_Skyline_at_Sunset.webp",
+              "fit": "cover",
+              "opacity": 0.4
+            }
+          },
           {
             "id": "title",
             "type": "text",
