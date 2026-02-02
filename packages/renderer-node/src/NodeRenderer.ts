@@ -456,6 +456,14 @@ export class NodeRenderer {
       // Write to file
       await fs.writeFile(outputPath, imageBuffer);
 
+      // Add metadata to the image
+      try {
+        await this.ffmpegEncoder.addImageMetadata(outputPath);
+      } catch (error) {
+        // If metadata fails, continue (image is still valid)
+        console.warn('Failed to add metadata to image:', error);
+      }
+
       // Close capturer
       await capturer.close();
 
