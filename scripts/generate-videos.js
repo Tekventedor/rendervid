@@ -338,22 +338,31 @@ function generateHTML(template, frame, viewportWidth, viewportHeight, exampleDir
       const { src, fit = 'cover', borderRadius } = props;
       css += `overflow:hidden;`;
       if (borderRadius) css += `border-radius:${borderRadius}px;`;
-      // Convert relative paths to absolute file:// URLs
+      // Convert relative paths to data URLs for local files
       let imgSrc = src;
-      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('file://')) {
-        imgSrc = 'file://' + path.resolve(exampleDir, src);
+      if (src && !src.startsWith('http') && !src.startsWith('data:')) {
+        const imgPath = path.resolve(exampleDir, src);
+        if (fs.existsSync(imgPath)) {
+          const imgBuffer = fs.readFileSync(imgPath);
+          const ext = path.extname(imgPath).toLowerCase();
+          const mimeType = ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' :
+                          ext === '.png' ? 'image/png' :
+                          ext === '.gif' ? 'image/gif' :
+                          ext === '.webp' ? 'image/webp' : 'image/jpeg';
+          imgSrc = `data:${mimeType};base64,${imgBuffer.toString('base64')}`;
+        }
       }
-      inner = `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:${fit};" crossorigin="anonymous" />`;
+      inner = `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:${fit};" />`;
     } else if (type === 'video' && props) {
       const { src, fit = 'cover', borderRadius } = props;
       css += `overflow:hidden;`;
       if (borderRadius) css += `border-radius:${borderRadius}px;`;
-      // Convert relative paths to absolute file:// URLs
+      // For videos, use file:// URLs (they work better than data URLs for video)
       let videoSrc = src;
       if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('file://')) {
         videoSrc = 'file://' + path.resolve(exampleDir, src);
       }
-      inner = `<video src="${videoSrc}" style="width:100%;height:100%;object-fit:${fit};" autoplay muted loop crossorigin="anonymous"></video>`;
+      inner = `<video src="${videoSrc}" style="width:100%;height:100%;object-fit:${fit};" autoplay muted loop></video>`;
     }
 
     return `<div id="${id}" style="${css}">${inner}</div>`;
