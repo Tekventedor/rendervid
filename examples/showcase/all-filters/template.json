@@ -19,6 +19,23 @@
         "endFrame": 45,
         "layers": [
           {
+            "id": "bg-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "src": "https://www.photomaticai.com/images/effects/low-angle_Nature___Wildlife.webp",
+              "fit": "cover",
+              "opacity": 0.35
+            }
+          },
+          {
             "id": "bg",
             "type": "shape",
             "position": {
@@ -31,7 +48,8 @@
             },
             "props": {
               "shape": "rectangle",
-              "fill": "#1a1a1a"
+              "fill": "#1a1a1a",
+              "opacity": 0.7
             }
           },
           {

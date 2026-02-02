@@ -19,6 +19,23 @@
         "endFrame": 60,
         "layers": [
           {
+            "id": "bg-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "src": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v3-balanced_ai-image-generator_pen_Whimsical_Pencil_Cityscape.webp",
+              "fit": "cover",
+              "opacity": 0.2
+            }
+          },
+          {
             "id": "bg",
             "type": "shape",
             "position": {
@@ -31,7 +48,8 @@
             },
             "props": {
               "shape": "rectangle",
-              "fill": "#0f172a"
+              "fill": "#0f172a",
+              "opacity": 0.85
             }
           },
           {

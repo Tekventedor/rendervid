@@ -19,6 +19,23 @@
         "endFrame": 45,
         "layers": [
           {
+            "id": "bg-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "src": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp",
+              "fit": "cover",
+              "opacity": 0.2
+            }
+          },
+          {
             "id": "bg",
             "type": "shape",
             "position": {
@@ -31,7 +48,8 @@
             },
             "props": {
               "shape": "rectangle",
-              "fill": "#0f172a"
+              "fill": "#0f172a",
+              "opacity": 0.85
             }
           },
           {

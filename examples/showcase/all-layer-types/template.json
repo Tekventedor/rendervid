@@ -19,6 +19,23 @@
         "endFrame": 60,
         "layers": [
           {
+            "id": "bg-image",
+            "type": "image",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "src": "https://www.photomaticai.com/images/processed/ai-generated-images/models_flux-dev_ai-image-generator_soft-retro_1970s_Soft_Retro_Living_Room.webp",
+              "fit": "cover",
+              "opacity": 0.25
+            }
+          },
+          {
             "id": "bg",
             "type": "shape",
             "position": {
@@ -31,7 +48,8 @@
             },
             "props": {
               "shape": "rectangle",
-              "fill": "#1e293b"
+              "fill": "#1e293b",
+              "opacity": 0.8
             }
           },
           {
