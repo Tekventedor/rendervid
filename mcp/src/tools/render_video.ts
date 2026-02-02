@@ -14,35 +14,132 @@ export const renderVideoTool = {
   name: 'render_video',
   description: `Generate a video file from a Rendervid JSON template.
 
-This tool renders a complete video by:
-1. Accepting a Rendervid template (JSON structure defining scenes, layers, animations)
-2. Merging provided input values with template defaults
-3. Rendering all frames using a headless browser
-4. Encoding frames into a video file using FFmpeg
+CRITICAL TEMPLATE RULES (Follow exactly to avoid errors):
 
-The template uses a declarative JSON format that describes:
-- Output dimensions, FPS, and duration
-- Dynamic inputs (variables that can be customized)
-- Scenes with layers (text, images, shapes, video, audio)
-- Animations (entrance, exit, emphasis effects with 40+ presets)
-- Easing functions (30+ options for smooth motion)
+1. TIMING IS IN FRAMES, NOT SECONDS
+   - At 30 fps: 30 frames = 1 second, 150 frames = 5 seconds
+   - duration: 5 means 5 SECONDS (converted to frames internally)
+   - startFrame: 0, endFrame: 150 means frames 0-150 (5 seconds at 30fps)
+   - Animation delay/duration are in FRAMES: delay: 30 = 1 second delay
 
-Common use cases:
-- Social media content (Instagram stories, TikTok videos, YouTube thumbnails)
-- Marketing videos (product showcases, sale announcements, testimonials)
-- Data visualizations (animated charts, graphs, dashboards)
-- Educational content (course intros, lesson titles)
+2. ALL LAYERS MUST HAVE position AND size
+   - position: { x: number, y: number } (pixels from top-left)
+   - size: { width: number, height: number } (pixels)
+   - Example: position: { x: 0, y: 0 }, size: { width: 1920, height: 1080 }
 
-The output path will be created automatically. You can specify format, quality, and FPS.
-Rendering progress is reported with frame counts and time estimates.
+3. LAYER PROPERTIES GO IN props OBJECT
+   - Correct: "props": { "text": "Hello", "fontSize": 48, "color": "#ffffff" }
+   - Wrong: "text": "Hello", "fontSize": 48 (these must be inside props)
 
-Example template structure:
+4. INPUT DEFINITIONS NEED ALL REQUIRED FIELDS
+   - key: unique identifier (string)
+   - type: "string" | "number" | "boolean" | "color"
+   - label: display name (string)
+   - description: what this input does (string) - REQUIRED
+   - required: true/false (boolean) - REQUIRED
+   - default: default value - REQUIRED
+   - Example: { "key": "title", "type": "string", "label": "Title", "description": "Main title text", "required": true, "default": "Hello" }
+
+5. ANIMATIONS USE FRAME-BASED TIMING
+   - type: "entrance" | "exit" | "emphasis"
+   - effect: "fadeIn", "slideUp", "scaleIn", etc.
+   - delay: number (frames to wait before starting)
+   - duration: number (frames the animation lasts)
+   - Example: { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 20 }
+     This means: wait 1 second (30 frames), then fade in over 0.67 seconds (20 frames)
+
+COMPLETE TEMPLATE STRUCTURE:
 {
-  "name": "My Video",
-  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5 },
-  "inputs": [{ "key": "title", "type": "string", "label": "Title", "default": "Hello" }],
-  "composition": { "scenes": [{ "id": "main", "startFrame": 0, "endFrame": 150, "layers": [...] }] }
-}`,
+  "name": "Video Name",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title Text",
+      "description": "Main title text to display",
+      "required": true,
+      "default": "Hello World"
+    }
+  ],
+  "defaults": {
+    "title": "Hello World"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#2563eb"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 200 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 30,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+
+LAYER TYPES:
+- text: Text with fontSize, fontWeight, color, textAlign, fontFamily
+- image: Image with src (URL), fit ("cover"|"contain"|"fill")
+- shape: Shape with shape ("rectangle"|"ellipse"|"triangle"|"star"), fill, stroke
+- video: Video with src (URL), volume, loop
+- custom: Custom component with customComponent.name and customComponent.props
+
+ANIMATION EFFECTS:
+- entrance: fadeIn, fadeInUp, fadeInDown, slideInUp, slideInDown, scaleIn, zoomIn
+- exit: fadeOut, fadeOutUp, fadeOutDown, slideOutUp, slideOutDown, scaleOut, zoomOut
+- emphasis: pulse, shake, bounce, swing, wobble, flash
+
+EASING FUNCTIONS:
+linear, easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic, easeInOutCubic,
+easeInQuart, easeOutQuart, easeInOutQuart, easeInBack, easeOutBack, easeInOutBack
+
+COMMON MISTAKES TO AVOID:
+❌ Using seconds for animation timing (use frames!)
+❌ Missing size property on layers
+❌ Putting layer props outside props object
+❌ Missing required field in input definitions
+❌ Using wrong position values (position is top-left corner, not center)
+❌ endFrame less than or equal to startFrame
+❌ Animation delay + duration exceeding scene duration`,
   inputSchema: zodToJsonSchema(RenderVideoInputSchema),
 };
 
