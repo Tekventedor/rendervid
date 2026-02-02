@@ -1,0 +1,245 @@
+{
+  "name": "Audio Wave Visualization",
+  "description": "Beautiful audio wave visualization with multiple frequency bands",
+  "version": "1.0.0",
+  "tags": ["audio", "visualization", "waves", "custom-component"],
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 10,
+    "backgroundColor": "#0a0015"
+  },
+  "inputs": [
+    {
+      "key": "trackName",
+      "type": "string",
+      "label": "Track Name",
+      "defaultValue": "COSMIC WAVES"
+    },
+    {
+      "key": "artist",
+      "type": "string",
+      "label": "Artist Name",
+      "defaultValue": "Digital Dreams"
+    },
+    {
+      "key": "waveColor1",
+      "type": "string",
+      "label": "Wave Color 1",
+      "defaultValue": "#ff00ff"
+    },
+    {
+      "key": "waveColor2",
+      "type": "string",
+      "label": "Wave Color 2",
+      "defaultValue": "#00ffff"
+    }
+  ],
+  "customComponents": {
+    "AudioWave": {
+      "type": "inline",
+      "code": "function AudioWave(props) { const width = props.layerSize.width; const height = props.layerSize.height; const numBars = 80; const bars = []; const centerY = height / 2; for (let i = 0; i < numBars; i++) { const x = (i / numBars) * width; const freq = Math.sin(props.frame * 0.1 + i * 0.3) * 0.5 + 0.5; const freq2 = Math.sin(props.frame * 0.15 + i * 0.2 + 1) * 0.3 + 0.3; const barHeight = (freq * 150 + freq2 * 100) * (1 + Math.sin(props.frame * 0.05) * 0.3); const barWidth = width / numBars * 0.8; const hue = (i / numBars * 60 + props.frame) % 360; const color = 'hsl(' + hue + ', 100%, 60%)'; const gradient = 'linear-gradient(to top, ' + props.color1 + ', ' + props.color2 + ')'; bars.push(React.createElement('rect', { key: 'bar-' + i, x: x, y: centerY - barHeight / 2, width: barWidth, height: barHeight, fill: color, rx: 2, opacity: 0.8 })); bars.push(React.createElement('rect', { key: 'reflect-' + i, x: x, y: centerY + barHeight / 2, width: barWidth, height: barHeight * 0.5, fill: color, rx: 2, opacity: 0.2, transform: 'scale(1, -1) translate(0, -' + height + ')' })); } return React.createElement('svg', { width: width, height: height, style: { filter: 'blur(0.5px)' } }, ...bars); }",
+      "description": "Animated audio wave bars with reflection"
+    },
+    "CircularSpectrum": {
+      "type": "inline",
+      "code": "function CircularSpectrum(props) { const centerX = props.layerSize.width / 2; const centerY = props.layerSize.height / 2; const numBars = 60; const radius = 180; const bars = []; for (let i = 0; i < numBars; i++) { const angle = (i / numBars) * Math.PI * 2; const freq = Math.sin(props.frame * 0.12 + i * 0.4) * 0.5 + 0.5; const length = freq * 120 + 40; const x1 = centerX + Math.cos(angle) * radius; const y1 = centerY + Math.sin(angle) * radius; const x2 = centerX + Math.cos(angle) * (radius + length); const y2 = centerY + Math.sin(angle) * (radius + length); const hue = (i / numBars * 360 + props.frame * 2) % 360; const color = 'hsl(' + hue + ', 100%, 65%)'; bars.push(React.createElement('line', { key: i, x1: x1, y1: y1, x2: x2, y2: y2, stroke: color, strokeWidth: 4, strokeLinecap: 'round', opacity: 0.8 })); } return React.createElement('svg', { width: props.layerSize.width, height: props.layerSize.height, style: { filter: 'blur(1px)' } }, React.createElement('circle', { cx: centerX, cy: centerY, r: radius - 10, fill: 'none', stroke: 'rgba(255, 255, 255, 0.1)', strokeWidth: 2 }), ...bars, React.createElement('circle', { cx: centerX, cy: centerY, r: 20, fill: 'radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0))', opacity: 0.6 })); }",
+      "description": "Circular audio spectrum analyzer"
+    },
+    "PulsingText": {
+      "type": "inline",
+      "code": "function PulsingText(props) { const scale = 1 + Math.sin(props.frame * 0.08) * 0.05; const opacity = 0.9 + Math.sin(props.frame * 0.12) * 0.1; return React.createElement('div', { style: { fontSize: props.fontSize || '48px', fontWeight: 'bold', color: props.color || '#ffffff', textAlign: 'center', transform: 'scale(' + scale + ')', opacity: opacity, textShadow: '0 0 20px rgba(255, 0, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3)', letterSpacing: '4px' } }, props.text); }",
+      "description": "Text with pulsing animation"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "wave-scene",
+        "startFrame": 0,
+        "endFrame": 600,
+        "backgroundColor": "#0a0015",
+        "layers": [
+          {
+            "id": "background-gradient",
+            "type": "shape",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "linear-gradient(135deg, rgba(10,0,30,1), rgba(30,0,60,1))"
+            }
+          },
+          {
+            "id": "circular-spectrum",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 800,
+              "height": 800
+            },
+            "customComponent": {
+              "name": "CircularSpectrum",
+              "props": {}
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "zoomIn",
+                "duration": 60
+              }
+            ]
+          },
+          {
+            "id": "audio-wave",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 800
+            },
+            "size": {
+              "width": 1600,
+              "height": 300
+            },
+            "customComponent": {
+              "name": "AudioWave",
+              "props": {
+                "color1": "{{waveColor1}}",
+                "color2": "{{waveColor2}}"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "duration": 40,
+                "delay": 30
+              }
+            ]
+          },
+          {
+            "id": "track-name",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
+            "customComponent": {
+              "name": "PulsingText",
+              "props": {
+                "text": "{{trackName}}",
+                "fontSize": "64px",
+                "color": "#ffffff"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInDown",
+                "duration": 40,
+                "delay": 20
+              }
+            ]
+          },
+          {
+            "id": "artist-name",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 280
+            },
+            "size": {
+              "width": 1600,
+              "height": 60
+            },
+            "props": {
+              "text": "{{artist}}",
+              "fontSize": 28,
+              "color": "rgba(255, 255, 255, 0.7)",
+              "textAlign": "center",
+              "letterSpacing": "6px"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 40,
+                "delay": 40
+              }
+            ]
+          },
+          {
+            "id": "now-playing",
+            "type": "shape",
+            "position": {
+              "x": 200,
+              "y": 100
+            },
+            "size": {
+              "width": 200,
+              "height": 50
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "rgba(255, 0, 255, 0.2)",
+              "borderRadius": 25,
+              "stroke": "rgba(255, 0, 255, 0.6)",
+              "strokeWidth": 2
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInLeft",
+                "duration": 30,
+                "delay": 50
+              }
+            ]
+          },
+          {
+            "id": "now-playing-text",
+            "type": "text",
+            "position": {
+              "x": 200,
+              "y": 100
+            },
+            "size": {
+              "width": 200,
+              "height": 50
+            },
+            "props": {
+              "text": "NOW PLAYING",
+              "fontSize": 14,
+              "color": "#ff00ff",
+              "textAlign": "center",
+              "fontWeight": "bold",
+              "letterSpacing": "2px"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 55
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

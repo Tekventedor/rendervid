@@ -1,0 +1,149 @@
+{
+  "name": "3D Cube Rotation",
+  "description": "Stunning 3D cube rotation with CSS transforms using custom component",
+  "version": "1.0.0",
+  "tags": ["3d", "rotation", "animation", "custom-component"],
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 8,
+    "backgroundColor": "#000000"
+  },
+  "inputs": [
+    {
+      "key": "label1",
+      "type": "string",
+      "label": "Face 1 Label",
+      "defaultValue": "FRONT"
+    },
+    {
+      "key": "label2",
+      "type": "string",
+      "label": "Face 2 Label",
+      "defaultValue": "RIGHT"
+    },
+    {
+      "key": "label3",
+      "type": "string",
+      "label": "Face 3 Label",
+      "defaultValue": "BACK"
+    },
+    {
+      "key": "label4",
+      "type": "string",
+      "label": "Face 4 Label",
+      "defaultValue": "LEFT"
+    },
+    {
+      "key": "label5",
+      "type": "string",
+      "label": "Face 5 Label",
+      "defaultValue": "TOP"
+    },
+    {
+      "key": "label6",
+      "type": "string",
+      "label": "Face 6 Label",
+      "defaultValue": "BOTTOM"
+    }
+  ],
+  "customComponents": {
+    "RotatingCube": {
+      "type": "inline",
+      "code": "function RotatingCube(props) { const rotationX = (props.frame / props.fps) * 30; const rotationY = (props.frame / props.fps) * 40; const size = 300; const perspective = 1200; const cubeStyle = { position: 'relative', width: size + 'px', height: size + 'px', transformStyle: 'preserve-3d', transform: 'rotateX(' + rotationX + 'deg) rotateY(' + rotationY + 'deg)', transition: 'transform 0.1s' }; const faceStyle = { position: 'absolute', width: size + 'px', height: size + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '42px', fontWeight: 'bold', color: 'white', border: '3px solid rgba(255, 255, 255, 0.3)', boxShadow: 'inset 0 0 60px rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)' }; const faces = [ { label: props.label1, transform: 'rotateY(0deg) translateZ(' + (size/2) + 'px)', background: 'linear-gradient(135deg, rgba(138,43,226,0.8), rgba(75,0,130,0.8))' }, { label: props.label2, transform: 'rotateY(90deg) translateZ(' + (size/2) + 'px)', background: 'linear-gradient(135deg, rgba(255,0,150,0.8), rgba(200,0,100,0.8))' }, { label: props.label3, transform: 'rotateY(180deg) translateZ(' + (size/2) + 'px)', background: 'linear-gradient(135deg, rgba(0,150,255,0.8), rgba(0,100,200,0.8))' }, { label: props.label4, transform: 'rotateY(-90deg) translateZ(' + (size/2) + 'px)', background: 'linear-gradient(135deg, rgba(255,200,0,0.8), rgba(200,150,0,0.8))' }, { label: props.label5, transform: 'rotateX(90deg) translateZ(' + (size/2) + 'px)', background: 'linear-gradient(135deg, rgba(0,255,150,0.8), rgba(0,200,100,0.8))' }, { label: props.label6, transform: 'rotateX(-90deg) translateZ(' + (size/2) + 'px)', background: 'linear-gradient(135deg, rgba(255,100,0,0.8), rgba(200,50,0,0.8))' } ]; return React.createElement('div', { style: { perspective: perspective + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' } }, React.createElement('div', { style: cubeStyle }, ...faces.map((face, i) => React.createElement('div', { key: i, style: { ...faceStyle, transform: face.transform, background: face.background } }, face.label)))); }",
+      "description": "3D rotating cube with customizable face labels"
+    },
+    "RadialGlow": {
+      "type": "inline",
+      "code": "function RadialGlow(props) { const pulseScale = 1 + Math.sin(props.frame * 0.05) * 0.15; const opacity = 0.3 + Math.sin(props.frame * 0.08) * 0.15; return React.createElement('div', { style: { width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(138,43,226,' + opacity + ') 0%, rgba(138,43,226,0) 70%)', transform: 'scale(' + pulseScale + ')', filter: 'blur(40px)' } }); }",
+      "description": "Pulsing radial glow effect"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "cube-scene",
+        "startFrame": 0,
+        "endFrame": 480,
+        "backgroundColor": "#000000",
+        "layers": [
+          {
+            "id": "glow-background",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 600,
+              "height": 600
+            },
+            "customComponent": {
+              "name": "RadialGlow",
+              "props": {}
+            }
+          },
+          {
+            "id": "cube",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "RotatingCube",
+              "props": {
+                "label1": "{{label1}}",
+                "label2": "{{label2}}",
+                "label3": "{{label3}}",
+                "label4": "{{label4}}",
+                "label5": "{{label5}}",
+                "label6": "{{label6}}"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "zoomIn",
+                "duration": 60
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 950
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "3D Transform with Custom Components",
+              "fontSize": 32,
+              "color": "#ffffff",
+              "textAlign": "center",
+              "textShadow": "0 0 20px rgba(138,43,226,0.8)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "duration": 40,
+                "delay": 30
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

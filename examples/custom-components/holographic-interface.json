@@ -1,0 +1,437 @@
+{
+  "name": "Holographic Interface",
+  "description": "Futuristic holographic interface with multiple animated elements",
+  "version": "1.0.0",
+  "tags": ["holographic", "futuristic", "interface", "sci-fi", "custom-component"],
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 12,
+    "backgroundColor": "#000510"
+  },
+  "inputs": [
+    {
+      "key": "systemName",
+      "type": "string",
+      "label": "System Name",
+      "defaultValue": "NEXUS SYSTEM"
+    },
+    {
+      "key": "statusText",
+      "type": "string",
+      "label": "Status",
+      "defaultValue": "ONLINE"
+    },
+    {
+      "key": "completionPercent",
+      "type": "number",
+      "label": "Completion Percentage",
+      "defaultValue": 87
+    }
+  ],
+  "customComponents": {
+    "HexagonGrid": {
+      "type": "inline",
+      "code": "function HexagonGrid(props) { const hexagons = []; const rows = 6; const cols = 10; const size = 40; const spacing = size * 1.8; for (let row = 0; row < rows; row++) { for (let col = 0; col < cols; col++) { const x = col * spacing + (row % 2 ? spacing / 2 : 0); const y = row * spacing * 0.866; const opacity = Math.sin(props.frame * 0.05 + row * 0.3 + col * 0.2) * 0.3 + 0.4; const points = []; for (let i = 0; i < 6; i++) { const angle = (Math.PI / 3) * i; const px = x + size * Math.cos(angle); const py = y + size * Math.sin(angle); points.push(px + ',' + py); } const hue = (props.frame + row * 20 + col * 10) % 120 + 180; hexagons.push(React.createElement('polygon', { key: row + '-' + col, points: points.join(' '), fill: 'none', stroke: 'hsl(' + hue + ', 70%, 50%)', strokeWidth: 2, opacity: opacity })); } } return React.createElement('svg', { width: props.layerSize.width, height: props.layerSize.height, style: { filter: 'blur(0.5px)' } }, ...hexagons); }",
+      "description": "Animated hexagonal grid pattern"
+    },
+    "DataStream": {
+      "type": "inline",
+      "code": "function DataStream(props) { const lines = []; const numLines = 5; for (let i = 0; i < numLines; i++) { const yOffset = (props.frame * 3 + i * 80) % (props.layerSize.height + 200) - 100; const chars = '01'; const text = Array(40).fill(0).map(() => chars[Math.floor(Math.random() * chars.length)]).join(''); const opacity = Math.max(0, Math.min(1, 1 - Math.abs(yOffset - props.layerSize.height / 2) / 300)); lines.push(React.createElement('div', { key: i, style: { position: 'absolute', top: yOffset + 'px', left: '0', right: '0', fontSize: '12px', color: '#00ffaa', fontFamily: 'monospace', opacity: opacity, textShadow: '0 0 5px #00ffaa', letterSpacing: '8px', whiteSpace: 'nowrap', overflow: 'hidden' } }, text)); } return React.createElement('div', { style: { width: '100%', height: '100%', position: 'relative', overflow: 'hidden' } }, ...lines); }",
+      "description": "Flowing binary data stream"
+    },
+    "CircularProgress": {
+      "type": "inline",
+      "code": "function CircularProgress(props) { const animationProgress = Math.min(1, props.frame / (props.fps * 3)); const targetValue = props.value || 75; const currentValue = Math.floor(animationProgress * targetValue); const size = 200; const strokeWidth = 8; const radius = (size - strokeWidth) / 2; const circumference = 2 * Math.PI * radius; const offset = circumference * (1 - currentValue / 100); const pulseScale = 1 + Math.sin(props.frame * 0.1) * 0.03; return React.createElement('div', { style: { width: size + 'px', height: size + 'px', position: 'relative', transform: 'scale(' + pulseScale + ')' } }, React.createElement('svg', { width: size, height: size }, React.createElement('circle', { cx: size / 2, cy: size / 2, r: radius, fill: 'none', stroke: 'rgba(0, 255, 170, 0.2)', strokeWidth: strokeWidth }), React.createElement('circle', { cx: size / 2, cy: size / 2, r: radius, fill: 'none', stroke: '#00ffaa', strokeWidth: strokeWidth, strokeDasharray: circumference, strokeDashoffset: offset, strokeLinecap: 'round', transform: 'rotate(-90 ' + (size / 2) + ' ' + (size / 2) + ')', style: { transition: 'stroke-dashoffset 0.3s' }, filter: 'drop-shadow(0 0 8px #00ffaa)' })), React.createElement('div', { style: { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '48px', fontWeight: 'bold', color: '#00ffaa', textShadow: '0 0 10px #00ffaa' } }, currentValue + '%')); }",
+      "description": "Animated circular progress indicator"
+    },
+    "HolographicText": {
+      "type": "inline",
+      "code": "function HolographicText(props) { const glitch = Math.random() > 0.97; const offsetX = glitch ? (Math.random() - 0.5) * 4 : 0; const opacity = glitch ? 0.8 : 1; const scanline = props.frame % 60 < 30 ? 1 : 0.95; return React.createElement('div', { style: { position: 'relative' } }, React.createElement('div', { style: { fontSize: props.fontSize || '72px', fontWeight: 'bold', color: '#00ffaa', textAlign: 'center', textShadow: '0 0 10px #00ffaa, 2px 2px 0 rgba(0, 255, 255, 0.3), -2px -2px 0 rgba(255, 0, 255, 0.3)', transform: 'translateX(' + offsetX + 'px)', opacity: opacity * scanline, letterSpacing: '6px', fontFamily: 'Arial, sans-serif' } }, props.text)); }",
+      "description": "Holographic text with glitch effect"
+    },
+    "RadarScan": {
+      "type": "inline",
+      "code": "function RadarScan(props) { const rotation = (props.frame * 2) % 360; const size = 300; const radius = size / 2; return React.createElement('svg', { width: size, height: size }, React.createElement('defs', {}, React.createElement('radialGradient', { id: 'radarGradient' }, React.createElement('stop', { offset: '0%', stopColor: '#00ffaa', stopOpacity: 0.8 }), React.createElement('stop', { offset: '100%', stopColor: '#00ffaa', stopOpacity: 0 }))), React.createElement('circle', { cx: radius, cy: radius, r: radius - 10, fill: 'none', stroke: 'rgba(0, 255, 170, 0.3)', strokeWidth: 2 }), React.createElement('circle', { cx: radius, cy: radius, r: radius - 30, fill: 'none', stroke: 'rgba(0, 255, 170, 0.2)', strokeWidth: 1 }), React.createElement('circle', { cx: radius, cy: radius, r: radius - 50, fill: 'none', stroke: 'rgba(0, 255, 170, 0.1)', strokeWidth: 1 }), React.createElement('line', { x1: radius, y1: radius, x2: radius + radius * 0.8, y2: radius, stroke: 'url(#radarGradient)', strokeWidth: 3, transform: 'rotate(' + rotation + ' ' + radius + ' ' + radius + ')', style: { transition: 'transform 0.05s linear' } }), Array(8).fill(0).map((_, i) => { const angle = (i / 8) * Math.PI * 2; const x = radius + Math.cos(angle) * (radius - 15); const y = radius + Math.sin(angle) * (radius - 15); const pulse = Math.sin(props.frame * 0.1 + i) * 0.5 + 0.5; return React.createElement('circle', { key: i, cx: x, cy: y, r: 3 + pulse * 2, fill: '#00ffaa', opacity: 0.6 + pulse * 0.4 }); })); }",
+      "description": "Animated radar scanning display"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "holographic-scene",
+        "startFrame": 0,
+        "endFrame": 720,
+        "backgroundColor": "#000510",
+        "layers": [
+          {
+            "id": "hexagon-background",
+            "type": "custom",
+            "position": {
+              "x": 400,
+              "y": 300
+            },
+            "size": {
+              "width": 1000,
+              "height": 600
+            },
+            "customComponent": {
+              "name": "HexagonGrid",
+              "props": {}
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 60
+              }
+            ]
+          },
+          {
+            "id": "data-stream-left",
+            "type": "custom",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 200,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "DataStream",
+              "props": {}
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInLeft",
+                "duration": 40,
+                "delay": 20
+              }
+            ]
+          },
+          {
+            "id": "data-stream-right",
+            "type": "custom",
+            "position": {
+              "x": 1720,
+              "y": 0
+            },
+            "size": {
+              "width": 200,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "DataStream",
+              "props": {}
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInRight",
+                "duration": 40,
+                "delay": 25
+              }
+            ]
+          },
+          {
+            "id": "main-title",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 200
+            },
+            "size": {
+              "width": 1600,
+              "height": 150
+            },
+            "customComponent": {
+              "name": "HolographicText",
+              "props": {
+                "text": "{{systemName}}",
+                "fontSize": "84px"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInDown",
+                "duration": 50,
+                "delay": 30
+              }
+            ]
+          },
+          {
+            "id": "status-badge",
+            "type": "shape",
+            "position": {
+              "x": 960,
+              "y": 320
+            },
+            "size": {
+              "width": 200,
+              "height": 50
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "rgba(0, 255, 170, 0.1)",
+              "borderRadius": 25,
+              "stroke": "#00ffaa",
+              "strokeWidth": 2
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 40,
+                "delay": 60
+              }
+            ]
+          },
+          {
+            "id": "status-text",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 320
+            },
+            "size": {
+              "width": 200,
+              "height": 50
+            },
+            "props": {
+              "text": "{{statusText}}",
+              "fontSize": 20,
+              "color": "#00ffaa",
+              "textAlign": "center",
+              "fontWeight": "bold",
+              "letterSpacing": "3px",
+              "textShadow": "0 0 10px #00ffaa"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 70
+              }
+            ]
+          },
+          {
+            "id": "radar-display",
+            "type": "custom",
+            "position": {
+              "x": 400,
+              "y": 650
+            },
+            "size": {
+              "width": 300,
+              "height": 300
+            },
+            "customComponent": {
+              "name": "RadarScan",
+              "props": {}
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "zoomIn",
+                "duration": 50,
+                "delay": 80
+              }
+            ]
+          },
+          {
+            "id": "progress-display",
+            "type": "custom",
+            "position": {
+              "x": 1520,
+              "y": 650
+            },
+            "size": {
+              "width": 200,
+              "height": 200
+            },
+            "customComponent": {
+              "name": "CircularProgress",
+              "props": {
+                "value": "{{completionPercent}}"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "zoomIn",
+                "duration": 50,
+                "delay": 85
+              }
+            ]
+          },
+          {
+            "id": "radar-label",
+            "type": "text",
+            "position": {
+              "x": 400,
+              "y": 930
+            },
+            "size": {
+              "width": 300,
+              "height": 40
+            },
+            "props": {
+              "text": "NETWORK SCAN",
+              "fontSize": 16,
+              "color": "#00ffaa",
+              "textAlign": "center",
+              "letterSpacing": "2px",
+              "textShadow": "0 0 5px #00ffaa"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 100
+              }
+            ]
+          },
+          {
+            "id": "progress-label",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 930
+            },
+            "size": {
+              "width": 200,
+              "height": 40
+            },
+            "props": {
+              "text": "COMPLETION",
+              "fontSize": 16,
+              "color": "#00ffaa",
+              "textAlign": "center",
+              "letterSpacing": "2px",
+              "textShadow": "0 0 5px #00ffaa"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 105
+              }
+            ]
+          },
+          {
+            "id": "corner-frame-1",
+            "type": "shape",
+            "position": {
+              "x": 100,
+              "y": 100
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "none",
+              "stroke": "#00ffaa",
+              "strokeWidth": 3
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 110
+              }
+            ]
+          },
+          {
+            "id": "corner-frame-2",
+            "type": "shape",
+            "position": {
+              "x": 1820,
+              "y": 100
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "none",
+              "stroke": "#00ffaa",
+              "strokeWidth": 3
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 115
+              }
+            ]
+          },
+          {
+            "id": "corner-frame-3",
+            "type": "shape",
+            "position": {
+              "x": 100,
+              "y": 980
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "none",
+              "stroke": "#00ffaa",
+              "strokeWidth": 3
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 120
+              }
+            ]
+          },
+          {
+            "id": "corner-frame-4",
+            "type": "shape",
+            "position": {
+              "x": 1820,
+              "y": 980
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "none",
+              "stroke": "#00ffaa",
+              "strokeWidth": 3
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 125
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

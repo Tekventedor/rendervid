@@ -1,0 +1,138 @@
+{
+  "name": "Particle Explosion Effect",
+  "description": "Stunning particle explosion with physics simulation using custom component",
+  "version": "1.0.0",
+  "tags": ["animation", "particles", "effects", "custom-component"],
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 5,
+    "backgroundColor": "#0a0a0a"
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title Text",
+      "defaultValue": "PARTICLE EXPLOSION"
+    },
+    {
+      "key": "particleCount",
+      "type": "number",
+      "label": "Number of Particles",
+      "defaultValue": 150
+    },
+    {
+      "key": "explosionForce",
+      "type": "number",
+      "label": "Explosion Force",
+      "defaultValue": 8
+    }
+  ],
+  "customComponents": {
+    "ParticleExplosion": {
+      "type": "inline",
+      "code": "function ParticleExplosion(props) { const particles = []; const centerX = props.layerSize.width / 2; const centerY = props.layerSize.height / 2; const explosionStartFrame = 30; const explosionProgress = Math.max(0, props.frame - explosionStartFrame) / props.fps; const particleCount = props.particleCount || 150; for (let i = 0; i < particleCount; i++) { const angle = (i / particleCount) * Math.PI * 2; const baseSpeed = (props.explosionForce || 8) * (0.8 + Math.random() * 0.4); const speed = baseSpeed * (1 - explosionProgress * 0.3); const distance = explosionProgress * speed * 60; const x = centerX + Math.cos(angle) * distance; const y = centerY + Math.sin(angle) * distance + explosionProgress * explosionProgress * 200; const opacity = Math.max(0, 1 - explosionProgress * 1.2); const size = 4 + Math.sin(i * 0.5) * 2; const hue = (i / particleCount * 360 + props.frame * 2) % 360; const color = 'hsl(' + hue + ', 100%, 60%)'; particles.push(React.createElement('circle', { key: i, cx: x, cy: y, r: size, fill: color, opacity: opacity })); } return React.createElement('svg', { width: props.layerSize.width, height: props.layerSize.height, style: { filter: 'blur(1px)' } }, ...particles); }",
+      "description": "Particle explosion with physics and color cycling"
+    },
+    "GlowingTitle": {
+      "type": "inline",
+      "code": "function GlowingTitle(props) { const opacity = Math.min(1, props.frame / 20); const scale = 0.8 + Math.min(0.2, props.frame / 100); const glowIntensity = Math.sin(props.frame * 0.1) * 0.3 + 0.7; return React.createElement('div', { style: { fontSize: '72px', fontWeight: 'bold', textAlign: 'center', color: '#ffffff', textShadow: '0 0 ' + (20 * glowIntensity) + 'px rgba(255, 100, 255, 0.8), 0 0 ' + (40 * glowIntensity) + 'px rgba(100, 200, 255, 0.6), 0 0 ' + (60 * glowIntensity) + 'px rgba(255, 255, 100, 0.4)', opacity: opacity, transform: 'scale(' + scale + ')', letterSpacing: '8px' } }, props.text); }",
+      "description": "Glowing text with pulsing effect"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "explosion-scene",
+        "startFrame": 0,
+        "endFrame": 300,
+        "backgroundColor": "#0a0a0a",
+        "layers": [
+          {
+            "id": "background-glow",
+            "type": "shape",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 800,
+              "height": 800
+            },
+            "props": {
+              "shapeType": "ellipse",
+              "fill": "radial-gradient(circle, rgba(138,43,226,0.15) 0%, rgba(138,43,226,0) 70%)"
+            }
+          },
+          {
+            "id": "particle-system",
+            "type": "custom",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "ParticleExplosion",
+              "props": {
+                "particleCount": "{{particleCount}}",
+                "explosionForce": "{{explosionForce}}"
+              }
+            }
+          },
+          {
+            "id": "title",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 200
+            },
+            "size": {
+              "width": 1800,
+              "height": 150
+            },
+            "customComponent": {
+              "name": "GlowingTitle",
+              "props": {
+                "text": "{{title}}"
+              }
+            }
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 850
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "Custom Component Physics",
+              "fontSize": 28,
+              "color": "rgba(255, 255, 255, 0.6)",
+              "textAlign": "center",
+              "letterSpacing": "4px"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 40,
+                "delay": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

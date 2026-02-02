@@ -1,0 +1,268 @@
+{
+  "name": "Neon Text Effects",
+  "description": "Stunning neon text with glow, flicker, and animation effects",
+  "version": "1.0.0",
+  "tags": ["text", "neon", "glow", "effects", "custom-component"],
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 6,
+    "backgroundColor": "#000000"
+  },
+  "inputs": [
+    {
+      "key": "mainText",
+      "type": "string",
+      "label": "Main Text",
+      "defaultValue": "NEON NIGHTS"
+    },
+    {
+      "key": "subText",
+      "type": "string",
+      "label": "Sub Text",
+      "defaultValue": "Custom Component Magic"
+    },
+    {
+      "key": "neonColor",
+      "type": "string",
+      "label": "Neon Color",
+      "defaultValue": "#ff00ff"
+    }
+  ],
+  "customComponents": {
+    "NeonText": {
+      "type": "inline",
+      "code": "function NeonText(props) { const flicker = Math.random() > 0.95 ? 0.7 : 1; const pulseIntensity = Math.sin(props.frame * 0.1) * 0.2 + 0.8; const glowSize = 30 * pulseIntensity * flicker; const color = props.color || '#ff00ff'; const textShadow = '0 0 ' + glowSize + 'px ' + color + ',' + '0 0 ' + (glowSize * 2) + 'px ' + color + ',' + '0 0 ' + (glowSize * 3) + 'px ' + color + ',' + '0 0 ' + (glowSize * 1.5) + 'px #fff'; const fadeIn = Math.min(1, props.frame / 40); const letterSpacing = props.letterSpacing || '12px'; return React.createElement('div', { style: { fontSize: props.fontSize || '96px', fontWeight: 'bold', color: '#fff', textAlign: 'center', textShadow: textShadow, opacity: fadeIn * flicker, letterSpacing: letterSpacing, fontFamily: 'Arial, sans-serif', textTransform: 'uppercase' } }, props.text); }",
+      "description": "Neon text with realistic flicker and glow"
+    },
+    "NeonBorder": {
+      "type": "inline",
+      "code": "function NeonBorder(props) { const pulseScale = 1 + Math.sin(props.frame * 0.08) * 0.02; const glowIntensity = Math.sin(props.frame * 0.12) * 0.3 + 0.7; const color = props.color || '#00ffff'; const shadowBlur = 20 * glowIntensity; const boxShadow = 'inset 0 0 ' + shadowBlur + 'px ' + color + ',' + '0 0 ' + shadowBlur + 'px ' + color + ',' + '0 0 ' + (shadowBlur * 2) + 'px ' + color; return React.createElement('div', { style: { width: props.width || '600px', height: props.height || '400px', border: '4px solid ' + color, borderRadius: '20px', boxShadow: boxShadow, transform: 'scale(' + pulseScale + ')', opacity: 0.8 } }); }",
+      "description": "Pulsing neon border frame"
+    },
+    "ScanLine": {
+      "type": "inline",
+      "code": "function ScanLine(props) { const position = (props.frame * 4) % props.layerSize.height; return React.createElement('div', { style: { width: '100%', height: '3px', background: 'linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0))', position: 'absolute', top: position + 'px', opacity: 0.4 } }); }",
+      "description": "Scanning line effect for retro look"
+    },
+    "ElectricSparks": {
+      "type": "inline",
+      "code": "function ElectricSparks(props) { const sparks = []; const numSparks = 8; for (let i = 0; i < numSparks; i++) { const active = (props.frame + i * 10) % 60 < 5; if (active) { const x = Math.random() * props.layerSize.width; const y = Math.random() * props.layerSize.height; const size = 2 + Math.random() * 3; const opacity = Math.random() * 0.8 + 0.2; sparks.push(React.createElement('circle', { key: i, cx: x, cy: y, r: size, fill: props.color || '#00ffff', opacity: opacity, filter: 'blur(1px)' })); } } return React.createElement('svg', { width: props.layerSize.width, height: props.layerSize.height, style: { position: 'absolute', pointerEvents: 'none' } }, ...sparks); }",
+      "description": "Random electric sparks effect"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "neon-scene",
+        "startFrame": 0,
+        "endFrame": 360,
+        "backgroundColor": "#000000",
+        "layers": [
+          {
+            "id": "grid-background",
+            "type": "shape",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "linear-gradient(180deg, #000000 0%, #0a0a1a 50%, #000000 100%)"
+            }
+          },
+          {
+            "id": "border-frame",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 1200,
+              "height": 600
+            },
+            "customComponent": {
+              "name": "NeonBorder",
+              "props": {
+                "width": "1200px",
+                "height": "600px",
+                "color": "#00ffff"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 60
+              }
+            ]
+          },
+          {
+            "id": "main-text",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 460
+            },
+            "size": {
+              "width": 1800,
+              "height": 200
+            },
+            "customComponent": {
+              "name": "NeonText",
+              "props": {
+                "text": "{{mainText}}",
+                "fontSize": "120px",
+                "color": "{{neonColor}}",
+                "letterSpacing": "16px"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "zoomIn",
+                "duration": 50,
+                "delay": 30
+              }
+            ]
+          },
+          {
+            "id": "sub-text",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 620
+            },
+            "size": {
+              "width": 1800,
+              "height": 100
+            },
+            "customComponent": {
+              "name": "NeonText",
+              "props": {
+                "text": "{{subText}}",
+                "fontSize": "36px",
+                "color": "#00ffff",
+                "letterSpacing": "8px"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "duration": 40,
+                "delay": 60
+              }
+            ]
+          },
+          {
+            "id": "scan-line",
+            "type": "custom",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "ScanLine",
+              "props": {}
+            }
+          },
+          {
+            "id": "electric-sparks",
+            "type": "custom",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "ElectricSparks",
+              "props": {
+                "color": "#00ffff"
+              }
+            }
+          },
+          {
+            "id": "corner-accent-1",
+            "type": "shape",
+            "position": {
+              "x": 200,
+              "y": 200
+            },
+            "size": {
+              "width": 80,
+              "height": 80
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "none",
+              "stroke": "#ff00ff",
+              "strokeWidth": 3,
+              "borderRadius": 5
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 80
+              },
+              {
+                "type": "continuous",
+                "effect": "pulse",
+                "duration": 120
+              }
+            ]
+          },
+          {
+            "id": "corner-accent-2",
+            "type": "shape",
+            "position": {
+              "x": 1720,
+              "y": 880
+            },
+            "size": {
+              "width": 80,
+              "height": 80
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "none",
+              "stroke": "#ff00ff",
+              "strokeWidth": 3,
+              "borderRadius": 5
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 85
+              },
+              {
+                "type": "continuous",
+                "effect": "pulse",
+                "duration": 120,
+                "delay": 60
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
