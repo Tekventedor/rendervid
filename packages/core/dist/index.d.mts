@@ -1225,6 +1225,12 @@ interface ComponentRegistry {
      */
     registerFromUrl(name: string, url: string): Promise<void>;
     /**
+     * Register a component from inline code.
+     * @param name - Component name
+     * @param code - JavaScript code defining the component
+     */
+    registerFromCode(name: string, code: string): void;
+    /**
      * Unregister a component.
      * @param name - Component name
      * @returns true if component was found and removed
@@ -1652,6 +1658,106 @@ declare class RendervidEngine {
 }
 
 /**
+ * Template Processor
+ *
+ * Processes templates before rendering by:
+ * 1. Loading custom components defined in template.customComponents
+ * 2. Interpolating input variables using {{key}} syntax
+ *
+ * @example
+ * ```typescript
+ * const processor = new TemplateProcessor();
+ *
+ * // Load custom components
+ * await processor.loadCustomComponents(template, registry);
+ *
+ * // Resolve input variables
+ * const processedTemplate = processor.resolveInputs(template, { title: 'Hello' });
+ * ```
+ */
+declare class TemplateProcessor {
+    /**
+     * Load custom components from template into registry
+     *
+     * Processes template.customComponents and registers them with the provided registry.
+     * Supports three types:
+     * - 'reference': Creates alias to pre-registered component
+     * - 'url': Loads component from HTTPS URL
+     * - 'inline': Creates component from code string
+     *
+     * Components are loaded in parallel for performance.
+     * Already registered components are skipped to prevent overwrites.
+     *
+     * @param template - Template containing customComponents definition
+     * @param registry - Component registry to register components into
+     * @throws Error if component loading fails
+     *
+     * @example
+     * ```typescript
+     * await processor.loadCustomComponents(template, registry);
+     * // All components from template.customComponents are now available
+     * ```
+     */
+    loadCustomComponents(template: Template, registry: ComponentRegistry): Promise<void>;
+    /**
+     * Load a single component from its definition
+     *
+     * @param name - Component name to register as
+     * @param definition - Component definition (reference, url, or inline)
+     * @param registry - Component registry to register into
+     * @throws Error if component type is invalid or loading fails
+     */
+    private loadComponent;
+    /**
+     * Resolve input variables in template
+     *
+     * Replaces all {{key}} placeholders in the template with actual values from inputs.
+     * Works recursively through all objects, arrays, and strings in the template.
+     *
+     * Variable syntax: {{variableName}}
+     * - Matches exact input keys
+     * - Case-sensitive
+     * - Missing variables are left unchanged
+     *
+     * @param template - Template with {{variable}} placeholders
+     * @param inputs - Input values to interpolate
+     * @returns New template with all variables resolved
+     *
+     * @example
+     * ```typescript
+     * const template = {
+     *   name: 'Video',
+     *   composition: {
+     *     scenes: [{
+     *       layers: [{
+     *         type: 'text',
+     *         text: '{{title}}',
+     *         color: '{{color}}'
+     *       }]
+     *     }]
+     *   }
+     * };
+     *
+     * const resolved = processor.resolveInputs(template, {
+     *   title: 'Hello World',
+     *   color: '#ff0000'
+     * });
+     * // resolved.composition.scenes[0].layers[0].text === 'Hello World'
+     * // resolved.composition.scenes[0].layers[0].color === '#ff0000'
+     * ```
+     */
+    resolveInputs(template: Template, inputs: Record<string, unknown>): Template;
+    /**
+     * Recursively interpolate variables in any object structure
+     *
+     * @param obj - Object to interpolate
+     * @param inputs - Input values
+     * @returns Interpolated object
+     */
+    private interpolateObject;
+}
+
+/**
  * Get list of all easing names.
  */
 declare function getAllEasingNames(): EasingName[];
@@ -1735,4 +1841,4 @@ declare function getPresetsByType(type: 'entrance' | 'exit' | 'emphasis'): Prese
  */
 declare function generatePresetKeyframes(name: string, options: PresetOptions): Keyframe[];
 
-export { type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BlendMode, type BlurPreset, type CompiledAnimation, type ComponentInfo, type ComponentRegistry, type ComponentSourceType, type ComponentType, type Composition, type CustomComponentDefinition, type CustomComponentRef, type CustomLayer, type CustomLayerProps, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, type Filter, type FilterAnimation, type FilterType, type FontWeight, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LottieLayer, type LottieLayerProps, type OutputConfig, type Padding, type PartialTemplate, type Position, type PresetDefinition, type PresetOptions, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedStyle, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type Template, type TemplateAuthor, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TransitionDirection, type TransitionType, type ValidationError, type ValidationResult, type ValidationWarning, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, compileAnimation, createCubicBezier, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCompositionDuration, getDefaultRegistry, getEasing, getLayerSchema, getPreset, getPresetsByType, getPropertiesAtFrame, getSceneAtFrame, getTemplateSchema, getValueAtFrame, interpolate, parseEasing, templateSchema, validateInputs, validateSceneOrder, validateTemplate };
+export { type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BlendMode, type BlurPreset, type CompiledAnimation, type ComponentInfo, type ComponentRegistry, type ComponentSourceType, type ComponentType, type Composition, type CustomComponentDefinition, type CustomComponentRef, type CustomLayer, type CustomLayerProps, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, type Filter, type FilterAnimation, type FilterType, type FontWeight, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LottieLayer, type LottieLayerProps, type OutputConfig, type Padding, type PartialTemplate, type Position, type PresetDefinition, type PresetOptions, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedStyle, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type Template, type TemplateAuthor, TemplateProcessor, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TransitionDirection, type TransitionType, type ValidationError, type ValidationResult, type ValidationWarning, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, compileAnimation, createCubicBezier, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCompositionDuration, getDefaultRegistry, getEasing, getLayerSchema, getPreset, getPresetsByType, getPropertiesAtFrame, getSceneAtFrame, getTemplateSchema, getValueAtFrame, interpolate, parseEasing, templateSchema, validateInputs, validateSceneOrder, validateTemplate };

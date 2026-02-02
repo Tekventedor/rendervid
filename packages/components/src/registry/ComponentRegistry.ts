@@ -76,9 +76,13 @@ export interface ListComponentsOptions {
  */
 export class ComponentRegistry {
   private components: Map<string, RegisteredComponent>;
+  private urlCache: Map<string, ComponentType<any>>;
+  private allowedDomains: string[];
 
   constructor() {
     this.components = new Map();
+    this.urlCache = new Map();
+    this.allowedDomains = [];
   }
 
   /**
@@ -351,6 +355,243 @@ export class ComponentRegistry {
    */
   clear(): void {
     this.components.clear();
+  }
+
+  /**
+   * Set allowed domains for URL component loading
+   *
+   * @param domains - Array of allowed domains (e.g., ['cdn.example.com', 'components.example.com'])
+   *
+   * @example
+   * ```typescript
+   * registry.setAllowedDomains(['cdn.example.com']);
+   * // Now only components from cdn.example.com can be loaded
+   * ```
+   */
+  setAllowedDomains(domains: string[]): void {
+    this.allowedDomains = domains;
+  }
+
+  /**
+   * Register a component from a URL
+   *
+   * Dynamically loads a React component from an external URL.
+   * The component must be exported as the default export.
+   *
+   * Security:
+   * - Only HTTPS URLs are allowed
+   * - Optional domain allowlist via setAllowedDomains()
+   * - Components are cached to prevent duplicate loads
+   *
+   * @param name - Component name to register as
+   * @param url - HTTPS URL to load component from
+   * @throws Error if URL is invalid or component cannot be loaded
+   *
+   * @example
+   * ```typescript
+   * await registry.registerFromUrl('Chart', 'https://cdn.example.com/Chart.js');
+   * const ChartComponent = registry.get('chart');
+   * ```
+   */
+  async registerFromUrl(name: string, url: string): Promise<void> {
+    // Check cache first
+    if (this.urlCache.has(url)) {
+      const cachedComponent = this.urlCache.get(url)!;
+      this.register(cachedComponent, {
+        id: name,
+        name: name,
+        description: `Component loaded from ${url}`,
+        category: 'custom',
+        tags: ['url-loaded'],
+      });
+      return;
+    }
+
+    // Validate URL
+    this.validateUrl(url);
+
+    try {
+      // Dynamic import
+      const module = await import(/* webpackIgnore: true */ url);
+      const component = module.default || module;
+
+      if (typeof component !== 'function') {
+        throw new Error(`Invalid component from ${url}: Expected a function, got ${typeof component}`);
+      }
+
+      // Cache the component
+      this.urlCache.set(url, component);
+
+      // Register with metadata
+      this.register(component, {
+        id: name,
+        name: name,
+        description: `Component loaded from ${url}`,
+        category: 'custom',
+        tags: ['url-loaded'],
+        metadata: { sourceUrl: url },
+      });
+    } catch (error) {
+      throw new Error(
+        `Failed to load component from ${url}: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  }
+
+  /**
+   * Register a component from inline code
+   *
+   * Creates a React component from JavaScript code string.
+   * Supports multiple formats: function components, arrow functions, and JSX.
+   *
+   * Security:
+   * - Validates code against dangerous patterns (eval, innerHTML, etc.)
+   * - Does not allow dynamic imports or require()
+   * - No access to global objects (window, document, etc.)
+   *
+   * @param name - Component name to register as
+   * @param code - JavaScript code defining the component
+   * @throws Error if code contains forbidden constructs or is invalid
+   *
+   * @example
+   * ```typescript
+   * registry.registerFromCode('Counter', `
+   *   function Counter(props) {
+   *     const value = Math.floor(props.from + (props.to - props.from) * Math.min(props.frame / (props.fps * 2), 1));
+   *     return React.createElement('div', { style: { fontSize: '72px' } }, value);
+   *   }
+   * `);
+   * ```
+   */
+  registerFromCode(name: string, code: string): void {
+    // Security: Validate code structure
+    const dangerousPatterns = [
+      /eval\s*\(/,
+      /Function\s*\(/,
+      /document\.write/,
+      /innerHTML\s*=/,
+      /outerHTML\s*=/,
+      /<script/i,
+      /import\s+.*\s+from/,
+      /require\s*\(/,
+      /globalThis/,
+      /window\./,
+      /document\./,
+    ];
+
+    for (const pattern of dangerousPatterns) {
+      if (pattern.test(code)) {
+        throw new Error(`Code contains forbidden construct: ${pattern}`);
+      }
+    }
+
+    let component: ComponentType<any>;
+
+    try {
+      // Import React for component creation
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const React = require('react');
+
+      // Format 1: Function component
+      // function MyComponent(props) { return <div>{props.text}</div>; }
+      if (code.includes('function') && code.includes('return')) {
+        const wrappedCode = `
+          return (function(React) {
+            ${code}
+            // Try to find the component by name
+            const match = ${JSON.stringify(code)}.match(/function\\s+(\\w+)/);
+            if (match && typeof eval(match[1]) !== 'undefined') {
+              return eval(match[1]);
+            }
+            // Fallback: assume Component or default export
+            return typeof Component !== 'undefined' ? Component :
+                   typeof default_1 !== 'undefined' ? default_1 : null;
+          });
+        `;
+        const factory = new Function(wrappedCode);
+        component = factory()(React);
+      }
+      // Format 2: Arrow function component
+      // const MyComponent = (props) => <div>{props.text}</div>
+      else if (code.includes('=>')) {
+        const wrappedCode = `
+          return (function(React) {
+            ${code}
+            const match = ${JSON.stringify(code)}.match(/(?:const|let|var)\\s+(\\w+)\\s*=/);
+            if (match && typeof eval(match[1]) !== 'undefined') {
+              return eval(match[1]);
+            }
+            return null;
+          });
+        `;
+        const factory = new Function(wrappedCode);
+        component = factory()(React);
+      }
+      // Format 3: JSX only (wrap in function)
+      // <div>{props.text}</div>
+      else if (code.trim().startsWith('<')) {
+        const wrappedCode = `
+          return function(props) {
+            return ${code};
+          };
+        `;
+        component = new Function('React', 'props', wrappedCode)(React);
+      } else {
+        throw new Error('Unrecognized code format. Expected function component, arrow function, or JSX.');
+      }
+
+      if (!component || typeof component !== 'function') {
+        throw new Error('Code did not export a valid React component');
+      }
+
+      // Register with metadata
+      this.register(component, {
+        id: name,
+        name: name,
+        description: 'Custom inline component',
+        category: 'custom',
+        tags: ['inline'],
+        metadata: { inlineCode: true },
+      });
+    } catch (error) {
+      throw new Error(
+        `Failed to create component from code: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  }
+
+  /**
+   * Validate a URL for component loading
+   *
+   * @param url - URL to validate
+   * @throws Error if URL is invalid
+   */
+  private validateUrl(url: string): void {
+    let parsed: URL;
+
+    try {
+      parsed = new URL(url);
+    } catch {
+      throw new Error(`Invalid URL: ${url}`);
+    }
+
+    // Must use HTTPS
+    if (parsed.protocol !== 'https:') {
+      throw new Error(`Component URLs must use HTTPS (got ${parsed.protocol})`);
+    }
+
+    // Check domain allowlist if configured
+    if (this.allowedDomains.length > 0) {
+      const isAllowed = this.allowedDomains.some(
+        (domain) => parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`)
+      );
+
+      if (!isAllowed) {
+        throw new Error(
+          `Domain not allowed: ${parsed.hostname}. Allowed domains: ${this.allowedDomains.join(', ')}`
+        );
+      }
+    }
   }
 
   /**

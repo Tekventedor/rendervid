@@ -204,6 +204,11 @@ class DefaultComponentRegistry implements ComponentRegistry {
     throw new Error(`Dynamic component loading not yet implemented: ${name} from ${url}`);
   }
 
+  registerFromCode(name: string, code: string): void {
+    // Inline code execution would happen here
+    throw new Error(`Inline component loading not yet implemented: ${name}`);
+  }
+
   unregister(name: string): boolean {
     return this.components.delete(name);
   }

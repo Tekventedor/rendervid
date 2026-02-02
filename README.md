@@ -122,6 +122,73 @@ fadeOut, fadeOutUp, fadeOutDown, slideOutUp, slideOutDown, scaleOut, zoomOut, ro
 ### Emphasis
 pulse, shake, bounce, swing, wobble, flash, rubberBand, heartbeat, float, spin
 
+## Custom Components
+
+Rendervid supports custom React components in templates, enabling dynamic visualizations beyond built-in components.
+
+### Three Ways to Use Custom Components
+
+```json
+{
+  "customComponents": {
+    "MyChart": {
+      "type": "reference",
+      "reference": "AnimatedChart",
+      "description": "Pre-registered chart component"
+    },
+    "ExternalWidget": {
+      "type": "url",
+      "url": "https://cdn.example.com/Widget.js",
+      "description": "Widget from CDN"
+    },
+    "QuickCounter": {
+      "type": "inline",
+      "code": "function Counter(props) { return React.createElement('div', {}, props.frame); }",
+      "description": "Simple inline component"
+    }
+  },
+  "composition": {
+    "scenes": [{
+      "layers": [{
+        "type": "custom",
+        "customComponent": {
+          "name": "MyChart",
+          "props": {
+            "data": "{{chartData}}",
+            "title": "Sales Chart"
+          }
+        }
+      }]
+    }]
+  }
+}
+```
+
+### Component Interface
+
+All custom components receive:
+- `frame` - Current frame number
+- `fps` - Frames per second
+- `sceneDuration` - Scene duration in frames
+- `layerSize` - Layer dimensions
+- User-defined props from the template
+
+### Input Variable Binding
+
+Use `{{variableName}}` to bind template inputs to component props:
+
+```typescript
+await renderer.renderVideo({
+  template: myTemplate,
+  inputs: {
+    chartData: [10, 20, 30, 40],
+    chartTitle: "Q1 Revenue"
+  }
+});
+```
+
+📖 **[Complete Custom Components Guide](./docs/custom-components.md)**
+
 ## Examples
 
 Explore our collection of ready-to-use templates:

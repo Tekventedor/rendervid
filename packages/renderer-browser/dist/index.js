@@ -1956,10 +1956,12 @@ var BrowserRenderer = class {
   root = null;
   isRendering = false;
   registry;
+  processor;
   constructor(options = {}) {
     this.options = options;
     this.container = options.container || this.createContainer();
     this.registry = options.registry || core.getDefaultRegistry();
+    this.processor = new core.TemplateProcessor();
   }
   createContainer() {
     const container = document.createElement("div");
@@ -2000,9 +2002,11 @@ var BrowserRenderer = class {
     }
     this.isRendering = true;
     try {
-      const { template, format = "mp4", bitrate, onProgress, onFrame } = options;
-      const { width, height, fps = 30 } = template.output;
-      const scenes = template.composition.scenes;
+      const { template, inputs = {}, format = "mp4", bitrate, onProgress, onFrame } = options;
+      await this.processor.loadCustomComponents(template, this.registry);
+      const processedTemplate = this.processor.resolveInputs(template, inputs);
+      const { width, height, fps = 30 } = processedTemplate.output;
+      const scenes = processedTemplate.composition.scenes;
       const totalFrames = calculateTotalFrames(scenes, fps);
       const duration = totalFrames / fps;
       const renderContainer = document.createElement("div");
@@ -2224,13 +2228,16 @@ var BrowserRenderer = class {
     try {
       const {
         template,
+        inputs = {},
         sceneIndex = 0,
         frame = 0,
         format = "png",
         quality = 0.95
       } = options;
-      const { width, height, fps = 30 } = template.output;
-      const scenes = template.composition.scenes;
+      await this.processor.loadCustomComponents(template, this.registry);
+      const processedTemplate = this.processor.resolveInputs(template, inputs);
+      const { width, height, fps = 30 } = processedTemplate.output;
+      const scenes = processedTemplate.composition.scenes;
       if (sceneIndex >= scenes.length) {
         throw new Error(`Scene index ${sceneIndex} out of range`);
       }

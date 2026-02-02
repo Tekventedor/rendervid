@@ -1,0 +1,91 @@
+{
+  "name": "Typewriter Effect Example",
+  "description": "Text appearing character by character with cursor",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8,
+    "backgroundColor": "#1e1e1e"
+  },
+  "inputs": [
+    {
+      "key": "text",
+      "type": "string",
+      "label": "Text to Type",
+      "required": true,
+      "defaultValue": "Welcome to Rendervid! Create amazing videos with custom React components."
+    },
+    {
+      "key": "speed",
+      "type": "number",
+      "label": "Characters per Second",
+      "defaultValue": 8
+    },
+    {
+      "key": "textColor",
+      "type": "string",
+      "label": "Text Color",
+      "defaultValue": "#00ff88"
+    }
+  ],
+  "customComponents": {
+    "Typewriter": {
+      "type": "inline",
+      "code": "function Typewriter(props) { const charsPerFrame = props.speed / props.fps; const visibleChars = Math.floor(props.frame * charsPerFrame); const displayText = props.text.substring(0, visibleChars); const showCursor = visibleChars < props.text.length || (props.frame % 30) < 15; return React.createElement('div', { style: { fontSize: '42px', color: props.color, fontFamily: 'monospace', whiteSpace: 'pre-wrap', lineHeight: '1.6', padding: '20px' } }, displayText, showCursor && React.createElement('span', { style: { opacity: 0.8 } }, '|')); }",
+      "description": "Typewriter text effect with blinking cursor"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "typewriter-scene",
+        "startFrame": 0,
+        "endFrame": 240,
+        "backgroundColor": "#1e1e1e",
+        "layers": [
+          {
+            "id": "typewriter-text",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 440
+            },
+            "size": {
+              "width": 1600,
+              "height": 400
+            },
+            "customComponent": {
+              "name": "Typewriter",
+              "props": {
+                "text": "{{text}}",
+                "speed": "{{speed}}",
+                "color": "{{textColor}}"
+              }
+            }
+          },
+          {
+            "id": "terminal-prompt",
+            "type": "text",
+            "position": {
+              "x": 100,
+              "y": 100
+            },
+            "size": {
+              "width": 800,
+              "height": 60
+            },
+            "props": {
+              "text": "$ rendervid --component typewriter",
+              "fontSize": 28,
+              "color": "#00ff88",
+              "fontFamily": "monospace"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

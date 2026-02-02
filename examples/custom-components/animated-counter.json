@@ -1,0 +1,93 @@
+{
+  "name": "Animated Counter Example",
+  "description": "Demonstrates an animated counter using inline custom component",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5,
+    "backgroundColor": "#1a1a2e"
+  },
+  "inputs": [
+    {
+      "key": "from",
+      "type": "number",
+      "label": "Start Value",
+      "required": true,
+      "defaultValue": 0
+    },
+    {
+      "key": "to",
+      "type": "number",
+      "label": "End Value",
+      "required": true,
+      "defaultValue": 100
+    },
+    {
+      "key": "color",
+      "type": "string",
+      "label": "Text Color",
+      "defaultValue": "#4ecdc4"
+    }
+  ],
+  "customComponents": {
+    "AnimatedCounter": {
+      "type": "inline",
+      "code": "function AnimatedCounter(props) { const duration = 3; const totalFrames = duration * props.fps; const progress = Math.min(props.frame / totalFrames, 1); const eased = 1 - Math.pow(1 - progress, 3); const value = Math.floor(props.from + (props.to - props.from) * eased); return React.createElement('div', { style: { fontSize: '120px', fontWeight: 'bold', textAlign: 'center', color: props.color, fontFamily: 'Arial, sans-serif' } }, value); }",
+      "description": "Animated number counter with easing"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "counter-scene",
+        "startFrame": 0,
+        "endFrame": 150,
+        "backgroundColor": "#1a1a2e",
+        "layers": [
+          {
+            "id": "counter",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 800,
+              "height": 200
+            },
+            "customComponent": {
+              "name": "AnimatedCounter",
+              "props": {
+                "from": "{{from}}",
+                "to": "{{to}}",
+                "color": "{{color}}"
+              }
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 300
+            },
+            "size": {
+              "width": 1600,
+              "height": 100
+            },
+            "props": {
+              "text": "Animated Counter",
+              "fontSize": 48,
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontWeight": "normal"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

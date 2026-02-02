@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import type { Template, Scene, ComponentRegistry } from '@rendervid/core';
-import { getDefaultRegistry } from '@rendervid/core';
+import { getDefaultRegistry, TemplateProcessor } from '@rendervid/core';
 import { TemplateRenderer, calculateTotalFrames } from './SceneRenderer';
 import { createFrameCapturer } from '../encoder/capturer';
 import { createWebCodecsEncoder, isWebCodecsSupported } from '../encoder/webcodecs';
@@ -22,6 +22,8 @@ export interface BrowserRendererOptions {
 export interface RenderVideoOptions {
   /** Template to render */
   template: Template;
+  /** Input values for template variables */
+  inputs?: Record<string, unknown>;
   /** Output format */
   format?: 'mp4' | 'webm';
   /** Video bitrate in bits per second */
@@ -35,6 +37,8 @@ export interface RenderVideoOptions {
 export interface RenderImageOptions {
   /** Template to render */
   template: Template;
+  /** Input values for template variables */
+  inputs?: Record<string, unknown>;
   /** Scene index to render (default: 0) */
   sceneIndex?: number;
   /** Frame to render (default: 0) */
@@ -94,11 +98,13 @@ export class BrowserRenderer {
   private root: Root | null = null;
   private isRendering = false;
   private registry: ComponentRegistry;
+  private processor: TemplateProcessor;
 
   constructor(options: BrowserRendererOptions = {}) {
     this.options = options;
     this.container = options.container || this.createContainer();
     this.registry = options.registry || getDefaultRegistry();
+    this.processor = new TemplateProcessor();
   }
 
   private createContainer(): HTMLElement {
@@ -147,9 +153,14 @@ export class BrowserRenderer {
     this.isRendering = true;
 
     try {
-      const { template, format = 'mp4', bitrate, onProgress, onFrame } = options;
-      const { width, height, fps = 30 } = template.output;
-      const scenes = template.composition.scenes;
+      const { template, inputs = {}, format = 'mp4', bitrate, onProgress, onFrame } = options;
+
+      // Process custom components and inputs
+      await this.processor.loadCustomComponents(template, this.registry);
+      const processedTemplate = this.processor.resolveInputs(template, inputs);
+
+      const { width, height, fps = 30 } = processedTemplate.output;
+      const scenes = processedTemplate.composition.scenes;
       const totalFrames = calculateTotalFrames(scenes, fps);
       const duration = totalFrames / fps;
 
@@ -469,14 +480,19 @@ export class BrowserRenderer {
     try {
       const {
         template,
+        inputs = {},
         sceneIndex = 0,
         frame = 0,
         format = 'png',
         quality = 0.95,
       } = options;
 
-      const { width, height, fps = 30 } = template.output;
-      const scenes = template.composition.scenes;
+      // Process custom components and inputs
+      await this.processor.loadCustomComponents(template, this.registry);
+      const processedTemplate = this.processor.resolveInputs(template, inputs);
+
+      const { width, height, fps = 30 } = processedTemplate.output;
+      const scenes = processedTemplate.composition.scenes;
 
       if (sceneIndex >= scenes.length) {
         throw new Error(`Scene index ${sceneIndex} out of range`);

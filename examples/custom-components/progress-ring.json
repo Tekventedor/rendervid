@@ -1,0 +1,83 @@
+{
+  "name": "Progress Ring Example",
+  "description": "Circular progress indicator with percentage display",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5,
+    "backgroundColor": "#0f0f23"
+  },
+  "inputs": [
+    {
+      "key": "ringColor",
+      "type": "string",
+      "label": "Ring Color",
+      "defaultValue": "#3b82f6"
+    },
+    {
+      "key": "strokeWidth",
+      "type": "number",
+      "label": "Stroke Width",
+      "defaultValue": 12
+    }
+  ],
+  "customComponents": {
+    "ProgressRing": {
+      "type": "inline",
+      "code": "function ProgressRing(props) { const progress = Math.min(props.frame / props.sceneDuration, 1); const size = 300; const center = size / 2; const radius = center - props.strokeWidth / 2; const circumference = 2 * Math.PI * radius; const offset = circumference * (1 - progress); return React.createElement('svg', { width: size, height: size }, React.createElement('circle', { cx: center, cy: center, r: radius, fill: 'none', stroke: '#2a2a3e', strokeWidth: props.strokeWidth }), React.createElement('circle', { cx: center, cy: center, r: radius, fill: 'none', stroke: props.color, strokeWidth: props.strokeWidth, strokeDasharray: circumference, strokeDashoffset: offset, strokeLinecap: 'round', transform: 'rotate(-90 ' + center + ' ' + center + ')' }), React.createElement('text', { x: center, y: center, textAnchor: 'middle', dominantBaseline: 'middle', fontSize: '48', fontWeight: 'bold', fill: props.color }, Math.floor(progress * 100) + '%')); }",
+      "description": "Circular progress ring with percentage"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "progress-scene",
+        "startFrame": 0,
+        "endFrame": 150,
+        "backgroundColor": "#0f0f23",
+        "layers": [
+          {
+            "id": "progress-ring",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 300,
+              "height": 300
+            },
+            "customComponent": {
+              "name": "ProgressRing",
+              "props": {
+                "color": "{{ringColor}}",
+                "strokeWidth": "{{strokeWidth}}"
+              }
+            }
+          },
+          {
+            "id": "label",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 800
+            },
+            "size": {
+              "width": 1600,
+              "height": 80
+            },
+            "props": {
+              "text": "Loading...",
+              "fontSize": 36,
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

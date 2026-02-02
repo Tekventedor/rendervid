@@ -15,6 +15,9 @@ export {
 // Types
 export * from './types';
 
+// Template Processing
+export { TemplateProcessor } from './template/TemplateProcessor';
+
 // Validation
 export {
   validateTemplate,

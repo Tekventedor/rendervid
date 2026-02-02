@@ -1203,6 +1203,9 @@ var DefaultComponentRegistry = class {
   async registerFromUrl(name, url) {
     throw new Error(`Dynamic component loading not yet implemented: ${name} from ${url}`);
   }
+  registerFromCode(name, code) {
+    throw new Error(`Inline component loading not yet implemented: ${name}`);
+  }
   unregister(name) {
     return this.components.delete(name);
   }
@@ -1611,7 +1614,162 @@ function filtersToCSS(filters) {
   return filters.map(filterToCSS).filter(Boolean).join(" ");
 }
 
+// src/template/TemplateProcessor.ts
+var TemplateProcessor = class {
+  /**
+   * Load custom components from template into registry
+   *
+   * Processes template.customComponents and registers them with the provided registry.
+   * Supports three types:
+   * - 'reference': Creates alias to pre-registered component
+   * - 'url': Loads component from HTTPS URL
+   * - 'inline': Creates component from code string
+   *
+   * Components are loaded in parallel for performance.
+   * Already registered components are skipped to prevent overwrites.
+   *
+   * @param template - Template containing customComponents definition
+   * @param registry - Component registry to register components into
+   * @throws Error if component loading fails
+   *
+   * @example
+   * ```typescript
+   * await processor.loadCustomComponents(template, registry);
+   * // All components from template.customComponents are now available
+   * ```
+   */
+  async loadCustomComponents(template, registry) {
+    if (!template.customComponents) {
+      return;
+    }
+    const loadPromises = [];
+    for (const [name, definition] of Object.entries(template.customComponents)) {
+      if (registry.has(name)) {
+        continue;
+      }
+      loadPromises.push(this.loadComponent(name, definition, registry));
+    }
+    await Promise.all(loadPromises);
+  }
+  /**
+   * Load a single component from its definition
+   *
+   * @param name - Component name to register as
+   * @param definition - Component definition (reference, url, or inline)
+   * @param registry - Component registry to register into
+   * @throws Error if component type is invalid or loading fails
+   */
+  async loadComponent(name, definition, registry) {
+    switch (definition.type) {
+      case "reference": {
+        if (!definition.reference) {
+          throw new Error(`Reference missing for component "${name}"`);
+        }
+        const referencedComponent = registry.get(definition.reference);
+        if (!referencedComponent) {
+          throw new Error(
+            `Referenced component "${definition.reference}" not found for "${name}". Make sure to register it before using this template.`
+          );
+        }
+        registry.register(name, referencedComponent, definition.propsSchema);
+        break;
+      }
+      case "url": {
+        if (!definition.url) {
+          throw new Error(`URL missing for component "${name}"`);
+        }
+        await registry.registerFromUrl(name, definition.url);
+        break;
+      }
+      case "inline": {
+        if (!definition.code) {
+          throw new Error(`Code missing for component "${name}"`);
+        }
+        registry.registerFromCode(name, definition.code);
+        break;
+      }
+      default: {
+        throw new Error(
+          `Unknown component type "${definition.type}" for "${name}"`
+        );
+      }
+    }
+  }
+  /**
+   * Resolve input variables in template
+   *
+   * Replaces all {{key}} placeholders in the template with actual values from inputs.
+   * Works recursively through all objects, arrays, and strings in the template.
+   *
+   * Variable syntax: {{variableName}}
+   * - Matches exact input keys
+   * - Case-sensitive
+   * - Missing variables are left unchanged
+   *
+   * @param template - Template with {{variable}} placeholders
+   * @param inputs - Input values to interpolate
+   * @returns New template with all variables resolved
+   *
+   * @example
+   * ```typescript
+   * const template = {
+   *   name: 'Video',
+   *   composition: {
+   *     scenes: [{
+   *       layers: [{
+   *         type: 'text',
+   *         text: '{{title}}',
+   *         color: '{{color}}'
+   *       }]
+   *     }]
+   *   }
+   * };
+   *
+   * const resolved = processor.resolveInputs(template, {
+   *   title: 'Hello World',
+   *   color: '#ff0000'
+   * });
+   * // resolved.composition.scenes[0].layers[0].text === 'Hello World'
+   * // resolved.composition.scenes[0].layers[0].color === '#ff0000'
+   * ```
+   */
+  resolveInputs(template, inputs) {
+    const cloned = JSON.parse(JSON.stringify(template));
+    return this.interpolateObject(cloned, inputs);
+  }
+  /**
+   * Recursively interpolate variables in any object structure
+   *
+   * @param obj - Object to interpolate
+   * @param inputs - Input values
+   * @returns Interpolated object
+   */
+  interpolateObject(obj, inputs) {
+    if (typeof obj === "string") {
+      return obj.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+        const value = inputs[key];
+        if (value === void 0) {
+          return match;
+        }
+        return String(value);
+      });
+    }
+    if (Array.isArray(obj)) {
+      return obj.map((item) => this.interpolateObject(item, inputs));
+    }
+    if (obj && typeof obj === "object") {
+      const result = {};
+      for (const [key, value] of Object.entries(obj)) {
+        result[key] = this.interpolateObject(value, inputs);
+      }
+      return result;
+    }
+    return obj;
+  }
+};
+
 exports.RendervidEngine = RendervidEngine;
+exports.TemplateProcessor = TemplateProcessor;
 exports.compileAnimation = compileAnimation;
 exports.createCubicBezier = createCubicBezier;
 exports.createSpring = createSpring;

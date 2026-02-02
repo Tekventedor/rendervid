@@ -1,5 +1,5 @@
 import React4, { useMemo, useRef, useEffect, useState } from 'react';
-import { generatePresetKeyframes, getPropertiesAtFrame, getDefaultRegistry } from '@rendervid/core';
+import { generatePresetKeyframes, getPropertiesAtFrame, getDefaultRegistry, TemplateProcessor } from '@rendervid/core';
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { createRoot } from 'react-dom/client';
 import html2canvas from 'html2canvas';
@@ -1949,10 +1949,12 @@ var BrowserRenderer = class {
   root = null;
   isRendering = false;
   registry;
+  processor;
   constructor(options = {}) {
     this.options = options;
     this.container = options.container || this.createContainer();
     this.registry = options.registry || getDefaultRegistry();
+    this.processor = new TemplateProcessor();
   }
   createContainer() {
     const container = document.createElement("div");
@@ -1993,9 +1995,11 @@ var BrowserRenderer = class {
     }
     this.isRendering = true;
     try {
-      const { template, format = "mp4", bitrate, onProgress, onFrame } = options;
-      const { width, height, fps = 30 } = template.output;
-      const scenes = template.composition.scenes;
+      const { template, inputs = {}, format = "mp4", bitrate, onProgress, onFrame } = options;
+      await this.processor.loadCustomComponents(template, this.registry);
+      const processedTemplate = this.processor.resolveInputs(template, inputs);
+      const { width, height, fps = 30 } = processedTemplate.output;
+      const scenes = processedTemplate.composition.scenes;
       const totalFrames = calculateTotalFrames(scenes, fps);
       const duration = totalFrames / fps;
       const renderContainer = document.createElement("div");
@@ -2217,13 +2221,16 @@ var BrowserRenderer = class {
     try {
       const {
         template,
+        inputs = {},
         sceneIndex = 0,
         frame = 0,
         format = "png",
         quality = 0.95
       } = options;
-      const { width, height, fps = 30 } = template.output;
-      const scenes = template.composition.scenes;
+      await this.processor.loadCustomComponents(template, this.registry);
+      const processedTemplate = this.processor.resolveInputs(template, inputs);
+      const { width, height, fps = 30 } = processedTemplate.output;
+      const scenes = processedTemplate.composition.scenes;
       if (sceneIndex >= scenes.length) {
         throw new Error(`Scene index ${sceneIndex} out of range`);
       }

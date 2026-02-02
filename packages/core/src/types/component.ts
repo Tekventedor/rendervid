@@ -118,6 +118,13 @@ export interface ComponentRegistry {
   registerFromUrl(name: string, url: string): Promise<void>;
 
   /**
+   * Register a component from inline code.
+   * @param name - Component name
+   * @param code - JavaScript code defining the component
+   */
+  registerFromCode(name: string, code: string): void;
+
+  /**
    * Unregister a component.
    * @param name - Component name
    * @returns true if component was found and removed

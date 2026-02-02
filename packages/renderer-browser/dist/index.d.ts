@@ -15,6 +15,8 @@ interface BrowserRendererOptions {
 interface RenderVideoOptions {
     /** Template to render */
     template: Template;
+    /** Input values for template variables */
+    inputs?: Record<string, unknown>;
     /** Output format */
     format?: 'mp4' | 'webm';
     /** Video bitrate in bits per second */
@@ -27,6 +29,8 @@ interface RenderVideoOptions {
 interface RenderImageOptions {
     /** Template to render */
     template: Template;
+    /** Input values for template variables */
+    inputs?: Record<string, unknown>;
     /** Scene index to render (default: 0) */
     sceneIndex?: number;
     /** Frame to render (default: 0) */
@@ -82,6 +86,7 @@ declare class BrowserRenderer {
     private root;
     private isRendering;
     private registry;
+    private processor;
     constructor(options?: BrowserRendererOptions);
     private createContainer;
     /**

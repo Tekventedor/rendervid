@@ -1,0 +1,405 @@
+{
+  "name": "Dashboard with Multiple Components",
+  "description": "Demonstrates using multiple custom components in a single template",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6,
+    "backgroundColor": "#0a0e27"
+  },
+  "inputs": [
+    {
+      "key": "usersCount",
+      "type": "number",
+      "label": "Users Count",
+      "defaultValue": 1247
+    },
+    {
+      "key": "revenueAmount",
+      "type": "number",
+      "label": "Revenue",
+      "defaultValue": 98765
+    },
+    {
+      "key": "conversionRate",
+      "type": "number",
+      "label": "Conversion Rate %",
+      "defaultValue": 87
+    }
+  ],
+  "customComponents": {
+    "Counter": {
+      "type": "inline",
+      "code": "function Counter(props) { const duration = 2.5; const totalFrames = duration * props.fps; const progress = Math.min(props.frame / totalFrames, 1); const eased = 1 - Math.pow(1 - progress, 3); const value = Math.floor(props.from + (props.to - props.from) * eased); const formatted = props.format === 'currency' ? '$' + value.toLocaleString() : value.toLocaleString(); return React.createElement('div', { style: { fontSize: '56px', fontWeight: 'bold', color: props.color, fontFamily: 'Arial, sans-serif' } }, formatted); }",
+      "description": "Animated counter with optional currency formatting"
+    },
+    "ProgressBar": {
+      "type": "inline",
+      "code": "function ProgressBar(props) { const duration = 2; const totalFrames = duration * props.fps; const delay = props.delay || 0; const delayFrames = delay * props.fps; const effectiveFrame = Math.max(0, props.frame - delayFrames); const progress = Math.min(effectiveFrame / totalFrames, 1); const eased = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2; return React.createElement('div', { style: { width: '100%', height: '12px', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '6px', overflow: 'hidden' } }, React.createElement('div', { style: { width: (eased * props.value) + '%', height: '100%', backgroundColor: props.color, borderRadius: '6px', transition: 'width 0.3s' } })); }",
+      "description": "Horizontal progress bar with delay support"
+    },
+    "Badge": {
+      "type": "inline",
+      "code": "function Badge(props) { const scale = props.frame < 10 ? props.frame / 10 : 1; return React.createElement('div', { style: { display: 'inline-block', padding: '12px 24px', backgroundColor: props.color, color: 'white', borderRadius: '24px', fontSize: '20px', fontWeight: 'bold', transform: 'scale(' + scale + ')' } }, props.text); }",
+      "description": "Badge with scale-in animation"
+    },
+    "MetricCard": {
+      "type": "inline",
+      "code": "function MetricCard(props) { const slideProgress = Math.min(props.frame / 20, 1); const opacity = slideProgress; const translateY = (1 - slideProgress) * 30; return React.createElement('div', { style: { backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '16px', padding: '32px', border: '1px solid rgba(255, 255, 255, 0.1)', opacity: opacity, transform: 'translateY(' + translateY + 'px)' } }, props.children); }",
+      "description": "Card container with slide-up animation"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "dashboard-scene",
+        "startFrame": 0,
+        "endFrame": 180,
+        "backgroundColor": "#0a0e27",
+        "layers": [
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 120
+            },
+            "size": {
+              "width": 1800,
+              "height": 80
+            },
+            "props": {
+              "text": "Performance Dashboard",
+              "fontSize": 52,
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontWeight": "bold"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInDown",
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "card-1-bg",
+            "type": "shape",
+            "position": {
+              "x": 280,
+              "y": 380
+            },
+            "size": {
+              "width": 420,
+              "height": 280
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "rgba(255, 255, 255, 0.05)",
+              "borderRadius": 16,
+              "stroke": "rgba(255, 255, 255, 0.1)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "duration": 25,
+                "delay": 10
+              }
+            ]
+          },
+          {
+            "id": "users-label",
+            "type": "text",
+            "position": {
+              "x": 280,
+              "y": 300
+            },
+            "size": {
+              "width": 420,
+              "height": 50
+            },
+            "props": {
+              "text": "Total Users",
+              "fontSize": 24,
+              "color": "#8b92b2",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 20,
+                "delay": 15
+              }
+            ]
+          },
+          {
+            "id": "users-counter",
+            "type": "custom",
+            "position": {
+              "x": 280,
+              "y": 380
+            },
+            "size": {
+              "width": 420,
+              "height": 100
+            },
+            "customComponent": {
+              "name": "Counter",
+              "props": {
+                "from": 0,
+                "to": "{{usersCount}}",
+                "color": "#4ecdc4",
+                "format": "number"
+              }
+            }
+          },
+          {
+            "id": "users-badge",
+            "type": "custom",
+            "position": {
+              "x": 280,
+              "y": 460
+            },
+            "size": {
+              "width": 420,
+              "height": 60
+            },
+            "customComponent": {
+              "name": "Badge",
+              "props": {
+                "text": "Active",
+                "color": "#4ecdc4"
+              }
+            }
+          },
+          {
+            "id": "card-2-bg",
+            "type": "shape",
+            "position": {
+              "x": 960,
+              "y": 380
+            },
+            "size": {
+              "width": 420,
+              "height": 280
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "rgba(255, 255, 255, 0.05)",
+              "borderRadius": 16,
+              "stroke": "rgba(255, 255, 255, 0.1)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "duration": 25,
+                "delay": 20
+              }
+            ]
+          },
+          {
+            "id": "revenue-label",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 300
+            },
+            "size": {
+              "width": 420,
+              "height": 50
+            },
+            "props": {
+              "text": "Revenue",
+              "fontSize": 24,
+              "color": "#8b92b2",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 20,
+                "delay": 25
+              }
+            ]
+          },
+          {
+            "id": "revenue-counter",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 380
+            },
+            "size": {
+              "width": 420,
+              "height": 100
+            },
+            "customComponent": {
+              "name": "Counter",
+              "props": {
+                "from": 0,
+                "to": "{{revenueAmount}}",
+                "color": "#f7b731",
+                "format": "currency"
+              }
+            }
+          },
+          {
+            "id": "revenue-badge",
+            "type": "custom",
+            "position": {
+              "x": 960,
+              "y": 460
+            },
+            "size": {
+              "width": 420,
+              "height": 60
+            },
+            "customComponent": {
+              "name": "Badge",
+              "props": {
+                "text": "This Month",
+                "color": "#f7b731"
+              }
+            }
+          },
+          {
+            "id": "card-3-bg",
+            "type": "shape",
+            "position": {
+              "x": 1640,
+              "y": 380
+            },
+            "size": {
+              "width": 420,
+              "height": 280
+            },
+            "props": {
+              "shapeType": "rectangle",
+              "fill": "rgba(255, 255, 255, 0.05)",
+              "borderRadius": 16,
+              "stroke": "rgba(255, 255, 255, 0.1)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "duration": 25,
+                "delay": 30
+              }
+            ]
+          },
+          {
+            "id": "conversion-label",
+            "type": "text",
+            "position": {
+              "x": 1640,
+              "y": 300
+            },
+            "size": {
+              "width": 420,
+              "height": 50
+            },
+            "props": {
+              "text": "Conversion Rate",
+              "fontSize": 24,
+              "color": "#8b92b2",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 20,
+                "delay": 35
+              }
+            ]
+          },
+          {
+            "id": "conversion-progress",
+            "type": "custom",
+            "position": {
+              "x": 1500,
+              "y": 390
+            },
+            "size": {
+              "width": 360,
+              "height": 20
+            },
+            "customComponent": {
+              "name": "ProgressBar",
+              "props": {
+                "value": "{{conversionRate}}",
+                "color": "#5f27cd",
+                "delay": 0.5
+              }
+            }
+          },
+          {
+            "id": "conversion-text",
+            "type": "text",
+            "position": {
+              "x": 1640,
+              "y": 440
+            },
+            "size": {
+              "width": 420,
+              "height": 80
+            },
+            "props": {
+              "text": "{{conversionRate}}%",
+              "fontSize": 52,
+              "color": "#5f27cd",
+              "textAlign": "center",
+              "fontWeight": "bold"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 20,
+                "delay": 45
+              }
+            ]
+          },
+          {
+            "id": "footer",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 900
+            },
+            "size": {
+              "width": 1800,
+              "height": 50
+            },
+            "props": {
+              "text": "Generated with Rendervid Custom Components",
+              "fontSize": 20,
+              "color": "rgba(255, 255, 255, 0.4)",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 60
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
