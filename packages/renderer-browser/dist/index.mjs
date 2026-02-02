@@ -1531,6 +1531,7 @@ function TransitionRenderer({
         return progress > 0.5 ? {} : { opacity: 0 };
     }
   };
+  const needsOutgoingOnTop = transitionType === "wipe" || transitionType === "diagonal-wipe";
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(
       "div",
@@ -1541,13 +1542,14 @@ function TransitionRenderer({
           left: 0,
           width: "100%",
           height: "100%",
-          ...getTransitionStyle()
+          zIndex: needsOutgoingOnTop ? 0 : 1,
+          ...getIncomingStyle()
         },
         children: /* @__PURE__ */ jsx(
           SceneRenderer,
           {
-            scene: outgoingScene,
-            frame: outgoingFrame,
+            scene: incomingScene,
+            frame: incomingFrame,
             fps,
             width,
             height,
@@ -1566,13 +1568,14 @@ function TransitionRenderer({
           left: 0,
           width: "100%",
           height: "100%",
-          ...getIncomingStyle()
+          zIndex: needsOutgoingOnTop ? 1 : 0,
+          ...getTransitionStyle()
         },
         children: /* @__PURE__ */ jsx(
           SceneRenderer,
           {
-            scene: incomingScene,
-            frame: incomingFrame,
+            scene: outgoingScene,
+            frame: outgoingFrame,
             fps,
             width,
             height,

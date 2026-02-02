@@ -582,30 +582,11 @@ function TransitionRenderer({
     }
   };
 
+  // For wipe transitions, outgoing scene needs to be on top so clip-path reveals incoming scene
+  const needsOutgoingOnTop = transitionType === 'wipe' || transitionType === 'diagonal-wipe';
+
   return (
     <>
-      {/* Outgoing scene */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          ...getTransitionStyle(),
-        }}
-      >
-        <SceneRenderer
-          scene={outgoingScene}
-          frame={outgoingFrame}
-          fps={fps}
-          width={width}
-          height={height}
-          isPlaying={isPlaying}
-          registry={registry}
-        />
-      </div>
-
       {/* Incoming scene */}
       <div
         style={{
@@ -614,12 +595,36 @@ function TransitionRenderer({
           left: 0,
           width: '100%',
           height: '100%',
+          zIndex: needsOutgoingOnTop ? 0 : 1,
           ...getIncomingStyle(),
         }}
       >
         <SceneRenderer
           scene={incomingScene}
           frame={incomingFrame}
+          fps={fps}
+          width={width}
+          height={height}
+          isPlaying={isPlaying}
+          registry={registry}
+        />
+      </div>
+
+      {/* Outgoing scene */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: needsOutgoingOnTop ? 1 : 0,
+          ...getTransitionStyle(),
+        }}
+      >
+        <SceneRenderer
+          scene={outgoingScene}
+          frame={outgoingFrame}
           fps={fps}
           width={width}
           height={height}
