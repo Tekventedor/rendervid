@@ -38,6 +38,7 @@ export const RenderVideoInputSchema = z.object({
   format: z.enum(['mp4', 'webm', 'mov', 'gif']).optional().default('mp4'),
   quality: z.enum(['draft', 'standard', 'high', 'lossless']).optional().default('high'),
   fps: z.number().int().positive().optional(),
+  renderWaitTime: z.number().int().positive().optional().describe('Time to wait after rendering before capturing each frame (ms, default: 50). Increase for complex animations or slow-loading content.'),
 });
 
 /**
@@ -50,6 +51,7 @@ export const RenderImageInputSchema = z.object({
   format: z.enum(['png', 'jpeg', 'webp']).optional().default('png'),
   quality: z.number().int().min(1).max(100).optional().default(90),
   frame: z.number().int().nonnegative().optional().default(0),
+  renderWaitTime: z.number().int().positive().optional().describe('Time to wait after rendering before capturing (ms, default: 50). Increase for complex animations or slow-loading content.'),
 });
 
 /**

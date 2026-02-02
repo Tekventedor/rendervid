@@ -73,6 +73,7 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
       outputPath: input.outputPath,
       codec: codecSettings.codec,
       quality: codecSettings.quality,
+      renderWaitTime: input.renderWaitTime,
       onProgress: (progress) => {
         logger.info('Render progress', {
           phase: progress.phase,

@@ -68,6 +68,7 @@ export async function executeRenderImage(args: unknown): Promise<string> {
       format: input.format as 'png' | 'jpeg' | 'webp',
       quality: input.quality,
       frame: input.frame,
+      renderWaitTime: input.renderWaitTime,
     });
 
     if (!result.success) {
