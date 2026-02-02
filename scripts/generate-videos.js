@@ -256,7 +256,7 @@ function generateHTML(template, frame, viewportWidth, viewportHeight) {
     .join('&');
 
   const elements = layers.map(layer => {
-    const { id, type, position, size, props, opacity: baseOpacity = 1, animations, filter } = layer;
+    const { id, type, position, size, props, opacity: baseOpacity = 1, animations, filter, filters } = layer;
     const x = position?.x || 0;
     const y = position?.y || 0;
     const w = size?.width || 100;
@@ -280,8 +280,26 @@ function generateHTML(template, frame, viewportWidth, viewportHeight) {
     if (transform) {
       css += `transform:${transform};transform-origin:center center;`;
     }
+
+    // Handle both filter (string) and filters (array) formats
     if (filter) {
       css += `filter:${filter};`;
+    } else if (filters && filters.length > 0) {
+      const filterString = filters.map(f => {
+        const { type, value } = f;
+        // Convert filter type and value to CSS filter function
+        if (type === 'blur') return `blur(${value}px)`;
+        if (type === 'brightness') return `brightness(${value}%)`;
+        if (type === 'contrast') return `contrast(${value}%)`;
+        if (type === 'grayscale') return `grayscale(${value}%)`;
+        if (type === 'sepia') return `sepia(${value}%)`;
+        if (type === 'hue-rotate') return `hue-rotate(${value}deg)`;
+        if (type === 'invert') return `invert(${value}%)`;
+        if (type === 'saturate') return `saturate(${value}%)`;
+        if (type === 'drop-shadow') return `drop-shadow(${value})`;
+        return '';
+      }).filter(Boolean).join(' ');
+      if (filterString) css += `filter:${filterString};`;
     }
 
     let inner = '';
