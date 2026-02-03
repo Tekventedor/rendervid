@@ -53,6 +53,8 @@ export class FrameCapturer {
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
         '--disable-gpu',
+        '--disable-web-security', // Disable CORS to allow loading external images
+        '--disable-features=IsolateOrigins,site-per-process', // Required for --disable-web-security to work
         `--window-size=${width},${height}`,
         ...(puppeteerOptions.args || []),
       ],
@@ -60,6 +62,20 @@ export class FrameCapturer {
     });
 
     this.page = await this.browser.newPage();
+
+    // Log browser console messages for debugging
+    this.page.on('console', msg => {
+      const type = msg.type();
+      if (type === 'error' || type === 'warn') {
+        console.log(`[Browser ${type}]`, msg.text());
+      }
+    });
+
+    // Log page errors
+    this.page.on('pageerror', error => {
+      console.log('[Browser error]', error.message);
+    });
+
     await this.page.setViewport({
       width,
       height,
@@ -80,7 +96,57 @@ export class FrameCapturer {
       timeout: 10000,
     });
 
+    // Pre-load all images from the template
+    await this.preloadImages();
+
     this.initialized = true;
+  }
+
+  /**
+   * Pre-load all image URLs from the template to avoid loading delays during frame capture
+   */
+  private async preloadImages(): Promise<void> {
+    if (!this.page) return;
+
+    const { template } = this.config;
+    const imageUrls: string[] = [];
+
+    // Extract all image URLs from all scenes
+    if (template.composition?.scenes) {
+      for (const scene of template.composition.scenes) {
+        if (scene.layers) {
+          for (const layer of scene.layers) {
+            if (layer.type === 'image' && layer.props?.src) {
+              const src = String(layer.props.src);
+              if (!imageUrls.includes(src)) {
+                imageUrls.push(src);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (imageUrls.length === 0) return;
+
+    // Pre-load images in the browser
+    await this.page.evaluate((urls: string[]) => {
+      return Promise.all(
+        urls.map(url => {
+          return new Promise<void>((resolve) => {
+            // @ts-expect-error - Image is available in browser context, not Node.js
+            const img = new Image();
+            // Don't set crossOrigin to avoid CORS issues with null origin
+            img.onload = () => resolve();
+            img.onerror = () => {
+              console.warn(`Failed to preload image: ${url}`);
+              resolve(); // Don't fail the whole process if one image fails
+            };
+            img.src = url;
+          });
+        })
+      );
+    }, imageUrls);
   }
 
   /**

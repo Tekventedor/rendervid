@@ -33,15 +33,22 @@ export function ImageLayer({ layer, frame, fps, sceneDuration }: ImageLayerProps
         transform: layer.rotation ? `rotate(${layer.rotation}deg)` : undefined,
         opacity: layer.opacity ?? 1,
         overflow: 'hidden',
-        // Use CSS background-image for better capture compatibility
-        backgroundImage: `url(${src})`,
-        backgroundSize: fit === 'fill' ? '100% 100%' : fit,
-        backgroundPosition: objectPosition,
-        backgroundRepeat: 'no-repeat',
         ...layerStyle,
         ...animationStyle,
       }}
       className={layer.className}
-    />
+    >
+      <img
+        src={src}
+        alt=""
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: fit === 'fill' ? 'fill' : (fit as any),
+          objectPosition: objectPosition,
+          display: 'block',
+        }}
+      />
+    </div>
   );
 }

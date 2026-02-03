@@ -133,13 +133,44 @@ LAYER TYPES: text, image, shape, video, audio, custom
 ANIMATION TYPES: entrance, exit, emphasis
 EASING CATEGORIES: basic, in, out (recommended), inout, back, bounce, elastic
 
+IMAGE LAYER EXAMPLE (REQUIRED FOR PROMOTIONAL VIDEOS):
+{
+  "id": "product-photo",
+  "type": "image",
+  "position": { "x": 100, "y": 100 },
+  "size": { "width": 800, "height": 600 },
+  "props": {
+    "src": "https://www.photomaticai.com/images/.../image.webp",
+    "fit": "cover"
+  }
+}
+
+WHEN TO USE IMAGE LAYERS:
+✓ ALWAYS include image layers for: promotional videos, product showcases, portfolios, presentations
+✓ If creating a promo for "Product X", include actual Product X images - not just text/shapes
+✓ Use Photomatic AI URLs: https://www.photomaticai.com/images/processed/...
+✓ Multiple images make videos more engaging: add 2-5 image layers showing different angles/features
+
+CRITICAL FOR IMAGE RENDERING:
+When your template includes image layers, set: "renderWaitTime": 300
+Images are pre-loaded during initialization, but a short wait ensures proper rendering.
+Example: { "template": {...}, "renderWaitTime": 300 }
+Note: Higher values (500-1000) for complex animations; lower (100-200) for simple templates
+
 COMMON MISTAKES TO AVOID:
+❌ Creating promotional videos with ONLY text and shapes - MUST include image layers showing the actual product/content
 ❌ Using seconds for animation timing (use frames!)
 ❌ Missing size property on layers
 ❌ Putting layer props outside props object
 ❌ Missing required field in input definitions
 ❌ Using wrong position values (position is top-left corner, not center)
 ❌ endFrame less than or equal to startFrame
+❌ DUPLICATE LAYER IDS: Layer IDs must be unique across ALL scenes (use "scene1-bg", "scene2-bg" not "background" in every scene)
+
+TEMPLATE VARIABLES:
+✓ Use {{variableName}} in props to reference inputs: "text": "{{title}}"
+✓ Define the variable in defaults: "defaults": { "title": "Hello" }
+✓ Note: "UNUSED_INPUT" warnings appear even when using {{variables}} - these can be ignored
 ❌ Animation delay + duration exceeding scene duration`,
   inputSchema: zodToJsonSchema(RenderVideoInputSchema),
 };
@@ -392,7 +423,7 @@ function generateValidationSuggestions(errors: Array<{ path?: string; message: s
 
     // Check for unused inputs
     if (message.includes('unused') || message.includes('not used')) {
-      suggestions.push('UNUSED INPUTS: All input variables must be used in the template with {{variableName}} syntax. Either use them in layer props or remove them from the inputs array.');
+      suggestions.push('UNUSED INPUTS: If you\'re using {{variableName}} in props, this warning is a false positive and can be ignored. Otherwise, either add {{variableName}} references in layer props or remove unused inputs from the inputs array.');
     }
 
     // Provide helpful suggestions based on common errors
