@@ -384,15 +384,24 @@ function ImageLayer({ layer, frame, fps, sceneDuration }) {
         transform: layer.rotation ? `rotate(${layer.rotation}deg)` : void 0,
         opacity: layer.opacity ?? 1,
         overflow: "hidden",
-        // Use CSS background-image for better capture compatibility
-        backgroundImage: `url(${src})`,
-        backgroundSize: fit === "fill" ? "100% 100%" : fit,
-        backgroundPosition: objectPosition,
-        backgroundRepeat: "no-repeat",
         ...layerStyle,
         ...animationStyle
       },
-      className: layer.className
+      className: layer.className,
+      children: /* @__PURE__ */ jsxRuntime.jsx(
+        "img",
+        {
+          src,
+          alt: "",
+          style: {
+            width: "100%",
+            height: "100%",
+            objectFit: fit === "fill" ? "fill" : fit,
+            objectPosition,
+            display: "block"
+          }
+        }
+      )
     }
   );
 }

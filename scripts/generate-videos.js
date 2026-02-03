@@ -489,6 +489,15 @@ async function generateVideo(browser, example) {
   fs.mkdirSync(frameDir, { recursive: true });
 
   const page = await browser.newPage();
+
+  // Log browser console for debugging
+  page.on('console', msg => {
+    const type = msg.type();
+    if (type === 'error' || type === 'warn') {
+      console.log(`     [Browser ${type}]`, msg.text());
+    }
+  });
+
   await page.setViewport({ width: out.width, height: out.height });
 
   console.log(`     Rendering ${totalFrames} frames...`);
@@ -500,6 +509,12 @@ async function generateVideo(browser, example) {
   const usesCustomComponents = hasCustomComponents(template);
   const usesSceneTransitions = hasSceneTransitions(template);
   const usesBrowserRenderer = usesCustomComponents || usesSceneTransitions;
+
+  if (usesBrowserRenderer) {
+    console.log(`     Using browser renderer (customComponents: ${usesCustomComponents}, transitions: ${usesSceneTransitions})`);
+  } else {
+    console.log(`     Using direct HTML generation`);
+  }
 
   // Render all frames
   // Track current scene to detect scene changes
@@ -665,7 +680,12 @@ async function main() {
     Array.from({ length: parallelCount }, () =>
       puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-web-security',
+          '--disable-features=IsolateOrigins,site-per-process', // Required for --disable-web-security to work
+        ],
       })
     )
   );
