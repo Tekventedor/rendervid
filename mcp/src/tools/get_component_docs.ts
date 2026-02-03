@@ -375,52 +375,191 @@ const COMPONENT_DOCS = {
 
   custom: {
     type: 'custom',
-    description: 'Use custom React components for advanced effects',
+    description: `Use custom React components for advanced effects and animations.
+
+IMPORTANT: You can create NEW custom components using THREE methods:
+
+1. **inline** - Write React code directly in the template (RECOMMENDED for AI agents)
+2. **url** - Load components from a CDN or URL
+3. **reference** - Use pre-registered components
+
+Custom components enable effects that built-in components cannot achieve:
+- Animated counters and timers
+- Particle systems and physics
+- Data visualizations and charts
+- 3D effects and transformations
+- Procedural graphics and SVG animations
+- Complex frame-based animations`,
     required: ['id', 'type', 'position', 'size', 'customComponent'],
+
+    howToDefineComponents: {
+      description: `Define custom components in the template's "customComponents" field at the root level:`,
+
+      method1_inline: {
+        type: 'inline',
+        description: 'Write React code as a string in the template. Best for AI-generated components.',
+        structure: {
+          customComponents: {
+            'ComponentName': {
+              type: 'inline',
+              code: 'function ComponentName(props) { /* React code here */ return React.createElement(...); }',
+              description: 'Optional description of what the component does'
+            }
+          }
+        },
+        exampleTemplate: {
+          name: 'Animated Counter Example',
+          customComponents: {
+            'AnimatedCounter': {
+              type: 'inline',
+              code: 'function AnimatedCounter(props) { const progress = Math.min(props.frame / (props.fps * 2), 1); const value = Math.floor(props.from + (props.to - props.from) * progress); return React.createElement("div", { style: { fontSize: "72px", fontWeight: "bold", color: "#00ffff" } }, value); }',
+              description: 'Animated number counter with easing'
+            }
+          },
+          output: { type: 'video', width: 1920, height: 1080, fps: 30, duration: 3 },
+          composition: {
+            scenes: [{
+              layers: [{
+                id: 'counter',
+                type: 'custom',
+                position: { x: 960, y: 540 },
+                size: { width: 400, height: 200 },
+                customComponent: {
+                  name: 'AnimatedCounter',
+                  props: { from: 0, to: 100 }
+                }
+              }]
+            }]
+          }
+        },
+        componentInterface: {
+          description: 'Every custom component receives these props automatically:',
+          props: {
+            frame: 'Current frame number (0, 1, 2, ...)',
+            fps: 'Frames per second (e.g., 30, 60)',
+            sceneDuration: 'Total frames in the scene',
+            layerSize: { width: 'Layer width in pixels', height: 'Layer height in pixels' },
+            yourCustomProps: 'Any props you define in customComponent.props'
+          }
+        },
+        rules: [
+          'Use React.createElement() to create elements (no JSX)',
+          'Components must be deterministic (same frame = same output)',
+          'Calculate animations based on props.frame',
+          'No side effects (fetch, setTimeout, setInterval)',
+          'No external state or imports',
+          'Return a single React element'
+        ]
+      },
+
+      method2_url: {
+        type: 'url',
+        description: 'Load component from a CDN or HTTPS URL',
+        structure: {
+          customComponents: {
+            'MyChart': {
+              type: 'url',
+              url: 'https://cdn.example.com/MyChart.js'
+            }
+          }
+        },
+        note: 'Must use HTTPS. Component file must export as default or named export.'
+      },
+
+      method3_reference: {
+        type: 'reference',
+        description: 'Reference a pre-registered component from the built-in library',
+        structure: {
+          customComponents: {
+            'Particles': {
+              type: 'reference',
+              reference: 'particle-system'
+            }
+          }
+        },
+        availableBuiltInComponents: [
+          'particle-system',
+          'typewriter-effect',
+          'glitch-effect',
+          'three-scene',
+          'svg-drawing',
+          'metaballs',
+          'aurora-background',
+          'wave-background'
+        ]
+      }
+    },
+
     customComponent: {
       name: {
         type: 'string',
         required: true,
-        description: 'Component name (e.g., "particle-system", "typewriter-effect")',
-        example: 'particle-system',
+        description: 'Name of the component defined in customComponents field',
+        example: 'AnimatedCounter',
       },
       props: {
         type: 'object',
-        required: true,
-        description: 'Component-specific props (varies by component)',
-        example: { frame: 0, fps: 30, count: 100 },
+        required: false,
+        description: 'Custom props to pass to the component (in addition to auto props)',
+        example: { from: 0, to: 100, color: '#00ffff' },
       },
     },
-    availableComponents: [
-      'particle-system',
-      'typewriter-effect',
-      'glitch-effect',
-      'three-scene',
-      'svg-drawing',
-      'metaballs',
-      'aurora-background',
-      'wave-background',
-    ],
-    example: {
-      id: 'particles',
-      type: 'custom',
-      position: { x: 0, y: 0 },
-      size: { width: 1920, height: 1080 },
-      customComponent: {
-        name: 'particle-system',
-        props: {
-          frame: 0,
-          fps: 30,
-          count: 100,
-          type: 'circle',
-          color: '#ffffff',
-          size: [2, 8],
-          speed: [1, 3],
-          direction: 'up',
+
+    fullWorkingExample: {
+      description: 'Complete template with inline custom component (ready to render)',
+      template: {
+        name: 'Fast Clock Example',
+        output: { type: 'video', width: 1920, height: 1080, fps: 60, duration: 5 },
+        customComponents: {
+          'FastClock': {
+            type: 'inline',
+            code: 'function FastClock(props) { const time = (props.frame / props.fps) * (props.speed || 1); const seconds = Math.floor(time % 60); const angle = seconds * 6; const rad = (angle - 90) * Math.PI / 180; const cx = props.layerSize.width / 2; const cy = props.layerSize.height / 2; const length = Math.min(cx, cy) * 0.8; const x2 = cx + Math.cos(rad) * length; const y2 = cy + Math.sin(rad) * length; return React.createElement("svg", { width: props.layerSize.width, height: props.layerSize.height }, React.createElement("circle", { cx: cx, cy: cy, r: Math.min(cx, cy) * 0.9, fill: "transparent", stroke: props.color || "#fff", strokeWidth: 4 }), React.createElement("line", { x1: cx, y1: cy, x2: x2, y2: y2, stroke: "#ff0000", strokeWidth: 3 })); }',
+            description: 'Animated analog clock with rotating second hand'
+          }
         },
-      },
+        composition: {
+          scenes: [{
+            layers: [{
+              id: 'clock',
+              type: 'custom',
+              position: { x: 960, y: 540 },
+              size: { width: 400, height: 400 },
+              customComponent: {
+                name: 'FastClock',
+                props: { speed: 10, color: '#ffffff' }
+              }
+            }]
+          }]
+        }
+      }
     },
-    note: 'For custom component details, use get_custom_component_docs tool',
+
+    example: {
+      description: 'Using a custom component in a layer',
+      id: 'my-custom-element',
+      type: 'custom',
+      position: { x: 960, y: 540 },
+      size: { width: 800, height: 400 },
+      customComponent: {
+        name: 'AnimatedCounter',
+        props: {
+          from: 0,
+          to: 100,
+          color: '#00ffff'
+        }
+      }
+    },
+
+    importantNotes: [
+      '✅ You CAN create new components with inline React code',
+      '✅ Components are defined in template.customComponents (root level)',
+      '✅ Use type: "inline" to write React code directly in the template',
+      '✅ Components receive frame, fps, sceneDuration, layerSize automatically',
+      '✅ Same component can be used multiple times with different props',
+      '⚠️ Components must be deterministic (frame-based, no randomness)',
+      '⚠️ Use React.createElement(), not JSX syntax',
+      '⚠️ No external dependencies or imports allowed in inline code'
+    ]
   },
 };
 

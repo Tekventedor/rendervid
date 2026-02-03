@@ -270,6 +270,155 @@ Templates are JSON objects with this structure:
 }
 ```
 
+## Creating Custom Components with Inline React Code
+
+**IMPORTANT:** You can create NEW custom components by writing React code directly in templates! This is one of Rendervid's most powerful features for AI agents.
+
+### Why Use Custom Components?
+
+Built-in components (text, image, shape) are limited to static or simple animations. Custom components enable:
+- ✅ Animated counters and timers
+- ✅ Particle systems and physics simulations
+- ✅ Data visualizations and charts
+- ✅ 3D effects with CSS transforms
+- ✅ Procedural graphics and SVG animations
+- ✅ Complex frame-based calculations
+
+### How to Create Custom Components
+
+Add a `customComponents` field to your template at the root level:
+
+```json
+{
+  "name": "Video with Custom Component",
+  "customComponents": {
+    "AnimatedCounter": {
+      "type": "inline",
+      "code": "function AnimatedCounter(props) { const progress = Math.min(props.frame / (props.fps * 2), 1); const value = Math.floor(props.from + (props.to - props.from) * progress); return React.createElement('div', { style: { fontSize: '72px', fontWeight: 'bold', color: '#00ffff' } }, value); }",
+      "description": "Animated number counter"
+    }
+  },
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3 },
+  "composition": {
+    "scenes": [{
+      "layers": [{
+        "id": "counter",
+        "type": "custom",
+        "position": { "x": 960, "y": 540 },
+        "size": { "width": 400, "height": 200 },
+        "customComponent": {
+          "name": "AnimatedCounter",
+          "props": { "from": 0, "to": 100 }
+        }
+      }]
+    }]
+  }
+}
+```
+
+### Component Interface
+
+Every custom component automatically receives these props:
+
+```typescript
+{
+  frame: number;         // Current frame (0, 1, 2, ...)
+  fps: number;           // Frames per second (30, 60)
+  sceneDuration: number; // Total frames in scene
+  layerSize: {
+    width: number;       // Layer width
+    height: number;      // Layer height
+  };
+  // + your custom props from customComponent.props
+}
+```
+
+### Rules for Inline Components
+
+1. ✅ **Use `React.createElement()`** - No JSX syntax
+2. ✅ **Frame-based animations** - Calculate from `props.frame`
+3. ✅ **Pure functions** - Same frame = same output
+4. ❌ **No side effects** - No fetch, setTimeout, setInterval
+5. ❌ **No external imports** - No require() or import
+6. ❌ **No DOM access** - No document or window
+
+### Complete Working Example
+
+```json
+{
+  "name": "Time Running Out Demo",
+  "customComponents": {
+    "FastClock": {
+      "type": "inline",
+      "code": "function FastClock(props) { const time = (props.frame / props.fps) * props.speed; const seconds = Math.floor(time % 60); const angle = seconds * 6; const rad = (angle - 90) * Math.PI / 180; const cx = props.layerSize.width / 2; const cy = props.layerSize.height / 2; const r = Math.min(cx, cy) * 0.9; const length = r * 0.8; const x2 = cx + Math.cos(rad) * length; const y2 = cy + Math.sin(rad) * length; return React.createElement('svg', { width: props.layerSize.width, height: props.layerSize.height }, React.createElement('circle', { cx: cx, cy: cy, r: r, fill: 'transparent', stroke: props.color || '#fff', strokeWidth: 4 }), React.createElement('line', { x1: cx, y1: cy, x2: x2, y2: y2, stroke: '#ff0000', strokeWidth: 3, strokeLinecap: 'round' })); }"
+    }
+  },
+  "output": { "type": "video", "width": 1920, "height": 1080, "fps": 60, "duration": 5 },
+  "composition": {
+    "scenes": [{
+      "layers": [
+        {
+          "id": "clock-left",
+          "type": "custom",
+          "position": { "x": 400, "y": 540 },
+          "size": { "width": 300, "height": 300 },
+          "customComponent": {
+            "name": "FastClock",
+            "props": { "speed": 10, "color": "#ff6b6b" }
+          }
+        },
+        {
+          "id": "clock-right",
+          "type": "custom",
+          "position": { "x": 1520, "y": 540 },
+          "size": { "width": 300, "height": 300 },
+          "customComponent": {
+            "name": "FastClock",
+            "props": { "speed": 10, "color": "#6baaff" }
+          }
+        },
+        {
+          "id": "text",
+          "type": "text",
+          "position": { "x": 960, "y": 540 },
+          "size": { "width": 600, "height": 200 },
+          "props": {
+            "text": "TIME IS RUNNING OUT",
+            "fontSize": 48,
+            "fontWeight": "bold",
+            "color": "#ffffff",
+            "textAlign": "center"
+          }
+        }
+      ]
+    }]
+  }
+}
+```
+
+This template creates two animated analog clocks showing time running at 10x speed with warning text in the center!
+
+### AI Agent Workflow
+
+When a user asks for a custom visual effect:
+
+1. **Check if built-in components suffice** - Use get_capabilities
+2. **If custom component needed** - Write inline React code
+3. **Add to template** - Include in customComponents field
+4. **Use in layers** - Reference by name in composition
+5. **Validate** - Call validate_template
+6. **Render** - Call render_video
+
+### Three Component Types
+
+| Type | When to Use | Security |
+|------|-------------|----------|
+| **inline** | AI-generated, one-time components | ⚠️ Validated |
+| **url** | Shared components from CDN | ⚠️ HTTPS only |
+| **reference** | Pre-built library components | ✅ Trusted |
+
+For more details, use the `get_component_docs` tool with `componentType: "custom"`.
+
 ## Troubleshooting
 
 ### Server Not Appearing in Claude Desktop
