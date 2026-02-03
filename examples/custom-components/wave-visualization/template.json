@@ -2,7 +2,12 @@
   "name": "Audio Wave Visualization",
   "description": "Beautiful audio wave visualization with multiple frequency bands",
   "version": "1.0.0",
-  "tags": ["audio", "visualization", "waves", "custom-component"],
+  "tags": [
+    "audio",
+    "visualization",
+    "waves",
+    "custom-component"
+  ],
   "output": {
     "type": "video",
     "width": 1920,
@@ -76,6 +81,10 @@
             "props": {
               "shapeType": "rectangle",
               "fill": "linear-gradient(135deg, rgba(10,0,30,1), rgba(30,0,60,1))"
+            },
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
             }
           },
           {
@@ -99,7 +108,11 @@
                 "effect": "zoomIn",
                 "duration": 60
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "audio-wave",
@@ -126,7 +139,11 @@
                 "duration": 40,
                 "delay": 30
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "track-name",
@@ -154,7 +171,11 @@
                 "duration": 40,
                 "delay": 20
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "artist-name",
@@ -181,7 +202,11 @@
                 "duration": 40,
                 "delay": 40
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "now-playing",

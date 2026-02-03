@@ -2,7 +2,13 @@
   "name": "Neon Text Effects",
   "description": "Stunning neon text with glow, flicker, and animation effects",
   "version": "1.0.0",
-  "tags": ["text", "neon", "glow", "effects", "custom-component"],
+  "tags": [
+    "text",
+    "neon",
+    "glow",
+    "effects",
+    "custom-component"
+  ],
   "output": {
     "type": "video",
     "width": 1920,
@@ -75,6 +81,10 @@
             "props": {
               "shapeType": "rectangle",
               "fill": "linear-gradient(180deg, #000000 0%, #0a0a1a 50%, #000000 100%)"
+            },
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
             }
           },
           {
@@ -102,7 +112,11 @@
                 "effect": "fadeIn",
                 "duration": 60
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "main-text",
@@ -131,7 +145,11 @@
                 "duration": 50,
                 "delay": 30
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "sub-text",
@@ -160,7 +178,11 @@
                 "duration": 40,
                 "delay": 60
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "scan-line",

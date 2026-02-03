@@ -75,7 +75,11 @@
                 "duration": 30,
                 "easing": "easeOutBack"
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "warning-text",
@@ -143,7 +147,11 @@
                 "duration": 30,
                 "delay": 50
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           },
           {
             "id": "glow-effect-left",
@@ -194,7 +202,11 @@
                 "loop": true,
                 "delay": 60
               }
-            ]
+            ],
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            }
           }
         ]
       }

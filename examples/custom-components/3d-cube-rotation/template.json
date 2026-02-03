@@ -134,6 +134,10 @@
               "width": 1600,
               "height": 80
             },
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            },
             "props": {
               "text": "3D Transform with Custom Components",
               "fontSize": 32,
