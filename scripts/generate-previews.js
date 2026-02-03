@@ -31,6 +31,7 @@ const CATEGORIES = [
   '3d',
   'backgrounds',
   'effects',
+  'custom-components',
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-frames');
 

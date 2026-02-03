@@ -32,6 +32,7 @@ const CATEGORIES = [
   '3d',
   'backgrounds',
   'effects',
+  'custom-components',
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-video-frames');
 const AUDIO_FILE = path.join(__dirname, '..', 'examples', 'showcase', 'background-music.mp3');
