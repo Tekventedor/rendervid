@@ -1,0 +1,203 @@
+{
+  "name": "Time Running Out - Animated Clocks",
+  "description": "Two animated clocks on both sides showing time running fast with centered warning text",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 8
+  },
+  "customComponents": {
+    "FastClock": {
+      "type": "inline",
+      "code": "function FastClock(props) { const speedMultiplier = props.speed || 10; const timeInSeconds = (props.frame / props.fps) * speedMultiplier; const hours = Math.floor(timeInSeconds / 3600) % 12 || 12; const minutes = Math.floor((timeInSeconds % 3600) / 60); const seconds = Math.floor(timeInSeconds % 60); const secondAngle = (seconds * 6) + ((props.frame % props.fps) / props.fps) * 6; const minuteAngle = (minutes * 6) + (seconds / 60) * 6; const hourAngle = (hours * 30) + (minutes / 60) * 30; const size = props.layerSize.width; const center = size / 2; const clockRadius = size * 0.4; const createHand = (angle, length, width, color) => { const rad = (angle - 90) * Math.PI / 180; const x2 = center + Math.cos(rad) * length; const y2 = center + Math.sin(rad) * length; return React.createElement('line', { x1: center, y1: center, x2: x2, y2: y2, stroke: color, strokeWidth: width, strokeLinecap: 'round' }); }; const hourMarkers = []; for (let i = 0; i < 12; i++) { const angle = i * 30; const rad = (angle - 90) * Math.PI / 180; const outerRadius = clockRadius; const innerRadius = clockRadius * 0.85; const x1 = center + Math.cos(rad) * innerRadius; const y1 = center + Math.sin(rad) * innerRadius; const x2 = center + Math.cos(rad) * outerRadius; const y2 = center + Math.sin(rad) * outerRadius; hourMarkers.push(React.createElement('line', { key: 'hour-' + i, x1: x1, y1: y1, x2: x2, y2: y2, stroke: props.color || '#ffffff', strokeWidth: size * 0.015, strokeLinecap: 'round' })); } const minuteMarkers = []; for (let i = 0; i < 60; i++) { if (i % 5 === 0) continue; const angle = i * 6; const rad = (angle - 90) * Math.PI / 180; const outerRadius = clockRadius; const innerRadius = clockRadius * 0.92; const x1 = center + Math.cos(rad) * innerRadius; const y1 = center + Math.sin(rad) * innerRadius; const x2 = center + Math.cos(rad) * outerRadius; const y2 = center + Math.sin(rad) * outerRadius; minuteMarkers.push(React.createElement('line', { key: 'min-' + i, x1: x1, y1: y1, x2: x2, y2: y2, stroke: props.color || '#ffffff', strokeWidth: size * 0.005, strokeLinecap: 'round', opacity: 0.5 })); } const glowIntensity = Math.sin(props.frame * 0.1) * 0.3 + 0.7; return React.createElement('svg', { width: size, height: size, style: { filter: 'drop-shadow(0 0 ' + (size * 0.05) + 'px rgba(255, 68, 68, ' + glowIntensity + '))' } }, React.createElement('circle', { cx: center, cy: center, r: clockRadius, fill: 'transparent', stroke: props.color || '#ffffff', strokeWidth: size * 0.02 }), React.createElement('circle', { cx: center, cy: center, r: clockRadius * 0.05, fill: props.color || '#ffffff' }), ...hourMarkers, ...minuteMarkers, createHand(hourAngle, clockRadius * 0.5, size * 0.02, props.color || '#ffffff'), createHand(minuteAngle, clockRadius * 0.7, size * 0.015, props.color || '#ffffff'), createHand(secondAngle, clockRadius * 0.85, size * 0.008, '#ff4444')); }",
+      "description": "Animated analog clock with customizable speed multiplier"
+    }
+  },
+  "composition": {
+    "backgroundColor": "#0a0a0a",
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 480,
+        "layers": [
+          {
+            "id": "clock-left",
+            "type": "custom",
+            "position": {
+              "x": 240,
+              "y": 540
+            },
+            "size": {
+              "width": 400,
+              "height": 400
+            },
+            "customComponent": {
+              "name": "FastClock",
+              "props": {
+                "speed": 20,
+                "color": "#ff6b6b"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "clock-right",
+            "type": "custom",
+            "position": {
+              "x": 1680,
+              "y": 540
+            },
+            "size": {
+              "width": 400,
+              "height": 400
+            },
+            "customComponent": {
+              "name": "FastClock",
+              "props": {
+                "speed": 20,
+                "color": "#6baaff"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "warning-text",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 540
+            },
+            "size": {
+              "width": 800,
+              "height": 300
+            },
+            "props": {
+              "text": "TIME IS\nRUNNING OUT",
+              "fontSize": 88,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "lineHeight": 1.2,
+              "fontFamily": "Arial Black, sans-serif",
+              "textShadow": "0 0 30px rgba(255, 68, 68, 0.8), 0 0 60px rgba(255, 68, 68, 0.5)",
+              "letterSpacing": "0.05em"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "duration": 40,
+                "easing": "easeOutCubic",
+                "delay": 20
+              },
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "duration": 60,
+                "loop": true,
+                "delay": 60
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": {
+              "x": 960,
+              "y": 780
+            },
+            "size": {
+              "width": 1000,
+              "height": 100
+            },
+            "props": {
+              "text": "Every second counts",
+              "fontSize": 36,
+              "fontWeight": "400",
+              "color": "#cccccc",
+              "textAlign": "center",
+              "fontStyle": "italic",
+              "textShadow": "0 2px 10px rgba(0, 0, 0, 0.8)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 30,
+                "delay": 50
+              }
+            ]
+          },
+          {
+            "id": "glow-effect-left",
+            "type": "shape",
+            "position": {
+              "x": 240,
+              "y": 540
+            },
+            "size": {
+              "width": 500,
+              "height": 500
+            },
+            "props": {
+              "shape": "ellipse",
+              "fill": "rgba(255, 107, 107, 0.1)",
+              "blur": 80
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "duration": 120,
+                "loop": true
+              }
+            ]
+          },
+          {
+            "id": "glow-effect-right",
+            "type": "shape",
+            "position": {
+              "x": 1680,
+              "y": 540
+            },
+            "size": {
+              "width": 500,
+              "height": 500
+            },
+            "props": {
+              "shape": "ellipse",
+              "fill": "rgba(107, 170, 255, 0.1)",
+              "blur": 80
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "duration": 120,
+                "loop": true,
+                "delay": 60
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

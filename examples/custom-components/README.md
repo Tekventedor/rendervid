@@ -56,9 +56,28 @@ Multi-component dashboard with metrics and statistics.
 
 ---
 
+### 5. Time Running Out (`time-running-out.json`)
+Two animated analog clocks showing time running at 20x speed with dramatic warning text.
+
+**Features:**
+- Animated analog clock with SVG rendering
+- Component reusability (same clock, different colors)
+- Hour, minute, and second hands with smooth animation
+- Dynamic glow effects
+- Frame-based time calculation
+
+**Duration:** 8 seconds | **FPS:** 60
+
+**Customizable:**
+- Clock speed multiplier
+- Clock colors
+- Warning text
+
+---
+
 ## 🌟 Stunning Visual Effects
 
-### 5. Particle Explosion (`particle-explosion.json`)
+### 6. Particle Explosion (`particle-explosion.json`)
 Spectacular particle physics simulation with color cycling.
 
 **Features:**
@@ -77,7 +96,7 @@ Spectacular particle physics simulation with color cycling.
 
 ---
 
-### 6. 3D Cube Rotation (`3d-cube-rotation.json`)
+### 7. 3D Cube Rotation (`3d-cube-rotation.json`)
 Stunning 3D cube with CSS transforms and face customization.
 
 **Features:**
@@ -95,7 +114,7 @@ Stunning 3D cube with CSS transforms and face customization.
 
 ---
 
-### 7. Wave Visualization (`wave-visualization.json`)
+### 8. Wave Visualization (`wave-visualization.json`)
 Beautiful audio wave visualization with multiple frequency bands.
 
 **Features:**
@@ -115,7 +134,7 @@ Beautiful audio wave visualization with multiple frequency bands.
 
 ---
 
-### 8. Neon Text Effects (`neon-text-effects.json`)
+### 9. Neon Text Effects (`neon-text-effects.json`)
 Stunning neon text with realistic glow, flicker, and electric effects.
 
 **Features:**
@@ -135,7 +154,7 @@ Stunning neon text with realistic glow, flicker, and electric effects.
 
 ---
 
-### 9. Holographic Interface (`holographic-interface.json`)
+### 10. Holographic Interface (`holographic-interface.json`)
 Futuristic sci-fi holographic interface with multiple animated elements.
 
 **Features:**
@@ -162,17 +181,13 @@ Futuristic sci-fi holographic interface with multiple animated elements.
 
 ```typescript
 import { createBrowserRenderer } from '@rendervid/renderer-browser';
-import template from './examples/custom-components/particle-explosion.json';
+import template from './examples/custom-components/time-running-out.json';
 
 const renderer = createBrowserRenderer();
 
 const result = await renderer.renderVideo({
-  template,
-  inputs: {
-    title: "AMAZING PARTICLES",
-    particleCount: 200,
-    explosionForce: 10
-  }
+  template
+  // No inputs needed - component props are in the template
 });
 
 // Download the video
