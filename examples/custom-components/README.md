@@ -1,193 +1,147 @@
 # Custom Components Examples
 
-This directory contains stunning examples demonstrating custom component usage in Rendervid templates.
+This directory contains stunning examples demonstrating custom component usage in Rendervid templates. Each example is in its own folder with a complete README, video preview, and template.
+
+## 📂 Examples Structure
+
+Each example folder contains:
+- **`template.json`** - The Rendervid template
+- **`README.md`** - Complete documentation
+- **`preview.gif`** - Animated preview (first 5 seconds)
+- **`video.mp4`** - Full rendered video
 
 ## 🎨 Basic Examples
 
-### 1. Animated Counter (`animated-counter.json`)
+### [Animated Counter](./animated-counter/)
+![Animated Counter](./animated-counter/preview.gif)
+
 Simple number counting animation with easing effects.
+- **Duration:** 5s | **FPS:** 30 | **Frames:** 150
 
-**Features:**
-- Frame-based animation
-- Configurable start/end values
-- Smooth easing function
-- Input variable binding
-
-**Duration:** 5 seconds | **FPS:** 30
+**[View Details →](./animated-counter/README.md)**
 
 ---
 
-### 2. Progress Ring (`progress-ring.json`)
+### [Progress Ring](./progress-ring/)
+![Progress Ring](./progress-ring/preview.gif)
+
 Circular progress indicator with percentage display.
+- **Duration:** 5s | **FPS:** 30 | **Frames:** 150
 
-**Features:**
-- SVG-based rendering
-- Animated percentage counter
-- Customizable colors and stroke width
-- Scene progress tracking
-
-**Duration:** 5 seconds | **FPS:** 30
+**[View Details →](./progress-ring/README.md)**
 
 ---
 
-### 3. Typewriter Effect (`typewriter.json`)
+### [Typewriter Effect](./typewriter/)
+![Typewriter](./typewriter/preview.gif)
+
 Text appearing character by character with blinking cursor.
+- **Duration:** 8s | **FPS:** 30 | **Frames:** 240
 
-**Features:**
-- Character-by-character reveal
-- Configurable typing speed
-- Blinking cursor animation
-- Terminal-style design
-
-**Duration:** 8 seconds | **FPS:** 30
+**[View Details →](./typewriter/README.md)**
 
 ---
 
-### 4. Dashboard (`dashboard.json`)
+### [Dashboard](./dashboard/)
+![Dashboard](./dashboard/preview.gif)
+
 Multi-component dashboard with metrics and statistics.
+- **Duration:** 6s | **FPS:** 30 | **Frames:** 180
 
-**Features:**
-- Multiple custom components
-- Animated counters and progress bars
-- Badge components
-- Professional layout
-
-**Duration:** 6 seconds | **FPS:** 30
+**[View Details →](./dashboard/README.md)**
 
 ---
 
-### 5. Time Running Out (`time-running-out.json`)
-Two animated analog clocks showing time running at 20x speed with dramatic warning text.
+### [Time Running Out](./time-running-out/)
+![Time Running Out](./time-running-out/preview.gif)
 
-**Features:**
-- Animated analog clock with SVG rendering
-- Component reusability (same clock, different colors)
-- Hour, minute, and second hands with smooth animation
-- Dynamic glow effects
-- Frame-based time calculation
+Two animated analog clocks showing time running at 20x speed with warning text.
+- **Duration:** 8s | **FPS:** 60 | **Frames:** 480
 
-**Duration:** 8 seconds | **FPS:** 60
-
-**Customizable:**
-- Clock speed multiplier
-- Clock colors
-- Warning text
+**[View Details →](./time-running-out/README.md)**
 
 ---
 
 ## 🌟 Stunning Visual Effects
 
-### 6. Particle Explosion (`particle-explosion.json`)
-Spectacular particle physics simulation with color cycling.
+### [Particle Explosion](./particle-explosion/)
+![Particle Explosion](./particle-explosion/preview.gif)
 
-**Features:**
-- 150+ animated particles
-- Physics-based motion
-- Color hue rotation
-- Gravity simulation
-- Glowing title effect
+Spectacular particle physics simulation with 150+ animated particles.
+- **Duration:** 5s | **FPS:** 60 | **Frames:** 300
 
-**Duration:** 5 seconds | **FPS:** 60
-
-**Customizable:**
-- Particle count (50-300)
-- Explosion force (1-15)
-- Title text
+**[View Details →](./particle-explosion/README.md)**
 
 ---
 
-### 7. 3D Cube Rotation (`3d-cube-rotation.json`)
-Stunning 3D cube with CSS transforms and face customization.
+### [3D Cube Rotation](./3d-cube-rotation/)
+![3D Cube](./3d-cube-rotation/preview.gif)
 
-**Features:**
-- Real 3D perspective rendering
-- Smooth rotation animation
-- 6 customizable faces
-- Gradient backgrounds per face
-- Pulsing radial glow
+Stunning 3D cube with CSS transforms and customizable faces.
+- **Duration:** 8s | **FPS:** 60 | **Frames:** 480
 
-**Duration:** 8 seconds | **FPS:** 60
-
-**Customizable:**
-- All 6 face labels
-- Rotation speed (implicit in frame rate)
+**[View Details →](./3d-cube-rotation/README.md)**
 
 ---
 
-### 8. Wave Visualization (`wave-visualization.json`)
+### [Wave Visualization](./wave-visualization/)
+![Wave Visualization](./wave-visualization/preview.gif)
+
 Beautiful audio wave visualization with multiple frequency bands.
+- **Duration:** 10s | **FPS:** 60 | **Frames:** 600
 
-**Features:**
-- Dual wave systems (bar + circular)
-- 80 animated frequency bars
-- Circular spectrum analyzer
-- Reflection effects
-- Pulsing title text
-- "Now Playing" badge
-
-**Duration:** 10 seconds | **FPS:** 60
-
-**Customizable:**
-- Track name
-- Artist name
-- Wave colors (gradient)
+**[View Details →](./wave-visualization/README.md)**
 
 ---
 
-### 9. Neon Text Effects (`neon-text-effects.json`)
+### [Neon Text Effects](./neon-text-effects/)
+![Neon Text](./neon-text-effects/preview.gif)
+
 Stunning neon text with realistic glow, flicker, and electric effects.
+- **Duration:** 6s | **FPS:** 60 | **Frames:** 360
 
-**Features:**
-- Realistic neon glow
-- Random flicker effect
-- Pulsing neon border frame
-- Scanning line (retro CRT effect)
-- Electric sparks
-- Corner accents
-
-**Duration:** 6 seconds | **FPS:** 60
-
-**Customizable:**
-- Main text
-- Sub text
-- Neon color
+**[View Details →](./neon-text-effects/README.md)**
 
 ---
 
-### 10. Holographic Interface (`holographic-interface.json`)
+### [Holographic Interface](./holographic-interface/)
+![Holographic Interface](./holographic-interface/preview.gif)
+
 Futuristic sci-fi holographic interface with multiple animated elements.
+- **Duration:** 12s | **FPS:** 60 | **Frames:** 720
 
-**Features:**
-- Animated hexagon grid pattern
-- Binary data streams (left & right)
-- Holographic text with glitch effect
-- Rotating radar scan display
-- Circular progress indicator
-- Corner frame decorations
-- Status badge
-
-**Duration:** 12 seconds | **FPS:** 60
-
-**Customizable:**
-- System name
-- Status text
-- Completion percentage
+**[View Details →](./holographic-interface/README.md)**
 
 ---
 
-## 🚀 Running Examples
+## 🚀 Quick Start
 
-### Browser
+### Render Any Example
+
+```bash
+# Render a specific example
+cd examples/custom-components
+npx tsx render-all-examples.ts animated-counter
+
+# Render all examples
+npx tsx render-all-examples.ts
+```
+
+### Use in Your Code
 
 ```typescript
 import { createBrowserRenderer } from '@rendervid/renderer-browser';
-import template from './examples/custom-components/time-running-out.json';
+import template from './examples/custom-components/particle-explosion/template.json';
 
 const renderer = createBrowserRenderer();
 
 const result = await renderer.renderVideo({
-  template
-  // No inputs needed - component props are in the template
+  template,
+  inputs: {
+    title: "AMAZING PARTICLES",
+    particleCount: 200,
+    explosionForce: 10
+  }
 });
 
 // Download the video
@@ -198,64 +152,41 @@ a.download = 'particle-explosion.mp4';
 a.click();
 ```
 
-### Node.js
+## 📊 Examples Overview
 
-```typescript
-import { createNodeRenderer } from '@rendervid/renderer-node';
-import { readFileSync } from 'fs';
-
-const template = JSON.parse(
-  readFileSync('./examples/custom-components/holographic-interface.json', 'utf-8')
-);
-
-const renderer = createNodeRenderer();
-
-await renderer.renderVideo({
-  template,
-  inputs: {
-    systemName: "NEXUS SYSTEM",
-    statusText: "ONLINE",
-    completionPercent: 87
-  },
-  output: { path: './holographic-interface.mp4' }
-});
-```
-
-### Command Line
-
-```bash
-# Validate all examples
-pnpm examples:validate
-
-# Render a specific example
-pnpm examples:render particle-explosion
-
-# Generate preview images for all examples
-pnpm examples:generate-previews
-```
+| Example | Complexity | FPS | Duration | Frames | Features |
+|---------|-----------|-----|----------|--------|----------|
+| [Animated Counter](./animated-counter/) | Low | 30 | 5s | 150 | Easing, inputs |
+| [Progress Ring](./progress-ring/) | Low | 30 | 5s | 150 | SVG, progress |
+| [Typewriter](./typewriter/) | Low | 30 | 8s | 240 | Text animation |
+| [Dashboard](./dashboard/) | Medium | 30 | 6s | 180 | Multi-component |
+| [Time Running Out](./time-running-out/) | Medium | 60 | 8s | 480 | Analog clocks |
+| [Particle Explosion](./particle-explosion/) | High | 60 | 5s | 300 | Physics, 150+ particles |
+| [3D Cube](./3d-cube-rotation/) | High | 60 | 8s | 480 | CSS 3D transforms |
+| [Wave Visualization](./wave-visualization/) | High | 60 | 10s | 600 | Spectrum analyzer |
+| [Neon Text](./neon-text-effects/) | High | 60 | 6s | 360 | Glow effects |
+| [Holographic UI](./holographic-interface/) | Very High | 60 | 12s | 720 | Multi-element sci-fi |
 
 ## 🎯 Performance Tips
 
-### For 60 FPS Examples
-The stunning visual effects (particles, 3D, waves, neon, holographic) use 60 FPS for smooth animation. These may take longer to render:
+### Rendering Times (Estimated)
 
-- **Particle Explosion:** ~30-60 seconds to render
-- **3D Cube Rotation:** ~20-40 seconds to render
-- **Wave Visualization:** ~40-80 seconds to render
-- **Neon Text Effects:** ~20-40 seconds to render
-- **Holographic Interface:** ~60-120 seconds to render
+- **Basic Examples** (30 FPS): ~10-30 seconds per example
+- **High FPS Examples** (60 FPS): ~30-120 seconds per example
+- **Complex Examples**: Up to 2-3 minutes
 
 ### Optimization Options
-To speed up rendering during development:
+
+Speed up rendering during development:
 
 ```typescript
 // Reduce FPS for faster preview
-template.output.fps = 30;
+template.output.fps = 15;
 
 // Reduce duration
 template.output.duration = 3;
 
-// Reduce particle count
+// Reduce complexity (e.g., particle count)
 inputs.particleCount = 50;
 ```
 
@@ -265,40 +196,34 @@ These examples use `type: "inline"` for simplicity and self-contained demos. In 
 
 - ✅ Use `type: "reference"` for pre-registered components (most secure)
 - ✅ Use `type: "url"` for shared components from trusted CDNs
-- ⚠️ Avoid `type: "inline"` in production
+- ⚠️ Avoid `type: "inline"` in production environments
 - 🔐 Configure domain allowlists when using URL components
 
 See [Custom Components Guide](../../docs/custom-components.md) for security best practices.
 
-## 📚 Learn More
+## 📚 Documentation
 
-- [Custom Components Guide](../../docs/custom-components.md) - Complete documentation
-- [Template Schema](../../docs/template-schema.md) - Template structure reference
-- [Animation System](../../docs/animation.md) - Animation presets and keyframes
+- **[Custom Components Guide](../../docs/custom-components.md)** - Complete technical documentation
+- **[AI Agent Guide](../../docs/custom-components-ai-guide.md)** - Guide for AI agents
+- **[Development Tutorial](./time-running-out/README.md)** - Step-by-step example
+- **[Template Schema](../../docs/template-schema.md)** - Template structure reference
 
-## 🎬 Example Categories
+## 💡 Creating Your Own
 
-| Category | Examples | Complexity | FPS |
-|----------|----------|------------|-----|
-| **Basic** | Counter, Progress Ring, Typewriter, Dashboard | Simple | 30 |
-| **Visual Effects** | Particle Explosion, 3D Cube, Waves, Neon, Holographic | Advanced | 60 |
-
-## 💡 Tips for Creating Your Own
-
-1. **Start with basic examples** to understand the component interface
-2. **Use frame-based animation** for deterministic results
+1. **Start with a basic example** to understand the component interface
+2. **Use frame-based animation** for deterministic, smooth results
 3. **Keep components pure** (no side effects, no external state)
-4. **Test with different frame rates** to ensure smooth animation
+4. **Test with different frame rates** (30 FPS vs 60 FPS)
 5. **Use input variables** for reusability
-6. **Add visual polish** with shadows, glows, and blur effects
-7. **Consider performance** - complex components may take longer to render
+6. **Add visual polish** with shadows, glows, blur effects
+7. **Consider performance** - complex components take longer to render
 
 ## 🐛 Troubleshooting
 
 ### Component doesn't appear
 - Check component name matches exactly (case-sensitive)
 - Verify component is in `customComponents` object
-- Check layer `type` is set to `"custom"`
+- Ensure layer `type` is set to `"custom"`
 
 ### Animation not smooth
 - Increase FPS (30 → 60)
@@ -306,11 +231,24 @@ See [Custom Components Guide](../../docs/custom-components.md) for security best
 - Reduce complexity (fewer particles/elements)
 
 ### Rendering takes too long
-- Decrease FPS for testing
+- Decrease FPS for testing (60 → 30 or 15)
 - Reduce duration
 - Simplify component logic
 - Reduce number of animated elements
 
+### GIF generation fails
+- Ensure FFmpeg is installed: `brew install ffmpeg` (macOS)
+- Check MP4 file exists first
+- Try reducing GIF dimensions or FPS
+
+## 🔧 Scripts
+
+This directory includes helpful scripts:
+
+- **`render-all-examples.ts`** - Render all examples (or specific ones)
+- **`generate-readmes.ts`** - Generate README files from templates
+- Individual example folders may include `demo.js` or `render.ts` scripts
+
 ---
 
-**Created with Rendervid Custom Components** 🎥✨
+**Created with Rendervid** 🎥✨ | [GitHub](https://github.com/QualityUnit/rendervid) | [Documentation](https://github.com/QualityUnit/rendervid#readme)
