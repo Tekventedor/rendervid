@@ -133,6 +133,29 @@ LAYER TYPES: text, image, shape, video, audio, custom
 ANIMATION TYPES: entrance, exit, emphasis
 EASING CATEGORIES: basic, in, out (recommended), inout, back, bounce, elastic
 
+VIDEO LAYER EXAMPLE (FOR VIDEO BACKGROUNDS):
+{
+  "id": "background-video",
+  "type": "video",
+  "position": { "x": 0, "y": 0 },
+  "size": { "width": 1920, "height": 1080 },
+  "props": {
+    "src": "/path/to/video.mp4",
+    "fit": "cover",
+    "loop": true,
+    "muted": true,
+    "playbackRate": 1,
+    "startTime": 0
+  }
+}
+
+WHEN TO USE VIDEO LAYERS:
+✓ Use for animated backgrounds (loops, motion footage)
+✓ Local file paths: "/Users/name/Downloads/video.mp4" (absolute paths only)
+✓ Always set "muted": true for background videos
+✓ Use "loop": true to repeat the video
+✓ Layer order matters: video background should be FIRST layer (rendered behind text/shapes)
+
 IMAGE LAYER EXAMPLE (REQUIRED FOR PROMOTIONAL VIDEOS):
 {
   "id": "product-photo",
@@ -151,11 +174,11 @@ WHEN TO USE IMAGE LAYERS:
 ✓ Use Photomatic AI URLs: https://www.photomaticai.com/images/processed/...
 ✓ Multiple images make videos more engaging: add 2-5 image layers showing different angles/features
 
-CRITICAL FOR IMAGE RENDERING:
-When your template includes image layers, set: "renderWaitTime": 300
-Images are pre-loaded during initialization, but a short wait ensures proper rendering.
-Example: { "template": {...}, "renderWaitTime": 300 }
-Note: Higher values (500-1000) for complex animations; lower (100-200) for simple templates
+CRITICAL FOR IMAGE/VIDEO RENDERING:
+When your template includes image or video layers, set: "renderWaitTime": 500
+Media is pre-loaded during initialization, but a wait ensures proper rendering.
+Example: { "template": {...}, "renderWaitTime": 500 }
+Note: Video layers need 500-1000ms; images need 300-500ms; simple text templates: 100-200ms
 
 COMMON MISTAKES TO AVOID:
 ❌ Creating promotional videos with ONLY text and shapes - MUST include image layers showing the actual product/content
