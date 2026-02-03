@@ -91,14 +91,17 @@
             "position": { "x": 0, "y": 0 },
             "size": { "width": 1920, "height": 1080 },
             "customComponent": {
-              "name": "aurora-background",
+              "name": "AuroraBackground",
               "props": {
                 "frame": 0,
+                "totalFrames": 180,
                 "fps": 30,
-                "colors": "{{auroraColors}}",
-                "speed": "{{speed}}",
-                "blur": "{{blur}}",
-                "opacity": "{{opacity}}"
+                "colors": ["#667eea", "#764ba2", "#f093fb", "#4facfe", "#00f2fe"],
+                "speed": 0.8,
+                "blur": 40,
+                "opacity": 0.6,
+                "width": "100%",
+                "height": "100%"
               }
             }
           },

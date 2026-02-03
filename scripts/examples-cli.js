@@ -14,7 +14,26 @@ const fs = require('fs');
 const path = require('path');
 
 const EXAMPLES_DIR = path.join(__dirname, '..', 'examples');
-const CATEGORIES = ['getting-started', 'social-media', 'marketing', 'data-visualization', 'showcase'];
+const CATEGORIES = [
+  'getting-started',
+  'social-media',
+  'marketing',
+  'data-visualization',
+  'showcase',
+  '3d',
+  'advanced',
+  'backgrounds',
+  'content',
+  'custom-components',
+  'ecommerce',
+  'education',
+  'effects',
+  'events',
+  'fitness',
+  'food',
+  'real-estate',
+  'streaming'
+];
 
 function collectExamples() {
   const examples = [];
