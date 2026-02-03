@@ -28,6 +28,9 @@ const CATEGORIES = [
   'fitness',
   'food',
   'showcase',
+  '3d',
+  'backgrounds',
+  'effects',
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-frames');
 

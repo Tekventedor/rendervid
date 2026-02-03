@@ -124,38 +124,118 @@ pulse, shake, bounce, swing, wobble, flash, rubberBand, heartbeat, float, spin
 
 ## Custom Components
 
-Rendervid supports custom React components in templates, enabling dynamic visualizations beyond built-in components.
+Create **dynamic, animated React components** directly in templates for effects beyond built-in components.
 
-### Three Ways to Use Custom Components
+### Why Use Custom Components?
+
+- ✅ **Animated counters & timers** - Smooth number animations
+- ✅ **Particle systems** - Explosions, confetti, snow effects
+- ✅ **Data visualizations** - Custom charts and graphs
+- ✅ **3D effects** - CSS transforms and perspective
+- ✅ **Physics simulations** - Gravity, collisions, motion
+- ✅ **Procedural graphics** - Dynamic SVG animations
+
+### Quick Start
+
+```typescript
+import { createBrowserRenderer } from '@rendervid/renderer-browser';
+
+// 1. Create a template with a custom component
+const template = {
+  name: "Animated Counter",
+  output: { type: "video", width: 1920, height: 1080, fps: 30, duration: 3 },
+  customComponents: {
+    "Counter": {
+      "type": "inline",
+      "code": "function Counter(props) { const progress = Math.min(props.frame / (props.fps * 2), 1); const value = Math.floor(props.from + (props.to - props.from) * progress); return React.createElement('div', { style: { fontSize: '72px', fontWeight: 'bold', color: '#00ffff' } }, value); }"
+    }
+  },
+  composition: {
+    scenes: [{
+      layers: [{
+        type: "custom",
+        customComponent: {
+          name: "Counter",
+          props: { from: 0, to: 100 }
+        }
+      }]
+    }]
+  }
+};
+
+// 2. Render the video
+const renderer = createBrowserRenderer();
+const result = await renderer.renderVideo({ template });
+
+// 3. Download or use the video
+const url = URL.createObjectURL(result.blob);
+```
+
+### Three Component Types
+
+**1. Inline (Quick & Self-Contained)**
+```json
+{
+  "type": "inline",
+  "code": "function MyComponent(props) { return React.createElement('div', {}, props.frame); }"
+}
+```
+✅ Best for: Simple components, prototyping, self-contained demos
+
+**2. URL (Shared & Reusable)**
+```json
+{
+  "type": "url",
+  "url": "https://cdn.example.com/MyComponent.js"
+}
+```
+✅ Best for: Sharing components, external libraries, team collaboration
+
+**3. Reference (Pre-Registered)**
+```json
+{
+  "type": "reference",
+  "reference": "AnimatedChart"
+}
+```
+✅ Best for: Production apps, type-safe components, trusted code
+
+### Component Interface
+
+Every custom component receives these props automatically:
+
+```typescript
+interface ComponentProps {
+  frame: number;         // Current frame (0, 1, 2, ...)
+  fps: number;           // Frames per second (30, 60)
+  sceneDuration: number; // Total frames in scene
+  layerSize: {
+    width: number;
+    height: number;
+  };
+  // + your custom props
+}
+```
+
+### Input Variable Binding
+
+Use `{{variableName}}` to make components dynamic:
 
 ```json
 {
-  "customComponents": {
-    "MyChart": {
-      "type": "reference",
-      "reference": "AnimatedChart",
-      "description": "Pre-registered chart component"
-    },
-    "ExternalWidget": {
-      "type": "url",
-      "url": "https://cdn.example.com/Widget.js",
-      "description": "Widget from CDN"
-    },
-    "QuickCounter": {
-      "type": "inline",
-      "code": "function Counter(props) { return React.createElement('div', {}, props.frame); }",
-      "description": "Simple inline component"
-    }
-  },
+  "inputs": [
+    { "key": "title", "type": "string" },
+    { "key": "count", "type": "number" }
+  ],
   "composition": {
     "scenes": [{
       "layers": [{
         "type": "custom",
         "customComponent": {
-          "name": "MyChart",
+          "name": "Counter",
           "props": {
-            "data": "{{chartData}}",
-            "title": "Sales Chart"
+            "text": "{{title}}",
+            "to": "{{count}}"
           }
         }
       }]
@@ -164,30 +244,33 @@ Rendervid supports custom React components in templates, enabling dynamic visual
 }
 ```
 
-### Component Interface
-
-All custom components receive:
-- `frame` - Current frame number
-- `fps` - Frames per second
-- `sceneDuration` - Scene duration in frames
-- `layerSize` - Layer dimensions
-- User-defined props from the template
-
-### Input Variable Binding
-
-Use `{{variableName}}` to bind template inputs to component props:
-
 ```typescript
+// Render with custom values
 await renderer.renderVideo({
-  template: myTemplate,
+  template,
   inputs: {
-    chartData: [10, 20, 30, 40],
-    chartTitle: "Q1 Revenue"
+    title: "Total Sales",
+    count: 1000
   }
 });
 ```
 
-📖 **[Complete Custom Components Guide](./docs/custom-components.md)**
+### 9 Stunning Examples
+
+Check out production-ready examples in `examples/custom-components/`:
+- **particle-explosion** - 150+ particles with physics
+- **3d-cube-rotation** - CSS 3D transforms
+- **wave-visualization** - Audio spectrum analyzer
+- **neon-text-effects** - Realistic neon glow
+- **holographic-interface** - Sci-fi UI
+- And 4 more basic examples!
+
+### Documentation
+
+📖 **[Complete Guide](./docs/custom-components.md)** - Full technical documentation
+🤖 **[AI Agent Guide](./docs/custom-components-ai-guide.md)** - For AI agents
+👨‍💻 **[Development Tutorial](./examples/custom-components/DEVELOPMENT_EXAMPLE.md)** - Step-by-step
+🎬 **[Examples Overview](./examples/custom-components/README.md)** - All 9 examples
 
 ## Examples
 
