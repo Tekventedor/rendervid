@@ -72,7 +72,7 @@
               "height": 400
             },
             "customComponent": {
-              "name": "three-scene",
+              "name": "ThreeScene",
               "props": {
                 "frame": 0,
                 "fps": 30,
