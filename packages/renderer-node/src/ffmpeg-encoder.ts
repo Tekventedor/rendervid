@@ -3,6 +3,49 @@ import { createWriteStream, promises as fs } from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
 import type { FFmpegConfig, RenderProgress } from './types';
+import { detectGPUCapabilities, type GPUInfo, type HardwareEncoder } from './gpu-detector';
+
+/**
+ * Hardware acceleration options for specific GPU encoders
+ */
+export interface HardwareAccelerationOptions {
+  /** Enable hardware acceleration (default: auto-detect) */
+  enabled?: boolean;
+  /** Preferred hardware encoder (auto-detect if not specified) */
+  preferredEncoder?: HardwareEncoder;
+  /** Fallback to software encoding if GPU unavailable (default: true) */
+  fallbackToSoftware?: boolean;
+  /** NVENC-specific options */
+  nvenc?: {
+    /** Encoding preset (default: 'p4') */
+    preset?: 'p1' | 'p2' | 'p3' | 'p4' | 'p5' | 'p6' | 'p7';
+    /** Tuning preset (default: 'hq') */
+    tune?: 'hq' | 'll' | 'ull' | 'lossless';
+    /** Rate control mode (default: 'vbr') */
+    rc?: 'constqp' | 'vbr' | 'cbr' | 'vbr_minqp' | 'll_2pass_quality' | 'vbr_2pass';
+  };
+  /** VideoToolbox-specific options */
+  videotoolbox?: {
+    /** Allow software encoding fallback (default: true) */
+    allow_sw?: boolean;
+    /** Enable realtime encoding (default: false) */
+    realtime?: boolean;
+  };
+  /** Quick Sync Video-specific options */
+  qsv?: {
+    /** Encoding preset (default: 'medium') */
+    preset?: 'veryfast' | 'faster' | 'fast' | 'medium' | 'slow' | 'slower' | 'veryslow';
+    /** Enable look ahead (default: true) */
+    look_ahead?: boolean;
+  };
+  /** AMD AMF-specific options */
+  amf?: {
+    /** Encoding quality (default: 'balanced') */
+    quality?: 'speed' | 'balanced' | 'quality';
+    /** Rate control mode (default: 'vbr_latency') */
+    rc?: 'cqp' | 'cbr' | 'vbr_peak' | 'vbr_latency';
+  };
+}
 
 /**
  * Options for FFmpeg encoding
@@ -36,6 +79,8 @@ export interface EncodeOptions {
   startTime?: number;
   /** Total frames for progress calculation */
   totalFrames?: number;
+  /** Hardware acceleration options */
+  hardwareAcceleration?: HardwareAccelerationOptions;
 }
 
 /**
@@ -63,6 +108,8 @@ export interface GifOptions {
  */
 export class FFmpegEncoder {
   private config: FFmpegConfig;
+  private gpuInfo: GPUInfo | null = null;
+  private gpuDetected = false;
 
   constructor(config: FFmpegConfig = {}) {
     this.config = config;
@@ -74,6 +121,188 @@ export class FFmpegEncoder {
     if (config.ffprobePath) {
       ffmpeg.setFfprobePath(config.ffprobePath);
     }
+  }
+
+  /**
+   * Detect GPU capabilities (cached after first call)
+   */
+  private async detectGPU(): Promise<GPUInfo> {
+    if (this.gpuDetected) {
+      return this.gpuInfo!;
+    }
+
+    this.gpuInfo = await detectGPUCapabilities(this.config.ffmpegPath);
+    this.gpuDetected = true;
+
+    return this.gpuInfo;
+  }
+
+  /**
+   * Merge config-level and option-level hardware acceleration settings
+   */
+  private mergeHardwareAccelerationOptions(
+    optionLevel?: HardwareAccelerationOptions
+  ): HardwareAccelerationOptions | undefined {
+    const configLevel = this.config.hardwareAcceleration;
+
+    if (!configLevel && !optionLevel) {
+      return undefined;
+    }
+
+    // Option-level settings override config-level settings
+    return {
+      enabled: optionLevel?.enabled ?? configLevel?.enabled,
+      preferredEncoder: optionLevel?.preferredEncoder ?? configLevel?.preferredEncoder,
+      fallbackToSoftware: optionLevel?.fallbackToSoftware ?? configLevel?.fallbackToSoftware,
+      nvenc: optionLevel?.nvenc,
+      videotoolbox: optionLevel?.videotoolbox,
+      qsv: optionLevel?.qsv,
+      amf: optionLevel?.amf,
+    };
+  }
+
+  /**
+   * Select the appropriate encoder based on GPU capabilities and user preferences
+   */
+  private async selectEncoder(
+    options: EncodeOptions,
+    gpuInfo: GPUInfo
+  ): Promise<{ codec: string; isHardware: boolean }> {
+    const hwAccel = this.mergeHardwareAccelerationOptions(options.hardwareAcceleration);
+    const requestedCodec = options.codec || 'libx264';
+
+    // If hardware acceleration is explicitly disabled, use software codec
+    if (hwAccel?.enabled === false) {
+      this.log('Hardware acceleration explicitly disabled, using software codec:', requestedCodec);
+      return { codec: requestedCodec, isHardware: false };
+    }
+
+    // If no GPU available, use software codec
+    if (!gpuInfo.available) {
+      this.log('No GPU acceleration available, using software codec:', requestedCodec);
+      if (gpuInfo.error) {
+        this.log('GPU detection error:', gpuInfo.error);
+      }
+      return { codec: requestedCodec, isHardware: false };
+    }
+
+    // Try to select hardware encoder
+    let selectedEncoder: HardwareEncoder | undefined;
+
+    // Use preferred encoder if specified and available
+    if (hwAccel?.preferredEncoder && gpuInfo.encoders.includes(hwAccel.preferredEncoder)) {
+      selectedEncoder = hwAccel.preferredEncoder;
+      this.log('Using preferred hardware encoder:', selectedEncoder);
+    } else if (gpuInfo.recommendedEncoder) {
+      // Use recommended encoder
+      selectedEncoder = gpuInfo.recommendedEncoder;
+      this.log('Using recommended hardware encoder:', selectedEncoder);
+    }
+
+    // If we have a hardware encoder, use it
+    if (selectedEncoder) {
+      this.log('GPU acceleration enabled');
+      this.log('GPU vendor:', gpuInfo.vendor);
+      if (gpuInfo.model) {
+        this.log('GPU model:', gpuInfo.model);
+      }
+      return { codec: selectedEncoder, isHardware: true };
+    }
+
+    // Fallback to software codec
+    const fallback = hwAccel?.fallbackToSoftware !== false;
+    if (fallback) {
+      this.log('No suitable hardware encoder found, falling back to software codec:', requestedCodec);
+      return { codec: requestedCodec, isHardware: false };
+    } else {
+      throw new Error('Hardware acceleration requested but no suitable encoder found');
+    }
+  }
+
+  /**
+   * Get hardware-specific encoder options
+   */
+  private getHardwareEncoderOptions(
+    encoder: HardwareEncoder,
+    quality: number,
+    hwAccel?: HardwareAccelerationOptions
+  ): string[] {
+    const options: string[] = [];
+
+    if (encoder.includes('nvenc')) {
+      // NVIDIA NVENC options
+      const nvencOpts = hwAccel?.nvenc || {};
+      const preset = nvencOpts.preset || 'p4'; // p4 is balanced quality/performance
+      const tune = nvencOpts.tune || 'hq'; // high quality
+      const rc = nvencOpts.rc || 'vbr'; // variable bitrate
+
+      options.push(
+        `-preset ${preset}`,
+        `-tune ${tune}`,
+        `-rc ${rc}`,
+        `-cq ${quality}` // Constant quality mode (similar to CRF)
+      );
+
+      this.log(`NVENC options: preset=${preset}, tune=${tune}, rc=${rc}, cq=${quality}`);
+    } else if (encoder.includes('videotoolbox')) {
+      // Apple VideoToolbox options
+      const vtOpts = hwAccel?.videotoolbox || {};
+      const allowSw = vtOpts.allow_sw !== false ? 1 : 0;
+      const realtime = vtOpts.realtime ? 1 : 0;
+
+      options.push(
+        `-b:v 0`, // Use quality-based encoding
+        `-q:v ${quality}` // Quality (1-100, lower is better)
+      );
+
+      if (allowSw) {
+        options.push(`-allow_sw ${allowSw}`);
+      }
+      if (realtime) {
+        options.push(`-realtime ${realtime}`);
+      }
+
+      this.log(`VideoToolbox options: quality=${quality}, allow_sw=${allowSw}, realtime=${realtime}`);
+    } else if (encoder.includes('qsv')) {
+      // Intel Quick Sync Video options
+      const qsvOpts = hwAccel?.qsv || {};
+      const preset = qsvOpts.preset || 'medium';
+      const lookAhead = qsvOpts.look_ahead !== false ? 1 : 0;
+
+      options.push(
+        `-preset ${preset}`,
+        `-global_quality ${quality * 2}` // QSV quality scale is different (0-51 -> 0-102)
+      );
+
+      if (lookAhead) {
+        options.push(`-look_ahead ${lookAhead}`);
+      }
+
+      this.log(`QSV options: preset=${preset}, global_quality=${quality * 2}, look_ahead=${lookAhead}`);
+    } else if (encoder.includes('amf')) {
+      // AMD AMF options
+      const amfOpts = hwAccel?.amf || {};
+      const quality = amfOpts.quality || 'balanced';
+      const rc = amfOpts.rc || 'vbr_latency';
+
+      options.push(
+        `-quality ${quality}`,
+        `-rc ${rc}`,
+        `-qp_i ${quality}`,
+        `-qp_p ${quality}`
+      );
+
+      this.log(`AMF options: quality=${quality}, rc=${rc}`);
+    }
+
+    return options;
+  }
+
+  /**
+   * Log message (can be overridden for custom logging)
+   */
+  private log(...args: unknown[]): void {
+    console.log('[FFmpegEncoder]', ...args);
   }
 
   /**
@@ -95,33 +324,69 @@ export class FFmpegEncoder {
       onProgress,
       startTime = Date.now(),
       totalFrames = 0,
+      hardwareAcceleration,
     } = options;
+
+    // Detect GPU capabilities and select encoder
+    const gpuInfo = await this.detectGPU();
+    const { codec: selectedCodec, isHardware } = await this.selectEncoder(options, gpuInfo);
+    const mergedHwAccel = this.mergeHardwareAccelerationOptions(hardwareAcceleration);
+
+    this.log('Starting video encoding...');
+    this.log('Resolution:', `${width}x${height}`);
+    this.log('Frame rate:', fps);
+    this.log('Codec:', selectedCodec, isHardware ? '(hardware)' : '(software)');
+    this.log('Quality:', quality);
 
     return new Promise((resolve, reject) => {
       let command = ffmpeg()
         .input(inputPattern)
         .inputFPS(fps)
-        .videoCodec(codec);
+        .videoCodec(selectedCodec);
 
       // Configure codec-specific options
       const outputOptions: string[] = [];
 
-      if (codec === 'libaom-av1') {
-        // AV1 specific options
-        outputOptions.push(
-          `-crf ${quality}`,
-          `-b:v 0`, // Use constant quality mode
-          `-cpu-used 4`, // Encoding speed (0-8, higher is faster)
-          `-row-mt 1`, // Enable row-based multithreading
-          `-pix_fmt ${pixelFormat}`
+      if (isHardware) {
+        // Hardware encoder options
+        const hwOptions = this.getHardwareEncoderOptions(
+          selectedCodec as HardwareEncoder,
+          quality,
+          mergedHwAccel
         );
+        outputOptions.push(...hwOptions);
+
+        // Pixel format for hardware encoders
+        if (selectedCodec.includes('nvenc')) {
+          outputOptions.push(`-pix_fmt ${pixelFormat}`);
+        } else if (selectedCodec.includes('videotoolbox')) {
+          // VideoToolbox prefers nv12
+          outputOptions.push(`-pix_fmt nv12`);
+        } else if (selectedCodec.includes('qsv')) {
+          // QSV prefers nv12
+          outputOptions.push(`-pix_fmt nv12`);
+        } else if (selectedCodec.includes('amf')) {
+          outputOptions.push(`-pix_fmt ${pixelFormat}`);
+        }
       } else {
-        // Default options for other codecs
-        outputOptions.push(
-          `-crf ${quality}`,
-          `-pix_fmt ${pixelFormat}`,
-          `-preset medium`
-        );
+        // Software encoder options
+        if (codec === 'libaom-av1') {
+          // AV1 specific options
+          outputOptions.push(
+            `-crf ${quality}`,
+            `-b:v 0`, // Use constant quality mode
+            `-cpu-used 4`, // Encoding speed (0-8, higher is faster)
+            `-row-mt 1`, // Enable row-based multithreading
+            `-pix_fmt ${pixelFormat}`
+          );
+        } else {
+          // Default options for other codecs
+          outputOptions.push(
+            `-crf ${quality}`,
+            `-pix_fmt ${pixelFormat}`,
+            `-preset medium`
+          );
+        }
       }
 
       command = command
@@ -168,9 +433,26 @@ export class FFmpegEncoder {
           }
         })
         .on('error', (err) => {
-          reject(new Error(`FFmpeg error: ${err.message}`));
+          const errorMsg = `FFmpeg error: ${err.message}`;
+          this.log('Encoding failed:', errorMsg);
+
+          // If hardware encoding failed and fallback is enabled, retry with software
+          if (isHardware && mergedHwAccel?.fallbackToSoftware !== false) {
+            this.log('Hardware encoding failed, retrying with software codec...');
+
+            // Retry with software codec
+            this.encodeToVideo({
+              ...options,
+              hardwareAcceleration: { ...mergedHwAccel, enabled: false },
+            })
+              .then(resolve)
+              .catch(reject);
+          } else {
+            reject(new Error(errorMsg));
+          }
         })
         .on('end', () => {
+          this.log('Encoding completed successfully');
           resolve();
         })
         .run();
@@ -198,7 +480,22 @@ export class FFmpegEncoder {
       onProgress,
       startTime = Date.now(),
       totalFrames = 0,
+      hardwareAcceleration,
     } = options;
+
+    // Detect GPU capabilities and select encoder
+    const gpuInfo = await this.detectGPU();
+    const { codec: selectedCodec, isHardware } = await this.selectEncoder(
+      { ...options, inputPattern: '' } as EncodeOptions,
+      gpuInfo
+    );
+    const mergedHwAccel = this.mergeHardwareAccelerationOptions(hardwareAcceleration);
+
+    this.log('Starting video encoding (streaming mode)...');
+    this.log('Resolution:', `${width}x${height}`);
+    this.log('Frame rate:', fps);
+    this.log('Codec:', selectedCodec, isHardware ? '(hardware)' : '(software)');
+    this.log('Quality:', quality);
 
     return new Promise((resolve, reject) => {
       // Build FFmpeg command arguments
@@ -216,24 +513,51 @@ export class FFmpegEncoder {
         args.push('-b:a', audioBitrate);
       }
 
-      // Add video codec and options
-      args.push('-c:v', codec);
+      // Add video codec
+      args.push('-c:v', selectedCodec);
 
-      // Codec-specific options
-      if (codec === 'libaom-av1') {
-        args.push(
-          '-crf', quality.toString(),
-          '-b:v', '0',
-          '-cpu-used', '4',
-          '-row-mt', '1',
-          '-pix_fmt', pixelFormat
+      // Add codec-specific options
+      if (isHardware) {
+        // Hardware encoder options
+        const hwOptions = this.getHardwareEncoderOptions(
+          selectedCodec as HardwareEncoder,
+          quality,
+          mergedHwAccel
         );
+
+        // Convert options to args format
+        for (const option of hwOptions) {
+          const parts = option.split(' ');
+          args.push(...parts);
+        }
+
+        // Pixel format for hardware encoders
+        if (selectedCodec.includes('nvenc')) {
+          args.push('-pix_fmt', pixelFormat);
+        } else if (selectedCodec.includes('videotoolbox')) {
+          args.push('-pix_fmt', 'nv12');
+        } else if (selectedCodec.includes('qsv')) {
+          args.push('-pix_fmt', 'nv12');
+        } else if (selectedCodec.includes('amf')) {
+          args.push('-pix_fmt', pixelFormat);
+        }
       } else {
-        args.push(
-          '-crf', quality.toString(),
-          '-pix_fmt', pixelFormat,
-          '-preset', 'medium'
-        );
+        // Software encoder options
+        if (codec === 'libaom-av1') {
+          args.push(
+            '-crf', quality.toString(),
+            '-b:v', '0',
+            '-cpu-used', '4',
+            '-row-mt', '1',
+            '-pix_fmt', pixelFormat
+          );
+        } else {
+          args.push(
+            '-crf', quality.toString(),
+            '-pix_fmt', pixelFormat,
+            '-preset', 'medium'
+          );
+        }
       }
 
       // Add metadata
@@ -286,15 +610,37 @@ export class FFmpegEncoder {
       // Handle process errors
       process.on('error', (err) => {
         encoding = false;
-        reject(new Error(`FFmpeg process error: ${err.message}`));
+        const errorMsg = `FFmpeg process error: ${err.message}`;
+        this.log('Encoding failed:', errorMsg);
+
+        // If hardware encoding failed and fallback is enabled, retry with software
+        if (isHardware && mergedHwAccel?.fallbackToSoftware !== false) {
+          this.log('Hardware encoding failed, retrying with software codec...');
+
+          // Retry with software codec
+          // Note: We can't retry streaming mode easily, so we reject and let caller handle
+          reject(new Error(`${errorMsg} (streaming mode cannot auto-retry)`));
+        } else {
+          reject(new Error(errorMsg));
+        }
       });
 
       process.on('exit', (code) => {
         encoding = false;
         if (code === 0) {
+          this.log('Encoding completed successfully');
           resolve();
         } else {
-          reject(new Error(`FFmpeg exited with code ${code}`));
+          const errorMsg = `FFmpeg exited with code ${code}`;
+          this.log('Encoding failed:', errorMsg);
+
+          // If hardware encoding failed and fallback is enabled
+          if (isHardware && mergedHwAccel?.fallbackToSoftware !== false) {
+            this.log('Hardware encoding failed, but cannot retry in streaming mode');
+            reject(new Error(`${errorMsg} (streaming mode cannot auto-retry, please disable hardware acceleration or use non-streaming mode)`));
+          } else {
+            reject(new Error(errorMsg));
+          }
         }
       });
 

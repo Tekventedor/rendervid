@@ -19,6 +19,8 @@ export interface FrameCapturerConfig {
   renderWaitTime?: number;
   /** Custom component registry */
   registry?: ComponentRegistry;
+  /** Enable GPU rendering in Puppeteer (default: true) */
+  useGPU?: boolean;
 }
 
 /**
@@ -30,10 +32,13 @@ export class FrameCapturer {
   private config: FrameCapturerConfig;
   private initialized = false;
   private renderWaitTime: number;
+  private useGPU: boolean;
+  private gpuFallback = false;
 
   constructor(config: FrameCapturerConfig) {
     this.config = config;
     this.renderWaitTime = config.renderWaitTime ?? 50;
+    this.useGPU = config.useGPU ?? true;
   }
 
   /**
@@ -45,21 +50,50 @@ export class FrameCapturer {
     const { puppeteerOptions = {} } = this.config;
     const { width, height } = this.config.template.output;
 
-    this.browser = await puppeteer.launch({
-      headless: puppeteerOptions.headless !== false,
-      executablePath: puppeteerOptions.executablePath,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-        '--disable-web-security', // Disable CORS to allow loading external images
-        '--disable-features=IsolateOrigins,site-per-process', // Required for --disable-web-security to work
-        `--window-size=${width},${height}`,
-        ...(puppeteerOptions.args || []),
-      ],
-      ignoreDefaultArgs: puppeteerOptions.ignoreDefaultArgs,
-    });
+    // Build GPU-related flags based on configuration
+    const gpuFlags = this.useGPU && !this.gpuFallback
+      ? [
+          '--enable-gpu',
+          '--use-gl=angle',
+        ]
+      : [
+          '--disable-gpu',
+        ];
+
+    try {
+      this.browser = await puppeteer.launch({
+        headless: puppeteerOptions.headless !== false,
+        executablePath: puppeteerOptions.executablePath,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          ...gpuFlags,
+          '--disable-web-security', // Disable CORS to allow loading external images
+          '--disable-features=IsolateOrigins,site-per-process', // Required for --disable-web-security to work
+          `--window-size=${width},${height}`,
+          ...(puppeteerOptions.args || []),
+        ],
+        ignoreDefaultArgs: puppeteerOptions.ignoreDefaultArgs,
+      });
+    } catch (error) {
+      // If GPU initialization fails and we haven't already tried fallback, retry without GPU
+      if (this.useGPU && !this.gpuFallback) {
+        console.warn('[FrameCapturer] GPU initialization failed, falling back to software rendering:', error instanceof Error ? error.message : String(error));
+        this.gpuFallback = true;
+        return this.initialize();
+      }
+      throw error;
+    }
+
+    // Log GPU status
+    if (this.useGPU && !this.gpuFallback) {
+      console.log('[FrameCapturer] GPU rendering enabled');
+    } else if (this.gpuFallback) {
+      console.log('[FrameCapturer] GPU rendering disabled (fallback to software rendering)');
+    } else {
+      console.log('[FrameCapturer] GPU rendering disabled (by configuration)');
+    }
 
     this.page = await this.browser.newPage();
 

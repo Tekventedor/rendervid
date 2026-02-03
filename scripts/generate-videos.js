@@ -91,6 +91,19 @@ function collectExamples() {
       if (fs.existsSync(templatePath)) {
         try {
           let template = JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
+
+          // Build defaults from inputs if not present
+          if (!template.defaults && template.inputs) {
+            template.defaults = {};
+            for (const input of template.inputs) {
+              if (input.default !== undefined) {
+                template.defaults[input.key] = input.default;
+              } else if (input.defaultValue !== undefined) {
+                template.defaults[input.key] = input.defaultValue;
+              }
+            }
+          }
+
           // Resolve template variables with defaults
           if (template.defaults) {
             template = templateProcessor.resolveInputs(template, template.defaults);

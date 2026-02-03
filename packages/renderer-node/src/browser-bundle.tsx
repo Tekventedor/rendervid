@@ -92,6 +92,26 @@ declare global {
 
   console.log('Registered custom components:', registry.list().map(c => c.name));
 
+  // Process inline custom components from template
+  const template = window.RENDERVID_TEMPLATE;
+  if (template?.customComponents) {
+    Object.entries(template.customComponents).forEach(([name, def]: [string, any]) => {
+      if (def.type === 'inline' && def.code) {
+        try {
+          // Create component from inline code
+          // The code string should define a function that returns a React element
+          // eslint-disable-next-line no-new-func
+          const componentFn = new Function('React', 'props', `return (${def.code})(props)`);
+          const Component = (props: any) => componentFn(React, props);
+          registry.register(name, Component as never);
+          console.log(`Registered inline custom component: ${name}`);
+        } catch (error) {
+          console.error(`Failed to register inline component ${name}:`, error);
+        }
+      }
+    });
+  }
+
   // Create React root
   const root = createRoot(rootElement);
   window.__rendervidRoot = root;

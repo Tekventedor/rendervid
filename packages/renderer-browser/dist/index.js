@@ -372,13 +372,16 @@ function ImageLayer({ layer, frame, fps, sceneDuration }) {
   const fit = layer.props.fit || "cover";
   const objectPosition = layer.props.objectPosition || "center";
   const layerStyle = layer.style ? resolveStyle(layer.style) : {};
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const left = layer.position.x - layer.size.width * anchor.x;
+  const top = layer.position.y - layer.size.height * anchor.y;
   return /* @__PURE__ */ jsxRuntime.jsx(
     "div",
     {
       style: {
         position: "absolute",
-        left: layer.position.x,
-        top: layer.position.y,
+        left,
+        top,
         width: layer.size.width,
         height: layer.size.height,
         transform: layer.rotation ? `rotate(${layer.rotation}deg)` : void 0,
@@ -464,13 +467,16 @@ function TextLayer({ layer, frame, fps, sceneDuration }) {
     middle: "center",
     bottom: "flex-end"
   }[verticalAlign];
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const left = layer.position.x - layer.size.width * anchor.x;
+  const top = layer.position.y - layer.size.height * anchor.y;
   return /* @__PURE__ */ jsxRuntime.jsx(
     "div",
     {
       style: {
         position: "absolute",
-        left: layer.position.x,
-        top: layer.position.y,
+        left,
+        top,
         width: layer.size.width,
         height: layer.size.height,
         transform: layer.rotation ? `rotate(${layer.rotation}deg)` : void 0,
@@ -534,6 +540,9 @@ function VideoLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
     volume = 1
   } = layer.props;
   const layerStyle = layer.style ? resolveStyle(layer.style) : {};
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const left = layer.position.x - layer.size.width * anchor.x;
+  const top = layer.position.y - layer.size.height * anchor.y;
   React4.useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -561,8 +570,8 @@ function VideoLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
     {
       style: {
         position: "absolute",
-        left: layer.position.x,
-        top: layer.position.y,
+        left,
+        top,
         width: layer.size.width,
         height: layer.size.height,
         transform: layer.rotation ? `rotate(${layer.rotation}deg)` : void 0,
@@ -655,6 +664,9 @@ function ShapeLayer({ layer, frame, fps, sceneDuration }) {
   const gradientId = `gradient-${layer.id}`;
   const fillValue = gradient ? `url(#${gradientId})` : fill || "transparent";
   const layerStyle = layer.style ? resolveStyle(layer.style) : {};
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const left = layer.position.x - layer.size.width * anchor.x;
+  const top = layer.position.y - layer.size.height * anchor.y;
   const renderShape = () => {
     switch (shape) {
       case "rectangle":
@@ -729,8 +741,8 @@ function ShapeLayer({ layer, frame, fps, sceneDuration }) {
     {
       style: {
         position: "absolute",
-        left: layer.position.x,
-        top: layer.position.y,
+        left,
+        top,
         width: layer.size.width,
         height: layer.size.height,
         transform: layer.rotation ? `rotate(${layer.rotation}deg)` : void 0,
@@ -976,13 +988,16 @@ function CustomLayer({
     return null;
   }
   const layerStyle = layer.style ? resolveStyle(layer.style) : {};
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const left = layer.position.x - layer.size.width * anchor.x;
+  const top = layer.position.y - layer.size.height * anchor.y;
   return /* @__PURE__ */ jsxRuntime.jsx(
     "div",
     {
       style: {
         position: "absolute",
-        left: layer.position.x,
-        top: layer.position.y,
+        left,
+        top,
         width: layer.size.width,
         height: layer.size.height,
         transform: layer.rotation ? `rotate(${layer.rotation}deg)` : void 0,

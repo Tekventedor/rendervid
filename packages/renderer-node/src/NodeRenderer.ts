@@ -5,6 +5,7 @@ import { getCompositionDuration, getDefaultRegistry, TemplateProcessor } from '@
 import type { Template, ComponentRegistry } from '@rendervid/core';
 import { FrameCapturer, createFrameCapturer } from './frame-capturer';
 import { FFmpegEncoder, createFFmpegEncoder } from './ffmpeg-encoder';
+import type { HardwareEncoder } from './gpu-detector';
 import type {
   NodeRendererOptions,
   VideoRenderOptions,
@@ -12,6 +13,8 @@ import type {
   SequenceRenderOptions,
   RenderResult,
   RenderProgress,
+  GPUConfig,
+  GPUEncodingType,
 } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,12 +28,81 @@ export class NodeRenderer {
   private ffmpegEncoder: FFmpegEncoder;
   private registry: ComponentRegistry;
   private templateProcessor: TemplateProcessor;
+  private gpuConfig: GPUConfig;
 
   constructor(options: NodeRendererOptions = {}) {
     this.options = options;
-    this.ffmpegEncoder = createFFmpegEncoder(options.ffmpeg);
+
+    // Initialize GPU configuration with defaults
+    this.gpuConfig = {
+      rendering: options.gpu?.rendering ?? true,
+      encoding: options.gpu?.encoding ?? 'auto',
+      fallback: options.gpu?.fallback ?? true,
+    };
+
+    // Convert GPU config to FFmpeg hardware acceleration config
+    const ffmpegConfig = {
+      ...options.ffmpeg,
+      hardwareAcceleration: this.createHardwareAccelerationConfig(this.gpuConfig),
+    };
+
+    this.ffmpegEncoder = createFFmpegEncoder(ffmpegConfig);
     this.registry = options.registry || getDefaultRegistry();
     this.templateProcessor = new TemplateProcessor();
+
+    // Log GPU configuration status
+    this.logGPUStatus();
+  }
+
+  /**
+   * Convert GPUConfig to FFmpeg HardwareAccelerationOptions
+   */
+  private createHardwareAccelerationConfig(gpuConfig: GPUConfig) {
+    // If encoding is 'none', disable hardware acceleration
+    if (gpuConfig.encoding === 'none') {
+      return {
+        enabled: false,
+        fallbackToSoftware: gpuConfig.fallback ?? true,
+      };
+    }
+
+    // Map encoding type to preferred encoder
+    let preferredEncoder: HardwareEncoder | undefined;
+
+    if (gpuConfig.encoding && gpuConfig.encoding !== 'auto') {
+      // Map vendor name to specific encoder (H.264)
+      const encoderMap: Record<string, HardwareEncoder> = {
+        nvidia: 'h264_nvenc',
+        intel: 'h264_qsv',
+        amd: 'h264_amf',
+        apple: 'h264_videotoolbox',
+      };
+      preferredEncoder = encoderMap[gpuConfig.encoding];
+    }
+
+    return {
+      enabled: true,
+      preferredEncoder,
+      fallbackToSoftware: gpuConfig.fallback ?? true,
+    };
+  }
+
+  /**
+   * Log GPU configuration status
+   */
+  private logGPUStatus(): void {
+    console.log('[NodeRenderer] GPU Configuration:');
+    console.log(`  - Rendering: ${this.gpuConfig.rendering ? 'enabled' : 'disabled'}`);
+
+    if (this.gpuConfig.encoding === 'none') {
+      console.log('  - Encoding: disabled (software mode)');
+    } else if (this.gpuConfig.encoding === 'auto') {
+      console.log('  - Encoding: auto-detect (will use best available GPU)');
+    } else {
+      console.log(`  - Encoding: ${this.gpuConfig.encoding} (explicit vendor selection)`);
+    }
+
+    console.log(`  - Fallback: ${this.gpuConfig.fallback ? 'enabled' : 'disabled'}`);
   }
 
   /**
@@ -212,6 +284,7 @@ export class NodeRenderer {
           puppeteerOptions,
           renderWaitTime,
           registry: this.registry,
+          useGPU: this.gpuConfig.rendering,
         });
         await capturer.initialize();
         capturers.push(capturer);
@@ -461,6 +534,7 @@ export class NodeRenderer {
         puppeteerOptions,
         renderWaitTime,
         registry: this.registry,
+        useGPU: this.gpuConfig.rendering,
       });
       await capturer.initialize();
 
@@ -558,6 +632,7 @@ export class NodeRenderer {
         puppeteerOptions,
         renderWaitTime,
         registry: this.registry,
+        useGPU: this.gpuConfig.rendering,
       });
       await capturer.initialize();
 

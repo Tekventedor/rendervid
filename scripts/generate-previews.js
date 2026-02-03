@@ -11,6 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const puppeteer = require('puppeteer');
+const { TemplateProcessor } = require('../packages/core/dist/index.js');
 
 const EXAMPLES_DIR = path.join(__dirname, '..', 'examples');
 const CATEGORIES = [
@@ -39,39 +40,11 @@ const GIF_MAX_FRAMES = 240; // Max frames in GIF for file size (increased for fu
 const MAX_DIMENSION = 400;
 
 /**
- * Replace {{key}} with values from defaults object
- */
-function replaceVars(obj, defaults) {
-  if (!defaults || !obj) return obj;
-
-  if (typeof obj === 'string') {
-    let result = obj;
-    for (const [key, value] of Object.entries(defaults)) {
-      result = result.split(`{{${key}}}`).join(String(value));
-    }
-    return result;
-  }
-
-  if (Array.isArray(obj)) {
-    return obj.map(item => replaceVars(item, defaults));
-  }
-
-  if (typeof obj === 'object') {
-    const result = {};
-    for (const [key, value] of Object.entries(obj)) {
-      result[key] = replaceVars(value, defaults);
-    }
-    return result;
-  }
-
-  return obj;
-}
-
-/**
  * Collect all example templates from the examples directory
  */
 function collectExamples() {
   const examples = [];
+  const templateProcessor = new TemplateProcessor();
 
   for (const category of CATEGORIES) {
     const categoryPath = path.join(EXAMPLES_DIR, category);
@@ -86,10 +59,24 @@ function collectExamples() {
       if (fs.existsSync(templatePath)) {
         try {
           let template = JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
-          // Replace {{variables}} with defaults
-          if (template.defaults) {
-            template = replaceVars(template, template.defaults);
+
+          // Build defaults from inputs if not present
+          if (!template.defaults && template.inputs) {
+            template.defaults = {};
+            for (const input of template.inputs) {
+              if (input.default !== undefined) {
+                template.defaults[input.key] = input.default;
+              } else if (input.defaultValue !== undefined) {
+                template.defaults[input.key] = input.defaultValue;
+              }
+            }
           }
+
+          // Resolve template variables with defaults
+          if (template.defaults) {
+            template = templateProcessor.resolveInputs(template, template.defaults);
+          }
+
           examples.push({
             path: `${category}/${dir}`,
             dir: path.join(categoryPath, dir),
@@ -106,143 +93,39 @@ function collectExamples() {
   return examples;
 }
 
-/**
- * Calculate animation opacity at a given frame
- */
-function getOpacity(animations, frame) {
-  let opacity = 1;
-
-  for (const anim of animations || []) {
-    const { type, delay = 0, duration = 30 } = anim;
-    const start = delay;
-    const end = delay + duration;
-
-    if (type === 'entrance') {
-      if (frame < start) {
-        opacity = 0;
-      } else if (frame < end) {
-        const progress = (frame - start) / duration;
-        opacity *= Math.min(1, progress);
-      }
-    } else if (type === 'exit') {
-      if (frame >= start && frame < end) {
-        const progress = (frame - start) / duration;
-        opacity *= Math.max(0, 1 - progress);
-      } else if (frame >= end) {
-        opacity = 0;
-      }
-    }
-  }
-
-  return opacity;
-}
 
 /**
- * Generate HTML for a single frame
+ * Generate HTML using the browser renderer
+ * This uses the same React renderer as video generation, ensuring all features work
  */
 function generateHTML(template, frame, viewportWidth, viewportHeight) {
   const { width, height } = template.output;
   const scale = Math.min(viewportWidth / width, viewportHeight / height);
-  const defaults = template.defaults || {};
-
-  // Find current scene
-  const scenes = template.composition?.scenes || [];
-  let scene = scenes[0];
-  for (const s of scenes) {
-    if (frame >= s.startFrame && frame < s.endFrame) {
-      scene = s;
-      break;
-    }
-  }
-
-  if (!scene) return '<html><body style="background:#000"></body></html>';
-
-  const sceneFrame = frame - (scene.startFrame || 0);
-  const layers = replaceVars(scene.layers || [], defaults);
-
-  // Build font imports
-  const fontFamilies = new Set(['Inter']);
-  for (const layer of layers) {
-    if (layer.type === 'text' && layer.props?.fontFamily) {
-      fontFamilies.add(layer.props.fontFamily);
-    }
-  }
-  const fontImports = Array.from(fontFamilies)
-    .map(f => `family=${f.replace(/\s+/g, '+')}:wght@400;500;600;700;800`)
-    .join('&');
-
-  const elements = layers.map(layer => {
-    const { id, type, position, size, props, opacity = 1, animations } = layer;
-    const x = position?.x || 0;
-    const y = position?.y || 0;
-    const w = size?.width || 100;
-    const h = size?.height || 100;
-
-    const animOpacity = getOpacity(animations, sceneFrame);
-    const finalOpacity = opacity * animOpacity;
-
-    let css = `position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;opacity:${finalOpacity};`;
-    let inner = '';
-
-    if (type === 'shape' && props) {
-      const { shape, fill, gradient, borderRadius } = props;
-
-      if (gradient) {
-        const stops = (gradient.colors || [])
-          .map(c => `${c.color === 'transparent' ? 'rgba(0,0,0,0)' : c.color} ${c.offset * 100}%`)
-          .join(',');
-        if (gradient.type === 'radial') {
-          css += `background:radial-gradient(circle,${stops});`;
-        } else {
-          css += `background:linear-gradient(${gradient.angle || 0}deg,${stops});`;
-        }
-      } else if (fill) {
-        css += `background:${fill};`;
-      }
-
-      if (borderRadius) css += `border-radius:${borderRadius}px;`;
-      if (shape === 'ellipse') css += `border-radius:50%;`;
-
-    } else if (type === 'text' && props) {
-      const { text, fontSize, fontWeight, color, textAlign, fontFamily } = props;
-      css += `font-size:${fontSize || 16}px;`;
-      css += `font-weight:${fontWeight || 'normal'};`;
-      css += `color:${color || '#fff'};`;
-      css += `font-family:${fontFamily || 'Inter,sans-serif'};`;
-      css += `display:flex;align-items:center;`;
-      css += `justify-content:${textAlign === 'center' ? 'center' : textAlign === 'right' ? 'flex-end' : 'flex-start'};`;
-      inner = `<span>${text || ''}</span>`;
-    } else if (type === 'image' && props) {
-      const { src, fit = 'cover', borderRadius } = props;
-      css += `overflow:hidden;`;
-      if (borderRadius) css += `border-radius:${borderRadius}px;`;
-      inner = `<img src="${src}" style="width:100%;height:100%;object-fit:${fit};" crossorigin="anonymous" />`;
-    } else if (type === 'video' && props) {
-      const { src, fit = 'cover', borderRadius } = props;
-      css += `overflow:hidden;`;
-      if (borderRadius) css += `border-radius:${borderRadius}px;`;
-      // For preview, use video element - Puppeteer will capture the current frame
-      inner = `<video src="${src}" style="width:100%;height:100%;object-fit:${fit};" autoplay muted loop crossorigin="anonymous"></video>`;
-    }
-
-    return `<div id="${id}" style="${css}">${inner}</div>`;
-  }).join('');
+  const bundlePath = path.join(__dirname, '..', 'packages', 'renderer-node', 'dist', 'browser-renderer.global.js');
+  const bundleCode = fs.readFileSync(bundlePath, 'utf-8');
 
   return `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?${fontImports}&display=swap" rel="stylesheet">
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; img-src * data: blob: 'unsafe-inline';">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:${viewportWidth}px;height:${viewportHeight}px;overflow:hidden;background:#000}
 .viewport{width:${viewportWidth}px;height:${viewportHeight}px;position:relative;overflow:hidden;background:#000}
-.canvas{position:absolute;top:0;left:0;width:${width}px;height:${height}px;background:#000;font-family:Inter,sans-serif;transform:scale(${scale});transform-origin:top left}
+#root{position:absolute;top:0;left:0;width:${width}px;height:${height}px;transform:scale(${scale});transform-origin:top left}
 </style>
 </head>
 <body>
-<div class="viewport"><div class="canvas">${elements}</div></div>
+<div class="viewport">
+  <div id="root"></div>
+</div>
+<script>
+${bundleCode}
+window.RENDERVID_TEMPLATE = ${JSON.stringify(template)};
+window.RENDERVID_CURRENT_FRAME = ${frame};
+window.RENDERVID_INPUTS = {};
+</script>
 </body>
 </html>`;
 }
@@ -273,7 +156,10 @@ async function generatePNG(browser, example) {
 
   const html = generateHTML(template, 9999, out.width, out.height);
   await page.setContent(html, { waitUntil: 'networkidle0' });
-  await new Promise(r => setTimeout(r, 500)); // Wait for fonts
+
+  // Wait for the browser renderer to be ready
+  await page.waitForFunction(() => window.RENDERVID_READY === true, { timeout: 5000 });
+  await new Promise(r => setTimeout(r, 500)); // Wait for React to render
 
   const previewPath = path.join(dir, 'preview.png');
   await page.screenshot({ path: previewPath });
@@ -326,10 +212,12 @@ async function generateGIF(browser, example) {
     // Only wait for network on first frame (fonts load), then use faster strategy
     if (i === 0) {
       await page.setContent(html, { waitUntil: 'networkidle0' });
-      await new Promise(r => setTimeout(r, 500)); // Extra wait for fonts on first frame
+      await page.waitForFunction(() => window.RENDERVID_READY === true, { timeout: 5000 });
+      await new Promise(r => setTimeout(r, 500)); // Extra wait for React to render on first frame
     } else {
       await page.setContent(html, { waitUntil: 'domcontentloaded' });
-      await new Promise(r => setTimeout(r, 50)); // Small delay for rendering
+      await page.waitForFunction(() => window.RENDERVID_READY === true, { timeout: 5000 });
+      await new Promise(r => setTimeout(r, 50)); // Small delay for React to render
     }
 
     const framePath = path.join(frameDir, `frame-${String(i).padStart(4, '0')}.png`);

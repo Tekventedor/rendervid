@@ -1,6 +1,22 @@
 import { describe, it, expect, vi, beforeAll } from 'vitest';
 import type { Template } from '@rendervid/core';
 
+// Mock fs for browser renderer bundle
+vi.mock('fs', () => ({
+  readFileSync: vi.fn((path: string) => {
+    // Mock the browser renderer bundle
+    if (path.includes('browser-renderer.global.js')) {
+      return '// Mock browser renderer code\nwindow.__rendervidRenderFrame = () => {};';
+    }
+    throw new Error(`File not found: ${path}`);
+  }),
+  promises: {
+    mkdir: vi.fn().mockResolvedValue(undefined),
+    writeFile: vi.fn().mockResolvedValue(undefined),
+    stat: vi.fn().mockResolvedValue({ size: 1024 }),
+  },
+}));
+
 // Properly mock fluent-ffmpeg
 vi.mock('fluent-ffmpeg', () => {
   const mockFfmpeg: any = vi.fn().mockReturnValue({
@@ -43,6 +59,7 @@ vi.mock('puppeteer', () => ({
         evaluate: vi.fn().mockResolvedValue(undefined),
         waitForFunction: vi.fn().mockResolvedValue(undefined),
         screenshot: vi.fn().mockResolvedValue(Buffer.from('fake-image')),
+        on: vi.fn(), // Add the 'on' method for event listeners
       }),
       close: vi.fn().mockResolvedValue(undefined),
     }),
@@ -119,19 +136,6 @@ describe('NodeRenderer', () => {
   describe('renderImage', () => {
     it('should attempt to render a single frame as an image', async () => {
       const renderer = createNodeRenderer();
-
-      // Mock fs operations
-      vi.mock('fs', async () => {
-        const actual = await vi.importActual('fs');
-        return {
-          ...actual,
-          promises: {
-            mkdir: vi.fn().mockResolvedValue(undefined),
-            writeFile: vi.fn().mockResolvedValue(undefined),
-            stat: vi.fn().mockResolvedValue({ size: 1024 }),
-          },
-        };
-      });
 
       const result = await renderer.renderImage({
         template: mockTemplate,

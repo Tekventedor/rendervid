@@ -41,12 +41,17 @@ export function CustomLayer({
   // Resolve layer style
   const layerStyle = layer.style ? resolveStyle(layer.style) : {};
 
+  // Apply anchor point (default is 0, 0 = top-left for backward compatibility)
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const left = layer.position.x - (layer.size.width * anchor.x);
+  const top = layer.position.y - (layer.size.height * anchor.y);
+
   return (
     <div
       style={{
         position: 'absolute',
-        left: layer.position.x,
-        top: layer.position.y,
+        left,
+        top,
         width: layer.size.width,
         height: layer.size.height,
         transform: layer.rotation ? `rotate(${layer.rotation}deg)` : undefined,

@@ -158,6 +158,57 @@ export interface FFmpegConfig {
   ffmpegPath?: string;
   /** Path to FFprobe binary */
   ffprobePath?: string;
+  /** Hardware acceleration configuration (for backward compatibility, prefer using per-render options) */
+  hardwareAcceleration?: {
+    /** Enable GPU acceleration (default: auto-detect) */
+    enabled?: boolean;
+    /** Preferred hardware encoder (auto-detect if not specified) */
+    preferredEncoder?: 'h264_nvenc' | 'hevc_nvenc' | 'h264_videotoolbox' | 'hevc_videotoolbox' | 'h264_qsv' | 'hevc_qsv' | 'h264_amf' | 'hevc_amf';
+    /** Fallback to software encoding if GPU unavailable (default: true) */
+    fallbackToSoftware?: boolean;
+  };
+}
+
+/**
+ * GPU encoding acceleration type
+ * - 'auto': Automatically detect and use best available GPU encoder (default)
+ * - 'nvidia': Use NVIDIA NVENC encoder
+ * - 'intel': Use Intel Quick Sync Video encoder
+ * - 'amd': Use AMD Advanced Media Framework encoder
+ * - 'apple': Use Apple VideoToolbox encoder
+ * - 'none': Disable GPU encoding, use software encoder
+ */
+export type GPUEncodingType = 'auto' | 'nvidia' | 'intel' | 'amd' | 'apple' | 'none';
+
+/**
+ * GPU acceleration configuration
+ * Controls both GPU-accelerated rendering (via Puppeteer/Chrome) and GPU-accelerated encoding (via FFmpeg)
+ */
+export interface GPUConfig {
+  /**
+   * Enable GPU-accelerated rendering in browser (default: true)
+   * Uses Chrome's GPU acceleration for faster frame rendering
+   */
+  rendering?: boolean;
+
+  /**
+   * GPU encoding acceleration type (default: 'auto')
+   * Controls which hardware encoder to use for video encoding
+   * - 'auto': Automatically detect and use best available GPU encoder
+   * - 'nvidia': Force NVIDIA NVENC encoder (requires NVIDIA GPU)
+   * - 'intel': Force Intel Quick Sync Video encoder (requires Intel GPU)
+   * - 'amd': Force AMD AMF encoder (requires AMD GPU)
+   * - 'apple': Force Apple VideoToolbox encoder (requires macOS)
+   * - 'none': Disable GPU encoding, use software encoder (libx264)
+   */
+  encoding?: GPUEncodingType;
+
+  /**
+   * Fallback to software rendering/encoding if GPU unavailable (default: true)
+   * If true, automatically falls back to software mode when GPU acceleration fails
+   * If false, throws an error when GPU acceleration is unavailable
+   */
+  fallback?: boolean;
 }
 
 /**
@@ -174,4 +225,6 @@ export interface NodeRendererOptions {
   concurrency?: number;
   /** Custom component registry */
   registry?: ComponentRegistry;
+  /** GPU acceleration configuration */
+  gpu?: GPUConfig;
 }

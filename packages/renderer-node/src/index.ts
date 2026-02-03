@@ -7,7 +7,15 @@ export type { FrameCapturerConfig } from './frame-capturer';
 
 // FFmpeg encoder
 export { FFmpegEncoder, createFFmpegEncoder } from './ffmpeg-encoder';
-export type { EncodeOptions, GifOptions } from './ffmpeg-encoder';
+export type { EncodeOptions, GifOptions, HardwareAccelerationOptions } from './ffmpeg-encoder';
+
+// GPU detector
+export {
+  detectGPUCapabilities,
+  isGPUEncoderAvailable,
+  getGPUDescription,
+} from './gpu-detector';
+export type { GPUVendor, HardwareEncoder, GPUInfo } from './gpu-detector';
 
 // Types
 export type {
@@ -19,4 +27,6 @@ export type {
   RenderResult,
   FFmpegConfig,
   NodeRendererOptions,
+  GPUConfig,
+  GPUEncodingType,
 } from './types';
