@@ -81,7 +81,11 @@ function collectExamples() {
       const templatePath = path.join(categoryPath, dir, 'template.json');
       if (fs.existsSync(templatePath)) {
         try {
-          const template = JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
+          let template = JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
+          // Replace {{variables}} with defaults
+          if (template.defaults) {
+            template = replaceVars(template, template.defaults);
+          }
           examples.push({
             path: `${category}/${dir}`,
             dir: path.join(categoryPath, dir),

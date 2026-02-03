@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import os from 'os';
-import { getCompositionDuration, getDefaultRegistry } from '@rendervid/core';
+import { getCompositionDuration, getDefaultRegistry, TemplateProcessor } from '@rendervid/core';
 import type { Template, ComponentRegistry } from '@rendervid/core';
 import { FrameCapturer, createFrameCapturer } from './frame-capturer';
 import { FFmpegEncoder, createFFmpegEncoder } from './ffmpeg-encoder';
@@ -24,11 +24,13 @@ export class NodeRenderer {
   private options: NodeRendererOptions;
   private ffmpegEncoder: FFmpegEncoder;
   private registry: ComponentRegistry;
+  private templateProcessor: TemplateProcessor;
 
   constructor(options: NodeRendererOptions = {}) {
     this.options = options;
     this.ffmpegEncoder = createFFmpegEncoder(options.ffmpeg);
     this.registry = options.registry || getDefaultRegistry();
+    this.templateProcessor = new TemplateProcessor();
   }
 
   /**
@@ -43,6 +45,17 @@ export class NodeRenderer {
    */
   registerComponent(name: string, component: CustomComponentType): void {
     this.registry.register(name, component);
+  }
+
+  /**
+   * Resolve template variables with inputs (merging defaults)
+   */
+  private resolveTemplate(template: Template, inputs: Record<string, unknown> = {}): Template {
+    // Merge defaults with provided inputs (provided inputs take precedence)
+    const mergedInputs = { ...template.defaults, ...inputs };
+
+    // Resolve {{variable}} placeholders
+    return this.templateProcessor.resolveInputs(template, mergedInputs);
   }
 
   /**
@@ -172,8 +185,11 @@ export class NodeRenderer {
       useStreaming = false,
     } = options;
 
-    const { width, height, fps = 30 } = template.output;
-    const totalFrames = getCompositionDuration(template.composition);
+    // Resolve template variables with inputs
+    const resolvedTemplate = this.resolveTemplate(template, inputs);
+
+    const { width, height, fps = 30 } = resolvedTemplate.output;
+    const totalFrames = getCompositionDuration(resolvedTemplate.composition);
 
     if (totalFrames === 0) {
       throw new Error('Template has no frames to render');
@@ -191,8 +207,8 @@ export class NodeRenderer {
       const numCapturers = Math.min(concurrency, totalFrames);
       for (let i = 0; i < numCapturers; i++) {
         const capturer = createFrameCapturer({
-          template,
-          inputs,
+          template: resolvedTemplate,
+          inputs: {},
           puppeteerOptions,
           renderWaitTime,
           registry: this.registry,
@@ -423,7 +439,10 @@ export class NodeRenderer {
       renderWaitTime,
     } = options;
 
-    const { width, height } = template.output;
+    // Resolve template variables with inputs
+    const resolvedTemplate = this.resolveTemplate(template, inputs);
+
+    const { width, height } = resolvedTemplate.output;
 
     // Determine format from extension if not specified
     const ext = path.extname(outputPath).toLowerCase().slice(1);
@@ -437,8 +456,8 @@ export class NodeRenderer {
     try {
       // Initialize frame capturer
       capturer = createFrameCapturer({
-        template,
-        inputs,
+        template: resolvedTemplate,
+        inputs: {},
         puppeteerOptions,
         renderWaitTime,
         registry: this.registry,
@@ -513,8 +532,11 @@ export class NodeRenderer {
       onProgress,
     } = options;
 
-    const { width, height, fps = 30 } = template.output;
-    const totalFrames = getCompositionDuration(template.composition);
+    // Resolve template variables with inputs
+    const resolvedTemplate = this.resolveTemplate(template, inputs);
+
+    const { width, height, fps = 30 } = resolvedTemplate.output;
+    const totalFrames = getCompositionDuration(resolvedTemplate.composition);
     const endFrame = options.endFrame ?? totalFrames;
 
     if (startFrame >= endFrame) {
@@ -531,8 +553,8 @@ export class NodeRenderer {
     try {
       // Initialize frame capturer
       capturer = createFrameCapturer({
-        template,
-        inputs,
+        template: resolvedTemplate,
+        inputs: {},
         puppeteerOptions,
         renderWaitTime,
         registry: this.registry,

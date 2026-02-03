@@ -11,6 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync, spawn } = require('child_process');
 const puppeteer = require('puppeteer');
+const { TemplateProcessor } = require('../packages/core/dist/index.js');
 
 const EXAMPLES_DIR = path.join(__dirname, '..', 'examples');
 const CATEGORIES = [
@@ -74,6 +75,7 @@ function replaceVars(obj, defaults) {
  */
 function collectExamples() {
   const examples = [];
+  const templateProcessor = new TemplateProcessor();
 
   for (const category of CATEGORIES) {
     const categoryPath = path.join(EXAMPLES_DIR, category);
@@ -87,7 +89,11 @@ function collectExamples() {
       const templatePath = path.join(categoryPath, dir, 'template.json');
       if (fs.existsSync(templatePath)) {
         try {
-          const template = JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
+          let template = JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
+          // Resolve template variables with defaults
+          if (template.defaults) {
+            template = templateProcessor.resolveInputs(template, template.defaults);
+          }
           if (template.output.type === 'video') {
             examples.push({
               path: `${category}/${dir}`,
@@ -266,6 +272,7 @@ function generateHTMLWithRenderer(template, frame, viewportWidth, viewportHeight
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; img-src * data: blob: 'unsafe-inline';">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:${viewportWidth}px;height:${viewportHeight}px;overflow:hidden;background:#000}
@@ -438,6 +445,7 @@ function generateHTML(template, frame, viewportWidth, viewportHeight, exampleDir
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; img-src * data: blob: 'unsafe-inline';">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?${fontImports}&display=swap" rel="stylesheet">
 <style>
