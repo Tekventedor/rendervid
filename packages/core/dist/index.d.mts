@@ -1374,7 +1374,7 @@ type PartialTemplate = Partial<Template> & Pick<Template, 'name' | 'output' | 'c
 /**
  * Validation error.
  */
-interface ValidationError {
+interface ValidationError$1 {
     /** Error code */
     code: string;
     /** Human-readable message */
@@ -1406,7 +1406,7 @@ interface ValidationResult {
     /** Is template valid */
     valid: boolean;
     /** Validation errors */
-    errors: ValidationError[];
+    errors: ValidationError$1[];
     /** Validation warnings */
     warnings: ValidationWarning[];
 }
@@ -1758,6 +1758,234 @@ declare class TemplateProcessor {
 }
 
 /**
+ * Component Defaults Manager
+ *
+ * Manages default values, prop schemas, and validation for custom components.
+ * Handles merging defaults with provided props and auto-injecting frame-aware props.
+ */
+
+/**
+ * Frame-aware props that are automatically injected by the renderer
+ */
+interface FrameAwareProps {
+    /** Current frame number (0 to totalFrames-1) */
+    frame: number;
+    /** Frames per second of the video */
+    fps: number;
+    /** Total number of frames in the composition */
+    totalFrames: number;
+    /** Size of the layer { width, height } */
+    layerSize: {
+        width: number;
+        height: number;
+    };
+    /** Duration of the current scene in frames */
+    sceneDuration: number;
+}
+/**
+ * Component default values configuration
+ */
+interface ComponentDefaults {
+    /** Required props that must be provided */
+    required?: Record<string, unknown>;
+    /** Optional props with fallback values */
+    optional?: Record<string, unknown>;
+    /** Props that should be excluded from auto-injection */
+    excludeAutoInject?: string[];
+}
+/**
+ * Component schema with validation rules
+ */
+interface ComponentSchema {
+    properties?: Record<string, PropertySchema>;
+    required?: string[];
+    additionalProperties?: boolean;
+}
+/**
+ * Individual property schema
+ */
+interface PropertySchema {
+    type: string | string[];
+    description?: string;
+    default?: unknown;
+    minimum?: number;
+    maximum?: number;
+    minLength?: number;
+    maxLength?: number;
+    enum?: unknown[];
+    items?: PropertySchema;
+    properties?: Record<string, PropertySchema>;
+}
+/**
+ * Component configuration including defaults and schema
+ */
+interface ComponentConfig {
+    name: string;
+    description?: string;
+    defaults?: ComponentDefaults;
+    schema?: ComponentSchema | JSONSchema7;
+    examples?: Record<string, unknown>;
+}
+/**
+ * Validation error details
+ */
+interface ValidationError {
+    property: string;
+    value: unknown;
+    error: string;
+    schema?: PropertySchema;
+}
+/**
+ * Prop resolution result
+ */
+interface PropResolutionResult {
+    props: Record<string, unknown>;
+    warnings: string[];
+    errors: ValidationError[];
+    isValid: boolean;
+}
+/**
+ * ComponentDefaultsManager
+ *
+ * Manages default values, validation, and prop resolution for custom components.
+ * Ensures components receive required frame-aware props and validated configuration.
+ *
+ * @example
+ * ```typescript
+ * const manager = new ComponentDefaultsManager();
+ *
+ * // Register component defaults
+ * manager.register('AnimatedChart', {
+ *   defaults: {
+ *     optional: {
+ *       animationDuration: 3,
+ *       colors: ['#00f2ea', '#ff0050'],
+ *       showGrid: true
+ *     }
+ *   },
+ *   schema: {
+ *     properties: {
+ *       animationDuration: { type: 'number', minimum: 0.1, maximum: 10 },
+ *       colors: { type: 'array', items: { type: 'string' } }
+ *     }
+ *   }
+ * });
+ *
+ * // Resolve component props
+ * const resolved = manager.resolveProps('AnimatedChart', {
+ *   colors: ['#ff0000']  // Override defaults
+ * }, frameData);
+ * ```
+ */
+declare class ComponentDefaultsManager {
+    private registry;
+    private readonly defaultFrameAwareDefaults;
+    /**
+     * Register a component configuration with defaults and schema
+     */
+    register(name: string, config: ComponentConfig): void;
+    /**
+     * Unregister a component
+     */
+    unregister(name: string): boolean;
+    /**
+     * Get component configuration
+     */
+    getConfig(name: string): ComponentConfig | undefined;
+    /**
+     * Get default values for a component
+     */
+    getDefaults(name: string): ComponentDefaults;
+    /**
+     * Get schema for a component
+     */
+    getSchema(name: string): ComponentSchema | JSONSchema7 | undefined;
+    /**
+     * Resolve component props with defaults and frame-aware props
+     *
+     * @param componentName - Name of the component
+     * @param layerProps - Props provided in the template layer
+     * @param frameData - Frame-aware data from renderer
+     * @returns Resolved props with defaults applied and validation results
+     */
+    resolveProps(componentName: string, layerProps: Record<string, unknown> | undefined, frameData: FrameAwareProps): PropResolutionResult;
+    /**
+     * Validate props against schema
+     */
+    private validateProps;
+    /**
+     * Validate type of a value against schema type
+     */
+    private validateType;
+    /**
+     * Get actual type of a value
+     */
+    private getActualType;
+    /**
+     * Merge multiple prop sets with proper precedence
+     *
+     * Precedence: layerProps > defaults.required > defaults.optional > frameAwareDefaults
+     */
+    mergeProps(componentName: string, ...propSets: Array<Record<string, unknown>>): Record<string, unknown>;
+    /**
+     * List all registered components
+     */
+    listComponents(): Array<{
+        name: string;
+        description?: string;
+        hasDefaults: boolean;
+        hasSchema: boolean;
+    }>;
+}
+/**
+ * Create a default instance with common component configurations
+ */
+declare function createDefaultComponentDefaultsManager(): ComponentDefaultsManager;
+
+/**
+ * Component Defaults Manager Integration Guide
+ *
+ * Shows how to integrate ComponentDefaultsManager with TemplateProcessor
+ * and the rendering pipeline.
+ */
+
+/**
+ * Extension for CustomLayer with resolved props
+ */
+interface ResolvedCustomLayer extends CustomLayer {
+    /** Props that have been resolved with defaults and validation */
+    __resolvedProps?: Record<string, unknown>;
+    /** Validation warnings from prop resolution */
+    __propWarnings?: string[];
+    /** Validation errors from prop resolution */
+    __propErrors?: Array<{
+        property: string;
+        error: string;
+    }>;
+}
+/**
+ * Helper class to integrate ComponentDefaultsManager with rendering
+ */
+declare class ComponentPropsResolver {
+    private defaultsManager;
+    constructor(defaultsManager?: ComponentDefaultsManager);
+    /**
+     * Resolve props for a custom layer
+     *
+     * This should be called before rendering each frame
+     */
+    resolveLayerProps(layer: CustomLayer, frame: number, fps: number, totalFrames: number, sceneDuration: number, layerWidth: number, layerHeight: number): PropResolutionResult;
+    /**
+     * Register component configuration
+     */
+    registerComponent(name: string, config: Parameters<ComponentDefaultsManager['register']>[1]): void;
+    /**
+     * Get defaults manager for direct access
+     */
+    getManager(): ComponentDefaultsManager;
+}
+
+/**
  * Get list of all easing names.
  */
 declare function getAllEasingNames(): EasingName[];
@@ -1841,4 +2069,4 @@ declare function getPresetsByType(type: 'entrance' | 'exit' | 'emphasis'): Prese
  */
 declare function generatePresetKeyframes(name: string, options: PresetOptions): Keyframe[];
 
-export { type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BlendMode, type BlurPreset, type CompiledAnimation, type ComponentInfo, type ComponentRegistry, type ComponentSourceType, type ComponentType, type Composition, type CustomComponentDefinition, type CustomComponentRef, type CustomLayer, type CustomLayerProps, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, type Filter, type FilterAnimation, type FilterType, type FontWeight, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LottieLayer, type LottieLayerProps, type OutputConfig, type Padding, type PartialTemplate, type Position, type PresetDefinition, type PresetOptions, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedStyle, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type Template, type TemplateAuthor, TemplateProcessor, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TransitionDirection, type TransitionType, type ValidationError, type ValidationResult, type ValidationWarning, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, compileAnimation, createCubicBezier, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCompositionDuration, getDefaultRegistry, getEasing, getLayerSchema, getPreset, getPresetsByType, getPropertiesAtFrame, getSceneAtFrame, getTemplateSchema, getValueAtFrame, interpolate, parseEasing, templateSchema, validateInputs, validateSceneOrder, validateTemplate };
+export { type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BlendMode, type BlurPreset, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type CustomComponentDefinition, type CustomComponentRef, type CustomLayer, type CustomLayerProps, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, type Filter, type FilterAnimation, type FilterType, type FontWeight, type FrameAwareProps, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LottieLayer, type LottieLayerProps, type OutputConfig, type Padding, type PartialTemplate, type Position, type PresetDefinition, type PresetOptions, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedStyle, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type Template, type TemplateAuthor, TemplateProcessor, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TransitionDirection, type TransitionType, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCompositionDuration, getDefaultRegistry, getEasing, getLayerSchema, getPreset, getPresetsByType, getPropertiesAtFrame, getSceneAtFrame, getTemplateSchema, getValueAtFrame, interpolate, parseEasing, templateSchema, validateInputs, validateSceneOrder, validateTemplate };

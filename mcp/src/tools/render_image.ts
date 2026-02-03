@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { createNodeRenderer } from '@rendervid/renderer-node';
 import type { Template } from '@rendervid/core';
+import { createDefaultComponentDefaultsManager } from '@rendervid/core';
 import { RenderImageInputSchema } from '../types.js';
 import { createLogger } from '../utils/logger.js';
 
@@ -51,8 +52,14 @@ export async function executeRenderImage(args: unknown): Promise<string> {
       frame: input.frame,
     });
 
-    // Create renderer
-    const renderer = createNodeRenderer();
+    // Create component defaults manager with pre-configured components
+    const defaultsManager = createDefaultComponentDefaultsManager();
+
+    // Create renderer with component defaults enabled
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const renderer = createNodeRenderer({
+      componentDefaultsManager: defaultsManager as any,
+    });
 
     // Merge inputs with template defaults
     const mergedInputs = {

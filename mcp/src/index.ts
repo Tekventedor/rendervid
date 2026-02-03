@@ -14,6 +14,7 @@ import { getCapabilitiesTool, executeGetCapabilities } from './tools/get_capabil
 import { listExamplesTool, executeListExamples } from './tools/list_examples.js';
 import { getExampleTool, executeGetExample } from './tools/get_example.js';
 import { getComponentDocsTool, executeGetComponentDocs } from './tools/get_component_docs.js';
+import { getComponentDefaultsTool, executeGetComponentDefaults } from './tools/get_component_defaults.js';
 import { getAnimationDocsTool, executeGetAnimationDocs } from './tools/get_animation_docs.js';
 import { getEasingDocsTool, executeGetEasingDocs } from './tools/get_easing_docs.js';
 
@@ -58,6 +59,7 @@ class RendervidMcpServer {
           listExamplesTool,
           getExampleTool,
           getComponentDocsTool,
+          getComponentDefaultsTool,
           getAnimationDocsTool,
           getEasingDocsTool,
         ],
@@ -100,6 +102,10 @@ class RendervidMcpServer {
 
           case 'get_component_docs':
             result = await executeGetComponentDocs(args);
+            break;
+
+          case 'get_component_defaults':
+            result = await executeGetComponentDefaults(args);
             break;
 
           case 'get_animation_docs':

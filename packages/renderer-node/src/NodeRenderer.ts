@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import os from 'os';
-import { getCompositionDuration, getDefaultRegistry, TemplateProcessor } from '@rendervid/core';
+import { getCompositionDuration, getDefaultRegistry, TemplateProcessor, ComponentPropsResolver } from '@rendervid/core';
 import type { Template, ComponentRegistry } from '@rendervid/core';
 import { FrameCapturer, createFrameCapturer } from './frame-capturer';
 import { FFmpegEncoder, createFFmpegEncoder } from './ffmpeg-encoder';
@@ -28,6 +28,7 @@ export class NodeRenderer {
   private ffmpegEncoder: FFmpegEncoder;
   private registry: ComponentRegistry;
   private templateProcessor: TemplateProcessor;
+  private componentPropsResolver: ComponentPropsResolver;
   private gpuConfig: GPUConfig;
 
   constructor(options: NodeRendererOptions = {}) {
@@ -49,6 +50,9 @@ export class NodeRenderer {
     this.ffmpegEncoder = createFFmpegEncoder(ffmpegConfig);
     this.registry = options.registry || getDefaultRegistry();
     this.templateProcessor = new TemplateProcessor();
+    this.componentPropsResolver = new ComponentPropsResolver(
+      options.componentDefaultsManager
+    );
 
     // Log GPU configuration status
     this.logGPUStatus();
@@ -127,7 +131,80 @@ export class NodeRenderer {
     const mergedInputs = { ...template.defaults, ...inputs };
 
     // Resolve {{variable}} placeholders
-    return this.templateProcessor.resolveInputs(template, mergedInputs);
+    const resolvedTemplate = this.templateProcessor.resolveInputs(template, mergedInputs);
+
+    // Process custom component props with defaults and validation
+    return this.processCustomComponentProps(resolvedTemplate);
+  }
+
+  /**
+   * Process custom component props by applying defaults and validation
+   *
+   * This ensures all custom components receive:
+   * 1. Default values for optional props
+   * 2. Required props validation
+   * 3. Auto-injected frame-aware props (frame, fps, totalFrames, layerSize)
+   * 4. Validated configuration against component schemas
+   */
+  private processCustomComponentProps(template: Template): Template {
+    // Deep clone to avoid mutations
+    const processed = JSON.parse(JSON.stringify(template));
+
+    if (!processed.composition?.scenes) {
+      return processed;
+    }
+
+    const fps = processed.output?.fps || 30;
+    const totalFrames = getCompositionDuration(processed.composition);
+
+    // Process each scene and its layers
+    for (const scene of processed.composition.scenes) {
+      if (!scene.layers) continue;
+
+      const sceneDuration = scene.endFrame - scene.startFrame;
+
+      for (const layer of scene.layers) {
+        // Only process custom component layers
+        if (layer.type !== 'custom' || !layer.customComponent) continue;
+
+        // Get layer dimensions
+        const layerWidth = layer.size?.width || processed.output.width || 1920;
+        const layerHeight = layer.size?.height || processed.output.height || 1080;
+
+        // Resolve component props with defaults and validation
+        // We use frame 0 here for template-time resolution
+        // The actual frame-aware props will be updated during rendering
+        const propResolution = this.componentPropsResolver.resolveLayerProps(
+          layer,
+          0, // Frame will be updated during render
+          fps,
+          totalFrames,
+          sceneDuration,
+          layerWidth,
+          layerHeight
+        );
+
+        // Log warnings and errors for debugging
+        if (propResolution.warnings.length > 0) {
+          console.warn(
+            `[ComponentDefaults] Warnings for ${layer.customComponent.name}:`,
+            propResolution.warnings
+          );
+        }
+
+        if (!propResolution.isValid) {
+          console.warn(
+            `[ComponentDefaults] Validation failed for ${layer.customComponent.name}:`,
+            propResolution.errors
+          );
+        }
+
+        // Update layer with resolved props
+        layer.customComponent.props = propResolution.props;
+      }
+    }
+
+    return processed;
   }
 
   /**

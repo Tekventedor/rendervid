@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { createNodeRenderer } from '@rendervid/renderer-node';
 import type { Template } from '@rendervid/core';
-import { RendervidEngine } from '@rendervid/core';
+import { RendervidEngine, createDefaultComponentDefaultsManager } from '@rendervid/core';
 import { RenderVideoInputSchema } from '../types.js';
 import { createLogger } from '../utils/logger.js';
 import * as os from 'os';
@@ -277,8 +277,15 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
       quality: input.quality,
     });
 
-    // Create renderer
-    const renderer = createNodeRenderer();
+    // Create component defaults manager with pre-configured components
+    // This ensures all custom components receive proper defaults and validation
+    const defaultsManager = createDefaultComponentDefaultsManager();
+
+    // Create renderer with component defaults enabled
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const renderer = createNodeRenderer({
+      componentDefaultsManager: defaultsManager as any,
+    });
 
     // Map quality to codec settings
     const codecSettings = getCodecSettings(input.format, input.quality);

@@ -18,6 +18,25 @@ export * from './types';
 // Template Processing
 export { TemplateProcessor } from './template/TemplateProcessor';
 
+// Component Defaults Manager
+export {
+  ComponentDefaultsManager,
+  createDefaultComponentDefaultsManager,
+  type FrameAwareProps,
+  type ComponentDefaults,
+  type ComponentSchema,
+  type PropertySchema,
+  type ComponentConfig,
+  type ValidationError as ComponentValidationError,
+  type PropResolutionResult,
+} from './component-defaults';
+
+// Component Defaults Integration
+export {
+  ComponentPropsResolver,
+  type ResolvedCustomLayer,
+} from './component-defaults-integration';
+
 // Validation
 export {
   validateTemplate,

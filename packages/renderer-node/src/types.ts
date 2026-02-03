@@ -227,4 +227,6 @@ export interface NodeRendererOptions {
   registry?: ComponentRegistry;
   /** GPU acceleration configuration */
   gpu?: GPUConfig;
+  /** Component defaults manager for prop resolution and validation */
+  componentDefaultsManager?: import('@rendervid/core').ComponentDefaultsManager;
 }
