@@ -33,12 +33,18 @@ export const TemplateSchema = z.object({
  */
 export const RenderVideoInputSchema = z.object({
   template: TemplateSchema,
-  inputs: z.record(z.any()).optional().default({}),
-  outputPath: z.string(),
-  format: z.enum(['mp4', 'webm', 'mov', 'gif']).optional().default('mp4'),
-  quality: z.enum(['draft', 'standard', 'high', 'lossless']).optional().default('high'),
-  fps: z.number().int().positive().optional(),
-  renderWaitTime: z.number().int().positive().optional().describe('Time to wait after rendering before capturing each frame (ms, default: 50). Increase for complex animations or slow-loading content.'),
+  inputs: z.record(z.any()).optional().default({})
+    .describe('Template variables. Example: {"title": "Hello World"}'),
+  outputPath: z.string()
+    .describe('Output file path. Use ~/Downloads/, ~/Desktop/, or ~/Documents/ on macOS'),
+  format: z.enum(['mp4', 'webm', 'mov', 'gif']).optional().default('mp4')
+    .describe('Video format. mp4 = Best compatibility (default), webm = Web optimized, mov = macOS native'),
+  quality: z.enum(['draft', 'standard', 'high', 'lossless']).optional().default('high')
+    .describe('Quality preset. draft = Fast preview, standard = Balanced, high = Production (default), lossless = Uncompressed'),
+  fps: z.number().int().positive().optional()
+    .describe('Override template fps. Common: 24 = Film, 30 = Standard, 60 = Smooth'),
+  renderWaitTime: z.number().int().positive().optional()
+    .describe('Wait time in ms before capturing frames. 100-200 = text-only, 500-800 = with images/videos. Default: 50'),
 });
 
 /**
@@ -46,12 +52,18 @@ export const RenderVideoInputSchema = z.object({
  */
 export const RenderImageInputSchema = z.object({
   template: TemplateSchema,
-  inputs: z.record(z.any()).optional().default({}),
-  outputPath: z.string(),
-  format: z.enum(['png', 'jpeg', 'webp']).optional().default('png'),
-  quality: z.number().int().min(1).max(100).optional().default(90),
-  frame: z.number().int().nonnegative().optional().default(0),
-  renderWaitTime: z.number().int().positive().optional().describe('Time to wait after rendering before capturing (ms, default: 50). Increase for complex animations or slow-loading content.'),
+  inputs: z.record(z.any()).optional().default({})
+    .describe('Template variables. Example: {"title": "Hello World"}'),
+  outputPath: z.string()
+    .describe('Output file path. Use ~/Downloads/, ~/Desktop/, or ~/Documents/ on macOS'),
+  format: z.enum(['png', 'jpeg', 'webp']).optional().default('png')
+    .describe('Image format. png = Lossless (default), jpeg = Compressed/smaller, webp = Modern/efficient'),
+  quality: z.number().int().min(1).max(100).optional().default(90)
+    .describe('Quality for JPEG/WebP. 1-100. Higher = better quality, larger file. Default: 90'),
+  frame: z.number().int().nonnegative().optional().default(0)
+    .describe('Frame number to capture (0-based). 0 = first frame, N = frame after N frames'),
+  renderWaitTime: z.number().int().positive().optional()
+    .describe('Wait time in ms before capturing. 100-200 = text-only, 500-800 = with images. Default: 50'),
 });
 
 /**

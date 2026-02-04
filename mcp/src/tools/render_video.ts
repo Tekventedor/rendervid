@@ -14,19 +14,27 @@ export const renderVideoTool = {
   name: 'render_video',
   description: `Generate a video file from a Rendervid JSON template.
 
-⚠️ IMPORTANT: ALWAYS USE validate_template FIRST
-Before calling render_video, use the validate_template tool to:
-- Check template structure and syntax
-- Verify image/video/audio URLs are accessible (catches 404 errors)
-- Detect broken media links before wasting time rendering
-- Prevent black/broken videos from invalid URLs
+USE FOR:
+Social media content (Instagram Reels, TikTok, YouTube Shorts), product demonstrations,
+promotional videos, explainer animations, tutorial videos, video ads, portfolio showcases,
+event announcements, presentations, marketing campaigns
 
-Example workflow:
-1. Call validate_template with your template
-2. Fix any errors reported by validation
-3. Call render_video once validation passes
+OUTPUT:
+- Format: MP4 (H.264, hardware-accelerated on Apple Silicon)
+- Location: Specified by outputPath parameter (e.g., ~/Downloads/video.mp4)
+- Quality: draft = Fast preview, standard = Balanced, high = Production quality (default), lossless = Uncompressed
+- Max resolution: 7680x4320 (8K)
+- Frame rates: 24, 30, 60 fps supported
 
-CRITICAL TEMPLATE RULES (Follow exactly to avoid errors):
+⚠️ CRITICAL: Pass template as JSON OBJECT, not string
+❌ WRONG: { "template": "{\\"name\\":\\"Video\\"}" }
+✅ CORRECT: { "template": {"name": "Video"} }
+
+⚠️ ALWAYS VALIDATE FIRST
+Workflow: validate_template → fix errors → render_video
+Prevents: 404 image errors, syntax issues, wasted render time
+
+CRITICAL TEMPLATE RULES:
 
 1. TIMING IS IN FRAMES, NOT SECONDS
    - At 30 fps: 30 frames = 1 second, 150 frames = 5 seconds
@@ -261,6 +269,18 @@ IMAGE LAYER EXAMPLE (REQUIRED FOR PROMOTIONAL VIDEOS):
   }
 }
 
+⚠️ IMAGE URL REQUIREMENTS (CRITICAL FOR macOS):
+✅ CORRECT: Use HTTPS URLs from:
+   - Unsplash: "https://images.unsplash.com/photo-..."
+   - Pexels: "https://images.pexels.com/photos/..."
+   - Photomatic AI: "https://www.photomaticai.com/images/processed/..."
+
+❌ WRONG: These will FAIL on macOS:
+   - "/mnt/user-data/uploads/image.webp" (Linux path)
+   - "/home/claude/image.webp" (invalid user path)
+   - "file:///path/to/image.webp" (blocked by browser security)
+   - Relative paths like "./image.webp"
+
 WHEN TO USE IMAGE LAYERS:
 ✓ ALWAYS include image layers for: promotional videos, product showcases, portfolios, presentations
 ✓ If creating a promo for "Product X", include actual Product X images - not just text/shapes
@@ -295,6 +315,18 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
   try {
     // Validate input
     const input = RenderVideoInputSchema.parse(args);
+
+    // Handle case where template is passed as a JSON string instead of object
+    if (typeof input.template === 'string') {
+      logger.error('Template was passed as string instead of object');
+      return JSON.stringify({
+        success: false,
+        error: 'TEMPLATE_FORMAT_ERROR',
+        message: 'Template must be a JSON object, not a string.',
+        howToFix: 'Instead of: {"template": "{\\"name\\":\\"...\\"}"}, use: {"template": {"name": "..."}}',
+        details: 'The template parameter should be a JavaScript object, not a JSON string. Remove the surrounding quotes and escape characters.',
+      }, null, 2);
+    }
 
     // Validate and fix output path for macOS
     let outputPath = input.outputPath;

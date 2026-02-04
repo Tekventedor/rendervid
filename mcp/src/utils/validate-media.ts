@@ -231,15 +231,39 @@ export async function validateTemplateMedia(template: any): Promise<{
   logger.info('Validating media URLs', { count: mediaLayers.length });
 
   for (const media of mediaLayers) {
+    // Check for common invalid paths that AI might generate
+    if (media.url.includes('/mnt/') || media.url.includes('/home/claude/')) {
+      errors.push(
+        `❌ Layer "${media.id}": Invalid path "${media.url}". On macOS, use HTTPS URLs for images (e.g., from Unsplash, Pexels, or Photomatic AI), not Linux-style paths like /mnt/ or /home/claude/`
+      );
+      continue;
+    }
+
+    if (media.url.startsWith('file://')) {
+      errors.push(
+        `❌ Layer "${media.id}": file:// URLs are blocked by browser security. Use HTTPS image URLs instead of: ${media.url}`
+      );
+      continue;
+    }
+
     const result = await validateMediaUrl(media.url, media.type as any);
 
     if (!result.valid) {
-      errors.push(
-        `Layer "${media.id}" (${media.type}): ${result.error || 'Unknown error'}`
-      );
+      // Make error messages more AI-friendly
+      let errorMsg = `❌ Layer "${media.id}" (${media.type}): ${result.error || 'Unknown error'}`;
+
+      if (result.error?.includes('404')) {
+        errorMsg += ' - Image not found at this URL. Use a different image URL.';
+      } else if (result.error?.includes('403')) {
+        errorMsg += ' - Access denied. This image URL may require authentication or has access restrictions.';
+      } else if (result.error?.includes('content-type')) {
+        errorMsg += ' - The URL does not point to a valid image/video file.';
+      }
+
+      errors.push(errorMsg);
     } else if (result.contentType === 'local-file') {
       warnings.push(
-        `Layer "${media.id}" uses local file path - ensure file exists: ${media.url}`
+        `⚠️  Layer "${media.id}" uses local file path - ensure file exists: ${media.url}`
       );
     }
   }

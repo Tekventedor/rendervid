@@ -10,33 +10,34 @@ const logger = createLogger('render_image');
 
 export const renderImageTool = {
   name: 'render_image',
-  description: `Generate a single image from a Rendervid template.
+  description: `Generate a static image from a Rendervid template at a specific frame.
 
-This tool renders a static image by:
-1. Accepting a Rendervid template (same JSON structure as video templates)
-2. Rendering a specific frame (default: frame 0)
-3. Exporting as PNG, JPEG, or WebP
+USE FOR:
+Social media posts (Instagram, Twitter, LinkedIn), video thumbnails (YouTube, Vimeo),
+blog post headers, presentation slides, infographics, quote graphics, product mockups,
+preview images, marketing materials, web banners
 
-Ideal for:
-- Social media images (Instagram posts, Twitter cards, LinkedIn banners)
-- Thumbnails (YouTube, blog posts, video covers)
-- Static graphics (quotes, announcements, infographics)
-- Previewing video frames
+OUTPUT:
+- Format: PNG (lossless), JPEG (compressed), or WebP (modern)
+- Location: Specified by outputPath parameter
+- Quality: 1-100 for JPEG/WebP (default: 90)
+- Frame: Captures specified frame number (default: 0)
+- Max resolution: 7680x4320 (8K)
 
-You can use the same template for both video and image output.
-For video templates, specify which frame to capture (0-based index).
-For image templates (output.type: "image"), the frame parameter is ignored.
+TEMPLATE:
+- Same JSON structure as video templates
+- Animations evaluated at specified frame
+- Supports all layer types (text, image, shape, custom)
+- Use output.type: "video" or "image" (both work)
 
-The template format is identical to video templates, supporting:
-- Multiple layers (text, images, shapes)
-- Animations (will be evaluated at the specified frame)
-- Dynamic inputs
-- Full styling capabilities
+TYPICAL USE:
+1. Render frame 0 as thumbnail
+2. Capture mid-animation frame for preview
+3. Generate social media image with custom text
+4. Create static graphics from animated template
 
-Example use:
-- Render frame 0 of a video template as a thumbnail
-- Generate social media post images with custom text
-- Create preview images for video content`,
+⚠️ CRITICAL: Pass template as JSON OBJECT, not string
+✅ CORRECT: { "template": {"name": "Image"} }`,
   inputSchema: zodToJsonSchema(RenderImageInputSchema),
 };
 
@@ -44,6 +45,18 @@ export async function executeRenderImage(args: unknown): Promise<string> {
   try {
     // Validate input
     const input = RenderImageInputSchema.parse(args);
+
+    // Handle case where template is passed as a JSON string instead of object
+    if (typeof input.template === 'string') {
+      logger.error('Template was passed as string instead of object');
+      return JSON.stringify({
+        success: false,
+        error: 'TEMPLATE_FORMAT_ERROR',
+        message: 'Template must be a JSON object, not a string.',
+        howToFix: 'Instead of: {"template": "{\\"name\\":\\"...\\"}"}, use: {"template": {"name": "..."}}',
+        details: 'The template parameter should be a JavaScript object, not a JSON string. Remove the surrounding quotes and escape characters.',
+      }, null, 2);
+    }
 
     logger.info('Starting image render', {
       outputPath: input.outputPath,
