@@ -117,7 +117,7 @@ export function createOffscreenCapturer(): FrameCapturer {
   const supportsOffscreen = typeof OffscreenCanvas !== 'undefined';
 
   if (!supportsOffscreen) {
-    console.warn('OffscreenCanvas not supported, falling back to regular canvas');
+    console.error('OffscreenCanvas not supported, falling back to regular canvas');
     return createFrameCapturer();
   }
 

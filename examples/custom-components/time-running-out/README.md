@@ -6,6 +6,9 @@ This example demonstrates the power of **inline custom components** in Rendervid
 
 ## Preview
 
+![Preview](preview.gif)
+
+
 **Duration:** 8 seconds @ 60 FPS
 **Resolution:** 1920x1080
 **Total Frames:** 480

@@ -4,6 +4,9 @@ Stunning northern lights aurora background with animated title and subtitle. Per
 
 ## Preview
 
+![Preview](preview.gif)
+
+
 This template features:
 - Flowing aurora borealis (northern lights) effect
 - Smooth gradient animations with vibrant colors

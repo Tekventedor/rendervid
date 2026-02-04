@@ -95,18 +95,18 @@ export class NodeRenderer {
    * Log GPU configuration status
    */
   private logGPUStatus(): void {
-    console.log('[NodeRenderer] GPU Configuration:');
-    console.log(`  - Rendering: ${this.gpuConfig.rendering ? 'enabled' : 'disabled'}`);
+    console.error('[NodeRenderer] GPU Configuration:');
+    console.error(`  - Rendering: ${this.gpuConfig.rendering ? 'enabled' : 'disabled'}`);
 
     if (this.gpuConfig.encoding === 'none') {
-      console.log('  - Encoding: disabled (software mode)');
+      console.error('  - Encoding: disabled (software mode)');
     } else if (this.gpuConfig.encoding === 'auto') {
-      console.log('  - Encoding: auto-detect (will use best available GPU)');
+      console.error('  - Encoding: auto-detect (will use best available GPU)');
     } else {
-      console.log(`  - Encoding: ${this.gpuConfig.encoding} (explicit vendor selection)`);
+      console.error(`  - Encoding: ${this.gpuConfig.encoding} (explicit vendor selection)`);
     }
 
-    console.log(`  - Fallback: ${this.gpuConfig.fallback ? 'enabled' : 'disabled'}`);
+    console.error(`  - Fallback: ${this.gpuConfig.fallback ? 'enabled' : 'disabled'}`);
   }
 
   /**
@@ -184,16 +184,16 @@ export class NodeRenderer {
           layerHeight
         );
 
-        // Log warnings and errors for debugging
+        // Log warnings and errors for debugging (use stderr to avoid interfering with MCP stdout)
         if (propResolution.warnings.length > 0) {
-          console.warn(
+          console.error(
             `[ComponentDefaults] Warnings for ${layer.customComponent.name}:`,
             propResolution.warnings
           );
         }
 
         if (!propResolution.isValid) {
-          console.warn(
+          console.error(
             `[ComponentDefaults] Validation failed for ${layer.customComponent.name}:`,
             propResolution.errors
           );
@@ -631,7 +631,7 @@ export class NodeRenderer {
         await this.ffmpegEncoder.addImageMetadata(outputPath);
       } catch (error) {
         // If metadata fails, continue (image is still valid)
-        console.warn('Failed to add metadata to image:', error);
+        console.error('Failed to add metadata to image:', error);
       }
 
       // Close capturer

@@ -1,5 +1,9 @@
 # Particle Explosion Effect
 
+## Preview
+
+![Preview](preview.gif)
+
 A dramatic explosion effect with radial particles bursting from the center in multiple colors, followed by impactful text reveal.
 
 ## Features

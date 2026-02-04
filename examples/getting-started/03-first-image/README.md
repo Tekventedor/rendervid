@@ -4,6 +4,9 @@ Generate a social media image with text overlay - perfect for thumbnails, blog h
 
 ## Preview
 
+![Preview](preview.gif)
+
+
 ![Preview](preview.png)
 
 ## Description

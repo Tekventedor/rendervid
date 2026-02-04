@@ -1,5 +1,9 @@
 # Particle Snow Effect
 
+## Preview
+
+![Preview](preview.gif)
+
 A serene falling snow effect with multiple layers of particles creating a realistic winter scene, perfect for seasonal and holiday content.
 
 ## Features

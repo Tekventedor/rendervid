@@ -4,6 +4,8 @@ High-energy wave background with vibrant purple/pink colors and waves from both 
 
 ## Preview
 
+![Wave Energy Preview](preview.gif)
+
 This template features:
 - Dual wave systems (top and bottom) for maximum impact
 - Fast-moving waves with vibrant purple/pink gradients

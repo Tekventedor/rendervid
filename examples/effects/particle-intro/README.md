@@ -1,5 +1,9 @@
 # Particle Intro Animation
 
+## Preview
+
+![Preview](preview.gif)
+
 A stunning particle-based intro animation featuring an aurora background with floating particles connected by lines, and title text appearing through the particle field.
 
 ## Features

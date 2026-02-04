@@ -4,6 +4,9 @@ Serene ocean wave background with multiple flowing layers in blue and teal. Perf
 
 ## Preview
 
+![Preview](preview.gif)
+
+
 This template features:
 - Multiple layers of animated ocean waves
 - Smooth wave motion from bottom to top

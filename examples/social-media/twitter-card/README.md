@@ -4,6 +4,9 @@ Image optimized for Twitter/X cards and posts.
 
 ## Preview
 
+![Preview](preview.gif)
+
+
 ![Preview](preview.png)
 
 ## Features

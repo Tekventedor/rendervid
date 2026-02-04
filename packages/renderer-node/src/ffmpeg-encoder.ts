@@ -302,7 +302,7 @@ export class FFmpegEncoder {
    * Log message (can be overridden for custom logging)
    */
   private log(...args: unknown[]): void {
-    console.log('[FFmpegEncoder]', ...args);
+    console.error('[FFmpegEncoder]', ...args);
   }
 
   /**

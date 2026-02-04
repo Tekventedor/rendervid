@@ -4,6 +4,9 @@ Eye-catching thumbnail optimized for YouTube videos.
 
 ## Preview
 
+![Preview](preview.gif)
+
+
 ![Preview](preview.png)
 
 ## Features

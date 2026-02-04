@@ -177,7 +177,7 @@ export function integrateWithTemplateProcessor() {
         );
 
         if (!propResolution.isValid) {
-          console.warn(\`Invalid props for \${layer.id}:\`, propResolution.errors);
+          console.error(\`Invalid props for \${layer.id}:\`, propResolution.errors);
         }
 
         // Store resolved props on the layer for use by renderer

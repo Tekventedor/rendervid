@@ -79,7 +79,7 @@ export class FrameCapturer {
     } catch (error) {
       // If GPU initialization fails and we haven't already tried fallback, retry without GPU
       if (this.useGPU && !this.gpuFallback) {
-        console.warn('[FrameCapturer] GPU initialization failed, falling back to software rendering:', error instanceof Error ? error.message : String(error));
+        console.error('[FrameCapturer] GPU initialization failed, falling back to software rendering:', error instanceof Error ? error.message : String(error));
         this.gpuFallback = true;
         return this.initialize();
       }
@@ -88,11 +88,11 @@ export class FrameCapturer {
 
     // Log GPU status
     if (this.useGPU && !this.gpuFallback) {
-      console.log('[FrameCapturer] GPU rendering enabled');
+      console.error('[FrameCapturer] GPU rendering enabled');
     } else if (this.gpuFallback) {
-      console.log('[FrameCapturer] GPU rendering disabled (fallback to software rendering)');
+      console.error('[FrameCapturer] GPU rendering disabled (fallback to software rendering)');
     } else {
-      console.log('[FrameCapturer] GPU rendering disabled (by configuration)');
+      console.error('[FrameCapturer] GPU rendering disabled (by configuration)');
     }
 
     this.page = await this.browser.newPage();
@@ -101,13 +101,13 @@ export class FrameCapturer {
     this.page.on('console', msg => {
       const type = msg.type();
       if (type === 'error' || type === 'warn') {
-        console.log(`[Browser ${type}]`, msg.text());
+        console.error(`[Browser ${type}]`, msg.text());
       }
     });
 
     // Log page errors
     this.page.on('pageerror', error => {
-      console.log('[Browser error]', error.message);
+      console.error('[Browser error]', error.message);
     });
 
     await this.page.setViewport({
@@ -173,7 +173,7 @@ export class FrameCapturer {
             // Don't set crossOrigin to avoid CORS issues with null origin
             img.onload = () => resolve();
             img.onerror = () => {
-              console.warn(`Failed to preload image: ${url}`);
+              console.error(`Failed to preload image: ${url}`);
               resolve(); // Don't fail the whole process if one image fails
             };
             img.src = url;
@@ -293,7 +293,7 @@ export class FrameCapturer {
       await this.injectCustomComponents();
 
       // Add debugging info to the page
-      await this.page.evaluate(`console.log('Browser renderer injected successfully')`);
+      await this.page.evaluate(`console.error('Browser renderer injected successfully')`);
     } catch (error) {
       throw new Error(
         `Failed to load browser renderer bundle: ${error instanceof Error ? error.message : String(error)}`
@@ -324,7 +324,7 @@ export class FrameCapturer {
       (function() {
         // Components will be available through the global RENDERVID_CUSTOM_COMPONENTS
         // This will be populated by the application code that registers components
-        console.log('Custom components ready:', window.RENDERVID_REGISTRY_COMPONENTS);
+        console.error('Custom components ready:', window.RENDERVID_REGISTRY_COMPONENTS);
       })();
     `);
   }
