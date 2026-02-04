@@ -14,11 +14,17 @@ export const renderVideoTool = {
   name: 'render_video',
   description: `Generate a video file from a Rendervid JSON template.
 
-OUTPUT PATH REQUIREMENTS:
-- macOS: Use ~/Downloads/, ~/Desktop/, or ~/Documents/
-- Example: outputPath: "~/Downloads/my-video.mp4"
-- Paths like /home/claude/ will be auto-corrected to Downloads folder
-- File is saved locally and accessible in Finder
+⚠️ IMPORTANT: ALWAYS USE validate_template FIRST
+Before calling render_video, use the validate_template tool to:
+- Check template structure and syntax
+- Verify image/video/audio URLs are accessible (catches 404 errors)
+- Detect broken media links before wasting time rendering
+- Prevent black/broken videos from invalid URLs
+
+Example workflow:
+1. Call validate_template with your template
+2. Fix any errors reported by validation
+3. Call render_video once validation passes
 
 CRITICAL TEMPLATE RULES (Follow exactly to avoid errors):
 
@@ -132,6 +138,93 @@ NEED MORE DETAILS? Use these tools for just-in-time documentation:
 LAYER TYPES: text, image, shape, video, audio, custom
 ANIMATION TYPES: entrance, exit, emphasis
 EASING CATEGORIES: basic, in, out (recommended), inout, back, bounce, elastic
+
+CUSTOM COMPONENTS (ADVANCED - For animated counters, charts, particles, etc.):
+
+**CRITICAL JSX RESTRICTION - READ CAREFULLY:**
+Custom components MUST use React.createElement(), NOT JSX syntax!
+
+❌ WRONG (JSX - Will create BLACK VIDEO):
+"code": "import React from 'react'; export default function Counter({ frame }) { return <div>{frame}</div>; }"
+
+✅ CORRECT (React.createElement):
+"code": "function Counter(props) { return React.createElement('div', null, props.frame); }"
+
+**RULES FOR INLINE CUSTOM COMPONENTS:**
+1. ✅ Use React.createElement() - NEVER use JSX (<div>, </div>, etc.)
+2. ✅ Plain function: function ComponentName(props) { ... }
+3. ✅ Access props: props.frame, props.fps, props.layerSize
+4. ❌ NO imports: no "import React" or "import anything"
+5. ❌ NO exports: no "export default" or "export"
+6. ❌ NO async/await, side effects, or external libraries
+7. ✅ React is globally available - just use React.createElement()
+
+**COMPONENT PROPS (automatically provided):**
+{
+  frame: number,           // Current frame (0, 1, 2, ...)
+  fps: number,            // Frames per second (30, 60)
+  sceneDuration: number,  // Total frames in scene
+  layerSize: {
+    width: number,
+    height: number
+  },
+  // + your custom props from customComponent.props
+}
+
+**SIMPLE CUSTOM COMPONENT EXAMPLE:**
+{
+  "customComponents": {
+    "AnimatedCounter": {
+      "type": "inline",
+      "code": "function AnimatedCounter(props) { const duration = 2 * props.fps; const progress = Math.min(props.frame / duration, 1); const value = Math.floor(props.from + (props.to - props.from) * progress); return React.createElement('div', { style: { fontSize: '72px', fontWeight: 'bold', color: '#00ffff' } }, value); }"
+    }
+  },
+  "composition": {
+    "scenes": [{
+      "layers": [{
+        "id": "counter",
+        "type": "custom",
+        "position": { "x": 960, "y": 540 },
+        "size": { "width": 400, "height": 200 },
+        "customComponent": {
+          "name": "AnimatedCounter",
+          "props": {
+            "from": 0,
+            "to": 100
+          }
+        }
+      }]
+    }]
+  }
+}
+
+**JSX TO React.createElement CONVERSION:**
+
+Simple element:
+JSX: <div>Hello</div>
+→ React.createElement('div', null, 'Hello')
+
+With props:
+JSX: <div style={{color: 'red'}}>Hello</div>
+→ React.createElement('div', { style: { color: 'red' } }, 'Hello')
+
+Nested elements:
+JSX: <div><span>{value}</span></div>
+→ React.createElement('div', null, React.createElement('span', null, value))
+
+Multiple children:
+JSX: <div><p>A</p><p>B</p></div>
+→ React.createElement('div', null, React.createElement('p', null, 'A'), React.createElement('p', null, 'B'))
+
+**WHEN TO USE CUSTOM COMPONENTS:**
+✓ Animated counters (0 → 100)
+✓ Timers and clocks
+✓ Particle effects
+✓ Custom charts/graphs
+✓ Progress bars
+✓ Complex animations beyond built-in effects
+
+For simple text/images/shapes, use built-in layer types instead!
 
 VIDEO LAYER EXAMPLE (FOR VIDEO BACKGROUNDS):
 {

@@ -86,7 +86,8 @@ Then:
 Claude will:
 1. Call `list_examples` to show social media templates
 2. Call `get_example` to load the Instagram story template
-3. Call `render_video` to generate your customized video
+3. ⚠️ Call `validate_template` to check the template and media URLs
+4. Call `render_video` to generate your customized video (only if validation passes)
 
 ## Common First Tasks
 
@@ -149,7 +150,7 @@ pnpm test
 
 1. **Start with examples** - Don't create templates from scratch initially
 2. **Use get_capabilities** - See what's available before building
-3. **Validate first** - Use `validate_template` before rendering
+3. ⚠️ **ALWAYS validate first** - Use `validate_template` before rendering to catch broken image URLs and structural errors (prevents black/broken videos)
 4. **Check logs** - If something fails, stderr logs show detailed errors
 5. **Absolute paths** - Always use absolute paths for output files
 

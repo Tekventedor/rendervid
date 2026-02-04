@@ -160,8 +160,8 @@ The AI will:
 The AI will:
 1. Use `get_capabilities` to check available animations
 2. Create a template JSON structure
-3. Call `validate_template` to ensure it's correct
-4. Call `render_video` to generate the output
+3. ⚠️ **CRITICAL:** Call `validate_template` to ensure correctness and check media URLs
+4. Call `render_video` to generate the output (only if validation passes)
 
 ### 5. Generate Social Media Content
 
@@ -199,9 +199,11 @@ The AI can use the bar chart example or create a custom template.
 2. User: "Use fadeIn animation with a gradient background"
    → AI creates template JSON
 
-3. AI validates with validate_template
+3. ⚠️ CRITICAL: AI validates with validate_template
+   → Catches broken image URLs, invalid structure, missing fields
+   → Prevents black/broken videos before wasting render time
 
-4. AI renders with render_video or render_image
+4. AI renders with render_video or render_image (only after validation passes)
 ```
 
 ### Workflow 3: Iterate on Design
@@ -209,10 +211,10 @@ The AI can use the bar chart example or create a custom template.
 ```
 1. Load example template
 2. Customize colors, text, timing
-3. Validate changes
-4. Render
+3. ⚠️ Validate changes with validate_template (catches broken URLs early)
+4. Render (only after validation passes)
 5. Review output
-6. Adjust and re-render
+6. Adjust and re-render (always validate before each render)
 ```
 
 ## Template Structure
