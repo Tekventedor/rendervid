@@ -2029,6 +2029,7 @@ var BrowserRenderer = class {
       const { template, inputs = {}, format = "mp4", bitrate, onProgress, onFrame } = options;
       await this.processor.loadCustomComponents(template, this.registry);
       const processedTemplate = this.processor.resolveInputs(template, inputs);
+      await this.loadFonts(processedTemplate);
       const { width, height, fps = 30 } = processedTemplate.output;
       const scenes = processedTemplate.composition.scenes;
       const totalFrames = calculateTotalFrames(scenes, fps);
@@ -2260,6 +2261,7 @@ var BrowserRenderer = class {
       } = options;
       await this.processor.loadCustomComponents(template, this.registry);
       const processedTemplate = this.processor.resolveInputs(template, inputs);
+      await this.loadFonts(processedTemplate);
       const { width, height, fps = 30 } = processedTemplate.output;
       const scenes = processedTemplate.composition.scenes;
       if (sceneIndex >= scenes.length) {
@@ -2319,6 +2321,34 @@ var BrowserRenderer = class {
       };
     } finally {
       this.isRendering = false;
+    }
+  }
+  /**
+   * Load fonts from template configuration.
+   *
+   * @private
+   */
+  async loadFonts(template) {
+    if (!template.fonts) {
+      return;
+    }
+    const fontManager = new core.FontManager();
+    try {
+      const result = await fontManager.loadFonts(template.fonts);
+      if (result.loaded.length > 0) {
+        console.log(`[BrowserRenderer] Loaded ${result.loaded.length} fonts in ${result.loadTime}ms`);
+        result.loaded.forEach((font) => {
+          console.log(`  - ${font.family} ${font.weight || 400} ${font.style || "normal"}`);
+        });
+      }
+      if (result.failed.length > 0) {
+        console.warn(`[BrowserRenderer] Failed to load ${result.failed.length} fonts, using fallbacks`);
+        result.failed.forEach((font) => {
+          console.warn(`  - ${font.family} ${font.weight || 400} ${font.style || "normal"}`);
+        });
+      }
+    } catch (error) {
+      console.warn("[BrowserRenderer] Font loading failed, using fallbacks:", error);
     }
   }
   /**

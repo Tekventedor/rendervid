@@ -208,6 +208,66 @@ var customComponentSchema = {
   },
   required: ["type"]
 };
+var fontSourceSchema = {
+  type: "object",
+  properties: {
+    url: { type: "string" },
+    local: {
+      oneOf: [
+        { type: "string" },
+        { type: "array", items: { type: "string" } }
+      ]
+    },
+    format: {
+      type: "string",
+      enum: ["woff2", "woff", "truetype", "opentype", "embedded-opentype", "svg"]
+    },
+    weight: {
+      type: "integer",
+      enum: [100, 200, 300, 400, 500, 600, 700, 800, 900]
+    },
+    style: {
+      type: "string",
+      enum: ["normal", "italic", "oblique"]
+    }
+  },
+  additionalProperties: false
+};
+var fontFamilySchema = {
+  type: "object",
+  properties: {
+    family: { type: "string", minLength: 1 },
+    sources: {
+      type: "array",
+      items: fontSourceSchema,
+      minItems: 1
+    },
+    display: {
+      type: "string",
+      enum: ["auto", "block", "swap", "fallback", "optional"]
+    },
+    fallback: {
+      type: "array",
+      items: { type: "string" }
+    },
+    preload: { type: "boolean" }
+  },
+  required: ["family", "sources"],
+  additionalProperties: false
+};
+var fontConfigurationSchema = {
+  type: "object",
+  properties: {
+    families: {
+      type: "array",
+      items: fontFamilySchema,
+      minItems: 1
+    },
+    basePath: { type: "string" }
+  },
+  required: ["families"],
+  additionalProperties: false
+};
 var templateSchema = {
   $schema: "http://json-schema.org/draft-07/schema#",
   title: "Rendervid Template",
@@ -238,6 +298,7 @@ var templateSchema = {
       type: "object",
       additionalProperties: customComponentSchema
     },
+    fonts: fontConfigurationSchema,
     composition: compositionSchema
   },
   required: ["name", "output", "inputs", "composition"]
@@ -2566,6 +2627,1630 @@ var ComponentPropsResolver = class {
   }
 };
 
-export { ComponentDefaultsManager, ComponentPropsResolver, RendervidEngine, TemplateProcessor, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCompositionDuration, getDefaultRegistry, getEasing, getLayerSchema, getPreset, getPresetsByType, getPropertiesAtFrame, getSceneAtFrame, getTemplateSchema, getValueAtFrame, interpolate, parseEasing, templateSchema, validateInputs, validateSceneOrder, validateTemplate };
+// src/fonts/types.ts
+function isNumericWeight(weight) {
+  return typeof weight === "number";
+}
+function isNamedWeight(weight) {
+  return typeof weight === "string";
+}
+function weightToNumeric(weight) {
+  if (isNumericWeight(weight)) {
+    return weight;
+  }
+  const weightMap = {
+    thin: 100,
+    extralight: 200,
+    light: 300,
+    normal: 400,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+    extrabold: 800,
+    black: 900
+  };
+  return weightMap[weight];
+}
+function numericToNamedWeight(weight) {
+  const weightMap = {
+    100: "thin",
+    200: "extralight",
+    300: "light",
+    400: "normal",
+    500: "medium",
+    600: "semibold",
+    700: "bold",
+    800: "extrabold",
+    900: "black"
+  };
+  return weightMap[weight];
+}
+var FontLoadingError = class _FontLoadingError extends Error {
+  /**
+   * Font family that failed to load
+   */
+  family;
+  /**
+   * Original error that caused the failure
+   */
+  cause;
+  constructor(message, family, cause) {
+    super(message);
+    this.name = "FontLoadingError";
+    this.family = family;
+    this.cause = cause;
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, _FontLoadingError);
+    }
+  }
+};
+var FONT_CONSTANTS = {
+  /**
+   * Default font weights to load if none specified
+   */
+  DEFAULT_WEIGHTS: [400, 700],
+  /**
+   * Default font styles to load if none specified
+   */
+  DEFAULT_STYLES: ["normal"],
+  /**
+   * Default character subset
+   */
+  DEFAULT_SUBSET: ["latin"],
+  /**
+   * Default font display strategy
+   */
+  DEFAULT_DISPLAY: "swap",
+  /**
+   * Default font loading strategy
+   */
+  DEFAULT_LOADING_STRATEGY: "eager",
+  /**
+   * Default timeout for font loading (10 seconds)
+   */
+  DEFAULT_TIMEOUT: 1e4,
+  /**
+   * Maximum file size for font uploads (4MB)
+   */
+  MAX_UPLOAD_SIZE: 4194304,
+  /**
+   * Supported font formats in order of preference
+   */
+  SUPPORTED_FORMATS: ["woff2", "woff", "ttf", "otf"],
+  /**
+   * Web-safe font fallback stacks
+   */
+  WEB_SAFE_FALLBACKS: {
+    "sans-serif": ["Arial", "Helvetica", "sans-serif"],
+    "serif": ["Georgia", "Times New Roman", "serif"],
+    "monospace": ["Courier New", "Courier", "monospace"],
+    "display": ["Impact", "Arial Black", "sans-serif"],
+    "handwriting": ["Comic Sans MS", "cursive"]
+  }
+};
+
+// src/fonts/FontManager.ts
+var FALLBACK_MAP = {
+  // Sans-Serif
+  Roboto: ["Arial", "Helvetica", "sans-serif"],
+  "Open Sans": ["Arial", "Helvetica", "sans-serif"],
+  Lato: ["Arial", "Helvetica", "sans-serif"],
+  Montserrat: ["Arial", "Helvetica", "sans-serif"],
+  Poppins: ["Arial", "Helvetica", "sans-serif"],
+  Inter: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Arial", "sans-serif"],
+  "Work Sans": ["Arial", "Helvetica", "sans-serif"],
+  "Plus Jakarta Sans": ["Arial", "Helvetica", "sans-serif"],
+  Nunito: ["Arial", "Helvetica", "sans-serif"],
+  Raleway: ["Arial", "Helvetica", "sans-serif"],
+  Ubuntu: ["Arial", "Helvetica", "sans-serif"],
+  "Source Sans Pro": ["Arial", "Helvetica", "sans-serif"],
+  // Serif
+  "Playfair Display": ["Georgia", "Times New Roman", "serif"],
+  Merriweather: ["Georgia", "Cambria", "serif"],
+  Lora: ["Georgia", "Times New Roman", "serif"],
+  "PT Serif": ["Georgia", "Times New Roman", "serif"],
+  "EB Garamond": ["Garamond", "Georgia", "serif"],
+  "Libre Baskerville": ["Baskerville", "Georgia", "serif"],
+  "Crimson Text": ["Georgia", "Times New Roman", "serif"],
+  // Monospace
+  "Roboto Mono": ["Consolas", "Monaco", "Courier New", "monospace"],
+  "JetBrains Mono": ["Consolas", "Monaco", "monospace"],
+  "Fira Code": ["Cascadia Code", "Consolas", "monospace"],
+  "Source Code Pro": ["Consolas", "Monaco", "monospace"],
+  "IBM Plex Mono": ["Consolas", "Monaco", "monospace"],
+  Inconsolata: ["Consolas", "Monaco", "monospace"],
+  // Display
+  "Bebas Neue": ["Impact", "Arial Black", "sans-serif"],
+  Oswald: ["Arial", "Helvetica", "sans-serif"],
+  Pacifico: ["cursive"],
+  Lobster: ["cursive"]
+};
+var GENERIC_FALLBACKS = {
+  "sans-serif": ["Arial", "Helvetica", "sans-serif"]};
+var FontManager = class {
+  loadTimeout;
+  injectedStyles = /* @__PURE__ */ new Set();
+  /**
+   * Create a new FontManager.
+   *
+   * @param options - Configuration options
+   * @param options.timeout - Font loading timeout in milliseconds (default: 10000)
+   */
+  constructor(options = {}) {
+    this.loadTimeout = options.timeout ?? 1e4;
+  }
+  /**
+   * Load fonts from configuration.
+   *
+   * Loads Google Fonts and custom fonts, with timeout and error handling.
+   * Fonts that fail to load will be included in the `failed` array.
+   *
+   * @param config - Font configuration
+   * @returns Promise resolving to loaded fonts result
+   *
+   * @example
+   * ```typescript
+   * const result = await fontManager.loadFonts({
+   *   google: [
+   *     { family: 'Roboto', weights: [400, 700] },
+   *     { family: 'Playfair Display', styles: ['normal', 'italic'] },
+   *   ],
+   * });
+   *
+   * console.log(`Loaded ${result.loaded.length} fonts in ${result.loadTime}ms`);
+   * if (result.failed.length > 0) {
+   *   console.warn(`Failed to load: ${result.failed.map(f => f.family).join(', ')}`);
+   * }
+   * ```
+   */
+  async loadFonts(config) {
+    const startTime = Date.now();
+    const loaded = [];
+    const failed = [];
+    const promises = [];
+    if (config.google) {
+      for (const font of config.google) {
+        promises.push(
+          this.loadGoogleFont(font).then(() => {
+            const weights = font.weights ?? [400];
+            const styles = font.styles ?? ["normal"];
+            for (const weight of weights) {
+              for (const style of styles) {
+                loaded.push({ family: font.family, weight, style });
+              }
+            }
+          }).catch((error) => {
+            console.error(`Failed to load Google Font ${font.family}:`, error);
+            failed.push({ family: font.family });
+          })
+        );
+      }
+    }
+    if (config.custom) {
+      for (const font of config.custom) {
+        promises.push(
+          this.loadCustomFont(font).then(() => {
+            loaded.push({
+              family: font.family,
+              weight: font.weight ?? 400,
+              style: font.style ?? "normal"
+            });
+          }).catch((error) => {
+            console.error(`Failed to load custom font ${font.family}:`, error);
+            failed.push({
+              family: font.family,
+              weight: font.weight,
+              style: font.style
+            });
+          })
+        );
+      }
+    }
+    await Promise.all(promises);
+    await this.waitForFontsReady();
+    const loadTime = Date.now() - startTime;
+    return { loaded, failed, loadTime };
+  }
+  /**
+   * Extract all fonts used in a template.
+   *
+   * Scans all text layers and extracts unique font family/weight/style combinations.
+   *
+   * @param template - Template to extract fonts from
+   * @returns Set of font references used in the template
+   *
+   * @example
+   * ```typescript
+   * const fonts = fontManager.extractFontsFromTemplate(template);
+   * console.log(`Template uses ${fonts.size} unique fonts`);
+   * fonts.forEach(font => {
+   *   console.log(`- ${font.family} ${font.weight} ${font.style}`);
+   * });
+   * ```
+   */
+  extractFontsFromTemplate(template) {
+    const fonts = /* @__PURE__ */ new Set();
+    const extractFromLayers = (layers) => {
+      for (const layer of layers) {
+        if (layer.type === "text") {
+          const textLayer = layer;
+          const fontFamily = textLayer.props.fontFamily;
+          if (fontFamily) {
+            let weight = 400;
+            if (textLayer.props.fontWeight) {
+              const fw = textLayer.props.fontWeight;
+              if (typeof fw === "number") {
+                weight = fw;
+              } else if (typeof fw === "string") {
+                if (fw === "bold") {
+                  weight = 700;
+                } else if (fw === "normal") {
+                  weight = 400;
+                } else {
+                  const parsed = parseInt(fw, 10);
+                  if ([100, 200, 300, 400, 500, 600, 700, 800, 900].includes(parsed)) {
+                    weight = parsed;
+                  }
+                }
+              }
+            }
+            const style = textLayer.props.fontStyle ?? "normal";
+            const fontRef = {
+              family: fontFamily,
+              weight,
+              style
+            };
+            let exists = false;
+            for (const existing of fonts) {
+              if (existing.family === fontRef.family && existing.weight === fontRef.weight && existing.style === fontRef.style) {
+                exists = true;
+                break;
+              }
+            }
+            if (!exists) {
+              fonts.add(fontRef);
+            }
+          }
+        }
+        if (layer.type === "group" && "children" in layer) {
+          extractFromLayers(layer.children);
+        }
+      }
+    };
+    for (const scene of template.composition.scenes) {
+      extractFromLayers(scene.layers);
+    }
+    return fonts;
+  }
+  /**
+   * Wait for document.fonts.ready.
+   *
+   * This ensures all fonts are loaded before rendering to prevent
+   * FOIT (Flash of Invisible Text) and FOUT (Flash of Unstyled Text).
+   *
+   * @param timeout - Optional timeout in milliseconds (uses instance timeout if not provided)
+   * @returns Promise that resolves when fonts are ready or timeout occurs
+   *
+   * @example
+   * ```typescript
+   * await fontManager.waitForFontsReady();
+   * // Fonts are now ready for rendering
+   * ```
+   */
+  async waitForFontsReady(timeout) {
+    const maxWait = timeout ?? this.loadTimeout;
+    if (typeof document === "undefined" || !document.fonts) {
+      return;
+    }
+    const timeoutPromise = new Promise((resolve) => {
+      setTimeout(() => {
+        console.warn("Font loading timeout reached, continuing with fallbacks");
+        resolve();
+      }, maxWait);
+    });
+    const readyPromise = document.fonts.ready.then(() => {
+    });
+    await Promise.race([readyPromise, timeoutPromise]);
+  }
+  /**
+   * Verify that specific fonts are loaded.
+   *
+   * Checks if fonts are available using the CSS Font Loading API.
+   *
+   * @param fonts - Array of font references to verify
+   * @returns True if all fonts are loaded, false otherwise
+   *
+   * @example
+   * ```typescript
+   * const allLoaded = fontManager.verifyFontsLoaded([
+   *   { family: 'Roboto', weight: 400 },
+   *   { family: 'Roboto', weight: 700 },
+   * ]);
+   * if (!allLoaded) {
+   *   console.warn('Some fonts are not loaded');
+   * }
+   * ```
+   */
+  verifyFontsLoaded(fonts) {
+    if (typeof document === "undefined" || !document.fonts) {
+      return true;
+    }
+    for (const font of fonts) {
+      const weight = font.weight ?? 400;
+      const style = font.style ?? "normal";
+      const fontSpec = `${style} ${weight} 16px "${font.family}"`;
+      if (!document.fonts.check(fontSpec)) {
+        console.error(`Font not loaded: ${font.family} (${weight} ${style})`);
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+   * Get CSS fallback font stack for a font family.
+   *
+   * Returns a CSS font-family value with appropriate fallbacks.
+   *
+   * @param fontFamily - Primary font family name
+   * @param customFallbacks - Optional custom fallback array
+   * @returns CSS font-family string with fallbacks
+   *
+   * @example
+   * ```typescript
+   * const stack = fontManager.getFallbackStack('Roboto');
+   * // Returns: "'Roboto', Arial, Helvetica, sans-serif"
+   *
+   * const customStack = fontManager.getFallbackStack('MyFont', ['Arial', 'sans-serif']);
+   * // Returns: "'MyFont', Arial, sans-serif"
+   * ```
+   */
+  getFallbackStack(fontFamily, customFallbacks) {
+    const fallbacks = customFallbacks ?? FALLBACK_MAP[fontFamily] ?? GENERIC_FALLBACKS["sans-serif"];
+    return `'${fontFamily}', ${fallbacks.join(", ")}`;
+  }
+  /**
+   * Load a Google Font.
+   *
+   * @internal
+   */
+  async loadGoogleFont(definition) {
+    const weights = definition.weights ?? [400];
+    const styles = definition.styles ?? ["normal"];
+    const subsets = definition.subsets ?? ["latin"];
+    const display = definition.display ?? "swap";
+    const family = definition.family.replace(/ /g, "+");
+    const weightsParam = weights.join(";");
+    const variants = [];
+    for (const style of styles) {
+      if (style === "italic") {
+        variants.push(`ital,wght@1,${weightsParam}`);
+      } else {
+        variants.push(`wght@${weightsParam}`);
+      }
+    }
+    const subsetsParam = subsets.join(",");
+    const url = `https://fonts.googleapis.com/css2?family=${family}:${variants.join(";")}&subset=${subsetsParam}&display=${display}`;
+    if (this.injectedStyles.has(url)) {
+      return;
+    }
+    try {
+      const response = await this.fetchWithTimeout(url, this.loadTimeout);
+      const css = await response.text();
+      this.injectFontCSS(css);
+      this.injectedStyles.add(url);
+      await this.loadFontFaces(definition.family, weights, styles);
+    } catch (error) {
+      throw new FontLoadingError(
+        `Failed to load Google Font: ${definition.family}`,
+        definition.family,
+        error instanceof Error ? error : void 0
+      );
+    }
+  }
+  /**
+   * Load a custom font.
+   *
+   * @internal
+   */
+  async loadCustomFont(definition) {
+    const weight = definition.weight ?? 400;
+    const style = definition.style ?? "normal";
+    const format = definition.format ?? "woff2";
+    const display = definition.display ?? "swap";
+    const css = this.generateFontFaceCSS({
+      family: definition.family,
+      src: definition.source,
+      weight,
+      style,
+      format,
+      display,
+      unicodeRange: definition.unicodeRange
+    });
+    if (this.injectedStyles.has(css)) {
+      return;
+    }
+    try {
+      this.injectFontCSS(css);
+      this.injectedStyles.add(css);
+      await this.loadFontFaces(definition.family, [weight], [style]);
+    } catch (error) {
+      throw new FontLoadingError(
+        `Failed to load custom font: ${definition.family}`,
+        definition.family,
+        error instanceof Error ? error : void 0
+      );
+    }
+  }
+  /**
+   * Generate @font-face CSS rule.
+   *
+   * @internal
+   */
+  generateFontFaceCSS(options) {
+    const { family, src, weight, style, format, display, unicodeRange } = options;
+    let css = "@font-face {\n";
+    css += `  font-family: '${family}';
+`;
+    css += `  src: url('${src}') format('${format}');
+`;
+    css += `  font-weight: ${weight};
+`;
+    css += `  font-style: ${style};
+`;
+    css += `  font-display: ${display};
+`;
+    if (unicodeRange) {
+      css += `  unicode-range: ${unicodeRange};
+`;
+    }
+    css += "}\n";
+    return css;
+  }
+  /**
+   * Inject CSS into the document.
+   *
+   * @internal
+   */
+  injectFontCSS(css) {
+    if (typeof document === "undefined") {
+      return;
+    }
+    const style = document.createElement("style");
+    style.textContent = css;
+    document.head.appendChild(style);
+  }
+  /**
+   * Load font faces using Font Loading API.
+   *
+   * @internal
+   */
+  async loadFontFaces(family, weights, styles) {
+    if (typeof FontFace === "undefined") {
+      return;
+    }
+    const promises = [];
+    for (const weight of weights) {
+      for (const style of styles) {
+        const promise = this.loadFontFace(family, weight, style);
+        promises.push(promise);
+      }
+    }
+    await Promise.all(promises);
+  }
+  /**
+   * Load a single font face.
+   *
+   * @internal
+   */
+  async loadFontFace(family, weight, style) {
+    if (typeof FontFace === "undefined" || typeof document === "undefined") {
+      return;
+    }
+    try {
+      const fontFace = new FontFace(
+        family,
+        `local('${family}')`,
+        { weight: weight.toString(), style }
+      );
+      const loadPromise = fontFace.load();
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error("Font load timeout")), this.loadTimeout);
+      });
+      await Promise.race([loadPromise, timeoutPromise]);
+      document.fonts.add(fontFace);
+    } catch (error) {
+      console.warn(`Failed to load font face: ${family} ${weight} ${style}`, error);
+    }
+  }
+  /**
+   * Fetch with timeout.
+   *
+   * @internal
+   */
+  async fetchWithTimeout(url, timeout) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+    try {
+      const response = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof Error && error.name === "AbortError") {
+        throw new Error("Fetch timeout");
+      }
+      throw error;
+    }
+  }
+};
+
+// src/fonts/catalog-data.json
+var catalog_data_default = {
+  fonts: [
+    {
+      family: "Roboto",
+      category: "sans-serif",
+      weights: [100, 300, 400, 500, 700, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 1
+    },
+    {
+      family: "Open Sans",
+      category: "sans-serif",
+      weights: [300, 400, 500, 600, 700, 800],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 2
+    },
+    {
+      family: "Lato",
+      category: "sans-serif",
+      weights: [100, 300, 400, 700, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 3
+    },
+    {
+      family: "Montserrat",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 4
+    },
+    {
+      family: "Poppins",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 5
+    },
+    {
+      family: "Inter",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 6
+    },
+    {
+      family: "Raleway",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 7
+    },
+    {
+      family: "Nunito",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 8
+    },
+    {
+      family: "Ubuntu",
+      category: "sans-serif",
+      weights: [300, 400, 500, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 9
+    },
+    {
+      family: "Work Sans",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 10
+    },
+    {
+      family: "Noto Sans",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 11
+    },
+    {
+      family: "Rubik",
+      category: "sans-serif",
+      weights: [300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 12
+    },
+    {
+      family: "Source Sans 3",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 13
+    },
+    {
+      family: "Mukta",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 14
+    },
+    {
+      family: "Kanit",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 15
+    },
+    {
+      family: "Barlow",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 16
+    },
+    {
+      family: "Manrope",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 17
+    },
+    {
+      family: "DM Sans",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 18
+    },
+    {
+      family: "Nunito Sans",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 19
+    },
+    {
+      family: "Quicksand",
+      category: "sans-serif",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 20
+    },
+    {
+      family: "Josefin Sans",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 21
+    },
+    {
+      family: "Cabin",
+      category: "sans-serif",
+      weights: [400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 22
+    },
+    {
+      family: "Hind",
+      category: "sans-serif",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 23
+    },
+    {
+      family: "Karla",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 24
+    },
+    {
+      family: "Oxygen",
+      category: "sans-serif",
+      weights: [300, 400, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 25
+    },
+    {
+      family: "Asap",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 26
+    },
+    {
+      family: "Exo 2",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 27
+    },
+    {
+      family: "IBM Plex Sans",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 28
+    },
+    {
+      family: "Arimo",
+      category: "sans-serif",
+      weights: [400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 29
+    },
+    {
+      family: "Titillium Web",
+      category: "sans-serif",
+      weights: [200, 300, 400, 600, 700, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 30
+    },
+    {
+      family: "Heebo",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 31
+    },
+    {
+      family: "Assistant",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 32
+    },
+    {
+      family: "Fira Sans",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 33
+    },
+    {
+      family: "Anton",
+      category: "sans-serif",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 34
+    },
+    {
+      family: "Dosis",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 35
+    },
+    {
+      family: "Plus Jakarta Sans",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 36
+    },
+    {
+      family: "Outfit",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 37
+    },
+    {
+      family: "Space Grotesk",
+      category: "sans-serif",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 38
+    },
+    {
+      family: "Urbanist",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 39
+    },
+    {
+      family: "Lexend",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 40
+    },
+    {
+      family: "Mulish",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 41
+    },
+    {
+      family: "Red Hat Display",
+      category: "sans-serif",
+      weights: [300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 42
+    },
+    {
+      family: "Figtree",
+      category: "sans-serif",
+      weights: [300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 43
+    },
+    {
+      family: "Archivo",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 44
+    },
+    {
+      family: "Jost",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 45
+    },
+    {
+      family: "Public Sans",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 46
+    },
+    {
+      family: "Cairo",
+      category: "sans-serif",
+      weights: [200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 47
+    },
+    {
+      family: "Comfortaa",
+      category: "sans-serif",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 48
+    },
+    {
+      family: "ABeeZee",
+      category: "sans-serif",
+      weights: [400],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 49
+    },
+    {
+      family: "Be Vietnam Pro",
+      category: "sans-serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 50
+    },
+    {
+      family: "Playfair Display",
+      category: "serif",
+      weights: [400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 51
+    },
+    {
+      family: "Merriweather",
+      category: "serif",
+      weights: [300, 400, 700, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 52
+    },
+    {
+      family: "Lora",
+      category: "serif",
+      weights: [400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 53
+    },
+    {
+      family: "PT Serif",
+      category: "serif",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 54
+    },
+    {
+      family: "Libre Baskerville",
+      category: "serif",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 55
+    },
+    {
+      family: "Crimson Text",
+      category: "serif",
+      weights: [400, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 56
+    },
+    {
+      family: "EB Garamond",
+      category: "serif",
+      weights: [400, 500, 600, 700, 800],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 57
+    },
+    {
+      family: "Noto Serif",
+      category: "serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 58
+    },
+    {
+      family: "Source Serif 4",
+      category: "serif",
+      weights: [200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 59
+    },
+    {
+      family: "Bitter",
+      category: "serif",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 60
+    },
+    {
+      family: "Cormorant Garamond",
+      category: "serif",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 61
+    },
+    {
+      family: "Spectral",
+      category: "serif",
+      weights: [200, 300, 400, 500, 600, 700, 800],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 62
+    },
+    {
+      family: "Alegreya",
+      category: "serif",
+      weights: [400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 63
+    },
+    {
+      family: "Abril Fatface",
+      category: "serif",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 64
+    },
+    {
+      family: "Cardo",
+      category: "serif",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 65
+    },
+    {
+      family: "Volkhov",
+      category: "serif",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 66
+    },
+    {
+      family: "Domine",
+      category: "serif",
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 67
+    },
+    {
+      family: "Tinos",
+      category: "serif",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 68
+    },
+    {
+      family: "Archivo Black",
+      category: "serif",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 69
+    },
+    {
+      family: "IBM Plex Serif",
+      category: "serif",
+      weights: [100, 200, 300, 400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 70
+    },
+    {
+      family: "Roboto Mono",
+      category: "monospace",
+      weights: [100, 200, 300, 400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 71
+    },
+    {
+      family: "JetBrains Mono",
+      category: "monospace",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 72
+    },
+    {
+      family: "Fira Code",
+      category: "monospace",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 73
+    },
+    {
+      family: "Source Code Pro",
+      category: "monospace",
+      weights: [200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 74
+    },
+    {
+      family: "Inconsolata",
+      category: "monospace",
+      weights: [200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 75
+    },
+    {
+      family: "Space Mono",
+      category: "monospace",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 76
+    },
+    {
+      family: "IBM Plex Mono",
+      category: "monospace",
+      weights: [100, 200, 300, 400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 77
+    },
+    {
+      family: "Courier Prime",
+      category: "monospace",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 78
+    },
+    {
+      family: "Anonymous Pro",
+      category: "monospace",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 79
+    },
+    {
+      family: "Overpass Mono",
+      category: "monospace",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 80
+    },
+    {
+      family: "PT Mono",
+      category: "monospace",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 81
+    },
+    {
+      family: "Ubuntu Mono",
+      category: "monospace",
+      weights: [400, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 82
+    },
+    {
+      family: "Noto Sans Mono",
+      category: "monospace",
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 83
+    },
+    {
+      family: "Red Hat Mono",
+      category: "monospace",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 84
+    },
+    {
+      family: "DM Mono",
+      category: "monospace",
+      weights: [300, 400, 500],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 85
+    },
+    {
+      family: "Bebas Neue",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 86
+    },
+    {
+      family: "Oswald",
+      category: "display",
+      weights: [200, 300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 87
+    },
+    {
+      family: "Righteous",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 88
+    },
+    {
+      family: "Pacifico",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 89
+    },
+    {
+      family: "Lobster",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 90
+    },
+    {
+      family: "Permanent Marker",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 91
+    },
+    {
+      family: "Bangers",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 92
+    },
+    {
+      family: "Fredoka",
+      category: "display",
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 93
+    },
+    {
+      family: "Russo One",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 94
+    },
+    {
+      family: "Alfa Slab One",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 95
+    },
+    {
+      family: "Caveat",
+      category: "display",
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext", "cyrillic"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: true,
+      popularity: 96
+    },
+    {
+      family: "Shadows Into Light",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 97
+    },
+    {
+      family: "Staatliches",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 98
+    },
+    {
+      family: "Archivo Black",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 99
+    },
+    {
+      family: "Concert One",
+      category: "display",
+      weights: [400],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      preview: "The quick brown fox jumps over the lazy dog",
+      variable: false,
+      popularity: 100
+    }
+  ]
+};
+
+// src/fonts/catalog.ts
+var catalog = catalog_data_default;
+function getFontCatalog() {
+  return [...catalog.fonts];
+}
+function getFontsByCategory(category) {
+  return catalog.fonts.filter((font) => font.category === category);
+}
+function getFontMetadata(family) {
+  return catalog.fonts.find((font) => font.family === family);
+}
+function getPopularFonts() {
+  return catalog.fonts.filter((font) => font.popularity <= 50).sort((a, b) => a.popularity - b.popularity);
+}
+function getVariableFonts() {
+  return catalog.fonts.filter((font) => font.variable);
+}
+function searchFonts(query) {
+  const lowerQuery = query.toLowerCase();
+  return catalog.fonts.filter(
+    (font) => font.family.toLowerCase().includes(lowerQuery)
+  );
+}
+function getFontsByWeight(weights, matchAll = false) {
+  return catalog.fonts.filter((font) => {
+    if (matchAll) {
+      return weights.every((weight) => font.weights.includes(weight));
+    } else {
+      return weights.some((weight) => font.weights.includes(weight));
+    }
+  });
+}
+function getFontsWithItalic() {
+  return catalog.fonts.filter((font) => font.styles.includes("italic"));
+}
+function getCatalogStats() {
+  const total = catalog.fonts.length;
+  const byCategory = catalog.fonts.reduce((acc, font) => {
+    acc[font.category] = (acc[font.category] || 0) + 1;
+    return acc;
+  }, {});
+  const variableCount = catalog.fonts.filter((f) => f.variable).length;
+  const withItalic = catalog.fonts.filter((f) => f.styles.includes("italic")).length;
+  return {
+    total,
+    byCategory,
+    variable: variableCount,
+    withItalic
+  };
+}
+function isFontAvailable(family) {
+  return catalog.fonts.some((font) => font.family === family);
+}
+function getRandomFonts(count = 1) {
+  const shuffled = [...catalog.fonts].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
+export { ComponentDefaultsManager, ComponentPropsResolver, FONT_CONSTANTS, FontLoadingError, FontManager, RendervidEngine, TemplateProcessor, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, numericToNamedWeight, parseEasing, searchFonts, templateSchema, validateInputs, validateSceneOrder, validateTemplate, weightToNumeric };
 //# sourceMappingURL=index.mjs.map
 //# sourceMappingURL=index.mjs.map

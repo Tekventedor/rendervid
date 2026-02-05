@@ -1,6 +1,7 @@
 import type { Composition } from './composition';
 import type { InputDefinition } from './input';
 import type { CustomComponentDefinition } from './component';
+import type { FontConfiguration } from '../fonts/types';
 
 /**
  * Author information for a template.
@@ -152,6 +153,47 @@ export interface Template {
    * Can be references to pre-registered components, URLs, or inline code.
    */
   customComponents?: Record<string, CustomComponentDefinition>;
+
+  // ═══════════════════════════════════════════════════════════════
+  // FONT CONFIGURATION
+  // ═══════════════════════════════════════════════════════════════
+
+  /**
+   * Font configuration for this template.
+   *
+   * Defines Google Fonts and custom fonts to be loaded for text layers.
+   * Supports multiple font families with various weights and styles.
+   *
+   * Fonts are loaded before rendering begins to ensure text appears correctly.
+   * If a font fails to load, the specified fallback fonts will be used.
+   *
+   * @optional This field is optional for backward compatibility.
+   * Templates without font configuration will use system fonts only.
+   *
+   * @example
+   * ```typescript
+   * fonts: {
+   *   google: [
+   *     {
+   *       family: 'Roboto',
+   *       weights: [400, 700],
+   *       styles: ['normal', 'italic']
+   *     }
+   *   ],
+   *   custom: [
+   *     {
+   *       family: 'MyBrand',
+   *       source: 'https://cdn.example.com/mybrand.woff2',
+   *       weight: 700
+   *     }
+   *   ],
+   *   fallbacks: {
+   *     'Roboto': ['Arial', 'Helvetica', 'sans-serif']
+   *   }
+   * }
+   * ```
+   */
+  fonts?: FontConfiguration;
 
   // ═══════════════════════════════════════════════════════════════
   // COMPOSITION

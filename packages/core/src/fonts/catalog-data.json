@@ -1,0 +1,1004 @@
+{
+  "fonts": [
+    {
+      "family": "Roboto",
+      "category": "sans-serif",
+      "weights": [100, 300, 400, 500, 700, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 1
+    },
+    {
+      "family": "Open Sans",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 600, 700, 800],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 2
+    },
+    {
+      "family": "Lato",
+      "category": "sans-serif",
+      "weights": [100, 300, 400, 700, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 3
+    },
+    {
+      "family": "Montserrat",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 4
+    },
+    {
+      "family": "Poppins",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 5
+    },
+    {
+      "family": "Inter",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 6
+    },
+    {
+      "family": "Raleway",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 7
+    },
+    {
+      "family": "Nunito",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 8
+    },
+    {
+      "family": "Ubuntu",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 9
+    },
+    {
+      "family": "Work Sans",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 10
+    },
+    {
+      "family": "Noto Sans",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 11
+    },
+    {
+      "family": "Rubik",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 12
+    },
+    {
+      "family": "Source Sans 3",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 13
+    },
+    {
+      "family": "Mukta",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 14
+    },
+    {
+      "family": "Kanit",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 15
+    },
+    {
+      "family": "Barlow",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 16
+    },
+    {
+      "family": "Manrope",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 17
+    },
+    {
+      "family": "DM Sans",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 18
+    },
+    {
+      "family": "Nunito Sans",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 19
+    },
+    {
+      "family": "Quicksand",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 20
+    },
+    {
+      "family": "Josefin Sans",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 21
+    },
+    {
+      "family": "Cabin",
+      "category": "sans-serif",
+      "weights": [400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 22
+    },
+    {
+      "family": "Hind",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 23
+    },
+    {
+      "family": "Karla",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 24
+    },
+    {
+      "family": "Oxygen",
+      "category": "sans-serif",
+      "weights": [300, 400, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 25
+    },
+    {
+      "family": "Asap",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 26
+    },
+    {
+      "family": "Exo 2",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 27
+    },
+    {
+      "family": "IBM Plex Sans",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 28
+    },
+    {
+      "family": "Arimo",
+      "category": "sans-serif",
+      "weights": [400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 29
+    },
+    {
+      "family": "Titillium Web",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 600, 700, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 30
+    },
+    {
+      "family": "Heebo",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 31
+    },
+    {
+      "family": "Assistant",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 32
+    },
+    {
+      "family": "Fira Sans",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 33
+    },
+    {
+      "family": "Anton",
+      "category": "sans-serif",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 34
+    },
+    {
+      "family": "Dosis",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 35
+    },
+    {
+      "family": "Plus Jakarta Sans",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 36
+    },
+    {
+      "family": "Outfit",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 37
+    },
+    {
+      "family": "Space Grotesk",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 38
+    },
+    {
+      "family": "Urbanist",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 39
+    },
+    {
+      "family": "Lexend",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 40
+    },
+    {
+      "family": "Mulish",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 41
+    },
+    {
+      "family": "Red Hat Display",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 42
+    },
+    {
+      "family": "Figtree",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 43
+    },
+    {
+      "family": "Archivo",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 44
+    },
+    {
+      "family": "Jost",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 45
+    },
+    {
+      "family": "Public Sans",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 46
+    },
+    {
+      "family": "Cairo",
+      "category": "sans-serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 47
+    },
+    {
+      "family": "Comfortaa",
+      "category": "sans-serif",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 48
+    },
+    {
+      "family": "ABeeZee",
+      "category": "sans-serif",
+      "weights": [400],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 49
+    },
+    {
+      "family": "Be Vietnam Pro",
+      "category": "sans-serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 50
+    },
+    {
+      "family": "Playfair Display",
+      "category": "serif",
+      "weights": [400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 51
+    },
+    {
+      "family": "Merriweather",
+      "category": "serif",
+      "weights": [300, 400, 700, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 52
+    },
+    {
+      "family": "Lora",
+      "category": "serif",
+      "weights": [400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 53
+    },
+    {
+      "family": "PT Serif",
+      "category": "serif",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 54
+    },
+    {
+      "family": "Libre Baskerville",
+      "category": "serif",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 55
+    },
+    {
+      "family": "Crimson Text",
+      "category": "serif",
+      "weights": [400, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 56
+    },
+    {
+      "family": "EB Garamond",
+      "category": "serif",
+      "weights": [400, 500, 600, 700, 800],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 57
+    },
+    {
+      "family": "Noto Serif",
+      "category": "serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 58
+    },
+    {
+      "family": "Source Serif 4",
+      "category": "serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 59
+    },
+    {
+      "family": "Bitter",
+      "category": "serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 60
+    },
+    {
+      "family": "Cormorant Garamond",
+      "category": "serif",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 61
+    },
+    {
+      "family": "Spectral",
+      "category": "serif",
+      "weights": [200, 300, 400, 500, 600, 700, 800],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 62
+    },
+    {
+      "family": "Alegreya",
+      "category": "serif",
+      "weights": [400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 63
+    },
+    {
+      "family": "Abril Fatface",
+      "category": "serif",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 64
+    },
+    {
+      "family": "Cardo",
+      "category": "serif",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 65
+    },
+    {
+      "family": "Volkhov",
+      "category": "serif",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 66
+    },
+    {
+      "family": "Domine",
+      "category": "serif",
+      "weights": [400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 67
+    },
+    {
+      "family": "Tinos",
+      "category": "serif",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 68
+    },
+    {
+      "family": "Archivo Black",
+      "category": "serif",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 69
+    },
+    {
+      "family": "IBM Plex Serif",
+      "category": "serif",
+      "weights": [100, 200, 300, 400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 70
+    },
+    {
+      "family": "Roboto Mono",
+      "category": "monospace",
+      "weights": [100, 200, 300, 400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 71
+    },
+    {
+      "family": "JetBrains Mono",
+      "category": "monospace",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 72
+    },
+    {
+      "family": "Fira Code",
+      "category": "monospace",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 73
+    },
+    {
+      "family": "Source Code Pro",
+      "category": "monospace",
+      "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 74
+    },
+    {
+      "family": "Inconsolata",
+      "category": "monospace",
+      "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 75
+    },
+    {
+      "family": "Space Mono",
+      "category": "monospace",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 76
+    },
+    {
+      "family": "IBM Plex Mono",
+      "category": "monospace",
+      "weights": [100, 200, 300, 400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 77
+    },
+    {
+      "family": "Courier Prime",
+      "category": "monospace",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 78
+    },
+    {
+      "family": "Anonymous Pro",
+      "category": "monospace",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 79
+    },
+    {
+      "family": "Overpass Mono",
+      "category": "monospace",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 80
+    },
+    {
+      "family": "PT Mono",
+      "category": "monospace",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 81
+    },
+    {
+      "family": "Ubuntu Mono",
+      "category": "monospace",
+      "weights": [400, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 82
+    },
+    {
+      "family": "Noto Sans Mono",
+      "category": "monospace",
+      "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 83
+    },
+    {
+      "family": "Red Hat Mono",
+      "category": "monospace",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 84
+    },
+    {
+      "family": "DM Mono",
+      "category": "monospace",
+      "weights": [300, 400, 500],
+      "styles": ["normal", "italic"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 85
+    },
+    {
+      "family": "Bebas Neue",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 86
+    },
+    {
+      "family": "Oswald",
+      "category": "display",
+      "weights": [200, 300, 400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 87
+    },
+    {
+      "family": "Righteous",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 88
+    },
+    {
+      "family": "Pacifico",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 89
+    },
+    {
+      "family": "Lobster",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 90
+    },
+    {
+      "family": "Permanent Marker",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 91
+    },
+    {
+      "family": "Bangers",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 92
+    },
+    {
+      "family": "Fredoka",
+      "category": "display",
+      "weights": [300, 400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 93
+    },
+    {
+      "family": "Russo One",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 94
+    },
+    {
+      "family": "Alfa Slab One",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 95
+    },
+    {
+      "family": "Caveat",
+      "category": "display",
+      "weights": [400, 500, 600, 700],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext", "cyrillic"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": true,
+      "popularity": 96
+    },
+    {
+      "family": "Shadows Into Light",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 97
+    },
+    {
+      "family": "Staatliches",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 98
+    },
+    {
+      "family": "Archivo Black",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 99
+    },
+    {
+      "family": "Concert One",
+      "category": "display",
+      "weights": [400],
+      "styles": ["normal"],
+      "subsets": ["latin", "latin-ext"],
+      "preview": "The quick brown fox jumps over the lazy dog",
+      "variable": false,
+      "popularity": 100
+    }
+  ]
+}

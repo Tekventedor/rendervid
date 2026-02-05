@@ -235,6 +235,78 @@ export const customComponentSchema: JSONSchema7 = {
 };
 
 /**
+ * JSON Schema for font source definition.
+ */
+export const fontSourceSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    url: { type: 'string' },
+    local: {
+      oneOf: [
+        { type: 'string' },
+        { type: 'array', items: { type: 'string' } },
+      ],
+    },
+    format: {
+      type: 'string',
+      enum: ['woff2', 'woff', 'truetype', 'opentype', 'embedded-opentype', 'svg'],
+    },
+    weight: {
+      type: 'integer',
+      enum: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    },
+    style: {
+      type: 'string',
+      enum: ['normal', 'italic', 'oblique'],
+    },
+  },
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for font family definition.
+ */
+export const fontFamilySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    family: { type: 'string', minLength: 1 },
+    sources: {
+      type: 'array',
+      items: fontSourceSchema,
+      minItems: 1,
+    },
+    display: {
+      type: 'string',
+      enum: ['auto', 'block', 'swap', 'fallback', 'optional'],
+    },
+    fallback: {
+      type: 'array',
+      items: { type: 'string' },
+    },
+    preload: { type: 'boolean' },
+  },
+  required: ['family', 'sources'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for font configuration.
+ */
+export const fontConfigurationSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    families: {
+      type: 'array',
+      items: fontFamilySchema,
+      minItems: 1,
+    },
+    basePath: { type: 'string' },
+  },
+  required: ['families'],
+  additionalProperties: false,
+};
+
+/**
  * Complete JSON Schema for template.
  */
 export const templateSchema: JSONSchema7 = {
@@ -267,6 +339,7 @@ export const templateSchema: JSONSchema7 = {
       type: 'object',
       additionalProperties: customComponentSchema,
     },
+    fonts: fontConfigurationSchema,
     composition: compositionSchema,
   },
   required: ['name', 'output', 'inputs', 'composition'],

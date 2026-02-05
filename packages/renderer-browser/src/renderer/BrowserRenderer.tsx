@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import type { Template, Scene, ComponentRegistry } from '@rendervid/core';
-import { getDefaultRegistry, TemplateProcessor } from '@rendervid/core';
+import { getDefaultRegistry, TemplateProcessor, FontManager } from '@rendervid/core';
 import { TemplateRenderer, calculateTotalFrames } from './SceneRenderer';
 import { createFrameCapturer } from '../encoder/capturer';
 import { createWebCodecsEncoder, isWebCodecsSupported } from '../encoder/webcodecs';
@@ -158,6 +158,9 @@ export class BrowserRenderer {
       // Process custom components and inputs
       await this.processor.loadCustomComponents(template, this.registry);
       const processedTemplate = this.processor.resolveInputs(template, inputs);
+
+      // Load fonts before rendering
+      await this.loadFonts(processedTemplate);
 
       const { width, height, fps = 30 } = processedTemplate.output;
       const scenes = processedTemplate.composition.scenes;
@@ -491,6 +494,9 @@ export class BrowserRenderer {
       await this.processor.loadCustomComponents(template, this.registry);
       const processedTemplate = this.processor.resolveInputs(template, inputs);
 
+      // Load fonts before rendering
+      await this.loadFonts(processedTemplate);
+
       const { width, height, fps = 30 } = processedTemplate.output;
       const scenes = processedTemplate.composition.scenes;
 
@@ -561,6 +567,43 @@ export class BrowserRenderer {
       };
     } finally {
       this.isRendering = false;
+    }
+  }
+
+  /**
+   * Load fonts from template configuration.
+   *
+   * @private
+   */
+  private async loadFonts(template: Template): Promise<void> {
+    // Check if template has fonts configuration
+    if (!template.fonts) {
+      return;
+    }
+
+    const fontManager = new FontManager();
+
+    try {
+      const result = await fontManager.loadFonts(template.fonts);
+
+      // Log successful font loading
+      if (result.loaded.length > 0) {
+        console.log(`[BrowserRenderer] Loaded ${result.loaded.length} fonts in ${result.loadTime}ms`);
+        result.loaded.forEach(font => {
+          console.log(`  - ${font.family} ${font.weight || 400} ${font.style || 'normal'}`);
+        });
+      }
+
+      // Log font loading failures
+      if (result.failed.length > 0) {
+        console.warn(`[BrowserRenderer] Failed to load ${result.failed.length} fonts, using fallbacks`);
+        result.failed.forEach(font => {
+          console.warn(`  - ${font.family} ${font.weight || 400} ${font.style || 'normal'}`);
+        });
+      }
+    } catch (error) {
+      // Font loading failed, but we continue with fallbacks
+      console.warn('[BrowserRenderer] Font loading failed, using fallbacks:', error);
     }
   }
 

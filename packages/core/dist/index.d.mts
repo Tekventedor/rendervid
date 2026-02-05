@@ -503,7 +503,7 @@ type VerticalAlign = 'top' | 'middle' | 'bottom';
 /**
  * Font weight options.
  */
-type FontWeight = 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
+type FontWeight$1 = 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
 /**
  * Text stroke configuration.
  */
@@ -546,7 +546,7 @@ interface TextLayerProps {
     /** Font size in pixels */
     fontSize?: number;
     /** Font weight */
-    fontWeight?: FontWeight;
+    fontWeight?: FontWeight$1;
     /** Font style */
     fontStyle?: 'normal' | 'italic';
     /** Text color */
@@ -1244,6 +1244,639 @@ interface ComponentRegistry {
 }
 
 /**
+ * Font type definitions for Rendervid
+ *
+ * Comprehensive type system for font loading, configuration, and management
+ * supporting Google Fonts, custom font uploads, and system fonts.
+ */
+/**
+ * Numeric font weights from 100 (Thin) to 900 (Black)
+ */
+type NumericFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+/**
+ * Named font weight aliases for common weights
+ */
+type NamedFontWeight = 'thin' | 'extralight' | 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black';
+/**
+ * Font weight - supports both numeric values (100-900) and named weights
+ */
+type FontWeight = NumericFontWeight | NamedFontWeight;
+/**
+ * Font style - normal or italic
+ */
+type FontStyle$1 = 'normal' | 'italic';
+/**
+ * Font category classification
+ */
+type FontCategory$1 = 'sans-serif' | 'serif' | 'monospace' | 'display' | 'handwriting';
+/**
+ * Font loading strategy
+ * - eager: Load font immediately when template is parsed
+ * - lazy: Load font only when it's about to be rendered
+ * - preload: Load font in parallel with other resources using browser preload
+ */
+type FontLoadingStrategy = 'eager' | 'lazy' | 'preload';
+/**
+ * Font display strategy for controlling FOIT (Flash of Invisible Text)
+ * and FOUT (Flash of Unstyled Text)
+ *
+ * - swap: Show fallback immediately, swap when font loads (recommended)
+ * - block: Hide text briefly, then show with font (can cause FOIT)
+ * - fallback: Show fallback if font takes too long
+ * - optional: Use font if cached, otherwise use fallback
+ * - auto: Browser decides (usually behaves like 'block')
+ */
+type FontDisplay$1 = 'swap' | 'block' | 'fallback' | 'optional' | 'auto';
+/**
+ * Font format for web fonts
+ */
+type FontFormat = 'woff2' | 'woff' | 'ttf' | 'otf' | 'eot';
+/**
+ * Google Font definition for loading fonts from Google Fonts API
+ */
+interface GoogleFontDefinition {
+    /**
+     * Font family name as it appears on Google Fonts
+     * @example "Roboto", "Open Sans", "Playfair Display"
+     */
+    family: string;
+    /**
+     * Font weights to load (numeric values 100-900)
+     * If not specified, defaults to [400] (normal weight)
+     * @example [400, 700] // Load normal and bold
+     */
+    weights?: NumericFontWeight[];
+    /**
+     * Font styles to load
+     * If not specified, defaults to ['normal']
+     * @example ['normal', 'italic']
+     */
+    styles?: FontStyle$1[];
+    /**
+     * Character subsets to include
+     * Common options: 'latin', 'latin-ext', 'cyrillic', 'greek', 'vietnamese'
+     * If not specified, defaults to ['latin']
+     * @example ['latin', 'latin-ext']
+     */
+    subsets?: string[];
+    /**
+     * Font display strategy
+     * Controls how the font behaves while loading
+     * @default 'swap'
+     */
+    display?: FontDisplay$1;
+    /**
+     * Optional text parameter for font subsetting
+     * When provided, Google Fonts will return a subset containing only these characters
+     * Significantly reduces file size for specific use cases
+     * @example "Hello World" // Only load glyphs for these characters
+     */
+    text?: string;
+    /**
+     * Whether this is a variable font
+     * Variable fonts support a range of weights/styles in a single file
+     */
+    variable?: boolean;
+}
+/**
+ * Custom font definition for uploaded or externally hosted fonts
+ */
+interface CustomFontDefinition {
+    /**
+     * Font family name to use in CSS
+     * @example "MyBrandFont", "CustomSerif"
+     */
+    family: string;
+    /**
+     * URL or upload ID for the font file
+     * Can be:
+     * - Full URL: "https://cdn.example.com/fonts/mybrand.woff2"
+     * - Upload ID: "upload_abc123" (resolved by font manager)
+     * - Data URI: "data:font/woff2;base64,..."
+     */
+    source: string;
+    /**
+     * Font weight this file represents
+     * @default 400
+     */
+    weight?: NumericFontWeight;
+    /**
+     * Font style this file represents
+     * @default 'normal'
+     */
+    style?: FontStyle$1;
+    /**
+     * Font file format
+     * Used to generate proper @font-face src with format() hint
+     * @default 'woff2'
+     */
+    format?: FontFormat;
+    /**
+     * Font display strategy
+     * @default 'swap'
+     */
+    display?: FontDisplay$1;
+    /**
+     * Unicode range this font covers
+     * Allows browsers to only download fonts for the characters actually used
+     * @example "U+0000-00FF, U+0131, U+0152-0153"
+     */
+    unicodeRange?: string;
+    /**
+     * Optional descriptors for font-face rule
+     * Can include font-stretch, font-feature-settings, etc.
+     */
+    descriptors?: Record<string, string>;
+}
+/**
+ * License information for fonts
+ */
+interface LicenseInfo {
+    /**
+     * License type
+     */
+    type: 'OFL' | 'Apache' | 'MIT' | 'proprietary' | 'custom';
+    /**
+     * URL to full license text
+     */
+    url: string;
+    /**
+     * Whether commercial use is allowed
+     */
+    allowsCommercial: boolean;
+    /**
+     * Whether attribution is required
+     */
+    requiresAttribution: boolean;
+    /**
+     * Any specific restrictions or requirements
+     * @example ["Cannot sell fonts standalone", "Must include copyright notice"]
+     */
+    restrictions?: string[];
+}
+/**
+ * Font metadata catalog entry
+ *
+ * Contains comprehensive information about a font for discovery,
+ * preview, and proper loading configuration.
+ */
+interface FontMetadata$1 {
+    /**
+     * Font family name
+     */
+    family: string;
+    /**
+     * Font category classification
+     */
+    category: FontCategory$1;
+    /**
+     * Available font weights
+     * @example [100, 300, 400, 700, 900]
+     */
+    variants: NumericFontWeight[];
+    /**
+     * Available font styles
+     * @example ['normal', 'italic']
+     */
+    styles: FontStyle$1[];
+    /**
+     * Available character subsets
+     * @example ['latin', 'latin-ext', 'cyrillic', 'greek']
+     */
+    subsets: string[];
+    /**
+     * Preview text to demonstrate the font
+     * @example "The quick brown fox jumps over the lazy dog"
+     */
+    preview: string;
+    /**
+     * Google Fonts API URL if this is a Google Font
+     * @example "https://fonts.google.com/specimen/Roboto"
+     */
+    googleFontsUrl?: string;
+    /**
+     * Whether this is a variable font
+     * Variable fonts support continuous weight/width variations
+     */
+    variable?: boolean;
+    /**
+     * License information
+     */
+    license: LicenseInfo;
+    /**
+     * Popularity rank (lower is more popular)
+     * Based on Google Fonts usage statistics
+     * @example 1 (most popular), 100, 500
+     */
+    popularity?: number;
+    /**
+     * Human-readable description of the font
+     * @example "Roboto is a neo-grotesque sans-serif typeface designed by Google"
+     */
+    description?: string;
+    /**
+     * Designer/creator of the font
+     * @example "Christian Robertson"
+     */
+    designer?: string;
+    /**
+     * Year the font was released
+     * @example 2011
+     */
+    releaseYear?: number;
+    /**
+     * Tags for categorization and search
+     * @example ["modern", "geometric", "clean", "professional"]
+     */
+    tags?: string[];
+}
+/**
+ * Font fallback configuration
+ *
+ * Defines fallback fonts to use while the primary font is loading
+ * or if it fails to load.
+ */
+interface FontFallback {
+    /**
+     * Primary font family name
+     */
+    primary: string;
+    /**
+     * Fallback font stack
+     * Listed in priority order
+     * @example ["Arial", "Helvetica", "sans-serif"]
+     */
+    fallbacks: string[];
+    /**
+     * Whether to use metric-matched fallbacks
+     * When true, attempts to find system fonts with similar metrics
+     * to reduce layout shift when font loads
+     */
+    metricMatched?: boolean;
+    /**
+     * Precomputed font metrics for fallback matching
+     * Used to calculate size-adjust, ascent-override, etc.
+     */
+    metrics?: FontMetrics;
+}
+/**
+ * Font metrics for fallback matching
+ *
+ * These metrics help create metric-matched fallbacks that reduce
+ * layout shift when the primary font loads.
+ */
+interface FontMetrics {
+    /**
+     * Font family name
+     */
+    familyName: string;
+    /**
+     * Units per em (typically 1000 or 2048)
+     */
+    unitsPerEm: number;
+    /**
+     * Ascender height (above baseline)
+     */
+    ascent: number;
+    /**
+     * Descender depth (below baseline)
+     */
+    descent: number;
+    /**
+     * Line gap (space between lines)
+     */
+    lineGap: number;
+    /**
+     * Cap height (height of capital letters)
+     */
+    capHeight: number;
+    /**
+     * x-height (height of lowercase x)
+     */
+    xHeight: number;
+    /**
+     * Average character width
+     */
+    avgWidth?: number;
+}
+/**
+ * Template-level font configuration
+ *
+ * Defines all fonts used in a template and how they should be loaded.
+ */
+interface FontConfiguration {
+    /**
+     * Google Fonts to load
+     * @example [{ family: "Roboto", weights: [400, 700] }]
+     */
+    google?: GoogleFontDefinition[];
+    /**
+     * Custom fonts to load
+     * @example [{ family: "MyBrand", source: "https://cdn.example.com/mybrand.woff2" }]
+     */
+    custom?: CustomFontDefinition[];
+    /**
+     * Font loading strategy
+     * Controls when and how fonts are loaded
+     * @default 'eager'
+     */
+    strategy?: FontLoadingStrategy;
+    /**
+     * Fallback font configurations
+     * Maps primary font families to their fallback stacks
+     * @example { "Roboto": ["Arial", "Helvetica", "sans-serif"] }
+     */
+    fallbacks?: Record<string, string[]>;
+    /**
+     * Timeout for font loading in milliseconds
+     * If a font doesn't load within this time, fallback is used
+     * @default 10000 (10 seconds)
+     */
+    timeout?: number;
+    /**
+     * Whether to preload fonts in parallel with other resources
+     * Uses <link rel="preload"> for better performance
+     * @default true
+     */
+    preload?: boolean;
+    /**
+     * Whether to subset fonts based on template text content
+     * Reduces file size by only including used characters
+     * @default false
+     */
+    subset?: boolean;
+}
+/**
+ * Font loading state
+ */
+type FontLoadingState = 'unloaded' | 'loading' | 'loaded' | 'error' | 'timeout';
+/**
+ * Font loading result
+ */
+interface FontLoadResult {
+    /**
+     * Font family that was loaded
+     */
+    family: string;
+    /**
+     * Weight that was loaded
+     */
+    weight: NumericFontWeight;
+    /**
+     * Style that was loaded
+     */
+    style: FontStyle$1;
+    /**
+     * Loading state
+     */
+    state: FontLoadingState;
+    /**
+     * Error message if loading failed
+     */
+    error?: string;
+    /**
+     * Time taken to load in milliseconds
+     */
+    loadTime?: number;
+    /**
+     * Font file size in bytes
+     */
+    fileSize?: number;
+    /**
+     * Whether this font was served from cache
+     */
+    cached?: boolean;
+}
+/**
+ * Font validation result
+ */
+interface FontValidationResult {
+    /**
+     * Whether the font is valid
+     */
+    valid: boolean;
+    /**
+     * Validation errors
+     */
+    errors: string[];
+    /**
+     * Validation warnings
+     */
+    warnings: string[];
+    /**
+     * Extracted font metadata
+     */
+    metadata?: Partial<FontMetadata$1>;
+}
+/**
+ * Options for font upload
+ */
+interface FontUploadOptions {
+    /**
+     * Custom family name override
+     * If not provided, uses the font's internal family name
+     */
+    family?: string;
+    /**
+     * Whether to convert to WOFF2 format
+     * @default true
+     */
+    convertToWoff2?: boolean;
+    /**
+     * Whether to validate the font file
+     * @default true
+     */
+    validate?: boolean;
+    /**
+     * Maximum file size in bytes
+     * @default 4194304 (4MB)
+     */
+    maxSize?: number;
+    /**
+     * Whether to parse and extract metadata
+     * @default true
+     */
+    extractMetadata?: boolean;
+}
+/**
+ * System font information
+ *
+ * Represents fonts available on the system without needing to load
+ */
+interface SystemFont {
+    /**
+     * Font family name
+     */
+    family: string;
+    /**
+     * Available styles on the system
+     */
+    styles: FontStyle$1[];
+    /**
+     * Available weights on the system
+     */
+    weights: NumericFontWeight[];
+    /**
+     * Font category
+     */
+    category?: FontCategory$1;
+    /**
+     * Whether this is a web-safe font
+     * Web-safe fonts are available on most systems
+     */
+    webSafe?: boolean;
+}
+/**
+ * Font cache entry
+ */
+interface FontCacheEntry {
+    /**
+     * Cache key
+     */
+    key: string;
+    /**
+     * Font family
+     */
+    family: string;
+    /**
+     * Font data (ArrayBuffer or URL)
+     */
+    data: ArrayBuffer | string;
+    /**
+     * When this entry was cached
+     */
+    cachedAt: number;
+    /**
+     * When this entry expires
+     */
+    expiresAt: number;
+    /**
+     * Cache entry size in bytes
+     */
+    size: number;
+    /**
+     * Font metadata
+     */
+    metadata?: Partial<FontMetadata$1>;
+}
+/**
+ * Helper type for converting named weights to numeric weights
+ */
+type WeightToNumeric<T extends FontWeight> = T extends 'thin' ? 100 : T extends 'extralight' ? 200 : T extends 'light' ? 300 : T extends 'normal' ? 400 : T extends 'medium' ? 500 : T extends 'semibold' ? 600 : T extends 'bold' ? 700 : T extends 'extrabold' ? 800 : T extends 'black' ? 900 : T extends NumericFontWeight ? T : never;
+/**
+ * Type guard to check if a weight is numeric
+ */
+declare function isNumericWeight(weight: FontWeight): weight is NumericFontWeight;
+/**
+ * Type guard to check if a weight is named
+ */
+declare function isNamedWeight(weight: FontWeight): weight is NamedFontWeight;
+/**
+ * Convert named weight to numeric weight
+ */
+declare function weightToNumeric(weight: FontWeight): NumericFontWeight;
+/**
+ * Convert numeric weight to named weight
+ */
+declare function numericToNamedWeight(weight: NumericFontWeight): NamedFontWeight;
+/**
+ * Font reference for identifying a specific font variant
+ * Used to track which fonts are used in templates
+ */
+interface FontReference {
+    /**
+     * Font family name
+     */
+    family: string;
+    /**
+     * Font weight
+     */
+    weight?: NumericFontWeight;
+    /**
+     * Font style
+     */
+    style?: FontStyle$1;
+}
+/**
+ * Result of loading fonts
+ */
+interface LoadedFonts {
+    /**
+     * Successfully loaded font references
+     */
+    loaded: FontReference[];
+    /**
+     * Failed font references
+     */
+    failed: FontReference[];
+    /**
+     * Total time taken to load fonts in milliseconds
+     */
+    loadTime: number;
+}
+/**
+ * Font loading error class
+ */
+declare class FontLoadingError extends Error {
+    /**
+     * Font family that failed to load
+     */
+    readonly family: string;
+    /**
+     * Original error that caused the failure
+     */
+    readonly cause?: Error;
+    constructor(message: string, family: string, cause?: Error);
+}
+/**
+ * Constants for common font configurations
+ */
+declare const FONT_CONSTANTS: {
+    /**
+     * Default font weights to load if none specified
+     */
+    readonly DEFAULT_WEIGHTS: readonly [400, 700];
+    /**
+     * Default font styles to load if none specified
+     */
+    readonly DEFAULT_STYLES: readonly ["normal"];
+    /**
+     * Default character subset
+     */
+    readonly DEFAULT_SUBSET: readonly ["latin"];
+    /**
+     * Default font display strategy
+     */
+    readonly DEFAULT_DISPLAY: "swap";
+    /**
+     * Default font loading strategy
+     */
+    readonly DEFAULT_LOADING_STRATEGY: "eager";
+    /**
+     * Default timeout for font loading (10 seconds)
+     */
+    readonly DEFAULT_TIMEOUT: 10000;
+    /**
+     * Maximum file size for font uploads (4MB)
+     */
+    readonly MAX_UPLOAD_SIZE: 4194304;
+    /**
+     * Supported font formats in order of preference
+     */
+    readonly SUPPORTED_FORMATS: readonly ["woff2", "woff", "ttf", "otf"];
+    /**
+     * Web-safe font fallback stacks
+     */
+    readonly WEB_SAFE_FALLBACKS: {
+        readonly 'sans-serif': readonly ["Arial", "Helvetica", "sans-serif"];
+        readonly serif: readonly ["Georgia", "Times New Roman", "serif"];
+        readonly monospace: readonly ["Courier New", "Courier", "monospace"];
+        readonly display: readonly ["Impact", "Arial Black", "sans-serif"];
+        readonly handwriting: readonly ["Comic Sans MS", "cursive"];
+    };
+};
+
+/**
  * Author information for a template.
  */
 interface TemplateAuthor {
@@ -1361,6 +1994,42 @@ interface Template {
      */
     customComponents?: Record<string, CustomComponentDefinition>;
     /**
+     * Font configuration for this template.
+     *
+     * Defines Google Fonts and custom fonts to be loaded for text layers.
+     * Supports multiple font families with various weights and styles.
+     *
+     * Fonts are loaded before rendering begins to ensure text appears correctly.
+     * If a font fails to load, the specified fallback fonts will be used.
+     *
+     * @optional This field is optional for backward compatibility.
+     * Templates without font configuration will use system fonts only.
+     *
+     * @example
+     * ```typescript
+     * fonts: {
+     *   google: [
+     *     {
+     *       family: 'Roboto',
+     *       weights: [400, 700],
+     *       styles: ['normal', 'italic']
+     *     }
+     *   ],
+     *   custom: [
+     *     {
+     *       family: 'MyBrand',
+     *       source: 'https://cdn.example.com/mybrand.woff2',
+     *       weight: 700
+     *     }
+     *   ],
+     *   fallbacks: {
+     *     'Roboto': ['Arial', 'Helvetica', 'sans-serif']
+     *   }
+     * }
+     * ```
+     */
+    fonts?: FontConfiguration;
+    /**
      * The composition containing scenes and layers
      */
     composition: Composition;
@@ -1370,6 +2039,84 @@ interface Template {
  * Missing fields will use defaults.
  */
 type PartialTemplate = Partial<Template> & Pick<Template, 'name' | 'output' | 'composition'>;
+
+/**
+ * Font weight options for custom fonts.
+ */
+type CustomFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+/**
+ * Font style options.
+ */
+type CustomFontStyle = 'normal' | 'italic' | 'oblique';
+/**
+ * Font display strategy for loading custom fonts.
+ * Controls how fonts are displayed while loading.
+ */
+type FontDisplay = 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+/**
+ * Font source definition for a specific font variant.
+ * Supports both URL and local font sources.
+ */
+interface FontSource {
+    /**
+     * URL to the font file (e.g., .woff2, .woff, .ttf, .otf)
+     * Can be relative or absolute URL
+     */
+    url?: string;
+    /**
+     * Local font name to check before downloading
+     * Can specify multiple local names as an array
+     */
+    local?: string | string[];
+    /**
+     * Font format (e.g., 'woff2', 'woff', 'truetype', 'opentype')
+     * Usually inferred from URL extension, but can be explicit
+     */
+    format?: 'woff2' | 'woff' | 'truetype' | 'opentype' | 'embedded-opentype' | 'svg';
+    /**
+     * Font weight this source applies to
+     * @default 400
+     */
+    weight?: CustomFontWeight;
+    /**
+     * Font style this source applies to
+     * @default 'normal'
+     */
+    style?: CustomFontStyle;
+}
+/**
+ * Font family definition with all its variants and sources.
+ * Defines a complete font family that can be loaded and used in templates.
+ */
+interface FontFamily {
+    /**
+     * Font family name as it will be referenced in CSS
+     * This is the name used in fontFamily properties
+     * @example 'Inter', 'Roboto', 'Custom Font'
+     */
+    family: string;
+    /**
+     * List of font sources for different weights and styles
+     * Each source can define a specific variant of the font
+     */
+    sources: FontSource[];
+    /**
+     * Font display strategy
+     * @default 'swap'
+     */
+    display?: FontDisplay;
+    /**
+     * Fallback fonts to use while loading or if font fails
+     * @example ['Arial', 'sans-serif']
+     */
+    fallback?: string[];
+    /**
+     * Whether to preload this font for better performance
+     * Preloaded fonts are loaded with higher priority
+     * @default false
+     */
+    preload?: boolean;
+}
 
 /**
  * Validation error.
@@ -2069,4 +2816,373 @@ declare function getPresetsByType(type: 'entrance' | 'exit' | 'emphasis'): Prese
  */
 declare function generatePresetKeyframes(name: string, options: PresetOptions): Keyframe[];
 
-export { type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BlendMode, type BlurPreset, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type CustomComponentDefinition, type CustomComponentRef, type CustomLayer, type CustomLayerProps, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, type Filter, type FilterAnimation, type FilterType, type FontWeight, type FrameAwareProps, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LottieLayer, type LottieLayerProps, type OutputConfig, type Padding, type PartialTemplate, type Position, type PresetDefinition, type PresetOptions, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedStyle, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type Template, type TemplateAuthor, TemplateProcessor, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TransitionDirection, type TransitionType, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCompositionDuration, getDefaultRegistry, getEasing, getLayerSchema, getPreset, getPresetsByType, getPropertiesAtFrame, getSceneAtFrame, getTemplateSchema, getValueAtFrame, interpolate, parseEasing, templateSchema, validateInputs, validateSceneOrder, validateTemplate };
+/**
+ * FontManager coordinates font loading for templates.
+ *
+ * Features:
+ * - Loads Google Fonts and custom fonts
+ * - Extracts fonts from template layers
+ * - Manages fallback font stacks
+ * - Handles timeouts and errors gracefully
+ * - Verifies fonts are ready before rendering
+ *
+ * @example
+ * ```typescript
+ * const fontManager = new FontManager();
+ *
+ * // Load fonts from configuration
+ * const result = await fontManager.loadFonts({
+ *   google: [{ family: 'Roboto', weights: [400, 700] }],
+ *   custom: [{ family: 'MyFont', source: '/fonts/myfont.woff2' }],
+ * });
+ *
+ * // Extract fonts from template
+ * const fonts = fontManager.extractFontsFromTemplate(template);
+ *
+ * // Get fallback stack
+ * const stack = fontManager.getFallbackStack('Roboto');
+ * // Returns: "'Roboto', Arial, Helvetica, sans-serif"
+ * ```
+ */
+declare class FontManager {
+    private readonly loadTimeout;
+    private readonly injectedStyles;
+    /**
+     * Create a new FontManager.
+     *
+     * @param options - Configuration options
+     * @param options.timeout - Font loading timeout in milliseconds (default: 10000)
+     */
+    constructor(options?: {
+        timeout?: number;
+    });
+    /**
+     * Load fonts from configuration.
+     *
+     * Loads Google Fonts and custom fonts, with timeout and error handling.
+     * Fonts that fail to load will be included in the `failed` array.
+     *
+     * @param config - Font configuration
+     * @returns Promise resolving to loaded fonts result
+     *
+     * @example
+     * ```typescript
+     * const result = await fontManager.loadFonts({
+     *   google: [
+     *     { family: 'Roboto', weights: [400, 700] },
+     *     { family: 'Playfair Display', styles: ['normal', 'italic'] },
+     *   ],
+     * });
+     *
+     * console.log(`Loaded ${result.loaded.length} fonts in ${result.loadTime}ms`);
+     * if (result.failed.length > 0) {
+     *   console.warn(`Failed to load: ${result.failed.map(f => f.family).join(', ')}`);
+     * }
+     * ```
+     */
+    loadFonts(config: FontConfiguration): Promise<LoadedFonts>;
+    /**
+     * Extract all fonts used in a template.
+     *
+     * Scans all text layers and extracts unique font family/weight/style combinations.
+     *
+     * @param template - Template to extract fonts from
+     * @returns Set of font references used in the template
+     *
+     * @example
+     * ```typescript
+     * const fonts = fontManager.extractFontsFromTemplate(template);
+     * console.log(`Template uses ${fonts.size} unique fonts`);
+     * fonts.forEach(font => {
+     *   console.log(`- ${font.family} ${font.weight} ${font.style}`);
+     * });
+     * ```
+     */
+    extractFontsFromTemplate(template: Template): Set<FontReference>;
+    /**
+     * Wait for document.fonts.ready.
+     *
+     * This ensures all fonts are loaded before rendering to prevent
+     * FOIT (Flash of Invisible Text) and FOUT (Flash of Unstyled Text).
+     *
+     * @param timeout - Optional timeout in milliseconds (uses instance timeout if not provided)
+     * @returns Promise that resolves when fonts are ready or timeout occurs
+     *
+     * @example
+     * ```typescript
+     * await fontManager.waitForFontsReady();
+     * // Fonts are now ready for rendering
+     * ```
+     */
+    waitForFontsReady(timeout?: number): Promise<void>;
+    /**
+     * Verify that specific fonts are loaded.
+     *
+     * Checks if fonts are available using the CSS Font Loading API.
+     *
+     * @param fonts - Array of font references to verify
+     * @returns True if all fonts are loaded, false otherwise
+     *
+     * @example
+     * ```typescript
+     * const allLoaded = fontManager.verifyFontsLoaded([
+     *   { family: 'Roboto', weight: 400 },
+     *   { family: 'Roboto', weight: 700 },
+     * ]);
+     * if (!allLoaded) {
+     *   console.warn('Some fonts are not loaded');
+     * }
+     * ```
+     */
+    verifyFontsLoaded(fonts: FontReference[]): boolean;
+    /**
+     * Get CSS fallback font stack for a font family.
+     *
+     * Returns a CSS font-family value with appropriate fallbacks.
+     *
+     * @param fontFamily - Primary font family name
+     * @param customFallbacks - Optional custom fallback array
+     * @returns CSS font-family string with fallbacks
+     *
+     * @example
+     * ```typescript
+     * const stack = fontManager.getFallbackStack('Roboto');
+     * // Returns: "'Roboto', Arial, Helvetica, sans-serif"
+     *
+     * const customStack = fontManager.getFallbackStack('MyFont', ['Arial', 'sans-serif']);
+     * // Returns: "'MyFont', Arial, sans-serif"
+     * ```
+     */
+    getFallbackStack(fontFamily: string, customFallbacks?: string[]): string;
+    /**
+     * Load a Google Font.
+     *
+     * @internal
+     */
+    private loadGoogleFont;
+    /**
+     * Load a custom font.
+     *
+     * @internal
+     */
+    private loadCustomFont;
+    /**
+     * Generate @font-face CSS rule.
+     *
+     * @internal
+     */
+    private generateFontFaceCSS;
+    /**
+     * Inject CSS into the document.
+     *
+     * @internal
+     */
+    private injectFontCSS;
+    /**
+     * Load font faces using Font Loading API.
+     *
+     * @internal
+     */
+    private loadFontFaces;
+    /**
+     * Load a single font face.
+     *
+     * @internal
+     */
+    private loadFontFace;
+    /**
+     * Fetch with timeout.
+     *
+     * @internal
+     */
+    private fetchWithTimeout;
+}
+
+/**
+ * Google Fonts Catalog
+ *
+ * Comprehensive catalog of 100+ curated Google Fonts with metadata.
+ * Provides utilities to query fonts by category, popularity, and family name.
+ */
+/**
+ * Font category types
+ */
+type FontCategory = 'sans-serif' | 'serif' | 'monospace' | 'display';
+/**
+ * Font style types
+ */
+type FontStyle = 'normal' | 'italic';
+/**
+ * Font metadata interface
+ */
+interface FontMetadata {
+    /** Font family name as used in CSS */
+    family: string;
+    /** Font category */
+    category: FontCategory;
+    /** Available font weights (e.g., [400, 700]) */
+    weights: number[];
+    /** Available font styles */
+    styles: FontStyle[];
+    /** Supported character subsets */
+    subsets: string[];
+    /** Preview text for the font */
+    preview: string;
+    /** Whether the font has a variable font version */
+    variable: boolean;
+    /** Popularity ranking (1 = most popular) */
+    popularity: number;
+}
+/**
+ * Get the complete font catalog
+ *
+ * @returns Array of all font metadata objects
+ *
+ * @example
+ * ```ts
+ * const allFonts = getFontCatalog();
+ * console.log(`Total fonts: ${allFonts.length}`);
+ * ```
+ */
+declare function getFontCatalog(): FontMetadata[];
+/**
+ * Get fonts filtered by category
+ *
+ * @param category - Font category to filter by
+ * @returns Array of font metadata objects in the specified category
+ *
+ * @example
+ * ```ts
+ * const sansFonts = getFontsByCategory('sans-serif');
+ * const serifFonts = getFontsByCategory('serif');
+ * const monoFonts = getFontsByCategory('monospace');
+ * ```
+ */
+declare function getFontsByCategory(category: FontCategory): FontMetadata[];
+/**
+ * Get metadata for a specific font family
+ *
+ * @param family - Font family name (case-sensitive)
+ * @returns Font metadata object or undefined if not found
+ *
+ * @example
+ * ```ts
+ * const roboto = getFontMetadata('Roboto');
+ * if (roboto) {
+ *   console.log(`Weights: ${roboto.weights.join(', ')}`);
+ *   console.log(`Variable: ${roboto.variable}`);
+ * }
+ * ```
+ */
+declare function getFontMetadata(family: string): FontMetadata | undefined;
+/**
+ * Get the top 50 most popular fonts
+ *
+ * @returns Array of the 50 most popular font metadata objects, sorted by popularity
+ *
+ * @example
+ * ```ts
+ * const popular = getPopularFonts();
+ * console.log(`Most popular: ${popular[0].family}`);
+ * ```
+ */
+declare function getPopularFonts(): FontMetadata[];
+/**
+ * Get fonts that support variable font technology
+ *
+ * @returns Array of variable font metadata objects
+ *
+ * @example
+ * ```ts
+ * const variableFonts = getVariableFonts();
+ * console.log(`Variable fonts: ${variableFonts.length}`);
+ * ```
+ */
+declare function getVariableFonts(): FontMetadata[];
+/**
+ * Search fonts by name (case-insensitive partial match)
+ *
+ * @param query - Search query string
+ * @returns Array of matching font metadata objects
+ *
+ * @example
+ * ```ts
+ * const results = searchFonts('mono');
+ * // Returns fonts like "Roboto Mono", "JetBrains Mono", etc.
+ * ```
+ */
+declare function searchFonts(query: string): FontMetadata[];
+/**
+ * Get fonts that support specific weights
+ *
+ * @param weights - Array of weight values to check for
+ * @param matchAll - If true, font must support all weights; if false, any weight
+ * @returns Array of font metadata objects supporting the specified weights
+ *
+ * @example
+ * ```ts
+ * // Find fonts with both 300 and 700 weights
+ * const fonts = getFontsByWeight([300, 700], true);
+ *
+ * // Find fonts with either 100 or 900 weights
+ * const extremes = getFontsByWeight([100, 900], false);
+ * ```
+ */
+declare function getFontsByWeight(weights: number[], matchAll?: boolean): FontMetadata[];
+/**
+ * Get fonts that support italic style
+ *
+ * @returns Array of font metadata objects with italic support
+ *
+ * @example
+ * ```ts
+ * const italicFonts = getFontsWithItalic();
+ * ```
+ */
+declare function getFontsWithItalic(): FontMetadata[];
+/**
+ * Get catalog statistics
+ *
+ * @returns Object containing catalog statistics
+ *
+ * @example
+ * ```ts
+ * const stats = getCatalogStats();
+ * console.log(`Total: ${stats.total}`);
+ * console.log(`Sans-serif: ${stats.byCategory['sans-serif']}`);
+ * ```
+ */
+declare function getCatalogStats(): {
+    total: number;
+    byCategory: Record<FontCategory, number>;
+    variable: number;
+    withItalic: number;
+};
+/**
+ * Validate if a font family exists in the catalog
+ *
+ * @param family - Font family name to check
+ * @returns True if the font exists in the catalog
+ *
+ * @example
+ * ```ts
+ * if (isFontAvailable('Roboto')) {
+ *   // Font is available
+ * }
+ * ```
+ */
+declare function isFontAvailable(family: string): boolean;
+/**
+ * Get random fonts from the catalog
+ *
+ * @param count - Number of random fonts to return
+ * @returns Array of random font metadata objects
+ *
+ * @example
+ * ```ts
+ * const randomFonts = getRandomFonts(5);
+ * ```
+ */
+declare function getRandomFonts(count?: number): FontMetadata[];
+
+export { type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BlendMode, type BlurPreset, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FrameAwareProps, type GoogleFontDefinition, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LoadedFonts, type LottieLayer, type LottieLayerProps, type NamedFontWeight, type NumericFontWeight, type OutputConfig, type Padding, type PartialTemplate, type Position, type PresetDefinition, type PresetOptions, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedStyle, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SystemFont, type Template, type TemplateAuthor, TemplateProcessor, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TransitionDirection, type TransitionType, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type WeightToNumeric, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, numericToNamedWeight, parseEasing, searchFonts, templateSchema, validateInputs, validateSceneOrder, validateTemplate, weightToNumeric };

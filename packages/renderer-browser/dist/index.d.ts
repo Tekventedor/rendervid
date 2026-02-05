@@ -113,6 +113,12 @@ declare class BrowserRenderer {
      */
     renderImage(options: RenderImageOptions): Promise<ImageResult>;
     /**
+     * Load fonts from template configuration.
+     *
+     * @private
+     */
+    private loadFonts;
+    /**
      * Dispose of the renderer and clean up resources.
      */
     dispose(): void;

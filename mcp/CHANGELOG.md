@@ -2,6 +2,24 @@
 
 All notable changes to the Rendervid MCP Server will be documented in this file.
 
+## [0.2.0] - 2026-02-05
+
+### Added
+- **Font Loading System** - Comprehensive font support with 100+ Google Fonts
+  - Templates can now include `fonts` configuration for Google Fonts and custom fonts
+  - 100 curated Google Fonts across sans-serif, serif, monospace, and display categories
+  - Custom font loading from external URLs (WOFF2, WOFF, TTF, OTF)
+  - Automatic font loading before rendering (browser and headless)
+  - Fallback font system with platform-specific defaults
+  - Font verification with 10-second timeout
+  - See `FONTS.md` for usage guide
+
+### Changed
+- Template schema now supports optional `fonts` field
+- BrowserRenderer loads fonts automatically before rendering
+- NodeRenderer injects FontManager into Puppeteer for headless font loading
+- All text layers can now use custom fonts via `fontFamily` property
+
 ## [0.1.1] - 2026-02-04
 
 ### Fixed

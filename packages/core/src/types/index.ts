@@ -119,3 +119,13 @@ export type {
 
 // Schema
 export type { JSONSchema7, JSONSchema7TypeName } from './schema';
+
+// Fonts
+export type {
+  CustomFontWeight,
+  CustomFontStyle,
+  FontDisplay,
+  FontSource,
+  FontFamily,
+  FontConfiguration,
+} from './fonts';

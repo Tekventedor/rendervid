@@ -232,6 +232,11 @@ Templates are JSON objects with this structure:
     "fps": 30,
     "duration": 5
   },
+  "fonts": {
+    "google": [
+      { "family": "Roboto", "weights": [400, 700] }
+    ]
+  },
   "inputs": [
     {
       "key": "title",
@@ -254,6 +259,8 @@ Templates are JSON objects with this structure:
             "size": { "width": 800, "height": 100 },
             "props": {
               "text": "{{title}}",
+              "fontFamily": "Roboto",
+              "fontWeight": 700,
               "fontSize": 72,
               "color": "#FFFFFF"
             },
@@ -268,6 +275,32 @@ Templates are JSON objects with this structure:
         ]
       }
     ]
+  }
+}
+```
+
+### Font Support (NEW in v0.2.0)
+
+Rendervid now supports **100+ Google Fonts** and custom fonts. See [`FONTS.md`](./FONTS.md) for details.
+
+Quick example:
+```json
+{
+  "fonts": {
+    "google": [
+      { "family": "Roboto", "weights": [400, 700] }
+    ]
+  }
+}
+```
+
+Then use in text layers:
+```json
+{
+  "type": "text",
+  "props": {
+    "fontFamily": "Roboto",
+    "fontWeight": 700
   }
 }
 ```

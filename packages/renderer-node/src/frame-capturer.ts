@@ -60,6 +60,11 @@ export class FrameCapturer {
           '--disable-gpu',
         ];
 
+    // Add font rendering flags for better quality
+    const fontFlags = [
+      '--font-render-hinting=none', // Better font rendering quality
+    ];
+
     try {
       this.browser = await puppeteer.launch({
         headless: puppeteerOptions.headless !== false,
@@ -69,6 +74,7 @@ export class FrameCapturer {
           '--disable-setuid-sandbox',
           '--disable-dev-shm-usage',
           ...gpuFlags,
+          ...fontFlags,
           '--disable-web-security', // Disable CORS to allow loading external images
           '--disable-features=IsolateOrigins,site-per-process', // Required for --disable-web-security to work
           `--window-size=${width},${height}`,
@@ -130,6 +136,9 @@ export class FrameCapturer {
       timeout: 10000,
     });
 
+    // Load fonts if configured
+    await this.loadFonts();
+
     // Pre-load all images from the template
     await this.preloadImages();
 
@@ -171,47 +180,44 @@ export class FrameCapturer {
     console.error(`[FrameCapturer] Preloading ${mediaUrls.length} media assets...`);
 
     // Pre-load media with retry mechanism (Remotion-style)
-    await this.page.evaluate((media: Array<{ url: string; type: string }>) => {
+    // Use Function constructor to avoid TypeScript analyzing browser context code
+    const preloadFn = new Function('media', `
       return Promise.all(
         media.map(({ url, type }) => {
-          return new Promise<void>((resolve, reject) => {
+          return new Promise((resolve, reject) => {
             let retries = 0;
-            const maxRetries = 3; // Match Remotion's default
+            const maxRetries = 3;
 
             const attemptLoad = () => {
               if (type === 'image') {
-                // @ts-expect-error - Image is available in browser context
                 const img = new Image();
-                img.crossOrigin = 'anonymous'; // Try CORS first
+                img.crossOrigin = 'anonymous';
 
                 img.onload = () => {
-                  console.error(`[Preload] ✓ Image loaded: ${url}`);
+                  console.error(\`[Preload] ✓ Image loaded: \${url}\`);
                   resolve();
                 };
 
                 img.onerror = () => {
                   retries++;
                   if (retries <= maxRetries) {
-                    // Exponential backoff: 1s, 2s, 4s (Remotion-style)
                     const delay = Math.pow(2, retries - 1) * 1000;
-                    console.error(`[Preload] Retry ${retries}/${maxRetries} for ${url} in ${delay}ms`);
+                    console.error(\`[Preload] Retry \${retries}/\${maxRetries} for \${url} in \${delay}ms\`);
                     setTimeout(attemptLoad, delay);
                   } else {
-                    console.error(`[Preload] ✗ Failed to load image after ${maxRetries} retries: ${url}`);
-                    // Resolve anyway - don't block entire render for one image
+                    console.error(\`[Preload] ✗ Failed to load image after \${maxRetries} retries: \${url}\`);
                     resolve();
                   }
                 };
 
                 img.src = url;
               } else if (type === 'video' || type === 'audio') {
-                // @ts-expect-error - Video/Audio available in browser context
                 const media = type === 'video' ? document.createElement('video') : document.createElement('audio');
                 media.crossOrigin = 'anonymous';
                 media.preload = 'auto';
 
                 media.onloadeddata = () => {
-                  console.error(`[Preload] ✓ ${type} loaded: ${url}`);
+                  console.error(\`[Preload] ✓ \${type} loaded: \${url}\`);
                   resolve();
                 };
 
@@ -219,10 +225,10 @@ export class FrameCapturer {
                   retries++;
                   if (retries <= maxRetries) {
                     const delay = Math.pow(2, retries - 1) * 1000;
-                    console.error(`[Preload] Retry ${retries}/${maxRetries} for ${url} in ${delay}ms`);
+                    console.error(\`[Preload] Retry \${retries}/\${maxRetries} for \${url} in \${delay}ms\`);
                     setTimeout(attemptLoad, delay);
                   } else {
-                    console.error(`[Preload] ✗ Failed to load ${type} after ${maxRetries} retries: ${url}`);
+                    console.error(\`[Preload] ✗ Failed to load \${type} after \${maxRetries} retries: \${url}\`);
                     resolve();
                   }
                 };
@@ -236,7 +242,10 @@ export class FrameCapturer {
           });
         })
       );
-    }, mediaUrls);
+    `);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await this.page.evaluate(preloadFn as any, mediaUrls);
 
     console.error(`[FrameCapturer] ✓ All media preloaded successfully`);
   }
@@ -388,6 +397,288 @@ export class FrameCapturer {
   }
 
   /**
+   * Load fonts from template configuration.
+   * Injects FontManager and loads fonts before rendering.
+   */
+  private async loadFonts(): Promise<void> {
+    if (!this.page) {
+      throw new Error('Frame capturer not initialized');
+    }
+
+    const { template } = this.config;
+
+    // Skip if no fonts configured
+    if (!template.fonts || (!template.fonts.google && !template.fonts.custom)) {
+      console.error('[FrameCapturer] No fonts configured, skipping font loading');
+      return;
+    }
+
+    console.error('[FrameCapturer] Loading fonts...');
+
+    try {
+      // Inject FontManager code into page context using addScriptTag
+      const fontManagerScript = `
+        (function() {
+          // Define FontManager in browser context
+          class FontManager {
+            constructor(options = {}) {
+              this.loadTimeout = options.timeout ?? 10000;
+              this.injectedStyles = new Set();
+            }
+
+            async loadFonts(config) {
+              const startTime = Date.now();
+              const loaded = [];
+              const failed = [];
+              const promises = [];
+
+              // Load Google Fonts
+              if (config.google) {
+                for (const font of config.google) {
+                  promises.push(
+                    this.loadGoogleFont(font)
+                      .then(() => {
+                        const weights = font.weights ?? [400];
+                        const styles = font.styles ?? ['normal'];
+                        for (const weight of weights) {
+                          for (const style of styles) {
+                            loaded.push({ family: font.family, weight, style });
+                          }
+                        }
+                      })
+                      .catch((error) => {
+                        console.error('Failed to load Google Font ' + font.family + ':', error);
+                        failed.push({ family: font.family });
+                      })
+                  );
+                }
+              }
+
+              // Load custom fonts
+              if (config.custom) {
+                for (const font of config.custom) {
+                  promises.push(
+                    this.loadCustomFont(font)
+                      .then(() => {
+                        loaded.push({
+                          family: font.family,
+                          weight: font.weight ?? 400,
+                          style: font.style ?? 'normal',
+                        });
+                      })
+                      .catch((error) => {
+                        console.error('Failed to load custom font ' + font.family + ':', error);
+                        failed.push({ family: font.family });
+                      })
+                  );
+                }
+              }
+
+              await Promise.all(promises);
+              await this.waitForFontsReady();
+
+              const loadTime = Date.now() - startTime;
+              return { loaded, failed, loadTime };
+            }
+
+            async loadGoogleFont(definition) {
+              const weights = definition.weights ?? [400];
+              const styles = definition.styles ?? ['normal'];
+              const subsets = definition.subsets ?? ['latin'];
+              const display = definition.display ?? 'swap';
+
+              const family = definition.family.replace(/ /g, '+');
+              const weightsParam = weights.join(';');
+
+              const variants = [];
+              for (const style of styles) {
+                if (style === 'italic') {
+                  variants.push('ital,wght@1,' + weightsParam);
+                } else {
+                  variants.push('wght@' + weightsParam);
+                }
+              }
+
+              const subsetsParam = subsets.join(',');
+              const url = 'https://fonts.googleapis.com/css2?family=' + family + ':' + variants.join(';') + '&subset=' + subsetsParam + '&display=' + display;
+
+              if (this.injectedStyles.has(url)) {
+                return;
+              }
+
+              const response = await fetch(url);
+              if (!response.ok) {
+                throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+              }
+              const css = await response.text();
+              this.injectFontCSS(css);
+              this.injectedStyles.add(url);
+
+              await this.loadFontFaces(definition.family, weights, styles);
+            }
+
+            async loadCustomFont(definition) {
+              const weight = definition.weight ?? 400;
+              const style = definition.style ?? 'normal';
+              const format = definition.format ?? 'woff2';
+              const display = definition.display ?? 'swap';
+
+              const css = this.generateFontFaceCSS({
+                family: definition.family,
+                src: definition.source,
+                weight,
+                style,
+                format,
+                display,
+                unicodeRange: definition.unicodeRange,
+              });
+
+              if (this.injectedStyles.has(css)) {
+                return;
+              }
+
+              this.injectFontCSS(css);
+              this.injectedStyles.add(css);
+
+              await this.loadFontFaces(definition.family, [weight], [style]);
+            }
+
+            generateFontFaceCSS(options) {
+              const { family, src, weight, style, format, display, unicodeRange } = options;
+
+              let css = '@font-face {\\n';
+              css += '  font-family: \\'' + family + '\\';\\n';
+              css += '  src: url(\\'' + src + '\\') format(\\'' + format + '\\');\\n';
+              css += '  font-weight: ' + weight + ';\\n';
+              css += '  font-style: ' + style + ';\\n';
+              css += '  font-display: ' + display + ';\\n';
+
+              if (unicodeRange) {
+                css += '  unicode-range: ' + unicodeRange + ';\\n';
+              }
+
+              css += '}\\n';
+              return css;
+            }
+
+            injectFontCSS(css) {
+              const style = document.createElement('style');
+              style.textContent = css;
+              document.head.appendChild(style);
+            }
+
+            async loadFontFaces(family, weights, styles) {
+              const promises = [];
+
+              for (const weight of weights) {
+                for (const style of styles) {
+                  const promise = this.loadFontFace(family, weight, style);
+                  promises.push(promise);
+                }
+              }
+
+              await Promise.all(promises);
+            }
+
+            async loadFontFace(family, weight, style) {
+              try {
+                const fontFace = new FontFace(
+                  family,
+                  'local(\\'' + family + '\\')',
+                  { weight: weight.toString(), style }
+                );
+
+                const loadPromise = fontFace.load();
+                const timeoutPromise = new Promise((_, reject) => {
+                  setTimeout(() => reject(new Error('Font load timeout')), this.loadTimeout);
+                });
+
+                await Promise.race([loadPromise, timeoutPromise]);
+                document.fonts.add(fontFace);
+              } catch (error) {
+                console.warn('Failed to load font face: ' + family + ' ' + weight + ' ' + style, error);
+              }
+            }
+
+            async waitForFontsReady(timeout) {
+              const maxWait = timeout ?? this.loadTimeout;
+
+              const timeoutPromise = new Promise((resolve) => {
+                setTimeout(() => {
+                  console.warn('Font loading timeout reached, continuing with fallbacks');
+                  resolve();
+                }, maxWait);
+              });
+
+              const readyPromise = document.fonts.ready.then(() => {
+                console.error('[FontManager] All fonts loaded and ready');
+              });
+
+              await Promise.race([readyPromise, timeoutPromise]);
+            }
+
+            verifyFontsLoaded(fonts) {
+              for (const font of fonts) {
+                const weight = font.weight ?? 400;
+                const style = font.style ?? 'normal';
+                const fontSpec = style + ' ' + weight + ' 16px "' + font.family + '"';
+
+                if (!document.fonts.check(fontSpec)) {
+                  console.error('Font not loaded: ' + font.family + ' (' + weight + ' ' + style + ')');
+                  return false;
+                }
+              }
+              return true;
+            }
+          }
+
+          // Make FontManager available globally
+          window.FontManager = FontManager;
+        })();
+      `;
+
+      await this.page.addScriptTag({ content: fontManagerScript });
+
+      // Load fonts using the injected FontManager
+      const fontConfig = template.fonts;
+
+      // Use Function constructor to avoid TypeScript analyzing browser context code
+      const loadFontsFn = new Function('config', `
+        return (async () => {
+          const fontManager = new window.FontManager({ timeout: config.timeout ?? 10000 });
+          const result = await fontManager.loadFonts(config);
+
+          // Wait for document.fonts.ready to ensure all fonts are loaded
+          await document.fonts.ready;
+
+          // Verify fonts are loaded
+          const allFonts = [...(result.loaded || [])];
+          const allLoaded = fontManager.verifyFontsLoaded(allFonts);
+
+          return { ...result, allLoaded };
+        })();
+      `);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result = await this.page.evaluate(loadFontsFn as any, fontConfig);
+
+      console.error(`[FrameCapturer] Fonts loaded: ${result.loaded.length} successful, ${result.failed.length} failed (${result.loadTime}ms)`);
+
+      if (!result.allLoaded) {
+        console.warn('[FrameCapturer] Some fonts may not be available, fallbacks will be used');
+      }
+
+      if (result.failed.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        console.warn('[FrameCapturer] Failed fonts:', result.failed.map((f: any) => f.family).join(', '));
+      }
+    } catch (error) {
+      console.error('[FrameCapturer] Font loading error:', error instanceof Error ? error.message : String(error));
+      // Continue without fonts - fallbacks will be used
+    }
+  }
+
+  /**
    * Inject custom renderer code into the page (for advanced use cases)
    */
   async injectRenderer(rendererCode: string): Promise<void> {
@@ -425,6 +716,18 @@ export class FrameCapturer {
       new Promise(async (resolve) => {
         // Wait for React rendering
         await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+        // Wait for fonts to be ready (critical for text rendering)
+        if (document.fonts) {
+          try {
+            await Promise.race([
+              document.fonts.ready,
+              new Promise(r => setTimeout(r, 2000)) // 2s timeout for fonts
+            ]);
+          } catch (e) {
+            console.warn('[Frame] Font ready check failed:', e);
+          }
+        }
 
         // Wait for all images in DOM to load
         const images = Array.from(document.querySelectorAll('img'));
@@ -510,6 +813,18 @@ export class FrameCapturer {
       new Promise(async (resolve) => {
         // Wait for React rendering
         await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+        // Wait for fonts to be ready (critical for text rendering)
+        if (document.fonts) {
+          try {
+            await Promise.race([
+              document.fonts.ready,
+              new Promise(r => setTimeout(r, 2000)) // 2s timeout for fonts
+            ]);
+          } catch (e) {
+            console.warn('[Frame] Font ready check failed:', e);
+          }
+        }
 
         // Wait for all images in DOM to load
         const images = Array.from(document.querySelectorAll('img'));
