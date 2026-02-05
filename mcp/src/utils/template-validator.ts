@@ -191,10 +191,25 @@ export function validateTemplateForRendering(template: any): TemplateValidationR
 
             // Check for valid animation effects
             const validEffects = [
-              'fadeIn', 'fadeOut',
+              // Entrance - Basic
+              'fadeIn', 'fadeInUp', 'fadeInDown', 'fadeInLeft', 'fadeInRight',
               'slideInUp', 'slideInDown', 'slideInLeft', 'slideInRight',
+              'scaleIn', 'zoomIn', 'rotateIn', 'bounceIn',
+              // Entrance - Advanced
+              'flipInX', 'flipInY', 'rollIn', 'lightSpeedIn', 'swingIn',
+              'backIn', 'elasticIn',
+              'slideInFromTopLeft', 'slideInFromTopRight',
+              'slideInFromBottomLeft', 'slideInFromBottomRight',
+              // Exit - Basic
+              'fadeOut', 'fadeOutUp', 'fadeOutDown', 'fadeOutLeft', 'fadeOutRight',
               'slideOutUp', 'slideOutDown', 'slideOutLeft', 'slideOutRight',
-              'scaleIn', 'scaleOut'
+              'scaleOut', 'zoomOut',
+              // Exit - Advanced
+              'flipOutX', 'flipOutY', 'rollOut', 'lightSpeedOut', 'swingOut',
+              'backOut', 'elasticOut',
+              // Emphasis
+              'pulse', 'shake', 'bounce', 'spin', 'heartbeat', 'float',
+              'wobble', 'flash', 'jello', 'rubberBand', 'tada', 'swing'
             ];
 
             if (animation.effect && !validEffects.includes(animation.effect)) {

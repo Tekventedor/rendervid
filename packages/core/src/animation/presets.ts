@@ -338,6 +338,382 @@ const float: PresetDefinition = {
 };
 
 // ═══════════════════════════════════════════════════════════════
+// ADDITIONAL ENTRANCE ANIMATIONS
+// ═══════════════════════════════════════════════════════════════
+
+const flipInX: PresetDefinition = {
+  name: 'flipInX',
+  type: 'entrance',
+  defaultDuration: 30,
+  defaultEasing: 'easeOutCubic',
+  generate: ({ duration, easing = 'easeOutCubic' }) => [
+    { frame: 0, properties: { opacity: 0, scaleY: 0, rotation: 90 }, easing },
+    { frame: duration, properties: { opacity: 1, scaleY: 1, rotation: 0 } },
+  ],
+};
+
+const flipInY: PresetDefinition = {
+  name: 'flipInY',
+  type: 'entrance',
+  defaultDuration: 30,
+  defaultEasing: 'easeOutCubic',
+  generate: ({ duration, easing = 'easeOutCubic' }) => [
+    { frame: 0, properties: { opacity: 0, scaleX: 0, rotation: 90 }, easing },
+    { frame: duration, properties: { opacity: 1, scaleX: 1, rotation: 0 } },
+  ],
+};
+
+const rollIn: PresetDefinition = {
+  name: 'rollIn',
+  type: 'entrance',
+  defaultDuration: 35,
+  defaultEasing: 'easeOutCubic',
+  generate: ({ duration, easing = 'easeOutCubic', canvasSize }) => {
+    const offset = -(canvasSize?.width ?? 500);
+    return [
+      { frame: 0, properties: { opacity: 0, x: offset, rotation: -120 }, easing },
+      { frame: duration, properties: { opacity: 1, x: 0, rotation: 0 } },
+    ];
+  },
+};
+
+const lightSpeedIn: PresetDefinition = {
+  name: 'lightSpeedIn',
+  type: 'entrance',
+  defaultDuration: 25,
+  defaultEasing: 'easeOutQuint',
+  generate: ({ duration, easing = 'easeOutQuint', canvasSize }) => {
+    const offset = canvasSize?.width ?? 500;
+    return [
+      { frame: 0, properties: { opacity: 0, x: offset, scaleX: 1.5 }, easing },
+      { frame: duration, properties: { opacity: 1, x: 0, scaleX: 1 } },
+    ];
+  },
+};
+
+const swingIn: PresetDefinition = {
+  name: 'swingIn',
+  type: 'entrance',
+  defaultDuration: 40,
+  defaultEasing: 'easeOutElastic',
+  generate: ({ duration, easing = 'easeOutElastic' }) => [
+    { frame: 0, properties: { opacity: 0, rotation: -45 }, easing },
+    { frame: duration, properties: { opacity: 1, rotation: 0 } },
+  ],
+};
+
+const backIn: PresetDefinition = {
+  name: 'backIn',
+  type: 'entrance',
+  defaultDuration: 30,
+  defaultEasing: 'easeOutBack',
+  generate: ({ duration, easing = 'easeOutBack' }) => [
+    { frame: 0, properties: { opacity: 0, scaleX: 0.7, scaleY: 0.7 }, easing },
+    { frame: duration, properties: { opacity: 1, scaleX: 1, scaleY: 1 } },
+  ],
+};
+
+const elasticIn: PresetDefinition = {
+  name: 'elasticIn',
+  type: 'entrance',
+  defaultDuration: 45,
+  defaultEasing: 'easeOutElastic',
+  generate: ({ duration, easing = 'easeOutElastic' }) => [
+    { frame: 0, properties: { opacity: 0, scaleX: 0.3, scaleY: 0.3 }, easing },
+    { frame: duration, properties: { opacity: 1, scaleX: 1, scaleY: 1 } },
+  ],
+};
+
+const slideInFromTopLeft: PresetDefinition = {
+  name: 'slideInFromTopLeft',
+  type: 'entrance',
+  defaultDuration: 30,
+  defaultEasing: 'easeOutCubic',
+  generate: ({ duration, easing = 'easeOutCubic', canvasSize }) => {
+    const offsetX = -(canvasSize?.width ?? 500);
+    const offsetY = -(canvasSize?.height ?? 500);
+    return [
+      { frame: 0, properties: { x: offsetX, y: offsetY }, easing },
+      { frame: duration, properties: { x: 0, y: 0 } },
+    ];
+  },
+};
+
+const slideInFromTopRight: PresetDefinition = {
+  name: 'slideInFromTopRight',
+  type: 'entrance',
+  defaultDuration: 30,
+  defaultEasing: 'easeOutCubic',
+  generate: ({ duration, easing = 'easeOutCubic', canvasSize }) => {
+    const offsetX = canvasSize?.width ?? 500;
+    const offsetY = -(canvasSize?.height ?? 500);
+    return [
+      { frame: 0, properties: { x: offsetX, y: offsetY }, easing },
+      { frame: duration, properties: { x: 0, y: 0 } },
+    ];
+  },
+};
+
+const slideInFromBottomLeft: PresetDefinition = {
+  name: 'slideInFromBottomLeft',
+  type: 'entrance',
+  defaultDuration: 30,
+  defaultEasing: 'easeOutCubic',
+  generate: ({ duration, easing = 'easeOutCubic', canvasSize }) => {
+    const offsetX = -(canvasSize?.width ?? 500);
+    const offsetY = canvasSize?.height ?? 500;
+    return [
+      { frame: 0, properties: { x: offsetX, y: offsetY }, easing },
+      { frame: duration, properties: { x: 0, y: 0 } },
+    ];
+  },
+};
+
+const slideInFromBottomRight: PresetDefinition = {
+  name: 'slideInFromBottomRight',
+  type: 'entrance',
+  defaultDuration: 30,
+  defaultEasing: 'easeOutCubic',
+  generate: ({ duration, easing = 'easeOutCubic', canvasSize }) => {
+    const offsetX = canvasSize?.width ?? 500;
+    const offsetY = canvasSize?.height ?? 500;
+    return [
+      { frame: 0, properties: { x: offsetX, y: offsetY }, easing },
+      { frame: duration, properties: { x: 0, y: 0 } },
+    ];
+  },
+};
+
+// ═══════════════════════════════════════════════════════════════
+// ADDITIONAL EXIT ANIMATIONS
+// ═══════════════════════════════════════════════════════════════
+
+const flipOutX: PresetDefinition = {
+  name: 'flipOutX',
+  type: 'exit',
+  defaultDuration: 30,
+  defaultEasing: 'easeInCubic',
+  generate: ({ duration, easing = 'easeInCubic' }) => [
+    { frame: 0, properties: { opacity: 1, scaleY: 1, rotation: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, scaleY: 0, rotation: -90 } },
+  ],
+};
+
+const flipOutY: PresetDefinition = {
+  name: 'flipOutY',
+  type: 'exit',
+  defaultDuration: 30,
+  defaultEasing: 'easeInCubic',
+  generate: ({ duration, easing = 'easeInCubic' }) => [
+    { frame: 0, properties: { opacity: 1, scaleX: 1, rotation: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, scaleX: 0, rotation: -90 } },
+  ],
+};
+
+const rollOut: PresetDefinition = {
+  name: 'rollOut',
+  type: 'exit',
+  defaultDuration: 35,
+  defaultEasing: 'easeInCubic',
+  generate: ({ duration, easing = 'easeInCubic', canvasSize }) => {
+    const offset = canvasSize?.width ?? 500;
+    return [
+      { frame: 0, properties: { opacity: 1, x: 0, rotation: 0 }, easing },
+      { frame: duration, properties: { opacity: 0, x: offset, rotation: 120 } },
+    ];
+  },
+};
+
+const lightSpeedOut: PresetDefinition = {
+  name: 'lightSpeedOut',
+  type: 'exit',
+  defaultDuration: 25,
+  defaultEasing: 'easeInQuint',
+  generate: ({ duration, easing = 'easeInQuint', canvasSize }) => {
+    const offset = canvasSize?.width ?? 500;
+    return [
+      { frame: 0, properties: { opacity: 1, x: 0, scaleX: 1 }, easing },
+      { frame: duration, properties: { opacity: 0, x: offset, scaleX: 0.7 } },
+    ];
+  },
+};
+
+const swingOut: PresetDefinition = {
+  name: 'swingOut',
+  type: 'exit',
+  defaultDuration: 40,
+  defaultEasing: 'easeInElastic',
+  generate: ({ duration, easing = 'easeInElastic' }) => [
+    { frame: 0, properties: { opacity: 1, rotation: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, rotation: 45 } },
+  ],
+};
+
+const backOut: PresetDefinition = {
+  name: 'backOut',
+  type: 'exit',
+  defaultDuration: 30,
+  defaultEasing: 'easeInBack',
+  generate: ({ duration, easing = 'easeInBack' }) => [
+    { frame: 0, properties: { opacity: 1, scaleX: 1, scaleY: 1 }, easing },
+    { frame: duration, properties: { opacity: 0, scaleX: 0.7, scaleY: 0.7 } },
+  ],
+};
+
+const elasticOut: PresetDefinition = {
+  name: 'elasticOut',
+  type: 'exit',
+  defaultDuration: 45,
+  defaultEasing: 'easeInElastic',
+  generate: ({ duration, easing = 'easeInElastic' }) => [
+    { frame: 0, properties: { opacity: 1, scaleX: 1, scaleY: 1 }, easing },
+    { frame: duration, properties: { opacity: 0, scaleX: 0.3, scaleY: 0.3 } },
+  ],
+};
+
+const fadeOutLeft: PresetDefinition = {
+  name: 'fadeOutLeft',
+  type: 'exit',
+  defaultDuration: 30,
+  defaultEasing: 'easeInCubic',
+  generate: ({ duration, easing = 'easeInCubic' }) => [
+    { frame: 0, properties: { opacity: 1, x: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, x: -50 } },
+  ],
+};
+
+const fadeOutRight: PresetDefinition = {
+  name: 'fadeOutRight',
+  type: 'exit',
+  defaultDuration: 30,
+  defaultEasing: 'easeInCubic',
+  generate: ({ duration, easing = 'easeInCubic' }) => [
+    { frame: 0, properties: { opacity: 1, x: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, x: 50 } },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// ADDITIONAL EMPHASIS ANIMATIONS
+// ═══════════════════════════════════════════════════════════════
+
+const wobble: PresetDefinition = {
+  name: 'wobble',
+  type: 'emphasis',
+  defaultDuration: 40,
+  defaultEasing: 'linear',
+  generate: ({ duration }) => {
+    const step = duration / 8;
+    return [
+      { frame: 0, properties: { x: 0, rotation: 0 } },
+      { frame: step, properties: { x: -10, rotation: -5 } },
+      { frame: step * 2, properties: { x: 10, rotation: 5 } },
+      { frame: step * 3, properties: { x: -8, rotation: -3 } },
+      { frame: step * 4, properties: { x: 8, rotation: 3 } },
+      { frame: step * 5, properties: { x: -5, rotation: -2 } },
+      { frame: step * 6, properties: { x: 5, rotation: 2 } },
+      { frame: step * 7, properties: { x: -2, rotation: -1 } },
+      { frame: duration, properties: { x: 0, rotation: 0 } },
+    ];
+  },
+};
+
+const flash: PresetDefinition = {
+  name: 'flash',
+  type: 'emphasis',
+  defaultDuration: 20,
+  defaultEasing: 'linear',
+  generate: ({ duration }) => {
+    const step = duration / 4;
+    return [
+      { frame: 0, properties: { opacity: 1 } },
+      { frame: step, properties: { opacity: 0 } },
+      { frame: step * 2, properties: { opacity: 1 } },
+      { frame: step * 3, properties: { opacity: 0 } },
+      { frame: duration, properties: { opacity: 1 } },
+    ];
+  },
+};
+
+const jello: PresetDefinition = {
+  name: 'jello',
+  type: 'emphasis',
+  defaultDuration: 40,
+  defaultEasing: 'easeInOutSine',
+  generate: ({ duration, easing = 'easeInOutSine' }) => {
+    const step = duration / 6;
+    return [
+      { frame: 0, properties: { scaleX: 1, scaleY: 1 }, easing },
+      { frame: step, properties: { scaleX: 0.9, scaleY: 1.1 }, easing },
+      { frame: step * 2, properties: { scaleX: 1.1, scaleY: 0.9 }, easing },
+      { frame: step * 3, properties: { scaleX: 0.95, scaleY: 1.05 }, easing },
+      { frame: step * 4, properties: { scaleX: 1.05, scaleY: 0.95 }, easing },
+      { frame: step * 5, properties: { scaleX: 0.98, scaleY: 1.02 }, easing },
+      { frame: duration, properties: { scaleX: 1, scaleY: 1 } },
+    ];
+  },
+};
+
+const rubberBand: PresetDefinition = {
+  name: 'rubberBand',
+  type: 'emphasis',
+  defaultDuration: 40,
+  defaultEasing: 'easeInOutSine',
+  generate: ({ duration, easing = 'easeInOutSine' }) => {
+    const step = duration / 6;
+    return [
+      { frame: 0, properties: { scaleX: 1, scaleY: 1 }, easing },
+      { frame: step, properties: { scaleX: 1.25, scaleY: 0.75 }, easing },
+      { frame: step * 2, properties: { scaleX: 0.75, scaleY: 1.25 }, easing },
+      { frame: step * 3, properties: { scaleX: 1.15, scaleY: 0.85 }, easing },
+      { frame: step * 4, properties: { scaleX: 0.95, scaleY: 1.05 }, easing },
+      { frame: step * 5, properties: { scaleX: 1.05, scaleY: 0.95 }, easing },
+      { frame: duration, properties: { scaleX: 1, scaleY: 1 } },
+    ];
+  },
+};
+
+const tada: PresetDefinition = {
+  name: 'tada',
+  type: 'emphasis',
+  defaultDuration: 40,
+  defaultEasing: 'easeInOutSine',
+  generate: ({ duration, easing = 'easeInOutSine' }) => {
+    const step = duration / 10;
+    return [
+      { frame: 0, properties: { scaleX: 1, scaleY: 1, rotation: 0 }, easing },
+      { frame: step, properties: { scaleX: 0.9, scaleY: 0.9, rotation: -3 }, easing },
+      { frame: step * 2, properties: { scaleX: 0.9, scaleY: 0.9, rotation: -3 }, easing },
+      { frame: step * 3, properties: { scaleX: 1.1, scaleY: 1.1, rotation: 3 }, easing },
+      { frame: step * 4, properties: { scaleX: 1.1, scaleY: 1.1, rotation: -3 }, easing },
+      { frame: step * 5, properties: { scaleX: 1.1, scaleY: 1.1, rotation: 3 }, easing },
+      { frame: step * 6, properties: { scaleX: 1.1, scaleY: 1.1, rotation: -3 }, easing },
+      { frame: step * 7, properties: { scaleX: 1.1, scaleY: 1.1, rotation: 3 }, easing },
+      { frame: step * 8, properties: { scaleX: 1.1, scaleY: 1.1, rotation: -3 }, easing },
+      { frame: step * 9, properties: { scaleX: 1.1, scaleY: 1.1, rotation: 3 }, easing },
+      { frame: duration, properties: { scaleX: 1, scaleY: 1, rotation: 0 } },
+    ];
+  },
+};
+
+const swing: PresetDefinition = {
+  name: 'swing',
+  type: 'emphasis',
+  defaultDuration: 40,
+  defaultEasing: 'easeInOutSine',
+  generate: ({ duration, easing = 'easeInOutSine' }) => {
+    const step = duration / 4;
+    return [
+      { frame: 0, properties: { rotation: 0 }, easing },
+      { frame: step, properties: { rotation: 15 }, easing },
+      { frame: step * 2, properties: { rotation: -10 }, easing },
+      { frame: step * 3, properties: { rotation: 5 }, easing },
+      { frame: duration, properties: { rotation: 0 } },
+    ];
+  },
+};
+
+// ═══════════════════════════════════════════════════════════════
 // PRESET REGISTRY
 // ═══════════════════════════════════════════════════════════════
 
@@ -345,7 +721,7 @@ const float: PresetDefinition = {
  * All preset animations.
  */
 export const presets: Record<string, PresetDefinition> = {
-  // Entrance
+  // Entrance - Basic
   fadeIn,
   fadeInUp,
   fadeInDown,
@@ -359,12 +735,34 @@ export const presets: Record<string, PresetDefinition> = {
   zoomIn,
   rotateIn,
   bounceIn,
-  // Exit
+  // Entrance - Advanced
+  flipInX,
+  flipInY,
+  rollIn,
+  lightSpeedIn,
+  swingIn,
+  backIn,
+  elasticIn,
+  slideInFromTopLeft,
+  slideInFromTopRight,
+  slideInFromBottomLeft,
+  slideInFromBottomRight,
+  // Exit - Basic
   fadeOut,
   fadeOutUp,
   fadeOutDown,
+  fadeOutLeft,
+  fadeOutRight,
   scaleOut,
   zoomOut,
+  // Exit - Advanced
+  flipOutX,
+  flipOutY,
+  rollOut,
+  lightSpeedOut,
+  swingOut,
+  backOut,
+  elasticOut,
   // Emphasis
   pulse,
   shake,
@@ -372,6 +770,12 @@ export const presets: Record<string, PresetDefinition> = {
   spin,
   heartbeat,
   float,
+  wobble,
+  flash,
+  jello,
+  rubberBand,
+  tada,
+  swing,
 };
 
 /**

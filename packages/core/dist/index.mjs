@@ -1134,8 +1134,346 @@ var float = {
     { frame: duration, properties: { y: 0 } }
   ]
 };
+var flipInX = {
+  name: "flipInX",
+  type: "entrance",
+  defaultDuration: 30,
+  defaultEasing: "easeOutCubic",
+  generate: ({ duration, easing = "easeOutCubic" }) => [
+    { frame: 0, properties: { opacity: 0, scaleY: 0, rotation: 90 }, easing },
+    { frame: duration, properties: { opacity: 1, scaleY: 1, rotation: 0 } }
+  ]
+};
+var flipInY = {
+  name: "flipInY",
+  type: "entrance",
+  defaultDuration: 30,
+  defaultEasing: "easeOutCubic",
+  generate: ({ duration, easing = "easeOutCubic" }) => [
+    { frame: 0, properties: { opacity: 0, scaleX: 0, rotation: 90 }, easing },
+    { frame: duration, properties: { opacity: 1, scaleX: 1, rotation: 0 } }
+  ]
+};
+var rollIn = {
+  name: "rollIn",
+  type: "entrance",
+  defaultDuration: 35,
+  defaultEasing: "easeOutCubic",
+  generate: ({ duration, easing = "easeOutCubic", canvasSize }) => {
+    const offset = -(canvasSize?.width ?? 500);
+    return [
+      { frame: 0, properties: { opacity: 0, x: offset, rotation: -120 }, easing },
+      { frame: duration, properties: { opacity: 1, x: 0, rotation: 0 } }
+    ];
+  }
+};
+var lightSpeedIn = {
+  name: "lightSpeedIn",
+  type: "entrance",
+  defaultDuration: 25,
+  defaultEasing: "easeOutQuint",
+  generate: ({ duration, easing = "easeOutQuint", canvasSize }) => {
+    const offset = canvasSize?.width ?? 500;
+    return [
+      { frame: 0, properties: { opacity: 0, x: offset, scaleX: 1.5 }, easing },
+      { frame: duration, properties: { opacity: 1, x: 0, scaleX: 1 } }
+    ];
+  }
+};
+var swingIn = {
+  name: "swingIn",
+  type: "entrance",
+  defaultDuration: 40,
+  defaultEasing: "easeOutElastic",
+  generate: ({ duration, easing = "easeOutElastic" }) => [
+    { frame: 0, properties: { opacity: 0, rotation: -45 }, easing },
+    { frame: duration, properties: { opacity: 1, rotation: 0 } }
+  ]
+};
+var backIn = {
+  name: "backIn",
+  type: "entrance",
+  defaultDuration: 30,
+  defaultEasing: "easeOutBack",
+  generate: ({ duration, easing = "easeOutBack" }) => [
+    { frame: 0, properties: { opacity: 0, scaleX: 0.7, scaleY: 0.7 }, easing },
+    { frame: duration, properties: { opacity: 1, scaleX: 1, scaleY: 1 } }
+  ]
+};
+var elasticIn = {
+  name: "elasticIn",
+  type: "entrance",
+  defaultDuration: 45,
+  defaultEasing: "easeOutElastic",
+  generate: ({ duration, easing = "easeOutElastic" }) => [
+    { frame: 0, properties: { opacity: 0, scaleX: 0.3, scaleY: 0.3 }, easing },
+    { frame: duration, properties: { opacity: 1, scaleX: 1, scaleY: 1 } }
+  ]
+};
+var slideInFromTopLeft = {
+  name: "slideInFromTopLeft",
+  type: "entrance",
+  defaultDuration: 30,
+  defaultEasing: "easeOutCubic",
+  generate: ({ duration, easing = "easeOutCubic", canvasSize }) => {
+    const offsetX = -(canvasSize?.width ?? 500);
+    const offsetY = -(canvasSize?.height ?? 500);
+    return [
+      { frame: 0, properties: { x: offsetX, y: offsetY }, easing },
+      { frame: duration, properties: { x: 0, y: 0 } }
+    ];
+  }
+};
+var slideInFromTopRight = {
+  name: "slideInFromTopRight",
+  type: "entrance",
+  defaultDuration: 30,
+  defaultEasing: "easeOutCubic",
+  generate: ({ duration, easing = "easeOutCubic", canvasSize }) => {
+    const offsetX = canvasSize?.width ?? 500;
+    const offsetY = -(canvasSize?.height ?? 500);
+    return [
+      { frame: 0, properties: { x: offsetX, y: offsetY }, easing },
+      { frame: duration, properties: { x: 0, y: 0 } }
+    ];
+  }
+};
+var slideInFromBottomLeft = {
+  name: "slideInFromBottomLeft",
+  type: "entrance",
+  defaultDuration: 30,
+  defaultEasing: "easeOutCubic",
+  generate: ({ duration, easing = "easeOutCubic", canvasSize }) => {
+    const offsetX = -(canvasSize?.width ?? 500);
+    const offsetY = canvasSize?.height ?? 500;
+    return [
+      { frame: 0, properties: { x: offsetX, y: offsetY }, easing },
+      { frame: duration, properties: { x: 0, y: 0 } }
+    ];
+  }
+};
+var slideInFromBottomRight = {
+  name: "slideInFromBottomRight",
+  type: "entrance",
+  defaultDuration: 30,
+  defaultEasing: "easeOutCubic",
+  generate: ({ duration, easing = "easeOutCubic", canvasSize }) => {
+    const offsetX = canvasSize?.width ?? 500;
+    const offsetY = canvasSize?.height ?? 500;
+    return [
+      { frame: 0, properties: { x: offsetX, y: offsetY }, easing },
+      { frame: duration, properties: { x: 0, y: 0 } }
+    ];
+  }
+};
+var flipOutX = {
+  name: "flipOutX",
+  type: "exit",
+  defaultDuration: 30,
+  defaultEasing: "easeInCubic",
+  generate: ({ duration, easing = "easeInCubic" }) => [
+    { frame: 0, properties: { opacity: 1, scaleY: 1, rotation: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, scaleY: 0, rotation: -90 } }
+  ]
+};
+var flipOutY = {
+  name: "flipOutY",
+  type: "exit",
+  defaultDuration: 30,
+  defaultEasing: "easeInCubic",
+  generate: ({ duration, easing = "easeInCubic" }) => [
+    { frame: 0, properties: { opacity: 1, scaleX: 1, rotation: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, scaleX: 0, rotation: -90 } }
+  ]
+};
+var rollOut = {
+  name: "rollOut",
+  type: "exit",
+  defaultDuration: 35,
+  defaultEasing: "easeInCubic",
+  generate: ({ duration, easing = "easeInCubic", canvasSize }) => {
+    const offset = canvasSize?.width ?? 500;
+    return [
+      { frame: 0, properties: { opacity: 1, x: 0, rotation: 0 }, easing },
+      { frame: duration, properties: { opacity: 0, x: offset, rotation: 120 } }
+    ];
+  }
+};
+var lightSpeedOut = {
+  name: "lightSpeedOut",
+  type: "exit",
+  defaultDuration: 25,
+  defaultEasing: "easeInQuint",
+  generate: ({ duration, easing = "easeInQuint", canvasSize }) => {
+    const offset = canvasSize?.width ?? 500;
+    return [
+      { frame: 0, properties: { opacity: 1, x: 0, scaleX: 1 }, easing },
+      { frame: duration, properties: { opacity: 0, x: offset, scaleX: 0.7 } }
+    ];
+  }
+};
+var swingOut = {
+  name: "swingOut",
+  type: "exit",
+  defaultDuration: 40,
+  defaultEasing: "easeInElastic",
+  generate: ({ duration, easing = "easeInElastic" }) => [
+    { frame: 0, properties: { opacity: 1, rotation: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, rotation: 45 } }
+  ]
+};
+var backOut = {
+  name: "backOut",
+  type: "exit",
+  defaultDuration: 30,
+  defaultEasing: "easeInBack",
+  generate: ({ duration, easing = "easeInBack" }) => [
+    { frame: 0, properties: { opacity: 1, scaleX: 1, scaleY: 1 }, easing },
+    { frame: duration, properties: { opacity: 0, scaleX: 0.7, scaleY: 0.7 } }
+  ]
+};
+var elasticOut = {
+  name: "elasticOut",
+  type: "exit",
+  defaultDuration: 45,
+  defaultEasing: "easeInElastic",
+  generate: ({ duration, easing = "easeInElastic" }) => [
+    { frame: 0, properties: { opacity: 1, scaleX: 1, scaleY: 1 }, easing },
+    { frame: duration, properties: { opacity: 0, scaleX: 0.3, scaleY: 0.3 } }
+  ]
+};
+var fadeOutLeft = {
+  name: "fadeOutLeft",
+  type: "exit",
+  defaultDuration: 30,
+  defaultEasing: "easeInCubic",
+  generate: ({ duration, easing = "easeInCubic" }) => [
+    { frame: 0, properties: { opacity: 1, x: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, x: -50 } }
+  ]
+};
+var fadeOutRight = {
+  name: "fadeOutRight",
+  type: "exit",
+  defaultDuration: 30,
+  defaultEasing: "easeInCubic",
+  generate: ({ duration, easing = "easeInCubic" }) => [
+    { frame: 0, properties: { opacity: 1, x: 0 }, easing },
+    { frame: duration, properties: { opacity: 0, x: 50 } }
+  ]
+};
+var wobble = {
+  name: "wobble",
+  type: "emphasis",
+  defaultDuration: 40,
+  defaultEasing: "linear",
+  generate: ({ duration }) => {
+    const step = duration / 8;
+    return [
+      { frame: 0, properties: { x: 0, rotation: 0 } },
+      { frame: step, properties: { x: -10, rotation: -5 } },
+      { frame: step * 2, properties: { x: 10, rotation: 5 } },
+      { frame: step * 3, properties: { x: -8, rotation: -3 } },
+      { frame: step * 4, properties: { x: 8, rotation: 3 } },
+      { frame: step * 5, properties: { x: -5, rotation: -2 } },
+      { frame: step * 6, properties: { x: 5, rotation: 2 } },
+      { frame: step * 7, properties: { x: -2, rotation: -1 } },
+      { frame: duration, properties: { x: 0, rotation: 0 } }
+    ];
+  }
+};
+var flash = {
+  name: "flash",
+  type: "emphasis",
+  defaultDuration: 20,
+  defaultEasing: "linear",
+  generate: ({ duration }) => {
+    const step = duration / 4;
+    return [
+      { frame: 0, properties: { opacity: 1 } },
+      { frame: step, properties: { opacity: 0 } },
+      { frame: step * 2, properties: { opacity: 1 } },
+      { frame: step * 3, properties: { opacity: 0 } },
+      { frame: duration, properties: { opacity: 1 } }
+    ];
+  }
+};
+var jello = {
+  name: "jello",
+  type: "emphasis",
+  defaultDuration: 40,
+  defaultEasing: "easeInOutSine",
+  generate: ({ duration, easing = "easeInOutSine" }) => {
+    const step = duration / 6;
+    return [
+      { frame: 0, properties: { scaleX: 1, scaleY: 1 }, easing },
+      { frame: step, properties: { scaleX: 0.9, scaleY: 1.1 }, easing },
+      { frame: step * 2, properties: { scaleX: 1.1, scaleY: 0.9 }, easing },
+      { frame: step * 3, properties: { scaleX: 0.95, scaleY: 1.05 }, easing },
+      { frame: step * 4, properties: { scaleX: 1.05, scaleY: 0.95 }, easing },
+      { frame: step * 5, properties: { scaleX: 0.98, scaleY: 1.02 }, easing },
+      { frame: duration, properties: { scaleX: 1, scaleY: 1 } }
+    ];
+  }
+};
+var rubberBand = {
+  name: "rubberBand",
+  type: "emphasis",
+  defaultDuration: 40,
+  defaultEasing: "easeInOutSine",
+  generate: ({ duration, easing = "easeInOutSine" }) => {
+    const step = duration / 6;
+    return [
+      { frame: 0, properties: { scaleX: 1, scaleY: 1 }, easing },
+      { frame: step, properties: { scaleX: 1.25, scaleY: 0.75 }, easing },
+      { frame: step * 2, properties: { scaleX: 0.75, scaleY: 1.25 }, easing },
+      { frame: step * 3, properties: { scaleX: 1.15, scaleY: 0.85 }, easing },
+      { frame: step * 4, properties: { scaleX: 0.95, scaleY: 1.05 }, easing },
+      { frame: step * 5, properties: { scaleX: 1.05, scaleY: 0.95 }, easing },
+      { frame: duration, properties: { scaleX: 1, scaleY: 1 } }
+    ];
+  }
+};
+var tada = {
+  name: "tada",
+  type: "emphasis",
+  defaultDuration: 40,
+  defaultEasing: "easeInOutSine",
+  generate: ({ duration, easing = "easeInOutSine" }) => {
+    const step = duration / 10;
+    return [
+      { frame: 0, properties: { scaleX: 1, scaleY: 1, rotation: 0 }, easing },
+      { frame: step, properties: { scaleX: 0.9, scaleY: 0.9, rotation: -3 }, easing },
+      { frame: step * 2, properties: { scaleX: 0.9, scaleY: 0.9, rotation: -3 }, easing },
+      { frame: step * 3, properties: { scaleX: 1.1, scaleY: 1.1, rotation: 3 }, easing },
+      { frame: step * 4, properties: { scaleX: 1.1, scaleY: 1.1, rotation: -3 }, easing },
+      { frame: step * 5, properties: { scaleX: 1.1, scaleY: 1.1, rotation: 3 }, easing },
+      { frame: step * 6, properties: { scaleX: 1.1, scaleY: 1.1, rotation: -3 }, easing },
+      { frame: step * 7, properties: { scaleX: 1.1, scaleY: 1.1, rotation: 3 }, easing },
+      { frame: step * 8, properties: { scaleX: 1.1, scaleY: 1.1, rotation: -3 }, easing },
+      { frame: step * 9, properties: { scaleX: 1.1, scaleY: 1.1, rotation: 3 }, easing },
+      { frame: duration, properties: { scaleX: 1, scaleY: 1, rotation: 0 } }
+    ];
+  }
+};
+var swing = {
+  name: "swing",
+  type: "emphasis",
+  defaultDuration: 40,
+  defaultEasing: "easeInOutSine",
+  generate: ({ duration, easing = "easeInOutSine" }) => {
+    const step = duration / 4;
+    return [
+      { frame: 0, properties: { rotation: 0 }, easing },
+      { frame: step, properties: { rotation: 15 }, easing },
+      { frame: step * 2, properties: { rotation: -10 }, easing },
+      { frame: step * 3, properties: { rotation: 5 }, easing },
+      { frame: duration, properties: { rotation: 0 } }
+    ];
+  }
+};
 var presets = {
-  // Entrance
+  // Entrance - Basic
   fadeIn,
   fadeInUp,
   fadeInDown,
@@ -1149,19 +1487,47 @@ var presets = {
   zoomIn,
   rotateIn,
   bounceIn,
-  // Exit
+  // Entrance - Advanced
+  flipInX,
+  flipInY,
+  rollIn,
+  lightSpeedIn,
+  swingIn,
+  backIn,
+  elasticIn,
+  slideInFromTopLeft,
+  slideInFromTopRight,
+  slideInFromBottomLeft,
+  slideInFromBottomRight,
+  // Exit - Basic
   fadeOut,
   fadeOutUp,
   fadeOutDown,
+  fadeOutLeft,
+  fadeOutRight,
   scaleOut,
   zoomOut,
+  // Exit - Advanced
+  flipOutX,
+  flipOutY,
+  rollOut,
+  lightSpeedOut,
+  swingOut,
+  backOut,
+  elasticOut,
   // Emphasis
   pulse,
   shake,
   bounce,
   spin,
   heartbeat,
-  float
+  float,
+  wobble,
+  flash,
+  jello,
+  rubberBand,
+  tada,
+  swing
 };
 function getPreset(name) {
   return presets[name];

@@ -7,15 +7,15 @@ type AnimationType = 'entrance' | 'exit' | 'emphasis' | 'keyframe';
 /**
  * Entrance animation presets.
  */
-type EntranceAnimation = 'fadeIn' | 'fadeInUp' | 'fadeInDown' | 'fadeInLeft' | 'fadeInRight' | 'slideInUp' | 'slideInDown' | 'slideInLeft' | 'slideInRight' | 'scaleIn' | 'scaleInUp' | 'scaleInDown' | 'rotateIn' | 'rotateInClockwise' | 'rotateInCounterClockwise' | 'bounceIn' | 'bounceInUp' | 'bounceInDown' | 'flipInX' | 'flipInY' | 'zoomIn' | 'typewriter' | 'revealLeft' | 'revealRight' | 'revealUp' | 'revealDown';
+type EntranceAnimation = 'fadeIn' | 'fadeInUp' | 'fadeInDown' | 'fadeInLeft' | 'fadeInRight' | 'slideInUp' | 'slideInDown' | 'slideInLeft' | 'slideInRight' | 'slideInFromTopLeft' | 'slideInFromTopRight' | 'slideInFromBottomLeft' | 'slideInFromBottomRight' | 'scaleIn' | 'scaleInUp' | 'scaleInDown' | 'zoomIn' | 'rotateIn' | 'rotateInClockwise' | 'rotateInCounterClockwise' | 'bounceIn' | 'bounceInUp' | 'bounceInDown' | 'flipInX' | 'flipInY' | 'rollIn' | 'lightSpeedIn' | 'swingIn' | 'backIn' | 'elasticIn' | 'typewriter' | 'revealLeft' | 'revealRight' | 'revealUp' | 'revealDown';
 /**
  * Exit animation presets.
  */
-type ExitAnimation = 'fadeOut' | 'fadeOutUp' | 'fadeOutDown' | 'fadeOutLeft' | 'fadeOutRight' | 'slideOutUp' | 'slideOutDown' | 'slideOutLeft' | 'slideOutRight' | 'scaleOut' | 'rotateOut' | 'bounceOut' | 'flipOutX' | 'flipOutY' | 'zoomOut';
+type ExitAnimation = 'fadeOut' | 'fadeOutUp' | 'fadeOutDown' | 'fadeOutLeft' | 'fadeOutRight' | 'slideOutUp' | 'slideOutDown' | 'slideOutLeft' | 'slideOutRight' | 'scaleOut' | 'zoomOut' | 'rotateOut' | 'bounceOut' | 'flipOutX' | 'flipOutY' | 'rollOut' | 'lightSpeedOut' | 'swingOut' | 'backOut' | 'elasticOut';
 /**
  * Emphasis animation presets (can loop).
  */
-type EmphasisAnimation = 'pulse' | 'shake' | 'bounce' | 'swing' | 'wobble' | 'flash' | 'rubberBand' | 'heartbeat' | 'float' | 'spin';
+type EmphasisAnimation = 'pulse' | 'float' | 'heartbeat' | 'shake' | 'bounce' | 'swing' | 'wobble' | 'flash' | 'tada' | 'rubberBand' | 'jello' | 'spin';
 /**
  * All animation preset names.
  */

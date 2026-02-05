@@ -7,27 +7,44 @@ export type AnimationType = 'entrance' | 'exit' | 'emphasis' | 'keyframe';
  * Entrance animation presets.
  */
 export type EntranceAnimation =
+  // Basic fade
   | 'fadeIn'
   | 'fadeInUp'
   | 'fadeInDown'
   | 'fadeInLeft'
   | 'fadeInRight'
+  // Slide
   | 'slideInUp'
   | 'slideInDown'
   | 'slideInLeft'
   | 'slideInRight'
+  | 'slideInFromTopLeft'
+  | 'slideInFromTopRight'
+  | 'slideInFromBottomLeft'
+  | 'slideInFromBottomRight'
+  // Scale & zoom
   | 'scaleIn'
   | 'scaleInUp'
   | 'scaleInDown'
+  | 'zoomIn'
+  // Rotate
   | 'rotateIn'
   | 'rotateInClockwise'
   | 'rotateInCounterClockwise'
+  // Bounce
   | 'bounceIn'
   | 'bounceInUp'
   | 'bounceInDown'
+  // Flip
   | 'flipInX'
   | 'flipInY'
-  | 'zoomIn'
+  // Special
+  | 'rollIn'
+  | 'lightSpeedIn'
+  | 'swingIn'
+  | 'backIn'
+  | 'elasticIn'
+  // Text-specific
   | 'typewriter'
   | 'revealLeft'
   | 'revealRight'
@@ -38,35 +55,54 @@ export type EntranceAnimation =
  * Exit animation presets.
  */
 export type ExitAnimation =
+  // Basic fade
   | 'fadeOut'
   | 'fadeOutUp'
   | 'fadeOutDown'
   | 'fadeOutLeft'
   | 'fadeOutRight'
+  // Slide
   | 'slideOutUp'
   | 'slideOutDown'
   | 'slideOutLeft'
   | 'slideOutRight'
+  // Scale & zoom
   | 'scaleOut'
+  | 'zoomOut'
+  // Rotate
   | 'rotateOut'
+  // Bounce
   | 'bounceOut'
+  // Flip
   | 'flipOutX'
   | 'flipOutY'
-  | 'zoomOut';
+  // Special
+  | 'rollOut'
+  | 'lightSpeedOut'
+  | 'swingOut'
+  | 'backOut'
+  | 'elasticOut';
 
 /**
  * Emphasis animation presets (can loop).
  */
 export type EmphasisAnimation =
+  // Subtle
   | 'pulse'
+  | 'float'
+  | 'heartbeat'
+  // Movement
   | 'shake'
   | 'bounce'
   | 'swing'
   | 'wobble'
+  // Attention
   | 'flash'
+  | 'tada'
+  // Elastic
   | 'rubberBand'
-  | 'heartbeat'
-  | 'float'
+  | 'jello'
+  // Rotation
   | 'spin';
 
 /**
