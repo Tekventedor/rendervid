@@ -94,15 +94,19 @@ if (validation.valid) {
 | [@rendervid/player](/api/player/player) | React preview component |
 | [@rendervid/templates](/api/templates/overview) | Pre-built themes and scene templates |
 
-## Layer Types
+## Core Features
 
-Rendervid supports 8 layer types:
+### [Animations](/features/animations)
+40+ animation presets including entrance, exit, and emphasis animations. Custom keyframe animations with 30+ easing functions for professional motion graphics.
 
-- **text** - Rich text with typography options
-- **image** - Display images with fit options
-- **video** - Play videos with playback controls
-- **shape** - Rectangles, ellipses, polygons, stars, paths
-- **audio** - Audio with volume and fade controls
-- **group** - Container for grouping layers
-- **lottie** - Lottie animations
-- **custom** - Custom React components
+### [Fonts](/features/fonts)
+100+ curated Google Fonts across 4 categories. Custom font loading from URLs with automatic loading before rendering and platform-specific fallbacks.
+
+### [Layer Types](/features/layer-types)
+8 layer types for composing rich content: image, video, text, shape, audio, group, lottie, and custom React components. Full guide with examples for each type.
+
+### [Scene Transitions](/features/transitions)
+11 professional transition types including fade, wipe, slide, zoom, and circle effects. Customizable duration and colors for smooth scene changes.
+
+### [3D Scenes](/features/3d-scenes)
+Hardware-accelerated 3D rendering using CSS transforms. 4 geometry types with automatic rotation, lighting modes, and wireframe rendering - no WebGL required.
