@@ -4,7 +4,13 @@ Comprehensive demonstration of **all 17 scene transition types** (with 29 total 
 
 ## Preview
 
+### Animated Preview (15 seconds)
 ![Preview](preview.gif)
+
+### All Transitions Overview
+![All Transitions](transitions-overview.png)
+
+*Grid showing key frames from all 30 scenes (intro + 29 transition variations)*
 
 ## What Are Scene Transitions?
 
