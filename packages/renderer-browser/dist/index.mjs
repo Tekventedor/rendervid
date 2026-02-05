@@ -1,6 +1,12 @@
-import React4, { useMemo, useRef, useEffect, useState } from 'react';
+import React8, { useMemo, useRef, useEffect, useState } from 'react';
 import { generatePresetKeyframes, getPropertiesAtFrame, getDefaultRegistry, TemplateProcessor, FontManager } from '@rendervid/core';
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
+import { Canvas, useThree, useLoader } from '@react-three/fiber';
+import { PerspectiveCamera, OrthographicCamera } from '@react-three/drei';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import * as THREE2 from 'three';
 import { createRoot } from 'react-dom/client';
 import html2canvas from 'html2canvas';
 import { ArrayBufferTarget, Muxer } from 'mp4-muxer';
@@ -1018,6 +1024,817 @@ var init_CustomLayer = __esm({
     init_resolver();
   }
 });
+function Camera({ config, frame, layerSize }) {
+  const { set } = useThree();
+  if (config.type === "perspective") {
+    const {
+      fov = 75,
+      near: near2 = 0.1,
+      far: far2 = 1e3,
+      position: position2 = [0, 0, 5],
+      lookAt: lookAt2
+    } = config;
+    return /* @__PURE__ */ jsx(
+      PerspectiveCamera,
+      {
+        makeDefault: true,
+        fov,
+        near: near2,
+        far: far2,
+        position: position2,
+        aspect: layerSize.width / layerSize.height,
+        onUpdate: (camera) => {
+          if (lookAt2) {
+            camera.lookAt(lookAt2[0], lookAt2[1], lookAt2[2]);
+          }
+        }
+      }
+    );
+  }
+  const {
+    left,
+    right,
+    top,
+    bottom,
+    near = 0.1,
+    far = 1e3,
+    position = [0, 0, 5],
+    lookAt
+  } = config;
+  const aspect = layerSize.width / layerSize.height;
+  const frustumSize = 10;
+  const orthoLeft = left ?? -frustumSize * aspect / 2;
+  const orthoRight = right ?? frustumSize * aspect / 2;
+  const orthoTop = top ?? frustumSize / 2;
+  const orthoBottom = bottom ?? -frustumSize / 2;
+  return /* @__PURE__ */ jsx(
+    OrthographicCamera,
+    {
+      makeDefault: true,
+      left: orthoLeft,
+      right: orthoRight,
+      top: orthoTop,
+      bottom: orthoBottom,
+      near,
+      far,
+      position,
+      onUpdate: (camera) => {
+        if (lookAt) {
+          camera.lookAt(lookAt[0], lookAt[1], lookAt[2]);
+        }
+      }
+    }
+  );
+}
+var init_Camera = __esm({
+  "src/layers/three/Camera.tsx"() {
+  }
+});
+function Lights({ lights }) {
+  return /* @__PURE__ */ jsx(Fragment, { children: lights.map((light, index) => {
+    const key = `light-${index}`;
+    switch (light.type) {
+      case "ambient":
+        return /* @__PURE__ */ jsx(
+          "ambientLight",
+          {
+            color: light.color,
+            intensity: light.intensity ?? 1
+          },
+          key
+        );
+      case "directional": {
+        const position = light.position;
+        return /* @__PURE__ */ jsx(
+          "directionalLight",
+          {
+            color: light.color,
+            intensity: light.intensity ?? 1,
+            position,
+            castShadow: light.castShadow ?? false,
+            "shadow-mapSize-width": light.shadowMapSize ?? 1024,
+            "shadow-mapSize-height": light.shadowMapSize ?? 1024,
+            onUpdate: (self) => {
+              if (light.target) {
+                self.target.position.set(
+                  light.target[0],
+                  light.target[1],
+                  light.target[2]
+                );
+              }
+            }
+          },
+          key
+        );
+      }
+      case "point":
+        return /* @__PURE__ */ jsx(
+          "pointLight",
+          {
+            color: light.color,
+            intensity: light.intensity ?? 1,
+            position: light.position,
+            distance: light.distance ?? 0,
+            decay: light.decay ?? 2,
+            castShadow: light.castShadow ?? false
+          },
+          key
+        );
+      case "spot": {
+        const position = light.position;
+        return /* @__PURE__ */ jsx(
+          "spotLight",
+          {
+            color: light.color,
+            intensity: light.intensity ?? 1,
+            position,
+            distance: light.distance ?? 0,
+            angle: light.angle ?? Math.PI / 3,
+            penumbra: light.penumbra ?? 0,
+            decay: light.decay ?? 2,
+            castShadow: light.castShadow ?? false,
+            onUpdate: (self) => {
+              if (light.target) {
+                self.target.position.set(
+                  light.target[0],
+                  light.target[1],
+                  light.target[2]
+                );
+              }
+            }
+          },
+          key
+        );
+      }
+      case "hemisphere":
+        return /* @__PURE__ */ jsx(
+          "hemisphereLight",
+          {
+            color: light.color,
+            groundColor: light.groundColor,
+            intensity: light.intensity ?? 1,
+            position: light.position ?? [0, 1, 0]
+          },
+          key
+        );
+      default:
+        console.warn(`Unknown light type: ${light.type}`);
+        return null;
+    }
+  }) });
+}
+var init_Lights = __esm({
+  "src/layers/three/Lights.tsx"() {
+  }
+});
+function Geometry({ config }) {
+  switch (config.type) {
+    case "box": {
+      const {
+        width = 1,
+        height = 1,
+        depth = 1,
+        widthSegments = 1,
+        heightSegments = 1,
+        depthSegments = 1
+      } = config;
+      return /* @__PURE__ */ jsx(
+        "boxGeometry",
+        {
+          args: [width, height, depth, widthSegments, heightSegments, depthSegments]
+        }
+      );
+    }
+    case "sphere": {
+      const {
+        radius = 1,
+        widthSegments = 32,
+        heightSegments = 16,
+        phiStart = 0,
+        phiLength = Math.PI * 2,
+        thetaStart = 0,
+        thetaLength = Math.PI
+      } = config;
+      return /* @__PURE__ */ jsx(
+        "sphereGeometry",
+        {
+          args: [
+            radius,
+            widthSegments,
+            heightSegments,
+            phiStart,
+            phiLength,
+            thetaStart,
+            thetaLength
+          ]
+        }
+      );
+    }
+    case "cylinder": {
+      const {
+        radiusTop = 1,
+        radiusBottom = 1,
+        height = 1,
+        radialSegments = 8,
+        heightSegments = 1,
+        openEnded = false
+      } = config;
+      return /* @__PURE__ */ jsx(
+        "cylinderGeometry",
+        {
+          args: [radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded]
+        }
+      );
+    }
+    case "cone": {
+      const {
+        radius = 1,
+        height = 1,
+        radialSegments = 8,
+        heightSegments = 1,
+        openEnded = false
+      } = config;
+      return /* @__PURE__ */ jsx(
+        "coneGeometry",
+        {
+          args: [radius, height, radialSegments, heightSegments, openEnded]
+        }
+      );
+    }
+    case "torus": {
+      const {
+        radius = 1,
+        tube = 0.4,
+        radialSegments = 8,
+        tubularSegments = 6,
+        arc = Math.PI * 2
+      } = config;
+      return /* @__PURE__ */ jsx(
+        "torusGeometry",
+        {
+          args: [radius, tube, radialSegments, tubularSegments, arc]
+        }
+      );
+    }
+    case "plane": {
+      const {
+        width = 1,
+        height = 1,
+        widthSegments = 1,
+        heightSegments = 1
+      } = config;
+      return /* @__PURE__ */ jsx(
+        "planeGeometry",
+        {
+          args: [width, height, widthSegments, heightSegments]
+        }
+      );
+    }
+    case "gltf":
+      return /* @__PURE__ */ jsx(GLTFGeometry, { config });
+    case "text3d":
+      return /* @__PURE__ */ jsx(Text3DGeometry, { config });
+    default:
+      console.warn(`Unknown geometry type: ${config.type}`);
+      return /* @__PURE__ */ jsx("boxGeometry", {});
+  }
+}
+function GLTFGeometry({ config }) {
+  const [geometry, setGeometry] = useState(null);
+  useEffect(() => {
+    const loader = new GLTFLoader();
+    loader.load(
+      config.url,
+      (gltf) => {
+        gltf.scene.traverse((child) => {
+          if (child instanceof THREE2.Mesh && child.geometry) {
+            const geom = child.geometry.clone();
+            if (config.scale) {
+              geom.scale(config.scale, config.scale, config.scale);
+            }
+            setGeometry(geom);
+          }
+        });
+      },
+      void 0,
+      (error) => {
+        console.error("Error loading GLTF:", error);
+        setGeometry(new THREE2.BoxGeometry(1, 1, 1));
+      }
+    );
+  }, [config.url, config.scale]);
+  if (!geometry) {
+    return /* @__PURE__ */ jsx("boxGeometry", { args: [0.1, 0.1, 0.1] });
+  }
+  return /* @__PURE__ */ jsx("primitive", { object: geometry, attach: "geometry" });
+}
+function Text3DGeometry({ config }) {
+  const [geometry, setGeometry] = useState(null);
+  useEffect(() => {
+    const loader = new FontLoader();
+    loader.load(
+      config.font,
+      (font) => {
+        const textGeometry = new TextGeometry(config.text, {
+          font,
+          size: config.size ?? 1,
+          height: config.height ?? 0.2,
+          curveSegments: config.curveSegments ?? 12,
+          bevelEnabled: config.bevelEnabled ?? false,
+          bevelThickness: config.bevelThickness ?? 0.03,
+          bevelSize: config.bevelSize ?? 0.02,
+          bevelSegments: config.bevelSegments ?? 3
+        });
+        textGeometry.computeBoundingBox();
+        setGeometry(textGeometry);
+      },
+      void 0,
+      (error) => {
+        console.error("Error loading font:", error);
+        setGeometry(new THREE2.BoxGeometry(1, 0.2, 0.2));
+      }
+    );
+  }, [config.text, config.font, config.size, config.height]);
+  if (!geometry) {
+    return /* @__PURE__ */ jsx("boxGeometry", { args: [0.1, 0.1, 0.1] });
+  }
+  return /* @__PURE__ */ jsx("primitive", { object: geometry, attach: "geometry" });
+}
+var init_Geometry = __esm({
+  "src/layers/three/Geometry.tsx"() {
+  }
+});
+function Material({ config }) {
+  switch (config.type) {
+    case "standard":
+      return /* @__PURE__ */ jsx(StandardMaterial, { config });
+    case "basic":
+      return /* @__PURE__ */ jsx(BasicMaterial, { config });
+    case "phong":
+      return /* @__PURE__ */ jsx(PhongMaterial, { config });
+    case "physical":
+      return /* @__PURE__ */ jsx(PhysicalMaterial, { config });
+    case "normal":
+      return /* @__PURE__ */ jsx(NormalMaterial, { config });
+    case "matcap":
+      return /* @__PURE__ */ jsx(MatCapMaterial, { config });
+    default:
+      console.warn(`Unknown material type: ${config.type}`);
+      return /* @__PURE__ */ jsx("meshStandardMaterial", {});
+  }
+}
+function StandardMaterial({
+  config
+}) {
+  const map = useTextureIfDefined(config.map);
+  const normalMap = useTextureIfDefined(config.normalMap);
+  const roughnessMap = useTextureIfDefined(config.roughnessMap);
+  const metalnessMap = useTextureIfDefined(config.metalnessMap);
+  const aoMap = useTextureIfDefined(config.aoMap);
+  const emissiveMap = useTextureIfDefined(config.emissiveMap);
+  const envMap = useTextureIfDefined(config.envMap);
+  return /* @__PURE__ */ jsx(
+    "meshStandardMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      metalness: config.metalness ?? 0,
+      roughness: config.roughness ?? 1,
+      map,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2.Vector2(...config.normalScale) : void 0,
+      roughnessMap,
+      metalnessMap,
+      aoMap,
+      aoMapIntensity: config.aoMapIntensity,
+      emissive: config.emissive,
+      emissiveIntensity: config.emissiveIntensity,
+      emissiveMap,
+      envMap,
+      envMapIntensity: config.envMapIntensity
+    }
+  );
+}
+function BasicMaterial({
+  config
+}) {
+  const map = useTextureIfDefined(config.map);
+  const envMap = useTextureIfDefined(config.envMap);
+  return /* @__PURE__ */ jsx(
+    "meshBasicMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      map,
+      envMap,
+      reflectivity: config.reflectivity,
+      refractionRatio: config.refractionRatio
+    }
+  );
+}
+function PhongMaterial({
+  config
+}) {
+  const map = useTextureIfDefined(config.map);
+  const normalMap = useTextureIfDefined(config.normalMap);
+  const specularMap = useTextureIfDefined(config.specularMap);
+  const emissiveMap = useTextureIfDefined(config.emissiveMap);
+  return /* @__PURE__ */ jsx(
+    "meshPhongMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      specular: config.specular,
+      shininess: config.shininess ?? 30,
+      map,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2.Vector2(...config.normalScale) : void 0,
+      specularMap,
+      emissive: config.emissive,
+      emissiveMap
+    }
+  );
+}
+function PhysicalMaterial({
+  config
+}) {
+  const map = useTextureIfDefined(config.map);
+  const normalMap = useTextureIfDefined(config.normalMap);
+  const roughnessMap = useTextureIfDefined(config.roughnessMap);
+  const metalnessMap = useTextureIfDefined(config.metalnessMap);
+  const aoMap = useTextureIfDefined(config.aoMap);
+  const emissiveMap = useTextureIfDefined(config.emissiveMap);
+  const envMap = useTextureIfDefined(config.envMap);
+  return /* @__PURE__ */ jsx(
+    "meshPhysicalMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      metalness: config.metalness ?? 0,
+      roughness: config.roughness ?? 1,
+      map,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2.Vector2(...config.normalScale) : void 0,
+      roughnessMap,
+      metalnessMap,
+      aoMap,
+      aoMapIntensity: config.aoMapIntensity,
+      emissive: config.emissive,
+      emissiveIntensity: config.emissiveIntensity,
+      emissiveMap,
+      envMap,
+      envMapIntensity: config.envMapIntensity,
+      clearcoat: config.clearcoat,
+      clearcoatRoughness: config.clearcoatRoughness,
+      sheen: config.sheen,
+      sheenColor: config.sheenColor,
+      transmission: config.transmission,
+      thickness: config.thickness
+    }
+  );
+}
+function NormalMaterial({
+  config
+}) {
+  const normalMap = useTextureIfDefined(config.normalMap);
+  return /* @__PURE__ */ jsx(
+    "meshNormalMaterial",
+    {
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2.Vector2(...config.normalScale) : void 0
+    }
+  );
+}
+function MatCapMaterial({
+  config
+}) {
+  const matcap = useTexture(config.matcap);
+  const map = useTextureIfDefined(config.map);
+  const normalMap = useTextureIfDefined(config.normalMap);
+  return /* @__PURE__ */ jsx(
+    "meshMatcapMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      matcap,
+      map,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2.Vector2(...config.normalScale) : void 0
+    }
+  );
+}
+function useTexture(config) {
+  const texture = useLoader(THREE2.TextureLoader, config.url);
+  useMemo(() => {
+    if (!texture) return;
+    if (config.wrapS) {
+      texture.wrapS = getWrapMode(config.wrapS);
+    }
+    if (config.wrapT) {
+      texture.wrapT = getWrapMode(config.wrapT);
+    }
+    if (config.repeat) {
+      texture.repeat.set(config.repeat[0], config.repeat[1]);
+    }
+    if (config.offset) {
+      texture.offset.set(config.offset[0], config.offset[1]);
+    }
+    if (config.rotation !== void 0) {
+      texture.rotation = config.rotation;
+    }
+    texture.needsUpdate = true;
+  }, [texture, config]);
+  return texture;
+}
+function useTextureIfDefined(config) {
+  const shouldLoad = !!config;
+  const texture = shouldLoad ? useLoader(THREE2.TextureLoader, config.url) : void 0;
+  useMemo(() => {
+    if (!texture || !config) return;
+    if (config.wrapS) {
+      texture.wrapS = getWrapMode(config.wrapS);
+    }
+    if (config.wrapT) {
+      texture.wrapT = getWrapMode(config.wrapT);
+    }
+    if (config.repeat) {
+      texture.repeat.set(config.repeat[0], config.repeat[1]);
+    }
+    if (config.offset) {
+      texture.offset.set(config.offset[0], config.offset[1]);
+    }
+    if (config.rotation !== void 0) {
+      texture.rotation = config.rotation;
+    }
+    texture.needsUpdate = true;
+  }, [texture, config]);
+  return texture;
+}
+function getSide(side) {
+  switch (side) {
+    case "front":
+      return THREE2.FrontSide;
+    case "back":
+      return THREE2.BackSide;
+    case "double":
+      return THREE2.DoubleSide;
+    default:
+      return THREE2.FrontSide;
+  }
+}
+function getWrapMode(mode) {
+  switch (mode) {
+    case "repeat":
+      return THREE2.RepeatWrapping;
+    case "clamp":
+      return THREE2.ClampToEdgeWrapping;
+    case "mirror":
+      return THREE2.MirroredRepeatWrapping;
+    default:
+      return THREE2.RepeatWrapping;
+  }
+}
+var init_Material = __esm({
+  "src/layers/three/Material.tsx"() {
+  }
+});
+function Mesh2({ config, frame }) {
+  const meshRef = useRef(null);
+  const {
+    geometry,
+    material,
+    position = [0, 0, 0],
+    rotation = [0, 0, 0],
+    scale = [1, 1, 1],
+    castShadow = false,
+    receiveShadow = false,
+    visible = true,
+    renderOrder = 0,
+    autoRotate
+  } = config;
+  useEffect(() => {
+    if (!meshRef.current || !autoRotate) return;
+    const mesh = meshRef.current;
+    mesh.rotation.x = rotation[0] + autoRotate[0] * frame;
+    mesh.rotation.y = rotation[1] + autoRotate[1] * frame;
+    mesh.rotation.z = rotation[2] + autoRotate[2] * frame;
+  }, [frame, autoRotate, rotation]);
+  return /* @__PURE__ */ jsxs(
+    "mesh",
+    {
+      ref: meshRef,
+      position,
+      rotation: autoRotate ? void 0 : rotation,
+      scale,
+      castShadow,
+      receiveShadow,
+      visible,
+      renderOrder,
+      children: [
+        /* @__PURE__ */ jsx(Geometry, { config: geometry }),
+        /* @__PURE__ */ jsx(Material, { config: material })
+      ]
+    }
+  );
+}
+var init_Mesh = __esm({
+  "src/layers/three/Mesh.tsx"() {
+    init_Geometry();
+    init_Material();
+  }
+});
+function ThreeScene({
+  camera,
+  lights = [],
+  meshes,
+  background,
+  fog,
+  shadows,
+  toneMapping,
+  frame,
+  layerSize
+}) {
+  const { scene, gl } = useThree();
+  useEffect(() => {
+    if (!background) {
+      scene.background = null;
+      return;
+    }
+    if (typeof background === "string" || typeof background === "number") {
+      scene.background = new THREE2.Color(background);
+      return;
+    }
+    scene.background = null;
+  }, [background, scene]);
+  useEffect(() => {
+    if (!fog) {
+      scene.fog = null;
+      return;
+    }
+    scene.fog = new THREE2.Fog(
+      new THREE2.Color(fog.color).getHex(),
+      fog.near,
+      fog.far
+    );
+  }, [fog, scene]);
+  useEffect(() => {
+    if (!shadows?.enabled) {
+      gl.shadowMap.enabled = false;
+      return;
+    }
+    gl.shadowMap.enabled = true;
+    switch (shadows.type) {
+      case "basic":
+        gl.shadowMap.type = THREE2.BasicShadowMap;
+        break;
+      case "pcf":
+        gl.shadowMap.type = THREE2.PCFShadowMap;
+        break;
+      case "pcfsoft":
+        gl.shadowMap.type = THREE2.PCFSoftShadowMap;
+        break;
+      case "vsm":
+        gl.shadowMap.type = THREE2.VSMShadowMap;
+        break;
+      default:
+        gl.shadowMap.type = THREE2.PCFShadowMap;
+    }
+  }, [shadows, gl]);
+  useEffect(() => {
+    if (!toneMapping) {
+      gl.toneMapping = THREE2.NoToneMapping;
+      gl.toneMappingExposure = 1;
+      return;
+    }
+    switch (toneMapping.type) {
+      case "none":
+        gl.toneMapping = THREE2.NoToneMapping;
+        break;
+      case "linear":
+        gl.toneMapping = THREE2.LinearToneMapping;
+        break;
+      case "reinhard":
+        gl.toneMapping = THREE2.ReinhardToneMapping;
+        break;
+      case "cineon":
+        gl.toneMapping = THREE2.CineonToneMapping;
+        break;
+      case "aces":
+        gl.toneMapping = THREE2.ACESFilmicToneMapping;
+        break;
+      default:
+        gl.toneMapping = THREE2.NoToneMapping;
+    }
+    gl.toneMappingExposure = toneMapping.exposure ?? 1;
+  }, [toneMapping, gl]);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(Camera, { config: camera, frame, layerSize }),
+    /* @__PURE__ */ jsx(Lights, { lights }),
+    meshes.map((mesh) => /* @__PURE__ */ jsx(Mesh2, { config: mesh, frame }, mesh.id))
+  ] });
+}
+var init_ThreeScene = __esm({
+  "src/layers/three/ThreeScene.tsx"() {
+    init_Camera();
+    init_Lights();
+    init_Mesh();
+  }
+});
+function ThreeLayer({ layer, frame, fps, sceneDuration }) {
+  const { style: animationStyle } = useLayerAnimation(layer, frame, fps, sceneDuration);
+  const layerStyle = layer.style ? resolveStyle(layer.style) : {};
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const left = layer.position.x - layer.size.width * anchor.x;
+  const top = layer.position.y - layer.size.height * anchor.y;
+  const {
+    camera,
+    lights,
+    meshes,
+    background,
+    fog,
+    antialias = true,
+    shadows,
+    toneMapping
+  } = layer.props;
+  const canvasProps = {
+    gl: {
+      alpha: true,
+      // Support transparency
+      antialias,
+      preserveDrawingBuffer: true
+      // Required for screenshots/video capture
+    },
+    shadows: shadows?.enabled ?? false,
+    style: {
+      width: "100%",
+      height: "100%"
+    }
+  };
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      style: {
+        position: "absolute",
+        left,
+        top,
+        width: layer.size.width,
+        height: layer.size.height,
+        transform: layer.rotation ? `rotate(${layer.rotation}deg)` : void 0,
+        opacity: layer.opacity ?? 1,
+        overflow: "hidden",
+        ...layerStyle,
+        ...animationStyle
+      },
+      className: layer.className,
+      children: /* @__PURE__ */ jsx(Canvas, { ...canvasProps, children: /* @__PURE__ */ jsx(
+        ThreeScene,
+        {
+          camera,
+          lights,
+          meshes,
+          background,
+          fog,
+          shadows,
+          toneMapping,
+          frame,
+          layerSize: layer.size
+        }
+      ) })
+    }
+  );
+}
+var init_ThreeLayer = __esm({
+  "src/layers/ThreeLayer.tsx"() {
+    init_useLayerAnimation();
+    init_resolver();
+    init_ThreeScene();
+  }
+});
 function LayerRenderer({
   layer,
   frame,
@@ -1064,6 +1881,8 @@ function LayerRenderer({
       );
     case "lottie":
       return /* @__PURE__ */ jsx(LottieLayer, { layer, ...commonProps });
+    case "three":
+      return /* @__PURE__ */ jsx(ThreeLayer, { layer, ...commonProps });
     case "custom":
       return /* @__PURE__ */ jsx(
         CustomLayer,
@@ -1088,6 +1907,7 @@ var init_LayerRenderer = __esm({
     init_GroupLayer();
     init_LottieLayer();
     init_CustomLayer();
+    init_ThreeLayer();
   }
 });
 
@@ -1125,7 +1945,7 @@ function SceneRenderer({
   registry
 }) {
   const sceneDuration = getSceneDuration(scene);
-  const registryMap = React4.useMemo(() => registryToMap(registry), [registry]);
+  const registryMap = React8.useMemo(() => registryToMap(registry), [registry]);
   const backgroundStyle = {};
   if (scene.backgroundColor) {
     backgroundStyle.backgroundColor = scene.backgroundColor;
@@ -2373,6 +3193,7 @@ init_AudioLayer();
 init_GroupLayer();
 init_LottieLayer();
 init_CustomLayer();
+init_ThreeLayer();
 init_LayerRenderer();
 
 // src/index.ts
@@ -2533,6 +3354,6 @@ function createFrameByFrameRecorder(options) {
   };
 }
 
-export { AudioLayer, BrowserRenderer, CustomLayer, GroupLayer, ImageLayer, LayerRenderer, LottieLayer, SceneRenderer, ShapeLayer, TemplateRenderer, TextLayer, VideoLayer, arrayBufferToBlob, blobToArrayBuffer, calculateTotalDuration, calculateTotalFrames, canvasToVideoFrame, createBrowserRenderer, createFrameByFrameRecorder, createFrameCapturer, createMediaRecorderEncoder, createMp4Muxer, createOffscreenCapturer, createWebCodecsEncoder, createWebMMuxer, downloadArrayBuffer, downloadBlob, getBestMimeType, getRecommendedCodec, getSceneAtFrame, getStyleClassName, isMediaRecorderSupported, isWebCodecsSupported, mergeStyles, resolveStyle, useLayerAnimation };
+export { AudioLayer, BrowserRenderer, CustomLayer, GroupLayer, ImageLayer, LayerRenderer, LottieLayer, SceneRenderer, ShapeLayer, TemplateRenderer, TextLayer, ThreeLayer, VideoLayer, arrayBufferToBlob, blobToArrayBuffer, calculateTotalDuration, calculateTotalFrames, canvasToVideoFrame, createBrowserRenderer, createFrameByFrameRecorder, createFrameCapturer, createMediaRecorderEncoder, createMp4Muxer, createOffscreenCapturer, createWebCodecsEncoder, createWebMMuxer, downloadArrayBuffer, downloadBlob, getBestMimeType, getRecommendedCodec, getSceneAtFrame, getStyleClassName, isMediaRecorderSupported, isWebCodecsSupported, mergeStyles, resolveStyle, useLayerAnimation };
 //# sourceMappingURL=index.mjs.map
 //# sourceMappingURL=index.mjs.map

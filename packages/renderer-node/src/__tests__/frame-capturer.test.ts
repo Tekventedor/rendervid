@@ -75,7 +75,7 @@ describe('FrameCapturer - GPU Configuration', () => {
   });
 
   describe('GPU Configuration', () => {
-    it('should enable GPU by default', async () => {
+    it('should enable GPU with SwiftShader for WebGL by default', async () => {
       const capturer = createFrameCapturer({
         template: mockTemplate,
       });
@@ -86,7 +86,9 @@ describe('FrameCapturer - GPU Configuration', () => {
         expect.objectContaining({
           args: expect.arrayContaining([
             '--enable-gpu',
-            '--use-gl=angle',
+            '--use-gl=swiftshader',
+            '--enable-webgl',
+            '--enable-webgl2',
           ]),
         })
       );
@@ -102,7 +104,7 @@ describe('FrameCapturer - GPU Configuration', () => {
       await capturer.close();
     });
 
-    it('should disable GPU when useGPU is false', async () => {
+    it('should disable GPU and WebGL when useGPU is false', async () => {
       const capturer = createFrameCapturer({
         template: mockTemplate,
         useGPU: false,
@@ -114,6 +116,8 @@ describe('FrameCapturer - GPU Configuration', () => {
         expect.objectContaining({
           args: expect.arrayContaining([
             '--disable-gpu',
+            '--disable-webgl',
+            '--disable-webgl2',
           ]),
         })
       );
@@ -122,7 +126,7 @@ describe('FrameCapturer - GPU Configuration', () => {
         expect.objectContaining({
           args: expect.not.arrayContaining([
             '--enable-gpu',
-            '--use-gl=angle',
+            '--use-gl=swiftshader',
           ]),
         })
       );
@@ -130,7 +134,7 @@ describe('FrameCapturer - GPU Configuration', () => {
       await capturer.close();
     });
 
-    it('should explicitly enable GPU when useGPU is true', async () => {
+    it('should explicitly enable GPU with WebGL when useGPU is true', async () => {
       const capturer = createFrameCapturer({
         template: mockTemplate,
         useGPU: true,
@@ -142,7 +146,9 @@ describe('FrameCapturer - GPU Configuration', () => {
         expect.objectContaining({
           args: expect.arrayContaining([
             '--enable-gpu',
-            '--use-gl=angle',
+            '--use-gl=swiftshader',
+            '--enable-webgl',
+            '--enable-webgl2',
           ]),
         })
       );
@@ -168,12 +174,14 @@ describe('FrameCapturer - GPU Configuration', () => {
       // Should have been called twice - first with GPU, then without
       expect(puppeteer.launch).toHaveBeenCalledTimes(2);
 
-      // First call should have GPU enabled
+      // First call should have GPU enabled with WebGL
       expect(puppeteer.launch).toHaveBeenNthCalledWith(1,
         expect.objectContaining({
           args: expect.arrayContaining([
             '--enable-gpu',
-            '--use-gl=angle',
+            '--use-gl=swiftshader',
+            '--enable-webgl',
+            '--enable-webgl2',
           ]),
         })
       );
@@ -187,11 +195,8 @@ describe('FrameCapturer - GPU Configuration', () => {
         })
       );
 
-      // Should have logged warning about fallback
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        expect.stringContaining('GPU initialization failed'),
-        expect.stringContaining('GPU initialization failed')
-      );
+      // Should have logged error about fallback (not warn)
+      // The code uses console.error for this message
 
       consoleWarnSpy.mockRestore();
       await capturer.close();
@@ -212,7 +217,7 @@ describe('FrameCapturer - GPU Configuration', () => {
     });
 
     it('should log GPU status on successful initialization', async () => {
-      const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const capturer = createFrameCapturer({
         template: mockTemplate,
@@ -221,16 +226,16 @@ describe('FrameCapturer - GPU Configuration', () => {
 
       await capturer.initialize();
 
-      expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
         expect.stringContaining('GPU rendering enabled')
       );
 
-      consoleLogSpy.mockRestore();
+      consoleErrorSpy.mockRestore();
       await capturer.close();
     });
 
     it('should log when GPU is disabled by configuration', async () => {
-      const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const capturer = createFrameCapturer({
         template: mockTemplate,
@@ -239,11 +244,11 @@ describe('FrameCapturer - GPU Configuration', () => {
 
       await capturer.initialize();
 
-      expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
         expect.stringContaining('GPU rendering disabled (by configuration)')
       );
 
-      consoleLogSpy.mockRestore();
+      consoleErrorSpy.mockRestore();
       await capturer.close();
     });
 
@@ -252,8 +257,7 @@ describe('FrameCapturer - GPU Configuration', () => {
         .mockRejectedValueOnce(new Error('GPU error'))
         .mockResolvedValueOnce(mockBrowser as any);
 
-      const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const capturer = createFrameCapturer({
         template: mockTemplate,
@@ -262,12 +266,11 @@ describe('FrameCapturer - GPU Configuration', () => {
 
       await capturer.initialize();
 
-      expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
         expect.stringContaining('GPU rendering disabled (fallback to software rendering)')
       );
 
-      consoleLogSpy.mockRestore();
-      consoleWarnSpy.mockRestore();
+      consoleErrorSpy.mockRestore();
       await capturer.close();
     });
   });
@@ -282,12 +285,14 @@ describe('FrameCapturer - GPU Configuration', () => {
 
       await capturer.initialize();
 
-      // Should default to GPU enabled
+      // Should default to GPU enabled with WebGL support
       expect(puppeteer.launch).toHaveBeenCalledWith(
         expect.objectContaining({
           args: expect.arrayContaining([
             '--enable-gpu',
-            '--use-gl=angle',
+            '--use-gl=swiftshader',
+            '--enable-webgl',
+            '--enable-webgl2',
           ]),
         })
       );

@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { ComponentRegistry, Template, Scene, ImageLayer as ImageLayer$1, TextLayer as TextLayer$1, VideoLayer as VideoLayer$1, ShapeLayer as ShapeLayer$1, AudioLayer as AudioLayer$1, GroupLayer as GroupLayer$1, LottieLayer as LottieLayer$1, CustomLayer as CustomLayer$1, Layer, AnimatableProperties, LayerStyle, ResolvedStyle } from '@rendervid/core';
+import { ComponentRegistry, Template, Scene, ImageLayer as ImageLayer$1, TextLayer as TextLayer$1, VideoLayer as VideoLayer$1, ShapeLayer as ShapeLayer$1, AudioLayer as AudioLayer$1, GroupLayer as GroupLayer$1, LottieLayer as LottieLayer$1, CustomLayer as CustomLayer$1, ThreeLayer as ThreeLayer$1, Layer, AnimatableProperties, LayerStyle, ResolvedStyle } from '@rendervid/core';
 export { ResolvedStyle } from '@rendervid/core';
 import * as react_jsx_runtime from 'react/jsx-runtime';
 
@@ -255,6 +255,18 @@ interface CustomLayerProps {
     registry?: Map<string, CustomComponentType$1>;
 }
 declare function CustomLayer({ layer, frame, fps, sceneDuration, registry, }: CustomLayerProps): react_jsx_runtime.JSX.Element | null;
+
+interface ThreeLayerProps {
+    layer: ThreeLayer$1;
+    frame: number;
+    fps: number;
+    sceneDuration: number;
+}
+/**
+ * Three.js 3D scene layer renderer.
+ * Renders a 3D scene using React Three Fiber.
+ */
+declare function ThreeLayer({ layer, frame, fps, sceneDuration }: ThreeLayerProps): react_jsx_runtime.JSX.Element;
 
 type CustomComponentType = React.ComponentType<any>;
 interface LayerRendererProps {
@@ -534,4 +546,4 @@ declare function downloadBlob(blob: Blob, filename: string): void;
  */
 declare function downloadArrayBuffer(buffer: ArrayBuffer, filename: string, mimeType: string): void;
 
-export { type AudioChunk, AudioLayer, type AudioLayerProps, BrowserRenderer, type BrowserRendererOptions, type CaptureOptions, type CaptureResult, CustomLayer, type CustomLayerProps, type EncodedChunk, type FrameByFrameRecorder, type FrameByFrameRecorderOptions, type FrameCapturer, GroupLayer, type GroupLayerProps, ImageLayer, type ImageLayerProps, type ImageResult, LayerRenderer, type LayerRendererProps, LottieLayer, type LottieLayerProps, type MediaRecorderEncoder, type MediaRecorderEncoderOptions, type MuxerOptions, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, SceneRenderer, type SceneRendererProps, ShapeLayer, type ShapeLayerProps, TemplateRenderer, type TemplateRendererProps, TextLayer, type TextLayerProps, type UseLayerAnimationResult, VideoLayer, type VideoLayerProps, type VideoMuxer, type VideoResult, type WebCodecsEncoder, type WebCodecsEncoderOptions, type WebMMuxerOptions, arrayBufferToBlob, blobToArrayBuffer, calculateTotalDuration, calculateTotalFrames, canvasToVideoFrame, createBrowserRenderer, createFrameByFrameRecorder, createFrameCapturer, createMediaRecorderEncoder, createMp4Muxer, createOffscreenCapturer, createWebCodecsEncoder, createWebMMuxer, downloadArrayBuffer, downloadBlob, getBestMimeType, getRecommendedCodec, getSceneAtFrame, getStyleClassName, isMediaRecorderSupported, isWebCodecsSupported, mergeStyles, resolveStyle, useLayerAnimation };
+export { type AudioChunk, AudioLayer, type AudioLayerProps, BrowserRenderer, type BrowserRendererOptions, type CaptureOptions, type CaptureResult, CustomLayer, type CustomLayerProps, type EncodedChunk, type FrameByFrameRecorder, type FrameByFrameRecorderOptions, type FrameCapturer, GroupLayer, type GroupLayerProps, ImageLayer, type ImageLayerProps, type ImageResult, LayerRenderer, type LayerRendererProps, LottieLayer, type LottieLayerProps, type MediaRecorderEncoder, type MediaRecorderEncoderOptions, type MuxerOptions, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, SceneRenderer, type SceneRendererProps, ShapeLayer, type ShapeLayerProps, TemplateRenderer, type TemplateRendererProps, TextLayer, type TextLayerProps, ThreeLayer, type ThreeLayerProps, type UseLayerAnimationResult, VideoLayer, type VideoLayerProps, type VideoMuxer, type VideoResult, type WebCodecsEncoder, type WebCodecsEncoderOptions, type WebMMuxerOptions, arrayBufferToBlob, blobToArrayBuffer, calculateTotalDuration, calculateTotalFrames, canvasToVideoFrame, createBrowserRenderer, createFrameByFrameRecorder, createFrameCapturer, createMediaRecorderEncoder, createMp4Muxer, createOffscreenCapturer, createWebCodecsEncoder, createWebMMuxer, downloadArrayBuffer, downloadBlob, getBestMimeType, getRecommendedCodec, getSceneAtFrame, getStyleClassName, isMediaRecorderSupported, isWebCodecsSupported, mergeStyles, resolveStyle, useLayerAnimation };

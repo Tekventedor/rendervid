@@ -6,4 +6,5 @@ export { AudioLayer, type AudioLayerProps } from './AudioLayer';
 export { GroupLayer, type GroupLayerProps } from './GroupLayer';
 export { LottieLayer, type LottieLayerProps } from './LottieLayer';
 export { CustomLayer, type CustomLayerProps } from './CustomLayer';
+export { ThreeLayer, type ThreeLayerProps } from './ThreeLayer';
 export { LayerRenderer, type LayerRendererProps } from './LayerRenderer';

@@ -66,6 +66,46 @@ export type {
   CustomComponentRef,
 } from './layer';
 
+// Three.js 3D Layers
+export type {
+  ThreeLayer,
+  ThreeLayerProps,
+  ThreeCameraConfig,
+  PerspectiveCameraConfig,
+  OrthographicCameraConfig,
+  CameraType,
+  ThreeLightConfig,
+  AmbientLightConfig,
+  DirectionalLightConfig,
+  PointLightConfig,
+  SpotLightConfig,
+  HemisphereLightConfig,
+  LightType,
+  ThreeGeometry,
+  BoxGeometry,
+  SphereGeometry,
+  CylinderGeometry,
+  ConeGeometry,
+  TorusGeometry,
+  PlaneGeometry,
+  GLTFGeometry,
+  Text3DGeometry,
+  GeometryType,
+  ThreeMaterialConfig,
+  StandardMaterialConfig,
+  BasicMaterialConfig,
+  PhongMaterialConfig,
+  PhysicalMaterialConfig,
+  NormalMaterialConfig,
+  MatCapMaterialConfig,
+  MaterialType,
+  TextureConfig,
+  ThreeMeshConfig,
+  Vector3,
+  Rotation3,
+  Color,
+} from './three';
+
 // Animation
 export type {
   Animation,

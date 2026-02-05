@@ -1,15 +1,40 @@
 'use strict';
 
-var React4 = require('react');
+var React8 = require('react');
 var core = require('@rendervid/core');
 var jsxRuntime = require('react/jsx-runtime');
+var fiber = require('@react-three/fiber');
+var drei = require('@react-three/drei');
+var GLTFLoader_js = require('three/examples/jsm/loaders/GLTFLoader.js');
+var FontLoader_js = require('three/examples/jsm/loaders/FontLoader.js');
+var TextGeometry_js = require('three/examples/jsm/geometries/TextGeometry.js');
+var THREE2 = require('three');
 var client = require('react-dom/client');
 var html2canvas = require('html2canvas');
 var mp4Muxer = require('mp4-muxer');
 
 function _interopDefault (e) { return e && e.__esModule ? e : { default: e }; }
 
-var React4__default = /*#__PURE__*/_interopDefault(React4);
+function _interopNamespace(e) {
+  if (e && e.__esModule) return e;
+  var n = Object.create(null);
+  if (e) {
+    Object.keys(e).forEach(function (k) {
+      if (k !== 'default') {
+        var d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
+      }
+    });
+  }
+  n.default = e;
+  return Object.freeze(n);
+}
+
+var React8__default = /*#__PURE__*/_interopDefault(React8);
+var THREE2__namespace = /*#__PURE__*/_interopNamespace(THREE2);
 var html2canvas__default = /*#__PURE__*/_interopDefault(html2canvas);
 
 var __defProp = Object.defineProperty;
@@ -22,7 +47,7 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 function useLayerAnimation(layer, frame, fps, sceneDuration) {
-  const animatedProperties = React4.useMemo(() => {
+  const animatedProperties = React8.useMemo(() => {
     if (!layer.animations || layer.animations.length === 0) {
       return {};
     }
@@ -39,7 +64,7 @@ function useLayerAnimation(layer, frame, fps, sceneDuration) {
     }
     return combined;
   }, [layer.animations, frame, fps, sceneDuration, layer.size]);
-  const style = React4.useMemo(() => {
+  const style = React8.useMemo(() => {
     const css = {};
     if (animatedProperties.opacity !== void 0) {
       css.opacity = animatedProperties.opacity;
@@ -527,7 +552,7 @@ var init_TextLayer = __esm({
   }
 });
 function VideoLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
-  const videoRef = React4.useRef(null);
+  const videoRef = React8.useRef(null);
   const { style: animationStyle } = useLayerAnimation(layer, frame, fps, sceneDuration);
   const src = layer.props.src;
   if (!src) return null;
@@ -543,7 +568,7 @@ function VideoLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
   const anchor = layer.anchor ?? { x: 0, y: 0 };
   const left = layer.position.x - layer.size.width * anchor.x;
   const top = layer.position.y - layer.size.height * anchor.y;
-  React4.useEffect(() => {
+  React8.useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     const layerStartFrame = layer.from ?? 0;
@@ -559,7 +584,7 @@ function VideoLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
       video.pause();
     }
   }, [frame, fps, startTime, playbackRate, isPlaying, layer.from]);
-  React4.useEffect(() => {
+  React8.useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     video.playbackRate = playbackRate;
@@ -774,7 +799,7 @@ var init_ShapeLayer = __esm({
   }
 });
 function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
-  const audioRef = React4.useRef(null);
+  const audioRef = React8.useRef(null);
   const src = layer.props.src;
   if (!src) return null;
   const {
@@ -795,7 +820,7 @@ function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
     const fadeProgress = (layerDuration - localFrame) / fadeOut;
     currentVolume = volume * Math.max(0, fadeProgress);
   }
-  React4.useEffect(() => {
+  React8.useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     const targetTime = startTime + localFrame / fps;
@@ -809,7 +834,7 @@ function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
       audio.pause();
     }
   }, [frame, fps, startTime, isPlaying, localFrame]);
-  React4.useEffect(() => {
+  React8.useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = Math.max(0, Math.min(1, currentVolume));
@@ -878,9 +903,9 @@ var init_GroupLayer = __esm({
   }
 });
 function LottieLayer({ layer, frame, fps, sceneDuration }) {
-  const containerRef = React4.useRef(null);
-  const playerRef = React4.useRef(null);
-  const [isLoaded, setIsLoaded] = React4.useState(false);
+  const containerRef = React8.useRef(null);
+  const playerRef = React8.useRef(null);
+  const [isLoaded, setIsLoaded] = React8.useState(false);
   const { style: animationStyle } = useLayerAnimation(layer, frame, fps, sceneDuration);
   const {
     data,
@@ -889,7 +914,7 @@ function LottieLayer({ layer, frame, fps, sceneDuration }) {
     direction = 1
   } = layer.props;
   const layerStyle = layer.style ? resolveStyle(layer.style) : {};
-  React4.useEffect(() => {
+  React8.useEffect(() => {
     if (lottie) {
       setIsLoaded(true);
       return;
@@ -901,7 +926,7 @@ function LottieLayer({ layer, frame, fps, sceneDuration }) {
       console.warn("Failed to load lottie-web:", err);
     });
   }, []);
-  React4.useEffect(() => {
+  React8.useEffect(() => {
     if (!isLoaded || !lottie || !containerRef.current) return;
     const isUrl = typeof data === "string";
     playerRef.current = lottie.loadAnimation({
@@ -917,7 +942,7 @@ function LottieLayer({ layer, frame, fps, sceneDuration }) {
       playerRef.current = null;
     };
   }, [isLoaded, data]);
-  React4.useEffect(() => {
+  React8.useEffect(() => {
     if (!playerRef.current) return;
     const player = playerRef.current;
     const layerStartFrame = layer.from ?? 0;
@@ -1025,6 +1050,817 @@ var init_CustomLayer = __esm({
     init_resolver();
   }
 });
+function Camera({ config, frame, layerSize }) {
+  const { set } = fiber.useThree();
+  if (config.type === "perspective") {
+    const {
+      fov = 75,
+      near: near2 = 0.1,
+      far: far2 = 1e3,
+      position: position2 = [0, 0, 5],
+      lookAt: lookAt2
+    } = config;
+    return /* @__PURE__ */ jsxRuntime.jsx(
+      drei.PerspectiveCamera,
+      {
+        makeDefault: true,
+        fov,
+        near: near2,
+        far: far2,
+        position: position2,
+        aspect: layerSize.width / layerSize.height,
+        onUpdate: (camera) => {
+          if (lookAt2) {
+            camera.lookAt(lookAt2[0], lookAt2[1], lookAt2[2]);
+          }
+        }
+      }
+    );
+  }
+  const {
+    left,
+    right,
+    top,
+    bottom,
+    near = 0.1,
+    far = 1e3,
+    position = [0, 0, 5],
+    lookAt
+  } = config;
+  const aspect = layerSize.width / layerSize.height;
+  const frustumSize = 10;
+  const orthoLeft = left ?? -frustumSize * aspect / 2;
+  const orthoRight = right ?? frustumSize * aspect / 2;
+  const orthoTop = top ?? frustumSize / 2;
+  const orthoBottom = bottom ?? -frustumSize / 2;
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    drei.OrthographicCamera,
+    {
+      makeDefault: true,
+      left: orthoLeft,
+      right: orthoRight,
+      top: orthoTop,
+      bottom: orthoBottom,
+      near,
+      far,
+      position,
+      onUpdate: (camera) => {
+        if (lookAt) {
+          camera.lookAt(lookAt[0], lookAt[1], lookAt[2]);
+        }
+      }
+    }
+  );
+}
+var init_Camera = __esm({
+  "src/layers/three/Camera.tsx"() {
+  }
+});
+function Lights({ lights }) {
+  return /* @__PURE__ */ jsxRuntime.jsx(jsxRuntime.Fragment, { children: lights.map((light, index) => {
+    const key = `light-${index}`;
+    switch (light.type) {
+      case "ambient":
+        return /* @__PURE__ */ jsxRuntime.jsx(
+          "ambientLight",
+          {
+            color: light.color,
+            intensity: light.intensity ?? 1
+          },
+          key
+        );
+      case "directional": {
+        const position = light.position;
+        return /* @__PURE__ */ jsxRuntime.jsx(
+          "directionalLight",
+          {
+            color: light.color,
+            intensity: light.intensity ?? 1,
+            position,
+            castShadow: light.castShadow ?? false,
+            "shadow-mapSize-width": light.shadowMapSize ?? 1024,
+            "shadow-mapSize-height": light.shadowMapSize ?? 1024,
+            onUpdate: (self) => {
+              if (light.target) {
+                self.target.position.set(
+                  light.target[0],
+                  light.target[1],
+                  light.target[2]
+                );
+              }
+            }
+          },
+          key
+        );
+      }
+      case "point":
+        return /* @__PURE__ */ jsxRuntime.jsx(
+          "pointLight",
+          {
+            color: light.color,
+            intensity: light.intensity ?? 1,
+            position: light.position,
+            distance: light.distance ?? 0,
+            decay: light.decay ?? 2,
+            castShadow: light.castShadow ?? false
+          },
+          key
+        );
+      case "spot": {
+        const position = light.position;
+        return /* @__PURE__ */ jsxRuntime.jsx(
+          "spotLight",
+          {
+            color: light.color,
+            intensity: light.intensity ?? 1,
+            position,
+            distance: light.distance ?? 0,
+            angle: light.angle ?? Math.PI / 3,
+            penumbra: light.penumbra ?? 0,
+            decay: light.decay ?? 2,
+            castShadow: light.castShadow ?? false,
+            onUpdate: (self) => {
+              if (light.target) {
+                self.target.position.set(
+                  light.target[0],
+                  light.target[1],
+                  light.target[2]
+                );
+              }
+            }
+          },
+          key
+        );
+      }
+      case "hemisphere":
+        return /* @__PURE__ */ jsxRuntime.jsx(
+          "hemisphereLight",
+          {
+            color: light.color,
+            groundColor: light.groundColor,
+            intensity: light.intensity ?? 1,
+            position: light.position ?? [0, 1, 0]
+          },
+          key
+        );
+      default:
+        console.warn(`Unknown light type: ${light.type}`);
+        return null;
+    }
+  }) });
+}
+var init_Lights = __esm({
+  "src/layers/three/Lights.tsx"() {
+  }
+});
+function Geometry({ config }) {
+  switch (config.type) {
+    case "box": {
+      const {
+        width = 1,
+        height = 1,
+        depth = 1,
+        widthSegments = 1,
+        heightSegments = 1,
+        depthSegments = 1
+      } = config;
+      return /* @__PURE__ */ jsxRuntime.jsx(
+        "boxGeometry",
+        {
+          args: [width, height, depth, widthSegments, heightSegments, depthSegments]
+        }
+      );
+    }
+    case "sphere": {
+      const {
+        radius = 1,
+        widthSegments = 32,
+        heightSegments = 16,
+        phiStart = 0,
+        phiLength = Math.PI * 2,
+        thetaStart = 0,
+        thetaLength = Math.PI
+      } = config;
+      return /* @__PURE__ */ jsxRuntime.jsx(
+        "sphereGeometry",
+        {
+          args: [
+            radius,
+            widthSegments,
+            heightSegments,
+            phiStart,
+            phiLength,
+            thetaStart,
+            thetaLength
+          ]
+        }
+      );
+    }
+    case "cylinder": {
+      const {
+        radiusTop = 1,
+        radiusBottom = 1,
+        height = 1,
+        radialSegments = 8,
+        heightSegments = 1,
+        openEnded = false
+      } = config;
+      return /* @__PURE__ */ jsxRuntime.jsx(
+        "cylinderGeometry",
+        {
+          args: [radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded]
+        }
+      );
+    }
+    case "cone": {
+      const {
+        radius = 1,
+        height = 1,
+        radialSegments = 8,
+        heightSegments = 1,
+        openEnded = false
+      } = config;
+      return /* @__PURE__ */ jsxRuntime.jsx(
+        "coneGeometry",
+        {
+          args: [radius, height, radialSegments, heightSegments, openEnded]
+        }
+      );
+    }
+    case "torus": {
+      const {
+        radius = 1,
+        tube = 0.4,
+        radialSegments = 8,
+        tubularSegments = 6,
+        arc = Math.PI * 2
+      } = config;
+      return /* @__PURE__ */ jsxRuntime.jsx(
+        "torusGeometry",
+        {
+          args: [radius, tube, radialSegments, tubularSegments, arc]
+        }
+      );
+    }
+    case "plane": {
+      const {
+        width = 1,
+        height = 1,
+        widthSegments = 1,
+        heightSegments = 1
+      } = config;
+      return /* @__PURE__ */ jsxRuntime.jsx(
+        "planeGeometry",
+        {
+          args: [width, height, widthSegments, heightSegments]
+        }
+      );
+    }
+    case "gltf":
+      return /* @__PURE__ */ jsxRuntime.jsx(GLTFGeometry, { config });
+    case "text3d":
+      return /* @__PURE__ */ jsxRuntime.jsx(Text3DGeometry, { config });
+    default:
+      console.warn(`Unknown geometry type: ${config.type}`);
+      return /* @__PURE__ */ jsxRuntime.jsx("boxGeometry", {});
+  }
+}
+function GLTFGeometry({ config }) {
+  const [geometry, setGeometry] = React8.useState(null);
+  React8.useEffect(() => {
+    const loader = new GLTFLoader_js.GLTFLoader();
+    loader.load(
+      config.url,
+      (gltf) => {
+        gltf.scene.traverse((child) => {
+          if (child instanceof THREE2__namespace.Mesh && child.geometry) {
+            const geom = child.geometry.clone();
+            if (config.scale) {
+              geom.scale(config.scale, config.scale, config.scale);
+            }
+            setGeometry(geom);
+          }
+        });
+      },
+      void 0,
+      (error) => {
+        console.error("Error loading GLTF:", error);
+        setGeometry(new THREE2__namespace.BoxGeometry(1, 1, 1));
+      }
+    );
+  }, [config.url, config.scale]);
+  if (!geometry) {
+    return /* @__PURE__ */ jsxRuntime.jsx("boxGeometry", { args: [0.1, 0.1, 0.1] });
+  }
+  return /* @__PURE__ */ jsxRuntime.jsx("primitive", { object: geometry, attach: "geometry" });
+}
+function Text3DGeometry({ config }) {
+  const [geometry, setGeometry] = React8.useState(null);
+  React8.useEffect(() => {
+    const loader = new FontLoader_js.FontLoader();
+    loader.load(
+      config.font,
+      (font) => {
+        const textGeometry = new TextGeometry_js.TextGeometry(config.text, {
+          font,
+          size: config.size ?? 1,
+          height: config.height ?? 0.2,
+          curveSegments: config.curveSegments ?? 12,
+          bevelEnabled: config.bevelEnabled ?? false,
+          bevelThickness: config.bevelThickness ?? 0.03,
+          bevelSize: config.bevelSize ?? 0.02,
+          bevelSegments: config.bevelSegments ?? 3
+        });
+        textGeometry.computeBoundingBox();
+        setGeometry(textGeometry);
+      },
+      void 0,
+      (error) => {
+        console.error("Error loading font:", error);
+        setGeometry(new THREE2__namespace.BoxGeometry(1, 0.2, 0.2));
+      }
+    );
+  }, [config.text, config.font, config.size, config.height]);
+  if (!geometry) {
+    return /* @__PURE__ */ jsxRuntime.jsx("boxGeometry", { args: [0.1, 0.1, 0.1] });
+  }
+  return /* @__PURE__ */ jsxRuntime.jsx("primitive", { object: geometry, attach: "geometry" });
+}
+var init_Geometry = __esm({
+  "src/layers/three/Geometry.tsx"() {
+  }
+});
+function Material({ config }) {
+  switch (config.type) {
+    case "standard":
+      return /* @__PURE__ */ jsxRuntime.jsx(StandardMaterial, { config });
+    case "basic":
+      return /* @__PURE__ */ jsxRuntime.jsx(BasicMaterial, { config });
+    case "phong":
+      return /* @__PURE__ */ jsxRuntime.jsx(PhongMaterial, { config });
+    case "physical":
+      return /* @__PURE__ */ jsxRuntime.jsx(PhysicalMaterial, { config });
+    case "normal":
+      return /* @__PURE__ */ jsxRuntime.jsx(NormalMaterial, { config });
+    case "matcap":
+      return /* @__PURE__ */ jsxRuntime.jsx(MatCapMaterial, { config });
+    default:
+      console.warn(`Unknown material type: ${config.type}`);
+      return /* @__PURE__ */ jsxRuntime.jsx("meshStandardMaterial", {});
+  }
+}
+function StandardMaterial({
+  config
+}) {
+  const map = useTextureIfDefined(config.map);
+  const normalMap = useTextureIfDefined(config.normalMap);
+  const roughnessMap = useTextureIfDefined(config.roughnessMap);
+  const metalnessMap = useTextureIfDefined(config.metalnessMap);
+  const aoMap = useTextureIfDefined(config.aoMap);
+  const emissiveMap = useTextureIfDefined(config.emissiveMap);
+  const envMap = useTextureIfDefined(config.envMap);
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "meshStandardMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      metalness: config.metalness ?? 0,
+      roughness: config.roughness ?? 1,
+      map,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2__namespace.Vector2(...config.normalScale) : void 0,
+      roughnessMap,
+      metalnessMap,
+      aoMap,
+      aoMapIntensity: config.aoMapIntensity,
+      emissive: config.emissive,
+      emissiveIntensity: config.emissiveIntensity,
+      emissiveMap,
+      envMap,
+      envMapIntensity: config.envMapIntensity
+    }
+  );
+}
+function BasicMaterial({
+  config
+}) {
+  const map = useTextureIfDefined(config.map);
+  const envMap = useTextureIfDefined(config.envMap);
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "meshBasicMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      map,
+      envMap,
+      reflectivity: config.reflectivity,
+      refractionRatio: config.refractionRatio
+    }
+  );
+}
+function PhongMaterial({
+  config
+}) {
+  const map = useTextureIfDefined(config.map);
+  const normalMap = useTextureIfDefined(config.normalMap);
+  const specularMap = useTextureIfDefined(config.specularMap);
+  const emissiveMap = useTextureIfDefined(config.emissiveMap);
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "meshPhongMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      specular: config.specular,
+      shininess: config.shininess ?? 30,
+      map,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2__namespace.Vector2(...config.normalScale) : void 0,
+      specularMap,
+      emissive: config.emissive,
+      emissiveMap
+    }
+  );
+}
+function PhysicalMaterial({
+  config
+}) {
+  const map = useTextureIfDefined(config.map);
+  const normalMap = useTextureIfDefined(config.normalMap);
+  const roughnessMap = useTextureIfDefined(config.roughnessMap);
+  const metalnessMap = useTextureIfDefined(config.metalnessMap);
+  const aoMap = useTextureIfDefined(config.aoMap);
+  const emissiveMap = useTextureIfDefined(config.emissiveMap);
+  const envMap = useTextureIfDefined(config.envMap);
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "meshPhysicalMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      metalness: config.metalness ?? 0,
+      roughness: config.roughness ?? 1,
+      map,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2__namespace.Vector2(...config.normalScale) : void 0,
+      roughnessMap,
+      metalnessMap,
+      aoMap,
+      aoMapIntensity: config.aoMapIntensity,
+      emissive: config.emissive,
+      emissiveIntensity: config.emissiveIntensity,
+      emissiveMap,
+      envMap,
+      envMapIntensity: config.envMapIntensity,
+      clearcoat: config.clearcoat,
+      clearcoatRoughness: config.clearcoatRoughness,
+      sheen: config.sheen,
+      sheenColor: config.sheenColor,
+      transmission: config.transmission,
+      thickness: config.thickness
+    }
+  );
+}
+function NormalMaterial({
+  config
+}) {
+  const normalMap = useTextureIfDefined(config.normalMap);
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "meshNormalMaterial",
+    {
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2__namespace.Vector2(...config.normalScale) : void 0
+    }
+  );
+}
+function MatCapMaterial({
+  config
+}) {
+  const matcap = useTexture(config.matcap);
+  const map = useTextureIfDefined(config.map);
+  const normalMap = useTextureIfDefined(config.normalMap);
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "meshMatcapMaterial",
+    {
+      color: config.color,
+      opacity: config.opacity ?? 1,
+      transparent: config.transparent ?? (config.opacity !== void 0 && config.opacity < 1),
+      side: getSide(config.side),
+      flatShading: config.flatShading,
+      wireframe: config.wireframe,
+      matcap,
+      map,
+      normalMap,
+      normalScale: config.normalScale ? new THREE2__namespace.Vector2(...config.normalScale) : void 0
+    }
+  );
+}
+function useTexture(config) {
+  const texture = fiber.useLoader(THREE2__namespace.TextureLoader, config.url);
+  React8.useMemo(() => {
+    if (!texture) return;
+    if (config.wrapS) {
+      texture.wrapS = getWrapMode(config.wrapS);
+    }
+    if (config.wrapT) {
+      texture.wrapT = getWrapMode(config.wrapT);
+    }
+    if (config.repeat) {
+      texture.repeat.set(config.repeat[0], config.repeat[1]);
+    }
+    if (config.offset) {
+      texture.offset.set(config.offset[0], config.offset[1]);
+    }
+    if (config.rotation !== void 0) {
+      texture.rotation = config.rotation;
+    }
+    texture.needsUpdate = true;
+  }, [texture, config]);
+  return texture;
+}
+function useTextureIfDefined(config) {
+  const shouldLoad = !!config;
+  const texture = shouldLoad ? fiber.useLoader(THREE2__namespace.TextureLoader, config.url) : void 0;
+  React8.useMemo(() => {
+    if (!texture || !config) return;
+    if (config.wrapS) {
+      texture.wrapS = getWrapMode(config.wrapS);
+    }
+    if (config.wrapT) {
+      texture.wrapT = getWrapMode(config.wrapT);
+    }
+    if (config.repeat) {
+      texture.repeat.set(config.repeat[0], config.repeat[1]);
+    }
+    if (config.offset) {
+      texture.offset.set(config.offset[0], config.offset[1]);
+    }
+    if (config.rotation !== void 0) {
+      texture.rotation = config.rotation;
+    }
+    texture.needsUpdate = true;
+  }, [texture, config]);
+  return texture;
+}
+function getSide(side) {
+  switch (side) {
+    case "front":
+      return THREE2__namespace.FrontSide;
+    case "back":
+      return THREE2__namespace.BackSide;
+    case "double":
+      return THREE2__namespace.DoubleSide;
+    default:
+      return THREE2__namespace.FrontSide;
+  }
+}
+function getWrapMode(mode) {
+  switch (mode) {
+    case "repeat":
+      return THREE2__namespace.RepeatWrapping;
+    case "clamp":
+      return THREE2__namespace.ClampToEdgeWrapping;
+    case "mirror":
+      return THREE2__namespace.MirroredRepeatWrapping;
+    default:
+      return THREE2__namespace.RepeatWrapping;
+  }
+}
+var init_Material = __esm({
+  "src/layers/three/Material.tsx"() {
+  }
+});
+function Mesh2({ config, frame }) {
+  const meshRef = React8.useRef(null);
+  const {
+    geometry,
+    material,
+    position = [0, 0, 0],
+    rotation = [0, 0, 0],
+    scale = [1, 1, 1],
+    castShadow = false,
+    receiveShadow = false,
+    visible = true,
+    renderOrder = 0,
+    autoRotate
+  } = config;
+  React8.useEffect(() => {
+    if (!meshRef.current || !autoRotate) return;
+    const mesh = meshRef.current;
+    mesh.rotation.x = rotation[0] + autoRotate[0] * frame;
+    mesh.rotation.y = rotation[1] + autoRotate[1] * frame;
+    mesh.rotation.z = rotation[2] + autoRotate[2] * frame;
+  }, [frame, autoRotate, rotation]);
+  return /* @__PURE__ */ jsxRuntime.jsxs(
+    "mesh",
+    {
+      ref: meshRef,
+      position,
+      rotation: autoRotate ? void 0 : rotation,
+      scale,
+      castShadow,
+      receiveShadow,
+      visible,
+      renderOrder,
+      children: [
+        /* @__PURE__ */ jsxRuntime.jsx(Geometry, { config: geometry }),
+        /* @__PURE__ */ jsxRuntime.jsx(Material, { config: material })
+      ]
+    }
+  );
+}
+var init_Mesh = __esm({
+  "src/layers/three/Mesh.tsx"() {
+    init_Geometry();
+    init_Material();
+  }
+});
+function ThreeScene({
+  camera,
+  lights = [],
+  meshes,
+  background,
+  fog,
+  shadows,
+  toneMapping,
+  frame,
+  layerSize
+}) {
+  const { scene, gl } = fiber.useThree();
+  React8.useEffect(() => {
+    if (!background) {
+      scene.background = null;
+      return;
+    }
+    if (typeof background === "string" || typeof background === "number") {
+      scene.background = new THREE2__namespace.Color(background);
+      return;
+    }
+    scene.background = null;
+  }, [background, scene]);
+  React8.useEffect(() => {
+    if (!fog) {
+      scene.fog = null;
+      return;
+    }
+    scene.fog = new THREE2__namespace.Fog(
+      new THREE2__namespace.Color(fog.color).getHex(),
+      fog.near,
+      fog.far
+    );
+  }, [fog, scene]);
+  React8.useEffect(() => {
+    if (!shadows?.enabled) {
+      gl.shadowMap.enabled = false;
+      return;
+    }
+    gl.shadowMap.enabled = true;
+    switch (shadows.type) {
+      case "basic":
+        gl.shadowMap.type = THREE2__namespace.BasicShadowMap;
+        break;
+      case "pcf":
+        gl.shadowMap.type = THREE2__namespace.PCFShadowMap;
+        break;
+      case "pcfsoft":
+        gl.shadowMap.type = THREE2__namespace.PCFSoftShadowMap;
+        break;
+      case "vsm":
+        gl.shadowMap.type = THREE2__namespace.VSMShadowMap;
+        break;
+      default:
+        gl.shadowMap.type = THREE2__namespace.PCFShadowMap;
+    }
+  }, [shadows, gl]);
+  React8.useEffect(() => {
+    if (!toneMapping) {
+      gl.toneMapping = THREE2__namespace.NoToneMapping;
+      gl.toneMappingExposure = 1;
+      return;
+    }
+    switch (toneMapping.type) {
+      case "none":
+        gl.toneMapping = THREE2__namespace.NoToneMapping;
+        break;
+      case "linear":
+        gl.toneMapping = THREE2__namespace.LinearToneMapping;
+        break;
+      case "reinhard":
+        gl.toneMapping = THREE2__namespace.ReinhardToneMapping;
+        break;
+      case "cineon":
+        gl.toneMapping = THREE2__namespace.CineonToneMapping;
+        break;
+      case "aces":
+        gl.toneMapping = THREE2__namespace.ACESFilmicToneMapping;
+        break;
+      default:
+        gl.toneMapping = THREE2__namespace.NoToneMapping;
+    }
+    gl.toneMappingExposure = toneMapping.exposure ?? 1;
+  }, [toneMapping, gl]);
+  return /* @__PURE__ */ jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntime.jsx(Camera, { config: camera, frame, layerSize }),
+    /* @__PURE__ */ jsxRuntime.jsx(Lights, { lights }),
+    meshes.map((mesh) => /* @__PURE__ */ jsxRuntime.jsx(Mesh2, { config: mesh, frame }, mesh.id))
+  ] });
+}
+var init_ThreeScene = __esm({
+  "src/layers/three/ThreeScene.tsx"() {
+    init_Camera();
+    init_Lights();
+    init_Mesh();
+  }
+});
+function ThreeLayer({ layer, frame, fps, sceneDuration }) {
+  const { style: animationStyle } = useLayerAnimation(layer, frame, fps, sceneDuration);
+  const layerStyle = layer.style ? resolveStyle(layer.style) : {};
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const left = layer.position.x - layer.size.width * anchor.x;
+  const top = layer.position.y - layer.size.height * anchor.y;
+  const {
+    camera,
+    lights,
+    meshes,
+    background,
+    fog,
+    antialias = true,
+    shadows,
+    toneMapping
+  } = layer.props;
+  const canvasProps = {
+    gl: {
+      alpha: true,
+      // Support transparency
+      antialias,
+      preserveDrawingBuffer: true
+      // Required for screenshots/video capture
+    },
+    shadows: shadows?.enabled ?? false,
+    style: {
+      width: "100%",
+      height: "100%"
+    }
+  };
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "div",
+    {
+      style: {
+        position: "absolute",
+        left,
+        top,
+        width: layer.size.width,
+        height: layer.size.height,
+        transform: layer.rotation ? `rotate(${layer.rotation}deg)` : void 0,
+        opacity: layer.opacity ?? 1,
+        overflow: "hidden",
+        ...layerStyle,
+        ...animationStyle
+      },
+      className: layer.className,
+      children: /* @__PURE__ */ jsxRuntime.jsx(fiber.Canvas, { ...canvasProps, children: /* @__PURE__ */ jsxRuntime.jsx(
+        ThreeScene,
+        {
+          camera,
+          lights,
+          meshes,
+          background,
+          fog,
+          shadows,
+          toneMapping,
+          frame,
+          layerSize: layer.size
+        }
+      ) })
+    }
+  );
+}
+var init_ThreeLayer = __esm({
+  "src/layers/ThreeLayer.tsx"() {
+    init_useLayerAnimation();
+    init_resolver();
+    init_ThreeScene();
+  }
+});
 function LayerRenderer({
   layer,
   frame,
@@ -1071,6 +1907,8 @@ function LayerRenderer({
       );
     case "lottie":
       return /* @__PURE__ */ jsxRuntime.jsx(LottieLayer, { layer, ...commonProps });
+    case "three":
+      return /* @__PURE__ */ jsxRuntime.jsx(ThreeLayer, { layer, ...commonProps });
     case "custom":
       return /* @__PURE__ */ jsxRuntime.jsx(
         CustomLayer,
@@ -1095,6 +1933,7 @@ var init_LayerRenderer = __esm({
     init_GroupLayer();
     init_LottieLayer();
     init_CustomLayer();
+    init_ThreeLayer();
   }
 });
 
@@ -1132,7 +1971,7 @@ function SceneRenderer({
   registry
 }) {
   const sceneDuration = getSceneDuration(scene);
-  const registryMap = React4__default.default.useMemo(() => registryToMap(registry), [registry]);
+  const registryMap = React8__default.default.useMemo(() => registryToMap(registry), [registry]);
   const backgroundStyle = {};
   if (scene.backgroundColor) {
     backgroundStyle.backgroundColor = scene.backgroundColor;
@@ -2380,6 +3219,7 @@ init_AudioLayer();
 init_GroupLayer();
 init_LottieLayer();
 init_CustomLayer();
+init_ThreeLayer();
 init_LayerRenderer();
 
 // src/index.ts
@@ -2551,6 +3391,7 @@ exports.SceneRenderer = SceneRenderer;
 exports.ShapeLayer = ShapeLayer;
 exports.TemplateRenderer = TemplateRenderer;
 exports.TextLayer = TextLayer;
+exports.ThreeLayer = ThreeLayer;
 exports.VideoLayer = VideoLayer;
 exports.arrayBufferToBlob = arrayBufferToBlob;
 exports.blobToArrayBuffer = blobToArrayBuffer;

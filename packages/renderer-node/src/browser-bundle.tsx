@@ -44,8 +44,38 @@ declare global {
     RENDERVID_INPUTS: Record<string, unknown>;
     RENDERVID_CURRENT_FRAME: number;
     RENDERVID_READY: boolean;
+    RENDERVID_WEBGL_AVAILABLE: boolean;
     __rendervidRenderFrame: (frame: number) => void;
     __rendervidRoot: ReturnType<typeof createRoot> | null;
+  }
+}
+
+/**
+ * Check if WebGL is available in the current browser context.
+ * This is critical for Three.js rendering.
+ */
+function checkWebGLAvailability(): boolean {
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+    if (!gl) {
+      console.error('[WebGL] WebGL context not available');
+      return false;
+    }
+
+    // Log WebGL info for debugging
+    const debugInfo = (gl as WebGLRenderingContext).getExtension('WEBGL_debug_renderer_info');
+    if (debugInfo) {
+      const renderer = (gl as WebGLRenderingContext).getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+      console.error('[WebGL] Renderer:', renderer);
+    }
+
+    console.error('[WebGL] WebGL is available');
+    return true;
+  } catch (error) {
+    console.error('[WebGL] Error checking WebGL availability:', error);
+    return false;
   }
 }
 
@@ -56,6 +86,9 @@ declare global {
     console.error('Root element not found');
     return;
   }
+
+  // Check WebGL availability for Three.js rendering
+  window.RENDERVID_WEBGL_AVAILABLE = checkWebGLAvailability();
 
   // Get the default registry and register all custom components
   const registry = getDefaultRegistry();
@@ -129,6 +162,16 @@ declare global {
     }
 
     const { width, height, fps = 30 } = template.output;
+
+    // Check if template uses Three.js layers
+    const hasThreeLayers = template.composition.scenes.some(scene =>
+      scene.layers?.some(layer => layer.type === 'three')
+    );
+
+    if (hasThreeLayers && !window.RENDERVID_WEBGL_AVAILABLE) {
+      console.error('[Render] Template contains Three.js layers but WebGL is not available');
+      console.error('[Render] Three.js layers will not render correctly');
+    }
 
     // Render the template at the current frame with the registry
     root.render(

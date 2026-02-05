@@ -30,6 +30,7 @@ export {
   GroupLayer,
   LottieLayer,
   CustomLayer,
+  ThreeLayer,
   LayerRenderer,
   type ImageLayerProps,
   type TextLayerProps,
@@ -39,6 +40,7 @@ export {
   type GroupLayerProps,
   type LottieLayerProps,
   type CustomLayerProps,
+  type ThreeLayerProps,
   type LayerRendererProps,
 } from './layers';
 

@@ -396,9 +396,637 @@ declare function filterToCSS(filter: Filter): string;
 declare function filtersToCSS(filters: Filter[]): string;
 
 /**
+ * Three.js 3D layer types.
+ * Provides comprehensive type definitions for 3D scenes, cameras, lights, geometry, and materials.
+ */
+
+/**
+ * 3D Vector represented as a tuple [x, y, z].
+ */
+type Vector3 = [number, number, number];
+/**
+ * 3D Rotation represented as Euler angles [x, y, z] in radians.
+ */
+type Rotation3 = [number, number, number];
+/**
+ * Color in hex format (e.g., '#ffffff') or numeric (0xffffff).
+ */
+type Color = string | number;
+/**
+ * Camera type discriminator.
+ */
+type CameraType = 'perspective' | 'orthographic';
+/**
+ * Perspective camera configuration.
+ */
+interface PerspectiveCameraConfig {
+    type: 'perspective';
+    /** Field of view in degrees */
+    fov: number;
+    /** Near clipping plane */
+    near?: number;
+    /** Far clipping plane */
+    far?: number;
+    /** Camera position [x, y, z] */
+    position?: Vector3;
+    /** Look at target [x, y, z] */
+    lookAt?: Vector3;
+}
+/**
+ * Orthographic camera configuration.
+ */
+interface OrthographicCameraConfig {
+    type: 'orthographic';
+    /** Left frustum plane */
+    left?: number;
+    /** Right frustum plane */
+    right?: number;
+    /** Top frustum plane */
+    top?: number;
+    /** Bottom frustum plane */
+    bottom?: number;
+    /** Near clipping plane */
+    near?: number;
+    /** Far clipping plane */
+    far?: number;
+    /** Camera position [x, y, z] */
+    position?: Vector3;
+    /** Look at target [x, y, z] */
+    lookAt?: Vector3;
+}
+/**
+ * Camera configuration union.
+ */
+type ThreeCameraConfig = PerspectiveCameraConfig | OrthographicCameraConfig;
+/**
+ * Light type discriminator.
+ */
+type LightType = 'ambient' | 'directional' | 'point' | 'spot' | 'hemisphere';
+/**
+ * Base light properties.
+ */
+interface LightBase {
+    /** Light color */
+    color?: Color;
+    /** Light intensity */
+    intensity?: number;
+}
+/**
+ * Ambient light configuration.
+ * Globally illuminates all objects in the scene equally.
+ */
+interface AmbientLightConfig extends LightBase {
+    type: 'ambient';
+}
+/**
+ * Directional light configuration.
+ * Light rays are parallel (like sunlight).
+ */
+interface DirectionalLightConfig extends LightBase {
+    type: 'directional';
+    /** Light position [x, y, z] */
+    position: Vector3;
+    /** Target position [x, y, z] */
+    target?: Vector3;
+    /** Enable shadows */
+    castShadow?: boolean;
+    /** Shadow map size (power of 2) */
+    shadowMapSize?: number;
+}
+/**
+ * Point light configuration.
+ * Light emanates from a single point in all directions.
+ */
+interface PointLightConfig extends LightBase {
+    type: 'point';
+    /** Light position [x, y, z] */
+    position: Vector3;
+    /** Maximum range of light (0 = infinite) */
+    distance?: number;
+    /** Light decay rate */
+    decay?: number;
+    /** Enable shadows */
+    castShadow?: boolean;
+}
+/**
+ * Spot light configuration.
+ * Cone-shaped light emanating from a single point.
+ */
+interface SpotLightConfig extends LightBase {
+    type: 'spot';
+    /** Light position [x, y, z] */
+    position: Vector3;
+    /** Target position [x, y, z] */
+    target?: Vector3;
+    /** Maximum range of light (0 = infinite) */
+    distance?: number;
+    /** Angle of light cone in radians */
+    angle?: number;
+    /** Penumbra softness (0-1) */
+    penumbra?: number;
+    /** Light decay rate */
+    decay?: number;
+    /** Enable shadows */
+    castShadow?: boolean;
+}
+/**
+ * Hemisphere light configuration.
+ * Light above ground and light from below ground.
+ */
+interface HemisphereLightConfig extends LightBase {
+    type: 'hemisphere';
+    /** Ground color */
+    groundColor?: Color;
+    /** Light position [x, y, z] */
+    position?: Vector3;
+}
+/**
+ * Light configuration union.
+ */
+type ThreeLightConfig = AmbientLightConfig | DirectionalLightConfig | PointLightConfig | SpotLightConfig | HemisphereLightConfig;
+/**
+ * Geometry type discriminator.
+ */
+type GeometryType = 'box' | 'sphere' | 'cylinder' | 'cone' | 'torus' | 'plane' | 'gltf' | 'text3d';
+/**
+ * Box geometry configuration.
+ */
+interface BoxGeometry {
+    type: 'box';
+    /** Width (x-axis) */
+    width?: number;
+    /** Height (y-axis) */
+    height?: number;
+    /** Depth (z-axis) */
+    depth?: number;
+    /** Width segments */
+    widthSegments?: number;
+    /** Height segments */
+    heightSegments?: number;
+    /** Depth segments */
+    depthSegments?: number;
+}
+/**
+ * Sphere geometry configuration.
+ */
+interface SphereGeometry {
+    type: 'sphere';
+    /** Sphere radius */
+    radius?: number;
+    /** Horizontal segments */
+    widthSegments?: number;
+    /** Vertical segments */
+    heightSegments?: number;
+    /** Horizontal starting angle */
+    phiStart?: number;
+    /** Horizontal sweep angle */
+    phiLength?: number;
+    /** Vertical starting angle */
+    thetaStart?: number;
+    /** Vertical sweep angle */
+    thetaLength?: number;
+}
+/**
+ * Cylinder geometry configuration.
+ */
+interface CylinderGeometry {
+    type: 'cylinder';
+    /** Top radius */
+    radiusTop?: number;
+    /** Bottom radius */
+    radiusBottom?: number;
+    /** Height of cylinder */
+    height?: number;
+    /** Radial segments */
+    radialSegments?: number;
+    /** Height segments */
+    heightSegments?: number;
+    /** Open ended */
+    openEnded?: boolean;
+}
+/**
+ * Cone geometry configuration.
+ */
+interface ConeGeometry {
+    type: 'cone';
+    /** Base radius */
+    radius?: number;
+    /** Height of cone */
+    height?: number;
+    /** Radial segments */
+    radialSegments?: number;
+    /** Height segments */
+    heightSegments?: number;
+    /** Open ended */
+    openEnded?: boolean;
+}
+/**
+ * Torus geometry configuration.
+ */
+interface TorusGeometry {
+    type: 'torus';
+    /** Torus radius */
+    radius?: number;
+    /** Tube radius */
+    tube?: number;
+    /** Radial segments */
+    radialSegments?: number;
+    /** Tubular segments */
+    tubularSegments?: number;
+    /** Central angle */
+    arc?: number;
+}
+/**
+ * Plane geometry configuration.
+ */
+interface PlaneGeometry {
+    type: 'plane';
+    /** Width (x-axis) */
+    width?: number;
+    /** Height (y-axis) */
+    height?: number;
+    /** Width segments */
+    widthSegments?: number;
+    /** Height segments */
+    heightSegments?: number;
+}
+/**
+ * GLTF model geometry configuration.
+ */
+interface GLTFGeometry {
+    type: 'gltf';
+    /** URL or path to GLTF/GLB file */
+    url: string;
+    /** Auto-play animations */
+    autoPlay?: boolean;
+    /** Animation index or name to play */
+    animationIndex?: number | string;
+    /** Animation playback speed */
+    animationSpeed?: number;
+    /** Scale model uniformly */
+    scale?: number;
+}
+/**
+ * 3D Text geometry configuration.
+ */
+interface Text3DGeometry {
+    type: 'text3d';
+    /** Text content */
+    text: string;
+    /** Font URL (JSON format) */
+    font: string;
+    /** Font size */
+    size?: number;
+    /** Extrusion depth */
+    height?: number;
+    /** Curve segments */
+    curveSegments?: number;
+    /** Enable bevel */
+    bevelEnabled?: boolean;
+    /** Bevel thickness */
+    bevelThickness?: number;
+    /** Bevel size */
+    bevelSize?: number;
+    /** Bevel segments */
+    bevelSegments?: number;
+}
+/**
+ * Geometry configuration union.
+ */
+type ThreeGeometry = BoxGeometry | SphereGeometry | CylinderGeometry | ConeGeometry | TorusGeometry | PlaneGeometry | GLTFGeometry | Text3DGeometry;
+/**
+ * Material type discriminator.
+ */
+type MaterialType = 'standard' | 'basic' | 'phong' | 'physical' | 'normal' | 'matcap';
+/**
+ * Texture configuration.
+ */
+interface TextureConfig {
+    /** Texture URL */
+    url: string;
+    /** Texture wrapping mode */
+    wrapS?: 'repeat' | 'clamp' | 'mirror';
+    /** Texture wrapping mode */
+    wrapT?: 'repeat' | 'clamp' | 'mirror';
+    /** Repeat count [u, v] */
+    repeat?: [number, number];
+    /** Texture offset [u, v] */
+    offset?: [number, number];
+    /** Texture rotation in radians */
+    rotation?: number;
+}
+/**
+ * Base material properties.
+ */
+interface MaterialBase {
+    /** Base color */
+    color?: Color;
+    /** Opacity (0-1) */
+    opacity?: number;
+    /** Transparent rendering */
+    transparent?: boolean;
+    /** Render side */
+    side?: 'front' | 'back' | 'double';
+    /** Flat shading */
+    flatShading?: boolean;
+    /** Wireframe mode */
+    wireframe?: boolean;
+}
+/**
+ * Standard PBR material configuration.
+ * Physically-based rendering with metalness and roughness.
+ */
+interface StandardMaterialConfig extends MaterialBase {
+    type: 'standard';
+    /** Metalness (0-1) */
+    metalness?: number;
+    /** Roughness (0-1) */
+    roughness?: number;
+    /** Base color map */
+    map?: TextureConfig;
+    /** Normal map */
+    normalMap?: TextureConfig;
+    /** Normal map scale */
+    normalScale?: [number, number];
+    /** Roughness map */
+    roughnessMap?: TextureConfig;
+    /** Metalness map */
+    metalnessMap?: TextureConfig;
+    /** Ambient occlusion map */
+    aoMap?: TextureConfig;
+    /** AO intensity */
+    aoMapIntensity?: number;
+    /** Emissive color */
+    emissive?: Color;
+    /** Emissive intensity */
+    emissiveIntensity?: number;
+    /** Emissive map */
+    emissiveMap?: TextureConfig;
+    /** Environment map */
+    envMap?: TextureConfig;
+    /** Environment map intensity */
+    envMapIntensity?: number;
+}
+/**
+ * Basic material configuration.
+ * Simple unlit material.
+ */
+interface BasicMaterialConfig extends MaterialBase {
+    type: 'basic';
+    /** Base color map */
+    map?: TextureConfig;
+    /** Environment map */
+    envMap?: TextureConfig;
+    /** Combine environment map */
+    combine?: 'multiply' | 'mix' | 'add';
+    /** Reflection amount */
+    reflectivity?: number;
+    /** Refraction ratio */
+    refractionRatio?: number;
+}
+/**
+ * Phong material configuration.
+ * Classic Phong shading model.
+ */
+interface PhongMaterialConfig extends MaterialBase {
+    type: 'phong';
+    /** Specular color */
+    specular?: Color;
+    /** Shininess */
+    shininess?: number;
+    /** Base color map */
+    map?: TextureConfig;
+    /** Normal map */
+    normalMap?: TextureConfig;
+    /** Normal map scale */
+    normalScale?: [number, number];
+    /** Specular map */
+    specularMap?: TextureConfig;
+    /** Emissive color */
+    emissive?: Color;
+    /** Emissive map */
+    emissiveMap?: TextureConfig;
+}
+/**
+ * Physical material configuration.
+ * Advanced PBR material.
+ */
+interface PhysicalMaterialConfig extends MaterialBase {
+    type: 'physical';
+    /** Metalness (0-1) */
+    metalness?: number;
+    /** Roughness (0-1) */
+    roughness?: number;
+    /** Base color map */
+    map?: TextureConfig;
+    /** Normal map */
+    normalMap?: TextureConfig;
+    /** Normal map scale */
+    normalScale?: [number, number];
+    /** Roughness map */
+    roughnessMap?: TextureConfig;
+    /** Metalness map */
+    metalnessMap?: TextureConfig;
+    /** Ambient occlusion map */
+    aoMap?: TextureConfig;
+    /** AO intensity */
+    aoMapIntensity?: number;
+    /** Emissive color */
+    emissive?: Color;
+    /** Emissive intensity */
+    emissiveIntensity?: number;
+    /** Emissive map */
+    emissiveMap?: TextureConfig;
+    /** Environment map */
+    envMap?: TextureConfig;
+    /** Environment map intensity */
+    envMapIntensity?: number;
+    /** Clearcoat intensity */
+    clearcoat?: number;
+    /** Clearcoat roughness */
+    clearcoatRoughness?: number;
+    /** Sheen effect */
+    sheen?: number;
+    /** Sheen color */
+    sheenColor?: Color;
+    /** Transmission (glass effect) */
+    transmission?: number;
+    /** Thickness for volume rendering */
+    thickness?: number;
+}
+/**
+ * Normal material configuration.
+ * Displays surface normals as RGB colors.
+ */
+interface NormalMaterialConfig extends MaterialBase {
+    type: 'normal';
+    /** Normal map */
+    normalMap?: TextureConfig;
+    /** Normal map scale */
+    normalScale?: [number, number];
+}
+/**
+ * MatCap material configuration.
+ * Material capture for spherical environment mapping.
+ */
+interface MatCapMaterialConfig extends MaterialBase {
+    type: 'matcap';
+    /** MatCap texture */
+    matcap: TextureConfig;
+    /** Base color map */
+    map?: TextureConfig;
+    /** Normal map */
+    normalMap?: TextureConfig;
+    /** Normal map scale */
+    normalScale?: [number, number];
+}
+/**
+ * Material configuration union.
+ */
+type ThreeMaterialConfig = StandardMaterialConfig | BasicMaterialConfig | PhongMaterialConfig | PhysicalMaterialConfig | NormalMaterialConfig | MatCapMaterialConfig;
+/**
+ * 3D Mesh configuration.
+ */
+interface ThreeMeshConfig {
+    /** Unique mesh identifier */
+    id: string;
+    /** Display name */
+    name?: string;
+    /** Geometry configuration */
+    geometry: ThreeGeometry;
+    /** Material configuration */
+    material: ThreeMaterialConfig;
+    /** Position [x, y, z] */
+    position?: Vector3;
+    /** Rotation [x, y, z] in radians */
+    rotation?: Rotation3;
+    /** Scale [x, y, z] */
+    scale?: Vector3;
+    /** Cast shadows */
+    castShadow?: boolean;
+    /** Receive shadows */
+    receiveShadow?: boolean;
+    /** Visible */
+    visible?: boolean;
+    /** Render order */
+    renderOrder?: number;
+    /** Auto-rotation speed [x, y, z] per frame */
+    autoRotate?: Vector3;
+}
+/**
+ * Props for Three.js 3D scene layer.
+ */
+interface ThreeLayerProps {
+    /**
+     * Camera configuration.
+     * @default { type: 'perspective', fov: 75, position: [0, 0, 5] }
+     */
+    camera: ThreeCameraConfig;
+    /**
+     * Array of lights in the scene.
+     * @default [{ type: 'ambient', color: '#ffffff', intensity: 0.5 }]
+     */
+    lights?: ThreeLightConfig[];
+    /**
+     * Array of meshes to render.
+     */
+    meshes: ThreeMeshConfig[];
+    /**
+     * Background color or texture.
+     */
+    background?: Color | TextureConfig;
+    /**
+     * Enable fog effect.
+     */
+    fog?: {
+        /** Fog color */
+        color: Color;
+        /** Fog near distance */
+        near: number;
+        /** Fog far distance */
+        far: number;
+    };
+    /**
+     * Enable anti-aliasing.
+     * @default true
+     */
+    antialias?: boolean;
+    /**
+     * Shadow map configuration.
+     */
+    shadows?: {
+        /** Enable shadows */
+        enabled: boolean;
+        /** Shadow map type */
+        type?: 'basic' | 'pcf' | 'pcfsoft' | 'vsm';
+    };
+    /**
+     * Tone mapping configuration.
+     */
+    toneMapping?: {
+        /** Tone mapping type */
+        type: 'none' | 'linear' | 'reinhard' | 'cineon' | 'aces';
+        /** Exposure level */
+        exposure?: number;
+    };
+    /**
+     * Enable orbit controls (for preview).
+     * @default false
+     */
+    controls?: boolean;
+    /**
+     * Custom shader code (GLSL).
+     */
+    customShader?: {
+        /** Vertex shader */
+        vertexShader?: string;
+        /** Fragment shader */
+        fragmentShader?: string;
+        /** Uniform values */
+        uniforms?: Record<string, unknown>;
+    };
+}
+/**
+ * Three.js 3D scene layer.
+ *
+ * @example Basic 3D scene with rotating cube:
+ * ```typescript
+ * const threeLayer: ThreeLayer = {
+ *   id: 'scene-1',
+ *   type: 'three',
+ *   position: { x: 0, y: 0 },
+ *   size: { width: 1920, height: 1080 },
+ *   props: {
+ *     camera: {
+ *       type: 'perspective',
+ *       fov: 75,
+ *       position: [0, 0, 5],
+ *     },
+ *     lights: [
+ *       { type: 'ambient', intensity: 0.5 },
+ *       { type: 'directional', position: [5, 5, 5], intensity: 1 },
+ *     ],
+ *     meshes: [
+ *       {
+ *         id: 'cube-1',
+ *         geometry: { type: 'box', width: 1, height: 1, depth: 1 },
+ *         material: { type: 'standard', color: '#ff0000', metalness: 0.5, roughness: 0.5 },
+ *         autoRotate: [0.01, 0.01, 0],
+ *       },
+ *     ],
+ *   },
+ * };
+ * ```
+ */
+interface ThreeLayer extends LayerBase {
+    type: 'three';
+    props: ThreeLayerProps;
+}
+
+/**
  * Available layer types.
  */
-type LayerType = 'image' | 'video' | 'text' | 'shape' | 'audio' | 'group' | 'lottie' | 'custom';
+type LayerType = 'image' | 'video' | 'text' | 'shape' | 'audio' | 'group' | 'lottie' | 'custom' | 'three';
 /**
  * Position in 2D space.
  */
@@ -800,7 +1428,7 @@ interface CustomLayer extends LayerBase {
 /**
  * Union of all layer types.
  */
-type Layer = ImageLayer | VideoLayer | TextLayer | ShapeLayer | AudioLayer | GroupLayer | LottieLayer | CustomLayer;
+type Layer = ImageLayer | VideoLayer | TextLayer | ShapeLayer | AudioLayer | GroupLayer | LottieLayer | CustomLayer | ThreeLayer;
 
 /**
  * Scene transition types.
@@ -3185,4 +3813,4 @@ declare function isFontAvailable(family: string): boolean;
  */
 declare function getRandomFonts(count?: number): FontMetadata[];
 
-export { type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BlendMode, type BlurPreset, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FrameAwareProps, type GoogleFontDefinition, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LoadedFonts, type LottieLayer, type LottieLayerProps, type NamedFontWeight, type NumericFontWeight, type OutputConfig, type Padding, type PartialTemplate, type Position, type PresetDefinition, type PresetOptions, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedStyle, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SystemFont, type Template, type TemplateAuthor, TemplateProcessor, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TransitionDirection, type TransitionType, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type WeightToNumeric, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, numericToNamedWeight, parseEasing, searchFonts, templateSchema, validateInputs, validateSceneOrder, validateTemplate, weightToNumeric };
+export { type AmbientLightConfig, type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BasicMaterialConfig, type BlendMode, type BlurPreset, type BoxGeometry, type CameraType, type Color, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type ConeGeometry, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type CylinderGeometry, type DirectionalLightConfig, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FrameAwareProps, type GLTFGeometry, type GeometryType, type GoogleFontDefinition, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type HemisphereLightConfig, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LightType, type LoadedFonts, type LottieLayer, type LottieLayerProps, type MatCapMaterialConfig, type MaterialType, type NamedFontWeight, type NormalMaterialConfig, type NumericFontWeight, type OrthographicCameraConfig, type OutputConfig, type Padding, type PartialTemplate, type PerspectiveCameraConfig, type PhongMaterialConfig, type PhysicalMaterialConfig, type PlaneGeometry, type PointLightConfig, type Position, type PresetDefinition, type PresetOptions, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedStyle, type Rotation3, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SphereGeometry, type SpotLightConfig, type StandardMaterialConfig, type SystemFont, type Template, type TemplateAuthor, TemplateProcessor, type Text3DGeometry, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TextureConfig, type ThreeCameraConfig, type ThreeGeometry, type ThreeLayer, type ThreeLayerProps, type ThreeLightConfig, type ThreeMaterialConfig, type ThreeMeshConfig, type TorusGeometry, type TransitionDirection, type TransitionType, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type Vector3, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type WeightToNumeric, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, numericToNamedWeight, parseEasing, searchFonts, templateSchema, validateInputs, validateSceneOrder, validateTemplate, weightToNumeric };

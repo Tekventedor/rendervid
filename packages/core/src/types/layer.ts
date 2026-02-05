@@ -1,6 +1,7 @@
 import type { Animation } from './animation';
 import type { LayerStyle } from './style';
 import type { Filter } from './filter';
+import type { ThreeLayer } from './three';
 
 /**
  * Available layer types.
@@ -13,7 +14,8 @@ export type LayerType =
   | 'audio'
   | 'group'
   | 'lottie'
-  | 'custom';
+  | 'custom'
+  | 'three';
 
 /**
  * Position in 2D space.
@@ -515,4 +517,5 @@ export type Layer =
   | AudioLayer
   | GroupLayer
   | LottieLayer
-  | CustomLayer;
+  | CustomLayer
+  | ThreeLayer;

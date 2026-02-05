@@ -1,0 +1,128 @@
+{
+  "name": "Basic Rotating Cube",
+  "description": "Simple rotating 3D cube with Three.js layer demonstrating basic geometry, lighting, and auto-rotation.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "cubeColor",
+      "type": "color",
+      "label": "Cube Color",
+      "required": false,
+      "default": "#ff6b6b"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#1a1a2e"
+    }
+  ],
+  "defaults": {
+    "cubeColor": "#ff6b6b",
+    "backgroundColor": "#1a1a2e"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "three-scene",
+            "type": "three",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "camera": {
+                "type": "perspective",
+                "fov": 75,
+                "position": [0, 0, 5]
+              },
+              "lights": [
+                {
+                  "type": "ambient",
+                  "color": "#ffffff",
+                  "intensity": 0.5
+                },
+                {
+                  "type": "directional",
+                  "color": "#ffffff",
+                  "intensity": 1,
+                  "position": [5, 5, 5]
+                }
+              ],
+              "meshes": [
+                {
+                  "id": "cube",
+                  "geometry": {
+                    "type": "box",
+                    "width": 2,
+                    "height": 2,
+                    "depth": 2
+                  },
+                  "material": {
+                    "type": "standard",
+                    "color": "{{cubeColor}}",
+                    "metalness": 0.3,
+                    "roughness": 0.4
+                  },
+                  "autoRotate": [0.01, 0.02, 0]
+                }
+              ]
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 960, "y": 900 },
+            "anchor": { "x": 0.5, "y": 0.5 },
+            "size": { "width": 1000, "height": 100 },
+            "props": {
+              "text": "BASIC ROTATING CUBE",
+              "fontSize": 48,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 4
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 20,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

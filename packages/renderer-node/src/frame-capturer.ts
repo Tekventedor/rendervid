@@ -51,13 +51,19 @@ export class FrameCapturer {
     const { width, height } = this.config.template.output;
 
     // Build GPU-related flags based on configuration
+    // For WebGL (Three.js) support in headless Chrome, we use SwiftShader
+    // SwiftShader is a software GL implementation that works reliably in headless mode
     const gpuFlags = this.useGPU && !this.gpuFallback
       ? [
           '--enable-gpu',
-          '--use-gl=angle',
+          '--use-gl=swiftshader', // Use SwiftShader for WebGL in headless mode
+          '--enable-webgl',
+          '--enable-webgl2',
         ]
       : [
           '--disable-gpu',
+          '--disable-webgl',
+          '--disable-webgl2',
         ];
 
     // Add font rendering flags for better quality
@@ -65,18 +71,26 @@ export class FrameCapturer {
       '--font-render-hinting=none', // Better font rendering quality
     ];
 
+    // Add stability and memory flags for handling large 3D assets
+    const stabilityFlags = [
+      '--disable-dev-shm-usage', // Avoid shared memory issues
+      '--disable-setuid-sandbox', // Required for some environments
+      '--no-sandbox', // Required for containerized environments
+      '--disable-web-security', // Disable CORS to allow loading external resources
+      '--disable-features=IsolateOrigins,site-per-process', // Required for --disable-web-security to work
+      '--ignore-gpu-blocklist', // Ignore GPU blocklist for software rendering
+      '--disable-accelerated-2d-canvas', // Can cause issues with canvas operations
+      '--disable-blink-features=AutomationControlled', // Hide automation
+    ];
+
     try {
       this.browser = await puppeteer.launch({
         headless: puppeteerOptions.headless !== false,
         executablePath: puppeteerOptions.executablePath,
         args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
+          ...stabilityFlags,
           ...gpuFlags,
           ...fontFlags,
-          '--disable-web-security', // Disable CORS to allow loading external images
-          '--disable-features=IsolateOrigins,site-per-process', // Required for --disable-web-security to work
           `--window-size=${width},${height}`,
           ...(puppeteerOptions.args || []),
         ],
@@ -135,6 +149,17 @@ export class FrameCapturer {
     await this.page.waitForFunction('window.RENDERVID_READY === true', {
       timeout: 10000,
     });
+
+    // Check WebGL availability (required for Three.js layers)
+    const webglAvailable = await this.page.evaluate(() => {
+      // @ts-expect-error - window extensions are defined in the browser context
+      return window.RENDERVID_WEBGL_AVAILABLE;
+    });
+    if (webglAvailable) {
+      console.error('[FrameCapturer] WebGL is available - Three.js layers will work');
+    } else {
+      console.warn('[FrameCapturer] WebGL is NOT available - Three.js layers may not render correctly');
+    }
 
     // Load fonts if configured
     await this.loadFonts();

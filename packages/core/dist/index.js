@@ -87,7 +87,7 @@ var layerBaseSchema = {
     id: { type: "string", minLength: 1 },
     type: {
       type: "string",
-      enum: ["image", "video", "text", "shape", "audio", "group", "lottie", "custom"]
+      enum: ["image", "video", "text", "shape", "audio", "group", "lottie", "custom", "three"]
     },
     name: { type: "string" },
     position: positionSchema,

@@ -91,6 +91,670 @@ export const animationSchema: JSONSchema7 = {
 };
 
 /**
+ * JSON Schema for Vector3 (3D vector).
+ */
+export const vector3Schema: JSONSchema7 = {
+  type: 'array',
+  items: { type: 'number' },
+  minItems: 3,
+  maxItems: 3,
+};
+
+/**
+ * JSON Schema for color (hex string or number).
+ */
+export const colorSchema: JSONSchema7 = {
+  oneOf: [
+    { type: 'string', pattern: '^#[0-9a-fA-F]{6}$' },
+    { type: 'number', minimum: 0, maximum: 0xffffff },
+  ],
+};
+
+/**
+ * JSON Schema for texture configuration.
+ */
+export const textureConfigSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    url: { type: 'string', minLength: 1 },
+    wrapS: { type: 'string', enum: ['repeat', 'clamp', 'mirror'] },
+    wrapT: { type: 'string', enum: ['repeat', 'clamp', 'mirror'] },
+    repeat: {
+      type: 'array',
+      items: { type: 'number' },
+      minItems: 2,
+      maxItems: 2,
+    },
+    offset: {
+      type: 'array',
+      items: { type: 'number' },
+      minItems: 2,
+      maxItems: 2,
+    },
+    rotation: { type: 'number' },
+  },
+  required: ['url'],
+  additionalProperties: false,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// CAMERA SCHEMAS
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * JSON Schema for perspective camera.
+ */
+export const perspectiveCameraSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'perspective' },
+    fov: { type: 'number', minimum: 0, maximum: 180 },
+    near: { type: 'number', minimum: 0 },
+    far: { type: 'number', minimum: 0 },
+    position: vector3Schema,
+    lookAt: vector3Schema,
+  },
+  required: ['type', 'fov'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for orthographic camera.
+ */
+export const orthographicCameraSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'orthographic' },
+    left: { type: 'number' },
+    right: { type: 'number' },
+    top: { type: 'number' },
+    bottom: { type: 'number' },
+    near: { type: 'number', minimum: 0 },
+    far: { type: 'number', minimum: 0 },
+    position: vector3Schema,
+    lookAt: vector3Schema,
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for camera configuration (union).
+ */
+export const cameraConfigSchema: JSONSchema7 = {
+  oneOf: [perspectiveCameraSchema, orthographicCameraSchema],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// LIGHT SCHEMAS
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * JSON Schema for ambient light.
+ */
+export const ambientLightSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'ambient' },
+    color: colorSchema,
+    intensity: { type: 'number', minimum: 0 },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for directional light.
+ */
+export const directionalLightSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'directional' },
+    color: colorSchema,
+    intensity: { type: 'number', minimum: 0 },
+    position: vector3Schema,
+    target: vector3Schema,
+    castShadow: { type: 'boolean' },
+    shadowMapSize: { type: 'number', minimum: 0 },
+  },
+  required: ['type', 'position'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for point light.
+ */
+export const pointLightSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'point' },
+    color: colorSchema,
+    intensity: { type: 'number', minimum: 0 },
+    position: vector3Schema,
+    distance: { type: 'number', minimum: 0 },
+    decay: { type: 'number', minimum: 0 },
+    castShadow: { type: 'boolean' },
+  },
+  required: ['type', 'position'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for spot light.
+ */
+export const spotLightSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'spot' },
+    color: colorSchema,
+    intensity: { type: 'number', minimum: 0 },
+    position: vector3Schema,
+    target: vector3Schema,
+    distance: { type: 'number', minimum: 0 },
+    angle: { type: 'number', minimum: 0, maximum: Math.PI / 2 },
+    penumbra: { type: 'number', minimum: 0, maximum: 1 },
+    decay: { type: 'number', minimum: 0 },
+    castShadow: { type: 'boolean' },
+  },
+  required: ['type', 'position'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for hemisphere light.
+ */
+export const hemisphereLightSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'hemisphere' },
+    color: colorSchema,
+    intensity: { type: 'number', minimum: 0 },
+    groundColor: colorSchema,
+    position: vector3Schema,
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for light configuration (union).
+ */
+export const lightConfigSchema: JSONSchema7 = {
+  oneOf: [
+    ambientLightSchema,
+    directionalLightSchema,
+    pointLightSchema,
+    spotLightSchema,
+    hemisphereLightSchema,
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// GEOMETRY SCHEMAS
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * JSON Schema for box geometry.
+ */
+export const boxGeometrySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'box' },
+    width: { type: 'number', minimum: 0 },
+    height: { type: 'number', minimum: 0 },
+    depth: { type: 'number', minimum: 0 },
+    widthSegments: { type: 'integer', minimum: 1 },
+    heightSegments: { type: 'integer', minimum: 1 },
+    depthSegments: { type: 'integer', minimum: 1 },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for sphere geometry.
+ */
+export const sphereGeometrySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'sphere' },
+    radius: { type: 'number', minimum: 0 },
+    widthSegments: { type: 'integer', minimum: 3 },
+    heightSegments: { type: 'integer', minimum: 2 },
+    phiStart: { type: 'number' },
+    phiLength: { type: 'number' },
+    thetaStart: { type: 'number' },
+    thetaLength: { type: 'number' },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for cylinder geometry.
+ */
+export const cylinderGeometrySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'cylinder' },
+    radiusTop: { type: 'number', minimum: 0 },
+    radiusBottom: { type: 'number', minimum: 0 },
+    height: { type: 'number', minimum: 0 },
+    radialSegments: { type: 'integer', minimum: 3 },
+    heightSegments: { type: 'integer', minimum: 1 },
+    openEnded: { type: 'boolean' },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for cone geometry.
+ */
+export const coneGeometrySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'cone' },
+    radius: { type: 'number', minimum: 0 },
+    height: { type: 'number', minimum: 0 },
+    radialSegments: { type: 'integer', minimum: 3 },
+    heightSegments: { type: 'integer', minimum: 1 },
+    openEnded: { type: 'boolean' },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for torus geometry.
+ */
+export const torusGeometrySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'torus' },
+    radius: { type: 'number', minimum: 0 },
+    tube: { type: 'number', minimum: 0 },
+    radialSegments: { type: 'integer', minimum: 3 },
+    tubularSegments: { type: 'integer', minimum: 3 },
+    arc: { type: 'number', minimum: 0, maximum: Math.PI * 2 },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for plane geometry.
+ */
+export const planeGeometrySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'plane' },
+    width: { type: 'number', minimum: 0 },
+    height: { type: 'number', minimum: 0 },
+    widthSegments: { type: 'integer', minimum: 1 },
+    heightSegments: { type: 'integer', minimum: 1 },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for GLTF geometry.
+ */
+export const gltfGeometrySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'gltf' },
+    url: { type: 'string', minLength: 1 },
+    autoPlay: { type: 'boolean' },
+    animationIndex: {
+      oneOf: [
+        { type: 'integer', minimum: 0 },
+        { type: 'string', minLength: 1 },
+      ],
+    },
+    animationSpeed: { type: 'number' },
+    scale: { type: 'number', minimum: 0 },
+  },
+  required: ['type', 'url'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for 3D text geometry.
+ */
+export const text3DGeometrySchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'text3d' },
+    text: { type: 'string' },
+    font: { type: 'string', minLength: 1 },
+    size: { type: 'number', minimum: 0 },
+    height: { type: 'number', minimum: 0 },
+    curveSegments: { type: 'integer', minimum: 1 },
+    bevelEnabled: { type: 'boolean' },
+    bevelThickness: { type: 'number', minimum: 0 },
+    bevelSize: { type: 'number', minimum: 0 },
+    bevelSegments: { type: 'integer', minimum: 0 },
+  },
+  required: ['type', 'text', 'font'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for geometry configuration (union).
+ */
+export const geometryConfigSchema: JSONSchema7 = {
+  oneOf: [
+    boxGeometrySchema,
+    sphereGeometrySchema,
+    cylinderGeometrySchema,
+    coneGeometrySchema,
+    torusGeometrySchema,
+    planeGeometrySchema,
+    gltfGeometrySchema,
+    text3DGeometrySchema,
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// MATERIAL SCHEMAS
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * JSON Schema for standard material.
+ */
+export const standardMaterialSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'standard' },
+    color: colorSchema,
+    opacity: { type: 'number', minimum: 0, maximum: 1 },
+    transparent: { type: 'boolean' },
+    side: { type: 'string', enum: ['front', 'back', 'double'] },
+    flatShading: { type: 'boolean' },
+    wireframe: { type: 'boolean' },
+    metalness: { type: 'number', minimum: 0, maximum: 1 },
+    roughness: { type: 'number', minimum: 0, maximum: 1 },
+    map: textureConfigSchema,
+    normalMap: textureConfigSchema,
+    normalScale: {
+      type: 'array',
+      items: { type: 'number' },
+      minItems: 2,
+      maxItems: 2,
+    },
+    roughnessMap: textureConfigSchema,
+    metalnessMap: textureConfigSchema,
+    aoMap: textureConfigSchema,
+    aoMapIntensity: { type: 'number', minimum: 0 },
+    emissive: colorSchema,
+    emissiveIntensity: { type: 'number', minimum: 0 },
+    emissiveMap: textureConfigSchema,
+    envMap: textureConfigSchema,
+    envMapIntensity: { type: 'number', minimum: 0 },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for basic material.
+ */
+export const basicMaterialSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'basic' },
+    color: colorSchema,
+    opacity: { type: 'number', minimum: 0, maximum: 1 },
+    transparent: { type: 'boolean' },
+    side: { type: 'string', enum: ['front', 'back', 'double'] },
+    flatShading: { type: 'boolean' },
+    wireframe: { type: 'boolean' },
+    map: textureConfigSchema,
+    envMap: textureConfigSchema,
+    combine: { type: 'string', enum: ['multiply', 'mix', 'add'] },
+    reflectivity: { type: 'number', minimum: 0, maximum: 1 },
+    refractionRatio: { type: 'number', minimum: 0, maximum: 1 },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for phong material.
+ */
+export const phongMaterialSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'phong' },
+    color: colorSchema,
+    opacity: { type: 'number', minimum: 0, maximum: 1 },
+    transparent: { type: 'boolean' },
+    side: { type: 'string', enum: ['front', 'back', 'double'] },
+    flatShading: { type: 'boolean' },
+    wireframe: { type: 'boolean' },
+    specular: colorSchema,
+    shininess: { type: 'number', minimum: 0 },
+    map: textureConfigSchema,
+    normalMap: textureConfigSchema,
+    normalScale: {
+      type: 'array',
+      items: { type: 'number' },
+      minItems: 2,
+      maxItems: 2,
+    },
+    specularMap: textureConfigSchema,
+    emissive: colorSchema,
+    emissiveMap: textureConfigSchema,
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for physical material.
+ */
+export const physicalMaterialSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'physical' },
+    color: colorSchema,
+    opacity: { type: 'number', minimum: 0, maximum: 1 },
+    transparent: { type: 'boolean' },
+    side: { type: 'string', enum: ['front', 'back', 'double'] },
+    flatShading: { type: 'boolean' },
+    wireframe: { type: 'boolean' },
+    metalness: { type: 'number', minimum: 0, maximum: 1 },
+    roughness: { type: 'number', minimum: 0, maximum: 1 },
+    map: textureConfigSchema,
+    normalMap: textureConfigSchema,
+    normalScale: {
+      type: 'array',
+      items: { type: 'number' },
+      minItems: 2,
+      maxItems: 2,
+    },
+    roughnessMap: textureConfigSchema,
+    metalnessMap: textureConfigSchema,
+    aoMap: textureConfigSchema,
+    aoMapIntensity: { type: 'number', minimum: 0 },
+    emissive: colorSchema,
+    emissiveIntensity: { type: 'number', minimum: 0 },
+    emissiveMap: textureConfigSchema,
+    envMap: textureConfigSchema,
+    envMapIntensity: { type: 'number', minimum: 0 },
+    clearcoat: { type: 'number', minimum: 0, maximum: 1 },
+    clearcoatRoughness: { type: 'number', minimum: 0, maximum: 1 },
+    sheen: { type: 'number', minimum: 0, maximum: 1 },
+    sheenColor: colorSchema,
+    transmission: { type: 'number', minimum: 0, maximum: 1 },
+    thickness: { type: 'number', minimum: 0 },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for normal material.
+ */
+export const normalMaterialSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'normal' },
+    opacity: { type: 'number', minimum: 0, maximum: 1 },
+    transparent: { type: 'boolean' },
+    side: { type: 'string', enum: ['front', 'back', 'double'] },
+    flatShading: { type: 'boolean' },
+    wireframe: { type: 'boolean' },
+    normalMap: textureConfigSchema,
+    normalScale: {
+      type: 'array',
+      items: { type: 'number' },
+      minItems: 2,
+      maxItems: 2,
+    },
+  },
+  required: ['type'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for matcap material.
+ */
+export const matcapMaterialSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    type: { const: 'matcap' },
+    color: colorSchema,
+    opacity: { type: 'number', minimum: 0, maximum: 1 },
+    transparent: { type: 'boolean' },
+    side: { type: 'string', enum: ['front', 'back', 'double'] },
+    flatShading: { type: 'boolean' },
+    wireframe: { type: 'boolean' },
+    matcap: textureConfigSchema,
+    map: textureConfigSchema,
+    normalMap: textureConfigSchema,
+    normalScale: {
+      type: 'array',
+      items: { type: 'number' },
+      minItems: 2,
+      maxItems: 2,
+    },
+  },
+  required: ['type', 'matcap'],
+  additionalProperties: false,
+};
+
+/**
+ * JSON Schema for material configuration (union).
+ */
+export const materialConfigSchema: JSONSchema7 = {
+  oneOf: [
+    standardMaterialSchema,
+    basicMaterialSchema,
+    phongMaterialSchema,
+    physicalMaterialSchema,
+    normalMaterialSchema,
+    matcapMaterialSchema,
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// MESH SCHEMA
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * JSON Schema for 3D mesh configuration.
+ */
+export const meshConfigSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    id: { type: 'string', minLength: 1 },
+    name: { type: 'string' },
+    geometry: geometryConfigSchema,
+    material: materialConfigSchema,
+    position: vector3Schema,
+    rotation: vector3Schema,
+    scale: vector3Schema,
+    castShadow: { type: 'boolean' },
+    receiveShadow: { type: 'boolean' },
+    visible: { type: 'boolean' },
+    renderOrder: { type: 'integer' },
+    autoRotate: vector3Schema,
+  },
+  required: ['id', 'geometry', 'material'],
+  additionalProperties: false,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// THREE LAYER PROPS SCHEMA
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * JSON Schema for Three.js layer props.
+ */
+export const threeLayerPropsSchema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    camera: cameraConfigSchema,
+    lights: {
+      type: 'array',
+      items: lightConfigSchema,
+    },
+    meshes: {
+      type: 'array',
+      items: meshConfigSchema,
+      minItems: 1,
+    },
+    background: {
+      oneOf: [colorSchema, textureConfigSchema],
+    },
+    fog: {
+      type: 'object',
+      properties: {
+        color: colorSchema,
+        near: { type: 'number', minimum: 0 },
+        far: { type: 'number', minimum: 0 },
+      },
+      required: ['color', 'near', 'far'],
+      additionalProperties: false,
+    },
+    antialias: { type: 'boolean' },
+    shadows: {
+      type: 'object',
+      properties: {
+        enabled: { type: 'boolean' },
+        type: { type: 'string', enum: ['basic', 'pcf', 'pcfsoft', 'vsm'] },
+      },
+      required: ['enabled'],
+      additionalProperties: false,
+    },
+    toneMapping: {
+      type: 'object',
+      properties: {
+        type: { type: 'string', enum: ['none', 'linear', 'reinhard', 'cineon', 'aces'] },
+        exposure: { type: 'number', minimum: 0 },
+      },
+      required: ['type'],
+      additionalProperties: false,
+    },
+    controls: { type: 'boolean' },
+    customShader: {
+      type: 'object',
+      properties: {
+        vertexShader: { type: 'string' },
+        fragmentShader: { type: 'string' },
+        uniforms: { type: 'object' },
+      },
+      additionalProperties: false,
+    },
+  },
+  required: ['camera', 'meshes'],
+  additionalProperties: false,
+};
+
+/**
  * JSON Schema for base layer properties.
  */
 export const layerBaseSchema: JSONSchema7 = {
@@ -99,7 +763,7 @@ export const layerBaseSchema: JSONSchema7 = {
     id: { type: 'string', minLength: 1 },
     type: {
       type: 'string',
-      enum: ['image', 'video', 'text', 'shape', 'audio', 'group', 'lottie', 'custom'],
+      enum: ['image', 'video', 'text', 'shape', 'audio', 'group', 'lottie', 'custom', 'three'],
     },
     name: { type: 'string' },
     position: positionSchema,

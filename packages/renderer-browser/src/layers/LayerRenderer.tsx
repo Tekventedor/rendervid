@@ -8,6 +8,7 @@ import { AudioLayer } from './AudioLayer';
 import { GroupLayer } from './GroupLayer';
 import { LottieLayer } from './LottieLayer';
 import { CustomLayer } from './CustomLayer';
+import { ThreeLayer } from './ThreeLayer';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CustomComponentType = React.ComponentType<any>;
@@ -83,6 +84,9 @@ export function LayerRenderer({
 
     case 'lottie':
       return <LottieLayer layer={layer} {...commonProps} />;
+
+    case 'three':
+      return <ThreeLayer layer={layer} {...commonProps} />;
 
     case 'custom':
       return (

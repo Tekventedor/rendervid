@@ -24,9 +24,19 @@ export default defineConfig([
     minify: true,
     sourcemap: false,
     splitting: false,
-    // Bundle React and ReactDOM since they need to be available in the browser
+    // Bundle React, ReactDOM, Three.js, and all rendervid packages
+    // These need to be available in the browser context
     external: [],
-    noExternal: ['react', 'react-dom', '@rendervid/renderer-browser', '@rendervid/core', '@rendervid/components'],
+    noExternal: [
+      'react',
+      'react-dom',
+      '@rendervid/renderer-browser',
+      '@rendervid/core',
+      '@rendervid/components',
+      'three',
+      '@react-three/fiber',
+      '@react-three/drei',
+    ],
     esbuildOptions(options) {
       // Ensure globalName is set for IIFE format
       options.globalName = 'RendervidBrowserRenderer';
@@ -38,6 +48,9 @@ export default defineConfig([
       // Ensure React modules are deduplicated
       options.conditions = ['module', 'import', 'default'];
       options.mainFields = ['module', 'main'];
+
+      // Enable .js extension resolution for Three.js examples
+      options.resolveExtensions = ['.tsx', '.ts', '.jsx', '.js', '.json'];
     },
   },
 ]);

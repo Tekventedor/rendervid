@@ -26,10 +26,13 @@
     "@rendervid/core": "workspace:*",
     "@rendervid/renderer-browser": "workspace:*",
     "@rendervid/components": "workspace:*",
+    "@react-three/drei": "^9.96.0",
+    "@react-three/fiber": "^8.15.0",
     "puppeteer": "^22.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "three": "^0.163.0"
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.24",

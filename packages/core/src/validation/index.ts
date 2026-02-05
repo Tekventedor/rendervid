@@ -1,6 +1,7 @@
 export type { ValidationResult, ValidationError, ValidationWarning } from './validator';
 export { validateTemplate, validateInputs } from './validator';
 export {
+  // Template schemas
   templateSchema,
   getTemplateSchema,
   getLayerSchema,
@@ -10,4 +11,35 @@ export {
   layerBaseSchema,
   sceneSchema,
   compositionSchema,
+  // Three.js schemas
+  vector3Schema,
+  colorSchema,
+  textureConfigSchema,
+  perspectiveCameraSchema,
+  orthographicCameraSchema,
+  cameraConfigSchema,
+  ambientLightSchema,
+  directionalLightSchema,
+  pointLightSchema,
+  spotLightSchema,
+  hemisphereLightSchema,
+  lightConfigSchema,
+  boxGeometrySchema,
+  sphereGeometrySchema,
+  cylinderGeometrySchema,
+  coneGeometrySchema,
+  torusGeometrySchema,
+  planeGeometrySchema,
+  gltfGeometrySchema,
+  text3DGeometrySchema,
+  geometryConfigSchema,
+  standardMaterialSchema,
+  basicMaterialSchema,
+  phongMaterialSchema,
+  physicalMaterialSchema,
+  normalMaterialSchema,
+  matcapMaterialSchema,
+  materialConfigSchema,
+  meshConfigSchema,
+  threeLayerPropsSchema,
 } from './schema';
