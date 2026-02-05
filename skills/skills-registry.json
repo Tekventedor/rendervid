@@ -1,12 +1,36 @@
 {
   "server": "rendervid-mcp-server",
   "version": "0.1.0",
-  "generated": "2026-02-02T05:40:05.601Z",
+  "generated": "2026-02-05T10:11:04.729Z",
   "description": "Model Context Protocol server for Rendervid - enables AI agents to generate videos and images",
   "skills": [
     {
+      "name": "get_animation_docs",
+      "description": "Get detailed documentation for Rendervid animation effects.\n\nUse this when you need to know what animation effects are available and how to use them.\n\nParameters:\n- animationType: \"entrance\", \"exit\", \"emphasis\", or \"all\" (default: \"all\")\n- effect: Get detailed docs for a specific effect (optional)\n\nExamples:\n- get_animation_docs({ animationType: \"entrance\" })\n- get_animation_docs({ effect: \"fadeIn\" })\n- get_animation_docs({}) - lists all animations",
+      "category": "utilities",
+      "tags": [
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "animationType": {
+            "type": "string",
+            "description": "Animation type: \"entrance\", \"exit\", \"emphasis\", or \"all\""
+          },
+          "effect": {
+            "type": "string",
+            "description": "Specific animation effect name (optional)"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
       "name": "get_capabilities",
-      "description": "Discover all available features and capabilities of the Rendervid engine.\n\nThis tool returns a comprehensive overview of what Rendervid can do, including:\n\n**Layer Types:**\n- text: Rich text with typography, fonts, alignment\n- image: Display images with fit options (cover, contain, fill)\n- video: Play video clips with timing controls\n- shape: Rectangles, ellipses, polygons, stars, paths\n- audio: Background music and sound effects\n- group: Container for organizing layers\n- lottie: Lottie animations\n- custom: Custom React components\n\n**Animation Presets (40+):**\n- Entrance: fadeIn, slideIn, zoomIn, bounceIn, rotateIn, etc.\n- Exit: fadeOut, slideOut, zoomOut, bounceOut, rotateOut, etc.\n- Emphasis: pulse, shake, bounce, swing, wobble, flash, etc.\n\n**Easing Functions (30+):**\n- Linear, ease, easeIn, easeOut, easeInOut\n- Cubic bezier variants (Quad, Cubic, Quart, Quint, Sine, Expo, Circ, Back, Elastic, Bounce)\n- Custom cubic-bezier and spring functions\n\n**Output Formats:**\n- Video: MP4, WebM, MOV, GIF\n- Image: PNG, JPEG, WebP\n- Codecs: H.264, H.265, VP8, VP9, AV1, ProRes\n\n**Styling Features:**\n- Blend modes (multiply, screen, overlay, etc.)\n- Filters (blur, brightness, grayscale, etc.)\n- Fonts (built-in, Google Fonts, custom fonts)\n- Tailwind CSS support\n\nUse this to understand what's possible when creating templates, especially for AI-generated content.\nThe capabilities object includes detailed schemas and examples for each element type.",
+      "description": "Discover all available features and capabilities of the Rendervid engine.\n\nThis tool returns a comprehensive overview of what Rendervid can do, including:\n\n**Layer Types:**\n- text: Rich text with typography, fonts, alignment\n- image: Display images with fit options (cover, contain, fill)\n- video: Play video clips with timing controls\n- shape: Rectangles, ellipses, polygons, stars, paths\n- audio: Background music and sound effects\n- group: Container for organizing layers\n- lottie: Lottie animations\n- custom: Custom React components (create new components with inline React code!)\n\n**Animation Presets (40+):**\n- Entrance: fadeIn, slideIn, zoomIn, bounceIn, rotateIn, etc.\n- Exit: fadeOut, slideOut, zoomOut, bounceOut, rotateOut, etc.\n- Emphasis: pulse, shake, bounce, swing, wobble, flash, etc.\n\n**Easing Functions (30+):**\n- Linear, ease, easeIn, easeOut, easeInOut\n- Cubic bezier variants (Quad, Cubic, Quart, Quint, Sine, Expo, Circ, Back, Elastic, Bounce)\n- Custom cubic-bezier and spring functions\n\n**Output Formats:**\n- Video: MP4, WebM, MOV, GIF\n- Image: PNG, JPEG, WebP\n- Codecs: H.264, H.265, VP8, VP9, AV1, ProRes\n\n**Styling Features:**\n- Blend modes (multiply, screen, overlay, etc.)\n- Filters (blur, brightness, grayscale, etc.)\n- Fonts (built-in, Google Fonts, custom fonts)\n- Tailwind CSS support\n\nUse this to understand what's possible when creating templates, especially for AI-generated content.\nThe capabilities object includes detailed schemas and examples for each element type.",
       "category": "discovery",
       "tags": [
         "discovery",
@@ -19,6 +43,70 @@
       "inputSchema": {
         "type": "object",
         "properties": {}
+      }
+    },
+    {
+      "name": "get_component_defaults",
+      "description": "Get default values, validation schemas, and configuration for custom components.\n\nThis tool shows you:\n- Available custom components with pre-configured defaults\n- Default values for each component's props\n- Validation rules (types, ranges, enums)\n- Required vs optional props\n- Examples of how to use each component\n\nUse this when:\n1. Creating custom component layers in templates\n2. Understanding what default values are available\n3. Learning validation constraints for props\n4. Getting examples of proper component configuration\n\nAvailable pre-configured components:\n- AnimatedLineChart: Animated line charts with gradients\n- AuroraBackground: Northern lights/aurora effect\n- WaveBackground: Fluid wave animations\n\nExample: get_component_defaults({ componentName: \"AnimatedLineChart\" })\nOr: get_component_defaults({}) to list all components",
+      "category": "utilities",
+      "tags": [
+        "templates",
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "componentName": {
+            "type": "string",
+            "description": "Name of a specific custom component to get defaults for (e.g., \"AnimatedLineChart\"). If not provided, lists all available components."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_component_docs",
+      "description": "Get detailed documentation for a specific Rendervid component/layer type.\n\nUse this tool when you need detailed information about how to use a specific component.\nThis is more token-efficient than loading all documentation at once.\n\nAvailable component types:\n- text: Text layers with custom styling\n- image: Image layers with various fit modes\n- shape: Geometric shapes (rectangle, ellipse, triangle, star, polygon)\n- video: Video layers with playback control\n- audio: Audio layers for background music/effects\n- custom: Custom React components\n\nExample: get_component_docs({ componentType: \"text\" })",
+      "category": "utilities",
+      "tags": [
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "componentType": {
+            "type": "string",
+            "description": "The component/layer type to get documentation for"
+          }
+        },
+        "required": [
+          "componentType"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_easing_docs",
+      "description": "Get documentation for easing functions (motion curves).\n\nEasing functions control the speed/acceleration of animations over time.\n\nCategories:\n- basic: Simple linear easing\n- in: Start slow, end fast (acceleration)\n- out: Start fast, end slow (deceleration) - RECOMMENDED for most animations\n- inout: Start and end slow, fast in middle\n- back: Overshoot and return (anticipation/follow-through)\n- bounce: Bouncing effect\n- elastic: Springy, elastic effect\n\nExamples:\n- get_easing_docs({ category: \"out\" }) - Most commonly used\n- get_easing_docs({ category: \"all\" }) - List all easings",
+      "category": "utilities",
+      "tags": [
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Easing category: \"basic\", \"in\", \"out\", \"inout\", \"back\", \"bounce\", \"elastic\", or \"all\""
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
       }
     },
     {
@@ -69,7 +157,7 @@
     },
     {
       "name": "render_image",
-      "description": "Generate a single image from a Rendervid template.\n\nThis tool renders a static image by:\n1. Accepting a Rendervid template (same JSON structure as video templates)\n2. Rendering a specific frame (default: frame 0)\n3. Exporting as PNG, JPEG, or WebP\n\nIdeal for:\n- Social media images (Instagram posts, Twitter cards, LinkedIn banners)\n- Thumbnails (YouTube, blog posts, video covers)\n- Static graphics (quotes, announcements, infographics)\n- Previewing video frames\n\nYou can use the same template for both video and image output.\nFor video templates, specify which frame to capture (0-based index).\nFor image templates (output.type: \"image\"), the frame parameter is ignored.\n\nThe template format is identical to video templates, supporting:\n- Multiple layers (text, images, shapes)\n- Animations (will be evaluated at the specified frame)\n- Dynamic inputs\n- Full styling capabilities\n\nExample use:\n- Render frame 0 of a video template as a thumbnail\n- Generate social media post images with custom text\n- Create preview images for video content",
+      "description": "Generate a static image from a Rendervid template at a specific frame.\n\nUSE FOR:\nSocial media posts (Instagram, Twitter, LinkedIn), video thumbnails (YouTube, Vimeo),\nblog post headers, presentation slides, infographics, quote graphics, product mockups,\npreview images, marketing materials, web banners\n\nOUTPUT:\n- Format: PNG (lossless), JPEG (compressed), or WebP (modern)\n- Location: Specified by outputPath parameter\n- Quality: 1-100 for JPEG/WebP (default: 90)\n- Frame: Captures specified frame number (default: 0)\n- Max resolution: 7680x4320 (8K)\n\nTEMPLATE REQUIREMENTS:\n- Same JSON structure as video templates\n- Animations evaluated at specified frame\n- Supports all layer types (text, image, shape, custom)\n- Use output.type: \"video\" or \"image\" (both work)\n- ⚠️ MUST include \"inputs\": [] field (even if empty for static templates)\n\nREQUIRED TEMPLATE FIELDS:\n{\n  \"name\": \"string\",           // Template name (REQUIRED)\n  \"output\": { ... },           // Output configuration (REQUIRED)\n  \"inputs\": [],                // Input definitions (REQUIRED - use [] if no dynamic inputs)\n  \"composition\": { ... }       // Scenes and layers (REQUIRED)\n}\n\nTYPICAL USE:\n1. Render frame 0 as thumbnail\n2. Capture mid-animation frame for preview\n3. Generate social media image with custom text\n4. Create static graphics from animated template\n\n⚠️ CRITICAL: Pass template as JSON OBJECT, not string\n✅ CORRECT: { \"template\": {\"name\": \"Image\", \"inputs\": [], ...} }\n❌ COMMON ERROR: Missing \"inputs\" field - always include it!",
       "category": "rendering",
       "tags": [
         "image",
@@ -186,10 +274,12 @@
           "inputs": {
             "type": "object",
             "additionalProperties": {},
-            "default": {}
+            "default": {},
+            "description": "Template variables. Example: {\"title\": \"Hello World\"}"
           },
           "outputPath": {
-            "type": "string"
+            "type": "string",
+            "description": "Output file path. Use ~/Downloads/, ~/Desktop/, or ~/Documents/ on macOS"
           },
           "format": {
             "type": "string",
@@ -198,18 +288,27 @@
               "jpeg",
               "webp"
             ],
-            "default": "png"
+            "default": "png",
+            "description": "Image format. png = Lossless (default), jpeg = Compressed/smaller, webp = Modern/efficient"
           },
           "quality": {
             "type": "integer",
             "minimum": 1,
             "maximum": 100,
-            "default": 90
+            "default": 90,
+            "description": "Quality for JPEG/WebP. 1-100. Higher = better quality, larger file. Default: 90"
           },
           "frame": {
             "type": "integer",
             "minimum": 0,
-            "default": 0
+            "default": 0,
+            "description": "Frame number to capture (0-based). 0 = first frame, N = frame after N frames"
+          },
+          "renderWaitTime": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "default": 100,
+            "description": "Wait time in ms before capturing. 100 = fast/default, 200 = text-only, 500-800 = with complex images"
           }
         },
         "required": [
@@ -222,7 +321,7 @@
     },
     {
       "name": "render_video",
-      "description": "Generate a video file from a Rendervid JSON template.\n\nThis tool renders a complete video by:\n1. Accepting a Rendervid template (JSON structure defining scenes, layers, animations)\n2. Merging provided input values with template defaults\n3. Rendering all frames using a headless browser\n4. Encoding frames into a video file using FFmpeg\n\nThe template uses a declarative JSON format that describes:\n- Output dimensions, FPS, and duration\n- Dynamic inputs (variables that can be customized)\n- Scenes with layers (text, images, shapes, video, audio)\n- Animations (entrance, exit, emphasis effects with 40+ presets)\n- Easing functions (30+ options for smooth motion)\n\nCommon use cases:\n- Social media content (Instagram stories, TikTok videos, YouTube thumbnails)\n- Marketing videos (product showcases, sale announcements, testimonials)\n- Data visualizations (animated charts, graphs, dashboards)\n- Educational content (course intros, lesson titles)\n\nThe output path will be created automatically. You can specify format, quality, and FPS.\nRendering progress is reported with frame counts and time estimates.\n\nExample template structure:\n{\n  \"name\": \"My Video\",\n  \"output\": { \"type\": \"video\", \"width\": 1920, \"height\": 1080, \"fps\": 30, \"duration\": 5 },\n  \"inputs\": [{ \"key\": \"title\", \"type\": \"string\", \"label\": \"Title\", \"default\": \"Hello\" }],\n  \"composition\": { \"scenes\": [{ \"id\": \"main\", \"startFrame\": 0, \"endFrame\": 150, \"layers\": [...] }] }\n}",
+      "description": "Generate a video file from a Rendervid JSON template. Use for videos ≤30 seconds. For longer videos, use start_render_async.\n\nUSE FOR:\nSocial media content (Instagram Reels, TikTok, YouTube Shorts), product demonstrations,\npromotional videos, explainer animations, tutorial videos, video ads, portfolio showcases,\nevent announcements, presentations, marketing campaigns\n\nOUTPUT CONFIGURATION (YOU CHOOSE):\n- Format: MP4 (default/best), WebM (web), MOV (macOS)\n- Quality: draft (fast preview), standard (balanced), high (production - default), lossless (uncompressed)\n- Resolution: Choose based on platform:\n  * TikTok/Reels/Shorts: 1080x1920 (9:16 portrait)\n  * YouTube/Instagram: 1920x1080 (16:9 landscape)\n  * Twitter: 1280x720 (smaller, faster)\n  * Max: 7680x4320 (8K)\n- FPS: 24 (cinematic), 30 (standard/default), 60 (smooth)\n- renderWaitTime: **AUTO-ADJUSTED** (100ms for text-only, 500ms for images/video automatically)\n  * Manual override: 100 (fast), 200 (safer), 500+ (complex media)\n  * 💡 TIP: If images don't appear, increase to 800-1000ms\n\n⚠️ CRITICAL: Images require time to load!\n- Server automatically uses 500ms renderWaitTime when images/videos detected\n- If images still don't appear: manually set \"renderWaitTime\": 800\n- Text-only templates use 100ms (fast)\n\n⚠️ TIMEOUT WARNING: Videos >30s may timeout (60s MCP limit). Use start_render_async for longer videos.\n\n⚠️ CRITICAL: Pass template as JSON OBJECT, not string\n❌ WRONG: { \"template\": \"{\\\"name\\\":\\\"Video\\\"}\" }\n✅ CORRECT: { \"template\": {\"name\": \"Video\"} }\n\n⚠️ ALWAYS VALIDATE FIRST\nWorkflow: validate_template → fix errors → render_video\nPrevents: 404 image errors, syntax issues, wasted render time\n\n⚠️ REQUIRED TEMPLATE FIELDS (ALWAYS INCLUDE):\n{\n  \"name\": \"string\",           // Template name (REQUIRED)\n  \"output\": { ... },           // Output configuration (REQUIRED)\n  \"inputs\": [],                // Input definitions array (REQUIRED - use empty array [] if no dynamic inputs)\n  \"composition\": { ... }       // Scenes and layers (REQUIRED)\n}\n\n❌ COMMON ERROR: Missing \"inputs\" field\n✅ FIX: Always include \"inputs\": [] even if you have no dynamic variables\n\nCRITICAL TEMPLATE RULES:\n\n1. TIMING IS IN FRAMES, NOT SECONDS\n   - At 30 fps: 30 frames = 1 second, 150 frames = 5 seconds\n   - duration: 5 means 5 SECONDS (converted to frames internally)\n   - startFrame: 0, endFrame: 150 means frames 0-150 (5 seconds at 30fps)\n   - Animation delay/duration are in FRAMES: delay: 30 = 1 second delay\n\n2. ALL LAYERS MUST HAVE position AND size\n   - position: { x: number, y: number } (pixels from top-left)\n   - size: { width: number, height: number } (pixels)\n   - Example: position: { x: 0, y: 0 }, size: { width: 1920, height: 1080 }\n\n3. LAYER PROPERTIES GO IN props OBJECT\n   - Correct: \"props\": { \"text\": \"Hello\", \"fontSize\": 48, \"color\": \"#ffffff\" }\n   - Wrong: \"text\": \"Hello\", \"fontSize\": 48 (these must be inside props)\n\n4. INPUTS FIELD IS ALWAYS REQUIRED\n   - MUST include \"inputs\" field in template (even if empty: \"inputs\": [])\n   - For static videos with no variables: \"inputs\": []\n   - For dynamic videos with {{variables}}: define each input with ALL fields:\n     * key: unique identifier (string)\n     * type: \"string\" | \"number\" | \"boolean\" | \"color\"\n     * label: display name (string)\n     * description: what this input does (string) - REQUIRED\n     * required: true/false (boolean) - REQUIRED\n     * default: default value - REQUIRED\n   - Example: { \"key\": \"title\", \"type\": \"string\", \"label\": \"Title\", \"description\": \"Main title text\", \"required\": true, \"default\": \"Hello\" }\n\n5. ANIMATIONS USE FRAME-BASED TIMING\n   - type: \"entrance\" | \"exit\" | \"emphasis\"\n   - effect: \"fadeIn\", \"slideUp\", \"scaleIn\", etc.\n   - delay: number (frames to wait before starting)\n   - duration: number (frames the animation lasts)\n   - Example: { \"type\": \"entrance\", \"effect\": \"fadeIn\", \"delay\": 30, \"duration\": 20 }\n     This means: wait 1 second (30 frames), then fade in over 0.67 seconds (20 frames)\n\nCOMPLETE TEMPLATE STRUCTURE (Static - No Variables):\n{\n  \"name\": \"Video Name\",\n  \"output\": {\n    \"type\": \"video\",\n    \"width\": 1920,\n    \"height\": 1080,\n    \"fps\": 30,\n    \"duration\": 5\n  },\n  \"inputs\": [],\n  \"composition\": {\n    \"scenes\": [\n      {\n        \"id\": \"main\",\n        \"startFrame\": 0,\n        \"endFrame\": 150,\n        \"layers\": [\n          {\n            \"id\": \"background\",\n            \"type\": \"shape\",\n            \"position\": { \"x\": 0, \"y\": 0 },\n            \"size\": { \"width\": 1920, \"height\": 1080 },\n            \"props\": {\n              \"shape\": \"rectangle\",\n              \"fill\": \"#2563eb\"\n            }\n          },\n          {\n            \"id\": \"title\",\n            \"type\": \"text\",\n            \"position\": { \"x\": 160, \"y\": 440 },\n            \"size\": { \"width\": 1600, \"height\": 200 },\n            \"props\": {\n              \"text\": \"Hello World\",\n              \"fontSize\": 72,\n              \"fontWeight\": \"bold\",\n              \"color\": \"#ffffff\",\n              \"textAlign\": \"center\"\n            }\n          }\n        ]\n      }\n    ]\n  }\n}\n\nCOMPLETE TEMPLATE STRUCTURE (Dynamic - With Variables):\n{\n  \"name\": \"Video Name\",\n  \"output\": {\n    \"type\": \"video\",\n    \"width\": 1920,\n    \"height\": 1080,\n    \"fps\": 30,\n    \"duration\": 5\n  },\n  \"inputs\": [\n    {\n      \"key\": \"title\",\n      \"type\": \"string\",\n      \"label\": \"Title Text\",\n      \"description\": \"Main title text to display\",\n      \"required\": true,\n      \"default\": \"Hello World\"\n    }\n  ],\n  \"defaults\": {\n    \"title\": \"Hello World\"\n  },\n  \"composition\": {\n    \"scenes\": [\n      {\n        \"id\": \"main\",\n        \"startFrame\": 0,\n        \"endFrame\": 150,\n        \"layers\": [\n          {\n            \"id\": \"background\",\n            \"type\": \"shape\",\n            \"position\": { \"x\": 0, \"y\": 0 },\n            \"size\": { \"width\": 1920, \"height\": 1080 },\n            \"props\": {\n              \"shape\": \"rectangle\",\n              \"fill\": \"#2563eb\"\n            }\n          },\n          {\n            \"id\": \"title\",\n            \"type\": \"text\",\n            \"position\": { \"x\": 160, \"y\": 440 },\n            \"size\": { \"width\": 1600, \"height\": 200 },\n            \"props\": {\n              \"text\": \"{{title}}\",\n              \"fontSize\": 72,\n              \"fontWeight\": \"bold\",\n              \"color\": \"#ffffff\",\n              \"textAlign\": \"center\"\n            },\n            \"animations\": [\n              {\n                \"type\": \"entrance\",\n                \"effect\": \"fadeIn\",\n                \"delay\": 30,\n                \"duration\": 20,\n                \"easing\": \"easeOutCubic\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}\n\nNEED MORE DETAILS? Use these tools for just-in-time documentation:\n- get_component_docs({ componentType: \"text\" }) - Detailed component/layer documentation\n- get_animation_docs({ animationType: \"entrance\" }) - Animation effects reference\n- get_easing_docs({ category: \"out\" }) - Easing functions guide\n- get_capabilities({}) - Full list of available features\n- list_examples({}) - Browse example templates\n\nLAYER TYPES: text, image, shape, video, audio, custom\nANIMATION TYPES: entrance, exit, emphasis\nEASING CATEGORIES: basic, in, out (recommended), inout, back, bounce, elastic\n\n⚠️ CRITICAL: ANIMATION RESTRICTIONS - CAUSES BLACK SCENES IF VIOLATED\n\n**SUPPORTED ANIMATIONS ONLY:**\n✅ SAFE (Standard entrance/exit effects):\n- fadeIn, fadeOut (opacity transitions)\n- slideInUp, slideInDown, slideInLeft, slideInRight, slideOutUp, slideOutDown, slideOutLeft, slideOutRight (position transitions)\n- scaleIn, scaleOut (size transitions)\n\n❌ NEVER USE (Will create BLACK SCENES):\n- Custom keyframe animations with \"type\": \"custom\"\n- Animations that change size or position in keyframes\n- Complex transform animations\n- CSS-based animations\n\n**ANIMATION STRUCTURE (REQUIRED FORMAT):**\n{\n  \"animations\": [\n    {\n      \"type\": \"entrance\",        // or \"exit\"\n      \"effect\": \"fadeIn\",        // Use supported effects only\n      \"delay\": 30,               // Frames to wait before starting\n      \"duration\": 20,            // Frames the animation lasts\n      \"easing\": \"easeOutCubic\"   // Optional easing function\n    }\n  ]\n}\n\n**EXAMPLE - SMOOTH SCENE TRANSITIONS:**\n// Scene 1 elements - fade out before scene ends\n{\n  \"animations\": [\n    {\n      \"type\": \"entrance\",\n      \"effect\": \"fadeIn\",\n      \"delay\": 15,\n      \"duration\": 20\n    },\n    {\n      \"type\": \"exit\",\n      \"effect\": \"fadeOut\",\n      \"delay\": 130,    // Start fade 20 frames before scene end (if scene is 150 frames)\n      \"duration\": 20\n    }\n  ]\n}\n\n// Scene 2 background - fade in at scene start\n{\n  \"animations\": [\n    {\n      \"type\": \"entrance\",\n      \"effect\": \"fadeIn\",\n      \"delay\": 0,       // Start immediately\n      \"duration\": 20\n    }\n  ]\n}\n\n⚠️ CRITICAL: POSITIONING RULES - ELEMENTS MUST BE VISIBLE\n\n**CANVAS BOUNDS (Example for 1080x1920 vertical video):**\n- Width: 0 to 1080 (pixels)\n- Height: 0 to 1920 (pixels)\n- Origin: Top-left corner (0, 0)\n\n**SAFE POSITIONING ZONES:**\n\n    +-------------------------+ y: 0\n    |    Title Area (Safe)    | y: 100-400\n    |-------------------------|\n    |                         |\n    |   Main Content Area     | y: 400-1500\n    |      (Safe Zone)        |\n    |                         |\n    |-------------------------|\n    |   Bottom Area (Safe)    | y: 1500-1800\n    +-------------------------+ y: 1920\n     x: 0               x: 1080\n\n❌ COMMON POSITIONING ERRORS (Causes invisible/black content):\n- Negative positions: x: -100 or y: -50\n- Beyond canvas: y: 2000 for 1920px height video\n- Partially off-screen: x: 1000 with width: 200 (goes to x: 1200, exceeds 1080)\n\n✅ CORRECT POSITIONING:\n- Title: { \"x\": 90, \"y\": 200 } with size { \"width\": 900, \"height\": 100 }\n- Main content: { \"x\": 100, \"y\": 500 } with size { \"width\": 880, \"height\": 800 }\n- Always ensure: x + width ≤ canvas width, y + height ≤ canvas height\n\n⚠️ CRITICAL: VIDEO BACKGROUNDS - AVOID LOOP FLASH\n\n**THE PROBLEM:** If scene duration > video source duration, video loops and causes visible flash/jump\n\n**THE SOLUTION:** Make scene duration EXACTLY match video source duration\n\n**EXAMPLE:**\n- Video source: 5 seconds\n- FPS: 30\n- Scene frames: 5 × 30 = 150 frames\n- Scene config: startFrame: 0, endFrame: 150 (exactly 5 seconds)\n\n❌ WRONG (Causes flash):\n{\n  \"startFrame\": 0,\n  \"endFrame\": 225,    // 7.5 seconds - video will loop at 5s and flash!\n  \"layers\": [{\n    \"type\": \"video\",\n    \"props\": {\n      \"src\": \"/path/to/5-second-video.mp4\",\n      \"loop\": true    // Will cause visible flash at 5s mark\n    }\n  }]\n}\n\n✅ CORRECT (No flash):\n{\n  \"startFrame\": 0,\n  \"endFrame\": 150,    // Exactly 5 seconds - no loop needed!\n  \"layers\": [{\n    \"type\": \"video\",\n    \"props\": {\n      \"src\": \"/path/to/5-second-video.mp4\",\n      \"muted\": true    // Loop not needed when duration matches\n    }\n  }]\n}\n\n⚠️ QUALITY SETTINGS - FOR PRODUCTION VIDEOS\n\n**WHEN TO USE HIGH QUALITY:**\nUse \"quality\": \"high\" for:\n- Final production videos\n- Client deliverables\n- Videos with text that must be sharp\n- Videos for large screens\n\n**OUTPUT:**\n- Uses software encoding (libx264) - slower but excellent quality\n- Bitrate: 8-10 Mbps (file size: ~8-12 MB for 15s video)\n- No compression artifacts\n- Crystal clear text and images\n\n**WHEN TO USE STANDARD QUALITY:**\nUse \"quality\": \"standard\" (default) for:\n- Quick previews\n- Social media content (compressed by platforms anyway)\n- Drafts and iterations\n\n**OUTPUT:**\n- Uses hardware encoding (faster)\n- Bitrate: ~1-2 Mbps (file size: ~1-2 MB for 15s video)\n- Good enough for most uses\n- Faster render times\n\nCUSTOM COMPONENTS (ADVANCED - For animated counters, charts, particles, etc.):\n\n**CRITICAL JSX RESTRICTION - READ CAREFULLY:**\nCustom components MUST use React.createElement(), NOT JSX syntax!\n\n❌ WRONG (JSX - Will create BLACK VIDEO):\n\"code\": \"import React from 'react'; export default function Counter({ frame }) { return <div>{frame}</div>; }\"\n\n✅ CORRECT (React.createElement):\n\"code\": \"function Counter(props) { return React.createElement('div', null, props.frame); }\"\n\n**RULES FOR INLINE CUSTOM COMPONENTS:**\n1. ✅ Use React.createElement() - NEVER use JSX (<div>, </div>, etc.)\n2. ✅ Plain function: function ComponentName(props) { ... }\n3. ✅ Access props: props.frame, props.fps, props.layerSize\n4. ❌ NO imports: no \"import React\" or \"import anything\"\n5. ❌ NO exports: no \"export default\" or \"export\"\n6. ❌ NO async/await, side effects, or external libraries\n7. ✅ React is globally available - just use React.createElement()\n\n**COMPONENT PROPS (automatically provided):**\n{\n  frame: number,           // Current frame (0, 1, 2, ...)\n  fps: number,            // Frames per second (30, 60)\n  sceneDuration: number,  // Total frames in scene\n  layerSize: {\n    width: number,\n    height: number\n  },\n  // + your custom props from customComponent.props\n}\n\n**SIMPLE CUSTOM COMPONENT EXAMPLE:**\n{\n  \"customComponents\": {\n    \"AnimatedCounter\": {\n      \"type\": \"inline\",\n      \"code\": \"function AnimatedCounter(props) { const duration = 2 * props.fps; const progress = Math.min(props.frame / duration, 1); const value = Math.floor(props.from + (props.to - props.from) * progress); return React.createElement('div', { style: { fontSize: '72px', fontWeight: 'bold', color: '#00ffff' } }, value); }\"\n    }\n  },\n  \"composition\": {\n    \"scenes\": [{\n      \"layers\": [{\n        \"id\": \"counter\",\n        \"type\": \"custom\",\n        \"position\": { \"x\": 960, \"y\": 540 },\n        \"size\": { \"width\": 400, \"height\": 200 },\n        \"customComponent\": {\n          \"name\": \"AnimatedCounter\",\n          \"props\": {\n            \"from\": 0,\n            \"to\": 100\n          }\n        }\n      }]\n    }]\n  }\n}\n\n**JSX TO React.createElement CONVERSION:**\n\nSimple element:\nJSX: <div>Hello</div>\n→ React.createElement('div', null, 'Hello')\n\nWith props:\nJSX: <div style={{color: 'red'}}>Hello</div>\n→ React.createElement('div', { style: { color: 'red' } }, 'Hello')\n\nNested elements:\nJSX: <div><span>{value}</span></div>\n→ React.createElement('div', null, React.createElement('span', null, value))\n\nMultiple children:\nJSX: <div><p>A</p><p>B</p></div>\n→ React.createElement('div', null, React.createElement('p', null, 'A'), React.createElement('p', null, 'B'))\n\n**WHEN TO USE CUSTOM COMPONENTS:**\n✓ Animated counters (0 → 100)\n✓ Timers and clocks\n✓ Particle effects\n✓ Custom charts/graphs\n✓ Progress bars\n✓ Complex animations beyond built-in effects\n\nFor simple text/images/shapes, use built-in layer types instead!\n\nVIDEO LAYER EXAMPLE (FOR VIDEO BACKGROUNDS):\n{\n  \"id\": \"background-video\",\n  \"type\": \"video\",\n  \"position\": { \"x\": 0, \"y\": 0 },\n  \"size\": { \"width\": 1920, \"height\": 1080 },\n  \"props\": {\n    \"src\": \"/path/to/video.mp4\",\n    \"fit\": \"cover\",\n    \"loop\": true,\n    \"muted\": true,\n    \"playbackRate\": 1,\n    \"startTime\": 0\n  }\n}\n\nWHEN TO USE VIDEO LAYERS:\n✓ Use for animated backgrounds (loops, motion footage)\n✓ Local file paths: \"/Users/name/Downloads/video.mp4\" (absolute paths only)\n✓ Always set \"muted\": true for background videos\n✓ Use \"loop\": true to repeat the video\n✓ Layer order matters: video background should be FIRST layer (rendered behind text/shapes)\n\nIMAGE LAYER EXAMPLE (REQUIRED FOR PROMOTIONAL VIDEOS):\n{\n  \"id\": \"product-photo\",\n  \"type\": \"image\",\n  \"position\": { \"x\": 100, \"y\": 100 },\n  \"size\": { \"width\": 800, \"height\": 600 },\n  \"props\": {\n    \"src\": \"https://www.photomaticai.com/images/.../image.webp\",\n    \"fit\": \"cover\"\n  }\n}\n\n⚠️ IMAGE SOURCE OPTIONS:\n\n✅ LOCAL FILES - AUTOMATICALLY HANDLED (Recommended for local development):\n   - MCP server automatically converts local files to base64 data URLs\n   - Absolute paths: \"/Users/name/Downloads/image.jpg\"\n   - Tilde paths: \"~/Downloads/image.jpg\" (auto-expands to home directory)\n   - Works on macOS, Linux, Windows\n   - **AUTO-RESIZE**: Files > 500 KB automatically resized to ~30-50 KB for optimal performance\n   - **BASE64**: Converted to data URLs seamlessly (no HTTP server needed)\n   - No internet connection required\n   - All formats: JPG, PNG, WebP, GIF, BMP, SVG\n   - ⚠️ Use absolute paths, NOT relative paths like \"./image.jpg\"\n\n✅ HTTPS URLs (Recommended for production):\n   - Unsplash: \"https://images.unsplash.com/photo-...\"\n   - Pexels: \"https://images.pexels.com/photos/...\"\n   - Photomatic AI: \"https://www.photomaticai.com/images/processed/...\"\n   - Any accessible HTTPS image URL\n\n✅ DATA URLs (Advanced):\n   - Base64: \"data:image/png;base64,iVBORw0KG...\"\n   - Local files are automatically converted to data URLs\n\n❌ WRONG: These will FAIL:\n   - \"/mnt/user-data/uploads/image.webp\" (Linux path, invalid on macOS)\n   - \"/home/claude/image.webp\" (Linux path, invalid on macOS)\n   - \"C:\\Users\\name\\image.jpg\" (Windows path, use forward slashes)\n   - \"./image.webp\" or \"../images/photo.jpg\" (relative paths not supported)\n\n🎯 AUTOMATIC IMAGE RESIZING:\n   - Large images (> 500 KB) are automatically resized\n   - Example: 1154 KB → 36 KB (preserves quality and aspect ratio)\n   - Ensures fast loading and no browser issues\n   - WebP files converted to JPEG for better compatibility\n\nWHEN TO USE IMAGE LAYERS:\n✓ ALWAYS include image layers for: promotional videos, product showcases, portfolios, presentations\n✓ If creating a promo for \"Product X\", include actual Product X images - not just text/shapes\n✓ Use Photomatic AI URLs: https://www.photomaticai.com/images/processed/...\n✓ Multiple images make videos more engaging: add 2-5 image layers showing different angles/features\n\nCRITICAL FOR IMAGE/VIDEO RENDERING:\nWhen your template includes image or video layers, set: \"renderWaitTime\": 500\nMedia is pre-loaded during initialization, but a wait ensures proper rendering.\nExample: { \"template\": {...}, \"renderWaitTime\": 500 }\nNote: Video layers need 500-1000ms; images need 300-500ms; simple text templates: 100-200ms\n\nCOMMON MISTAKES TO AVOID:\n❌ MISSING \"inputs\" FIELD - THIS IS THE #1 ERROR! Always include \"inputs\": [] even for static templates\n❌ Creating promotional videos with ONLY text and shapes - MUST include image layers showing the actual product/content\n❌ Using seconds for animation timing (use frames!)\n❌ Missing size property on layers\n❌ Putting layer props outside props object\n❌ Missing required fields in input definitions (description, required, default)\n❌ Using wrong position values (position is top-left corner, not center)\n❌ endFrame less than or equal to startFrame\n❌ DUPLICATE LAYER IDS: Layer IDs must be unique across ALL scenes (use \"scene1-bg\", \"scene2-bg\" not \"background\" in every scene)\n\nTEMPLATE VARIABLES:\n✓ Use {{variableName}} in props to reference inputs: \"text\": \"{{title}}\"\n✓ Define the variable in defaults: \"defaults\": { \"title\": \"Hello\" }\n✓ Note: \"UNUSED_INPUT\" warnings appear even when using {{variables}} - these can be ignored\n❌ Animation delay + duration exceeding scene duration",
       "category": "rendering",
       "tags": [
         "video",
@@ -339,10 +438,12 @@
           "inputs": {
             "type": "object",
             "additionalProperties": {},
-            "default": {}
+            "default": {},
+            "description": "Template variables. Example: {\"title\": \"Hello World\"}"
           },
           "outputPath": {
-            "type": "string"
+            "type": "string",
+            "description": "Output file path. Use ~/Downloads/, ~/Desktop/, or ~/Documents/ on macOS"
           },
           "format": {
             "type": "string",
@@ -352,7 +453,8 @@
               "mov",
               "gif"
             ],
-            "default": "mp4"
+            "default": "mp4",
+            "description": "Video format. mp4 = Best compatibility (default), webm = Web optimized, mov = macOS native"
           },
           "quality": {
             "type": "string",
@@ -362,11 +464,19 @@
               "high",
               "lossless"
             ],
-            "default": "high"
+            "default": "high",
+            "description": "Quality preset. draft = Fast preview, standard = Balanced, high = Production (default), lossless = Uncompressed"
           },
           "fps": {
             "type": "integer",
-            "exclusiveMinimum": 0
+            "exclusiveMinimum": 0,
+            "description": "Override template fps. Common: 24 = Film, 30 = Standard, 60 = Smooth"
+          },
+          "renderWaitTime": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "default": 100,
+            "description": "Wait time in ms before capturing frames. 100 = fast/default, 200 = text-only, 500-800 = with complex images/videos"
           }
         },
         "required": [
@@ -378,8 +488,33 @@
       }
     },
     {
+      "name": "check_render_status",
+      "description": "Check the status of an async video render job started with start_render_async.\n\nRETURNS:\n- status: \"queued\" | \"rendering\" | \"completed\" | \"failed\"\n- progress: percentage (0-100)\n- currentFrame / totalFrames\n- eta: estimated time remaining (seconds)\n- outputPath: available when completed\n- error: available if failed",
+      "category": "rendering",
+      "tags": [
+        "video",
+        "rendering",
+        "mcp",
+        "rendervid"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "description": "Job ID returned from start_render_async"
+          }
+        },
+        "required": [
+          "jobId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
       "name": "validate_template",
-      "description": "Validate a Rendervid template JSON structure.\n\nThis tool performs comprehensive validation of a template to ensure it's properly formatted and ready for rendering.\n\nValidation checks include:\n- Template structure (name, output, composition)\n- Output configuration (type, dimensions, fps, duration)\n- Input definitions (keys, types, defaults)\n- Scene structure (IDs, frame ranges)\n- Layer configuration (types, positions, sizes, props)\n- Animation definitions (types, effects, timing, easing)\n- Component references and props\n- Data consistency (frame ranges, input references)\n\nReturns:\n- valid: boolean indicating if template is valid\n- errors: array of validation errors (if any)\n- warnings: array of validation warnings (if any)\n\nUse this before rendering to catch issues early, or when:\n- Creating new templates\n- Modifying existing templates\n- Debugging template issues\n- Verifying AI-generated templates\n\nThe validator provides detailed error messages with paths to help fix issues quickly.",
+      "description": "Validate a Rendervid template JSON structure and media URLs before rendering.\n\nUSE FOR:\nPre-render validation (save time), debugging template issues, checking image URL accessibility,\nverifying template structure, catching syntax errors early, platform compatibility checks,\navoiding \"black video\" problems, ensuring media loads correctly\n\nOUTPUT:\n- valid: boolean (true/false)\n- errorSummary: Quick AI-readable overview of top issues\n- errors: Detailed validation errors with paths\n- suggestions: Actionable steps to fix issues\n- breakdown: Separate structure vs media error counts\n\nWORKFLOW:\n1. Create template → 2. validate_template → 3. Fix errors → 4. render_video\n\n⚠️ Template can be object OR string (auto-parsed):\n✅ RECOMMENDED: { \"template\": {\"name\": \"Video\"} }\n⚠️  ALLOWED: { \"template\": \"{\\\"name\\\":\\\"Video\\\"}\" } (auto-parsed)\n\nThis tool performs comprehensive validation:\n\nValidation checks include:\n- Template structure (name, output, composition)\n- Output configuration (type, dimensions, fps, duration)\n- Input definitions (keys, types, defaults)\n- Scene structure (IDs, frame ranges)\n- Layer configuration (types, positions, sizes, props)\n- Animation definitions (types, effects, timing, easing)\n- Component references and props\n- Data consistency (frame ranges, input references)\n- **Media URL validation**:\n  - Checks if image/video/audio URLs exist (HTTP HEAD request)\n  - Verifies correct content-type (image/* for images, video/* for videos, audio/* for audio)\n  - Returns 404, 403, or network errors BEFORE rendering starts\n  - Detects invalid paths (/mnt/, /home/claude/, file://)\n  - Validates all image, video, and audio layers\n\n**IMPORTANT FOR AI AGENTS:**\nAlways call validate_template BEFORE calling render_video to catch:\n- ❌ Broken image URLs (404, 403 errors)\n- ❌ Invalid file paths (Linux paths on macOS: /mnt/, /home/claude/)\n- ❌ Browser security violations (file:// URLs)\n- ❌ Wrong content types (HTML page instead of image)\n- ❌ Network/timeout errors\n- ❌ Invalid template structure\n\nReturns:\n- valid: boolean indicating if template AND all media URLs are valid\n- errorSummary: AI-friendly summary of top errors with actionable fixes\n- errors: array of detailed validation errors including media URL failures\n- warnings: array of warnings (e.g., local file paths that weren't checked)\n- suggestions: specific actions to fix common errors\n- breakdown: separate validation results for structure and media\n\nMedia validation timeout: 10 seconds per URL\nLocal file paths (non-http) are skipped with a warning\n\nUse this before rendering to catch issues early, especially when:\n- Using external image/video URLs (Unsplash, Pexels, custom URLs)\n- Creating templates with user-provided media\n- AI-generated templates with dynamic URLs\n- Debugging \"black video\" issues\n- Validating before expensive render operations\n\nThe validator provides:\n1. **Error Summary**: Quick AI-readable overview of issues\n2. **Detailed Errors**: Full error context with paths\n3. **Suggestions**: Specific actions to resolve each error type\n4. **How-To-Fix**: Direct instructions for common mistakes",
       "category": "validation",
       "tags": [
         "validation",

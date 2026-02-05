@@ -1,15 +1,34 @@
 ---
 name: validate_template
-description: "Validate a Rendervid template JSON structure."
+description: "Validate a Rendervid template JSON structure and media URLs before rendering."
 tags: [validation, quality, templates, generation, json, mcp, rendervid]
 category: validation
 ---
 
 # validate_template
 
-Validate a Rendervid template JSON structure.
+Validate a Rendervid template JSON structure and media URLs before rendering.
 
-This tool performs comprehensive validation of a template to ensure it's properly formatted and ready for rendering.
+USE FOR:
+Pre-render validation (save time), debugging template issues, checking image URL accessibility,
+verifying template structure, catching syntax errors early, platform compatibility checks,
+avoiding "black video" problems, ensuring media loads correctly
+
+OUTPUT:
+- valid: boolean (true/false)
+- errorSummary: Quick AI-readable overview of top issues
+- errors: Detailed validation errors with paths
+- suggestions: Actionable steps to fix issues
+- breakdown: Separate structure vs media error counts
+
+WORKFLOW:
+1. Create template → 2. validate_template → 3. Fix errors → 4. render_video
+
+⚠️ Template can be object OR string (auto-parsed):
+✅ RECOMMENDED: { "template": {"name": "Video"} }
+⚠️  ALLOWED: { "template": "{\"name\":\"Video\"}" } (auto-parsed)
+
+This tool performs comprehensive validation:
 
 Validation checks include:
 - Template structure (name, output, composition)
@@ -20,19 +39,45 @@ Validation checks include:
 - Animation definitions (types, effects, timing, easing)
 - Component references and props
 - Data consistency (frame ranges, input references)
+- **Media URL validation**:
+  - Checks if image/video/audio URLs exist (HTTP HEAD request)
+  - Verifies correct content-type (image/* for images, video/* for videos, audio/* for audio)
+  - Returns 404, 403, or network errors BEFORE rendering starts
+  - Detects invalid paths (/mnt/, /home/claude/, file://)
+  - Validates all image, video, and audio layers
+
+**IMPORTANT FOR AI AGENTS:**
+Always call validate_template BEFORE calling render_video to catch:
+- ❌ Broken image URLs (404, 403 errors)
+- ❌ Invalid file paths (Linux paths on macOS: /mnt/, /home/claude/)
+- ❌ Browser security violations (file:// URLs)
+- ❌ Wrong content types (HTML page instead of image)
+- ❌ Network/timeout errors
+- ❌ Invalid template structure
 
 Returns:
-- valid: boolean indicating if template is valid
-- errors: array of validation errors (if any)
-- warnings: array of validation warnings (if any)
+- valid: boolean indicating if template AND all media URLs are valid
+- errorSummary: AI-friendly summary of top errors with actionable fixes
+- errors: array of detailed validation errors including media URL failures
+- warnings: array of warnings (e.g., local file paths that weren't checked)
+- suggestions: specific actions to fix common errors
+- breakdown: separate validation results for structure and media
 
-Use this before rendering to catch issues early, or when:
-- Creating new templates
-- Modifying existing templates
-- Debugging template issues
-- Verifying AI-generated templates
+Media validation timeout: 10 seconds per URL
+Local file paths (non-http) are skipped with a warning
 
-The validator provides detailed error messages with paths to help fix issues quickly.
+Use this before rendering to catch issues early, especially when:
+- Using external image/video URLs (Unsplash, Pexels, custom URLs)
+- Creating templates with user-provided media
+- AI-generated templates with dynamic URLs
+- Debugging "black video" issues
+- Validating before expensive render operations
+
+The validator provides:
+1. **Error Summary**: Quick AI-readable overview of issues
+2. **Detailed Errors**: Full error context with paths
+3. **Suggestions**: Specific actions to resolve each error type
+4. **How-To-Fix**: Direct instructions for common mistakes
 
 ## When to Use
 

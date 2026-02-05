@@ -19,7 +19,7 @@ This tool returns a comprehensive overview of what Rendervid can do, including:
 - audio: Background music and sound effects
 - group: Container for organizing layers
 - lottie: Lottie animations
-- custom: Custom React components
+- custom: Custom React components (create new components with inline React code!)
 
 **Animation Presets (40+):**
 - Entrance: fadeIn, slideIn, zoomIn, bounceIn, rotateIn, etc.

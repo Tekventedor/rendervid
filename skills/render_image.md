@@ -1,39 +1,50 @@
 ---
 name: render_image
-description: "Generate a single image from a Rendervid template."
+description: "Generate a static image from a Rendervid template at a specific frame."
 tags: [image, rendering, templates, generation, json, mcp, rendervid]
 category: rendering
 ---
 
 # render_image
 
-Generate a single image from a Rendervid template.
+Generate a static image from a Rendervid template at a specific frame.
 
-This tool renders a static image by:
-1. Accepting a Rendervid template (same JSON structure as video templates)
-2. Rendering a specific frame (default: frame 0)
-3. Exporting as PNG, JPEG, or WebP
+USE FOR:
+Social media posts (Instagram, Twitter, LinkedIn), video thumbnails (YouTube, Vimeo),
+blog post headers, presentation slides, infographics, quote graphics, product mockups,
+preview images, marketing materials, web banners
 
-Ideal for:
-- Social media images (Instagram posts, Twitter cards, LinkedIn banners)
-- Thumbnails (YouTube, blog posts, video covers)
-- Static graphics (quotes, announcements, infographics)
-- Previewing video frames
+OUTPUT:
+- Format: PNG (lossless), JPEG (compressed), or WebP (modern)
+- Location: Specified by outputPath parameter
+- Quality: 1-100 for JPEG/WebP (default: 90)
+- Frame: Captures specified frame number (default: 0)
+- Max resolution: 7680x4320 (8K)
 
-You can use the same template for both video and image output.
-For video templates, specify which frame to capture (0-based index).
-For image templates (output.type: "image"), the frame parameter is ignored.
+TEMPLATE REQUIREMENTS:
+- Same JSON structure as video templates
+- Animations evaluated at specified frame
+- Supports all layer types (text, image, shape, custom)
+- Use output.type: "video" or "image" (both work)
+- ⚠️ MUST include "inputs": [] field (even if empty for static templates)
 
-The template format is identical to video templates, supporting:
-- Multiple layers (text, images, shapes)
-- Animations (will be evaluated at the specified frame)
-- Dynamic inputs
-- Full styling capabilities
+REQUIRED TEMPLATE FIELDS:
+{
+  "name": "string",           // Template name (REQUIRED)
+  "output": { ... },           // Output configuration (REQUIRED)
+  "inputs": [],                // Input definitions (REQUIRED - use [] if no dynamic inputs)
+  "composition": { ... }       // Scenes and layers (REQUIRED)
+}
 
-Example use:
-- Render frame 0 of a video template as a thumbnail
-- Generate social media post images with custom text
-- Create preview images for video content
+TYPICAL USE:
+1. Render frame 0 as thumbnail
+2. Capture mid-animation frame for preview
+3. Generate social media image with custom text
+4. Create static graphics from animated template
+
+⚠️ CRITICAL: Pass template as JSON OBJECT, not string
+✅ CORRECT: { "template": {"name": "Image", "inputs": [], ...} }
+❌ COMMON ERROR: Missing "inputs" field - always include it!
 
 ## When to Use
 
@@ -48,11 +59,12 @@ Use this tool when you need to:
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `template` | object | ✓ |  |
-| `inputs` | object |  |  |
-| `outputPath` | string | ✓ |  |
-| `format` | string |  |  |
-| `quality` | integer |  |  |
-| `frame` | integer |  |  |
+| `inputs` | object |  | Template variables. Example: {"title": "Hello World"} |
+| `outputPath` | string | ✓ | Output file path. Use ~/Downloads/, ~/Desktop/, or ~/Documents/ on macOS |
+| `format` | string |  | Image format. png = Lossless (default), jpeg = Compressed/smaller, webp = Modern/efficient |
+| `quality` | integer |  | Quality for JPEG/WebP. 1-100. Higher = better quality, larger file. Default: 90 |
+| `frame` | integer |  | Frame number to capture (0-based). 0 = first frame, N = frame after N frames |
+| `renderWaitTime` | integer |  | Wait time in ms before capturing. 100 = fast/default, 200 = text-only, 500-800 = with complex images |
 
 
 ## Input Schema
@@ -164,10 +176,12 @@ Use this tool when you need to:
     "inputs": {
       "type": "object",
       "additionalProperties": {},
-      "default": {}
+      "default": {},
+      "description": "Template variables. Example: {\"title\": \"Hello World\"}"
     },
     "outputPath": {
-      "type": "string"
+      "type": "string",
+      "description": "Output file path. Use ~/Downloads/, ~/Desktop/, or ~/Documents/ on macOS"
     },
     "format": {
       "type": "string",
@@ -176,18 +190,27 @@ Use this tool when you need to:
         "jpeg",
         "webp"
       ],
-      "default": "png"
+      "default": "png",
+      "description": "Image format. png = Lossless (default), jpeg = Compressed/smaller, webp = Modern/efficient"
     },
     "quality": {
       "type": "integer",
       "minimum": 1,
       "maximum": 100,
-      "default": 90
+      "default": 90,
+      "description": "Quality for JPEG/WebP. 1-100. Higher = better quality, larger file. Default: 90"
     },
     "frame": {
       "type": "integer",
       "minimum": 0,
-      "default": 0
+      "default": 0,
+      "description": "Frame number to capture (0-based). 0 = first frame, N = frame after N frames"
+    },
+    "renderWaitTime": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "default": 100,
+      "description": "Wait time in ms before capturing. 100 = fast/default, 200 = text-only, 500-800 = with complex images"
     }
   },
   "required": [
