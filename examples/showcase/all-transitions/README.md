@@ -1,6 +1,6 @@
 # Complete Scene Transitions Showcase
 
-Comprehensive demonstration of **all 29 scene transition types** available in Rendervid.
+Comprehensive demonstration of **all 17 scene transition types** (with 29 total scene variations including directional options) available in Rendervid.
 
 ## Preview
 
