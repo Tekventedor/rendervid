@@ -807,17 +807,8 @@ export class FrameCapturer {
         // Wait for Three.js/WebGL canvas to be ready
         const canvases = Array.from(document.querySelectorAll('canvas'));
         if (canvases.length > 0) {
-          console.error('[Frame] Found', canvases.length, 'canvas elements, waiting for Three.js...');
-
           // Give Three.js time to initialize and render first frame
-          // Three.js typically needs:
-          // - Time to create WebGL context
-          // - Time to compile shaders
-          // - Time to render first frame
-          // We use a generous wait time to ensure rendering completes
-          await new Promise(r => setTimeout(r, 2000));
-
-          console.error('[Frame] Three.js render wait complete');
+          await new Promise(r => setTimeout(r, 500));
         }
 
         // Additional safety delay
@@ -920,17 +911,8 @@ export class FrameCapturer {
         // Wait for Three.js/WebGL canvas to be ready
         const canvases = Array.from(document.querySelectorAll('canvas'));
         if (canvases.length > 0) {
-          console.error('[Frame] Found', canvases.length, 'canvas elements, waiting for Three.js...');
-
           // Give Three.js time to initialize and render first frame
-          // Three.js typically needs:
-          // - Time to create WebGL context
-          // - Time to compile shaders
-          // - Time to render first frame
-          // We use a generous wait time to ensure rendering completes
-          await new Promise(r => setTimeout(r, 2000));
-
-          console.error('[Frame] Three.js render wait complete');
+          await new Promise(r => setTimeout(r, 500));
         }
 
         // Additional safety delay

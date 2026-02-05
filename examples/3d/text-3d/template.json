@@ -39,8 +39,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#000000"
@@ -49,14 +55,28 @@
           {
             "id": "three-scene",
             "type": "three",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "camera": {
                 "type": "perspective",
                 "fov": 75,
-                "position": [0, 2, 12],
-                "lookAt": [0, 0, 0]
+                "position": [
+                  0,
+                  2,
+                  12
+                ],
+                "lookAt": [
+                  0,
+                  0,
+                  0
+                ]
               },
               "lights": [
                 {
@@ -68,7 +88,11 @@
                   "type": "directional",
                   "color": "#ffffff",
                   "intensity": 2,
-                  "position": [10, 10, 10],
+                  "position": [
+                    10,
+                    10,
+                    10
+                  ],
                   "castShadow": true,
                   "shadowMapSize": 2048
                 },
@@ -76,22 +100,38 @@
                   "type": "point",
                   "color": "#ff6b6b",
                   "intensity": 3,
-                  "position": [-8, 3, 5],
+                  "position": [
+                    -8,
+                    3,
+                    5
+                  ],
                   "distance": 30
                 },
                 {
                   "type": "point",
                   "color": "#4c00ff",
                   "intensity": 3,
-                  "position": [8, 3, 5],
+                  "position": [
+                    8,
+                    3,
+                    5
+                  ],
                   "distance": 30
                 },
                 {
                   "type": "spot",
                   "color": "#ffffff",
                   "intensity": 2,
-                  "position": [0, 10, 8],
-                  "target": [0, 0, 0],
+                  "position": [
+                    0,
+                    10,
+                    8
+                  ],
+                  "target": [
+                    0,
+                    0,
+                    0
+                  ],
                   "angle": 0.5,
                   "penumbra": 0.3,
                   "castShadow": true
@@ -122,10 +162,18 @@
                     "emissive": "{{textColor}}",
                     "emissiveIntensity": 0.2
                   },
-                  "position": [-8, 0, 0],
+                  "position": [
+                    -8,
+                    0,
+                    0
+                  ],
                   "castShadow": true,
                   "receiveShadow": true,
-                  "autoRotate": [0, 0.01, 0]
+                  "autoRotate": [
+                    0,
+                    0.01,
+                    0
+                  ]
                 },
                 {
                   "id": "floor",
@@ -140,8 +188,16 @@
                     "roughness": 0.9,
                     "metalness": 0.1
                   },
-                  "position": [0, -2, 0],
-                  "rotation": [-1.5708, 0, 0],
+                  "position": [
+                    0,
+                    -2,
+                    0
+                  ],
+                  "rotation": [
+                    -1.5708,
+                    0,
+                    0
+                  ],
                   "receiveShadow": true
                 },
                 {
@@ -156,7 +212,11 @@
                     "color": "#0a0a15",
                     "roughness": 1
                   },
-                  "position": [0, 8, -10]
+                  "position": [
+                    0,
+                    8,
+                    -10
+                  ]
                 }
               ],
               "shadows": {
@@ -185,9 +245,18 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": { "x": 960, "y": 950 },
-            "anchor": { "x": 0.5, "y": 0.5 },
-            "size": { "width": 1400, "height": 80 },
+            "position": {
+              "x": 960,
+              "y": 950
+            },
+            "anchor": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "size": {
+              "width": 1400,
+              "height": 80
+            },
             "props": {
               "text": "Extruded 3D Text with Physical Materials",
               "fontSize": 32,
@@ -208,8 +277,14 @@
           {
             "id": "particle-1",
             "type": "shape",
-            "position": { "x": 300, "y": 300 },
-            "size": { "width": 20, "height": 20 },
+            "position": {
+              "x": 300,
+              "y": 300
+            },
+            "size": {
+              "width": 20,
+              "height": 20
+            },
             "props": {
               "shape": "circle",
               "fill": "#ff6b6b",
@@ -227,8 +302,14 @@
           {
             "id": "particle-2",
             "type": "shape",
-            "position": { "x": 1620, "y": 300 },
-            "size": { "width": 20, "height": 20 },
+            "position": {
+              "x": 1620,
+              "y": 300
+            },
+            "size": {
+              "width": 20,
+              "height": 20
+            },
             "props": {
               "shape": "circle",
               "fill": "#4c00ff",
@@ -246,8 +327,14 @@
           {
             "id": "particle-3",
             "type": "shape",
-            "position": { "x": 150, "y": 700 },
-            "size": { "width": 15, "height": 15 },
+            "position": {
+              "x": 150,
+              "y": 700
+            },
+            "size": {
+              "width": 15,
+              "height": 15
+            },
             "props": {
               "shape": "circle",
               "fill": "#51cf66",
@@ -265,8 +352,14 @@
           {
             "id": "particle-4",
             "type": "shape",
-            "position": { "x": 1770, "y": 700 },
-            "size": { "width": 15, "height": 15 },
+            "position": {
+              "x": 1770,
+              "y": 700
+            },
+            "size": {
+              "width": 15,
+              "height": 15
+            },
             "props": {
               "shape": "circle",
               "fill": "#ffd43b",

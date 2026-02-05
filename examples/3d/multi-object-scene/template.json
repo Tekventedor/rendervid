@@ -20,8 +20,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
@@ -30,14 +36,28 @@
           {
             "id": "three-scene",
             "type": "three",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "camera": {
                 "type": "perspective",
                 "fov": 75,
-                "position": [0, 3, 10],
-                "lookAt": [0, 0, 0]
+                "position": [
+                  0,
+                  3,
+                  10
+                ],
+                "lookAt": [
+                  0,
+                  0,
+                  0
+                ]
               },
               "lights": [
                 {
@@ -49,7 +69,11 @@
                   "type": "directional",
                   "color": "#ffffff",
                   "intensity": 1.2,
-                  "position": [8, 10, 6],
+                  "position": [
+                    8,
+                    10,
+                    6
+                  ],
                   "castShadow": true,
                   "shadowMapSize": 2048
                 },
@@ -57,14 +81,22 @@
                   "type": "point",
                   "color": "#ff6b6b",
                   "intensity": 1.5,
-                  "position": [-4, 4, 4],
+                  "position": [
+                    -4,
+                    4,
+                    4
+                  ],
                   "distance": 20
                 },
                 {
                   "type": "point",
                   "color": "#4c00ff",
                   "intensity": 1.5,
-                  "position": [4, 4, 4],
+                  "position": [
+                    4,
+                    4,
+                    4
+                  ],
                   "distance": 20
                 }
               ],
@@ -85,10 +117,18 @@
                     "emissive": "#667eea",
                     "emissiveIntensity": 0.3
                   },
-                  "position": [0, 0, 0],
+                  "position": [
+                    0,
+                    0,
+                    0
+                  ],
                   "castShadow": true,
                   "receiveShadow": true,
-                  "autoRotate": [0, 0.008, 0]
+                  "autoRotate": [
+                    0,
+                    0.008,
+                    0
+                  ]
                 },
                 {
                   "id": "cube-1",
@@ -104,10 +144,18 @@
                     "metalness": 0.5,
                     "roughness": 0.3
                   },
-                  "position": [-4, 0, 0],
+                  "position": [
+                    -4,
+                    0,
+                    0
+                  ],
                   "castShadow": true,
                   "receiveShadow": true,
-                  "autoRotate": [0.015, 0.02, 0.01]
+                  "autoRotate": [
+                    0.015,
+                    0.02,
+                    0.01
+                  ]
                 },
                 {
                   "id": "cube-2",
@@ -123,10 +171,18 @@
                     "metalness": 0.5,
                     "roughness": 0.3
                   },
-                  "position": [4, 0, 0],
+                  "position": [
+                    4,
+                    0,
+                    0
+                  ],
                   "castShadow": true,
                   "receiveShadow": true,
-                  "autoRotate": [0.015, -0.02, 0.01]
+                  "autoRotate": [
+                    0.015,
+                    -0.02,
+                    0.01
+                  ]
                 },
                 {
                   "id": "torus-1",
@@ -143,10 +199,22 @@
                     "metalness": 0.6,
                     "roughness": 0.4
                   },
-                  "position": [0, 0, 0],
-                  "rotation": [1.5708, 0, 0],
+                  "position": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    1.5708,
+                    0,
+                    0
+                  ],
                   "castShadow": true,
-                  "autoRotate": [0, 0.012, 0]
+                  "autoRotate": [
+                    0,
+                    0.012,
+                    0
+                  ]
                 },
                 {
                   "id": "cone-back",
@@ -162,10 +230,18 @@
                     "metalness": 0.3,
                     "roughness": 0.6
                   },
-                  "position": [0, 0, -4],
+                  "position": [
+                    0,
+                    0,
+                    -4
+                  ],
                   "castShadow": true,
                   "receiveShadow": true,
-                  "autoRotate": [0, 0.025, 0]
+                  "autoRotate": [
+                    0,
+                    0.025,
+                    0
+                  ]
                 },
                 {
                   "id": "cylinder-1",
@@ -182,10 +258,18 @@
                     "metalness": 0.7,
                     "roughness": 0.2
                   },
-                  "position": [-3, -2, -2],
+                  "position": [
+                    -3,
+                    -2,
+                    -2
+                  ],
                   "castShadow": true,
                   "receiveShadow": true,
-                  "autoRotate": [0.01, 0.015, 0]
+                  "autoRotate": [
+                    0.01,
+                    0.015,
+                    0
+                  ]
                 },
                 {
                   "id": "cylinder-2",
@@ -202,10 +286,18 @@
                     "metalness": 0.7,
                     "roughness": 0.2
                   },
-                  "position": [3, -2, -2],
+                  "position": [
+                    3,
+                    -2,
+                    -2
+                  ],
                   "castShadow": true,
                   "receiveShadow": true,
-                  "autoRotate": [0.01, -0.015, 0]
+                  "autoRotate": [
+                    0.01,
+                    -0.015,
+                    0
+                  ]
                 },
                 {
                   "id": "floor",
@@ -220,8 +312,16 @@
                     "roughness": 0.8,
                     "metalness": 0.2
                   },
-                  "position": [0, -3, 0],
-                  "rotation": [-1.5708, 0, 0],
+                  "position": [
+                    0,
+                    -3,
+                    0
+                  ],
+                  "rotation": [
+                    -1.5708,
+                    0,
+                    0
+                  ],
                   "receiveShadow": true
                 }
               ],
@@ -251,9 +351,18 @@
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 80 },
-            "anchor": { "x": 0.5, "y": 0 },
-            "size": { "width": 1400, "height": 100 },
+            "position": {
+              "x": 960,
+              "y": 80
+            },
+            "anchor": {
+              "x": 0.5,
+              "y": 0
+            },
+            "size": {
+              "width": 1400,
+              "height": 100
+            },
             "props": {
               "text": "MULTI-OBJECT SCENE",
               "fontSize": 72,
@@ -276,9 +385,18 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": { "x": 960, "y": 170 },
-            "anchor": { "x": 0.5, "y": 0 },
-            "size": { "width": 1200, "height": 60 },
+            "position": {
+              "x": 960,
+              "y": 170
+            },
+            "anchor": {
+              "x": 0.5,
+              "y": 0
+            },
+            "size": {
+              "width": 1200,
+              "height": 60
+            },
             "props": {
               "text": "7 Different Geometries • Complex Animations • Dynamic Lighting",
               "fontSize": 24,
@@ -299,8 +417,14 @@
           {
             "id": "feature-box",
             "type": "shape",
-            "position": { "x": 100, "y": 880 },
-            "size": { "width": 500, "height": 120 },
+            "position": {
+              "x": 100,
+              "y": 880
+            },
+            "size": {
+              "width": 500,
+              "height": 120
+            },
             "props": {
               "shape": "rectangle",
               "fill": "rgba(0, 0, 0, 0.6)",
@@ -318,8 +442,14 @@
           {
             "id": "features",
             "type": "text",
-            "position": { "x": 130, "y": 910 },
-            "size": { "width": 440, "height": 100 },
+            "position": {
+              "x": 130,
+              "y": 910
+            },
+            "size": {
+              "width": 440,
+              "height": 100
+            },
             "props": {
               "text": "• Sphere, Cube, Torus, Cone, Cylinder\n• PBR Materials & Shadows\n• Atmospheric Fog",
               "fontSize": 20,

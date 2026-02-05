@@ -88,15 +88,7 @@
                   "autoRotate": [0.01, 0.02, 0]
                 }
               ]
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "scaleIn",
-                "duration": 30,
-                "easing": "easeOutBack"
-              }
-            ]
+            }
           },
           {
             "id": "title",
