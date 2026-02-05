@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { createNodeRenderer } from '@rendervid/renderer-node';
 import type { Template } from '@rendervid/core';
-import { createDefaultComponentDefaultsManager } from '@rendervid/core';
+import { createDefaultComponentDefaultsManager, validateMotionBlurConfig } from '@rendervid/core';
 import { RenderVideoInputSchema } from '../types.js';
 import { createLogger } from '../utils/logger.js';
 import { preprocessTemplateFiles } from '../utils/template-preprocessor.js';
@@ -21,10 +21,15 @@ WHEN TO USE:
 - High quality renders that take several minutes
 - Multiple videos rendering in parallel
 - Any render that might take more than 60 seconds
+- Videos with motion blur (especially high sample counts)
 
 RETURNS IMMEDIATELY with a job ID. Use check_render_status to monitor progress.
 
-All parameters same as render_video. See render_video for complete documentation.`,
+All parameters same as render_video. See render_video for complete documentation.
+
+MOTION BLUR NOTE:
+Motion blur multiplies render time by sample count (10 samples = 10× slower).
+For motion-blurred videos, use start_render_async instead of render_video to avoid timeout.`,
   inputSchema: zodToJsonSchema(RenderVideoInputSchema),
 };
 
@@ -61,6 +66,20 @@ export async function executeStartRenderAsync(args: unknown): Promise<string> {
   try {
     const input = RenderVideoInputSchema.parse(args);
 
+    // Validate motion blur configuration if provided
+    if (input.motionBlur) {
+      const motionBlurErrors = validateMotionBlurConfig(input.motionBlur);
+      if (motionBlurErrors.length > 0) {
+        logger.error('Invalid motion blur configuration', { errors: motionBlurErrors });
+        return JSON.stringify({
+          success: false,
+          error: 'Invalid motion blur configuration',
+          details: motionBlurErrors,
+          suggestion: 'Check motion blur parameters: samples (2-32), shutterAngle (0-360), minSamples ≤ samples, motionThreshold (0.0001-1.0)',
+        }, null, 2);
+      }
+    }
+
     // Validate output path
     let outputPath = input.outputPath;
     if (outputPath.startsWith('~/')) {
@@ -91,6 +110,7 @@ export async function executeStartRenderAsync(args: unknown): Promise<string> {
         format: input.format,
         quality: input.quality,
         renderWaitTime: input.renderWaitTime,
+        motionBlur: input.motionBlur,
       }
     );
 
@@ -296,6 +316,7 @@ async function executeRenderInBackground(jobId: string): Promise<void> {
       codec: codecSettings.codec,
       quality: codecSettings.quality,
       renderWaitTime: renderWaitTime,
+      motionBlur: job.renderOptions.motionBlur,
       onProgress: (progress: any) => {
         jobManager.updateProgress(jobId, {
           phase: progress.phase,

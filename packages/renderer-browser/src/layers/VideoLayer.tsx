@@ -46,7 +46,9 @@ export function VideoLayer({ layer, frame, fps, sceneDuration, isPlaying = true 
     const targetTime = startTime + (localFrame / fps) * playbackRate;
 
     // Only seek if difference is significant
-    if (Math.abs(video.currentTime - targetTime) > 0.1) {
+    // Use tight tolerance (1ms) for sub-frame precision during motion blur
+    const tolerance = 0.001; // 1ms precision
+    if (Math.abs(video.currentTime - targetTime) > tolerance) {
       video.currentTime = targetTime;
     }
 

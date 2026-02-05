@@ -1,0 +1,146 @@
+{
+  "name": "Motion Blur - Preview Mode",
+  "description": "Fast preview mode for quick iteration",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 3
+  },
+  "inputs": [],
+  "composition": {
+    "scenes": [
+      {
+        "id": "preview-demo",
+        "startFrame": 0,
+        "endFrame": 90,
+        "backgroundColor": "#1a1a2e",
+        "layers": [
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 260, "y": 120 },
+            "size": { "width": 1400, "height": 100 },
+            "props": {
+              "text": "Preview Mode - Fast Iteration",
+              "fontSize": 52,
+              "fontWeight": "bold",
+              "textAlign": "center",
+              "color": "#ffffff"
+            }
+          },
+          {
+            "id": "box1",
+            "type": "shape",
+            "position": { "x": -100, "y": 350 },
+            "size": { "width": 100, "height": 100 },
+            "props": {
+              "type": "rectangle",
+              "color": "#ff6b6b",
+              "borderRadius": 10
+            },
+            "animations": [
+              {
+                "type": "custom",
+                "keyframes": [
+                  {
+                    "frame": 20,
+                    "properties": {
+                      "position": { "x": -100, "y": 350 }
+                    }
+                  },
+                  {
+                    "frame": 70,
+                    "properties": {
+                      "position": { "x": 1920, "y": 350 }
+                    }
+                  }
+                ],
+                "easing": "linear"
+              }
+            ]
+          },
+          {
+            "id": "box2",
+            "type": "shape",
+            "position": { "x": 260, "y": 540 },
+            "size": { "width": 150, "height": 150 },
+            "rotation": 0,
+            "props": {
+              "type": "rectangle",
+              "color": "#4ecdc4",
+              "borderRadius": 5
+            },
+            "animations": [
+              {
+                "type": "custom",
+                "keyframes": [
+                  {
+                    "frame": 20,
+                    "properties": {
+                      "rotation": 0,
+                      "scale": { "x": 1.0, "y": 1.0 }
+                    }
+                  },
+                  {
+                    "frame": 70,
+                    "properties": {
+                      "rotation": 720,
+                      "scale": { "x": 1.5, "y": 1.5 }
+                    }
+                  }
+                ],
+                "easing": "easeInOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "box3",
+            "type": "shape",
+            "position": { "x": 1920, "y": 730 },
+            "size": { "width": 100, "height": 100 },
+            "props": {
+              "type": "rectangle",
+              "color": "#f7b731",
+              "borderRadius": 10
+            },
+            "animations": [
+              {
+                "type": "custom",
+                "keyframes": [
+                  {
+                    "frame": 20,
+                    "properties": {
+                      "position": { "x": 1920, "y": 730 }
+                    }
+                  },
+                  {
+                    "frame": 70,
+                    "properties": {
+                      "position": { "x": -100, "y": 730 }
+                    }
+                  }
+                ],
+                "easing": "linear"
+              }
+            ]
+          },
+          {
+            "id": "description",
+            "type": "text",
+            "position": { "x": 260, "y": 920 },
+            "size": { "width": 1400, "height": 120 },
+            "props": {
+              "text": "Preview mode uses 2 samples for ~2× render time (vs 10× for normal)\nPerfect for layout and timing preview during development",
+              "fontSize": 26,
+              "textAlign": "center",
+              "color": "#aaaaaa"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

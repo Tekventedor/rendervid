@@ -1,6 +1,38 @@
 import { z } from 'zod';
 
 /**
+ * Zod schema for motion blur configuration
+ */
+export const MotionBlurSchema = z.object({
+  enabled: z.boolean()
+    .describe('Enable/disable motion blur'),
+  shutterAngle: z.number().min(0).max(360).optional()
+    .describe('Shutter angle in degrees (0-360). 180° = cinematic standard, 360° = full frame exposure, 90° = fast shutter. Default: 180'),
+  samples: z.number().int().min(2).max(32).optional()
+    .describe('Number of temporal samples per frame (2-32). Higher = smoother blur but slower. Default: 10'),
+  quality: z.enum(['low', 'medium', 'high', 'ultra']).optional()
+    .describe('Quality preset (overrides samples and shutterAngle unless explicitly set). low = 5 samples, medium = 10 samples, high = 16 samples, ultra = 32 samples. Default: medium'),
+  adaptive: z.boolean().optional()
+    .describe('Enable adaptive sampling to reduce samples on static frames. Default: false'),
+  minSamples: z.number().int().min(2).optional()
+    .describe('Minimum samples for adaptive mode (must be ≤ samples). Default: 3'),
+  motionThreshold: z.number().min(0.0001).max(1.0).optional()
+    .describe('Motion detection sensitivity for adaptive sampling (0-1). Lower = more aggressive reduction. Default: 0.01'),
+  stochastic: z.boolean().optional()
+    .describe('Enable stochastic (random) sampling to reduce banding artifacts. Adds jitter to sample times. Default: false'),
+  blurAmount: z.number().min(0).max(2).optional()
+    .describe('Blur amount multiplier (0-2). 0 = no blur, 1 = normal, 2 = double blur. Default: 1.0'),
+  blurAxis: z.enum(['x', 'y', 'both']).optional()
+    .describe('Blur only on specific axis. Default: both'),
+  variableSampleRate: z.boolean().optional()
+    .describe('Auto-adjust sample count based on motion magnitude. Saves time on slow-moving frames. Default: false'),
+  maxSamples: z.number().int().min(2).max(32).optional()
+    .describe('Maximum samples for variable sample rate mode (must be ≥ samples). Default: samples'),
+  preview: z.boolean().optional()
+    .describe('Preview mode: use minimal samples (2) for fast iteration. Default: false'),
+}).describe('Motion blur configuration for cinematic video rendering');
+
+/**
  * Zod schema for template JSON validation
  */
 export const TemplateSchema = z.object({
@@ -45,6 +77,8 @@ export const RenderVideoInputSchema = z.object({
     .describe('Override template fps. Common: 24 = Film, 30 = Standard, 60 = Smooth'),
   renderWaitTime: z.number().int().positive().optional().default(100)
     .describe('Wait time in ms before capturing frames. 100 = fast/default, 200 = text-only, 500-800 = with complex images/videos'),
+  motionBlur: MotionBlurSchema.optional()
+    .describe('Motion blur configuration for cinematic effect. WARNING: Multiplies render time by sample count (e.g., 10 samples = 10× slower)'),
 });
 
 /**

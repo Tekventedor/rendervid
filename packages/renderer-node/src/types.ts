@@ -1,4 +1,4 @@
-import type { Template, ComponentRegistry } from '@rendervid/core';
+import type { Template, ComponentRegistry, MotionBlurConfig } from '@rendervid/core';
 import type { HardwareAccelerationOptions } from './ffmpeg-encoder';
 
 /**
@@ -47,6 +47,8 @@ export interface VideoRenderOptions {
   useStreaming?: boolean;
   /** Hardware acceleration options. Set {enabled: false} to force software encoding for maximum quality. */
   hardwareAcceleration?: HardwareAccelerationOptions;
+  /** Motion blur configuration (global render config) */
+  motionBlur?: MotionBlurConfig;
 }
 
 /**

@@ -1024,6 +1024,123 @@ interface ThreeLayer extends LayerBase {
 }
 
 /**
+ * Motion Blur Configuration and Utilities
+ *
+ * Implements temporal supersampling for cinematic motion blur effect.
+ * Renders multiple sub-frames at fractional time offsets per output frame,
+ * then composites with weighted averaging.
+ */
+/**
+ * Quality preset levels for motion blur
+ */
+type MotionBlurQuality = 'low' | 'medium' | 'high' | 'ultra';
+/**
+ * Motion blur configuration
+ */
+interface MotionBlurConfig {
+    /** Enable/disable motion blur */
+    enabled: boolean;
+    /**
+     * Shutter angle in degrees (0-360)
+     * - 180° = cinematic standard (half frame exposure)
+     * - 360° = full frame exposure (maximum blur)
+     * - 90° = fast shutter (minimal blur)
+     * @default 180
+     */
+    shutterAngle?: number;
+    /**
+     * Number of temporal samples per frame (2-32)
+     * Higher values = smoother blur but slower rendering
+     * @default 10
+     */
+    samples?: number;
+    /**
+     * Quality preset (overrides samples and shutterAngle unless explicitly set)
+     * @default 'medium'
+     */
+    quality?: MotionBlurQuality;
+    /**
+     * Enable adaptive sampling (reduce samples on static frames)
+     * @default false
+     */
+    adaptive?: boolean;
+    /**
+     * Minimum samples for adaptive mode (must be ≤ samples)
+     * @default 3
+     */
+    minSamples?: number;
+    /**
+     * Motion detection sensitivity for adaptive sampling (0-1)
+     * Lower values = more aggressive reduction
+     * @default 0.01
+     */
+    motionThreshold?: number;
+    /**
+     * Enable stochastic (random) sampling to reduce banding
+     * Adds random jitter to sample times for better quality
+     * @default false
+     */
+    stochastic?: boolean;
+    /**
+     * Blur amount multiplier per layer (0-2)
+     * 0 = no blur, 1 = normal, 2 = double blur
+     * @default 1.0
+     */
+    blurAmount?: number;
+    /**
+     * Blur only on specific axis
+     * @default 'both'
+     */
+    blurAxis?: 'x' | 'y' | 'both';
+    /**
+     * Variable sample rate mode
+     * Auto-adjusts samples based on motion magnitude
+     * @default false
+     */
+    variableSampleRate?: boolean;
+    /**
+     * Maximum samples for variable sample rate mode
+     * @default samples
+     */
+    maxSamples?: number;
+    /**
+     * Preview mode - use minimal samples for fast iteration
+     * @default false
+     */
+    preview?: boolean;
+}
+/**
+ * Fully resolved motion blur configuration (all optional fields filled)
+ */
+type ResolvedMotionBlurConfig = Required<MotionBlurConfig>;
+/**
+ * Quality preset definitions
+ */
+declare const MOTION_BLUR_QUALITY_PRESETS: Record<MotionBlurQuality, Required<Pick<MotionBlurConfig, 'samples' | 'shutterAngle'>>>;
+/**
+ * Default motion blur configuration values
+ */
+declare const DEFAULT_MOTION_BLUR_CONFIG: ResolvedMotionBlurConfig;
+/**
+ * Resolve motion blur configuration with defaults
+ * Applies quality presets if specified, then fills remaining defaults
+ */
+declare function resolveMotionBlurConfig(config?: MotionBlurConfig): ResolvedMotionBlurConfig;
+/**
+ * Validate motion blur configuration
+ * @returns Array of error messages (empty if valid)
+ */
+declare function validateMotionBlurConfig(config: MotionBlurConfig): string[];
+/**
+ * Merge multiple motion blur configurations with precedence
+ * Priority: layer > scene > global
+ *
+ * If any config has enabled: false, the result is disabled (no merge)
+ * Otherwise, merge fields with more specific configs overriding general ones
+ */
+declare function mergeMotionBlurConfigs(global?: MotionBlurConfig, scene?: MotionBlurConfig, layer?: MotionBlurConfig): MotionBlurConfig | undefined;
+
+/**
  * Available layer types.
  */
 type LayerType = 'image' | 'video' | 'text' | 'shape' | 'audio' | 'group' | 'lottie' | 'custom' | 'three';
@@ -1360,6 +1477,8 @@ interface LayerBase {
     inputProperty?: string;
     /** Animations applied to this layer */
     animations?: Animation[];
+    /** Motion blur configuration (layer-level override) */
+    motionBlur?: MotionBlurConfig;
     /** Layer is locked in editor */
     locked?: boolean;
     /** Layer is hidden */
@@ -1515,6 +1634,10 @@ interface Scene {
      * Transition to next scene
      */
     transition?: SceneTransition;
+    /**
+     * Motion blur configuration (scene-level config)
+     */
+    motionBlur?: MotionBlurConfig;
     /**
      * Layers in this scene
      */
@@ -3813,4 +3936,4 @@ declare function isFontAvailable(family: string): boolean;
  */
 declare function getRandomFonts(count?: number): FontMetadata[];
 
-export { type AmbientLightConfig, type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BasicMaterialConfig, type BlendMode, type BlurPreset, type BoxGeometry, type CameraType, type Color, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type ConeGeometry, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type CylinderGeometry, type DirectionalLightConfig, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FrameAwareProps, type GLTFGeometry, type GeometryType, type GoogleFontDefinition, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type HemisphereLightConfig, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LightType, type LoadedFonts, type LottieLayer, type LottieLayerProps, type MatCapMaterialConfig, type MaterialType, type NamedFontWeight, type NormalMaterialConfig, type NumericFontWeight, type OrthographicCameraConfig, type OutputConfig, type Padding, type PartialTemplate, type PerspectiveCameraConfig, type PhongMaterialConfig, type PhysicalMaterialConfig, type PlaneGeometry, type PointLightConfig, type Position, type PresetDefinition, type PresetOptions, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedStyle, type Rotation3, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SphereGeometry, type SpotLightConfig, type StandardMaterialConfig, type SystemFont, type Template, type TemplateAuthor, TemplateProcessor, type Text3DGeometry, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TextureConfig, type ThreeCameraConfig, type ThreeGeometry, type ThreeLayer, type ThreeLayerProps, type ThreeLightConfig, type ThreeMaterialConfig, type ThreeMeshConfig, type TorusGeometry, type TransitionDirection, type TransitionType, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type Vector3, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type WeightToNumeric, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, numericToNamedWeight, parseEasing, searchFonts, templateSchema, validateInputs, validateSceneOrder, validateTemplate, weightToNumeric };
+export { type AmbientLightConfig, type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BasicMaterialConfig, type BlendMode, type BlurPreset, type BoxGeometry, type CameraType, type Color, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type ConeGeometry, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type CylinderGeometry, DEFAULT_MOTION_BLUR_CONFIG, type DirectionalLightConfig, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FrameAwareProps, type GLTFGeometry, type GeometryType, type GoogleFontDefinition, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type HemisphereLightConfig, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LightType, type LoadedFonts, type LottieLayer, type LottieLayerProps, MOTION_BLUR_QUALITY_PRESETS, type MatCapMaterialConfig, type MaterialType, type MotionBlurConfig, type MotionBlurQuality, type NamedFontWeight, type NormalMaterialConfig, type NumericFontWeight, type OrthographicCameraConfig, type OutputConfig, type Padding, type PartialTemplate, type PerspectiveCameraConfig, type PhongMaterialConfig, type PhysicalMaterialConfig, type PlaneGeometry, type PointLightConfig, type Position, type PresetDefinition, type PresetOptions, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedMotionBlurConfig, type ResolvedStyle, type Rotation3, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SphereGeometry, type SpotLightConfig, type StandardMaterialConfig, type SystemFont, type Template, type TemplateAuthor, TemplateProcessor, type Text3DGeometry, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TextureConfig, type ThreeCameraConfig, type ThreeGeometry, type ThreeLayer, type ThreeLayerProps, type ThreeLightConfig, type ThreeMaterialConfig, type ThreeMeshConfig, type TorusGeometry, type TransitionDirection, type TransitionType, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type Vector3, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type WeightToNumeric, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, mergeMotionBlurConfigs, numericToNamedWeight, parseEasing, resolveMotionBlurConfig, searchFonts, templateSchema, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, weightToNumeric };

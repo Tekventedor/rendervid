@@ -2041,6 +2041,121 @@ function filtersToCSS(filters) {
   return filters.map(filterToCSS).filter(Boolean).join(" ");
 }
 
+// src/types/motion-blur.ts
+var MOTION_BLUR_QUALITY_PRESETS = {
+  low: { samples: 5, shutterAngle: 180 },
+  medium: { samples: 10, shutterAngle: 180 },
+  high: { samples: 16, shutterAngle: 180 },
+  ultra: { samples: 32, shutterAngle: 180 }
+};
+var DEFAULT_MOTION_BLUR_CONFIG = {
+  enabled: false,
+  shutterAngle: 180,
+  samples: 10,
+  quality: "medium",
+  adaptive: false,
+  minSamples: 3,
+  motionThreshold: 0.01,
+  stochastic: false,
+  blurAmount: 1,
+  blurAxis: "both",
+  variableSampleRate: false,
+  maxSamples: 10,
+  preview: false
+};
+function resolveMotionBlurConfig(config) {
+  if (!config) {
+    return { ...DEFAULT_MOTION_BLUR_CONFIG };
+  }
+  const resolved = { ...DEFAULT_MOTION_BLUR_CONFIG };
+  if (config.quality) {
+    const preset = MOTION_BLUR_QUALITY_PRESETS[config.quality];
+    if (config.samples === void 0) {
+      resolved.samples = preset.samples;
+    }
+    if (config.shutterAngle === void 0) {
+      resolved.shutterAngle = preset.shutterAngle;
+    }
+    resolved.quality = config.quality;
+  }
+  Object.assign(resolved, config);
+  return resolved;
+}
+function validateMotionBlurConfig(config) {
+  const errors = [];
+  if (config.shutterAngle !== void 0) {
+    if (config.shutterAngle < 0 || config.shutterAngle > 360) {
+      errors.push("shutterAngle must be between 0 and 360 degrees");
+    }
+  }
+  if (config.samples !== void 0) {
+    if (!Number.isInteger(config.samples)) {
+      errors.push("samples must be an integer");
+    } else if (config.samples < 2 || config.samples > 32) {
+      errors.push("samples must be between 2 and 32");
+    }
+  }
+  if (config.minSamples !== void 0) {
+    if (!Number.isInteger(config.minSamples)) {
+      errors.push("minSamples must be an integer");
+    } else if (config.minSamples < 2) {
+      errors.push("minSamples must be at least 2");
+    }
+    if (config.samples !== void 0 && config.minSamples > config.samples) {
+      errors.push("minSamples must be less than or equal to samples");
+    }
+  }
+  if (config.motionThreshold !== void 0) {
+    if (config.motionThreshold < 1e-4 || config.motionThreshold > 1) {
+      errors.push("motionThreshold must be between 0.0001 and 1.0");
+    }
+  }
+  if (config.quality !== void 0) {
+    const validQualities = ["low", "medium", "high", "ultra"];
+    if (!validQualities.includes(config.quality)) {
+      errors.push(`quality must be one of: ${validQualities.join(", ")}`);
+    }
+  }
+  if (config.blurAmount !== void 0) {
+    if (config.blurAmount < 0 || config.blurAmount > 2) {
+      errors.push("blurAmount must be between 0 and 2");
+    }
+  }
+  if (config.blurAxis !== void 0) {
+    const validAxes = ["x", "y", "both"];
+    if (!validAxes.includes(config.blurAxis)) {
+      errors.push(`blurAxis must be one of: ${validAxes.join(", ")}`);
+    }
+  }
+  if (config.maxSamples !== void 0) {
+    if (!Number.isInteger(config.maxSamples)) {
+      errors.push("maxSamples must be an integer");
+    } else if (config.maxSamples < 2 || config.maxSamples > 32) {
+      errors.push("maxSamples must be between 2 and 32");
+    }
+    if (config.samples !== void 0 && config.maxSamples < config.samples) {
+      errors.push("maxSamples must be greater than or equal to samples");
+    }
+  }
+  return errors;
+}
+function mergeMotionBlurConfigs(global, scene, layer) {
+  const configs = [layer, scene, global].filter((c) => c !== void 0);
+  if (configs.length === 0) {
+    return void 0;
+  }
+  const hasExplicitDisable = configs.some((c) => c.enabled === false);
+  if (hasExplicitDisable) {
+    return { enabled: false };
+  }
+  const merged = { enabled: true };
+  for (let i = configs.length - 1; i >= 0; i--) {
+    const config = configs[i];
+    Object.assign(merged, config);
+  }
+  return merged;
+}
+
 // src/template/TemplateProcessor.ts
 var TemplateProcessor = class {
   /**
@@ -4260,9 +4375,11 @@ function getRandomFonts(count = 1) {
 
 exports.ComponentDefaultsManager = ComponentDefaultsManager;
 exports.ComponentPropsResolver = ComponentPropsResolver;
+exports.DEFAULT_MOTION_BLUR_CONFIG = DEFAULT_MOTION_BLUR_CONFIG;
 exports.FONT_CONSTANTS = FONT_CONSTANTS;
 exports.FontLoadingError = FontLoadingError;
 exports.FontManager = FontManager;
+exports.MOTION_BLUR_QUALITY_PRESETS = MOTION_BLUR_QUALITY_PRESETS;
 exports.RendervidEngine = RendervidEngine;
 exports.TemplateProcessor = TemplateProcessor;
 exports.compileAnimation = compileAnimation;
@@ -4297,11 +4414,14 @@ exports.interpolate = interpolate;
 exports.isFontAvailable = isFontAvailable;
 exports.isNamedWeight = isNamedWeight;
 exports.isNumericWeight = isNumericWeight;
+exports.mergeMotionBlurConfigs = mergeMotionBlurConfigs;
 exports.numericToNamedWeight = numericToNamedWeight;
 exports.parseEasing = parseEasing;
+exports.resolveMotionBlurConfig = resolveMotionBlurConfig;
 exports.searchFonts = searchFonts;
 exports.templateSchema = templateSchema;
 exports.validateInputs = validateInputs;
+exports.validateMotionBlurConfig = validateMotionBlurConfig;
 exports.validateSceneOrder = validateSceneOrder;
 exports.validateTemplate = validateTemplate;
 exports.weightToNumeric = weightToNumeric;

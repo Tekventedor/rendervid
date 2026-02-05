@@ -139,6 +139,20 @@ export type {
 } from './filter';
 export { filterToCSS, filtersToCSS } from './filter';
 
+// Motion Blur
+export type {
+  MotionBlurConfig,
+  MotionBlurQuality,
+  ResolvedMotionBlurConfig,
+} from './motion-blur';
+export {
+  MOTION_BLUR_QUALITY_PRESETS,
+  DEFAULT_MOTION_BLUR_CONFIG,
+  resolveMotionBlurConfig,
+  validateMotionBlurConfig,
+  mergeMotionBlurConfigs,
+} from './motion-blur';
+
 // Input
 export type {
   InputDefinition,

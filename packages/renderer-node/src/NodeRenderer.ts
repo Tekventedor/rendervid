@@ -1,11 +1,12 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import os from 'os';
-import { getCompositionDuration, getDefaultRegistry, TemplateProcessor, ComponentPropsResolver } from '@rendervid/core';
+import { getCompositionDuration, getDefaultRegistry, TemplateProcessor, ComponentPropsResolver, resolveMotionBlurConfig } from '@rendervid/core';
 import type { Template, ComponentRegistry } from '@rendervid/core';
 import { FrameCapturer, createFrameCapturer } from './frame-capturer';
 import { FFmpegEncoder, createFFmpegEncoder } from './ffmpeg-encoder';
 import type { HardwareEncoder } from './gpu-detector';
+import { MotionBlurFrameRenderer } from './motion-blur-renderer';
 import type {
   NodeRendererOptions,
   VideoRenderOptions,
@@ -217,7 +218,8 @@ export class NodeRenderer {
       onFrame?: (frame: number, total: number) => void;
       onProgress?: (progress: RenderProgress) => void;
       startTime?: number;
-    }
+    },
+    motionBlurRenderer?: MotionBlurFrameRenderer
   ): AsyncGenerator<Buffer> {
     const { onFrame, onProgress, startTime = Date.now() } = callbacks || {};
     const numCapturers = capturers.length;
@@ -228,7 +230,9 @@ export class NodeRenderer {
       // Sequential rendering
       const capturer = capturers[0];
       for (let frame = 0; frame < totalFrames; frame++) {
-        const frameBuffer = await capturer.captureFrame(frame);
+        const frameBuffer = motionBlurRenderer
+          ? await motionBlurRenderer.renderBlurredFrame(frame, capturer)
+          : await capturer.captureFrame(frame);
         yield frameBuffer;
 
         completedFrames++;
@@ -271,7 +275,9 @@ export class NodeRenderer {
         await Promise.all(
           batch.map(async ({ frame, capturerIndex }) => {
             const capturer = capturers[capturerIndex];
-            const frameBuffer = await capturer.captureFrame(frame);
+            const frameBuffer = motionBlurRenderer
+              ? await motionBlurRenderer.renderBlurredFrame(frame, capturer)
+              : await capturer.captureFrame(frame);
             frameBuffers.set(frame, frameBuffer);
 
             if (onFrame) {
@@ -347,6 +353,31 @@ export class NodeRenderer {
       throw new Error('Template has no frames to render');
     }
 
+    // Check if motion blur is enabled
+    const motionBlurEnabled = options.motionBlur?.enabled ?? false;
+    let motionBlurRenderer: MotionBlurFrameRenderer | undefined;
+
+    if (motionBlurEnabled) {
+      const resolved = resolveMotionBlurConfig(options.motionBlur);
+
+      motionBlurRenderer = new MotionBlurFrameRenderer({
+        motionBlur: resolved,
+        width,
+        height,
+      });
+
+      console.error('[NodeRenderer] Motion blur enabled:');
+      console.error(`  - Samples: ${resolved.samples}`);
+      console.error(`  - Shutter angle: ${resolved.shutterAngle}°`);
+      console.error(`  - Adaptive: ${resolved.adaptive ? 'enabled' : 'disabled'}`);
+      console.error(`  - Estimated render time: ${resolved.samples}x slower`);
+
+      // Validate performance warnings
+      if (resolved.samples > 16) {
+        console.warn('[NodeRenderer] High sample count detected - render will be very slow');
+      }
+    }
+
     // Ensure output directory exists
     await fs.mkdir(path.dirname(outputPath), { recursive: true });
 
@@ -387,7 +418,7 @@ export class NodeRenderer {
           onFrame,
           onProgress,
           startTime,
-        });
+        }, motionBlurRenderer);
 
         await this.ffmpegEncoder.encodeToVideoStream(frameStream, {
           outputPath,
@@ -429,7 +460,9 @@ export class NodeRenderer {
           // Single capturer - sequential rendering (original behavior)
           const capturer = capturers[0];
           for (let frame = 0; frame < totalFrames; frame++) {
-            const frameBuffer = await capturer.captureFrame(frame);
+            const frameBuffer = motionBlurRenderer
+              ? await motionBlurRenderer.renderBlurredFrame(frame, capturer)
+              : await capturer.captureFrame(frame);
             const framePath = path.join(framesDir, `frame-${frame.toString().padStart(6, '0')}.png`);
             await fs.writeFile(framePath, frameBuffer);
 
@@ -471,7 +504,9 @@ export class NodeRenderer {
             await Promise.all(
               batch.map(async ({ frame, capturerIndex }) => {
                 const capturer = capturers[capturerIndex];
-                const frameBuffer = await capturer.captureFrame(frame);
+                const frameBuffer = motionBlurRenderer
+                  ? await motionBlurRenderer.renderBlurredFrame(frame, capturer)
+                  : await capturer.captureFrame(frame);
                 const framePath = path.join(framesDir!, `frame-${frame.toString().padStart(6, '0')}.png`);
                 await fs.writeFile(framePath, frameBuffer);
 

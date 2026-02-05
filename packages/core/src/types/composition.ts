@@ -1,4 +1,5 @@
 import type { Layer } from './layer';
+import type { MotionBlurConfig } from './motion-blur';
 
 /**
  * Scene transition types.
@@ -114,6 +115,11 @@ export interface Scene {
    * Transition to next scene
    */
   transition?: SceneTransition;
+
+  /**
+   * Motion blur configuration (scene-level config)
+   */
+  motionBlur?: MotionBlurConfig;
 
   /**
    * Layers in this scene

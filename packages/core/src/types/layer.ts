@@ -2,6 +2,7 @@ import type { Animation } from './animation';
 import type { LayerStyle } from './style';
 import type { Filter } from './filter';
 import type { ThreeLayer } from './three';
+import type { MotionBlurConfig } from './motion-blur';
 
 /**
  * Available layer types.
@@ -430,6 +431,10 @@ export interface LayerBase {
   // Animations
   /** Animations applied to this layer */
   animations?: Animation[];
+
+  // Motion Blur
+  /** Motion blur configuration (layer-level override) */
+  motionBlur?: MotionBlurConfig;
 
   // Metadata
   /** Layer is locked in editor */

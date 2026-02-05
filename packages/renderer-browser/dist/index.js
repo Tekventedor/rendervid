@@ -574,7 +574,8 @@ function VideoLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
     const layerStartFrame = layer.from ?? 0;
     const localFrame = frame - layerStartFrame;
     const targetTime = startTime + localFrame / fps * playbackRate;
-    if (Math.abs(video.currentTime - targetTime) > 0.1) {
+    const tolerance = 1e-3;
+    if (Math.abs(video.currentTime - targetTime) > tolerance) {
       video.currentTime = targetTime;
     }
     if (isPlaying && video.paused) {

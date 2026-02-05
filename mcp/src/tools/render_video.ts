@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { createNodeRenderer } from '@rendervid/renderer-node';
 import type { Template } from '@rendervid/core';
-import { RendervidEngine, createDefaultComponentDefaultsManager } from '@rendervid/core';
+import { RendervidEngine, createDefaultComponentDefaultsManager, validateMotionBlurConfig } from '@rendervid/core';
 import { RenderVideoInputSchema } from '../types.js';
 import { createLogger } from '../utils/logger.js';
 import { preprocessTemplateFiles } from '../utils/template-preprocessor.js';
@@ -34,6 +34,113 @@ OUTPUT CONFIGURATION (YOU CHOOSE):
 - renderWaitTime: **AUTO-ADJUSTED** (100ms for text-only, 500ms for images/video automatically)
   * Manual override: 100 (fast), 200 (safer), 500+ (complex media)
   * 💡 TIP: If images don't appear, increase to 800-1000ms
+
+MOTION BLUR (Optional - for cinematic effect):
+Add natural motion blur like professional cameras. ⚠️ WARNING: Multiplies render time by sample count!
+
+WHEN TO USE:
+✅ Fast-moving animations, camera pans, product showcases, sports/action content
+❌ Static text/images, long videos (use start_render_async), simple graphics
+
+QUALITY PRESETS (Recommended):
+- "quality": "low"    → 5 samples, fast (~5× slower)
+- "quality": "medium" → 10 samples, balanced (~10× slower) - DEFAULT
+- "quality": "high"   → 16 samples, cinematic (~16× slower)
+- "quality": "ultra"  → 32 samples, maximum blur (~32× slower)
+
+SIMPLE EXAMPLE (Use quality preset):
+{
+  "motionBlur": {
+    "enabled": true,
+    "quality": "medium"
+  }
+}
+
+ADVANCED EXAMPLE (Custom parameters):
+{
+  "motionBlur": {
+    "enabled": true,
+    "samples": 12,              // 2-32 temporal samples (higher = smoother blur)
+    "shutterAngle": 180,        // 0-360° (180° = cinematic standard, 360° = max blur)
+    "adaptive": true,           // Auto-reduce samples on static frames (30-50% faster)
+    "minSamples": 3,            // Minimum samples for adaptive mode
+    "motionThreshold": 0.01     // Motion sensitivity (lower = more aggressive)
+  }
+}
+
+PARAMETERS:
+
+Basic Settings:
+- enabled: true/false (enable motion blur)
+- quality: "low" | "medium" | "high" | "ultra" (overrides samples/shutterAngle)
+- samples: 2-32 (number of sub-frames per frame, higher = smoother)
+- shutterAngle: 0-360° (exposure time: 180° = cinematic, 360° = full frame)
+
+Performance Optimization:
+- adaptive: true/false (reduce samples on static frames, saves 30-50%)
+- minSamples: 2-32 (minimum samples for adaptive mode, must be ≤ samples)
+- motionThreshold: 0.0001-1.0 (motion detection sensitivity)
+- variableSampleRate: true/false (auto-adjust samples based on motion magnitude)
+- maxSamples: 2-32 (maximum for variable rate, must be ≥ samples)
+- preview: true/false (fast preview mode, uses 2 samples for ~2× render time)
+
+Quality Enhancement:
+- stochastic: true/false (random sampling to reduce banding artifacts)
+
+Fine-Tuning:
+- blurAmount: 0-2 (blur multiplier: 0=none, 1=normal, 2=double)
+- blurAxis: "x" | "y" | "both" (blur direction, default: both)
+
+ADVANCED EXAMPLES:
+
+High Quality with Optimization:
+{
+  "motionBlur": {
+    "enabled": true,
+    "quality": "high",
+    "adaptive": true,
+    "stochastic": true
+  }
+}
+
+Variable Sample Rate (Smart Optimization):
+{
+  "motionBlur": {
+    "enabled": true,
+    "samples": 6,          // Minimum samples (slow motion)
+    "maxSamples": 20,      // Maximum samples (fast motion)
+    "variableSampleRate": true
+  }
+}
+
+Preview Mode (Fast Iteration):
+{
+  "motionBlur": {
+    "enabled": true,
+    "preview": true        // Forces 2 samples, ~2× render time
+  }
+}
+
+Per-Layer Control (Scene-Level):
+{
+  "composition": {
+    "scenes": [{
+      "motionBlur": { "quality": "high" },  // Scene override
+      "layers": [
+        { "id": "hero" },  // Inherits high quality
+        { "id": "ui", "motionBlur": { "enabled": false } }  // Layer override
+      ]
+    }]
+  }
+}
+
+⚠️ PERFORMANCE WARNING:
+- Render time = base time × sample count
+- 10 samples = ~10× slower (5 min → 50 min)
+- Use "adaptive": true to save 30-50% on mixed content
+- Use "variableSampleRate": true for automatic optimization
+- Use "preview": true during development (~2× instead of 10×)
+- For long videos with motion blur, use start_render_async
 
 ⚠️ CRITICAL: Images require time to load!
 - Server automatically uses 500ms renderWaitTime when images/videos detected
@@ -583,6 +690,20 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
       }, null, 2);
     }
 
+    // Validate motion blur configuration if provided
+    if (input.motionBlur) {
+      const motionBlurErrors = validateMotionBlurConfig(input.motionBlur);
+      if (motionBlurErrors.length > 0) {
+        logger.error('Invalid motion blur configuration', { errors: motionBlurErrors });
+        return JSON.stringify({
+          success: false,
+          error: 'Invalid motion blur configuration',
+          details: motionBlurErrors,
+          suggestion: 'Check motion blur parameters: samples (2-32), shutterAngle (0-360), minSamples ≤ samples, motionThreshold (0.0001-1.0)',
+        }, null, 2);
+      }
+    }
+
     // Validate and fix output path for macOS
     let outputPath = input.outputPath;
     let pathWasCorrected = false;
@@ -819,6 +940,7 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
         codec: codecSettings.codec,
         quality: codecSettings.quality,
         renderWaitTime: renderWaitTime,
+        motionBlur: input.motionBlur,
         onProgress: (progress: any) => {
           logger.info('Render progress', {
             phase: progress.phase,
