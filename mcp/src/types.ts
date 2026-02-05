@@ -43,8 +43,8 @@ export const RenderVideoInputSchema = z.object({
     .describe('Quality preset. draft = Fast preview, standard = Balanced, high = Production (default), lossless = Uncompressed'),
   fps: z.number().int().positive().optional()
     .describe('Override template fps. Common: 24 = Film, 30 = Standard, 60 = Smooth'),
-  renderWaitTime: z.number().int().positive().optional()
-    .describe('Wait time in ms before capturing frames. 100-200 = text-only, 500-800 = with images/videos. Default: 50'),
+  renderWaitTime: z.number().int().positive().optional().default(100)
+    .describe('Wait time in ms before capturing frames. 100 = fast/default, 200 = text-only, 500-800 = with complex images/videos'),
 });
 
 /**
@@ -62,8 +62,8 @@ export const RenderImageInputSchema = z.object({
     .describe('Quality for JPEG/WebP. 1-100. Higher = better quality, larger file. Default: 90'),
   frame: z.number().int().nonnegative().optional().default(0)
     .describe('Frame number to capture (0-based). 0 = first frame, N = frame after N frames'),
-  renderWaitTime: z.number().int().positive().optional()
-    .describe('Wait time in ms before capturing. 100-200 = text-only, 500-800 = with images. Default: 50'),
+  renderWaitTime: z.number().int().positive().optional().default(100)
+    .describe('Wait time in ms before capturing. 100 = fast/default, 200 = text-only, 500-800 = with complex images'),
 });
 
 /**

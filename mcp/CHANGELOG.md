@@ -2,6 +2,33 @@
 
 All notable changes to the Rendervid MCP Server will be documented in this file.
 
+## [0.1.1] - 2026-02-04
+
+### Fixed
+- **Critical: Server crash prevention** - Added comprehensive error handling to ensure the MCP server never crashes without returning a proper error response
+  - Added `unhandledRejection` handler to catch unhandled promise rejections
+  - Added `uncaughtException` handler to prevent process termination on unexpected errors
+  - Wrapped template validation in try-catch to handle malformed templates gracefully
+  - Wrapped renderer initialization in try-catch to handle system configuration issues
+  - Wrapped video rendering in try-catch to handle rendering failures properly
+  - Enhanced error serialization with multi-level fallbacks to ensure responses are always sent
+- **Improved error messages** - All error responses now include:
+  - `success: false` flag for easy detection
+  - Detailed error messages with context
+  - Actionable suggestions for fixing issues
+  - Stack traces for debugging (when applicable)
+  - Timestamps for error tracking
+
+### Changed
+- Error responses are now more structured and actionable for AI agents
+- All tool execution errors are logged to stderr with structured format
+- Error handling is now defensive with multiple fallback layers
+
+### Documentation
+- Added `ERROR_HANDLING.md` documenting the error handling architecture
+- Documented expected behavior for various error scenarios
+- Added testing guidelines for error handling
+
 ## [0.1.0] - 2026-02-01
 
 ### Added

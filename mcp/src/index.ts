@@ -9,6 +9,14 @@ import {
 import { createLogger } from './utils/logger.js';
 import { renderVideoTool, executeRenderVideo } from './tools/render_video.js';
 import { renderImageTool, executeRenderImage } from './tools/render_image.js';
+import {
+  startRenderAsyncTool,
+  checkRenderStatusTool,
+  listRenderJobsTool,
+  executeStartRenderAsync,
+  executeCheckRenderStatus,
+  executeListRenderJobs,
+} from './tools/render_video_async.js';
 import { validateTemplateTool, executeValidateTemplate } from './tools/validate_template.js';
 import { getCapabilitiesTool, executeGetCapabilities } from './tools/get_capabilities.js';
 import { listExamplesTool, executeListExamples } from './tools/list_examples.js';
@@ -53,6 +61,9 @@ class RendervidMcpServer {
       return {
         tools: [
           renderVideoTool,
+          startRenderAsyncTool,
+          checkRenderStatusTool,
+          listRenderJobsTool,
           renderImageTool,
           validateTemplateTool,
           getCapabilitiesTool,
@@ -78,6 +89,18 @@ class RendervidMcpServer {
         switch (name) {
           case 'render_video':
             result = await executeRenderVideo(args);
+            break;
+
+          case 'start_render_async':
+            result = await executeStartRenderAsync(args);
+            break;
+
+          case 'check_render_status':
+            result = await executeCheckRenderStatus(args);
+            break;
+
+          case 'list_render_jobs':
+            result = await executeListRenderJobs(args);
             break;
 
           case 'render_image':
@@ -131,17 +154,39 @@ class RendervidMcpServer {
       } catch (error) {
         logger.error('Tool execution failed', { name, error });
 
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        // Defensive error handling - ensure we always return something
+        let errorMessage: string;
+        let errorStack: string | undefined;
+
+        try {
+          errorMessage = error instanceof Error ? error.message : String(error);
+          errorStack = error instanceof Error ? error.stack : undefined;
+        } catch (stringifyError) {
+          errorMessage = 'Failed to serialize error message';
+          errorStack = undefined;
+        }
+
+        // Construct error response with safe JSON serialization
+        let errorResponse: string;
+        try {
+          errorResponse = JSON.stringify({
+            success: false,
+            error: 'Tool execution failed',
+            tool: name,
+            details: errorMessage,
+            stack: errorStack,
+            timestamp: new Date().toISOString(),
+          }, null, 2);
+        } catch (jsonError) {
+          // Last resort: return plain text error
+          errorResponse = `{"success": false, "error": "Tool execution failed", "tool": "${name}", "details": "Failed to serialize error"}`;
+        }
 
         return {
           content: [
             {
               type: 'text',
-              text: JSON.stringify({
-                error: 'Tool execution failed',
-                tool: name,
-                details: errorMessage,
-              }, null, 2),
+              text: errorResponse,
             },
           ],
           isError: true,
@@ -154,6 +199,26 @@ class RendervidMcpServer {
     this.server.onerror = (error) => {
       logger.error('Server error', { error });
     };
+
+    // Critical: Handle unhandled promise rejections
+    // Without this, async errors can crash the process without returning a response
+    process.on('unhandledRejection', (reason) => {
+      logger.error('Unhandled Promise Rejection', {
+        reason: reason instanceof Error ? reason.message : String(reason),
+        stack: reason instanceof Error ? reason.stack : undefined,
+      });
+      // Don't crash - the MCP server must stay running
+    });
+
+    // Critical: Handle uncaught exceptions
+    // This prevents the process from crashing on unexpected errors
+    process.on('uncaughtException', (error) => {
+      logger.error('Uncaught Exception', {
+        message: error.message,
+        stack: error.stack,
+      });
+      // Don't crash - the MCP server must stay running
+    });
 
     process.on('SIGINT', async () => {
       logger.info('Received SIGINT, shutting down');

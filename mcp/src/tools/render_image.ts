@@ -5,6 +5,7 @@ import type { Template } from '@rendervid/core';
 import { createDefaultComponentDefaultsManager } from '@rendervid/core';
 import { RenderImageInputSchema } from '../types.js';
 import { createLogger } from '../utils/logger.js';
+import { preprocessTemplateFiles } from '../utils/template-preprocessor.js';
 
 const logger = createLogger('render_image');
 
@@ -24,11 +25,20 @@ OUTPUT:
 - Frame: Captures specified frame number (default: 0)
 - Max resolution: 7680x4320 (8K)
 
-TEMPLATE:
+TEMPLATE REQUIREMENTS:
 - Same JSON structure as video templates
 - Animations evaluated at specified frame
 - Supports all layer types (text, image, shape, custom)
 - Use output.type: "video" or "image" (both work)
+- ⚠️ MUST include "inputs": [] field (even if empty for static templates)
+
+REQUIRED TEMPLATE FIELDS:
+{
+  "name": "string",           // Template name (REQUIRED)
+  "output": { ... },           // Output configuration (REQUIRED)
+  "inputs": [],                // Input definitions (REQUIRED - use [] if no dynamic inputs)
+  "composition": { ... }       // Scenes and layers (REQUIRED)
+}
 
 TYPICAL USE:
 1. Render frame 0 as thumbnail
@@ -37,7 +47,8 @@ TYPICAL USE:
 4. Create static graphics from animated template
 
 ⚠️ CRITICAL: Pass template as JSON OBJECT, not string
-✅ CORRECT: { "template": {"name": "Image"} }`,
+✅ CORRECT: { "template": {"name": "Image", "inputs": [], ...} }
+❌ COMMON ERROR: Missing "inputs" field - always include it!`,
   inputSchema: zodToJsonSchema(RenderImageInputSchema),
 };
 
@@ -58,11 +69,65 @@ export async function executeRenderImage(args: unknown): Promise<string> {
       }, null, 2);
     }
 
+    // Preprocess template to convert local files to data URLs
+    logger.info('Preprocessing template files');
+    const preprocessResult = await preprocessTemplateFiles(input.template, {
+      maxBase64SizeKB: 500,
+    });
+
+    // Log conversions
+    if (preprocessResult.conversions.length > 0) {
+      logger.info('File conversions completed', {
+        count: preprocessResult.conversions.length,
+        conversions: preprocessResult.conversions.map(c => ({
+          layerId: c.layerId,
+          originalPath: c.originalPath,
+          originalSize: `${c.originalSizeKB.toFixed(1)} KB`,
+          finalSize: `${c.finalSizeKB.toFixed(1)} KB`,
+          wasResized: c.wasResized,
+        })),
+      });
+    }
+
+    // Log warnings
+    if (preprocessResult.warnings.length > 0) {
+      logger.warn('File preprocessing warnings', { warnings: preprocessResult.warnings });
+    }
+
+    // Handle preprocessing errors
+    if (preprocessResult.errors.length > 0) {
+      logger.error('File preprocessing failed', { errors: preprocessResult.errors });
+      return JSON.stringify({
+        success: false,
+        error: 'Failed to preprocess template files',
+        details: preprocessResult.errors,
+        suggestion: 'Check that all local file paths are valid and accessible.',
+      }, null, 2);
+    }
+
+    const processedTemplate = preprocessResult.template;
+
+    // Auto-adjust renderWaitTime based on template content
+    let renderWaitTime = input.renderWaitTime ?? 100;
+    const hasMediaLayers = detectMediaLayers(processedTemplate);
+
+    if (hasMediaLayers && !input.renderWaitTime) {
+      // Template has images/videos and user didn't specify renderWaitTime
+      // Use 500ms to ensure media loads properly
+      renderWaitTime = 500;
+      logger.info('Auto-adjusted renderWaitTime for media layers', {
+        from: 100,
+        to: 500,
+        reason: 'Template contains image/video/audio layers',
+      });
+    }
+
     logger.info('Starting image render', {
       outputPath: input.outputPath,
       format: input.format,
       quality: input.quality,
       frame: input.frame,
+      renderWaitTime,
     });
 
     // Create component defaults manager with pre-configured components
@@ -82,13 +147,13 @@ export async function executeRenderImage(args: unknown): Promise<string> {
 
     // Render image
     const result = await renderer.renderImage({
-      template: input.template as Template,
+      template: processedTemplate as Template,
       inputs: mergedInputs,
       outputPath: input.outputPath,
       format: input.format as 'png' | 'jpeg' | 'webp',
       quality: input.quality,
       frame: input.frame,
-      renderWaitTime: input.renderWaitTime,
+      renderWaitTime: renderWaitTime,
     });
 
     if (!result.success) {
@@ -112,7 +177,8 @@ export async function executeRenderImage(args: unknown): Promise<string> {
         height: result.height,
         format: input.format,
         frame: input.frame,
-        renderTime: result.renderTime,
+        renderTimeMs: result.renderTime, // Exact render time in milliseconds (for cost computation)
+        renderTime: result.renderTime, // Backwards compatibility
         renderTimeFormatted: `${(result.renderTime / 1000).toFixed(2)}s`,
       },
     }, null, 2);
@@ -146,6 +212,26 @@ export async function executeRenderImage(args: unknown): Promise<string> {
       error: errorMessage,
     }, null, 2);
   }
+}
+
+/**
+ * Detect if template has media layers (image, video, audio)
+ * Used to auto-adjust renderWaitTime for proper media loading
+ */
+function detectMediaLayers(template: any): boolean {
+  if (!template?.composition?.scenes) return false;
+
+  for (const scene of template.composition.scenes) {
+    if (!scene.layers) continue;
+
+    for (const layer of scene.layers) {
+      if (layer.type === 'image' || layer.type === 'video' || layer.type === 'audio') {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 function formatFileSize(bytes: number | undefined): string {

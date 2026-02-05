@@ -65,6 +65,10 @@ export interface EncodeOptions {
   codec?: 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'libaom-av1' | 'prores';
   /** Quality CRF (0-51) */
   quality?: number;
+  /** Video bitrate (e.g., '8M', '10M'). Overrides quality/CRF when specified. */
+  bitrate?: string;
+  /** Encoding preset for libx264/libx265 (default: 'medium'). Use 'slow' or 'veryslow' for better quality. */
+  preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium' | 'slow' | 'slower' | 'veryslow';
   /** Pixel format */
   pixelFormat?: string;
   /** Audio file to include */
@@ -317,6 +321,8 @@ export class FFmpegEncoder {
       height,
       codec = 'libx264',
       quality = 23,
+      bitrate,
+      preset = 'medium',
       pixelFormat = 'yuv420p',
       audioFile,
       audioCodec = 'aac',
@@ -372,19 +378,32 @@ export class FFmpegEncoder {
         // Software encoder options
         if (codec === 'libaom-av1') {
           // AV1 specific options
+          if (bitrate) {
+            outputOptions.push(`-b:v ${bitrate}`);
+          } else {
+            outputOptions.push(
+              `-crf ${quality}`,
+              `-b:v 0` // Use constant quality mode
+            );
+          }
           outputOptions.push(
-            `-crf ${quality}`,
-            `-b:v 0`, // Use constant quality mode
             `-cpu-used 4`, // Encoding speed (0-8, higher is faster)
             `-row-mt 1`, // Enable row-based multithreading
             `-pix_fmt ${pixelFormat}`
           );
         } else {
-          // Default options for other codecs
+          // Default options for other codecs (libx264, libx265, etc.)
+          if (bitrate) {
+            outputOptions.push(`-b:v ${bitrate}`);
+          } else {
+            outputOptions.push(
+              `-crf ${quality}`,
+              `-b:v 0` // Use constant quality mode
+            );
+          }
           outputOptions.push(
-            `-crf ${quality}`,
             `-pix_fmt ${pixelFormat}`,
-            `-preset medium`
+            `-preset ${preset}`
           );
         }
       }
@@ -473,6 +492,8 @@ export class FFmpegEncoder {
       height,
       codec = 'libx264',
       quality = 23,
+      bitrate,
+      preset = 'medium',
       pixelFormat = 'yuv420p',
       audioFile,
       audioCodec = 'aac',
@@ -544,18 +565,25 @@ export class FFmpegEncoder {
       } else {
         // Software encoder options
         if (codec === 'libaom-av1') {
+          if (bitrate) {
+            args.push('-b:v', bitrate);
+          } else {
+            args.push('-crf', quality.toString(), '-b:v', '0');
+          }
           args.push(
-            '-crf', quality.toString(),
-            '-b:v', '0',
             '-cpu-used', '4',
             '-row-mt', '1',
             '-pix_fmt', pixelFormat
           );
         } else {
+          if (bitrate) {
+            args.push('-b:v', bitrate);
+          } else {
+            args.push('-crf', quality.toString(), '-b:v', '0');
+          }
           args.push(
-            '-crf', quality.toString(),
             '-pix_fmt', pixelFormat,
-            '-preset', 'medium'
+            '-preset', preset
           );
         }
       }

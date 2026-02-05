@@ -5,6 +5,9 @@ import type { Template } from '@rendervid/core';
 import { RendervidEngine, createDefaultComponentDefaultsManager } from '@rendervid/core';
 import { RenderVideoInputSchema } from '../types.js';
 import { createLogger } from '../utils/logger.js';
+import { preprocessTemplateFiles } from '../utils/template-preprocessor.js';
+import { validateTemplateForRendering } from '../utils/template-validator.js';
+import { validateRenderedVideo } from '../utils/post-render-validator.js';
 import * as os from 'os';
 import * as path from 'path';
 
@@ -12,19 +15,32 @@ const logger = createLogger('render_video');
 
 export const renderVideoTool = {
   name: 'render_video',
-  description: `Generate a video file from a Rendervid JSON template.
+  description: `Generate a video file from a Rendervid JSON template. Use for videos ≤30 seconds. For longer videos, use start_render_async.
 
 USE FOR:
 Social media content (Instagram Reels, TikTok, YouTube Shorts), product demonstrations,
 promotional videos, explainer animations, tutorial videos, video ads, portfolio showcases,
 event announcements, presentations, marketing campaigns
 
-OUTPUT:
-- Format: MP4 (H.264, hardware-accelerated on Apple Silicon)
-- Location: Specified by outputPath parameter (e.g., ~/Downloads/video.mp4)
-- Quality: draft = Fast preview, standard = Balanced, high = Production quality (default), lossless = Uncompressed
-- Max resolution: 7680x4320 (8K)
-- Frame rates: 24, 30, 60 fps supported
+OUTPUT CONFIGURATION (YOU CHOOSE):
+- Format: MP4 (default/best), WebM (web), MOV (macOS)
+- Quality: draft (fast preview), standard (balanced), high (production - default), lossless (uncompressed)
+- Resolution: Choose based on platform:
+  * TikTok/Reels/Shorts: 1080x1920 (9:16 portrait)
+  * YouTube/Instagram: 1920x1080 (16:9 landscape)
+  * Twitter: 1280x720 (smaller, faster)
+  * Max: 7680x4320 (8K)
+- FPS: 24 (cinematic), 30 (standard/default), 60 (smooth)
+- renderWaitTime: **AUTO-ADJUSTED** (100ms for text-only, 500ms for images/video automatically)
+  * Manual override: 100 (fast), 200 (safer), 500+ (complex media)
+  * 💡 TIP: If images don't appear, increase to 800-1000ms
+
+⚠️ CRITICAL: Images require time to load!
+- Server automatically uses 500ms renderWaitTime when images/videos detected
+- If images still don't appear: manually set "renderWaitTime": 800
+- Text-only templates use 100ms (fast)
+
+⚠️ TIMEOUT WARNING: Videos >30s may timeout (60s MCP limit). Use start_render_async for longer videos.
 
 ⚠️ CRITICAL: Pass template as JSON OBJECT, not string
 ❌ WRONG: { "template": "{\\"name\\":\\"Video\\"}" }
@@ -33,6 +49,17 @@ OUTPUT:
 ⚠️ ALWAYS VALIDATE FIRST
 Workflow: validate_template → fix errors → render_video
 Prevents: 404 image errors, syntax issues, wasted render time
+
+⚠️ REQUIRED TEMPLATE FIELDS (ALWAYS INCLUDE):
+{
+  "name": "string",           // Template name (REQUIRED)
+  "output": { ... },           // Output configuration (REQUIRED)
+  "inputs": [],                // Input definitions array (REQUIRED - use empty array [] if no dynamic inputs)
+  "composition": { ... }       // Scenes and layers (REQUIRED)
+}
+
+❌ COMMON ERROR: Missing "inputs" field
+✅ FIX: Always include "inputs": [] even if you have no dynamic variables
 
 CRITICAL TEMPLATE RULES:
 
@@ -51,13 +78,16 @@ CRITICAL TEMPLATE RULES:
    - Correct: "props": { "text": "Hello", "fontSize": 48, "color": "#ffffff" }
    - Wrong: "text": "Hello", "fontSize": 48 (these must be inside props)
 
-4. INPUT DEFINITIONS NEED ALL REQUIRED FIELDS
-   - key: unique identifier (string)
-   - type: "string" | "number" | "boolean" | "color"
-   - label: display name (string)
-   - description: what this input does (string) - REQUIRED
-   - required: true/false (boolean) - REQUIRED
-   - default: default value - REQUIRED
+4. INPUTS FIELD IS ALWAYS REQUIRED
+   - MUST include "inputs" field in template (even if empty: "inputs": [])
+   - For static videos with no variables: "inputs": []
+   - For dynamic videos with {{variables}}: define each input with ALL fields:
+     * key: unique identifier (string)
+     * type: "string" | "number" | "boolean" | "color"
+     * label: display name (string)
+     * description: what this input does (string) - REQUIRED
+     * required: true/false (boolean) - REQUIRED
+     * default: default value - REQUIRED
    - Example: { "key": "title", "type": "string", "label": "Title", "description": "Main title text", "required": true, "default": "Hello" }
 
 5. ANIMATIONS USE FRAME-BASED TIMING
@@ -68,7 +98,54 @@ CRITICAL TEMPLATE RULES:
    - Example: { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 20 }
      This means: wait 1 second (30 frames), then fade in over 0.67 seconds (20 frames)
 
-COMPLETE TEMPLATE STRUCTURE:
+COMPLETE TEMPLATE STRUCTURE (Static - No Variables):
+{
+  "name": "Video Name",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [],
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#2563eb"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 160, "y": 440 },
+            "size": { "width": 1600, "height": 200 },
+            "props": {
+              "text": "Hello World",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+
+COMPLETE TEMPLATE STRUCTURE (Dynamic - With Variables):
 {
   "name": "Video Name",
   "output": {
@@ -146,6 +223,160 @@ NEED MORE DETAILS? Use these tools for just-in-time documentation:
 LAYER TYPES: text, image, shape, video, audio, custom
 ANIMATION TYPES: entrance, exit, emphasis
 EASING CATEGORIES: basic, in, out (recommended), inout, back, bounce, elastic
+
+⚠️ CRITICAL: ANIMATION RESTRICTIONS - CAUSES BLACK SCENES IF VIOLATED
+
+**SUPPORTED ANIMATIONS ONLY:**
+✅ SAFE (Standard entrance/exit effects):
+- fadeIn, fadeOut (opacity transitions)
+- slideInUp, slideInDown, slideInLeft, slideInRight, slideOutUp, slideOutDown, slideOutLeft, slideOutRight (position transitions)
+- scaleIn, scaleOut (size transitions)
+
+❌ NEVER USE (Will create BLACK SCENES):
+- Custom keyframe animations with "type": "custom"
+- Animations that change size or position in keyframes
+- Complex transform animations
+- CSS-based animations
+
+**ANIMATION STRUCTURE (REQUIRED FORMAT):**
+{
+  "animations": [
+    {
+      "type": "entrance",        // or "exit"
+      "effect": "fadeIn",        // Use supported effects only
+      "delay": 30,               // Frames to wait before starting
+      "duration": 20,            // Frames the animation lasts
+      "easing": "easeOutCubic"   // Optional easing function
+    }
+  ]
+}
+
+**EXAMPLE - SMOOTH SCENE TRANSITIONS:**
+// Scene 1 elements - fade out before scene ends
+{
+  "animations": [
+    {
+      "type": "entrance",
+      "effect": "fadeIn",
+      "delay": 15,
+      "duration": 20
+    },
+    {
+      "type": "exit",
+      "effect": "fadeOut",
+      "delay": 130,    // Start fade 20 frames before scene end (if scene is 150 frames)
+      "duration": 20
+    }
+  ]
+}
+
+// Scene 2 background - fade in at scene start
+{
+  "animations": [
+    {
+      "type": "entrance",
+      "effect": "fadeIn",
+      "delay": 0,       // Start immediately
+      "duration": 20
+    }
+  ]
+}
+
+⚠️ CRITICAL: POSITIONING RULES - ELEMENTS MUST BE VISIBLE
+
+**CANVAS BOUNDS (Example for 1080x1920 vertical video):**
+- Width: 0 to 1080 (pixels)
+- Height: 0 to 1920 (pixels)
+- Origin: Top-left corner (0, 0)
+
+**SAFE POSITIONING ZONES:**
+
+    +-------------------------+ y: 0
+    |    Title Area (Safe)    | y: 100-400
+    |-------------------------|
+    |                         |
+    |   Main Content Area     | y: 400-1500
+    |      (Safe Zone)        |
+    |                         |
+    |-------------------------|
+    |   Bottom Area (Safe)    | y: 1500-1800
+    +-------------------------+ y: 1920
+     x: 0               x: 1080
+
+❌ COMMON POSITIONING ERRORS (Causes invisible/black content):
+- Negative positions: x: -100 or y: -50
+- Beyond canvas: y: 2000 for 1920px height video
+- Partially off-screen: x: 1000 with width: 200 (goes to x: 1200, exceeds 1080)
+
+✅ CORRECT POSITIONING:
+- Title: { "x": 90, "y": 200 } with size { "width": 900, "height": 100 }
+- Main content: { "x": 100, "y": 500 } with size { "width": 880, "height": 800 }
+- Always ensure: x + width ≤ canvas width, y + height ≤ canvas height
+
+⚠️ CRITICAL: VIDEO BACKGROUNDS - AVOID LOOP FLASH
+
+**THE PROBLEM:** If scene duration > video source duration, video loops and causes visible flash/jump
+
+**THE SOLUTION:** Make scene duration EXACTLY match video source duration
+
+**EXAMPLE:**
+- Video source: 5 seconds
+- FPS: 30
+- Scene frames: 5 × 30 = 150 frames
+- Scene config: startFrame: 0, endFrame: 150 (exactly 5 seconds)
+
+❌ WRONG (Causes flash):
+{
+  "startFrame": 0,
+  "endFrame": 225,    // 7.5 seconds - video will loop at 5s and flash!
+  "layers": [{
+    "type": "video",
+    "props": {
+      "src": "/path/to/5-second-video.mp4",
+      "loop": true    // Will cause visible flash at 5s mark
+    }
+  }]
+}
+
+✅ CORRECT (No flash):
+{
+  "startFrame": 0,
+  "endFrame": 150,    // Exactly 5 seconds - no loop needed!
+  "layers": [{
+    "type": "video",
+    "props": {
+      "src": "/path/to/5-second-video.mp4",
+      "muted": true    // Loop not needed when duration matches
+    }
+  }]
+}
+
+⚠️ QUALITY SETTINGS - FOR PRODUCTION VIDEOS
+
+**WHEN TO USE HIGH QUALITY:**
+Use "quality": "high" for:
+- Final production videos
+- Client deliverables
+- Videos with text that must be sharp
+- Videos for large screens
+
+**OUTPUT:**
+- Uses software encoding (libx264) - slower but excellent quality
+- Bitrate: 8-10 Mbps (file size: ~8-12 MB for 15s video)
+- No compression artifacts
+- Crystal clear text and images
+
+**WHEN TO USE STANDARD QUALITY:**
+Use "quality": "standard" (default) for:
+- Quick previews
+- Social media content (compressed by platforms anyway)
+- Drafts and iterations
+
+**OUTPUT:**
+- Uses hardware encoding (faster)
+- Bitrate: ~1-2 Mbps (file size: ~1-2 MB for 15s video)
+- Good enough for most uses
+- Faster render times
 
 CUSTOM COMPONENTS (ADVANCED - For animated counters, charts, particles, etc.):
 
@@ -269,17 +500,40 @@ IMAGE LAYER EXAMPLE (REQUIRED FOR PROMOTIONAL VIDEOS):
   }
 }
 
-⚠️ IMAGE URL REQUIREMENTS (CRITICAL FOR macOS):
-✅ CORRECT: Use HTTPS URLs from:
+⚠️ IMAGE SOURCE OPTIONS:
+
+✅ LOCAL FILES - AUTOMATICALLY HANDLED (Recommended for local development):
+   - MCP server automatically converts local files to base64 data URLs
+   - Absolute paths: "/Users/name/Downloads/image.jpg"
+   - Tilde paths: "~/Downloads/image.jpg" (auto-expands to home directory)
+   - Works on macOS, Linux, Windows
+   - **AUTO-RESIZE**: Files > 500 KB automatically resized to ~30-50 KB for optimal performance
+   - **BASE64**: Converted to data URLs seamlessly (no HTTP server needed)
+   - No internet connection required
+   - All formats: JPG, PNG, WebP, GIF, BMP, SVG
+   - ⚠️ Use absolute paths, NOT relative paths like "./image.jpg"
+
+✅ HTTPS URLs (Recommended for production):
    - Unsplash: "https://images.unsplash.com/photo-..."
    - Pexels: "https://images.pexels.com/photos/..."
    - Photomatic AI: "https://www.photomaticai.com/images/processed/..."
+   - Any accessible HTTPS image URL
 
-❌ WRONG: These will FAIL on macOS:
-   - "/mnt/user-data/uploads/image.webp" (Linux path)
-   - "/home/claude/image.webp" (invalid user path)
-   - "file:///path/to/image.webp" (blocked by browser security)
-   - Relative paths like "./image.webp"
+✅ DATA URLs (Advanced):
+   - Base64: "data:image/png;base64,iVBORw0KG..."
+   - Local files are automatically converted to data URLs
+
+❌ WRONG: These will FAIL:
+   - "/mnt/user-data/uploads/image.webp" (Linux path, invalid on macOS)
+   - "/home/claude/image.webp" (Linux path, invalid on macOS)
+   - "C:\\Users\\name\\image.jpg" (Windows path, use forward slashes)
+   - "./image.webp" or "../images/photo.jpg" (relative paths not supported)
+
+🎯 AUTOMATIC IMAGE RESIZING:
+   - Large images (> 500 KB) are automatically resized
+   - Example: 1154 KB → 36 KB (preserves quality and aspect ratio)
+   - Ensures fast loading and no browser issues
+   - WebP files converted to JPEG for better compatibility
 
 WHEN TO USE IMAGE LAYERS:
 ✓ ALWAYS include image layers for: promotional videos, product showcases, portfolios, presentations
@@ -294,11 +548,12 @@ Example: { "template": {...}, "renderWaitTime": 500 }
 Note: Video layers need 500-1000ms; images need 300-500ms; simple text templates: 100-200ms
 
 COMMON MISTAKES TO AVOID:
+❌ MISSING "inputs" FIELD - THIS IS THE #1 ERROR! Always include "inputs": [] even for static templates
 ❌ Creating promotional videos with ONLY text and shapes - MUST include image layers showing the actual product/content
 ❌ Using seconds for animation timing (use frames!)
 ❌ Missing size property on layers
 ❌ Putting layer props outside props object
-❌ Missing required field in input definitions
+❌ Missing required fields in input definitions (description, required, default)
 ❌ Using wrong position values (position is top-left corner, not center)
 ❌ endFrame less than or equal to startFrame
 ❌ DUPLICATE LAYER IDS: Layer IDs must be unique across ALL scenes (use "scene1-bg", "scene2-bg" not "background" in every scene)
@@ -370,8 +625,21 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
 
     // Validate template before rendering
     logger.info('Validating template');
-    const engine = new RendervidEngine();
-    const validation = engine.validateTemplate(input.template);
+    let validation: { valid: boolean; errors?: any[]; warnings?: any[] };
+
+    try {
+      const engine = new RendervidEngine();
+      validation = engine.validateTemplate(input.template);
+    } catch (validationError) {
+      logger.error('Template validation threw an exception', { error: validationError });
+
+      return JSON.stringify({
+        success: false,
+        error: 'Template validation failed with an unexpected error',
+        details: validationError instanceof Error ? validationError.message : String(validationError),
+        suggestion: 'This may indicate a malformed template structure. Please check the template format.',
+      }, null, 2);
+    }
 
     if (!validation.valid) {
       logger.warn('Template validation failed', {
@@ -396,21 +664,141 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
       });
     }
 
+    // Preprocess template to convert local files to data URLs
+    logger.info('Preprocessing template files');
+    const preprocessResult = await preprocessTemplateFiles(input.template, {
+      maxBase64SizeKB: 500,
+    });
+
+    // Log conversions
+    if (preprocessResult.conversions.length > 0) {
+      logger.info('File conversions completed', {
+        count: preprocessResult.conversions.length,
+        conversions: preprocessResult.conversions.map(c => ({
+          layerId: c.layerId,
+          originalPath: c.originalPath,
+          originalSize: `${c.originalSizeKB.toFixed(1)} KB`,
+          finalSize: `${c.finalSizeKB.toFixed(1)} KB`,
+          wasResized: c.wasResized,
+        })),
+      });
+    }
+
+    // Log warnings
+    if (preprocessResult.warnings.length > 0) {
+      logger.warn('File preprocessing warnings', { warnings: preprocessResult.warnings });
+    }
+
+    // Handle preprocessing errors
+    if (preprocessResult.errors.length > 0) {
+      logger.error('File preprocessing failed', { errors: preprocessResult.errors });
+      return JSON.stringify({
+        success: false,
+        error: 'Failed to preprocess template files',
+        details: preprocessResult.errors,
+        suggestion: 'Check that all local file paths are valid and accessible.',
+      }, null, 2);
+    }
+
+    const processedTemplate = preprocessResult.template;
+
+    // Validate template for common rendering issues
+    logger.info('Validating template for rendering issues');
+    const renderValidation = validateTemplateForRendering(processedTemplate);
+
+    // Log validation issues
+    if (renderValidation.issues.length > 0) {
+      const errors = renderValidation.issues.filter(i => i.severity === 'error');
+      const warnings = renderValidation.issues.filter(i => i.severity === 'warning');
+
+      if (errors.length > 0) {
+        logger.error('Template has critical issues that will cause rendering problems', {
+          errorCount: errors.length,
+          errors: errors.map(e => ({
+            code: e.code,
+            message: e.message,
+            fix: e.fix,
+            location: e.location,
+          })),
+        });
+
+        return JSON.stringify({
+          success: false,
+          error: 'Template validation failed - will cause rendering issues',
+          issues: {
+            errors: errors.map(e => ({
+              code: e.code,
+              message: e.message,
+              fix: e.fix,
+              location: e.location,
+            })),
+            warnings: warnings.map(w => ({
+              code: w.code,
+              message: w.message,
+              fix: w.fix,
+              location: w.location,
+            })),
+          },
+          suggestion: 'Fix the errors listed above before rendering. Common issues: unsupported animations (use fadeIn/fadeOut instead of custom keyframes), elements positioned outside canvas bounds, invalid scene timing.',
+        }, null, 2);
+      }
+
+      if (warnings.length > 0) {
+        logger.warn('Template has warnings', {
+          warningCount: warnings.length,
+          warnings: warnings.map(w => ({
+            code: w.code,
+            message: w.message,
+            fix: w.fix,
+            location: w.location,
+          })),
+        });
+      }
+    }
+
+    // Auto-adjust renderWaitTime based on template content
+    let renderWaitTime = input.renderWaitTime ?? 100;
+    const hasMediaLayers = detectMediaLayers(processedTemplate);
+
+    if (hasMediaLayers && !input.renderWaitTime) {
+      // Template has images/videos and user didn't specify renderWaitTime
+      // Use 500ms to ensure media loads properly
+      renderWaitTime = 500;
+      logger.info('Auto-adjusted renderWaitTime for media layers', {
+        from: 100,
+        to: 500,
+        reason: 'Template contains image/video/audio layers',
+      });
+    }
+
     logger.info('Starting video render', {
       outputPath: outputPath,
       format: input.format,
       quality: input.quality,
+      renderWaitTime,
     });
 
     // Create component defaults manager with pre-configured components
     // This ensures all custom components receive proper defaults and validation
-    const defaultsManager = createDefaultComponentDefaultsManager();
+    let renderer: any;
+    try {
+      const defaultsManager = createDefaultComponentDefaultsManager();
 
-    // Create renderer with component defaults enabled
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const renderer = createNodeRenderer({
-      componentDefaultsManager: defaultsManager as any,
-    });
+      // Create renderer with component defaults enabled
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      renderer = createNodeRenderer({
+        componentDefaultsManager: defaultsManager as any,
+      });
+    } catch (rendererError) {
+      logger.error('Failed to create renderer', { error: rendererError });
+
+      return JSON.stringify({
+        success: false,
+        error: 'Failed to initialize video renderer',
+        details: rendererError instanceof Error ? rendererError.message : String(rendererError),
+        suggestion: 'This may indicate a system configuration issue. Ensure ffmpeg and required dependencies are installed.',
+      }, null, 2);
+    }
 
     // Map quality to codec settings
     const codecSettings = getCodecSettings(input.format, input.quality);
@@ -421,26 +809,44 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
       ...input.inputs,
     };
 
-    // Render video
-    const result = await renderer.renderVideo({
-      template: input.template as Template,
-      inputs: mergedInputs,
-      outputPath: outputPath,
-      codec: codecSettings.codec,
-      quality: codecSettings.quality,
-      renderWaitTime: input.renderWaitTime,
-      onProgress: (progress) => {
-        logger.info('Render progress', {
-          phase: progress.phase,
-          percent: progress.percent?.toFixed(1),
-          frame: `${progress.currentFrame}/${progress.totalFrames}`,
-          eta: progress.eta ? `${progress.eta.toFixed(1)}s` : undefined,
-        });
-      },
-    });
+    // Render video with timeout protection
+    let result: any;
+    try {
+      result = await renderer.renderVideo({
+        template: processedTemplate as Template,
+        inputs: mergedInputs,
+        outputPath: outputPath,
+        codec: codecSettings.codec,
+        quality: codecSettings.quality,
+        renderWaitTime: renderWaitTime,
+        onProgress: (progress: any) => {
+          logger.info('Render progress', {
+            phase: progress.phase,
+            percent: progress.percent?.toFixed(1),
+            frame: `${progress.currentFrame}/${progress.totalFrames}`,
+            eta: progress.eta ? `${progress.eta.toFixed(1)}s` : undefined,
+          });
+        },
+      });
+    } catch (renderError) {
+      logger.error('Video rendering threw an exception', { error: renderError });
+
+      return JSON.stringify({
+        success: false,
+        error: 'Video rendering failed',
+        details: renderError instanceof Error ? renderError.message : String(renderError),
+        suggestion: 'Check template structure, ensure all media URLs are accessible, and verify system resources.',
+      }, null, 2);
+    }
 
     if (!result.success) {
-      throw new Error(result.error || 'Video rendering failed');
+      logger.error('Video rendering returned failure', { error: result.error });
+
+      return JSON.stringify({
+        success: false,
+        error: result.error || 'Video rendering failed',
+        details: 'The renderer completed but reported a failure status.',
+      }, null, 2);
     }
 
     logger.info('Video render complete', {
@@ -449,6 +855,22 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
       fileSize: formatFileSize(result.fileSize),
       renderTime: `${(result.renderTime / 1000).toFixed(2)}s`,
     });
+
+    // Post-render validation to detect black scenes
+    logger.info('Running post-render validation');
+    const postValidation = await validateRenderedVideo(
+      result.outputPath,
+      result.duration,
+      result.fps || 30
+    );
+
+    if (postValidation.hasIssues) {
+      logger.warn('Post-render validation detected issues', {
+        blackScenes: postValidation.blackScenes,
+        lowQuality: postValidation.lowQuality,
+        suggestions: postValidation.suggestions,
+      });
+    }
 
     const response: any = {
       success: true,
@@ -461,7 +883,8 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
         width: result.width,
         height: result.height,
         frameCount: result.frameCount,
-        renderTime: result.renderTime,
+        renderTimeMs: result.renderTime, // Exact render time in milliseconds (for cost computation)
+        renderTime: result.renderTime, // Backwards compatibility
         renderTimeFormatted: `${(result.renderTime / 1000).toFixed(2)}s`,
       },
     };
@@ -474,6 +897,24 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
         actualPath: result.outputPath,
         note: 'File saved to your macOS user directory. You can find it in Finder.',
       };
+    }
+
+    // Add validation warnings if any issues detected
+    if (postValidation.hasIssues) {
+      response.validation = {
+        hasIssues: true,
+        blackScenes: postValidation.blackScenes.length > 0 ? {
+          frames: postValidation.blackScenes,
+          message: '⚠️ BLACK SCENES DETECTED - Video may have invisible content',
+        } : undefined,
+        lowQuality: postValidation.lowQuality ? {
+          message: 'Video file size is smaller than expected - may indicate compression issues',
+        } : undefined,
+        suggestions: postValidation.suggestions,
+      };
+
+      // Update message to alert about issues
+      response.message = `Video rendered but validation detected issues. Check validation field for details. ${result.outputPath}`;
     }
 
     return JSON.stringify(response, null, 2);
@@ -525,6 +966,26 @@ export async function executeRenderVideo(args: unknown): Promise<string> {
       error: errorMessage,
     }, null, 2);
   }
+}
+
+/**
+ * Detect if template has media layers (image, video, audio)
+ * Used to auto-adjust renderWaitTime for proper media loading
+ */
+function detectMediaLayers(template: any): boolean {
+  if (!template?.composition?.scenes) return false;
+
+  for (const scene of template.composition.scenes) {
+    if (!scene.layers) continue;
+
+    for (const layer of scene.layers) {
+      if (layer.type === 'image' || layer.type === 'video' || layer.type === 'audio') {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 function getCodecSettings(format: string, quality: string): { codec: 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'prores'; quality: number } {

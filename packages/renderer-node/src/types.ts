@@ -1,4 +1,5 @@
 import type { Template, ComponentRegistry } from '@rendervid/core';
+import type { HardwareAccelerationOptions } from './ffmpeg-encoder';
 
 /**
  * Options for video rendering
@@ -16,6 +17,10 @@ export interface VideoRenderOptions {
   format?: 'mp4' | 'webm' | 'mov' | 'gif';
   /** Video quality CRF (0-51, lower is better quality, default: 23) */
   quality?: number;
+  /** Video bitrate (e.g., '8M', '10M'). Overrides quality/CRF when specified. */
+  bitrate?: string;
+  /** Encoding preset for libx264/libx265 (default: 'medium'). Use 'slow' or 'veryslow' for better quality. */
+  preset?: 'ultrafast' | 'superfast' | 'veryfast' | 'faster' | 'fast' | 'medium' | 'slow' | 'slower' | 'veryslow';
   /** Audio codec (default: 'aac') */
   audioCodec?: 'aac' | 'mp3' | 'opus' | 'none';
   /** Audio bitrate (default: '128k') */
@@ -40,6 +45,8 @@ export interface VideoRenderOptions {
   concurrency?: number;
   /** Use streaming mode (pipe frames directly to FFmpeg without writing to disk) (default: false) */
   useStreaming?: boolean;
+  /** Hardware acceleration options. Set {enabled: false} to force software encoding for maximum quality. */
+  hardwareAcceleration?: HardwareAccelerationOptions;
 }
 
 /**

@@ -321,6 +321,8 @@ export class NodeRenderer {
       outputPath,
       codec = 'libx264',
       quality = 23,
+      bitrate,
+      preset,
       pixelFormat = 'yuv420p',
       audioCodec = 'aac',
       audioBitrate = '128k',
@@ -332,6 +334,7 @@ export class NodeRenderer {
       onFrame,
       concurrency = this.options.concurrency || 1,
       useStreaming = false,
+      hardwareAcceleration,
     } = options;
 
     // Resolve template variables with inputs
@@ -393,9 +396,12 @@ export class NodeRenderer {
           height,
           codec,
           quality,
+          bitrate,
+          preset,
           pixelFormat,
           audioCodec,
           audioBitrate,
+          hardwareAcceleration,
           onProgress: onProgress ? (progress) => {
             onProgress({
               ...progress,
@@ -510,9 +516,12 @@ export class NodeRenderer {
           height,
           codec,
           quality,
+          bitrate,
+          preset,
           pixelFormat,
           audioCodec,
           audioBitrate,
+          hardwareAcceleration,
           onProgress: onProgress ? (progress) => {
             onProgress({
               ...progress,

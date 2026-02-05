@@ -137,23 +137,28 @@ export class FrameCapturer {
   }
 
   /**
-   * Pre-load all image URLs from the template to avoid loading delays during frame capture
+   * Pre-load all media (images, videos, audio) from template
+   * Based on Remotion's approach with retry mechanism and proper error handling
    */
   private async preloadImages(): Promise<void> {
     if (!this.page) return;
 
     const { template } = this.config;
-    const imageUrls: string[] = [];
+    const mediaUrls: Array<{ url: string; type: 'image' | 'video' | 'audio' }> = [];
 
-    // Extract all image URLs from all scenes
+    // Extract ALL media URLs from all scenes (images, videos, audio)
     if (template.composition?.scenes) {
       for (const scene of template.composition.scenes) {
         if (scene.layers) {
           for (const layer of scene.layers) {
-            if (layer.type === 'image' && layer.props?.src) {
-              const src = String(layer.props.src);
-              if (!imageUrls.includes(src)) {
-                imageUrls.push(src);
+            if (layer.type === 'image' || layer.type === 'video' || layer.type === 'audio') {
+              const src = (layer.props as any)?.src;
+              if (src) {
+                const url = String(src);
+                // Skip data URLs (already embedded)
+                if (!url.startsWith('data:') && !mediaUrls.some(m => m.url === url)) {
+                  mediaUrls.push({ url, type: layer.type });
+                }
               }
             }
           }
@@ -161,26 +166,79 @@ export class FrameCapturer {
       }
     }
 
-    if (imageUrls.length === 0) return;
+    if (mediaUrls.length === 0) return;
 
-    // Pre-load images in the browser
-    await this.page.evaluate((urls: string[]) => {
+    console.error(`[FrameCapturer] Preloading ${mediaUrls.length} media assets...`);
+
+    // Pre-load media with retry mechanism (Remotion-style)
+    await this.page.evaluate((media: Array<{ url: string; type: string }>) => {
       return Promise.all(
-        urls.map(url => {
-          return new Promise<void>((resolve) => {
-            // @ts-expect-error - Image is available in browser context, not Node.js
-            const img = new Image();
-            // Don't set crossOrigin to avoid CORS issues with null origin
-            img.onload = () => resolve();
-            img.onerror = () => {
-              console.error(`Failed to preload image: ${url}`);
-              resolve(); // Don't fail the whole process if one image fails
+        media.map(({ url, type }) => {
+          return new Promise<void>((resolve, reject) => {
+            let retries = 0;
+            const maxRetries = 3; // Match Remotion's default
+
+            const attemptLoad = () => {
+              if (type === 'image') {
+                // @ts-expect-error - Image is available in browser context
+                const img = new Image();
+                img.crossOrigin = 'anonymous'; // Try CORS first
+
+                img.onload = () => {
+                  console.error(`[Preload] ✓ Image loaded: ${url}`);
+                  resolve();
+                };
+
+                img.onerror = () => {
+                  retries++;
+                  if (retries <= maxRetries) {
+                    // Exponential backoff: 1s, 2s, 4s (Remotion-style)
+                    const delay = Math.pow(2, retries - 1) * 1000;
+                    console.error(`[Preload] Retry ${retries}/${maxRetries} for ${url} in ${delay}ms`);
+                    setTimeout(attemptLoad, delay);
+                  } else {
+                    console.error(`[Preload] ✗ Failed to load image after ${maxRetries} retries: ${url}`);
+                    // Resolve anyway - don't block entire render for one image
+                    resolve();
+                  }
+                };
+
+                img.src = url;
+              } else if (type === 'video' || type === 'audio') {
+                // @ts-expect-error - Video/Audio available in browser context
+                const media = type === 'video' ? document.createElement('video') : document.createElement('audio');
+                media.crossOrigin = 'anonymous';
+                media.preload = 'auto';
+
+                media.onloadeddata = () => {
+                  console.error(`[Preload] ✓ ${type} loaded: ${url}`);
+                  resolve();
+                };
+
+                media.onerror = () => {
+                  retries++;
+                  if (retries <= maxRetries) {
+                    const delay = Math.pow(2, retries - 1) * 1000;
+                    console.error(`[Preload] Retry ${retries}/${maxRetries} for ${url} in ${delay}ms`);
+                    setTimeout(attemptLoad, delay);
+                  } else {
+                    console.error(`[Preload] ✗ Failed to load ${type} after ${maxRetries} retries: ${url}`);
+                    resolve();
+                  }
+                };
+
+                media.src = url;
+                media.load();
+              }
             };
-            img.src = url;
+
+            attemptLoad();
           });
         })
       );
-    }, imageUrls);
+    }, mediaUrls);
+
+    console.error(`[FrameCapturer] ✓ All media preloaded successfully`);
   }
 
   /**
@@ -203,7 +261,7 @@ export class FrameCapturer {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; img-src * data: blob: 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob: file:; img-src * data: blob: file: 'unsafe-inline'; media-src * data: blob: file:;">
   <style>
     * {
       margin: 0;
@@ -362,15 +420,52 @@ export class FrameCapturer {
       }
     }, frame);
 
-    // Wait for React to complete rendering
-    // Use string template to avoid TypeScript type-checking browser APIs
+    // Wait for React to render, then wait for ALL media to load (Remotion-style)
     await this.page.evaluate(`
-      new Promise((resolve) => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setTimeout(resolve, ${this.renderWaitTime});
+      new Promise(async (resolve) => {
+        // Wait for React rendering
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+        // Wait for all images in DOM to load
+        const images = Array.from(document.querySelectorAll('img'));
+        const imagePromises = images.map(img => {
+          if (img.complete && img.naturalWidth > 0) {
+            return Promise.resolve(); // Already loaded
+          }
+          return new Promise((resolveImg) => {
+            img.onload = () => resolveImg();
+            img.onerror = () => {
+              console.error('[Frame] Image failed to load:', img.src);
+              resolveImg(); // Continue anyway
+            };
+            // Timeout after 5 seconds per image
+            setTimeout(resolveImg, 5000);
           });
         });
+
+        // Wait for all videos in DOM to be ready
+        const videos = Array.from(document.querySelectorAll('video'));
+        const videoPromises = videos.map(video => {
+          if (video.readyState >= 2) { // HAVE_CURRENT_DATA or better
+            return Promise.resolve();
+          }
+          return new Promise((resolveVideo) => {
+            video.onloadeddata = () => resolveVideo();
+            video.onerror = () => {
+              console.error('[Frame] Video failed to load:', video.src);
+              resolveVideo();
+            };
+            setTimeout(resolveVideo, 5000);
+          });
+        });
+
+        // Wait for all media to load
+        await Promise.all([...imagePromises, ...videoPromises]);
+
+        // Additional safety delay
+        await new Promise(r => setTimeout(r, ${this.renderWaitTime}));
+
+        resolve();
       })
     `);
 
@@ -410,15 +505,52 @@ export class FrameCapturer {
       }
     }, frame);
 
-    // Wait for React to complete rendering
-    // Use string template to avoid TypeScript type-checking browser APIs
+    // Wait for React to render, then wait for ALL media to load (Remotion-style)
     await this.page.evaluate(`
-      new Promise((resolve) => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setTimeout(resolve, ${this.renderWaitTime});
+      new Promise(async (resolve) => {
+        // Wait for React rendering
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+        // Wait for all images in DOM to load
+        const images = Array.from(document.querySelectorAll('img'));
+        const imagePromises = images.map(img => {
+          if (img.complete && img.naturalWidth > 0) {
+            return Promise.resolve(); // Already loaded
+          }
+          return new Promise((resolveImg) => {
+            img.onload = () => resolveImg();
+            img.onerror = () => {
+              console.error('[Frame] Image failed to load:', img.src);
+              resolveImg(); // Continue anyway
+            };
+            // Timeout after 5 seconds per image
+            setTimeout(resolveImg, 5000);
           });
         });
+
+        // Wait for all videos in DOM to be ready
+        const videos = Array.from(document.querySelectorAll('video'));
+        const videoPromises = videos.map(video => {
+          if (video.readyState >= 2) { // HAVE_CURRENT_DATA or better
+            return Promise.resolve();
+          }
+          return new Promise((resolveVideo) => {
+            video.onloadeddata = () => resolveVideo();
+            video.onerror = () => {
+              console.error('[Frame] Video failed to load:', video.src);
+              resolveVideo();
+            };
+            setTimeout(resolveVideo, 5000);
+          });
+        });
+
+        // Wait for all media to load
+        await Promise.all([...imagePromises, ...videoPromises]);
+
+        // Additional safety delay
+        await new Promise(r => setTimeout(r, ${this.renderWaitTime}));
+
+        resolve();
       })
     `);
 
