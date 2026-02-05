@@ -2,6 +2,12 @@
 
 Professional product visualization example demonstrating advanced Three.js features including studio lighting, real-time shadows, and physically-based rendering.
 
+## Preview
+
+![Preview](./preview.gif)
+
+[View full video (video.mp4)](./video.mp4)
+
 ## Features
 
 - Studio lighting setup (key light, fill light, rim light, accent light)

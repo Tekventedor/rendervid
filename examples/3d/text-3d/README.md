@@ -2,6 +2,12 @@
 
 Extruded 3D text with dramatic lighting, metallic material, and cinematic presentation.
 
+## Preview
+
+![Preview](./preview.gif)
+
+[View full video (video.mp4)](./video.mp4)
+
 ## Features
 
 - Text3D geometry with beveled edges

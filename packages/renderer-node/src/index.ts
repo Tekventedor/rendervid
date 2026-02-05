@@ -22,7 +22,7 @@ export type {
   VideoRenderOptions,
   ImageRenderOptions,
   SequenceRenderOptions,
-  PuppeteerLaunchOptions,
+  PlaywrightLaunchOptions,
   RenderProgress,
   RenderResult,
   FFmpegConfig,

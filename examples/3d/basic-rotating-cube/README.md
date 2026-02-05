@@ -2,6 +2,12 @@
 
 A simple example demonstrating the Three.js layer with a rotating 3D cube.
 
+## Preview
+
+![Preview](./preview.gif)
+
+[View full video (video.mp4)](./video.mp4)
+
 ## Features
 
 - Three.js layer with perspective camera

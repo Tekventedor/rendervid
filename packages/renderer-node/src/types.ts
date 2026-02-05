@@ -33,8 +33,8 @@ export interface VideoRenderOptions {
   tempDir?: string;
   /** Keep temporary files after rendering (default: false) */
   keepTempFiles?: boolean;
-  /** Puppeteer launch options */
-  puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Playwright launch options */
+  playwrightOptions?: PlaywrightLaunchOptions;
   /** Time to wait after rendering before capturing (ms, default: 50) */
   renderWaitTime?: number;
   /** Progress callback */
@@ -65,8 +65,8 @@ export interface ImageRenderOptions {
   quality?: number;
   /** Frame to render (default: 0) */
   frame?: number;
-  /** Puppeteer launch options */
-  puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Playwright launch options */
+  playwrightOptions?: PlaywrightLaunchOptions;
   /** Time to wait after rendering before capturing (ms, default: 50) */
   renderWaitTime?: number;
 }
@@ -91,8 +91,8 @@ export interface SequenceRenderOptions {
   startFrame?: number;
   /** End frame (default: total frames) */
   endFrame?: number;
-  /** Puppeteer launch options */
-  puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Playwright launch options */
+  playwrightOptions?: PlaywrightLaunchOptions;
   /** Time to wait after rendering before capturing (ms, default: 50) */
   renderWaitTime?: number;
   /** Progress callback */
@@ -100,17 +100,15 @@ export interface SequenceRenderOptions {
 }
 
 /**
- * Puppeteer launch options
+ * Playwright launch options
  */
-export interface PuppeteerLaunchOptions {
+export interface PlaywrightLaunchOptions {
   /** Path to Chrome executable */
   executablePath?: string;
   /** Run in headless mode (default: true) */
   headless?: boolean;
   /** Additional Chrome arguments */
   args?: string[];
-  /** Ignore default args */
-  ignoreDefaultArgs?: string[] | boolean;
 }
 
 /**
@@ -224,8 +222,8 @@ export interface GPUConfig {
 export interface NodeRendererOptions {
   /** FFmpeg configuration */
   ffmpeg?: FFmpegConfig;
-  /** Default Puppeteer options */
-  puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Default Playwright options */
+  playwrightOptions?: PlaywrightLaunchOptions;
   /** Default temporary directory */
   tempDir?: string;
   /** Number of concurrent browser instances for parallel rendering (default: 1) */

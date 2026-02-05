@@ -61,7 +61,7 @@ describe('Renderer Node Types', () => {
         pixelFormat: 'yuv420p',
         tempDir: '/tmp/render',
         keepTempFiles: false,
-        puppeteerOptions: { headless: true },
+        playwrightOptions: { headless: true },
         onProgress,
         onFrame,
       };
@@ -123,7 +123,7 @@ describe('Renderer Node Types', () => {
         format: 'jpeg',
         quality: 95,
         frame: 150,
-        puppeteerOptions: { headless: true },
+        playwrightOptions: { headless: true },
       };
 
       expect(options.format).toBe('jpeg');
@@ -168,7 +168,7 @@ describe('Renderer Node Types', () => {
         quality: 100,
         startFrame: 0,
         endFrame: 150,
-        puppeteerOptions: { headless: true },
+        playwrightOptions: { headless: true },
         onProgress,
       };
 
@@ -281,14 +281,14 @@ describe('Renderer Node Types', () => {
         ffmpeg: {
           ffmpegPath: '/usr/local/bin/ffmpeg',
         },
-        puppeteerOptions: {
+        playwrightOptions: {
           headless: true,
         },
         tempDir: '/tmp/rendervid',
       };
 
       expect(options.ffmpeg?.ffmpegPath).toBe('/usr/local/bin/ffmpeg');
-      expect(options.puppeteerOptions?.headless).toBe(true);
+      expect(options.playwrightOptions?.headless).toBe(true);
       expect(options.tempDir).toBe('/tmp/rendervid');
     });
   });

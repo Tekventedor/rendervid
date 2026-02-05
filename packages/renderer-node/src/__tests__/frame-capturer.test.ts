@@ -306,7 +306,7 @@ describe('FrameCapturer - GPU Configuration', () => {
       const capturer = createFrameCapturer({
         template: mockTemplate,
         inputs: { title: 'Test' },
-        puppeteerOptions: {
+        playwrightOptions: {
           headless: false,
           executablePath: '/custom/chrome',
           args: customArgs,

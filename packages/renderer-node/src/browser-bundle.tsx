@@ -9,6 +9,23 @@ import { TemplateRenderer } from '@rendervid/renderer-browser';
 import type { Template } from '@rendervid/core';
 import { getDefaultRegistry } from '@rendervid/core';
 
+// Fix React Three Fiber compatibility with bundled React
+// React Three Fiber needs access to React internals
+if (typeof window !== 'undefined') {
+  // Ensure React is available globally for React Three Fiber
+  (window as any).React = React;
+
+  // Ensure React internals are accessible
+  if (React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) {
+    const internals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED as any;
+
+    // Add ReactCurrentBatchConfig if missing (React 19 compatibility)
+    if (!internals.ReactCurrentBatchConfig) {
+      internals.ReactCurrentBatchConfig = { transition: null };
+    }
+  }
+}
+
 // Import all custom components from @rendervid/components
 import {
   AuroraBackground,
@@ -55,9 +72,16 @@ declare global {
  * This is critical for Three.js rendering.
  */
 function checkWebGLAvailability(): boolean {
+  console.error('[WebGL] Starting WebGL availability check...');
+
   try {
+    console.error('[WebGL] Creating canvas element...');
     const canvas = document.createElement('canvas');
+    console.error('[WebGL] Canvas created successfully');
+
+    console.error('[WebGL] Attempting to get WebGL context...');
     const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    console.error('[WebGL] Context result:', gl ? 'SUCCESS' : 'NULL');
 
     if (!gl) {
       console.error('[WebGL] WebGL context not available');
@@ -80,15 +104,20 @@ function checkWebGLAvailability(): boolean {
 }
 
 // Initialize the renderer when the script loads
+console.error('[BrowserBundle] Script loaded, starting initialization...');
+
 (function initRenderer() {
+  console.error('[BrowserBundle] IIFE executing...');
   const rootElement = document.getElementById('root');
   if (!rootElement) {
-    console.error('Root element not found');
+    console.error('[BrowserBundle] Root element not found!');
     return;
   }
+  console.error('[BrowserBundle] Root element found, checking WebGL...');
 
   // Check WebGL availability for Three.js rendering
   window.RENDERVID_WEBGL_AVAILABLE = checkWebGLAvailability();
+  console.error('[BrowserBundle] WebGL check complete, result:', window.RENDERVID_WEBGL_AVAILABLE);
 
   // Get the default registry and register all custom components
   const registry = getDefaultRegistry();

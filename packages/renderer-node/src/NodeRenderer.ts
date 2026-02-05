@@ -328,7 +328,7 @@ export class NodeRenderer {
       audioBitrate = '128k',
       tempDir,
       keepTempFiles = false,
-      puppeteerOptions = this.options.puppeteerOptions,
+      playwrightOptions = this.options.playwrightOptions,
       renderWaitTime,
       onProgress,
       onFrame,
@@ -361,7 +361,7 @@ export class NodeRenderer {
         const capturer = createFrameCapturer({
           template: resolvedTemplate,
           inputs: {},
-          puppeteerOptions,
+          playwrightOptions,
           renderWaitTime,
           registry: this.registry,
           useGPU: this.gpuConfig.rendering,
@@ -594,7 +594,7 @@ export class NodeRenderer {
       format,
       quality = 90,
       frame = 0,
-      puppeteerOptions = this.options.puppeteerOptions,
+      playwrightOptions = this.options.playwrightOptions,
       renderWaitTime,
     } = options;
 
@@ -617,7 +617,7 @@ export class NodeRenderer {
       capturer = createFrameCapturer({
         template: resolvedTemplate,
         inputs: {},
-        puppeteerOptions,
+        playwrightOptions,
         renderWaitTime,
         registry: this.registry,
         useGPU: this.gpuConfig.rendering,
@@ -687,7 +687,7 @@ export class NodeRenderer {
       format = 'png',
       quality = 90,
       startFrame = 0,
-      puppeteerOptions = this.options.puppeteerOptions,
+      playwrightOptions = this.options.playwrightOptions,
       renderWaitTime,
       onProgress,
     } = options;
@@ -715,7 +715,7 @@ export class NodeRenderer {
       capturer = createFrameCapturer({
         template: resolvedTemplate,
         inputs: {},
-        puppeteerOptions,
+        playwrightOptions,
         renderWaitTime,
         registry: this.registry,
         useGPU: this.gpuConfig.rendering,

@@ -49,7 +49,12 @@ export function ThreeScene({
   frame,
   layerSize,
 }: ThreeSceneProps) {
-  const { scene, gl } = useThree();
+  const { scene, gl, invalidate } = useThree();
+
+  // Trigger render when frame changes
+  useEffect(() => {
+    invalidate();
+  }, [frame, invalidate]);
 
   // Configure scene background
   useEffect(() => {

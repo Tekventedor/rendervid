@@ -2,6 +2,12 @@
 
 A complex 3D scene demonstrating multiple objects with different geometries, materials, and coordinated animations.
 
+## Preview
+
+![Preview](./preview.gif)
+
+[View full video (video.mp4)](./video.mp4)
+
 ## Features
 
 - 8 different mesh objects with 5 geometry types

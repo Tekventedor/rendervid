@@ -1,7 +1,7 @@
-import type { Browser, Page } from 'puppeteer';
-import puppeteer from 'puppeteer';
+import type { Browser, Page } from 'playwright';
+import { chromium } from 'playwright';
 import type { Template, ComponentRegistry } from '@rendervid/core';
-import type { PuppeteerLaunchOptions } from './types';
+import type { PlaywrightLaunchOptions } from './types';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -13,8 +13,8 @@ export interface FrameCapturerConfig {
   template: Template;
   /** Input values */
   inputs?: Record<string, unknown>;
-  /** Puppeteer launch options */
-  puppeteerOptions?: PuppeteerLaunchOptions;
+  /** Playwright launch options */
+  playwrightOptions?: PlaywrightLaunchOptions;
   /** Time to wait after rendering before capturing (ms, default: 50) */
   renderWaitTime?: number;
   /** Custom component registry */
@@ -24,7 +24,7 @@ export interface FrameCapturerConfig {
 }
 
 /**
- * Frame capturer using Puppeteer headless browser
+ * Frame capturer using Playwright headless browser
  */
 export class FrameCapturer {
   private browser: Browser | null = null;
@@ -47,16 +47,15 @@ export class FrameCapturer {
   async initialize(): Promise<void> {
     if (this.initialized) return;
 
-    const { puppeteerOptions = {} } = this.config;
+    const { playwrightOptions = {} } = this.config;
     const { width, height } = this.config.template.output;
 
     // Build GPU-related flags based on configuration
-    // For WebGL (Three.js) support in headless Chrome, we use SwiftShader
-    // SwiftShader is a software GL implementation that works reliably in headless mode
+    // Playwright has better WebGL support than Puppeteer, especially in headless mode
     const gpuFlags = this.useGPU && !this.gpuFallback
       ? [
           '--enable-gpu',
-          '--use-gl=swiftshader', // Use SwiftShader for WebGL in headless mode
+          '--use-gl=desktop', // Use desktop GL for better WebGL support
           '--enable-webgl',
           '--enable-webgl2',
         ]
@@ -79,22 +78,25 @@ export class FrameCapturer {
       '--disable-web-security', // Disable CORS to allow loading external resources
       '--disable-features=IsolateOrigins,site-per-process', // Required for --disable-web-security to work
       '--ignore-gpu-blocklist', // Ignore GPU blocklist for software rendering
-      '--disable-accelerated-2d-canvas', // Can cause issues with canvas operations
       '--disable-blink-features=AutomationControlled', // Hide automation
     ];
 
     try {
-      this.browser = await puppeteer.launch({
-        headless: puppeteerOptions.headless !== false,
-        executablePath: puppeteerOptions.executablePath,
+      // Playwright uses boolean headless, no 'new' mode needed
+      const headlessMode = playwrightOptions.headless === false ? false : true;
+
+      console.error(`[FrameCapturer] Launching browser with Playwright headless mode: ${headlessMode}`);
+
+      this.browser = await chromium.launch({
+        headless: headlessMode,
+        executablePath: playwrightOptions.executablePath,
         args: [
           ...stabilityFlags,
           ...gpuFlags,
           ...fontFlags,
           `--window-size=${width},${height}`,
-          ...(puppeteerOptions.args || []),
+          ...(playwrightOptions.args || []),
         ],
-        ignoreDefaultArgs: puppeteerOptions.ignoreDefaultArgs,
       });
     } catch (error) {
       // If GPU initialization fails and we haven't already tried fallback, retry without GPU
@@ -118,10 +120,23 @@ export class FrameCapturer {
     this.page = await this.browser.newPage();
 
     // Log browser console messages for debugging
-    this.page.on('console', msg => {
+    this.page.on('console', async msg => {
       const type = msg.type();
-      if (type === 'error' || type === 'warn') {
-        console.error(`[Browser ${type}]`, msg.text());
+      const text = msg.text();
+
+      // Log all console messages for debugging
+      console.error(`[Browser ${type}]`, text);
+
+      // Also get args for more detail on errors
+      if (type === 'error') {
+        try {
+          const args = await Promise.all(msg.args().map(arg => arg.jsonValue().catch(() => arg.toString())));
+          if (args.length > 0 && args[0] !== text) {
+            console.error(`[Browser error detail]`, ...args);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
       }
     });
 
@@ -130,16 +145,15 @@ export class FrameCapturer {
       console.error('[Browser error]', error.message);
     });
 
-    await this.page.setViewport({
+    await this.page.setViewportSize({
       width,
       height,
-      deviceScaleFactor: 1,
     });
 
     // Set up the rendering page with template HTML
     const html = this.generateRenderHTML();
     await this.page.setContent(html, {
-      waitUntil: 'networkidle0',
+      waitUntil: 'networkidle',
     });
 
     // Inject the browser renderer bundle
@@ -685,7 +699,7 @@ export class FrameCapturer {
       `);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result = await this.page.evaluate(loadFontsFn as any, fontConfig);
+      const result = await this.page.evaluate(loadFontsFn as any, fontConfig) as any;
 
       console.error(`[FrameCapturer] Fonts loaded: ${result.loaded.length} successful, ${result.failed.length} failed (${result.loadTime}ms)`);
 
@@ -790,6 +804,22 @@ export class FrameCapturer {
         // Wait for all media to load
         await Promise.all([...imagePromises, ...videoPromises]);
 
+        // Wait for Three.js/WebGL canvas to be ready
+        const canvases = Array.from(document.querySelectorAll('canvas'));
+        if (canvases.length > 0) {
+          console.error('[Frame] Found', canvases.length, 'canvas elements, waiting for Three.js...');
+
+          // Give Three.js time to initialize and render first frame
+          // Three.js typically needs:
+          // - Time to create WebGL context
+          // - Time to compile shaders
+          // - Time to render first frame
+          // We use a generous wait time to ensure rendering completes
+          await new Promise(r => setTimeout(r, 2000));
+
+          console.error('[Frame] Three.js render wait complete');
+        }
+
         // Additional safety delay
         await new Promise(r => setTimeout(r, ${this.renderWaitTime}));
 
@@ -886,6 +916,22 @@ export class FrameCapturer {
 
         // Wait for all media to load
         await Promise.all([...imagePromises, ...videoPromises]);
+
+        // Wait for Three.js/WebGL canvas to be ready
+        const canvases = Array.from(document.querySelectorAll('canvas'));
+        if (canvases.length > 0) {
+          console.error('[Frame] Found', canvases.length, 'canvas elements, waiting for Three.js...');
+
+          // Give Three.js time to initialize and render first frame
+          // Three.js typically needs:
+          // - Time to create WebGL context
+          // - Time to compile shaders
+          // - Time to render first frame
+          // We use a generous wait time to ensure rendering completes
+          await new Promise(r => setTimeout(r, 2000));
+
+          console.error('[Frame] Three.js render wait complete');
+        }
 
         // Additional safety delay
         await new Promise(r => setTimeout(r, ${this.renderWaitTime}));

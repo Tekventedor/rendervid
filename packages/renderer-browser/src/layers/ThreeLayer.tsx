@@ -47,6 +47,8 @@ export function ThreeLayer({ layer, frame, fps, sceneDuration }: ThreeLayerProps
       preserveDrawingBuffer: true, // Required for screenshots/video capture
     },
     shadows: shadows?.enabled ?? false,
+    frameloop: 'always' as const, // Continuous rendering
+    dpr: 1, // Device pixel ratio - use 1 for consistent rendering
     style: {
       width: '100%',
       height: '100%',

@@ -1679,7 +1679,10 @@ function ThreeScene({
   frame,
   layerSize
 }) {
-  const { scene, gl } = useThree();
+  const { scene, gl, invalidate } = useThree();
+  useEffect(() => {
+    invalidate();
+  }, [frame, invalidate]);
   useEffect(() => {
     if (!background) {
       scene.background = null;
@@ -1790,6 +1793,10 @@ function ThreeLayer({ layer, frame, fps, sceneDuration }) {
       // Required for screenshots/video capture
     },
     shadows: shadows?.enabled ?? false,
+    frameloop: "always",
+    // Continuous rendering
+    dpr: 1,
+    // Device pixel ratio - use 1 for consistent rendering
     style: {
       width: "100%",
       height: "100%"
