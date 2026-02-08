@@ -6,6 +6,8 @@ A beautiful slideshow with smooth fade transitions between images.
 
 ![Preview](./preview.gif)
 
+[Download MP4](./video.mp4)
+
 ## Features
 
 - Smooth fade transitions between images
@@ -16,16 +18,16 @@ A beautiful slideshow with smooth fade transitions between images.
 ## Usage
 
 ```bash
-pnpm run examples:render getting-started/04-image-slideshow
+npx tsx examples/getting-started/04-image-slideshow/render.ts
 ```
 
 ## Inputs
 
 | Input | Type | Required | Default |
 |-------|------|----------|---------|
-| `image1` | image | Yes | flowhunt.io blog image |
-| `image2` | image | Yes | flowhunt.io blog image |
-| `image3` | image | Yes | flowhunt.io blog image |
+| `image1` | string | Yes | photomaticai.com sample image |
+| `image2` | string | Yes | photomaticai.com sample image |
+| `image3` | string | Yes | photomaticai.com sample image |
 
 ## Customization
 

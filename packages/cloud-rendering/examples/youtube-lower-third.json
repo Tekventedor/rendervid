@@ -1,0 +1,266 @@
+{
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5,
+    "background": "transparent",
+    "codec": "prores"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "lower-third",
+        "startFrame": 0,
+        "endFrame": 150,
+        "backgroundColor": "transparent",
+        "layers": [
+          {
+            "id": "card-bg",
+            "type": "shape",
+            "position": { "x": 40, "y": 910 },
+            "size": { "width": 420, "height": 110 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff",
+              "borderRadius": 12
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 120,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "avatar",
+            "type": "image",
+            "position": { "x": 55, "y": 935 },
+            "size": { "width": 60, "height": 60 },
+            "props": {
+              "src": "https://yt3.googleusercontent.com/U1odzKpyZw7s4kcP0O1LwLXqmvoho1jqVxZ7EABsT8IRIEuzTF4Vwu-cdq3387GmzmQq9Fxhi4c=s900-c-k-c0x00ffffff-no-rj",
+              "fit": "cover",
+              "borderRadius": 30
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 120,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "channel-name",
+            "type": "text",
+            "position": { "x": 128, "y": 935 },
+            "size": { "width": 180, "height": 30 },
+            "props": {
+              "text": "Remotion",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "fontFamily": "Arial, sans-serif",
+              "color": "#0f0f0f"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 120,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "subscriber-count",
+            "type": "text",
+            "position": { "x": 128, "y": 960 },
+            "size": { "width": 180, "height": 25 },
+            "props": {
+              "text": "2.55K subscribers",
+              "fontSize": 13,
+              "fontFamily": "Arial, sans-serif",
+              "color": "#606060"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 120,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "subscribe-button",
+            "type": "shape",
+            "position": { "x": 330, "y": 947 },
+            "size": { "width": 110, "height": 36 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f0f0f",
+              "borderRadius": 18
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "keyframe",
+                "delay": 40,
+                "duration": 20,
+                "keyframes": [
+                  { "offset": 0, "transform": "scale(1)" },
+                  { "offset": 0.25, "transform": "scale(0.92)" },
+                  { "offset": 0.5, "transform": "scale(1.02)" },
+                  { "offset": 0.75, "transform": "scale(0.99)" },
+                  { "offset": 1, "transform": "scale(1)" }
+                ]
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 120,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "subscribe-text",
+            "type": "text",
+            "position": { "x": 330, "y": 955 },
+            "size": { "width": 110, "height": 24 },
+            "props": {
+              "text": "Subscribe",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "fontFamily": "Arial, sans-serif",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "keyframe",
+                "delay": 40,
+                "duration": 20,
+                "keyframes": [
+                  { "offset": 0, "transform": "scale(1)" },
+                  { "offset": 0.25, "transform": "scale(0.92)" },
+                  { "offset": 0.5, "transform": "scale(1.02)" },
+                  { "offset": 0.75, "transform": "scale(0.99)" },
+                  { "offset": 1, "transform": "scale(1)" }
+                ]
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 120,
+                "duration": 30
+              }
+            ],
+            "duration": 55
+          },
+          {
+            "id": "subscribed-button-bg",
+            "type": "shape",
+            "position": { "x": 330, "y": 947 },
+            "size": { "width": 110, "height": 36 },
+            "from": 55,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#f2f2f2",
+              "borderRadius": 18
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 10,
+                "easing": "easeOutBack"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 65,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "subscribed-text",
+            "type": "text",
+            "position": { "x": 330, "y": 955 },
+            "size": { "width": 110, "height": 24 },
+            "from": 55,
+            "props": {
+              "text": "Subscribed",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "fontFamily": "Arial, sans-serif",
+              "color": "#0f0f0f",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 10,
+                "easing": "easeOutBack"
+              },
+              {
+                "type": "exit",
+                "effect": "fadeOut",
+                "delay": 65,
+                "duration": 30
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

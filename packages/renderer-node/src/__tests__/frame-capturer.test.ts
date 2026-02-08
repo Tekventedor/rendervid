@@ -1,12 +1,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { Template } from '@rendervid/core';
-import puppeteer from 'puppeteer';
 
-// Mock puppeteer
-vi.mock('puppeteer', () => ({
-  default: {
+// Mock playwright - use vi.hoisted to make mockChromium available in vi.mock factory
+const { mockChromium } = vi.hoisted(() => ({
+  mockChromium: {
     launch: vi.fn(),
   },
+}));
+
+vi.mock('playwright', () => ({
+  chromium: mockChromium,
 }));
 
 // Mock fs for browser renderer bundle
@@ -53,7 +56,7 @@ describe('FrameCapturer - GPU Configuration', () => {
 
     // Create fresh mocks for each test
     mockPage = {
-      setViewport: vi.fn().mockResolvedValue(undefined),
+      setViewportSize: vi.fn().mockResolvedValue(undefined),
       setContent: vi.fn().mockResolvedValue(undefined),
       addScriptTag: vi.fn().mockResolvedValue(undefined),
       evaluate: vi.fn().mockResolvedValue(undefined),
@@ -67,7 +70,7 @@ describe('FrameCapturer - GPU Configuration', () => {
       close: vi.fn().mockResolvedValue(undefined),
     };
 
-    vi.mocked(puppeteer.launch).mockResolvedValue(mockBrowser as any);
+    mockChromium.launch.mockResolvedValue(mockBrowser as any);
   });
 
   afterEach(() => {
@@ -75,25 +78,25 @@ describe('FrameCapturer - GPU Configuration', () => {
   });
 
   describe('GPU Configuration', () => {
-    it('should enable GPU with SwiftShader for WebGL by default', async () => {
+    it('should enable GPU with desktop GL for WebGL by default', async () => {
       const capturer = createFrameCapturer({
         template: mockTemplate,
       });
 
       await capturer.initialize();
 
-      expect(puppeteer.launch).toHaveBeenCalledWith(
+      expect(mockChromium.launch).toHaveBeenCalledWith(
         expect.objectContaining({
           args: expect.arrayContaining([
             '--enable-gpu',
-            '--use-gl=swiftshader',
+            '--use-gl=desktop',
             '--enable-webgl',
             '--enable-webgl2',
           ]),
         })
       );
 
-      expect(puppeteer.launch).toHaveBeenCalledWith(
+      expect(mockChromium.launch).toHaveBeenCalledWith(
         expect.objectContaining({
           args: expect.not.arrayContaining([
             '--disable-gpu',
@@ -112,7 +115,7 @@ describe('FrameCapturer - GPU Configuration', () => {
 
       await capturer.initialize();
 
-      expect(puppeteer.launch).toHaveBeenCalledWith(
+      expect(mockChromium.launch).toHaveBeenCalledWith(
         expect.objectContaining({
           args: expect.arrayContaining([
             '--disable-gpu',
@@ -122,11 +125,11 @@ describe('FrameCapturer - GPU Configuration', () => {
         })
       );
 
-      expect(puppeteer.launch).toHaveBeenCalledWith(
+      expect(mockChromium.launch).toHaveBeenCalledWith(
         expect.objectContaining({
           args: expect.not.arrayContaining([
             '--enable-gpu',
-            '--use-gl=swiftshader',
+            '--use-gl=desktop',
           ]),
         })
       );
@@ -142,11 +145,11 @@ describe('FrameCapturer - GPU Configuration', () => {
 
       await capturer.initialize();
 
-      expect(puppeteer.launch).toHaveBeenCalledWith(
+      expect(mockChromium.launch).toHaveBeenCalledWith(
         expect.objectContaining({
           args: expect.arrayContaining([
             '--enable-gpu',
-            '--use-gl=swiftshader',
+            '--use-gl=desktop',
             '--enable-webgl',
             '--enable-webgl2',
           ]),
@@ -157,12 +160,12 @@ describe('FrameCapturer - GPU Configuration', () => {
     });
 
     it('should fallback to software rendering on GPU initialization error', async () => {
-      // Mock puppeteer to fail on first call (GPU enabled) and succeed on second call (GPU disabled)
-      vi.mocked(puppeteer.launch)
+      // Mock playwright to fail on first call (GPU enabled) and succeed on second call (GPU disabled)
+      mockChromium.launch
         .mockRejectedValueOnce(new Error('GPU initialization failed'))
         .mockResolvedValueOnce(mockBrowser as any);
 
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const capturer = createFrameCapturer({
         template: mockTemplate,
@@ -172,14 +175,14 @@ describe('FrameCapturer - GPU Configuration', () => {
       await capturer.initialize();
 
       // Should have been called twice - first with GPU, then without
-      expect(puppeteer.launch).toHaveBeenCalledTimes(2);
+      expect(mockChromium.launch).toHaveBeenCalledTimes(2);
 
       // First call should have GPU enabled with WebGL
-      expect(puppeteer.launch).toHaveBeenNthCalledWith(1,
+      expect(mockChromium.launch).toHaveBeenNthCalledWith(1,
         expect.objectContaining({
           args: expect.arrayContaining([
             '--enable-gpu',
-            '--use-gl=swiftshader',
+            '--use-gl=desktop',
             '--enable-webgl',
             '--enable-webgl2',
           ]),
@@ -187,7 +190,7 @@ describe('FrameCapturer - GPU Configuration', () => {
       );
 
       // Second call should have GPU disabled (fallback)
-      expect(puppeteer.launch).toHaveBeenNthCalledWith(2,
+      expect(mockChromium.launch).toHaveBeenNthCalledWith(2,
         expect.objectContaining({
           args: expect.arrayContaining([
             '--disable-gpu',
@@ -195,15 +198,11 @@ describe('FrameCapturer - GPU Configuration', () => {
         })
       );
 
-      // Should have logged error about fallback (not warn)
-      // The code uses console.error for this message
-
-      consoleWarnSpy.mockRestore();
       await capturer.close();
     });
 
     it('should not retry fallback if GPU is already disabled', async () => {
-      vi.mocked(puppeteer.launch).mockRejectedValueOnce(new Error('Initialization failed'));
+      mockChromium.launch.mockRejectedValueOnce(new Error('Initialization failed'));
 
       const capturer = createFrameCapturer({
         template: mockTemplate,
@@ -213,7 +212,7 @@ describe('FrameCapturer - GPU Configuration', () => {
       await expect(capturer.initialize()).rejects.toThrow('Initialization failed');
 
       // Should only be called once since GPU was already disabled
-      expect(puppeteer.launch).toHaveBeenCalledTimes(1);
+      expect(mockChromium.launch).toHaveBeenCalledTimes(1);
     });
 
     it('should log GPU status on successful initialization', async () => {
@@ -253,7 +252,7 @@ describe('FrameCapturer - GPU Configuration', () => {
     });
 
     it('should log when GPU fallback occurs', async () => {
-      vi.mocked(puppeteer.launch)
+      mockChromium.launch
         .mockRejectedValueOnce(new Error('GPU error'))
         .mockResolvedValueOnce(mockBrowser as any);
 
@@ -286,11 +285,11 @@ describe('FrameCapturer - GPU Configuration', () => {
       await capturer.initialize();
 
       // Should default to GPU enabled with WebGL support
-      expect(puppeteer.launch).toHaveBeenCalledWith(
+      expect(mockChromium.launch).toHaveBeenCalledWith(
         expect.objectContaining({
           args: expect.arrayContaining([
             '--enable-gpu',
-            '--use-gl=swiftshader',
+            '--use-gl=desktop',
             '--enable-webgl',
             '--enable-webgl2',
           ]),
@@ -316,9 +315,8 @@ describe('FrameCapturer - GPU Configuration', () => {
 
       await capturer.initialize();
 
-      expect(puppeteer.launch).toHaveBeenCalledWith(
+      expect(mockChromium.launch).toHaveBeenCalledWith(
         expect.objectContaining({
-          headless: false,
           executablePath: '/custom/chrome',
           args: expect.arrayContaining(customArgs),
         })
@@ -335,7 +333,7 @@ describe('FrameCapturer - GPU Configuration', () => {
       await capturer.initialize();
 
       // Should include standard flags
-      expect(puppeteer.launch).toHaveBeenCalledWith(
+      expect(mockChromium.launch).toHaveBeenCalledWith(
         expect.objectContaining({
           args: expect.arrayContaining([
             '--no-sandbox',
@@ -421,12 +419,11 @@ describe('FrameCapturer - GPU Configuration', () => {
     });
 
     it('should close browser properly after GPU fallback', async () => {
-      vi.mocked(puppeteer.launch)
+      mockChromium.launch
         .mockRejectedValueOnce(new Error('GPU error'))
         .mockResolvedValueOnce(mockBrowser as any);
 
-      vi.spyOn(console, 'warn').mockImplementation(() => {});
-      vi.spyOn(console, 'log').mockImplementation(() => {});
+      vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const capturer = createFrameCapturer({
         template: mockTemplate,
@@ -449,7 +446,7 @@ describe('FrameCapturer - GPU Configuration', () => {
       await capturer.initialize(); // Second call should be no-op
 
       // Should only launch once
-      expect(puppeteer.launch).toHaveBeenCalledTimes(1);
+      expect(mockChromium.launch).toHaveBeenCalledTimes(1);
 
       await capturer.close();
     });

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Worker container (scaled based on workersCount config)
+  worker:
+    build:
+      context: ../../../
+      dockerfile: packages/cloud-rendering/deployments/docker/worker.Dockerfile
+    image: rendervid-worker:latest
+    volumes:
+      - ${RENDERVID_VOLUME_PATH:-./rendervid-jobs}:/data
+    environment:
+      - JOB_ID=${JOB_ID}
+      - CHUNK_ID=${CHUNK_ID}
+      - START_FRAME=${START_FRAME}
+      - END_FRAME=${END_FRAME}
+    networks:
+      - rendervid-network
+    # Deploy with resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+
+  # Merger container
+  merger:
+    build:
+      context: ../../../
+      dockerfile: packages/cloud-rendering/deployments/docker/merger.Dockerfile
+    image: rendervid-merger:latest
+    volumes:
+      - ${RENDERVID_VOLUME_PATH:-./rendervid-jobs}:/data
+    environment:
+      - JOB_ID=${JOB_ID}
+    networks:
+      - rendervid-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+networks:
+  rendervid-network:
+    driver: bridge

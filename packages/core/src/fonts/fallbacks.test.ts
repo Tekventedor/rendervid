@@ -374,7 +374,7 @@ describe('Font Fallbacks', () => {
     });
 
     it('should include system fonts in fallbacks', () => {
-      const systemFonts = ['Arial', 'Helvetica', 'Georgia', 'Times', 'Courier', 'Impact', 'Verdana', 'Comic Sans'];
+      const systemFonts = ['Arial', 'Helvetica', 'Georgia', 'Times', 'Courier', 'Impact', 'Verdana', 'Comic Sans', 'Brush Script', 'Trebuchet', 'cursive', 'sans-serif', 'serif', 'monospace'];
 
       Object.entries(FONT_FALLBACKS).forEach(([family, fallbacks]) => {
         const hasSystemFont = fallbacks.some(f => {

@@ -294,6 +294,8 @@ describe('MotionBlurFrameRenderer', () => {
         adaptive: false,
         minSamples: 3,
         motionThreshold: 0.01,
+        blurAmount: 1,
+        stochastic: false,
       };
 
       const renderer = new MotionBlurFrameRenderer({
@@ -324,6 +326,8 @@ describe('MotionBlurFrameRenderer', () => {
         adaptive: false,
         minSamples: 2,
         motionThreshold: 0.01,
+        blurAmount: 1,
+        stochastic: false,
       };
 
       const renderer = new MotionBlurFrameRenderer({
@@ -353,6 +357,8 @@ describe('MotionBlurFrameRenderer', () => {
         adaptive: false,
         minSamples: 2,
         motionThreshold: 0.01,
+        blurAmount: 1,
+        stochastic: false,
       };
 
       const renderer = new MotionBlurFrameRenderer({

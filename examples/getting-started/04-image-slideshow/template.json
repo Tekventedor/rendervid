@@ -86,10 +86,12 @@
                 "duration": 30
               },
               {
-                "type": "continuous",
-                "effect": "zoomIn",
-                "scale": 1.1,
-                "duration": 120
+                "type": "keyframe",
+                "duration": 120,
+                "keyframes": [
+                  { "frame": 0, "properties": { "scaleX": 1, "scaleY": 1 } },
+                  { "frame": 120, "properties": { "scaleX": 1.1, "scaleY": 1.1 } }
+                ]
               }
             ]
           },
@@ -159,10 +161,12 @@
             },
             "animations": [
               {
-                "type": "continuous",
-                "effect": "zoomIn",
-                "scale": 1.1,
-                "duration": 120
+                "type": "keyframe",
+                "duration": 120,
+                "keyframes": [
+                  { "frame": 0, "properties": { "scaleX": 1, "scaleY": 1 } },
+                  { "frame": 120, "properties": { "scaleX": 1.1, "scaleY": 1.1 } }
+                ]
               }
             ]
           },
@@ -232,10 +236,12 @@
             },
             "animations": [
               {
-                "type": "continuous",
-                "effect": "zoomIn",
-                "scale": 1.1,
-                "duration": 120
+                "type": "keyframe",
+                "duration": 120,
+                "keyframes": [
+                  { "frame": 0, "properties": { "scaleX": 1, "scaleY": 1 } },
+                  { "frame": 120, "properties": { "scaleX": 1.1, "scaleY": 1.1 } }
+                ]
               },
               {
                 "type": "exit",

@@ -345,10 +345,13 @@ export class FFmpegEncoder {
     this.log('Quality:', quality);
 
     return new Promise((resolve, reject) => {
+      // Use prores_ks as the actual FFmpeg encoder for ProRes
+      const ffmpegCodec = selectedCodec === 'prores' ? 'prores_ks' : selectedCodec;
+
       let command = ffmpeg()
         .input(inputPattern)
         .inputFPS(fps)
-        .videoCodec(selectedCodec);
+        .videoCodec(ffmpegCodec);
 
       // Configure codec-specific options
       const outputOptions: string[] = [];
@@ -376,7 +379,14 @@ export class FFmpegEncoder {
         }
       } else {
         // Software encoder options
-        if (codec === 'libaom-av1') {
+        if (codec === 'prores') {
+          // ProRes 4444 with alpha support
+          outputOptions.push(
+            `-profile:v 4444`,
+            `-pix_fmt yuva444p10le`,
+            `-vendor apl0`
+          );
+        } else if (codec === 'libaom-av1') {
           // AV1 specific options
           if (bitrate) {
             outputOptions.push(`-b:v ${bitrate}`);
@@ -564,7 +574,14 @@ export class FFmpegEncoder {
         }
       } else {
         // Software encoder options
-        if (codec === 'libaom-av1') {
+        if (codec === 'prores') {
+          // ProRes 4444 with alpha support
+          args.push(
+            '-profile:v', '4444',
+            '-pix_fmt', 'yuva444p10le',
+            '-vendor', 'apl0'
+          );
+        } else if (codec === 'libaom-av1') {
           if (bitrate) {
             args.push('-b:v', bitrate);
           } else {

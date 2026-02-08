@@ -45,3 +45,4 @@ test-*.png
 test-*.gif
 test-page.html
 .temp-video-frames/
+/rendervid-jobs/

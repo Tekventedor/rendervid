@@ -46,6 +46,14 @@ export default defineWorkspace([
     },
   },
   {
+    extends: './packages/editor/vitest.config.ts',
+    test: {
+      name: 'editor',
+      root: './packages/editor',
+      environment: 'jsdom',
+    },
+  },
+  {
     extends: './examples/vitest.config.ts',
     test: {
       name: 'examples',
