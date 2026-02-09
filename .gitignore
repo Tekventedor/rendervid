@@ -8,6 +8,13 @@ node_modules
 dist
 build
 *.tsbuildinfo
+# Stray tsc outputs in src/ directories
+packages/*/src/**/*.js
+packages/*/src/**/*.js.map
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.d.ts.map
+!packages/*/src/**/*.test.ts
+!packages/*/src/**/*.test.tsx
 
 # Cache
 .cache
