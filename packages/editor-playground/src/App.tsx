@@ -76,9 +76,6 @@ export function App() {
             onSave: (t) => {
               console.log('[onSave]', t);
             },
-            onExport: (t) => {
-              console.log('[onExport]', t);
-            },
             onChange: (t) => {
               console.log('[onChange]', t.name);
             },

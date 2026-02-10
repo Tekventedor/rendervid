@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <style>
+    #bg-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg4 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title4 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark4 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg5 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title5 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark5 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg6 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title6 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark6 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg7 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title7 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark7 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg8 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title8 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark8 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="bg-image" transform="translate(0, 0)">
+    <image href="https://www.photomaticai.com/images/styles/pixel-art_Pixel_Art_Style.webp" width="1920" height="1080" preserveAspectRatio="xMidYMid slice" />
+  </g>
+  <g id="bg1" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="title1" transform="translate(160, 200)">
+    <text y="42" font-family="sans-serif" font-size="42" font-weight="600" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">ScrambleText</tspan></text>
+  </g>
+  <!-- Unsupported layer type "custom" (scramble1) -->
+  <g id="watermark1" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="19.2">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg2" transform="translate(960, 540)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="title2" transform="translate(160, 200)">
+    <text y="42" font-family="sans-serif" font-size="42" font-weight="600" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">FlipText</tspan></text>
+  </g>
+  <!-- Unsupported layer type "custom" (flip1) -->
+  <g id="watermark2" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="19.2">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg3" transform="translate(960, 540)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="title3" transform="translate(160, 200)">
+    <text y="42" font-family="sans-serif" font-size="42" font-weight="600" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">FuzzyText</tspan></text>
+  </g>
+  <!-- Unsupported layer type "custom" (fuzzy1) -->
+  <g id="watermark3" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="19.2">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg4" transform="translate(960, 540)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="title4" transform="translate(160, 200)">
+    <text y="42" font-family="sans-serif" font-size="42" font-weight="600" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">NeonText</tspan></text>
+  </g>
+  <!-- Unsupported layer type "custom" (neon1) -->
+  <g id="watermark4" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="19.2">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg5" transform="translate(960, 540)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="title5" transform="translate(160, 200)">
+    <text y="42" font-family="sans-serif" font-size="42" font-weight="600" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">TextTrail</tspan></text>
+  </g>
+  <!-- Unsupported layer type "custom" (trail1) -->
+  <g id="watermark5" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="19.2">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg6" transform="translate(960, 540)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="title6" transform="translate(160, 200)">
+    <text y="42" font-family="sans-serif" font-size="42" font-weight="600" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">LetterMorph</tspan></text>
+  </g>
+  <!-- Unsupported layer type "custom" (lettermorph1) -->
+  <g id="watermark6" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="19.2">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg7" transform="translate(960, 540)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="title7" transform="translate(160, 200)">
+    <text y="42" font-family="sans-serif" font-size="42" font-weight="600" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">MorphText</tspan></text>
+  </g>
+  <!-- Unsupported layer type "custom" (morph1) -->
+  <g id="watermark7" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="19.2">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg8" transform="translate(960, 540)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="title8" transform="translate(160, 200)">
+    <text y="42" font-family="sans-serif" font-size="42" font-weight="600" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">DistortText</tspan></text>
+  </g>
+  <!-- Unsupported layer type "custom" (distort1) -->
+  <g id="watermark8" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="19.2">FlowHunt.io</tspan></text>
+  </g>
+</svg>

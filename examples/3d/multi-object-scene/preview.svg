@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <filter id="title-shadow"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="subtitle-shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.4)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes title-anim-0 {
+      0% { transform: translate(0px, -1080px); }
+      5% { transform: translate(0px, -925.965px); }
+      10% { transform: translate(0px, -787.32px); }
+      15% { transform: translate(0px, -663.255px); }
+      20% { transform: translate(0px, -552.96px); }
+      25% { transform: translate(0px, -455.625px); }
+      30% { transform: translate(0px, -370.44px); }
+      35% { transform: translate(0px, -296.595px); }
+      40% { transform: translate(0px, -233.28px); }
+      45% { transform: translate(0px, -179.685px); }
+      50% { transform: translate(0px, -135px); }
+      55% { transform: translate(0px, -98.415px); }
+      60% { transform: translate(0px, -69.12px); }
+      65% { transform: translate(0px, -46.305px); }
+      70% { transform: translate(0px, -29.16px); }
+      75% { transform: translate(0px, -16.875px); }
+      80% { transform: translate(0px, -8.64px); }
+      85% { transform: translate(0px, -3.645px); }
+      90% { transform: translate(0px, -1.08px); }
+      95% { transform: translate(0px, -0.135px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #title {
+      transform-origin: 700px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.833s 0.5s linear 1 normal forwards;
+    }
+    @keyframes subtitle-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #subtitle {
+      transform-origin: 600px 0px;
+      transform: none;
+      opacity: 1;
+      animation: subtitle-anim-0 0.667s 1.167s linear 1 normal forwards;
+    }
+    @keyframes feature-box-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1646.16px, 0px); }
+      10% { transform: translate(-1399.68px, 0px); }
+      15% { transform: translate(-1179.12px, 0px); }
+      20% { transform: translate(-983.04px, 0px); }
+      25% { transform: translate(-810px, 0px); }
+      30% { transform: translate(-658.56px, 0px); }
+      35% { transform: translate(-527.28px, 0px); }
+      40% { transform: translate(-414.72px, 0px); }
+      45% { transform: translate(-319.44px, 0px); }
+      50% { transform: translate(-240px, 0px); }
+      55% { transform: translate(-174.96px, 0px); }
+      60% { transform: translate(-122.88px, 0px); }
+      65% { transform: translate(-82.32px, 0px); }
+      70% { transform: translate(-51.84px, 0px); }
+      75% { transform: translate(-30px, 0px); }
+      80% { transform: translate(-15.36px, 0px); }
+      85% { transform: translate(-6.48px, 0px); }
+      90% { transform: translate(-1.92px, 0px); }
+      95% { transform: translate(-0.24px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #feature-box {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: feature-box-anim-0 0.833s 2s linear 1 normal forwards;
+    }
+    @keyframes features-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #features {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: features-anim-0 0.667s 2.333s linear 1 normal forwards;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" />
+  </g>
+  <!-- Unsupported layer type "three" (three-scene) -->
+  <g id="title" transform="translate(260, 80)">
+    <text y="72" font-family="sans-serif" font-size="72" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle" letter-spacing="4" filter="url(#title-shadow)"><tspan x="700" dy="0">MULTI-OBJECT SCENE</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(360, 170)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="normal" font-style="normal" fill="#ffffff" text-anchor="middle" filter="url(#subtitle-shadow)"><tspan x="600" dy="0">7 Different Geometries • Complex Animations • Dynamic Lighting</tspan></text>
+  </g>
+  <g id="feature-box" transform="translate(100, 880)">
+    <rect x="0" y="0" width="500" height="120" rx="0" ry="0" fill="rgba(0, 0, 0, 0.6)" />
+  </g>
+  <g id="features" transform="translate(130, 910)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="normal" font-style="normal" fill="#ffffff" text-anchor="start"><tspan x="0" dy="0">• Sphere, Cube, Torus, Cone, Cylinder</tspan><tspan x="0" dy="32">• PBR Materials &amp; Shadows</tspan><tspan x="0" dy="32">• Atmospheric Fog</tspan></text>
+  </g>
+</svg>

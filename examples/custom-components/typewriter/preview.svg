@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#1e1e1e" />
+  <style>
+    #terminal-prompt {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <rect id="rv-1" x="0" y="0" width="1920" height="1080" fill="#1e1e1e" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="0s" dur="8s" fill="freeze" /></rect>
+  <!-- Unsupported layer type "custom" (typewriter-text) -->
+  <g id="terminal-prompt" transform="translate(100, 100)">
+    <text y="28" font-family="monospace" font-size="28" font-weight="normal" font-style="normal" fill="#00ff88" text-anchor="start"><tspan x="0" dy="0">$ rendervid --component typewriter</tspan></text>
+  </g>
+</svg>

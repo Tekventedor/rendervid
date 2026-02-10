@@ -1,8 +1,14 @@
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
-import type { Layer, InputDefinition } from '@rendervid/core';
+import type { Layer, InputDefinition, Template } from '@rendervid/core';
 import type { ThreeLayer as ThreeLayerType } from '@rendervid/core';
+import { exportAnimatedSvg } from '@rendervid/core';
 import { Player } from '@rendervid/player';
-import { ThreeLayer } from '@rendervid/renderer-browser';
+import {
+  ThreeLayer,
+  createBrowserRenderer,
+  downloadBlob,
+  isWebCodecsSupported,
+} from '@rendervid/renderer-browser';
 import { allTemplates, categories } from './templates';
 
 type ZoomMode = 'fit' | number;
@@ -84,6 +90,9 @@ export function App() {
   const [speed, setSpeed] = useState(1);
   const [zoom, setZoom] = useState<ZoomMode>('fit');
   const [inputValues, setInputValues] = useState<Record<string, unknown>>({});
+  const [exporting, setExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState(0);
+  const [exportError, setExportError] = useState<string | null>(null);
   const frameCount = useRef(0);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [viewportSize, setViewportSize] = useState({ width: 800, height: 600 });
@@ -127,6 +136,50 @@ export function App() {
     () => buildComponentRegistry(template?.customComponents),
     [template],
   );
+
+  // Export handler
+  const handleExport = useCallback(async (tmpl: Template) => {
+    if (exporting) return;
+    setExporting(true);
+    setExportProgress(0);
+    setExportError(null);
+    try {
+      const renderer = createBrowserRenderer({
+        preferWebCodecs: isWebCodecsSupported(),
+      });
+      const format = isWebCodecsSupported() ? 'mp4' as const : 'webm' as const;
+      const result = await renderer.renderVideo({
+        template: tmpl,
+        inputs: inputValues,
+        format,
+        onProgress: (p) => setExportProgress(Math.round(p.percentage)),
+      });
+      const ext = format === 'mp4' ? 'mp4' : 'webm';
+      const filename = `${tmpl.name || 'video'}.${ext}`.replace(/\s+/g, '-').toLowerCase();
+      downloadBlob(result.blob, filename);
+      renderer.dispose();
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setExporting(false);
+    }
+  }, [exporting, inputValues]);
+
+  // SVG export handler
+  const handleExportSvg = useCallback((tmpl: Template) => {
+    try {
+      const result = exportAnimatedSvg(tmpl, inputValues);
+      const blob = new Blob([result.svg], { type: 'image/svg+xml' });
+      const filename = `${tmpl.name || 'animation'}.svg`.replace(/\s+/g, '-').toLowerCase();
+      downloadBlob(blob, filename);
+      if (result.unsupportedLayers.length > 0) {
+        const names = result.unsupportedLayers.map(l => `${l.name || l.id} (${l.type})`).join(', ');
+        console.warn(`SVG export skipped unsupported layers: ${names}`);
+      }
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : String(err));
+    }
+  }, [inputValues]);
 
   // Custom layer renderer for Three.js 3D layers and custom components
   const renderLayer = useMemo(() => {
@@ -243,6 +296,7 @@ export function App() {
               loop={loop}
               speed={speed}
               renderLayer={renderLayer}
+              onExport={handleExport}
               onComplete={() => {
                 console.log('[onComplete]');
               }}
@@ -344,6 +398,55 @@ export function App() {
             </button>
           </Section>
         )}
+
+        {/* Export */}
+        <Section title="Export">
+          {exporting ? (
+            <div>
+              <div style={{ fontSize: '12px', color: '#a1a1aa', marginBottom: '6px' }}>
+                Rendering... {exportProgress}%
+              </div>
+              <div style={{
+                width: '100%', height: '4px', backgroundColor: '#27272a',
+                borderRadius: '2px', overflow: 'hidden',
+              }}>
+                <div style={{
+                  width: `${exportProgress}%`, height: '100%',
+                  backgroundColor: '#6366f1', borderRadius: '2px',
+                  transition: 'width 0.2s ease',
+                }} />
+              </div>
+            </div>
+          ) : (
+            <>
+              <button
+                onClick={() => template && handleExport(template)}
+                style={{
+                  width: '100%', padding: '8px', fontSize: '13px', fontWeight: 600,
+                  backgroundColor: '#16a34a', color: '#fff', border: 'none',
+                  borderRadius: '6px', cursor: 'pointer',
+                }}
+              >
+                Export {isWebCodecsSupported() ? 'MP4' : 'WebM'}
+              </button>
+              <button
+                onClick={() => template && handleExportSvg(template)}
+                style={{
+                  width: '100%', padding: '8px', fontSize: '13px', fontWeight: 600,
+                  backgroundColor: '#7c3aed', color: '#fff', border: 'none',
+                  borderRadius: '6px', cursor: 'pointer', marginTop: '4px',
+                }}
+              >
+                Export SVG
+              </button>
+              {exportError && (
+                <div style={{ fontSize: '11px', color: '#f87171', marginTop: '4px' }}>
+                  {exportError}
+                </div>
+              )}
+            </>
+          )}
+        </Section>
 
         {/* Zoom */}
         <Section title={`Zoom: ${zoomLabel(zoom)}`}>

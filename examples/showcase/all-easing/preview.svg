@@ -1,0 +1,626 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #bg-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball1-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1824px, 0px); }
+      10% { transform: translate(-1728px, 0px); }
+      15% { transform: translate(-1632px, 0px); }
+      20% { transform: translate(-1536px, 0px); }
+      25% { transform: translate(-1440px, 0px); }
+      30% { transform: translate(-1344px, 0px); }
+      35% { transform: translate(-1248px, 0px); }
+      40% { transform: translate(-1152px, 0px); }
+      45% { transform: translate(-1056px, 0px); }
+      50% { transform: translate(-960px, 0px); }
+      55% { transform: translate(-864px, 0px); }
+      60% { transform: translate(-768px, 0px); }
+      65% { transform: translate(-672px, 0px); }
+      70% { transform: translate(-576px, 0px); }
+      75% { transform: translate(-480px, 0px); }
+      80% { transform: translate(-384px, 0px); }
+      85% { transform: translate(-288px, 0px); }
+      90% { transform: translate(-192px, 0px); }
+      95% { transform: translate(-96px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball1-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball2-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1915.2px, 0px); }
+      10% { transform: translate(-1900.8px, 0px); }
+      15% { transform: translate(-1876.8px, 0px); }
+      20% { transform: translate(-1843.2px, 0px); }
+      25% { transform: translate(-1800px, 0px); }
+      30% { transform: translate(-1747.2px, 0px); }
+      35% { transform: translate(-1684.8px, 0px); }
+      40% { transform: translate(-1612.8px, 0px); }
+      45% { transform: translate(-1531.2px, 0px); }
+      50% { transform: translate(-1440px, 0px); }
+      55% { transform: translate(-1339.2px, 0px); }
+      60% { transform: translate(-1228.8px, 0px); }
+      65% { transform: translate(-1108.8px, 0px); }
+      70% { transform: translate(-979.2px, 0px); }
+      75% { transform: translate(-840px, 0px); }
+      80% { transform: translate(-691.2px, 0px); }
+      85% { transform: translate(-532.8px, 0px); }
+      90% { transform: translate(-364.8px, 0px); }
+      95% { transform: translate(-187.2px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball2-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball3-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1732.8px, 0px); }
+      10% { transform: translate(-1555.2px, 0px); }
+      15% { transform: translate(-1387.2px, 0px); }
+      20% { transform: translate(-1228.8px, 0px); }
+      25% { transform: translate(-1080px, 0px); }
+      30% { transform: translate(-940.8px, 0px); }
+      35% { transform: translate(-811.2px, 0px); }
+      40% { transform: translate(-691.2px, 0px); }
+      45% { transform: translate(-580.8px, 0px); }
+      50% { transform: translate(-480px, 0px); }
+      55% { transform: translate(-388.8px, 0px); }
+      60% { transform: translate(-307.2px, 0px); }
+      65% { transform: translate(-235.2px, 0px); }
+      70% { transform: translate(-172.8px, 0px); }
+      75% { transform: translate(-120px, 0px); }
+      80% { transform: translate(-76.8px, 0px); }
+      85% { transform: translate(-43.2px, 0px); }
+      90% { transform: translate(-19.2px, 0px); }
+      95% { transform: translate(-4.8px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball3-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label4 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track4 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball4-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1919.04px, 0px); }
+      10% { transform: translate(-1912.32px, 0px); }
+      15% { transform: translate(-1894.08px, 0px); }
+      20% { transform: translate(-1858.56px, 0px); }
+      25% { transform: translate(-1800px, 0px); }
+      30% { transform: translate(-1712.64px, 0px); }
+      35% { transform: translate(-1590.72px, 0px); }
+      40% { transform: translate(-1428.48px, 0px); }
+      45% { transform: translate(-1220.16px, 0px); }
+      50% { transform: translate(-960px, 0px); }
+      55% { transform: translate(-699.84px, 0px); }
+      60% { transform: translate(-491.52px, 0px); }
+      65% { transform: translate(-329.28px, 0px); }
+      70% { transform: translate(-207.36px, 0px); }
+      75% { transform: translate(-120px, 0px); }
+      80% { transform: translate(-61.44px, 0px); }
+      85% { transform: translate(-25.92px, 0px); }
+      90% { transform: translate(-7.68px, 0px); }
+      95% { transform: translate(-0.96px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball4 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball4-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label5 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track5 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball5-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1919.988px, 0px); }
+      10% { transform: translate(-1919.808px, 0px); }
+      15% { transform: translate(-1919.028px, 0px); }
+      20% { transform: translate(-1916.928px, 0px); }
+      25% { transform: translate(-1912.5px, 0px); }
+      30% { transform: translate(-1904.448px, 0px); }
+      35% { transform: translate(-1891.188px, 0px); }
+      40% { transform: translate(-1870.848px, 0px); }
+      45% { transform: translate(-1841.268px, 0px); }
+      50% { transform: translate(-1800px, 0px); }
+      55% { transform: translate(-1744.308px, 0px); }
+      60% { transform: translate(-1671.168px, 0px); }
+      65% { transform: translate(-1577.268px, 0px); }
+      70% { transform: translate(-1459.008px, 0px); }
+      75% { transform: translate(-1312.5px, 0px); }
+      80% { transform: translate(-1133.568px, 0px); }
+      85% { transform: translate(-917.748px, 0px); }
+      90% { transform: translate(-660.288px, 0px); }
+      95% { transform: translate(-356.148px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball5 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball5-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label6 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track6 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball6-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1563.852px, 0px); }
+      10% { transform: translate(-1259.712px, 0px); }
+      15% { transform: translate(-1002.252px, 0px); }
+      20% { transform: translate(-786.432px, 0px); }
+      25% { transform: translate(-607.5px, 0px); }
+      30% { transform: translate(-460.992px, 0px); }
+      35% { transform: translate(-342.732px, 0px); }
+      40% { transform: translate(-248.832px, 0px); }
+      45% { transform: translate(-175.692px, 0px); }
+      50% { transform: translate(-120px, 0px); }
+      55% { transform: translate(-78.732px, 0px); }
+      60% { transform: translate(-49.152px, 0px); }
+      65% { transform: translate(-28.812px, 0px); }
+      70% { transform: translate(-15.552px, 0px); }
+      75% { transform: translate(-7.5px, 0px); }
+      80% { transform: translate(-3.072px, 0px); }
+      85% { transform: translate(-0.972px, 0px); }
+      90% { transform: translate(-0.192px, 0px); }
+      95% { transform: translate(-0.012px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball6 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball6-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label7 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track7 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball7-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1498.735px, 0px); }
+      10% { transform: translate(-1135.05px, 0px); }
+      15% { transform: translate(-825.055px, 0px); }
+      20% { transform: translate(-564.86px, 0px); }
+      25% { transform: translate(-350.573px, 0px); }
+      30% { transform: translate(-178.306px, 0px); }
+      35% { transform: translate(-44.167px, 0px); }
+      40% { transform: translate(55.733px, 0px); }
+      45% { transform: translate(125.285px, 0px); }
+      50% { transform: translate(168.379px, 0px); }
+      55% { transform: translate(188.906px, 0px); }
+      60% { transform: translate(190.755px, 0px); }
+      65% { transform: translate(177.818px, 0px); }
+      70% { transform: translate(153.983px, 0px); }
+      75% { transform: translate(123.142px, 0px); }
+      80% { transform: translate(89.185px, 0px); }
+      85% { transform: translate(56.002px, 0px); }
+      90% { transform: translate(27.483px, 0px); }
+      95% { transform: translate(7.519px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball7 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball7-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label8 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track8 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball8-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-678.823px, 0px); }
+      10% { transform: translate(480px, 0px); }
+      15% { transform: translate(678.823px, 0px); }
+      20% { transform: translate(240px, 0px); }
+      25% { transform: translate(-169.706px, 0px); }
+      30% { transform: translate(-240px, 0px); }
+      35% { transform: translate(-84.853px, 0px); }
+      40% { transform: translate(60px, 0px); }
+      45% { transform: translate(84.853px, 0px); }
+      50% { transform: translate(30px, 0px); }
+      55% { transform: translate(-21.213px, 0px); }
+      60% { transform: translate(-30px, 0px); }
+      65% { transform: translate(-10.607px, 0px); }
+      70% { transform: translate(7.5px, 0px); }
+      75% { transform: translate(10.607px, 0px); }
+      80% { transform: translate(3.75px, 0px); }
+      85% { transform: translate(-2.652px, 0px); }
+      90% { transform: translate(-3.75px, 0px); }
+      95% { transform: translate(-1.326px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball8 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball8-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label9 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track9 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball9-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1883.7px, 0px); }
+      10% { transform: translate(-1774.8px, 0px); }
+      15% { transform: translate(-1593.3px, 0px); }
+      20% { transform: translate(-1339.2px, 0px); }
+      25% { transform: translate(-1012.5px, 0px); }
+      30% { transform: translate(-613.2px, 0px); }
+      35% { transform: translate(-141.3px, 0px); }
+      40% { transform: translate(-172.8px, 0px); }
+      45% { transform: translate(-347.7px, 0px); }
+      50% { transform: translate(-450px, 0px); }
+      55% { transform: translate(-479.7px, 0px); }
+      60% { transform: translate(-436.8px, 0px); }
+      65% { transform: translate(-321.3px, 0px); }
+      70% { transform: translate(-133.2px, 0px); }
+      75% { transform: translate(-52.5px, 0px); }
+      80% { transform: translate(-115.2px, 0px); }
+      85% { transform: translate(-105.3px, 0px); }
+      90% { transform: translate(-22.8px, 0px); }
+      95% { transform: translate(-29.7px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball9 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball9-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label10 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track10 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball10-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1917.348px, 0px); }
+      10% { transform: translate(-1916.25px, 0px); }
+      15% { transform: translate(-1914.697px, 0px); }
+      20% { transform: translate(-1912.5px, 0px); }
+      25% { transform: translate(-1909.393px, 0px); }
+      30% { transform: translate(-1905px, 0px); }
+      35% { transform: translate(-1898.787px, 0px); }
+      40% { transform: translate(-1890px, 0px); }
+      45% { transform: translate(-1877.574px, 0px); }
+      50% { transform: translate(-1860px, 0px); }
+      55% { transform: translate(-1835.147px, 0px); }
+      60% { transform: translate(-1800px, 0px); }
+      65% { transform: translate(-1750.294px, 0px); }
+      70% { transform: translate(-1680px, 0px); }
+      75% { transform: translate(-1580.589px, 0px); }
+      80% { transform: translate(-1440px, 0px); }
+      85% { transform: translate(-1241.177px, 0px); }
+      90% { transform: translate(-960px, 0px); }
+      95% { transform: translate(-562.355px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball10 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball10-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label11 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track11 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball11-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1320.48px, 0px); }
+      10% { transform: translate(-1083.091px, 0px); }
+      15% { transform: translate(-908.577px, 0px); }
+      20% { transform: translate(-768px, 0px); }
+      25% { transform: translate(-650.039px, 0px); }
+      30% { transform: translate(-548.846px, 0px); }
+      35% { transform: translate(-460.926px, 0px); }
+      40% { transform: translate(-384px, 0px); }
+      45% { transform: translate(-316.484px, 0px); }
+      50% { transform: translate(-257.231px, 0px); }
+      55% { transform: translate(-205.385px, 0px); }
+      60% { transform: translate(-160.291px, 0px); }
+      65% { transform: translate(-121.441px, 0px); }
+      70% { transform: translate(-88.437px, 0px); }
+      75% { transform: translate(-60.968px, 0px); }
+      80% { transform: translate(-38.792px, 0px); }
+      85% { transform: translate(-21.723px, 0px); }
+      90% { transform: translate(-9.624px, 0px); }
+      95% { transform: translate(-2.402px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball11 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball11-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #label12 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #track12 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes ball12-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1908.181px, 0px); }
+      10% { transform: translate(-1873.014px, 0px); }
+      15% { transform: translate(-1815.366px, 0px); }
+      20% { transform: translate(-1736.656px, 0px); }
+      25% { transform: translate(-1638.823px, 0px); }
+      30% { transform: translate(-1524.274px, 0px); }
+      35% { transform: translate(-1395.831px, 0px); }
+      40% { transform: translate(-1256.656px, 0px); }
+      45% { transform: translate(-1110.177px, 0px); }
+      50% { transform: translate(-960px, 0px); }
+      55% { transform: translate(-809.823px, 0px); }
+      60% { transform: translate(-663.344px, 0px); }
+      65% { transform: translate(-524.169px, 0px); }
+      70% { transform: translate(-395.726px, 0px); }
+      75% { transform: translate(-281.177px, 0px); }
+      80% { transform: translate(-183.344px, 0px); }
+      85% { transform: translate(-104.634px, 0px); }
+      90% { transform: translate(-46.986px, 0px); }
+      95% { transform: translate(-11.819px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #ball12 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: ball12-anim-0 2.667s 0.333s linear 1 normal forwards;
+    }
+    #footer {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="bg-image" transform="translate(0, 0)">
+    <image href="https://www.photomaticai.com/images/ai-generated-images/models_ideogram-v2a_ai-image-generator_sleek-desig_Futuristic_3D_Workspace_Design.webp" width="1920" height="1080" preserveAspectRatio="xMidYMid slice" />
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0c0a09" />
+  </g>
+  <g id="title" transform="translate(0, 30)">
+    <text y="48" font-family="sans-serif" font-size="48" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">EASING FUNCTIONS COMPARISON</tspan></text>
+  </g>
+  <g id="label1" transform="translate(60, 130)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">linear</tspan></text>
+  </g>
+  <g id="track1" transform="translate(270, 130)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball1" transform="translate(270, 130)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#f97316" />
+  </g>
+  <g id="label2" transform="translate(60, 200)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeInQuad</tspan></text>
+  </g>
+  <g id="track2" transform="translate(270, 200)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball2" transform="translate(270, 200)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#eab308" />
+  </g>
+  <g id="label3" transform="translate(60, 270)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeOutQuad</tspan></text>
+  </g>
+  <g id="track3" transform="translate(270, 270)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball3" transform="translate(270, 270)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#22c55e" />
+  </g>
+  <g id="label4" transform="translate(60, 340)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeInOutCubic</tspan></text>
+  </g>
+  <g id="track4" transform="translate(270, 340)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball4" transform="translate(270, 340)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#3b82f6" />
+  </g>
+  <g id="label5" transform="translate(60, 410)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeInQuart</tspan></text>
+  </g>
+  <g id="track5" transform="translate(270, 410)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball5" transform="translate(270, 410)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#8b5cf6" />
+  </g>
+  <g id="label6" transform="translate(60, 480)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeOutQuart</tspan></text>
+  </g>
+  <g id="track6" transform="translate(270, 480)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball6" transform="translate(270, 480)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#ec4899" />
+  </g>
+  <g id="label7" transform="translate(60, 550)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeOutBack</tspan></text>
+  </g>
+  <g id="track7" transform="translate(270, 550)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball7" transform="translate(270, 550)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#ef4444" />
+  </g>
+  <g id="label8" transform="translate(60, 620)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeOutElastic</tspan></text>
+  </g>
+  <g id="track8" transform="translate(270, 620)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball8" transform="translate(270, 620)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#14b8a6" />
+  </g>
+  <g id="label9" transform="translate(60, 690)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeOutBounce</tspan></text>
+  </g>
+  <g id="track9" transform="translate(270, 690)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball9" transform="translate(270, 690)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#0ea5e9" />
+  </g>
+  <g id="label10" transform="translate(60, 760)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeInExpo</tspan></text>
+  </g>
+  <g id="track10" transform="translate(270, 760)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball10" transform="translate(270, 760)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#a3e635" />
+  </g>
+  <g id="label11" transform="translate(60, 830)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeOutCirc</tspan></text>
+  </g>
+  <g id="track11" transform="translate(270, 830)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball11" transform="translate(270, 830)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#fbbf24" />
+  </g>
+  <g id="label12" transform="translate(60, 900)">
+    <text y="20" font-family="sans-serif" font-size="20" font-weight="600" font-style="normal" fill="#a8a29e" text-anchor="start"><tspan x="0" dy="0">easeInOutSine</tspan></text>
+  </g>
+  <g id="track12" transform="translate(270, 900)">
+    <rect x="0" y="0" width="1590" height="30" rx="15" ry="15" fill="#1c1917" />
+  </g>
+  <g id="ball12" transform="translate(270, 900)">
+    <ellipse cx="15" cy="15" rx="15" ry="15" fill="#fb923c" />
+  </g>
+  <g id="footer" transform="translate(0, 1010)">
+    <text y="18" font-family="sans-serif" font-size="18" font-weight="normal" font-style="normal" fill="#57534e" text-anchor="middle"><tspan x="960" dy="0">Watch how each ball moves at different speeds • Same duration, different curves</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

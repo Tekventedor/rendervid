@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <filter id="title-shadow"><feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="rgba(138,43,226,0.8)" /></filter>
+  </defs>
+
+  <style>
+    @keyframes title-anim-0 {
+      0% { transform: translate(0px, 50px); opacity: 0; }
+      5% { transform: translate(0px, 42.869px); opacity: 0.143; }
+      10% { transform: translate(0px, 36.45px); opacity: 0.271; }
+      15% { transform: translate(0px, 30.706px); opacity: 0.386; }
+      20% { transform: translate(0px, 25.6px); opacity: 0.488; }
+      25% { transform: translate(0px, 21.094px); opacity: 0.578; }
+      30% { transform: translate(0px, 17.15px); opacity: 0.657; }
+      35% { transform: translate(0px, 13.731px); opacity: 0.725; }
+      40% { transform: translate(0px, 10.8px); opacity: 0.784; }
+      45% { transform: translate(0px, 8.319px); opacity: 0.834; }
+      50% { transform: translate(0px, 6.25px); opacity: 0.875; }
+      55% { transform: translate(0px, 4.556px); opacity: 0.909; }
+      60% { transform: translate(0px, 3.2px); opacity: 0.936; }
+      65% { transform: translate(0px, 2.144px); opacity: 0.957; }
+      70% { transform: translate(0px, 1.35px); opacity: 0.973; }
+      75% { transform: translate(0px, 0.781px); opacity: 0.984; }
+      80% { transform: translate(0px, 0.4px); opacity: 0.992; }
+      85% { transform: translate(0px, 0.169px); opacity: 0.997; }
+      90% { transform: translate(0px, 0.05px); opacity: 0.999; }
+      95% { transform: translate(0px, 0.006px); opacity: 1; }
+      100% { transform: translate(0px, 0px); opacity: 1; }
+    }
+    #title {
+      transform-origin: 800px 40px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 0.5s linear 1 normal forwards;
+    }
+  </style>
+
+  <rect id="rv-1" x="0" y="0" width="1920" height="1080" fill="#000000" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="0s" dur="8s" fill="freeze" /></rect>
+  <!-- Unsupported layer type "custom" (glow-background) -->
+  <!-- Unsupported layer type "custom" (cube) -->
+  <g id="title" transform="translate(160, 910)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#ffffff" text-anchor="middle" filter="url(#title-shadow)"><tspan x="800" dy="0">3D Transform with Custom Components</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background-gradient-1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #aurora-blob-1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.3;
+    }
+    #aurora-blob-2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.2;
+    }
+    #aurora-blob-3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.25;
+    }
+    @keyframes quote-mark-open-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #quote-mark-open {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.4;
+      animation: quote-mark-open-anim-0 0.833s 0.667s linear 1 normal forwards;
+    }
+    @keyframes quote-mark-close-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #quote-mark-close {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.4;
+      animation: quote-mark-close-anim-0 0.833s 5.167s linear 1 normal forwards;
+    }
+    @keyframes divider-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: divider-anim-0 0.667s 5.5s linear 1 normal forwards;
+    }
+    @keyframes author-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #author {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: author-anim-0 1s 6.167s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background-gradient-1" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1e1b4b" />
+  </g>
+  <g id="aurora-blob-1" transform="translate(300, 200)">
+    <rect width="600" height="600" fill="#8b5cf6" />
+  </g>
+  <g id="aurora-blob-2" transform="translate(1100, 300)">
+    <rect width="500" height="500" fill="#ec4899" />
+  </g>
+  <g id="aurora-blob-3" transform="translate(700, 500)">
+    <rect width="550" height="550" fill="#06b6d4" />
+  </g>
+  <g id="quote-mark-open" transform="translate(260, 350)">
+    <text y="120" font-family="serif" font-size="120" font-weight="bold" font-style="normal" fill="{{accentColor}}" text-anchor="start"><tspan x="0" dy="0">&quot;</tspan></text>
+  </g>
+  <g id="quote-mark-close" transform="translate(1560, 500)">
+    <text y="120" font-family="serif" font-size="120" font-weight="bold" font-style="normal" fill="{{accentColor}}" text-anchor="end"><tspan x="100" dy="0">&quot;</tspan></text>
+  </g>
+  <g id="divider" transform="translate(810, 640)">
+    <rect x="0" y="0" width="300" height="3" rx="0" ry="0" fill="{{accentColor}}" />
+  </g>
+  <g id="author" transform="translate(560, 670)">
+    <text y="32" font-family="serif" font-size="32" font-weight="300" font-style="normal" fill="#e2e8f0" text-anchor="middle" letter-spacing="2"><tspan x="400" dy="0">— {{author}}</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

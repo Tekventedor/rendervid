@@ -71,6 +71,13 @@ export {
   type PresetOptions,
 } from './animation';
 
+// SVG Export
+export {
+  exportAnimatedSvg,
+  type SvgExportResult,
+  type UnsupportedLayerInfo,
+} from './export/svg-exporter';
+
 // Fonts
 export type {
   FontWeight,

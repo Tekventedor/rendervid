@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#000000" />
+  <defs>
+    <linearGradient id="background-grad" x1="85.355%" y1="85.355%" x2="14.645%" y2="14.645%"><stop offset="0%" stop-color="{{backgroundColor}}" /><stop offset="100%" stop-color="#27272a" /></linearGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #accent-blob {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.15;
+    }
+    #accent-blob-2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.1;
+    }
+    #headline {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #tagline {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #brand-line {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #brand-name {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1200" height="630" rx="0" ry="0" fill="url(#background-grad)" />
+  </g>
+  <g id="accent-blob" transform="translate(900, 350)">
+    <ellipse cx="200" cy="200" rx="200" ry="200" fill="{{primaryColor}}" />
+  </g>
+  <g id="accent-blob-2" transform="translate(-50, -50)">
+    <ellipse cx="150" cy="150" rx="150" ry="150" fill="{{primaryColor}}" />
+  </g>
+  <g id="headline" transform="translate(60, 220)">
+    <text y="56" font-family="Inter, system-ui, sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#fafafa" text-anchor="start"><tspan x="0" dy="0">{{headline}}</tspan></text>
+  </g>
+  <g id="tagline" transform="translate(60, 390)">
+    <text y="24" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="normal" font-style="normal" fill="#a1a1aa" text-anchor="start"><tspan x="0" dy="0">{{tagline}}</tspan></text>
+  </g>
+  <g id="brand-line" transform="translate(60, 540)">
+    <rect x="0" y="0" width="40" height="3" rx="0" ry="0" fill="{{primaryColor}}" />
+  </g>
+  <g id="brand-name" transform="translate(115, 530)">
+    <text y="18" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="500" font-style="normal" fill="#71717a" text-anchor="start"><tspan x="0" dy="0">{{brandName}}</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

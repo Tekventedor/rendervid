@@ -1,0 +1,454 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 0s linear 1 normal forwards;
+    }
+    @keyframes bar1-label-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #bar1-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar1-label-anim-0 0.5s 0.667s linear 1 normal forwards;
+    }
+    @keyframes bar1-track-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #bar1-track {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar1-track-anim-0 0.5s 0.5s linear 1 normal forwards;
+    }
+    @keyframes bar1-fill-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1646.16px, 0px); }
+      10% { transform: translate(-1399.68px, 0px); }
+      15% { transform: translate(-1179.12px, 0px); }
+      20% { transform: translate(-983.04px, 0px); }
+      25% { transform: translate(-810px, 0px); }
+      30% { transform: translate(-658.56px, 0px); }
+      35% { transform: translate(-527.28px, 0px); }
+      40% { transform: translate(-414.72px, 0px); }
+      45% { transform: translate(-319.44px, 0px); }
+      50% { transform: translate(-240px, 0px); }
+      55% { transform: translate(-174.96px, 0px); }
+      60% { transform: translate(-122.88px, 0px); }
+      65% { transform: translate(-82.32px, 0px); }
+      70% { transform: translate(-51.84px, 0px); }
+      75% { transform: translate(-30px, 0px); }
+      80% { transform: translate(-15.36px, 0px); }
+      85% { transform: translate(-6.48px, 0px); }
+      90% { transform: translate(-1.92px, 0px); }
+      95% { transform: translate(-0.24px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #bar1-fill {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar1-fill-anim-0 1.333s 1s linear 1 normal forwards;
+    }
+    @keyframes bar1-value-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    @keyframes bar1-value-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #bar1-value {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      visibility: hidden;
+      animation: bar1-value-anim-0 0.5s 1.667s linear 1 normal forwards, bar1-value-vis 4.333s 1.667s 1 linear forwards;
+    }
+    @keyframes bar2-label-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #bar2-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar2-label-anim-0 0.5s 1.167s linear 1 normal forwards;
+    }
+    @keyframes bar2-track-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #bar2-track {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar2-track-anim-0 0.5s 1s linear 1 normal forwards;
+    }
+    @keyframes bar2-fill-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1646.16px, 0px); }
+      10% { transform: translate(-1399.68px, 0px); }
+      15% { transform: translate(-1179.12px, 0px); }
+      20% { transform: translate(-983.04px, 0px); }
+      25% { transform: translate(-810px, 0px); }
+      30% { transform: translate(-658.56px, 0px); }
+      35% { transform: translate(-527.28px, 0px); }
+      40% { transform: translate(-414.72px, 0px); }
+      45% { transform: translate(-319.44px, 0px); }
+      50% { transform: translate(-240px, 0px); }
+      55% { transform: translate(-174.96px, 0px); }
+      60% { transform: translate(-122.88px, 0px); }
+      65% { transform: translate(-82.32px, 0px); }
+      70% { transform: translate(-51.84px, 0px); }
+      75% { transform: translate(-30px, 0px); }
+      80% { transform: translate(-15.36px, 0px); }
+      85% { transform: translate(-6.48px, 0px); }
+      90% { transform: translate(-1.92px, 0px); }
+      95% { transform: translate(-0.24px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #bar2-fill {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar2-fill-anim-0 1.333s 1.667s linear 1 normal forwards;
+    }
+    @keyframes bar2-value-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    @keyframes bar2-value-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #bar2-value {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      visibility: hidden;
+      animation: bar2-value-anim-0 0.5s 2.333s linear 1 normal forwards, bar2-value-vis 3.667s 2.333s 1 linear forwards;
+    }
+    @keyframes bar3-label-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #bar3-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar3-label-anim-0 0.5s 1.667s linear 1 normal forwards;
+    }
+    @keyframes bar3-track-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #bar3-track {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar3-track-anim-0 0.5s 1.5s linear 1 normal forwards;
+    }
+    @keyframes bar3-fill-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1646.16px, 0px); }
+      10% { transform: translate(-1399.68px, 0px); }
+      15% { transform: translate(-1179.12px, 0px); }
+      20% { transform: translate(-983.04px, 0px); }
+      25% { transform: translate(-810px, 0px); }
+      30% { transform: translate(-658.56px, 0px); }
+      35% { transform: translate(-527.28px, 0px); }
+      40% { transform: translate(-414.72px, 0px); }
+      45% { transform: translate(-319.44px, 0px); }
+      50% { transform: translate(-240px, 0px); }
+      55% { transform: translate(-174.96px, 0px); }
+      60% { transform: translate(-122.88px, 0px); }
+      65% { transform: translate(-82.32px, 0px); }
+      70% { transform: translate(-51.84px, 0px); }
+      75% { transform: translate(-30px, 0px); }
+      80% { transform: translate(-15.36px, 0px); }
+      85% { transform: translate(-6.48px, 0px); }
+      90% { transform: translate(-1.92px, 0px); }
+      95% { transform: translate(-0.24px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #bar3-fill {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: bar3-fill-anim-0 1.333s 2.333s linear 1 normal forwards;
+    }
+    @keyframes bar3-value-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    @keyframes bar3-value-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #bar3-value {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      visibility: hidden;
+      animation: bar3-value-anim-0 0.5s 3s linear 1 normal forwards, bar3-value-vis 3s 3s 1 linear forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="{{backgroundColor}}" />
+  </g>
+  <g id="title" transform="translate(160, 80)">
+    <text y="56" font-family="Inter, system-ui, sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#f8fafc" text-anchor="start"><tspan x="0" dy="0">{{title}}</tspan></text>
+  </g>
+  <g id="bar1-label" transform="translate(160, 250)">
+    <text y="24" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="500" font-style="normal" fill="#94a3b8" text-anchor="start"><tspan x="0" dy="0">{{label1}}</tspan></text>
+  </g>
+  <g id="bar1-track" transform="translate(380, 250)">
+    <rect x="0" y="0" width="1200" height="50" rx="8" ry="8" fill="#1e293b" />
+  </g>
+  <g id="bar1-fill" transform="translate(380, 250)">
+    <rect x="0" y="0" width="540" height="50" rx="8" ry="8" fill="{{primaryColor}}" />
+  </g>
+  <g id="bar1-value" transform="translate(940, 258)">
+    <text y="24" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="start"><tspan x="0" dy="0">45%</tspan></text>
+  </g>
+  <g id="bar2-label" transform="translate(160, 380)">
+    <text y="24" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="500" font-style="normal" fill="#94a3b8" text-anchor="start"><tspan x="0" dy="0">{{label2}}</tspan></text>
+  </g>
+  <g id="bar2-track" transform="translate(380, 380)">
+    <rect x="0" y="0" width="1200" height="50" rx="8" ry="8" fill="#1e293b" />
+  </g>
+  <g id="bar2-fill" transform="translate(380, 380)">
+    <rect x="0" y="0" width="360" height="50" rx="8" ry="8" fill="#8b5cf6" />
+  </g>
+  <g id="bar2-value" transform="translate(760, 388)">
+    <text y="24" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="start"><tspan x="0" dy="0">30%</tspan></text>
+  </g>
+  <g id="bar3-label" transform="translate(160, 510)">
+    <text y="24" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="500" font-style="normal" fill="#94a3b8" text-anchor="start"><tspan x="0" dy="0">{{label3}}</tspan></text>
+  </g>
+  <g id="bar3-track" transform="translate(380, 510)">
+    <rect x="0" y="0" width="1200" height="50" rx="8" ry="8" fill="#1e293b" />
+  </g>
+  <g id="bar3-fill" transform="translate(380, 510)">
+    <rect x="0" y="0" width="300" height="50" rx="8" ry="8" fill="#22c55e" />
+  </g>
+  <g id="bar3-value" transform="translate(700, 518)">
+    <text y="24" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="start"><tspan x="0" dy="0">25%</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

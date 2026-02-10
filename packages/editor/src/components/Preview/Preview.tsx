@@ -6,7 +6,7 @@ import { SelectionOverlay } from './SelectionOverlay';
 /**
  * Compile inline component code string into a React component function.
  */
-function compileInlineComponent(code: string): React.ComponentType<any> | null {
+export function compileInlineComponent(code: string): React.ComponentType<any> | null {
   const wrappedCode = `
     return (function(React) {
       ${code}
@@ -26,7 +26,7 @@ function compileInlineComponent(code: string): React.ComponentType<any> | null {
  * Build a fresh ComponentRegistry from template.customComponents.
  * Returns a new object each time so downstream useMemo deps invalidate.
  */
-function buildRegistry(customComponents: Template['customComponents']): ComponentRegistry {
+export function buildRegistry(customComponents: Template['customComponents']): ComponentRegistry {
   const components = new Map<string, any>();
 
   if (customComponents) {

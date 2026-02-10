@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <rect width="1080" height="1920" fill="#000000" />
+  <defs>
+    <linearGradient id="background-grad" x1="100%" y1="50%" x2="0%" y2="50%"><stop offset="0%" stop-color="{{backgroundColor}}" /><stop offset="50%" stop-color="#1a1a1a" /><stop offset="100%" stop-color="{{backgroundColor}}" /></linearGradient>
+    <radialGradient id="glow-top-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{primaryColor}}" /><stop offset="100%" stop-color="transparent" /></radialGradient>
+    <radialGradient id="glow-bottom-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{primaryColor}}" /><stop offset="100%" stop-color="transparent" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes glow-top-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #glow-top {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.3;
+      animation: glow-top-anim-0 1s 0s linear 1 normal forwards;
+    }
+    @keyframes glow-bottom-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #glow-bottom {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.2;
+      animation: glow-bottom-anim-0 1s 0.5s linear 1 normal forwards;
+    }
+    @keyframes headline-anim-0 {
+      0% { transform: translate(0px, 1920px); }
+      5% { transform: translate(0px, 1646.16px); }
+      10% { transform: translate(0px, 1399.68px); }
+      15% { transform: translate(0px, 1179.12px); }
+      20% { transform: translate(0px, 983.04px); }
+      25% { transform: translate(0px, 810px); }
+      30% { transform: translate(0px, 658.56px); }
+      35% { transform: translate(0px, 527.28px); }
+      40% { transform: translate(0px, 414.72px); }
+      45% { transform: translate(0px, 319.44px); }
+      50% { transform: translate(0px, 240px); }
+      55% { transform: translate(0px, 174.96px); }
+      60% { transform: translate(0px, 122.88px); }
+      65% { transform: translate(0px, 82.32px); }
+      70% { transform: translate(0px, 51.84px); }
+      75% { transform: translate(0px, 30px); }
+      80% { transform: translate(0px, 15.36px); }
+      85% { transform: translate(0px, 6.48px); }
+      90% { transform: translate(0px, 1.92px); }
+      95% { transform: translate(0px, 0.24px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #headline {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: headline-anim-0 0.833s 0.667s linear 1 normal forwards;
+    }
+    @keyframes subheadline-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #subheadline {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: subheadline-anim-0 0.667s 1.333s linear 1 normal forwards;
+    }
+    @keyframes cta-bg-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    @keyframes cta-bg-anim-1 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #cta-bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: cta-bg-anim-0 0.667s 2s linear 1 normal forwards, cta-bg-anim-1 1s 4s linear 1 normal none;
+    }
+    @keyframes cta-text-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    @keyframes cta-text-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #cta-text {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      visibility: hidden;
+      animation: cta-text-anim-0 0.5s 2.167s linear 1 normal forwards, cta-text-vis 3.833s 2.167s 1 linear forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1080" height="1920" rx="0" ry="0" fill="url(#background-grad)" />
+  </g>
+  <g id="glow-top" transform="translate(200, -200)">
+    <ellipse cx="300" cy="300" rx="300" ry="300" fill="url(#glow-top-grad)" />
+  </g>
+  <g id="glow-bottom" transform="translate(300, 1400)">
+    <ellipse cx="250" cy="250" rx="250" ry="250" fill="url(#glow-bottom-grad)" />
+  </g>
+  <g id="headline" transform="translate(60, 800)">
+    <text y="96" font-family="Inter, system-ui, sans-serif" font-size="96" font-weight="800" font-style="normal" fill="#ffffff" text-anchor="middle" letter-spacing="-2"><tspan x="480" dy="0">{{headline}}</tspan></text>
+  </g>
+  <g id="subheadline" transform="translate(60, 1000)">
+    <text y="32" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#a1a1aa" text-anchor="middle"><tspan x="480" dy="0">{{subheadline}}</tspan></text>
+  </g>
+  <g id="cta-bg" transform="translate(340, 1650)">
+    <rect x="0" y="0" width="400" height="60" rx="30" ry="30" fill="{{primaryColor}}" />
+  </g>
+  <g id="cta-text" transform="translate(340, 1665)">
+    <text y="20" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle" letter-spacing="2"><tspan x="200" dy="0">{{ctaText}}</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

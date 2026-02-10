@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#0a0a0a" />
+  <style>
+    #background-glow {
+      transform-origin: 400px 400px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes subtitle-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #subtitle {
+      transform-origin: 800px 40px;
+      transform: none;
+      opacity: 1;
+      animation: subtitle-anim-0 0.667s 0.333s linear 1 normal forwards;
+    }
+  </style>
+
+  <rect id="rv-1" x="0" y="0" width="1920" height="1080" fill="#0a0a0a" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="0s" dur="5s" fill="freeze" /></rect>
+  <g id="background-glow" transform="translate(560, 140)">
+    <rect width="800" height="800" fill="radial-gradient(circle, rgba(138,43,226,0.15) 0%, rgba(138,43,226,0) 70%)" />
+  </g>
+  <!-- Unsupported layer type "custom" (particle-system) -->
+  <!-- Unsupported layer type "custom" (title) -->
+  <g id="subtitle" transform="translate(160, 810)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="rgba(255, 255, 255, 0.6)" text-anchor="middle" letter-spacing="4px"><tspan x="800" dy="0">Custom Component Physics</tspan></text>
+  </g>
+</svg>

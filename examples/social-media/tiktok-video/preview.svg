@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <rect width="1080" height="1920" fill="#000000" />
+  <defs>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <linearGradient id="background-grad" x1="85.355%" y1="85.355%" x2="14.645%" y2="14.645%"><stop offset="0%" stop-color="{{primaryColor}}" /><stop offset="100%" stop-color="{{secondaryColor}}" /></linearGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes hook-text-anim-0 {
+      0% { transform: scale(0.3, 0.3); opacity: 0; }
+      5% { transform: scale(0.313, 0.313); opacity: 0.019; }
+      10% { transform: scale(0.353, 0.353); opacity: 0.076; }
+      15% { transform: scale(0.419, 0.419); opacity: 0.17; }
+      20% { transform: scale(0.512, 0.512); opacity: 0.303; }
+      25% { transform: scale(0.631, 0.631); opacity: 0.473; }
+      30% { transform: scale(0.776, 0.776); opacity: 0.681; }
+      35% { transform: scale(0.948, 0.948); opacity: 0.926; }
+      40% { transform: scale(0.937, 0.937); opacity: 0.91; }
+      45% { transform: scale(0.873, 0.873); opacity: 0.819; }
+      50% { transform: scale(0.836, 0.836); opacity: 0.766; }
+      55% { transform: scale(0.825, 0.825); opacity: 0.75; }
+      60% { transform: scale(0.841, 0.841); opacity: 0.773; }
+      65% { transform: scale(0.883, 0.883); opacity: 0.833; }
+      70% { transform: scale(0.951, 0.951); opacity: 0.931; }
+      75% { transform: scale(0.981, 0.981); opacity: 0.973; }
+      80% { transform: scale(0.958, 0.958); opacity: 0.94; }
+      85% { transform: scale(0.962, 0.962); opacity: 0.945; }
+      90% { transform: scale(0.992, 0.992); opacity: 0.988; }
+      95% { transform: scale(0.989, 0.989); opacity: 0.985; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    @keyframes hook-text-anim-1 {
+      0% { opacity: 1; }
+      5% { opacity: 1; }
+      10% { opacity: 0.999; }
+      15% { opacity: 0.997; }
+      20% { opacity: 0.992; }
+      25% { opacity: 0.984; }
+      30% { opacity: 0.973; }
+      35% { opacity: 0.957; }
+      40% { opacity: 0.936; }
+      45% { opacity: 0.909; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.834; }
+      60% { opacity: 0.784; }
+      65% { opacity: 0.725; }
+      70% { opacity: 0.657; }
+      75% { opacity: 0.578; }
+      80% { opacity: 0.488; }
+      85% { opacity: 0.386; }
+      90% { opacity: 0.271; }
+      95% { opacity: 0.143; }
+      100% { opacity: 0; }
+    }
+    #hook-text {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: hook-text-anim-0 1s 0.333s linear 1 normal forwards, hook-text-anim-1 0.5s 2.333s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes main-text-anim-0 {
+      0% { transform: translate(0px, 1920px); }
+      5% { transform: translate(0px, 1646.16px); }
+      10% { transform: translate(0px, 1399.68px); }
+      15% { transform: translate(0px, 1179.12px); }
+      20% { transform: translate(0px, 983.04px); }
+      25% { transform: translate(0px, 810px); }
+      30% { transform: translate(0px, 658.56px); }
+      35% { transform: translate(0px, 527.28px); }
+      40% { transform: translate(0px, 414.72px); }
+      45% { transform: translate(0px, 319.44px); }
+      50% { transform: translate(0px, 240px); }
+      55% { transform: translate(0px, 174.96px); }
+      60% { transform: translate(0px, 122.88px); }
+      65% { transform: translate(0px, 82.32px); }
+      70% { transform: translate(0px, 51.84px); }
+      75% { transform: translate(0px, 30px); }
+      80% { transform: translate(0px, 15.36px); }
+      85% { transform: translate(0px, 6.48px); }
+      90% { transform: translate(0px, 1.92px); }
+      95% { transform: translate(0px, 0.24px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #main-text {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: main-text-anim-0 0.667s 3s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes reveal-text-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    @keyframes reveal-text-anim-1 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #reveal-text {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: reveal-text-anim-0 0.833s 6s linear 1 normal forwards, reveal-text-anim-1 0.667s 7s linear 1 normal none;
+    }
+    @keyframes handle-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #handle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: handle-anim-0 0.5s 7.167s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1080" height="1920" rx="0" ry="0" fill="#000000" />
+  </g>
+  <g id="hook-text" transform="translate(60, 860)">
+    <text y="72" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="480" dy="0">{{hookText}}</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1080" height="1920" rx="0" ry="0" fill="url(#background-grad)" />
+  </g>
+  <g id="main-text" transform="translate(60, 860)">
+    <text y="64" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="480" dy="0">{{mainText}}</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1080" height="1920" rx="0" ry="0" fill="#000000" />
+  </g>
+  <g id="reveal-text" transform="translate(60, 800)">
+    <text y="96" font-family="Inter, system-ui, sans-serif" font-size="96" font-weight="800" font-style="normal" fill="{{primaryColor}}" text-anchor="middle"><tspan x="480" dy="0">{{revealText}}</tspan></text>
+  </g>
+  <g id="handle" transform="translate(60, 1700)">
+    <text y="28" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="500" font-style="normal" fill="#71717a" text-anchor="middle"><tspan x="480" dy="0">{{handle}}</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

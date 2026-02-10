@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { Template } from '@rendervid/core';
 import { TemplateProcessor } from '@rendervid/core';
 import { useEditorStore } from '../context/EditorStore';
@@ -7,6 +7,7 @@ import { Timeline } from './Timeline/Timeline';
 import { LayerPanel } from './LayerPanel/LayerPanel';
 import { PropertyPanel } from './PropertyPanel/PropertyPanel';
 import { InputPanel } from './InputPanel/InputPanel';
+import { ExportDialog } from './ExportDialog/ExportDialog';
 import type { EditorConfig, EditorCallbacks } from '../types';
 
 const templateProcessor = new TemplateProcessor();
@@ -63,6 +64,8 @@ export function VideoEditor({
     getTotalFrames,
     updateTemplate,
   } = useEditorStore();
+
+  const [showExportDialog, setShowExportDialog] = useState(false);
 
   // Resolve template with input values for preview rendering
   const resolvedTemplate = useMemo(() => {
@@ -154,6 +157,8 @@ export function VideoEditor({
           callbacks.onError(error as Error);
         }
       }
+    } else {
+      setShowExportDialog(true);
     }
   };
 
@@ -268,22 +273,20 @@ export function VideoEditor({
           </button>
         )}
 
-        {callbacks.onExport && (
-          <button
-            onClick={handleExport}
-            style={{
-              padding: '6px 16px',
-              fontSize: '12px',
-              backgroundColor: '#00aa00',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-          >
-            Export
-          </button>
-        )}
+        <button
+          onClick={handleExport}
+          style={{
+            padding: '6px 16px',
+            fontSize: '12px',
+            backgroundColor: '#00aa00',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+        >
+          Export
+        </button>
       </div>
 
       {/* Main Content Area */}
@@ -461,6 +464,15 @@ export function VideoEditor({
           onZoomChange={setZoom}
         />
       </div>
+
+      {/* Export Dialog */}
+      {showExportDialog && (
+        <ExportDialog
+          template={resolvedTemplate}
+          inputValues={inputValues}
+          onClose={() => setShowExportDialog(false)}
+        />
+      )}
     </div>
   );
 }

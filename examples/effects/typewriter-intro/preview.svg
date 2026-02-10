@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes terminal-border-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #terminal-border {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: terminal-border-anim-0 0.667s 0s linear 1 normal forwards;
+    }
+    @keyframes terminal-header-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #terminal-header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: terminal-header-anim-0 0.667s 0s linear 1 normal forwards;
+    }
+    @keyframes terminal-title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #terminal-title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: terminal-title-anim-0 0.667s 0s linear 1 normal forwards;
+    }
+    @keyframes prompt-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #prompt {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: prompt-anim-0 0.5s 0.833s linear 1 normal forwards;
+    }
+    #scan-line {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.3;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
+  </g>
+  <g id="terminal-border" transform="translate(160, 190)">
+    <rect x="1" y="1" width="1598" height="698" rx="0" ry="0" fill="transparent" stroke="#00ff00" stroke-width="2" />
+  </g>
+  <g id="terminal-header" transform="translate(160, 190)">
+    <rect x="0" y="0" width="1600" height="60" rx="0" ry="0" fill="#00ff0022" />
+  </g>
+  <g id="terminal-title" transform="translate(180, 200)">
+    <text y="20" font-family="monospace" font-size="20" font-weight="bold" font-style="normal" fill="#00ff00" text-anchor="start"><tspan x="0" dy="0">TERMINAL v1.0.0</tspan></text>
+  </g>
+  <g id="prompt" transform="translate(200, 300)">
+    <text y="32" font-family="monospace" font-size="32" font-weight="bold" font-style="normal" fill="#00ff00" text-anchor="start"><tspan x="0" dy="0">&gt; </tspan></text>
+  </g>
+  <g id="scan-line" transform="translate(160, 190)">
+    <rect x="0" y="0" width="1600" height="2" rx="0" ry="0" fill="#00ff00" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

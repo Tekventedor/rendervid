@@ -83,6 +83,7 @@ export function Player({
   onFrameChange,
   onPlayStateChange,
   renderLayer,
+  onExport,
 }: PlayerProps): React.ReactElement {
   // Resolve input placeholders
   const resolvedTemplate = useMemo(() => {
@@ -189,6 +190,7 @@ export function Player({
           <Controls
             state={state}
             controls={playbackControls}
+            onExport={onExport ? () => onExport(resolvedTemplate) : undefined}
           />
         </div>
       )}

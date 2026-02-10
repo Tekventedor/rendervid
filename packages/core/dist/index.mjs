@@ -2742,6 +2742,400 @@ var ComponentPropsResolver = class {
   }
 };
 
+// src/export/svg-exporter.ts
+var SAMPLE_COUNT = 20;
+var UNSUPPORTED_TYPES = ["video", "audio", "lottie", "custom", "three"];
+var UNSUPPORTED_REASONS = {
+  video: "Video playback cannot be represented in static SVG",
+  audio: "Audio has no visual representation in SVG",
+  lottie: "Lottie animations require a dedicated runtime player",
+  custom: "Custom React components cannot be serialized to SVG",
+  three: "Three.js 3D scenes require WebGL which is not available in SVG"
+};
+function exportAnimatedSvg(template, inputs) {
+  let resolved = template;
+  if (inputs && Object.keys(inputs).length > 0) {
+    const processor = new TemplateProcessor();
+    resolved = processor.resolveInputs(template, inputs);
+  }
+  const { width, height } = resolved.output;
+  const fps = resolved.output.fps ?? 30;
+  const bgColor = resolved.output.backgroundColor ?? "#000000";
+  const defs = [];
+  const styles = [];
+  const elements = [];
+  const unsupportedLayers = [];
+  let idCounter = 0;
+  const nextId = () => `rv-${++idCounter}`;
+  for (const scene of resolved.composition.scenes) {
+    const sceneOffsetSec = scene.startFrame / fps;
+    const sceneDurationFrames = scene.endFrame - scene.startFrame;
+    if (scene.backgroundColor) {
+      const sceneStart = scene.startFrame / fps;
+      const sceneDur = sceneDurationFrames / fps;
+      const bgId = nextId();
+      elements.push(
+        `  <rect id="${bgId}" x="0" y="0" width="${width}" height="${height}" fill="${esc(scene.backgroundColor)}" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="${round(sceneStart)}s" dur="${round(sceneDur)}s" fill="freeze" /></rect>`
+      );
+    }
+    for (const layer of scene.layers) {
+      convertLayer(layer, scene, sceneOffsetSec, sceneDurationFrames, fps, { width, height }, defs, styles, elements, unsupportedLayers);
+    }
+  }
+  const defsBlock = defs.length > 0 ? `  <defs>
+${defs.join("\n")}
+  </defs>
+` : "";
+  const styleBlock = styles.length > 0 ? `  <style>
+${styles.join("\n")}
+  </style>
+` : "";
+  const svg = [
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">`,
+    `  <rect width="${width}" height="${height}" fill="${esc(bgColor)}" />`,
+    defsBlock,
+    styleBlock,
+    elements.join("\n"),
+    `</svg>`
+  ].filter(Boolean).join("\n");
+  return { svg, unsupportedLayers };
+}
+function convertLayer(layer, scene, sceneOffsetSec, sceneDurationFrames, fps, canvasSize, defs, styles, elements, unsupportedLayers) {
+  if (UNSUPPORTED_TYPES.includes(layer.type)) {
+    elements.push(`  <!-- Unsupported layer type "${layer.type}" (${esc(layer.name ?? layer.id)}) -->`);
+    unsupportedLayers.push({
+      id: layer.id,
+      name: layer.name,
+      type: layer.type,
+      reason: UNSUPPORTED_REASONS[layer.type] ?? `Layer type "${layer.type}" is not supported in SVG export`
+    });
+    return;
+  }
+  if (layer.hidden) return;
+  const layerId = sanitizeId(layer.id);
+  const anchor = layer.anchor ?? { x: 0, y: 0 };
+  const x = layer.position.x - layer.size.width * anchor.x;
+  const y = layer.position.y - layer.size.height * anchor.y;
+  const baseOpacity = layer.opacity ?? 1;
+  const baseRotation = layer.rotation ?? 0;
+  const baseScaleX = layer.scale?.x ?? 1;
+  const baseScaleY = layer.scale?.y ?? 1;
+  let content;
+  switch (layer.type) {
+    case "text":
+      content = convertTextLayer(layer, defs, layerId);
+      break;
+    case "shape":
+      content = convertShapeLayer(layer, defs, layerId);
+      break;
+    case "image":
+      content = convertImageLayer(layer);
+      break;
+    case "group":
+      content = convertGroupLayer(layer, scene, sceneOffsetSec, sceneDurationFrames, fps, canvasSize, defs, styles, unsupportedLayers);
+      break;
+    default:
+      return;
+  }
+  const anchorPxX = layer.size.width * anchor.x;
+  const anchorPxY = layer.size.height * anchor.y;
+  const transformOrigin = `${anchorPxX}px ${anchorPxY}px`;
+  const baseTransform = buildTransform(0, 0, baseScaleX, baseScaleY, baseRotation);
+  const anims = layer.animations ?? [];
+  const animRules = [];
+  for (let ai = 0; ai < anims.length; ai++) {
+    const anim = anims[ai];
+    const animId = `${layerId}-anim-${ai}`;
+    const result = generateAnimationCSS(anim, animId, fps, canvasSize);
+    if (result) {
+      styles.push(result.keyframes);
+      animRules.push(result.rule(sceneOffsetSec));
+    }
+  }
+  const layerFrom = layer.from ?? 0;
+  const layerDuration = layer.duration === void 0 || layer.duration === -1 ? sceneDurationFrames - layerFrom : layer.duration;
+  const visStart = (scene.startFrame + layerFrom) / fps;
+  const visDur = layerDuration / fps;
+  const cssRules = [];
+  cssRules.push(`      transform-origin: ${transformOrigin};`);
+  cssRules.push(`      transform: ${baseTransform};`);
+  cssRules.push(`      opacity: ${baseOpacity};`);
+  if (layerFrom > 0 || layerDuration < sceneDurationFrames) {
+    cssRules.push(`      visibility: hidden;`);
+    const visAnimId = `${layerId}-vis`;
+    styles.push(
+      `    @keyframes ${visAnimId} {
+      0%, 100% { visibility: visible; }
+    }`
+    );
+    animRules.push(
+      `${visAnimId} ${round(visDur)}s ${round(visStart)}s 1 linear forwards`
+    );
+  }
+  if (animRules.length > 0) {
+    cssRules.push(`      animation: ${animRules.join(", ")};`);
+  }
+  styles.push(`    #${layerId} {
+${cssRules.join("\n")}
+    }`);
+  elements.push(
+    `  <g id="${layerId}" transform="translate(${round(x)}, ${round(y)})">`,
+    `    ${content}`,
+    `  </g>`
+  );
+}
+function convertTextLayer(layer, defs, layerId) {
+  const props = layer.props;
+  const fontSize = props.fontSize ?? 16;
+  const fontFamily = props.fontFamily ?? "sans-serif";
+  const fontWeight = props.fontWeight ?? "normal";
+  const fontStyle = props.fontStyle ?? "normal";
+  const color = props.color ?? "#ffffff";
+  const textAlign = props.textAlign ?? "left";
+  const lineHeight = props.lineHeight ?? 1.2;
+  const letterSpacing = props.letterSpacing ?? 0;
+  const textAnchor = textAlign === "center" ? "middle" : textAlign === "right" ? "end" : "start";
+  const textX = textAlign === "center" ? layer.size.width / 2 : textAlign === "right" ? layer.size.width : 0;
+  const lines = props.text.split("\n");
+  const lineSpacing = fontSize * lineHeight;
+  const verticalAlign = props.verticalAlign ?? "top";
+  const totalTextHeight = lines.length * lineSpacing;
+  let startY;
+  if (verticalAlign === "middle") {
+    startY = (layer.size.height - totalTextHeight) / 2 + fontSize;
+  } else if (verticalAlign === "bottom") {
+    startY = layer.size.height - totalTextHeight + fontSize;
+  } else {
+    startY = fontSize;
+  }
+  const tspans = lines.map(
+    (line, i) => `<tspan x="${textX}" dy="${i === 0 ? 0 : lineSpacing}">${esc(line)}</tspan>`
+  ).join("");
+  const attrs = [
+    `font-family="${esc(fontFamily)}"`,
+    `font-size="${fontSize}"`,
+    `font-weight="${fontWeight}"`,
+    `font-style="${fontStyle}"`,
+    `fill="${esc(color)}"`,
+    `text-anchor="${textAnchor}"`
+  ];
+  if (letterSpacing) {
+    attrs.push(`letter-spacing="${letterSpacing}"`);
+  }
+  let strokeAttrs = "";
+  if (props.stroke) {
+    strokeAttrs = ` stroke="${esc(props.stroke.color)}" stroke-width="${props.stroke.width}" paint-order="stroke"`;
+  }
+  let filterId = "";
+  if (props.textShadow) {
+    filterId = `${layerId}-shadow`;
+    const ts = props.textShadow;
+    let dx = 0, dy = 0, blurVal = 0, shadowColor = "rgba(0,0,0,0.5)";
+    if (typeof ts === "string") {
+      const m = ts.match(/^([\d.-]+)\w*\s+([\d.-]+)\w*\s+([\d.-]+)\w*\s+(.+)$/);
+      if (m) {
+        dx = parseFloat(m[1]);
+        dy = parseFloat(m[2]);
+        blurVal = parseFloat(m[3]);
+        shadowColor = m[4];
+      }
+    } else if (typeof ts === "object" && ts !== null) {
+      const obj = ts;
+      dx = obj.offsetX ?? 0;
+      dy = obj.offsetY ?? 0;
+      blurVal = obj.blur ?? 0;
+      shadowColor = obj.color ?? "rgba(0,0,0,0.5)";
+    }
+    defs.push(
+      `    <filter id="${filterId}"><feDropShadow dx="${dx}" dy="${dy}" stdDeviation="${blurVal / 2}" flood-color="${esc(shadowColor)}" /></filter>`
+    );
+  }
+  let bgRect = "";
+  if (props.backgroundColor) {
+    const padding = typeof props.padding === "number" ? props.padding : 0;
+    const br = props.borderRadius ?? 0;
+    bgRect = `<rect x="${-padding}" y="${-padding}" width="${layer.size.width + padding * 2}" height="${layer.size.height + padding * 2}" rx="${br}" ry="${br}" fill="${esc(props.backgroundColor)}" />`;
+  }
+  const filterRef = filterId ? ` filter="url(#${filterId})"` : "";
+  return `${bgRect}<text y="${startY}" ${attrs.join(" ")}${strokeAttrs}${filterRef}>${tspans}</text>`;
+}
+function convertShapeLayer(layer, defs, layerId) {
+  const props = layer.props;
+  const { width, height } = layer.size;
+  const gradientId = `${layerId}-grad`;
+  let fillValue;
+  if (props.gradient) {
+    defs.push(createGradientDef(props.gradient, gradientId));
+    fillValue = `url(#${gradientId})`;
+  } else {
+    fillValue = props.fill ?? "transparent";
+  }
+  const stroke = props.stroke ? ` stroke="${esc(props.stroke)}"` : "";
+  const strokeWidth = props.strokeWidth ? ` stroke-width="${props.strokeWidth}"` : "";
+  const strokeDash = props.strokeDash ? ` stroke-dasharray="${props.strokeDash.join(" ")}"` : "";
+  const common = `fill="${esc(fillValue)}"${stroke}${strokeWidth}${strokeDash}`;
+  const sw = props.strokeWidth ?? 0;
+  switch (props.shape) {
+    case "rectangle": {
+      const br = props.borderRadius ?? 0;
+      return `<rect x="${sw / 2}" y="${sw / 2}" width="${width - sw}" height="${height - sw}" rx="${br}" ry="${br}" ${common} />`;
+    }
+    case "ellipse":
+      return `<ellipse cx="${width / 2}" cy="${height / 2}" rx="${(width - sw) / 2}" ry="${(height - sw) / 2}" ${common} />`;
+    case "polygon": {
+      const sides = props.sides ?? 6;
+      const pts = generatePolygonPoints(sides, width, height);
+      return `<polygon points="${pts}" ${common} />`;
+    }
+    case "star": {
+      const numPoints = props.points ?? 5;
+      const innerRadius = props.innerRadius ?? 0.5;
+      const pts = generateStarPoints(numPoints, width, height, innerRadius);
+      return `<polygon points="${pts}" ${common} />`;
+    }
+    case "path":
+      return `<path d="${esc(props.pathData ?? "")}" ${common} />`;
+    default:
+      return `<rect width="${width}" height="${height}" ${common} />`;
+  }
+}
+function convertImageLayer(layer) {
+  const { width, height } = layer.size;
+  const fit = layer.props.fit ?? "cover";
+  const preserveAspectRatio = fit === "cover" ? "xMidYMid slice" : fit === "contain" ? "xMidYMid meet" : fit === "fill" ? "none" : "xMidYMid slice";
+  return `<image href="${esc(layer.props.src)}" width="${width}" height="${height}" preserveAspectRatio="${preserveAspectRatio}" />`;
+}
+function convertGroupLayer(layer, scene, sceneOffsetSec, sceneDurationFrames, fps, canvasSize, defs, styles, unsupportedLayers) {
+  const childElements = [];
+  for (const child of layer.children) {
+    convertLayer(child, scene, sceneOffsetSec, sceneDurationFrames, fps, canvasSize, defs, styles, childElements, unsupportedLayers);
+  }
+  return childElements.join("\n    ");
+}
+function generateAnimationCSS(anim, animId, fps, canvasSize) {
+  const duration = anim.duration;
+  if (duration <= 0) return null;
+  let kfs;
+  if (anim.type === "keyframe" && anim.keyframes) {
+    kfs = anim.keyframes;
+  } else if (anim.effect) {
+    kfs = generatePresetKeyframes(anim.effect, {
+      duration,
+      easing: anim.easing,
+      canvasSize
+    });
+    if (kfs.length === 0) return null;
+  } else {
+    return null;
+  }
+  const stops = [];
+  for (let i = 0; i <= SAMPLE_COUNT; i++) {
+    const frame = i / SAMPLE_COUNT * duration;
+    const props = getPropertiesAtFrame(kfs, frame);
+    const pct = Math.round(i / SAMPLE_COUNT * 100);
+    const transformParts = [];
+    if (props.x !== void 0 || props.y !== void 0) {
+      transformParts.push(`translate(${round(props.x ?? 0)}px, ${round(props.y ?? 0)}px)`);
+    }
+    if (props.scaleX !== void 0 || props.scaleY !== void 0) {
+      transformParts.push(`scale(${round(props.scaleX ?? 1)}, ${round(props.scaleY ?? 1)})`);
+    }
+    if (props.rotation !== void 0) {
+      transformParts.push(`rotate(${round(props.rotation)}deg)`);
+    }
+    const cssParts = [];
+    if (transformParts.length > 0) {
+      cssParts.push(`transform: ${transformParts.join(" ")}`);
+    }
+    if (props.opacity !== void 0) {
+      cssParts.push(`opacity: ${round(props.opacity)}`);
+    }
+    if (cssParts.length > 0) {
+      stops.push(`      ${pct}% { ${cssParts.join("; ")}; }`);
+    }
+  }
+  if (stops.length === 0) return null;
+  const keyframesCSS = `    @keyframes ${animId} {
+${stops.join("\n")}
+    }`;
+  const durSec = duration / fps;
+  const delaySec = (anim.delay ?? 0) / fps;
+  const iterations = anim.loop === -1 ? "infinite" : String(anim.loop ?? 1);
+  const direction = anim.alternate ? "alternate" : "normal";
+  const preset = anim.effect ? getPreset(anim.effect) : void 0;
+  const animType = preset?.type ?? anim.type;
+  const fillMode = animType === "emphasis" ? "none" : "forwards";
+  return {
+    keyframes: keyframesCSS,
+    rule: (sceneOffsetSec) => {
+      const totalDelay = sceneOffsetSec + delaySec;
+      return `${animId} ${round(durSec)}s ${round(totalDelay)}s linear ${iterations} ${direction} ${fillMode}`;
+    }
+  };
+}
+function generatePolygonPoints(sides, width, height) {
+  const pts = [];
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const radius = Math.min(width, height) / 2;
+  for (let i = 0; i < sides; i++) {
+    const angle = i * 2 * Math.PI / sides - Math.PI / 2;
+    const px = centerX + radius * Math.cos(angle);
+    const py = centerY + radius * Math.sin(angle);
+    pts.push(`${round(px)},${round(py)}`);
+  }
+  return pts.join(" ");
+}
+function generateStarPoints(numPoints, width, height, innerRadius) {
+  const result = [];
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const outerRadius = Math.min(width, height) / 2;
+  const inner = outerRadius * innerRadius;
+  for (let i = 0; i < numPoints * 2; i++) {
+    const angle = i * Math.PI / numPoints - Math.PI / 2;
+    const r = i % 2 === 0 ? outerRadius : inner;
+    const px = centerX + r * Math.cos(angle);
+    const py = centerY + r * Math.sin(angle);
+    result.push(`${round(px)},${round(py)}`);
+  }
+  return result.join(" ");
+}
+function createGradientDef(gradient, id) {
+  const { type, colors, angle = 0 } = gradient;
+  if (type === "radial") {
+    const stops2 = colors.map(
+      (stop) => `<stop offset="${stop.offset * 100}%" stop-color="${esc(stop.color)}" />`
+    ).join("");
+    return `    <radialGradient id="${id}" cx="50%" cy="50%" r="50%">${stops2}</radialGradient>`;
+  }
+  const rad = angle * Math.PI / 180;
+  const x1 = 50 - Math.cos(rad) * 50;
+  const y1 = 50 + Math.sin(rad) * 50;
+  const x2 = 50 + Math.cos(rad) * 50;
+  const y2 = 50 - Math.sin(rad) * 50;
+  const stops = colors.map(
+    (stop) => `<stop offset="${stop.offset * 100}%" stop-color="${esc(stop.color)}" />`
+  ).join("");
+  return `    <linearGradient id="${id}" x1="${round(x1)}%" y1="${round(y1)}%" x2="${round(x2)}%" y2="${round(y2)}%">${stops}</linearGradient>`;
+}
+function buildTransform(x, y, scaleX, scaleY, rotation) {
+  const parts = [];
+  if (scaleX !== 1 || scaleY !== 1) parts.push(`scale(${round(scaleX)}, ${round(scaleY)})`);
+  if (rotation !== 0) parts.push(`rotate(${round(rotation)}deg)`);
+  return parts.length > 0 ? parts.join(" ") : "none";
+}
+function round(n) {
+  return Math.round(n * 1e3) / 1e3;
+}
+function esc(s) {
+  const str = String(s ?? "");
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function sanitizeId(id) {
+  return id.replace(/[^a-zA-Z0-9_-]/g, "_");
+}
+
 // src/fonts/types.ts
 function isNumericWeight(weight) {
   return typeof weight === "number";
@@ -4366,6 +4760,6 @@ function getRandomFonts(count = 1) {
   return shuffled.slice(0, count);
 }
 
-export { ComponentDefaultsManager, ComponentPropsResolver, DEFAULT_MOTION_BLUR_CONFIG, FONT_CONSTANTS, FontLoadingError, FontManager, MOTION_BLUR_QUALITY_PRESETS, RendervidEngine, TemplateProcessor, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, mergeMotionBlurConfigs, numericToNamedWeight, parseEasing, resolveMotionBlurConfig, searchFonts, templateSchema, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, weightToNumeric };
+export { ComponentDefaultsManager, ComponentPropsResolver, DEFAULT_MOTION_BLUR_CONFIG, FONT_CONSTANTS, FontLoadingError, FontManager, MOTION_BLUR_QUALITY_PRESETS, RendervidEngine, TemplateProcessor, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, exportAnimatedSvg, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, mergeMotionBlurConfigs, numericToNamedWeight, parseEasing, resolveMotionBlurConfig, searchFonts, templateSchema, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, weightToNumeric };
 //# sourceMappingURL=index.mjs.map
 //# sourceMappingURL=index.mjs.map

@@ -1,0 +1,532 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <style>
+    #bg-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <rect id="rv-1" x="0" y="0" width="1920" height="1080" fill="#0a0a1f" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="0s" dur="3s" fill="freeze" /></rect>
+  <g id="bg-image" transform="translate(0, 0)">
+    <image href="https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2_ai-image-generator_cinematic-3d_Futuristic_City_Skyline_at_Sunset.webp" width="1920" height="1080" preserveAspectRatio="xMidYMid slice" />
+  </g>
+  <g id="title" transform="translate(160, 440)">
+    <text y="96" font-family="sans-serif" font-size="96" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">29 Scene Transitions</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(160, 600)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#e0e7ff" text-anchor="middle"><tspan x="800" dy="0">Complete showcase of all transition types</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1720, 20)">
+    <text y="14" font-family="sans-serif" font-size="14" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end"><tspan x="180" dy="0">RenderVid by</tspan><tspan x="180" dy="16.8">FlowHunt.io</tspan></text>
+  </g>
+  <rect id="rv-2" x="0" y="0" width="1920" height="1080" fill="#8b5cf6" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="3s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">CUT</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#e9d5ff" text-anchor="middle"><tspan x="700" dy="0">Instant switch (no animation)</tspan></text>
+  </g>
+  <rect id="rv-3" x="0" y="0" width="1920" height="1080" fill="#ec4899" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="5s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">FADE</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fce7f3" text-anchor="middle"><tspan x="700" dy="0">Crossfade opacity transition</tspan></text>
+  </g>
+  <rect id="rv-4" x="0" y="0" width="1920" height="1080" fill="#f59e0b" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="7s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">SLIDE LEFT</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fef3c7" text-anchor="middle"><tspan x="700" dy="0">Scene slides in from right →</tspan></text>
+  </g>
+  <rect id="rv-5" x="0" y="0" width="1920" height="1080" fill="#10b981" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="9s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">SLIDE RIGHT</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#d1fae5" text-anchor="middle"><tspan x="700" dy="0">Scene slides in from left ←</tspan></text>
+  </g>
+  <rect id="rv-6" x="0" y="0" width="1920" height="1080" fill="#06b6d4" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="11s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">SLIDE UP</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#cffafe" text-anchor="middle"><tspan x="700" dy="0">Scene slides in from bottom ↑</tspan></text>
+  </g>
+  <rect id="rv-7" x="0" y="0" width="1920" height="1080" fill="#6366f1" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="13s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">SLIDE DOWN</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#e0e7ff" text-anchor="middle"><tspan x="700" dy="0">Scene slides in from top ↓</tspan></text>
+  </g>
+  <rect id="rv-8" x="0" y="0" width="1920" height="1080" fill="#ef4444" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="15s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">ZOOM</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fee2e2" text-anchor="middle"><tspan x="700" dy="0">Scale in/out with opacity</tspan></text>
+  </g>
+  <rect id="rv-9" x="0" y="0" width="1920" height="1080" fill="#a855f7" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="17s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">WIPE LEFT</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#f3e8ff" text-anchor="middle"><tspan x="700" dy="0">Directional wipe from right</tspan></text>
+  </g>
+  <rect id="rv-10" x="0" y="0" width="1920" height="1080" fill="#14b8a6" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="19s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">WIPE RIGHT</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#ccfbf1" text-anchor="middle"><tspan x="700" dy="0">Directional wipe from left</tspan></text>
+  </g>
+  <rect id="rv-11" x="0" y="0" width="1920" height="1080" fill="#f97316" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="21s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">WIPE UP</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#ffedd5" text-anchor="middle"><tspan x="700" dy="0">Directional wipe from bottom</tspan></text>
+  </g>
+  <rect id="rv-12" x="0" y="0" width="1920" height="1080" fill="#84cc16" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="23s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">WIPE DOWN</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#ecfccb" text-anchor="middle"><tspan x="700" dy="0">Directional wipe from top</tspan></text>
+  </g>
+  <rect id="rv-13" x="0" y="0" width="1920" height="1080" fill="#eab308" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="25s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">ROTATE</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fef9c3" text-anchor="middle"><tspan x="700" dy="0">Rotate out/in with scale</tspan></text>
+  </g>
+  <rect id="rv-14" x="0" y="0" width="1920" height="1080" fill="#0ea5e9" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="27s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">FLIP H</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#e0f2fe" text-anchor="middle"><tspan x="700" dy="0">3D horizontal flip effect</tspan></text>
+  </g>
+  <rect id="rv-15" x="0" y="0" width="1920" height="1080" fill="#8b5cf6" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="29s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">FLIP V</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#ede9fe" text-anchor="middle"><tspan x="700" dy="0">3D vertical flip effect</tspan></text>
+  </g>
+  <rect id="rv-16" x="0" y="0" width="1920" height="1080" fill="#ec4899" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="31s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">BLUR</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fce7f3" text-anchor="middle"><tspan x="700" dy="0">Blur out/in transition</tspan></text>
+  </g>
+  <rect id="rv-17" x="0" y="0" width="1920" height="1080" fill="#f59e0b" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="33s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">CIRCLE</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fef3c7" text-anchor="middle"><tspan x="700" dy="0">Circular reveal transition</tspan></text>
+  </g>
+  <rect id="rv-18" x="0" y="0" width="1920" height="1080" fill="#10b981" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="35s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">PUSH LEFT</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#d1fae5" text-anchor="middle"><tspan x="700" dy="0">Push scene from right</tspan></text>
+  </g>
+  <rect id="rv-19" x="0" y="0" width="1920" height="1080" fill="#06b6d4" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="37s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">PUSH RIGHT</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#cffafe" text-anchor="middle"><tspan x="700" dy="0">Push scene from left</tspan></text>
+  </g>
+  <rect id="rv-20" x="0" y="0" width="1920" height="1080" fill="#6366f1" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="39s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">PUSH UP</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#e0e7ff" text-anchor="middle"><tspan x="700" dy="0">Push scene from bottom</tspan></text>
+  </g>
+  <rect id="rv-21" x="0" y="0" width="1920" height="1080" fill="#ef4444" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="41s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="100" font-family="sans-serif" font-size="100" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">PUSH DOWN</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fee2e2" text-anchor="middle"><tspan x="700" dy="0">Push scene from top</tspan></text>
+  </g>
+  <rect id="rv-22" x="0" y="0" width="1920" height="1080" fill="#a855f7" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="43s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="96" font-family="sans-serif" font-size="96" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">CROSSZOOM</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#f3e8ff" text-anchor="middle"><tspan x="700" dy="0">Cross zoom in/out effect</tspan></text>
+  </g>
+  <rect id="rv-23" x="0" y="0" width="1920" height="1080" fill="#14b8a6" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="45s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">GLITCH</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#ccfbf1" text-anchor="middle"><tspan x="700" dy="0">Digital glitch distortion</tspan></text>
+  </g>
+  <rect id="rv-24" x="0" y="0" width="1920" height="1080" fill="#f97316" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="47s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="110" font-family="sans-serif" font-size="110" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">DISSOLVE</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#ffedd5" text-anchor="middle"><tspan x="700" dy="0">Pixelated dissolve effect</tspan></text>
+  </g>
+  <rect id="rv-25" x="0" y="0" width="1920" height="1080" fill="#84cc16" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="49s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">CUBE H</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#ecfccb" text-anchor="middle"><tspan x="700" dy="0">3D cube horizontal rotation</tspan></text>
+  </g>
+  <rect id="rv-26" x="0" y="0" width="1920" height="1080" fill="#eab308" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="51s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">CUBE V</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fef9c3" text-anchor="middle"><tspan x="700" dy="0">3D cube vertical rotation</tspan></text>
+  </g>
+  <rect id="rv-27" x="0" y="0" width="1920" height="1080" fill="#0ea5e9" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="53s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">SWIRL</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#e0f2fe" text-anchor="middle"><tspan x="700" dy="0">Swirl/spiral rotation effect</tspan></text>
+  </g>
+  <rect id="rv-28" x="0" y="0" width="1920" height="1080" fill="#8b5cf6" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="55s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="96" font-family="sans-serif" font-size="96" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">DIAGONAL ↙</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#ede9fe" text-anchor="middle"><tspan x="700" dy="0">Diagonal wipe top-left to bottom-right</tspan></text>
+  </g>
+  <rect id="rv-29" x="0" y="0" width="1920" height="1080" fill="#ec4899" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="57s" dur="2s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="96" font-family="sans-serif" font-size="96" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">DIAGONAL ↘</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#fce7f3" text-anchor="middle"><tspan x="700" dy="0">Diagonal wipe top-right to bottom-left</tspan></text>
+  </g>
+  <rect id="rv-30" x="0" y="0" width="1920" height="1080" fill="#3b82f6" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="59s" dur="1s" fill="freeze" /></rect>
+  <g id="title" transform="translate(160, 480)">
+    <text y="120" font-family="sans-serif" font-size="120" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">IRIS</tspan></text>
+  </g>
+  <g id="desc" transform="translate(260, 620)">
+    <text y="28" font-family="sans-serif" font-size="28" font-weight="normal" font-style="normal" fill="#dbeafe" text-anchor="middle"><tspan x="700" dy="0">Iris in/out circle effect</tspan></text>
+  </g>
+</svg>

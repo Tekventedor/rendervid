@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#0f0f23" />
+  <style>
+    #label {
+      transform-origin: 800px 40px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <rect id="rv-1" x="0" y="0" width="1920" height="1080" fill="#0f0f23" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="0s" dur="5s" fill="freeze" /></rect>
+  <!-- Unsupported layer type "custom" (progress-ring) -->
+  <g id="label" transform="translate(160, 760)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="normal" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Loading...</tspan></text>
+  </g>
+</svg>

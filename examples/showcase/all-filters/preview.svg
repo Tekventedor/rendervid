@@ -1,0 +1,1087 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="left-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <radialGradient id="right-image-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6b6b" /><stop offset="50%" stop-color="#4ecdc4" /><stop offset="100%" stop-color="#ffe66d" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #bg-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #header {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #divider {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #left-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #right-pattern {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="bg-image" transform="translate(0, 0)">
+    <image href="https://www.photomaticai.com/images/effects/low-angle_Nature___Wildlife.webp" width="1920" height="1080" preserveAspectRatio="xMidYMid slice" />
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">ALL FILTERS SHOWCASE</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Side-by-Side Comparison</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">NO FILTER</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">BLUR FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Gaussian blur effect</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#4ecdc4" text-anchor="middle"><tspan x="480" dy="0">blur(10px)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">BRIGHTNESS FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Adjust image brightness (100 = normal)</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#ffe66d" text-anchor="middle"><tspan x="480" dy="0">brightness(160)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">CONTRAST FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Adjust color contrast (100 = normal)</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#ff6b6b" text-anchor="middle"><tspan x="480" dy="0">contrast(200)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">GRAYSCALE FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Convert to black and white (0-100%)</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#999999" text-anchor="middle"><tspan x="480" dy="0">grayscale(100%)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">SEPIA FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Vintage brown tone effect (0-100%)</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#d4a574" text-anchor="middle"><tspan x="480" dy="0">sepia(100%)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">HUE-ROTATE FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Shift color wheel (0-360 degrees)</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#a78bfa" text-anchor="middle"><tspan x="480" dy="0">hue-rotate(180deg)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">INVERT FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Invert all colors (0-100%)</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#00ff00" text-anchor="middle"><tspan x="480" dy="0">invert(100%)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">SATURATE FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">Adjust color intensity (100 = normal)</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#ff00ff" text-anchor="middle"><tspan x="480" dy="0">saturate(300)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1a1a1a" />
+  </g>
+  <g id="header" transform="translate(0, 40)">
+    <text y="64" font-family="sans-serif" font-size="64" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="960" dy="0">DROP-SHADOW FILTER</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(0, 120)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="960" dy="0">CSS-style shadow effect</tspan></text>
+  </g>
+  <g id="divider" transform="translate(960, 0)">
+    <rect x="0" y="0" width="4" height="1080" rx="0" ry="0" fill="#333333" />
+  </g>
+  <g id="left-label" transform="translate(0, 220)">
+    <text y="36" font-family="sans-serif" font-size="36" font-weight="bold" font-style="normal" fill="#666666" text-anchor="middle"><tspan x="480" dy="0">ORIGINAL</tspan></text>
+  </g>
+  <g id="right-label" transform="translate(960, 220)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="bold" font-style="normal" fill="#fbbf24" text-anchor="middle"><tspan x="480" dy="0">drop-shadow(0 25px 50px)</tspan></text>
+  </g>
+  <g id="left-image" transform="translate(180, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#left-image-grad)" />
+  </g>
+  <g id="right-image" transform="translate(1140, 340)">
+    <rect x="0" y="0" width="600" height="400" rx="20" ry="20" fill="url(#right-image-grad)" />
+  </g>
+  <g id="left-overlay" transform="translate(260, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="right-overlay" transform="translate(1220, 420)">
+    <rect width="150" height="150" fill="#ffffff" />
+  </g>
+  <g id="left-pattern" transform="translate(520, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="right-pattern" transform="translate(1480, 540)">
+    <rect x="0" y="0" width="180" height="100" rx="10" ry="10" fill="#667eea" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

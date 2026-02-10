@@ -1,0 +1,553 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <linearGradient id="shape-grad" x1="85.355%" y1="85.355%" x2="14.645%" y2="14.645%"><stop offset="0%" stop-color="#667eea" /><stop offset="100%" stop-color="#764ba2" /></linearGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <radialGradient id="shape-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fbbf24" /><stop offset="50%" stop-color="#f97316" /><stop offset="100%" stop-color="#dc2626" /></radialGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #bg-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes shape-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #shape {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: shape-anim-0 0.833s 0s linear 1 normal forwards;
+    }
+    @keyframes title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 0.5s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes shape-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #shape {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: shape-anim-0 0.833s 2s linear 1 normal forwards;
+    }
+    @keyframes title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 2.5s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes shape-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #shape {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: shape-anim-0 0.833s 4s linear 1 normal forwards;
+    }
+    @keyframes title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 4.5s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes shape-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #shape {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: shape-anim-0 0.833s 6s linear 1 normal forwards;
+    }
+    @keyframes title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 6.5s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes shape-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #shape {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: shape-anim-0 0.833s 8s linear 1 normal forwards;
+    }
+    @keyframes title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 8.5s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes shape-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #shape {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: shape-anim-0 0.833s 10s linear 1 normal forwards;
+    }
+    @keyframes title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 10.5s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="bg-image" transform="translate(0, 0)">
+    <image href="https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v3-balanced_ai-image-generator_pen_Whimsical_Pencil_Cityscape.webp" width="1920" height="1080" preserveAspectRatio="xMidYMid slice" />
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0f172a" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">SHAPE TYPE</tspan></text>
+  </g>
+  <g id="shape" transform="translate(660, 350)">
+    <rect x="0" y="0" width="600" height="300" rx="20" ry="20" fill="#3b82f6" />
+  </g>
+  <g id="title" transform="translate(160, 750)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Rectangle</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0f172a" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">SHAPE TYPE</tspan></text>
+  </g>
+  <g id="shape" transform="translate(660, 350)">
+    <rect x="0" y="0" width="600" height="300" rx="50" ry="50" fill="#8b5cf6" />
+  </g>
+  <g id="title" transform="translate(160, 750)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Rounded Rectangle</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0f172a" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">SHAPE TYPE</tspan></text>
+  </g>
+  <g id="shape" transform="translate(610, 290)">
+    <ellipse cx="350" cy="200" rx="350" ry="200" fill="#ec4899" />
+  </g>
+  <g id="title" transform="translate(160, 750)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Ellipse</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0f172a" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">SHAPE TYPE</tspan></text>
+  </g>
+  <g id="shape" transform="translate(710, 290)">
+    <ellipse cx="250" cy="250" rx="250" ry="250" fill="#f97316" />
+  </g>
+  <g id="title" transform="translate(160, 850)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Circle</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0f172a" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">GRADIENT TYPE</tspan></text>
+  </g>
+  <g id="shape" transform="translate(660, 350)">
+    <rect x="0" y="0" width="600" height="300" rx="20" ry="20" fill="url(#shape-grad)" />
+  </g>
+  <g id="title" transform="translate(160, 750)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Linear Gradient</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0f172a" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">GRADIENT TYPE</tspan></text>
+  </g>
+  <g id="shape" transform="translate(710, 290)">
+    <ellipse cx="250" cy="250" rx="250" ry="250" fill="url(#shape-grad)" />
+  </g>
+  <g id="title" transform="translate(160, 850)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Radial Gradient</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#1a1a2e" />
+  <style>
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes subtitle-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: subtitle-anim-0 0.667s 0.5s linear 1 normal forwards;
+    }
+  </style>
+
+  <rect id="rv-1" x="0" y="0" width="1920" height="1080" fill="#1a1a2e" opacity="0"><animate attributeName="opacity" from="1" to="1" begin="0s" dur="5s" fill="freeze" /></rect>
+  <!-- Unsupported layer type "custom" (counter) -->
+  <g id="title" transform="translate(160, 250)">
+    <text y="48" font-family="sans-serif" font-size="48" font-weight="normal" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Animated Counter</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(160, 650)">
+    <text y="24" font-family="monospace" font-size="24" font-weight="normal" font-style="normal" fill="#888888" text-anchor="middle"><tspan x="800" dy="0">Step-by-step counting with transition effects</tspan></text>
+  </g>
+</svg>

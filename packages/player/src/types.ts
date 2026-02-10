@@ -108,6 +108,8 @@ export interface PlayerProps {
   onPlayStateChange?: (isPlaying: boolean) => void;
   /** Render function for custom layer rendering */
   renderLayer?: (layer: Layer, frame: number) => React.ReactNode;
+  /** Callback when export button is clicked (shows export button when provided) */
+  onExport?: (template: Template) => void;
 }
 
 /**
@@ -150,6 +152,8 @@ export interface ControlsProps {
   showVolumeControl?: boolean;
   /** Whether to show frame counter (default: true) */
   showFrameCounter?: boolean;
+  /** Export callback (shows export button when provided) */
+  onExport?: () => void;
 }
 
 /**

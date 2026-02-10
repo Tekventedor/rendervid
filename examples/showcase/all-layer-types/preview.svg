@@ -1,0 +1,929 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <linearGradient id="demo-grad" x1="85.355%" y1="85.355%" x2="14.645%" y2="14.645%"><stop offset="0%" stop-color="#3b82f6" /><stop offset="100%" stop-color="#8b5cf6" /></linearGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #bg-image {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes demo-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #demo {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: demo-anim-0 0.833s 0s linear 1 normal forwards;
+    }
+    @keyframes title-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: title-anim-0 0.667s 0.5s linear 1 normal forwards;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes demo1-anim-0 {
+      0% { transform: translate(0px, 1080px); }
+      5% { transform: translate(0px, 925.965px); }
+      10% { transform: translate(0px, 787.32px); }
+      15% { transform: translate(0px, 663.255px); }
+      20% { transform: translate(0px, 552.96px); }
+      25% { transform: translate(0px, 455.625px); }
+      30% { transform: translate(0px, 370.44px); }
+      35% { transform: translate(0px, 296.595px); }
+      40% { transform: translate(0px, 233.28px); }
+      45% { transform: translate(0px, 179.685px); }
+      50% { transform: translate(0px, 135px); }
+      55% { transform: translate(0px, 98.415px); }
+      60% { transform: translate(0px, 69.12px); }
+      65% { transform: translate(0px, 46.305px); }
+      70% { transform: translate(0px, 29.16px); }
+      75% { transform: translate(0px, 16.875px); }
+      80% { transform: translate(0px, 8.64px); }
+      85% { transform: translate(0px, 3.645px); }
+      90% { transform: translate(0px, 1.08px); }
+      95% { transform: translate(0px, 0.135px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #demo1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: demo1-anim-0 0.833s 2s linear 1 normal forwards;
+    }
+    @keyframes demo2-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #demo2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: demo2-anim-0 0.833s 2.333s linear 1 normal forwards;
+    }
+    @keyframes demo3-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #demo3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: demo3-anim-0 0.833s 2.667s linear 1 normal forwards;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes demo-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #demo {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: demo-anim-0 0.833s 4s linear 1 normal forwards;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes card1-anim-0 {
+      0% { transform: translate(-1920px, 0px); }
+      5% { transform: translate(-1646.16px, 0px); }
+      10% { transform: translate(-1399.68px, 0px); }
+      15% { transform: translate(-1179.12px, 0px); }
+      20% { transform: translate(-983.04px, 0px); }
+      25% { transform: translate(-810px, 0px); }
+      30% { transform: translate(-658.56px, 0px); }
+      35% { transform: translate(-527.28px, 0px); }
+      40% { transform: translate(-414.72px, 0px); }
+      45% { transform: translate(-319.44px, 0px); }
+      50% { transform: translate(-240px, 0px); }
+      55% { transform: translate(-174.96px, 0px); }
+      60% { transform: translate(-122.88px, 0px); }
+      65% { transform: translate(-82.32px, 0px); }
+      70% { transform: translate(-51.84px, 0px); }
+      75% { transform: translate(-30px, 0px); }
+      80% { transform: translate(-15.36px, 0px); }
+      85% { transform: translate(-6.48px, 0px); }
+      90% { transform: translate(-1.92px, 0px); }
+      95% { transform: translate(-0.24px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #card1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: card1-anim-0 0.833s 8s linear 1 normal forwards;
+    }
+    @keyframes card2-anim-0 {
+      0% { transform: scale(0, 0); opacity: 0; }
+      5% { transform: scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: scale(1, 1); opacity: 1; }
+      100% { transform: scale(1, 1); opacity: 1; }
+    }
+    #card2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: card2-anim-0 0.833s 8.333s linear 1 normal forwards;
+    }
+    @keyframes card3-anim-0 {
+      0% { transform: translate(1920px, 0px); }
+      5% { transform: translate(1646.16px, 0px); }
+      10% { transform: translate(1399.68px, 0px); }
+      15% { transform: translate(1179.12px, 0px); }
+      20% { transform: translate(983.04px, 0px); }
+      25% { transform: translate(810px, 0px); }
+      30% { transform: translate(658.56px, 0px); }
+      35% { transform: translate(527.28px, 0px); }
+      40% { transform: translate(414.72px, 0px); }
+      45% { transform: translate(319.44px, 0px); }
+      50% { transform: translate(240px, 0px); }
+      55% { transform: translate(174.96px, 0px); }
+      60% { transform: translate(122.88px, 0px); }
+      65% { transform: translate(82.32px, 0px); }
+      70% { transform: translate(51.84px, 0px); }
+      75% { transform: translate(30px, 0px); }
+      80% { transform: translate(15.36px, 0px); }
+      85% { transform: translate(6.48px, 0px); }
+      90% { transform: translate(1.92px, 0px); }
+      95% { transform: translate(0.24px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #card3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: card3-anim-0 0.833s 8.667s linear 1 normal forwards;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #bg {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #label {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes wave1-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave1-anim-0 1s 10s linear infinite normal none;
+    }
+    @keyframes wave2-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave2-anim-0 1s 10.167s linear infinite normal none;
+    }
+    @keyframes wave3-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave3-anim-0 1s 10.333s linear infinite normal none;
+    }
+    @keyframes wave4-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave4 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave4-anim-0 1s 10s linear infinite normal none;
+    }
+    @keyframes wave5-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave5 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave5-anim-0 1s 10.5s linear infinite normal none;
+    }
+    @keyframes wave6-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave6 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave6-anim-0 1s 10.167s linear infinite normal none;
+    }
+    @keyframes wave7-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave7 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave7-anim-0 1s 10.333s linear infinite normal none;
+    }
+    @keyframes wave8-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave8 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave8-anim-0 1s 10s linear infinite normal none;
+    }
+    @keyframes wave9-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave9 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave9-anim-0 1s 10.5s linear infinite normal none;
+    }
+    @keyframes wave10-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave10 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave10-anim-0 1s 10.167s linear infinite normal none;
+    }
+    @keyframes wave11-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave11 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave11-anim-0 1s 10.333s linear infinite normal none;
+    }
+    @keyframes wave12-anim-0 {
+      0% { transform: scale(1, 1); }
+      5% { transform: scale(1.002, 1.002); }
+      10% { transform: scale(1.01, 1.01); }
+      15% { transform: scale(1.021, 1.021); }
+      20% { transform: scale(1.035, 1.035); }
+      25% { transform: scale(1.05, 1.05); }
+      30% { transform: scale(1.065, 1.065); }
+      35% { transform: scale(1.079, 1.079); }
+      40% { transform: scale(1.09, 1.09); }
+      45% { transform: scale(1.098, 1.098); }
+      50% { transform: scale(1.1, 1.1); }
+      55% { transform: scale(1.098, 1.098); }
+      60% { transform: scale(1.09, 1.09); }
+      65% { transform: scale(1.079, 1.079); }
+      70% { transform: scale(1.065, 1.065); }
+      75% { transform: scale(1.05, 1.05); }
+      80% { transform: scale(1.035, 1.035); }
+      85% { transform: scale(1.021, 1.021); }
+      90% { transform: scale(1.01, 1.01); }
+      95% { transform: scale(1.002, 1.002); }
+      100% { transform: scale(1, 1); }
+    }
+    #wave12 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: wave12-anim-0 1s 10s linear infinite normal none;
+    }
+    #title {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #desc {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="bg-image" transform="translate(0, 0)">
+    <image href="https://www.photomaticai.com/images/processed/ai-generated-images/models_flux-dev_ai-image-generator_soft-retro_1970s_Soft_Retro_Living_Room.webp" width="1920" height="1080" preserveAspectRatio="xMidYMid slice" />
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1e293b" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">LAYER TYPE</tspan></text>
+  </g>
+  <g id="demo" transform="translate(660, 300)">
+    <rect x="0" y="0" width="600" height="400" rx="30" ry="30" fill="url(#demo-grad)" />
+  </g>
+  <g id="title" transform="translate(160, 800)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Shape Layer</tspan></text>
+  </g>
+  <g id="desc" transform="translate(160, 880)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="normal" font-style="normal" fill="#94a3b8" text-anchor="middle"><tspan x="800" dy="0">Rectangles, circles, gradients, and custom shapes</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1e293b" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">LAYER TYPE</tspan></text>
+  </g>
+  <g id="demo1" transform="translate(160, 320)">
+    <text y="72" font-family="sans-serif" font-size="72" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Bold Headline</tspan></text>
+  </g>
+  <g id="demo2" transform="translate(160, 450)">
+    <text y="32" font-family="sans-serif" font-size="32" font-weight="normal" font-style="normal" fill="#94a3b8" text-anchor="middle"><tspan x="800" dy="0">Supporting text with different styles</tspan></text>
+  </g>
+  <g id="demo3" transform="translate(160, 540)">
+    <text y="28" font-family="JetBrains Mono" font-size="28" font-weight="normal" font-style="normal" fill="#22d3ee" text-anchor="middle"><tspan x="800" dy="0">const code = 'monospace';</tspan></text>
+  </g>
+  <g id="title" transform="translate(160, 800)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Text Layer</tspan></text>
+  </g>
+  <g id="desc" transform="translate(160, 880)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="normal" font-style="normal" fill="#94a3b8" text-anchor="middle"><tspan x="800" dy="0">Rich typography with fonts, weights, and styles</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1e293b" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">LAYER TYPE</tspan></text>
+  </g>
+  <g id="demo" transform="translate(560, 280)">
+    <image href="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" width="800" height="450" preserveAspectRatio="xMidYMid slice" />
+  </g>
+  <g id="title" transform="translate(160, 800)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Image Layer</tspan></text>
+  </g>
+  <g id="desc" transform="translate(160, 880)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="normal" font-style="normal" fill="#94a3b8" text-anchor="middle"><tspan x="800" dy="0">Photos and graphics with fit modes</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1e293b" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">LAYER TYPE</tspan></text>
+  </g>
+  <!-- Unsupported layer type "video" (demo) -->
+  <g id="title" transform="translate(160, 800)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Video Layer</tspan></text>
+  </g>
+  <g id="desc" transform="translate(160, 880)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="normal" font-style="normal" fill="#94a3b8" text-anchor="middle"><tspan x="800" dy="0">Video playback with loop and timing control</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1e293b" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">LAYER TYPE</tspan></text>
+  </g>
+  <g id="card1" transform="translate(260, 300)">
+    <rect x="0" y="0" width="400" height="400" rx="20" ry="20" fill="#22c55e" />
+  </g>
+  <g id="card2" transform="translate(760, 300)">
+    <rect x="0" y="0" width="400" height="400" rx="20" ry="20" fill="#eab308" />
+  </g>
+  <g id="card3" transform="translate(1260, 300)">
+    <rect x="0" y="0" width="400" height="400" rx="20" ry="20" fill="#ef4444" />
+  </g>
+  <g id="title" transform="translate(160, 800)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Group Layer</tspan></text>
+  </g>
+  <g id="desc" transform="translate(160, 880)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="normal" font-style="normal" fill="#94a3b8" text-anchor="middle"><tspan x="800" dy="0">Organize and animate multiple layers together</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+  <g id="bg" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#1e293b" />
+  </g>
+  <g id="label" transform="translate(160, 150)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="600" font-style="normal" fill="#64748b" text-anchor="middle"><tspan x="800" dy="0">LAYER TYPE</tspan></text>
+  </g>
+  <g id="wave1" transform="translate(360, 440)">
+    <rect x="0" y="0" width="40" height="200" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave2" transform="translate(460, 390)">
+    <rect x="0" y="0" width="40" height="300" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave3" transform="translate(560, 340)">
+    <rect x="0" y="0" width="40" height="400" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave4" transform="translate(660, 290)">
+    <rect x="0" y="0" width="40" height="500" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave5" transform="translate(760, 340)">
+    <rect x="0" y="0" width="40" height="400" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave6" transform="translate(860, 390)">
+    <rect x="0" y="0" width="40" height="300" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave7" transform="translate(960, 290)">
+    <rect x="0" y="0" width="40" height="500" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave8" transform="translate(1060, 340)">
+    <rect x="0" y="0" width="40" height="400" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave9" transform="translate(1160, 390)">
+    <rect x="0" y="0" width="40" height="300" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave10" transform="translate(1260, 290)">
+    <rect x="0" y="0" width="40" height="500" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave11" transform="translate(1360, 340)">
+    <rect x="0" y="0" width="40" height="400" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="wave12" transform="translate(1460, 440)">
+    <rect x="0" y="0" width="40" height="200" rx="20" ry="20" fill="#a855f7" />
+  </g>
+  <g id="title" transform="translate(160, 800)">
+    <text y="56" font-family="sans-serif" font-size="56" font-weight="bold" font-style="normal" fill="#ffffff" text-anchor="middle"><tspan x="800" dy="0">Audio Layer</tspan></text>
+  </g>
+  <g id="desc" transform="translate(160, 880)">
+    <text y="24" font-family="sans-serif" font-size="24" font-weight="normal" font-style="normal" fill="#94a3b8" text-anchor="middle"><tspan x="800" dy="0">Background music and sound effects with volume control</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

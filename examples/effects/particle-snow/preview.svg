@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <linearGradient id="background-grad" x1="100%" y1="50%" x2="0%" y2="50%"><stop offset="0%" stop-color="{{backgroundColor}}" /><stop offset="100%" stop-color="#0f1419" /></linearGradient>
+    <filter id="message-shadow"><feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="rgba(0, 0, 0, 0.5)" /></filter>
+    <filter id="subtitle-shadow"><feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="rgba(0, 0, 0, 0.4)" /></filter>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes content-background-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #content-background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.15;
+      animation: content-background-anim-0 1.167s 1s linear 1 normal forwards;
+    }
+    @keyframes message-anim-0 {
+      0% { transform: translate(0px, -1080px); }
+      5% { transform: translate(0px, -925.965px); }
+      10% { transform: translate(0px, -787.32px); }
+      15% { transform: translate(0px, -663.255px); }
+      20% { transform: translate(0px, -552.96px); }
+      25% { transform: translate(0px, -455.625px); }
+      30% { transform: translate(0px, -370.44px); }
+      35% { transform: translate(0px, -296.595px); }
+      40% { transform: translate(0px, -233.28px); }
+      45% { transform: translate(0px, -179.685px); }
+      50% { transform: translate(0px, -135px); }
+      55% { transform: translate(0px, -98.415px); }
+      60% { transform: translate(0px, -69.12px); }
+      65% { transform: translate(0px, -46.305px); }
+      70% { transform: translate(0px, -29.16px); }
+      75% { transform: translate(0px, -16.875px); }
+      80% { transform: translate(0px, -8.64px); }
+      85% { transform: translate(0px, -3.645px); }
+      90% { transform: translate(0px, -1.08px); }
+      95% { transform: translate(0px, -0.135px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    #message {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: message-anim-0 1.167s 1.5s linear 1 normal forwards;
+    }
+    @keyframes subtitle-anim-0 {
+      0% { opacity: 0; }
+      5% { opacity: 0.143; }
+      10% { opacity: 0.271; }
+      15% { opacity: 0.386; }
+      20% { opacity: 0.488; }
+      25% { opacity: 0.578; }
+      30% { opacity: 0.657; }
+      35% { opacity: 0.725; }
+      40% { opacity: 0.784; }
+      45% { opacity: 0.834; }
+      50% { opacity: 0.875; }
+      55% { opacity: 0.909; }
+      60% { opacity: 0.936; }
+      65% { opacity: 0.957; }
+      70% { opacity: 0.973; }
+      75% { opacity: 0.984; }
+      80% { opacity: 0.992; }
+      85% { opacity: 0.997; }
+      90% { opacity: 0.999; }
+      95% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    #subtitle {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+      animation: subtitle-anim-0 1s 2.333s linear 1 normal forwards;
+    }
+    @keyframes decorative-snowflake-left-anim-0 {
+      0% { transform: rotate(-180deg); opacity: 0; }
+      5% { transform: rotate(-154.327deg); opacity: 0.143; }
+      10% { transform: rotate(-131.22deg); opacity: 0.271; }
+      15% { transform: rotate(-110.542deg); opacity: 0.386; }
+      20% { transform: rotate(-92.16deg); opacity: 0.488; }
+      25% { transform: rotate(-75.937deg); opacity: 0.578; }
+      30% { transform: rotate(-61.74deg); opacity: 0.657; }
+      35% { transform: rotate(-49.433deg); opacity: 0.725; }
+      40% { transform: rotate(-38.88deg); opacity: 0.784; }
+      45% { transform: rotate(-29.948deg); opacity: 0.834; }
+      50% { transform: rotate(-22.5deg); opacity: 0.875; }
+      55% { transform: rotate(-16.403deg); opacity: 0.909; }
+      60% { transform: rotate(-11.52deg); opacity: 0.936; }
+      65% { transform: rotate(-7.718deg); opacity: 0.957; }
+      70% { transform: rotate(-4.86deg); opacity: 0.973; }
+      75% { transform: rotate(-2.812deg); opacity: 0.984; }
+      80% { transform: rotate(-1.44deg); opacity: 0.992; }
+      85% { transform: rotate(-0.608deg); opacity: 0.997; }
+      90% { transform: rotate(-0.18deg); opacity: 0.999; }
+      95% { transform: rotate(-0.023deg); opacity: 1; }
+      100% { transform: rotate(0deg); opacity: 1; }
+    }
+    #decorative-snowflake-left {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.6;
+      animation: decorative-snowflake-left-anim-0 1s 2s linear 1 normal forwards;
+    }
+    @keyframes decorative-snowflake-right-anim-0 {
+      0% { transform: rotate(-180deg); opacity: 0; }
+      5% { transform: rotate(-154.327deg); opacity: 0.143; }
+      10% { transform: rotate(-131.22deg); opacity: 0.271; }
+      15% { transform: rotate(-110.542deg); opacity: 0.386; }
+      20% { transform: rotate(-92.16deg); opacity: 0.488; }
+      25% { transform: rotate(-75.937deg); opacity: 0.578; }
+      30% { transform: rotate(-61.74deg); opacity: 0.657; }
+      35% { transform: rotate(-49.433deg); opacity: 0.725; }
+      40% { transform: rotate(-38.88deg); opacity: 0.784; }
+      45% { transform: rotate(-29.948deg); opacity: 0.834; }
+      50% { transform: rotate(-22.5deg); opacity: 0.875; }
+      55% { transform: rotate(-16.403deg); opacity: 0.909; }
+      60% { transform: rotate(-11.52deg); opacity: 0.936; }
+      65% { transform: rotate(-7.718deg); opacity: 0.957; }
+      70% { transform: rotate(-4.86deg); opacity: 0.973; }
+      75% { transform: rotate(-2.812deg); opacity: 0.984; }
+      80% { transform: rotate(-1.44deg); opacity: 0.992; }
+      85% { transform: rotate(-0.608deg); opacity: 0.997; }
+      90% { transform: rotate(-0.18deg); opacity: 0.999; }
+      95% { transform: rotate(-0.023deg); opacity: 1; }
+      100% { transform: rotate(0deg); opacity: 1; }
+    }
+    #decorative-snowflake-right {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.6;
+      animation: decorative-snowflake-right-anim-0 1s 2s linear 1 normal forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="url(#background-grad)" />
+  </g>
+  <!-- Unsupported layer type "custom" (snow-large) -->
+  <!-- Unsupported layer type "custom" (snow-small) -->
+  <!-- Unsupported layer type "custom" (snowflakes) -->
+  <g id="content-background" transform="translate(260, 380)">
+    <rect x="0" y="0" width="1400" height="320" rx="30" ry="30" fill="#ffffff" />
+  </g>
+  <g id="message" transform="translate(160, 420)">
+    <text y="88" font-family="Inter, system-ui, sans-serif" font-size="88" font-weight="700" font-style="normal" fill="#ffffff" text-anchor="middle" letter-spacing="8" filter="url(#message-shadow)"><tspan x="800" dy="0">{{message}}</tspan></text>
+  </g>
+  <g id="subtitle" transform="translate(160, 560)">
+    <text y="36" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="normal" font-style="normal" fill="#d1e7f5" text-anchor="middle" letter-spacing="6" filter="url(#subtitle-shadow)"><tspan x="800" dy="0">{{subtitle}}</tspan></text>
+  </g>
+  <g id="decorative-snowflake-left" transform="translate(340, 480)">
+    <polygon points="25,0 31.25,14.175 46.651,12.5 37.5,25 46.651,37.5 31.25,35.825 25,50 18.75,35.825 3.349,37.5 12.5,25 3.349,12.5 18.75,14.175" fill="#ffffff" />
+  </g>
+  <g id="decorative-snowflake-right" transform="translate(1530, 480)">
+    <polygon points="25,0 31.25,14.175 46.651,12.5 37.5,25 46.651,37.5 31.25,35.825 25,50 18.75,35.825 3.349,37.5 12.5,25 3.349,12.5 18.75,14.175" fill="#ffffff" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

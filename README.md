@@ -280,42 +280,50 @@ Explore our collection of ready-to-use templates:
 
 | Example | Description | Preview |
 |---------|-------------|---------|
-| [Hello World](./examples/getting-started/01-hello-world/) | Minimal text animation | ![](./examples/getting-started/01-hello-world/preview.gif) |
-| [First Video](./examples/getting-started/02-first-video/) | 5-second video with text | ![](./examples/getting-started/02-first-video/preview.gif) |
-| [First Image](./examples/getting-started/03-first-image/) | Social media image | ![](./examples/getting-started/03-first-image/preview.png) |
+| [Hello World](./examples/getting-started/01-hello-world/) | Minimal text animation | ![](./examples/getting-started/01-hello-world/preview.gif) [SVG](./examples/getting-started/01-hello-world/preview.svg) |
+| [First Video](./examples/getting-started/02-first-video/) | 5-second video with text | ![](./examples/getting-started/02-first-video/preview.gif) [SVG](./examples/getting-started/02-first-video/preview.svg) |
+| [First Image](./examples/getting-started/03-first-image/) | Social media image | ![](./examples/getting-started/03-first-image/preview.png) [SVG](./examples/getting-started/03-first-image/preview.svg) |
 
 ### Social Media
 
-| Example | Dimensions | Platform |
-|---------|------------|----------|
-| [Instagram Story](./examples/social-media/instagram-story/) | 1080x1920 | Instagram Stories |
-| [Instagram Post](./examples/social-media/instagram-post/) | 1080x1080 | Instagram Feed |
-| [TikTok Video](./examples/social-media/tiktok-video/) | 1080x1920 | TikTok |
-| [YouTube Thumbnail](./examples/social-media/youtube-thumbnail/) | 1280x720 | YouTube |
-| [Twitter Card](./examples/social-media/twitter-card/) | 1200x630 | Twitter/X |
-| [LinkedIn Banner](./examples/social-media/linkedin-banner/) | 1584x396 | LinkedIn |
+| Example | Dimensions | Platform | SVG |
+|---------|------------|----------|-----|
+| [Instagram Story](./examples/social-media/instagram-story/) | 1080x1920 | Instagram Stories | [Preview](./examples/social-media/instagram-story/preview.svg) |
+| [Instagram Post](./examples/social-media/instagram-post/) | 1080x1080 | Instagram Feed | [Preview](./examples/social-media/instagram-post/preview.svg) |
+| [TikTok Video](./examples/social-media/tiktok-video/) | 1080x1920 | TikTok | [Preview](./examples/social-media/tiktok-video/preview.svg) |
+| [YouTube Thumbnail](./examples/social-media/youtube-thumbnail/) | 1280x720 | YouTube | [Preview](./examples/social-media/youtube-thumbnail/preview.svg) |
+| [Twitter Card](./examples/social-media/twitter-card/) | 1200x630 | Twitter/X | [Preview](./examples/social-media/twitter-card/preview.svg) |
+| [LinkedIn Banner](./examples/social-media/linkedin-banner/) | 1584x396 | LinkedIn | [Preview](./examples/social-media/linkedin-banner/preview.svg) |
 
 ### Marketing
 
-| Example | Description |
-|---------|-------------|
-| [Product Showcase](./examples/marketing/product-showcase/) | Feature product with details |
-| [Sale Announcement](./examples/marketing/sale-announcement/) | Promotional sale video |
-| [Testimonial Video](./examples/marketing/testimonial-video/) | Customer testimonial |
-| [Before & After](./examples/marketing/before-after/) | Before/after comparison |
-| [Logo Reveal](./examples/marketing/logo-reveal/) | Animated logo reveal |
+| Example | Description | SVG |
+|---------|-------------|-----|
+| [Product Showcase](./examples/marketing/product-showcase/) | Feature product with details | [Preview](./examples/marketing/product-showcase/preview.svg) |
+| [Sale Announcement](./examples/marketing/sale-announcement/) | Promotional sale video | [Preview](./examples/marketing/sale-announcement/preview.svg) |
+| [Testimonial Video](./examples/marketing/testimonial-video/) | Customer testimonial | [Preview](./examples/marketing/testimonial-video/preview.svg) |
+| [Before & After](./examples/marketing/before-after/) | Before/after comparison | [Preview](./examples/marketing/before-after/preview.svg) |
+| [Logo Reveal](./examples/marketing/logo-reveal/) | Animated logo reveal | [Preview](./examples/marketing/logo-reveal/preview.svg) |
 
 ### Data Visualization
 
-| Example | Description |
-|---------|-------------|
-| [Animated Bar Chart](./examples/data-visualization/animated-bar-chart/) | Animated bar chart |
-| [Line Graph](./examples/data-visualization/line-graph/) | Animated line graph |
-| [Pie Chart](./examples/data-visualization/pie-chart/) | Pie chart reveal |
-| [Counter Animation](./examples/data-visualization/counter-animation/) | Counting numbers |
-| [Progress Dashboard](./examples/data-visualization/progress-dashboard/) | Progress indicators |
+| Example | Description | SVG |
+|---------|-------------|-----|
+| [Animated Bar Chart](./examples/data-visualization/animated-bar-chart/) | Animated bar chart | [Preview](./examples/data-visualization/animated-bar-chart/preview.svg) |
+| [Line Graph](./examples/data-visualization/line-graph/) | Animated line graph | [Preview](./examples/data-visualization/line-graph/preview.svg) |
+| [Pie Chart](./examples/data-visualization/pie-chart/) | Pie chart reveal | [Preview](./examples/data-visualization/pie-chart/preview.svg) |
+| [Counter Animation](./examples/data-visualization/counter-animation/) | Counting numbers | [Preview](./examples/data-visualization/counter-animation/preview.svg) |
+| [Progress Dashboard](./examples/data-visualization/progress-dashboard/) | Progress indicators | [Preview](./examples/data-visualization/progress-dashboard/preview.svg) |
 
 See the [examples directory](./examples/) for more details and usage instructions.
+
+### SVG Export
+
+All example templates include an animated SVG preview (`preview.svg`). These are lightweight, scalable, CSS-animated SVG files generated by `exportAnimatedSvg()`. To regenerate all previews:
+
+```bash
+npx tsx scripts/export-all-svgs.ts
+```
 
 ## MCP Server
 
