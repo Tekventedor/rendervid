@@ -37,13 +37,27 @@
       "label": "CTA",
       "required": false,
       "default": "Read Article"
+    },
+    {
+      "key": "featuredImage",
+      "type": "url",
+      "label": "Featured Image",
+      "description": "Blog post featured image URL",
+      "required": false,
+      "default": "https://www.photomaticai.com/images/ai-generated-images/models_ideogram-v2a_ai-image-generator_sleek-desig_Futuristic_3D_Workspace_Design.webp",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "category": "MARKETING",
     "title": "10 Strategies to Boost Your Social Media Engagement",
     "excerpt": "Discover proven tactics to increase your audience engagement.",
-    "cta": "Read Article"
+    "cta": "Read Article",
+    "featuredImage": "https://www.photomaticai.com/images/ai-generated-images/models_ideogram-v2a_ai-image-generator_sleek-desig_Futuristic_3D_Workspace_Design.webp"
   },
   "composition": {
     "scenes": [
@@ -80,7 +94,7 @@
               "height": 600
             },
             "props": {
-              "src": "https://www.photomaticai.com/images/ai-generated-images/models_ideogram-v2a_ai-image-generator_sleek-desig_Futuristic_3D_Workspace_Design.webp",
+              "src": "{{featuredImage}}",
               "fit": "cover"
             },
             "animations": [

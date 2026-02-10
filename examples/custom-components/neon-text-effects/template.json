@@ -22,21 +22,26 @@
       "key": "mainText",
       "type": "string",
       "label": "Main Text",
-      "defaultValue": "NEON NIGHTS"
+      "default": "NEON NIGHTS"
     },
     {
       "key": "subText",
       "type": "string",
       "label": "Sub Text",
-      "defaultValue": "Custom Component Magic"
+      "default": "Custom Component Magic"
     },
     {
       "key": "neonColor",
       "type": "string",
       "label": "Neon Color",
-      "defaultValue": "#ff00ff"
+      "default": "#ff00ff"
     }
   ],
+  "defaults": {
+    "mainText": "NEON NIGHTS",
+    "subText": "Custom Component Magic",
+    "neonColor": "#ff00ff"
+  },
   "customComponents": {
     "NeonText": {
       "type": "inline",

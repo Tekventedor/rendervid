@@ -37,13 +37,27 @@
       "label": "CTA",
       "required": false,
       "default": "Listen Now"
+    },
+    {
+      "key": "podcastImage",
+      "type": "url",
+      "label": "Podcast Image",
+      "description": "Podcast artwork or episode image URL",
+      "required": false,
+      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2-turbo_ai-image-generator_abstra_Surreal_Abstract_Film_Dreamscape.webp",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "podcastName": "TECH TALKS",
     "episodeTitle": "The Future of AI in Marketing",
     "guestName": "with Sarah Johnson, CMO at TechCorp",
-    "cta": "Listen Now"
+    "cta": "Listen Now",
+    "podcastImage": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2-turbo_ai-image-generator_abstra_Surreal_Abstract_Film_Dreamscape.webp"
   },
   "composition": {
     "scenes": [
@@ -81,7 +95,7 @@
             },
             "opacity": 0.4,
             "props": {
-              "src": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2-turbo_ai-image-generator_abstra_Surreal_Abstract_Film_Dreamscape.webp",
+              "src": "{{podcastImage}}",
               "fit": "cover"
             },
             "animations": [

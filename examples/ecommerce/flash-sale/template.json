@@ -37,13 +37,27 @@
       "label": "CTA",
       "required": false,
       "default": "SHOP NOW"
+    },
+    {
+      "key": "productImage",
+      "type": "url",
+      "label": "Product Image",
+      "description": "Product image URL",
+      "required": false,
+      "default": "watch.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "discount": "50%",
     "productName": "ALL ELECTRONICS",
     "timer": "02:45:30",
-    "cta": "SHOP NOW"
+    "cta": "SHOP NOW",
+    "productImage": "watch.jpg"
   },
   "composition": {
     "scenes": [
@@ -80,7 +94,7 @@
               "height": 700
             },
             "props": {
-              "src": "watch.jpg",
+              "src": "{{productImage}}",
               "fit": "cover"
             },
             "animations": [

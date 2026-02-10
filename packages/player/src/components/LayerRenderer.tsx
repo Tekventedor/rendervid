@@ -239,6 +239,32 @@ function renderLottieLayer(layer: Layer): React.ReactNode {
 }
 
 /**
+ * Render a three.js 3D layer (placeholder in preview)
+ */
+function renderThreeLayer(layer: Layer): React.ReactNode {
+  if (layer.type !== 'three') return null;
+
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#22c55e',
+        fontSize: '14px',
+        border: '1px dashed #22c55e',
+        borderRadius: '4px',
+      }}
+    >
+      <span>3D Scene</span>
+    </div>
+  );
+}
+
+/**
  * Render a custom layer
  */
 function renderCustomLayer(layer: Layer): React.ReactNode {
@@ -312,6 +338,9 @@ export function LayerRenderer({
       break;
     case 'custom':
       content = renderCustomLayer(layer);
+      break;
+    case 'three':
+      content = renderThreeLayer(layer);
       break;
     default:
       content = (

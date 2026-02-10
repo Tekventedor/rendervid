@@ -37,13 +37,27 @@
       "label": "Address",
       "required": false,
       "default": "1234 Oak Street, Beverly Hills, CA"
+    },
+    {
+      "key": "propertyImage",
+      "type": "url",
+      "label": "Property Image",
+      "description": "Property photo URL",
+      "required": false,
+      "default": "modern-house.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "oldPrice": "Was $950,000",
     "newPrice": "$875,000",
     "savings": "SAVE $75,000",
-    "address": "1234 Oak Street, Beverly Hills, CA"
+    "address": "1234 Oak Street, Beverly Hills, CA",
+    "propertyImage": "modern-house.jpg"
   },
   "composition": {
     "scenes": [
@@ -80,7 +94,7 @@
               "height": 650
             },
             "props": {
-              "src": "modern-house.jpg",
+              "src": "{{propertyImage}}",
               "fit": "cover"
             },
             "animations": [

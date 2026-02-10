@@ -16,21 +16,26 @@
       "type": "string",
       "label": "Text to Type",
       "required": true,
-      "defaultValue": "Welcome to Rendervid! Create amazing videos with custom React components."
+      "default": "Welcome to Rendervid! Create amazing videos with custom React components."
     },
     {
       "key": "speed",
       "type": "number",
       "label": "Characters per Second",
-      "defaultValue": 8
+      "default": 8
     },
     {
       "key": "textColor",
       "type": "string",
       "label": "Text Color",
-      "defaultValue": "#00ff88"
+      "default": "#00ff88"
     }
   ],
+  "defaults": {
+    "text": "Welcome to Rendervid! Create amazing videos with custom React components.",
+    "speed": 8,
+    "textColor": "#00ff88"
+  },
   "customComponents": {
     "Typewriter": {
       "type": "inline",

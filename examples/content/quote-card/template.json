@@ -30,12 +30,26 @@
       "label": "Background Color",
       "required": false,
       "default": "#7c3aed"
+    },
+    {
+      "key": "backgroundImage",
+      "type": "url",
+      "label": "Background Image",
+      "description": "Background pattern image URL",
+      "required": false,
+      "default": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "quote": "The only way to do great work is to love what you do.",
     "author": "- Steve Jobs",
-    "backgroundColor": "#7c3aed"
+    "backgroundColor": "#7c3aed",
+    "backgroundImage": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp"
   },
   "composition": {
     "scenes": [
@@ -73,7 +87,7 @@
             },
             "opacity": 0.15,
             "props": {
-              "src": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp",
+              "src": "{{backgroundImage}}",
               "fit": "cover"
             }
           },

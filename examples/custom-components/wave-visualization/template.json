@@ -21,27 +21,33 @@
       "key": "trackName",
       "type": "string",
       "label": "Track Name",
-      "defaultValue": "COSMIC WAVES"
+      "default": "COSMIC WAVES"
     },
     {
       "key": "artist",
       "type": "string",
       "label": "Artist Name",
-      "defaultValue": "Digital Dreams"
+      "default": "Digital Dreams"
     },
     {
       "key": "waveColor1",
       "type": "string",
       "label": "Wave Color 1",
-      "defaultValue": "#ff00ff"
+      "default": "#ff00ff"
     },
     {
       "key": "waveColor2",
       "type": "string",
       "label": "Wave Color 2",
-      "defaultValue": "#00ffff"
+      "default": "#00ffff"
     }
   ],
+  "defaults": {
+    "trackName": "COSMIC WAVES",
+    "artist": "Digital Dreams",
+    "waveColor1": "#ff00ff",
+    "waveColor2": "#00ffff"
+  },
   "customComponents": {
     "AudioWave": {
       "type": "inline",

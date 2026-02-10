@@ -59,8 +59,8 @@ export function Timeline({
   return (
     <div className="rendervid-timeline">
       {/* Time display */}
-      <div className="timeline-header" style={{ padding: '8px', backgroundColor: '#f5f5f5', borderBottom: '1px solid #ddd' }}>
-        <span style={{ fontFamily: 'monospace', fontSize: '14px' }}>
+      <div className="timeline-header" style={{ padding: '8px', backgroundColor: '#2a2a2a', borderBottom: '1px solid #444' }}>
+        <span style={{ fontFamily: 'monospace', fontSize: '14px', color: '#ccc' }}>
           {formatTime(currentFrame)} / {formatTime(totalFrames)} ({totalFrames} frames @ {fps}fps)
         </span>
       </div>
@@ -150,8 +150,8 @@ export function Timeline({
 
       {/* Zoom controls */}
       {onZoomChange && (
-        <div className="timeline-controls" style={{ padding: '8px', backgroundColor: '#f5f5f5', borderTop: '1px solid #ddd' }}>
-          <label style={{ marginRight: '8px', fontSize: '12px' }}>Zoom:</label>
+        <div className="timeline-controls" style={{ padding: '8px', backgroundColor: '#2a2a2a', borderTop: '1px solid #444' }}>
+          <label style={{ marginRight: '8px', fontSize: '12px', color: '#ccc' }}>Zoom:</label>
           <input
             type="range"
             min="0.5"
@@ -161,7 +161,7 @@ export function Timeline({
             onChange={(e) => onZoomChange(parseFloat(e.target.value))}
             style={{ width: '150px' }}
           />
-          <span style={{ marginLeft: '8px', fontSize: '12px' }}>{zoom.toFixed(1)}x</span>
+          <span style={{ marginLeft: '8px', fontSize: '12px', color: '#ccc' }}>{zoom.toFixed(1)}x</span>
         </div>
       )}
     </div>

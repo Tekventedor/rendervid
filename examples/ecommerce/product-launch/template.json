@@ -12,11 +12,29 @@
   "inputs": [
     {
       "key": "backgroundVideo",
-      "type": "video",
+      "type": "url",
       "label": "Background Video",
       "description": "URL or path to background video",
       "required": false,
-      "default": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+      "default": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "validation": {
+        "allowedTypes": [
+          "video"
+        ]
+      }
+    },
+    {
+      "key": "productImage",
+      "type": "url",
+      "label": "Product Image",
+      "description": "Product image URL",
+      "required": false,
+      "default": "product.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     },
     {
       "key": "productName",
@@ -44,7 +62,8 @@
     "backgroundVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     "productName": "NEXUS PRO",
     "tagline": "The future of productivity is here",
-    "launchDate": "Available March 15, 2024"
+    "launchDate": "Available March 15, 2024",
+    "productImage": "product.jpg"
   },
   "composition": {
     "scenes": [
@@ -81,7 +100,7 @@
               "height": 800
             },
             "props": {
-              "src": "product.jpg",
+              "src": "{{productImage}}",
               "fit": "cover"
             },
             "animations": [

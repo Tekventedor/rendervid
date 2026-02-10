@@ -37,13 +37,27 @@
       "label": "Price",
       "required": true,
       "default": "$14.99"
+    },
+    {
+      "key": "foodImage",
+      "type": "url",
+      "label": "Food Image",
+      "description": "Dish photo URL",
+      "required": false,
+      "default": "food_recept.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "badgeText": "TODAY ONLY",
     "day": "TUESDAY SPECIAL",
     "dishName": "Gourmet Burger & Fries",
-    "price": "$14.99"
+    "price": "$14.99",
+    "foodImage": "food_recept.jpg"
   },
   "composition": {
     "scenes": [
@@ -80,7 +94,7 @@
               "height": 600
             },
             "props": {
-              "src": "food_recept.jpg",
+              "src": "{{foodImage}}",
               "fit": "cover",
               "borderRadius": 30
             },

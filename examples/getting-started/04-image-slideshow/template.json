@@ -12,27 +12,42 @@
   "inputs": [
     {
       "key": "image1",
-      "type": "string",
+      "type": "url",
       "label": "First Image",
       "description": "URL to the first image",
       "required": true,
-      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_flux-dev_ai-image-generator_soft-retro_1970s_Soft_Retro_Living_Room.webp"
+      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_flux-dev_ai-image-generator_soft-retro_1970s_Soft_Retro_Living_Room.webp",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     },
     {
       "key": "image2",
-      "type": "string",
+      "type": "url",
       "label": "Second Image",
       "description": "URL to the second image",
       "required": true,
-      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v3-balanced_ai-image-generator_pen_Whimsical_Pencil_Cityscape.webp"
+      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v3-balanced_ai-image-generator_pen_Whimsical_Pencil_Cityscape.webp",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     },
     {
       "key": "image3",
-      "type": "string",
+      "type": "url",
       "label": "Third Image",
       "description": "URL to the third image",
       "required": true,
-      "default": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp"
+      "default": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
@@ -89,8 +104,20 @@
                 "type": "keyframe",
                 "duration": 120,
                 "keyframes": [
-                  { "frame": 0, "properties": { "scaleX": 1, "scaleY": 1 } },
-                  { "frame": 120, "properties": { "scaleX": 1.1, "scaleY": 1.1 } }
+                  {
+                    "frame": 0,
+                    "properties": {
+                      "scaleX": 1,
+                      "scaleY": 1
+                    }
+                  },
+                  {
+                    "frame": 120,
+                    "properties": {
+                      "scaleX": 1.1,
+                      "scaleY": 1.1
+                    }
+                  }
                 ]
               }
             ]
@@ -164,8 +191,20 @@
                 "type": "keyframe",
                 "duration": 120,
                 "keyframes": [
-                  { "frame": 0, "properties": { "scaleX": 1, "scaleY": 1 } },
-                  { "frame": 120, "properties": { "scaleX": 1.1, "scaleY": 1.1 } }
+                  {
+                    "frame": 0,
+                    "properties": {
+                      "scaleX": 1,
+                      "scaleY": 1
+                    }
+                  },
+                  {
+                    "frame": 120,
+                    "properties": {
+                      "scaleX": 1.1,
+                      "scaleY": 1.1
+                    }
+                  }
                 ]
               }
             ]
@@ -239,8 +278,20 @@
                 "type": "keyframe",
                 "duration": 120,
                 "keyframes": [
-                  { "frame": 0, "properties": { "scaleX": 1, "scaleY": 1 } },
-                  { "frame": 120, "properties": { "scaleX": 1.1, "scaleY": 1.1 } }
+                  {
+                    "frame": 0,
+                    "properties": {
+                      "scaleX": 1,
+                      "scaleY": 1
+                    }
+                  },
+                  {
+                    "frame": 120,
+                    "properties": {
+                      "scaleX": 1.1,
+                      "scaleY": 1.1
+                    }
+                  }
                 ]
               },
               {

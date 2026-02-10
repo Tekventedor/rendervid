@@ -22,21 +22,26 @@
       "key": "systemName",
       "type": "string",
       "label": "System Name",
-      "defaultValue": "NEXUS SYSTEM"
+      "default": "NEXUS SYSTEM"
     },
     {
       "key": "statusText",
       "type": "string",
       "label": "Status",
-      "defaultValue": "ONLINE"
+      "default": "ONLINE"
     },
     {
       "key": "completionPercent",
       "type": "number",
       "label": "Completion Percentage",
-      "defaultValue": 87
+      "default": 87
     }
   ],
+  "defaults": {
+    "systemName": "NEXUS SYSTEM",
+    "statusText": "ONLINE",
+    "completionPercent": 87
+  },
   "customComponents": {
     "HexagonGrid": {
       "type": "inline",

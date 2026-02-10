@@ -15,21 +15,26 @@
       "key": "usersCount",
       "type": "number",
       "label": "Users Count",
-      "defaultValue": 1247
+      "default": 1247
     },
     {
       "key": "revenueAmount",
       "type": "number",
       "label": "Revenue",
-      "defaultValue": 98765
+      "default": 98765
     },
     {
       "key": "conversionRate",
       "type": "number",
       "label": "Conversion Rate %",
-      "defaultValue": 87
+      "default": 87
     }
   ],
+  "defaults": {
+    "usersCount": 1247,
+    "revenueAmount": 98765,
+    "conversionRate": 87
+  },
   "customComponents": {
     "Counter": {
       "type": "inline",

@@ -37,13 +37,27 @@
       "label": "Details",
       "required": false,
       "default": "4 Beds • 3 Baths • 2,850 sqft"
+    },
+    {
+      "key": "propertyImage",
+      "type": "url",
+      "label": "Property Image",
+      "description": "Property photo URL",
+      "required": false,
+      "default": "property.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "listingType": "FOR SALE",
     "price": "$875,000",
     "address": "1234 Oak Street, Beverly Hills, CA",
-    "details": "4 Beds • 3 Baths • 2,850 sqft"
+    "details": "4 Beds • 3 Baths • 2,850 sqft",
+    "propertyImage": "property.jpg"
   },
   "composition": {
     "scenes": [
@@ -80,7 +94,7 @@
               "height": 700
             },
             "props": {
-              "src": "property.jpg",
+              "src": "{{propertyImage}}",
               "fit": "cover"
             },
             "animations": [

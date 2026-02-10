@@ -30,12 +30,26 @@
       "label": "Address",
       "required": true,
       "default": "456 Maple Avenue, Santa Monica, CA"
+    },
+    {
+      "key": "propertyImage",
+      "type": "url",
+      "label": "Property Image",
+      "description": "Property photo URL",
+      "required": false,
+      "default": "house.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "eventDate": "Saturday, March 15",
     "eventTime": "1:00 PM - 4:00 PM",
-    "address": "456 Maple Avenue, Santa Monica, CA"
+    "address": "456 Maple Avenue, Santa Monica, CA",
+    "propertyImage": "house.jpg"
   },
   "composition": {
     "scenes": [
@@ -72,7 +86,7 @@
               "height": 650
             },
             "props": {
-              "src": "house.jpg",
+              "src": "{{propertyImage}}",
               "fit": "cover"
             },
             "animations": [

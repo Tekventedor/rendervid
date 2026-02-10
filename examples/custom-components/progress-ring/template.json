@@ -15,15 +15,19 @@
       "key": "ringColor",
       "type": "string",
       "label": "Ring Color",
-      "defaultValue": "#3b82f6"
+      "default": "#3b82f6"
     },
     {
       "key": "strokeWidth",
       "type": "number",
       "label": "Stroke Width",
-      "defaultValue": 12
+      "default": 12
     }
   ],
+  "defaults": {
+    "ringColor": "#3b82f6",
+    "strokeWidth": 12
+  },
   "customComponents": {
     "ProgressRing": {
       "type": "inline",

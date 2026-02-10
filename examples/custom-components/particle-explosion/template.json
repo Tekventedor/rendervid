@@ -21,21 +21,26 @@
       "key": "title",
       "type": "string",
       "label": "Title Text",
-      "defaultValue": "PARTICLE EXPLOSION"
+      "default": "PARTICLE EXPLOSION"
     },
     {
       "key": "particleCount",
       "type": "number",
       "label": "Number of Particles",
-      "defaultValue": 150
+      "default": 150
     },
     {
       "key": "explosionForce",
       "type": "number",
       "label": "Explosion Force",
-      "defaultValue": 8
+      "default": 8
     }
   ],
+  "defaults": {
+    "title": "PARTICLE EXPLOSION",
+    "particleCount": 150,
+    "explosionForce": 8
+  },
   "customComponents": {
     "ParticleExplosion": {
       "type": "inline",

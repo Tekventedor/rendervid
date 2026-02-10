@@ -36,5 +36,177 @@
     "title": "SYSTEM BREACH",
     "subtitle": "Access Granted",
     "accentColor": "#00ff00"
+  },
+  "customComponents": {
+    "GlitchText": {
+      "type": "inline",
+      "code": "function GlitchText(props) { var frame = props.frame || 0; var text = props.text || 'GLITCH'; var fontSize = props.fontSize || 96; var color = props.color || '#ffffff'; var accentColor = props.accentColor || '#00ff00'; var intensity = Math.sin(frame * 0.3) > 0.6 ? 1 : 0; var offsetR = intensity * (Math.sin(frame * 7.1) * 8); var offsetB = intensity * (Math.sin(frame * 5.3) * -6); var baseStyle = { position: 'absolute', top: 0, left: 0, width: '100%', fontSize: fontSize + 'px', fontWeight: '900', textAlign: 'center', letterSpacing: '12px', fontFamily: 'monospace' }; var layers = [ React.createElement('div', { key: 'r', style: Object.assign({}, baseStyle, { color: 'rgba(255,0,0,0.7)', transform: 'translateX(' + offsetR + 'px)', mixBlendMode: 'screen' }) }, text), React.createElement('div', { key: 'b', style: Object.assign({}, baseStyle, { color: 'rgba(0,0,255,0.7)', transform: 'translateX(' + offsetB + 'px)', mixBlendMode: 'screen' }) }, text), React.createElement('div', { key: 'main', style: Object.assign({}, baseStyle, { color: color }) }, text) ]; if (intensity > 0) { var sliceY = Math.random() * 100; layers.push(React.createElement('div', { key: 'slice', style: { position: 'absolute', top: sliceY + '%', left: (Math.random() * 20 - 10) + 'px', width: '100%', height: '4px', background: accentColor, opacity: 0.5 } })); } return React.createElement('div', { style: { position: 'relative', width: '100%', height: '100%' } }, layers); }",
+      "description": "RGB split glitch text effect"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a0a"
+            }
+          },
+          {
+            "id": "scanlines",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "opacity": 0.05,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff"
+            }
+          },
+          {
+            "id": "glitch-title",
+            "type": "custom",
+            "position": {
+              "x": 160,
+              "y": 380
+            },
+            "size": {
+              "width": 1600,
+              "height": 200
+            },
+            "customComponent": {
+              "name": "GlitchText",
+              "props": {
+                "text": "{{title}}",
+                "fontSize": 96,
+                "color": "#ffffff",
+                "accentColor": "{{accentColor}}"
+              }
+            }
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": {
+              "x": 360,
+              "y": 600
+            },
+            "size": {
+              "width": 1200,
+              "height": 60
+            },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 32,
+              "fontWeight": "300",
+              "color": "{{accentColor}}",
+              "textAlign": "center",
+              "fontFamily": "monospace",
+              "letterSpacing": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 45,
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "line-top",
+            "type": "shape",
+            "position": {
+              "x": 460,
+              "y": 370
+            },
+            "size": {
+              "width": 1000,
+              "height": 2
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{accentColor}}"
+            },
+            "opacity": 0.5,
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 30,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "line-bottom",
+            "type": "shape",
+            "position": {
+              "x": 460,
+              "y": 590
+            },
+            "size": {
+              "width": 1000,
+              "height": 2
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{accentColor}}"
+            },
+            "opacity": 0.5,
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 30,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7
+            }
+          }
+        ]
+      }
+    ]
   }
 }

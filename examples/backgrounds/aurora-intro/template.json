@@ -29,7 +29,13 @@
       "type": "array",
       "label": "Aurora Colors",
       "required": false,
-      "default": ["#667eea", "#764ba2", "#f093fb", "#4facfe", "#00f2fe"],
+      "default": [
+        "#667eea",
+        "#764ba2",
+        "#f093fb",
+        "#4facfe",
+        "#00f2fe"
+      ],
       "description": "Array of hex color codes for the aurora effect"
     },
     {
@@ -39,7 +45,7 @@
       "required": false,
       "default": 0.8,
       "min": 0.1,
-      "max": 2.0
+      "max": 2
     },
     {
       "key": "blur",
@@ -57,13 +63,19 @@
       "required": false,
       "default": 0.6,
       "min": 0.1,
-      "max": 1.0
+      "max": 1
     }
   ],
   "defaults": {
     "title": "WELCOME",
     "subtitle": "Experience the Magic",
-    "auroraColors": ["#667eea", "#764ba2", "#f093fb", "#4facfe", "#00f2fe"],
+    "auroraColors": [
+      "#667eea",
+      "#764ba2",
+      "#f093fb",
+      "#4facfe",
+      "#00f2fe"
+    ],
     "speed": 0.8,
     "blur": 40,
     "opacity": 0.6
@@ -78,8 +90,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a1f"
@@ -88,15 +106,27 @@
           {
             "id": "aurora",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "customComponent": {
               "name": "AuroraBackground",
               "props": {
                 "frame": 0,
                 "totalFrames": 180,
                 "fps": 30,
-                "colors": ["#667eea", "#764ba2", "#f093fb", "#4facfe", "#00f2fe"],
+                "colors": [
+                  "#667eea",
+                  "#764ba2",
+                  "#f093fb",
+                  "#4facfe",
+                  "#00f2fe"
+                ],
                 "speed": 0.8,
                 "blur": 40,
                 "opacity": 0.6,
@@ -108,8 +138,14 @@
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 460, "y": 440 },
-            "size": { "width": 1000, "height": 120 },
+            "position": {
+              "x": 460,
+              "y": 440
+            },
+            "size": {
+              "width": 1000,
+              "height": 120
+            },
             "props": {
               "text": "{{title}}",
               "fontSize": 96,
@@ -132,8 +168,14 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": { "x": 560, "y": 580 },
-            "size": { "width": 800, "height": 60 },
+            "position": {
+              "x": 560,
+              "y": 580
+            },
+            "size": {
+              "width": 800,
+              "height": 60
+            },
             "props": {
               "text": "{{subtitle}}",
               "fontSize": 32,
@@ -155,8 +197,14 @@
           {
             "id": "accent-line",
             "type": "shape",
-            "position": { "x": 860, "y": 620 },
-            "size": { "width": 200, "height": 3 },
+            "position": {
+              "x": 860,
+              "y": 620
+            },
+            "size": {
+              "width": 200,
+              "height": 3
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#667eea"
@@ -174,8 +222,14 @@
           {
             "id": "watermark",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -189,5 +243,12 @@
         ]
       }
     ]
+  },
+  "customComponents": {
+    "AuroraBackground": {
+      "type": "inline",
+      "code": "function AuroraBackground(props) { var w = props.layerSize ? props.layerSize.width : 1920; var h = props.layerSize ? props.layerSize.height : 1080; var frame = props.frame || 0; var fps = props.fps || 30; var t = frame / fps; var colors = props.colors || ['#667eea', '#764ba2', '#f093fb', '#4facfe']; var speed = props.speed || 0.8; var blur = props.blur || 40; var opacity = props.opacity || 0.6; var blobs = []; for (var i = 0; i < colors.length; i++) { var phase = i * Math.PI * 2 / colors.length; var x = 50 + Math.sin(t * speed * 0.5 + phase) * 30; var y = 30 + Math.cos(t * speed * 0.3 + phase * 1.5) * 25; var scale = 1 + Math.sin(t * speed * 0.2 + i) * 0.3; blobs.push(React.createElement('div', { key: i, style: { position: 'absolute', left: x + '%', top: y + '%', width: (300 * scale) + 'px', height: (200 * scale) + 'px', borderRadius: '50%', background: colors[i], filter: 'blur(' + blur + 'px)', opacity: opacity, transform: 'translate(-50%, -50%)', transition: 'none' } })); } return React.createElement('div', { style: { position: 'relative', width: '100%', height: '100%', overflow: 'hidden', background: '#0a0a1f' } }, blobs); }",
+      "description": "Animated aurora borealis background effect"
+    }
   }
 }

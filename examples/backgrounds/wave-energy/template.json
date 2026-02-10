@@ -36,7 +36,11 @@
       "type": "array",
       "label": "Wave Colors",
       "required": false,
-      "default": ["#8b5cf6", "#d946ef", "#ec4899"],
+      "default": [
+        "#8b5cf6",
+        "#d946ef",
+        "#ec4899"
+      ],
       "description": "Array of hex color codes for wave layers"
     },
     {
@@ -46,7 +50,7 @@
       "required": false,
       "default": 0.8,
       "min": 0.3,
-      "max": 2.0
+      "max": 2
     },
     {
       "key": "waveCount",
@@ -71,7 +75,11 @@
     "title": "UNLEASH",
     "subtitle": "THE POWER",
     "tagline": "Next Generation Technology",
-    "waveColors": ["#8b5cf6", "#d946ef", "#ec4899"],
+    "waveColors": [
+      "#8b5cf6",
+      "#d946ef",
+      "#ec4899"
+    ],
     "waveSpeed": 0.8,
     "waveCount": 3,
     "amplitude": 70
@@ -86,8 +94,14 @@
           {
             "id": "background",
             "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "props": {
               "shape": "rectangle",
               "fill": "#0f0a1e"
@@ -96,14 +110,24 @@
           {
             "id": "wave-background",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
             "customComponent": {
               "name": "WaveBackground",
               "props": {
                 "frame": 0,
                 "fps": 30,
-                "colors": ["#8b5cf6", "#d946ef", "#ec4899"],
+                "colors": [
+                  "#8b5cf6",
+                  "#d946ef",
+                  "#ec4899"
+                ],
                 "speed": 0.8,
                 "waveCount": 3,
                 "amplitude": 70,
@@ -118,8 +142,14 @@
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 460, "y": 380 },
-            "size": { "width": 1000, "height": 140 },
+            "position": {
+              "x": 460,
+              "y": 380
+            },
+            "size": {
+              "width": 1000,
+              "height": 140
+            },
             "props": {
               "text": "{{title}}",
               "fontSize": 120,
@@ -142,8 +172,14 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": { "x": 460, "y": 540 },
-            "size": { "width": 1000, "height": 100 },
+            "position": {
+              "x": 460,
+              "y": 540
+            },
+            "size": {
+              "width": 1000,
+              "height": 100
+            },
             "props": {
               "text": "{{subtitle}}",
               "fontSize": 80,
@@ -165,8 +201,14 @@
           {
             "id": "tagline",
             "type": "text",
-            "position": { "x": 560, "y": 680 },
-            "size": { "width": 800, "height": 50 },
+            "position": {
+              "x": 560,
+              "y": 680
+            },
+            "size": {
+              "width": 800,
+              "height": 50
+            },
             "props": {
               "text": "{{tagline}}",
               "fontSize": 28,
@@ -188,8 +230,14 @@
           {
             "id": "watermark",
             "type": "text",
-            "position": { "x": 1520, "y": 20 },
-            "size": { "width": 380, "height": 60 },
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
               "fontSize": 16,
@@ -203,5 +251,12 @@
         ]
       }
     ]
+  },
+  "customComponents": {
+    "WaveBackground": {
+      "type": "inline",
+      "code": "function WaveBackground(props) { var w = props.layerSize ? props.layerSize.width : 1920; var h = props.layerSize ? props.layerSize.height : 1080; var frame = props.frame || 0; var fps = props.fps || 30; var t = frame / fps; var colors = props.colors || ['#0ea5e9', '#06b6d4', '#14b8a6']; var speed = props.speed || 0.3; var waveCount = Math.min(props.waveCount || 3, colors.length); var amp = props.amplitude || 60; var freq = props.frequency || 0.02; var dir = props.direction || 'bottom'; var opacity = props.opacity !== undefined ? props.opacity : 1; var paths = []; for (var i = 0; i < waveCount; i++) { var baseY = dir === 'both' ? (i % 2 === 0 ? h * 0.7 + i * 40 : h * 0.2 - i * 20) : h * 0.55 + i * 80; var d = 'M0,' + baseY; for (var x = 0; x <= w; x += 20) { var y = baseY + Math.sin(x * freq + t * speed * (2 + i * 0.5) + i * 2) * amp * (1 - i * 0.15); y += Math.sin(x * freq * 0.5 + t * speed * 1.5 + i * 3) * amp * 0.3; d += ' L' + x + ',' + y; } if (dir === 'both' && i % 2 !== 0) { d += ' L' + w + ',0 L0,0 Z'; } else { d += ' L' + w + ',' + h + ' L0,' + h + ' Z'; } paths.push(React.createElement('path', { key: i, d: d, fill: colors[i % colors.length], opacity: 0.6 - i * 0.1 })); } return React.createElement('svg', { width: w, height: h, style: { position: 'absolute', top: 0, left: 0, opacity: opacity } }, paths); }",
+      "description": "Animated wave pattern background"
+    }
   }
 }

@@ -37,13 +37,27 @@
       "label": "Source",
       "required": false,
       "default": "TECH NEWS"
+    },
+    {
+      "key": "featuredImage",
+      "type": "url",
+      "label": "Featured Image",
+      "description": "Header image URL",
+      "required": false,
+      "default": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2_ai-image-generator_cinematic-3d_Futuristic_City_Skyline_at_Sunset.webp",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "badge": "BREAKING NEWS",
     "headline": "Major Tech Company Announces Revolutionary AI Platform",
     "subheadline": "Industry experts predict significant impact on global markets",
-    "source": "TECH NEWS"
+    "source": "TECH NEWS",
+    "featuredImage": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2_ai-image-generator_cinematic-3d_Futuristic_City_Skyline_at_Sunset.webp"
   },
   "composition": {
     "scenes": [
@@ -80,7 +94,7 @@
               "height": 600
             },
             "props": {
-              "src": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v2_ai-image-generator_cinematic-3d_Futuristic_City_Skyline_at_Sunset.webp",
+              "src": "{{featuredImage}}",
               "fit": "cover"
             },
             "animations": [

@@ -1,4 +1,4 @@
-import type { Template } from '@rendervid/core';
+import type { Template, InputDefinition } from '@rendervid/core';
 
 /**
  * Editor state management types
@@ -63,14 +63,17 @@ export interface TimelineProps {
  * Layer panel types
  */
 export interface LayerPanelProps {
-  sceneId: string;
-  layers: any[];
+  scenes: any[];
+  selectedSceneId: string | null;
   selectedLayerId: string | null;
+  onSelectScene: (sceneId: string) => void;
   onSelectLayer: (layerId: string | null) => void;
   onAddLayer: (type: string) => void;
   onDeleteLayer: (layerId: string) => void;
-  onReorderLayers: (layerIds: string[]) => void;
+  onReorderLayers: (sceneId: string, layerIds: string[]) => void;
   onDuplicateLayer: (layerId: string) => void;
+  onAddScene: () => void;
+  onDeleteScene: (sceneId: string) => void;
 }
 
 /**
@@ -79,6 +82,10 @@ export interface LayerPanelProps {
 export interface PropertyPanelProps {
   selectedLayer: any | null;
   onUpdateLayer: (updates: any) => void;
+  template: Template;
+  onUpdateCustomComponentCode: (name: string, code: string) => void;
+  selectedScene: any | null;
+  onUpdateScene: (updates: any) => void;
 }
 
 /**
@@ -92,6 +99,16 @@ export interface PreviewProps {
   onPlayingChange: (isPlaying: boolean) => void;
   width?: number;
   height?: number;
+}
+
+/**
+ * Input panel types
+ */
+export interface InputPanelProps {
+  inputs: InputDefinition[];
+  values: Record<string, unknown>;
+  onChangeValue: (key: string, value: unknown) => void;
+  onReset: () => void;
 }
 
 /**

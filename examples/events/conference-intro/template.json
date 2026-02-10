@@ -44,6 +44,19 @@
       "label": "Session Title",
       "required": false,
       "default": "The Future of Cloud Architecture"
+    },
+    {
+      "key": "speakerImage",
+      "type": "url",
+      "label": "Speaker/Conference Image",
+      "description": "Speaker photo or conference image URL",
+      "required": false,
+      "default": "conference.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
@@ -51,7 +64,8 @@
     "speakerName": "Michael Roberts",
     "speakerTitle": "Chief Technology Officer",
     "company": "Innovate Labs",
-    "sessionTitle": "The Future of Cloud Architecture"
+    "sessionTitle": "The Future of Cloud Architecture",
+    "speakerImage": "conference.jpg"
   },
   "composition": {
     "scenes": [
@@ -88,7 +102,7 @@
               "height": 700
             },
             "props": {
-              "src": "conference.jpg",
+              "src": "{{speakerImage}}",
               "fit": "cover"
             },
             "animations": [

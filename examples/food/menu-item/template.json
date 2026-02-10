@@ -37,13 +37,27 @@
       "label": "Price",
       "required": true,
       "default": "$28"
+    },
+    {
+      "key": "foodImage",
+      "type": "url",
+      "label": "Food Image",
+      "description": "Dish photo URL",
+      "required": false,
+      "default": "food_recept.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "category": "SIGNATURE DISH",
     "dishName": "Truffle Risotto",
     "description": "Arborio rice, black truffle, parmesan, white wine",
-    "price": "$28"
+    "price": "$28",
+    "foodImage": "food_recept.jpg"
   },
   "composition": {
     "scenes": [
@@ -80,7 +94,7 @@
               "height": 500
             },
             "props": {
-              "src": "food_recept.jpg",
+              "src": "{{foodImage}}",
               "fit": "cover",
               "borderRadius": 20
             },

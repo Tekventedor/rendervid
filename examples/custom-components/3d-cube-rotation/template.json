@@ -16,39 +16,47 @@
       "key": "label1",
       "type": "string",
       "label": "Face 1 Label",
-      "defaultValue": "FRONT"
+      "default": "FRONT"
     },
     {
       "key": "label2",
       "type": "string",
       "label": "Face 2 Label",
-      "defaultValue": "RIGHT"
+      "default": "RIGHT"
     },
     {
       "key": "label3",
       "type": "string",
       "label": "Face 3 Label",
-      "defaultValue": "BACK"
+      "default": "BACK"
     },
     {
       "key": "label4",
       "type": "string",
       "label": "Face 4 Label",
-      "defaultValue": "LEFT"
+      "default": "LEFT"
     },
     {
       "key": "label5",
       "type": "string",
       "label": "Face 5 Label",
-      "defaultValue": "TOP"
+      "default": "TOP"
     },
     {
       "key": "label6",
       "type": "string",
       "label": "Face 6 Label",
-      "defaultValue": "BOTTOM"
+      "default": "BOTTOM"
     }
   ],
+  "defaults": {
+    "label1": "FRONT",
+    "label2": "RIGHT",
+    "label3": "BACK",
+    "label4": "LEFT",
+    "label5": "TOP",
+    "label6": "BOTTOM"
+  },
   "customComponents": {
     "RotatingCube": {
       "type": "inline",

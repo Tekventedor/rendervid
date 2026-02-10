@@ -1,6 +1,58 @@
-import React, { useEffect, useRef } from 'react';
-import type { Template } from '@rendervid/core';
+import React, { useEffect, useRef, useMemo } from 'react';
+import type { Template, ComponentRegistry } from '@rendervid/core';
 import { TemplateRenderer } from '@rendervid/renderer-browser';
+import { SelectionOverlay } from './SelectionOverlay';
+
+/**
+ * Compile inline component code string into a React component function.
+ */
+function compileInlineComponent(code: string): React.ComponentType<any> | null {
+  const wrappedCode = `
+    return (function(React) {
+      ${code}
+      var match = ${JSON.stringify(code)}.match(/function\\s+(\\w+)/);
+      if (match && typeof eval(match[1]) !== 'undefined') {
+        return eval(match[1]);
+      }
+      return null;
+    });
+  `;
+  const factory = new Function(wrappedCode);
+  const component = factory()(React);
+  return typeof component === 'function' ? component : null;
+}
+
+/**
+ * Build a fresh ComponentRegistry from template.customComponents.
+ * Returns a new object each time so downstream useMemo deps invalidate.
+ */
+function buildRegistry(customComponents: Template['customComponents']): ComponentRegistry {
+  const components = new Map<string, any>();
+
+  if (customComponents) {
+    for (const [name, def] of Object.entries(customComponents)) {
+      if (def.type === 'inline' && def.code) {
+        try {
+          const comp = compileInlineComponent(def.code);
+          if (comp) components.set(name, comp);
+          else console.warn(`Inline component "${name}" did not produce a valid function`);
+        } catch (err) {
+          console.warn(`Failed to compile custom component "${name}":`, err);
+        }
+      }
+    }
+  }
+
+  return {
+    register: (name: string, comp: any) => { components.set(name, comp); },
+    get: (name: string) => components.get(name),
+    list: () => Array.from(components.keys()).map((name) => ({ name })),
+    has: (name: string) => components.has(name),
+    registerFromUrl: async () => {},
+    registerFromCode: () => {},
+    unregister: (name: string) => components.delete(name),
+  } as ComponentRegistry;
+}
 
 export interface PreviewProps {
   template: Template;
@@ -11,6 +63,11 @@ export interface PreviewProps {
   width?: number;
   height?: number;
   className?: string;
+  layers?: any[];
+  selectedLayerId?: string | null;
+  onSelectLayer?: (id: string | null) => void;
+  onUpdateLayer?: (layerId: string, updates: any) => void;
+  onUpdateLayerWithoutHistory?: (layerId: string, updates: any) => void;
 }
 
 export function Preview({
@@ -22,6 +79,11 @@ export function Preview({
   width,
   height,
   className = '',
+  layers,
+  selectedLayerId,
+  onSelectLayer,
+  onUpdateLayer,
+  onUpdateLayerWithoutHistory,
 }: PreviewProps) {
   const { width: templateWidth, height: templateHeight, fps = 30 } = template.output;
   const displayWidth = width || templateWidth;
@@ -29,6 +91,12 @@ export function Preview({
   const animationFrameRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number>(performance.now());
   const accumulatedTimeRef = useRef<number>(0);
+
+  // Build a fresh registry from custom components (new object triggers downstream memo invalidation)
+  const registry = useMemo(
+    () => buildRegistry(template.customComponents),
+    [template.customComponents],
+  );
 
   // Handle playback
   useEffect(() => {
@@ -77,6 +145,8 @@ export function Preview({
     };
   }, [isPlaying, currentFrame, template, fps, onFrameChange]);
 
+  const scale = Math.min(displayWidth / templateWidth, displayHeight / templateHeight);
+
   return (
     <div className={`rendervid-preview ${className}`}>
       <div
@@ -88,13 +158,36 @@ export function Preview({
           overflow: 'hidden',
         }}
       >
-        <TemplateRenderer
-          scenes={template.composition.scenes}
-          frame={currentFrame}
-          fps={fps}
-          width={templateWidth}
-          height={templateHeight}
-        />
+        <div
+          style={{
+            width: templateWidth,
+            height: templateHeight,
+            transform: `scale(${scale})`,
+            transformOrigin: 'top left',
+            position: 'relative',
+          }}
+        >
+          <TemplateRenderer
+            scenes={template.composition.scenes}
+            frame={currentFrame}
+            fps={fps}
+            width={templateWidth}
+            height={templateHeight}
+            registry={registry}
+          />
+          {layers && onSelectLayer && onUpdateLayer && onUpdateLayerWithoutHistory && (
+            <SelectionOverlay
+              layers={layers}
+              selectedLayerId={selectedLayerId ?? null}
+              scale={scale}
+              templateWidth={templateWidth}
+              templateHeight={templateHeight}
+              onSelectLayer={onSelectLayer}
+              onUpdateLayer={onUpdateLayer}
+              onUpdateLayerWithoutHistory={onUpdateLayerWithoutHistory}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

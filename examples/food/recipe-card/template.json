@@ -12,11 +12,16 @@
   "inputs": [
     {
       "key": "foodImage",
-      "type": "image",
+      "type": "url",
       "label": "Food Image",
       "description": "Path to the recipe food image",
       "required": true,
-      "default": "food_recept.jpg"
+      "default": "food_recept.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     },
     {
       "key": "category",

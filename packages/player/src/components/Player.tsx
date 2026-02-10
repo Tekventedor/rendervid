@@ -1,7 +1,9 @@
 import React, { useMemo, useEffect } from 'react';
-import { getCompositionDuration, getSceneAtFrame } from '@rendervid/core';
+import { getCompositionDuration, getSceneAtFrame, TemplateProcessor } from '@rendervid/core';
 import type { Scene, Layer } from '@rendervid/core';
 import type { PlayerProps } from '../types';
+
+const templateProcessor = new TemplateProcessor();
 import { usePlayback } from '../hooks/usePlayback';
 import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import { Timeline } from './Timeline';
@@ -82,16 +84,22 @@ export function Player({
   onPlayStateChange,
   renderLayer,
 }: PlayerProps): React.ReactElement {
-  const { width: templateWidth, height: templateHeight, fps = 30 } = template.output;
-  const { scenes } = template.composition;
+  // Resolve input placeholders
+  const resolvedTemplate = useMemo(() => {
+    if (!inputs || Object.keys(inputs).length === 0) return template;
+    return templateProcessor.resolveInputs(template, inputs);
+  }, [template, inputs]);
+
+  const { width: templateWidth, height: templateHeight, fps = 30 } = resolvedTemplate.output;
+  const { scenes } = resolvedTemplate.composition;
 
   const width = customWidth ?? templateWidth;
   const height = customHeight ?? templateHeight;
 
   // Calculate total frames
   const totalFrames = useMemo(() => {
-    return getCompositionDuration(template.composition);
-  }, [template.composition]);
+    return getCompositionDuration(resolvedTemplate.composition);
+  }, [resolvedTemplate.composition]);
 
   // Playback hook
   const { state, controls: playbackControls } = usePlayback({
@@ -118,8 +126,8 @@ export function Player({
 
   // Get current scene
   const currentScene = useMemo(() => {
-    return getSceneAtFrame(template.composition, state.currentFrame);
-  }, [template.composition, state.currentFrame]);
+    return getSceneAtFrame(resolvedTemplate.composition, state.currentFrame);
+  }, [resolvedTemplate.composition, state.currentFrame]);
 
   // Get visible layers
   const visibleLayers = useMemo(() => {

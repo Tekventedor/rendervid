@@ -37,13 +37,27 @@
       "label": "Validity",
       "required": false,
       "default": "Valid until December 31st"
+    },
+    {
+      "key": "productImage",
+      "type": "url",
+      "label": "Product Image",
+      "description": "Product image URL",
+      "required": false,
+      "default": "sunglasses.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "offerLabel": "EXCLUSIVE OFFER",
     "discountValue": "25% OFF",
     "discountCode": "SAVE25",
-    "validity": "Valid until December 31st"
+    "validity": "Valid until December 31st",
+    "productImage": "sunglasses.jpg"
   },
   "composition": {
     "scenes": [
@@ -80,7 +94,7 @@
               "height": 700
             },
             "props": {
-              "src": "sunglasses.jpg",
+              "src": "{{productImage}}",
               "fit": "cover"
             },
             "animations": [

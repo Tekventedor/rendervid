@@ -30,12 +30,26 @@
       "label": "Player Name",
       "required": false,
       "default": "by ProGamer123"
+    },
+    {
+      "key": "gameImage",
+      "type": "url",
+      "label": "Game Image",
+      "description": "Game or gameplay screenshot URL",
+      "required": false,
+      "default": "gaming.jpg",
+      "validation": {
+        "allowedTypes": [
+          "image"
+        ]
+      }
     }
   ],
   "defaults": {
     "gameTitle": "APEX LEGENDS",
     "highlightType": "BEST PLAYS",
-    "playerName": "by ProGamer123"
+    "playerName": "by ProGamer123",
+    "gameImage": "gaming.jpg"
   },
   "composition": {
     "scenes": [
@@ -72,7 +86,7 @@
               "height": 700
             },
             "props": {
-              "src": "gaming.jpg",
+              "src": "{{gameImage}}",
               "fit": "cover"
             },
             "animations": [

@@ -347,6 +347,28 @@ pnpm test
 pnpm typecheck
 ```
 
+### Playgrounds
+
+Interactive dev apps for testing the editor and player components with sample templates.
+
+```bash
+# Build libraries first (required on first run)
+pnpm build
+
+# Start editor playground → http://localhost:5180
+pnpm --filter @rendervid/editor-playground dev
+
+# Start player playground → http://localhost:5181
+pnpm --filter @rendervid/player-playground dev
+
+# Or start both at once
+pnpm --filter @rendervid/editor-playground --filter @rendervid/player-playground --parallel dev
+```
+
+**Editor Playground** (`packages/editor-playground/`) — Full VideoEditor with template switching, undo/redo, save/export callbacks logged to the console.
+
+**Player Playground** (`packages/player-playground/`) — Player with sidebar controls for autoplay, loop, speed (0.25x–4x), and show/hide controls. Template info panel shows dimensions, FPS, and duration.
+
 ## License
 
 [FlowHunt Attribution License](./LICENSE) - Free for commercial and personal use with attribution

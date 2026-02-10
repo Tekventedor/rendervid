@@ -9,6 +9,11 @@ interface EditorStore extends EditorState {
   setTemplate: (template: Template) => void;
   updateTemplate: (updates: Partial<Template>) => void;
 
+  // Input values
+  inputValues: Record<string, unknown>;
+  setInputValue: (key: string, value: unknown) => void;
+  resetInputValues: () => void;
+
   // Selection actions
   selectLayer: (layerId: string | null) => void;
   selectScene: (sceneId: string | null) => void;
@@ -32,6 +37,7 @@ interface EditorStore extends EditorState {
   // Layer actions
   addLayer: (sceneId: string, layer: any) => void;
   updateLayer: (layerId: string, updates: any) => void;
+  updateLayerWithoutHistory: (layerId: string, updates: any) => void;
   deleteLayer: (layerId: string) => void;
   duplicateLayer: (layerId: string) => void;
   reorderLayers: (sceneId: string, layerIds: string[]) => void;
@@ -86,6 +92,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     },
     future: [],
   },
+  inputValues: {},
   config: {
     enableHistory: true,
     maxHistorySize: MAX_HISTORY_SIZE,
@@ -94,9 +101,20 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 
   // Template actions
   setTemplate: (template) => set((state) => {
+    // Initialize inputValues from template defaults
+    const inputValues: Record<string, unknown> = { ...template.defaults };
+    if (template.inputs) {
+      for (const input of template.inputs) {
+        if (input.default !== undefined && !(input.key in inputValues)) {
+          inputValues[input.key] = input.default;
+        }
+      }
+    }
+
     if (state.config.enableHistory) {
       return {
         template,
+        inputValues,
         history: {
           past: [...state.history.past, state.history.present].slice(-MAX_HISTORY_SIZE),
           present: template,
@@ -104,7 +122,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         },
       };
     }
-    return { template };
+    return { template, inputValues };
   }),
 
   updateTemplate: (updates) => set((state) => {
@@ -120,6 +138,23 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
       };
     }
     return { template: newTemplate };
+  }),
+
+  // Input value actions
+  setInputValue: (key, value) => set((state) => ({
+    inputValues: { ...state.inputValues, [key]: value },
+  })),
+
+  resetInputValues: () => set((state) => {
+    const inputValues: Record<string, unknown> = { ...state.template.defaults };
+    if (state.template.inputs) {
+      for (const input of state.template.inputs) {
+        if (input.default !== undefined && !(input.key in inputValues)) {
+          inputValues[input.key] = input.default;
+        }
+      }
+    }
+    return { inputValues };
   }),
 
   // Selection actions
@@ -230,6 +265,23 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         future: [],
       } : state.history,
     };
+  }),
+
+  updateLayerWithoutHistory: (layerId, updates) => set((state) => {
+    const newScenes = state.template.composition.scenes.map((scene: any) => ({
+      ...scene,
+      layers: scene.layers?.map((layer: any) =>
+        layer.id === layerId ? { ...layer, ...updates } : layer
+      ),
+    }));
+    const newTemplate = {
+      ...state.template,
+      composition: {
+        ...state.template.composition,
+        scenes: newScenes,
+      },
+    };
+    return { template: newTemplate };
   }),
 
   deleteLayer: (layerId) => set((state) => {

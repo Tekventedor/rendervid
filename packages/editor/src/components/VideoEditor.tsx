@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import type { Template } from '@rendervid/core';
+import { TemplateProcessor } from '@rendervid/core';
 import { useEditorStore } from '../context/EditorStore';
 import { Preview } from './Preview/Preview';
 import { Timeline } from './Timeline/Timeline';
 import { LayerPanel } from './LayerPanel/LayerPanel';
 import { PropertyPanel } from './PropertyPanel/PropertyPanel';
+import { InputPanel } from './InputPanel/InputPanel';
 import type { EditorConfig, EditorCallbacks } from '../types';
+
+const templateProcessor = new TemplateProcessor();
 
 export interface VideoEditorProps {
   template: Template;
@@ -31,7 +35,10 @@ export function VideoEditor({
     currentFrame,
     isPlaying,
     zoom,
+    inputValues,
     setTemplate,
+    setInputValue,
+    resetInputValues,
     selectLayer,
     selectScene,
     setCurrentFrame,
@@ -44,6 +51,7 @@ export function VideoEditor({
     canRedo,
     addLayer,
     updateLayer,
+    updateLayerWithoutHistory,
     deleteLayer,
     duplicateLayer,
     reorderLayers,
@@ -53,7 +61,30 @@ export function VideoEditor({
     getSelectedLayer,
     getSelectedScene,
     getTotalFrames,
+    updateTemplate,
   } = useEditorStore();
+
+  // Resolve template with input values for preview rendering
+  const resolvedTemplate = useMemo(() => {
+    if (!template.inputs || template.inputs.length === 0 || Object.keys(inputValues).length === 0) {
+      return template;
+    }
+    return templateProcessor.resolveInputs(template, inputValues);
+  }, [template, inputValues]);
+
+  const handleUpdateCustomComponentCode = (name: string, code: string) => {
+    const existing = template.customComponents?.[name];
+    updateTemplate({
+      customComponents: {
+        ...template.customComponents,
+        [name]: {
+          type: 'inline' as const,
+          ...existing,
+          code,
+        },
+      },
+    });
+  };
 
   // Initialize template
   useEffect(() => {
@@ -138,9 +169,22 @@ export function VideoEditor({
     }
   };
 
+  const handleAddScene = () => {
+    const scenes = template.composition.scenes;
+    const lastScene = scenes[scenes.length - 1] as any;
+    const startFrame = lastScene ? (lastScene.endFrame ?? lastScene.startFrame + 150) : 0;
+    const duration = 150;
+    addScene({
+      id: `scene-${Date.now()}`,
+      name: `Scene ${scenes.length + 1}`,
+      startFrame,
+      endFrame: startFrame + duration,
+      layers: [],
+    });
+  };
+
   const totalFrames = getTotalFrames();
   const selectedLayer = getSelectedLayer();
-  const selectedScene = getSelectedScene();
   const currentSceneId = selectedSceneId || (template.composition.scenes[0] as any)?.id;
   const currentScene = template.composition.scenes.find((s: any) => s.id === currentSceneId);
   const layers = (currentScene as any)?.layers || [];
@@ -247,14 +291,17 @@ export function VideoEditor({
         {/* Left Sidebar - Layer Panel */}
         <div style={{ width: '250px', borderRight: '1px solid #444', display: 'flex', flexDirection: 'column' }}>
           <LayerPanel
-            sceneId={currentSceneId}
-            layers={layers}
+            scenes={template.composition.scenes}
+            selectedSceneId={currentSceneId}
             selectedLayerId={selectedLayerId}
+            onSelectScene={selectScene}
             onSelectLayer={selectLayer}
             onAddLayer={handleAddLayer}
             onDeleteLayer={deleteLayer}
-            onReorderLayers={(layerIds) => reorderLayers(currentSceneId, layerIds)}
+            onReorderLayers={reorderLayers}
             onDuplicateLayer={duplicateLayer}
+            onAddScene={handleAddScene}
+            onDeleteScene={deleteScene}
           />
         </div>
 
@@ -262,13 +309,18 @@ export function VideoEditor({
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#1a1a1a', minWidth: 0 }}>
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'auto', padding: '20px' }}>
             <Preview
-              template={template}
+              template={resolvedTemplate}
               currentFrame={currentFrame}
               isPlaying={isPlaying}
               onFrameChange={setCurrentFrame}
               onPlayingChange={setPlaying}
-              width={template.output.width * 0.5}
-              height={template.output.height * 0.5}
+              width={template.output.width * 0.5 * zoom}
+              height={template.output.height * 0.5 * zoom}
+              layers={layers}
+              selectedLayerId={selectedLayerId}
+              onSelectLayer={selectLayer}
+              onUpdateLayer={(id, updates) => updateLayer(id, updates)}
+              onUpdateLayerWithoutHistory={(id, updates) => updateLayerWithoutHistory(id, updates)}
             />
           </div>
 
@@ -316,12 +368,85 @@ export function VideoEditor({
             >
               ⏭
             </button>
+
+            <span style={{ fontSize: '12px', color: '#999', marginLeft: '8px' }}>
+              Frame {currentFrame} / {totalFrames}
+            </span>
+
+            <div style={{ flex: 1 }} />
+
+            {/* Zoom Controls */}
+            <button
+              onClick={() => setZoom(Math.max(0.25, zoom - 0.25))}
+              disabled={zoom <= 0.25}
+              style={{
+                padding: '6px 10px',
+                fontSize: '12px',
+                backgroundColor: zoom > 0.25 ? '#444' : '#2a2a2a',
+                color: zoom > 0.25 ? '#fff' : '#666',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: zoom > 0.25 ? 'pointer' : 'not-allowed',
+              }}
+              title="Zoom out"
+            >
+              −
+            </button>
+            <span style={{ fontSize: '12px', color: '#ccc', minWidth: '40px', textAlign: 'center' }}>
+              {Math.round(zoom * 100)}%
+            </span>
+            <button
+              onClick={() => setZoom(Math.min(3, zoom + 0.25))}
+              disabled={zoom >= 3}
+              style={{
+                padding: '6px 10px',
+                fontSize: '12px',
+                backgroundColor: zoom < 3 ? '#444' : '#2a2a2a',
+                color: zoom < 3 ? '#fff' : '#666',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: zoom < 3 ? 'pointer' : 'not-allowed',
+              }}
+              title="Zoom in"
+            >
+              +
+            </button>
+            <button
+              onClick={() => setZoom(1)}
+              style={{
+                padding: '6px 10px',
+                fontSize: '11px',
+                backgroundColor: '#444',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
+              title="Reset zoom to 100%"
+            >
+              Fit
+            </button>
           </div>
         </div>
 
-        {/* Right Sidebar - Property Panel */}
-        <div style={{ width: '300px', borderLeft: '1px solid #444' }}>
-          <PropertyPanel selectedLayer={selectedLayer} onUpdateLayer={(updates) => selectedLayerId && updateLayer(selectedLayerId, updates)} />
+        {/* Right Sidebar - Input Panel + Property Panel */}
+        <div style={{ width: '300px', borderLeft: '1px solid #444', overflowY: 'auto' }}>
+          {template.inputs && template.inputs.length > 0 && (
+            <InputPanel
+              inputs={template.inputs}
+              values={inputValues}
+              onChangeValue={setInputValue}
+              onReset={resetInputValues}
+            />
+          )}
+          <PropertyPanel
+            selectedLayer={selectedLayer}
+            onUpdateLayer={(updates) => selectedLayerId && updateLayer(selectedLayerId, updates)}
+            template={template}
+            onUpdateCustomComponentCode={handleUpdateCustomComponentCode}
+            selectedScene={!selectedLayerId && selectedSceneId ? currentScene : undefined}
+            onUpdateScene={(updates) => currentSceneId && updateScene(currentSceneId, updates)}
+          />
         </div>
       </div>
 

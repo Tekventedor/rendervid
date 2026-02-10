@@ -761,5 +761,47 @@
         ]
       }
     ]
+  },
+  "customComponents": {
+    "ScrambleText": {
+      "type": "inline",
+      "code": "function ScrambleText(props) { var frame = props.frame || 0; var fps = props.fps || 30; var text = props.text || 'SCRAMBLE'; var duration = props.duration || 60; var delay = props.delay || 0; var fontSize = props.fontSize || 72; var color = props.color || '#00ff88'; var fontWeight = props.fontWeight || 'bold'; var textAlign = props.textAlign || 'center'; var fontFamily = props.fontFamily || 'monospace'; var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*'; var progress = Math.min(1, Math.max(0, (frame - delay) / duration)); var result = ''; for (var i = 0; i < text.length; i++) { var charProgress = Math.min(1, progress * text.length / (i + 1)); if (charProgress >= 1 || text[i] === ' ') { result += text[i]; } else { result += chars[Math.floor(Math.sin(frame * 13 + i * 7) * 0.5 + 0.5) * chars.length % chars.length]; } } return React.createElement('div', { style: { fontSize: fontSize + 'px', fontWeight: fontWeight, color: color, textAlign: textAlign, fontFamily: fontFamily, whiteSpace: 'pre' } }, result); }",
+      "description": "Text scramble/decode animation"
+    },
+    "FlipText": {
+      "type": "inline",
+      "code": "function FlipText(props) { var frame = props.frame || 0; var text = props.text || 'FLIP'; var duration = props.duration || 60; var stagger = props.stagger || 3; var delay = props.delay || 0; var fontSize = props.fontSize || 80; var color = props.color || '#ff0080'; var fontWeight = props.fontWeight || 'bold'; var textAlign = props.textAlign || 'center'; var letters = []; for (var i = 0; i < text.length; i++) { var charDelay = delay + i * stagger; var p = Math.min(1, Math.max(0, (frame - charDelay) / (duration - i * stagger))); var rotateX = (1 - p) * 90; var opacity = p; letters.push(React.createElement('span', { key: i, style: { display: 'inline-block', transform: 'perspective(1000px) rotateX(' + rotateX + 'deg)', opacity: opacity, transition: 'none' } }, text[i] === ' ' ? '\\u00A0' : text[i])); } return React.createElement('div', { style: { fontSize: fontSize + 'px', fontWeight: fontWeight, color: color, textAlign: textAlign } }, letters); }",
+      "description": "3D letter flip animation"
+    },
+    "FuzzyText": {
+      "type": "inline",
+      "code": "function FuzzyText(props) { var frame = props.frame || 0; var text = props.text || 'FUZZY'; var duration = props.duration || 60; var delay = props.delay || 0; var staggerDelay = props.staggerDelay || 2; var fontSize = props.fontSize || 80; var color = props.color || '#00d9ff'; var fontWeight = props.fontWeight || 'bold'; var textAlign = props.textAlign || 'center'; var startBlur = props.startBlur || 20; var letters = []; for (var i = 0; i < text.length; i++) { var cd = delay + i * staggerDelay; var p = Math.min(1, Math.max(0, (frame - cd) / duration)); var blur = startBlur * (1 - p); var opacity = p; letters.push(React.createElement('span', { key: i, style: { display: 'inline-block', filter: 'blur(' + blur + 'px)', opacity: opacity } }, text[i] === ' ' ? '\\u00A0' : text[i])); } return React.createElement('div', { style: { fontSize: fontSize + 'px', fontWeight: fontWeight, color: color, textAlign: textAlign } }, letters); }",
+      "description": "Blur-to-clear text reveal"
+    },
+    "NeonText": {
+      "type": "inline",
+      "code": "function NeonText(props) { var frame = props.frame || 0; var fps = props.fps || 30; var t = frame / fps; var text = props.text || 'NEON'; var fontSize = props.fontSize || 90; var color = props.color || '#ff00ff'; var fontWeight = props.fontWeight || 'bold'; var textAlign = props.textAlign || 'center'; var speed = props.speed || 1.5; var intensity = props.intensity || 1; var pulse = 0.5 + Math.sin(t * speed * Math.PI * 2) * 0.5; var glow = 10 + pulse * 30 * intensity; var glow2 = 20 + pulse * 50 * intensity; return React.createElement('div', { style: { fontSize: fontSize + 'px', fontWeight: fontWeight, color: color, textAlign: textAlign, textShadow: '0 0 ' + glow + 'px ' + color + ', 0 0 ' + glow2 + 'px ' + color + ', 0 0 ' + (glow2 * 1.5) + 'px ' + color } }, text); }",
+      "description": "Neon glow pulsing text"
+    },
+    "TextTrail": {
+      "type": "inline",
+      "code": "function TextTrail(props) { var frame = props.frame || 0; var fps = props.fps || 30; var t = frame / fps; var text = props.text || 'TRAIL'; var fontSize = props.fontSize || 90; var color = props.color || '#ffdd00'; var fontWeight = props.fontWeight || 'bold'; var textAlign = props.textAlign || 'center'; var trailLength = props.trailLength || 10; var trailSpacing = props.trailSpacing || 8; var speed = props.speed || 1.5; var dir = props.direction || 'right'; var layers = []; for (var i = trailLength; i >= 0; i--) { var offset = i * trailSpacing * (dir === 'left' ? 1 : -1); var opacity = i === 0 ? 1 : (1 - i / trailLength) * 0.4; var blur = i === 0 ? 0 : i * 1.5; layers.push(React.createElement('div', { key: i, style: { position: i === 0 ? 'relative' : 'absolute', top: 0, left: 0, width: '100%', fontSize: fontSize + 'px', fontWeight: fontWeight, color: color, textAlign: textAlign, opacity: opacity, filter: blur > 0 ? 'blur(' + blur + 'px)' : 'none', transform: 'translateX(' + (offset + Math.sin(t * speed) * 10) + 'px)' } }, text)); } return React.createElement('div', { style: { position: 'relative' } }, layers); }",
+      "description": "Motion trail text effect"
+    },
+    "LetterMorph": {
+      "type": "inline",
+      "code": "function LetterMorph(props) { var frame = props.frame || 0; var startText = props.startText || 'HELLO'; var endText = props.endText || 'WORLD'; var duration = props.duration || 60; var stagger = props.stagger || 6; var delay = props.delay || 0; var fontSize = props.fontSize || 90; var color = props.color || '#00ffaa'; var fontWeight = props.fontWeight || 'bold'; var textAlign = props.textAlign || 'center'; var fontFamily = props.fontFamily || 'monospace'; var maxLen = Math.max(startText.length, endText.length); var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; var letters = []; for (var i = 0; i < maxLen; i++) { var cd = delay + i * stagger; var p = Math.min(1, Math.max(0, (frame - cd) / (duration / 2))); var sc = i < startText.length ? startText[i] : ' '; var ec = i < endText.length ? endText[i] : ' '; var ch; if (p <= 0) { ch = sc; } else if (p >= 1) { ch = ec; } else { ch = chars[Math.floor(Math.sin(frame * 11 + i * 17) * 0.5 + 0.5) * chars.length % chars.length]; } letters.push(React.createElement('span', { key: i, style: { display: 'inline-block' } }, ch === ' ' ? '\\u00A0' : ch)); } return React.createElement('div', { style: { fontSize: fontSize + 'px', fontWeight: fontWeight, color: color, textAlign: textAlign, fontFamily: fontFamily } }, letters); }",
+      "description": "Letter-by-letter morph between texts"
+    },
+    "MorphText": {
+      "type": "inline",
+      "code": "function MorphText(props) { var frame = props.frame || 0; var texts = props.texts || ['HELLO', 'WORLD']; var morphDuration = props.morphDuration || 20; var pauseDuration = props.pauseDuration || 15; var fontSize = props.fontSize || 80; var color = props.color || '#fdcb6e'; var fontWeight = props.fontWeight || 'bold'; var textAlign = props.textAlign || 'center'; var blurIntensity = props.blurIntensity || 6; var cycle = morphDuration + pauseDuration; var idx = Math.floor(frame / cycle) % texts.length; var phaseFrame = frame % cycle; var opacity = 1; var blur = 0; if (phaseFrame < morphDuration / 2) { opacity = phaseFrame / (morphDuration / 2); blur = blurIntensity * (1 - opacity); } else if (phaseFrame > cycle - morphDuration / 2) { opacity = (cycle - phaseFrame) / (morphDuration / 2); blur = blurIntensity * (1 - opacity); } return React.createElement('div', { style: { fontSize: fontSize + 'px', fontWeight: fontWeight, color: color, textAlign: textAlign, opacity: opacity, filter: blur > 0 ? 'blur(' + blur + 'px)' : 'none' } }, texts[idx]); }",
+      "description": "Smooth text morphing with blur"
+    },
+    "DistortText": {
+      "type": "inline",
+      "code": "function DistortText(props) { var frame = props.frame || 0; var fps = props.fps || 30; var t = frame / fps; var text = props.text || 'DISTORT'; var fontSize = props.fontSize || 80; var color = props.color || '#00ffff'; var fontWeight = props.fontWeight || 'bold'; var textAlign = props.textAlign || 'center'; var amp = props.amplitude || 12; var freq = props.frequency || 0.4; var speed = props.speed || 2.5; var letters = []; for (var i = 0; i < text.length; i++) { var yOff = Math.sin(i * freq + t * speed) * amp; letters.push(React.createElement('span', { key: i, style: { display: 'inline-block', transform: 'translateY(' + yOff + 'px)' } }, text[i] === ' ' ? '\\u00A0' : text[i])); } return React.createElement('div', { style: { fontSize: fontSize + 'px', fontWeight: fontWeight, color: color, textAlign: textAlign } }, letters); }",
+      "description": "Wave distortion text effect"
+    }
   }
 }
