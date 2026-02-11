@@ -355,6 +355,27 @@ pnpm test
 pnpm typecheck
 ```
 
+### Publishing to npm
+
+All packages are published automatically via GitHub Actions when you push a version tag.
+
+```bash
+# Create and push a version tag (e.g., v0.2.0)
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+This triggers the [publish workflow](./.github/workflows/publish.yml) which:
+
+1. **Validates** — builds all packages, runs type checks, tests, and example validation
+2. **Publishes** — updates all package versions to match the tag, resolves `workspace:*` dependencies, and publishes all 11 `@rendervid/*` packages to npm in dependency order
+
+**Requirements:**
+- An `NPM_TOKEN` secret must be configured in GitHub repository settings (Settings → Secrets → Actions)
+- The token needs publish permissions for the `@rendervid` npm scope
+
+**Published packages:** `core`, `components`, `renderer-browser`, `renderer-node`, `player`, `editor`, `templates`, `cloud-rendering`, `editor-playground`, `player-playground`, `mcp-server`
+
 ### Playgrounds
 
 Interactive dev apps for testing the editor and player components with sample templates.
