@@ -6,6 +6,8 @@ Breaking news style announcement with bold typography.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

@@ -2,6 +2,12 @@
 
 A dramatic reveal animation where text transitions from chaotic glitches to crystal clarity.
 
+## Preview
+
+![Preview](preview.gif)
+
+[View animated SVG](preview.svg)
+
 ## Overview
 
 This template creates a progressive decoding effect where text starts in complete digital chaos and gradually stabilizes. The glitch effect intensity and type change over time, simulating the visual of corrupted data being decoded or a signal clearing up. Perfect for dramatic reveals, data decryption sequences, or transmission effects.

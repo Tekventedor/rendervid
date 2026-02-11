@@ -6,6 +6,8 @@ A 3D rotating cube with customizable colors and rotation speed, showcasing Three
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - 3D box geometry using CSS 3D transforms

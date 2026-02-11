@@ -6,6 +6,8 @@ Extruded 3D text with dramatic lighting, metallic material, and cinematic presen
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 [View full video (video.mp4)](./video.mp4)
 
 ## Features

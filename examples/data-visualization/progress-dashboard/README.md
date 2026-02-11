@@ -6,6 +6,8 @@ Animated dashboard with multiple progress indicators.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 A comprehensive dashboard animation featuring multiple progress indicators including circular gauges, progress bars, and statistics. All elements animate in with staggered timing for a professional presentation effect.

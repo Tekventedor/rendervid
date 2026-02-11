@@ -6,6 +6,8 @@ Professional course introduction featuring course title and instructor.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

@@ -6,6 +6,8 @@ A comprehensive 9-second showcase video demonstrating all of Rendervid's latest 
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Overview
 
 **Duration:** 9 seconds (270 frames at 30fps)

@@ -6,6 +6,8 @@ Vertical video template optimized for Instagram Stories and Reels.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 Eye-catching vertical video with gradient glows, animated text, and a pulsing CTA button. Perfect for product launches, announcements, and promotional content.

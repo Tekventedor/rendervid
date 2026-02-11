@@ -6,6 +6,8 @@ Dynamic intro for gaming highlights and montages.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

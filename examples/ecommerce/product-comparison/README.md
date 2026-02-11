@@ -5,6 +5,8 @@ Side-by-side feature comparison of two products or plans.
 ## Preview
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 ```bash
 pnpm run examples:render ecommerce/product-comparison

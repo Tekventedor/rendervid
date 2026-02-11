@@ -1,0 +1,536 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <radialGradient id="mesh-blob-pink-1-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{colorPink}}" /><stop offset="70%" stop-color="rgba(236,72,153,0.3)" /><stop offset="100%" stop-color="rgba(236,72,153,0)" /></radialGradient>
+    <radialGradient id="mesh-blob-purple-1-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{colorPurple}}" /><stop offset="60%" stop-color="rgba(139,92,246,0.3)" /><stop offset="100%" stop-color="rgba(139,92,246,0)" /></radialGradient>
+    <radialGradient id="mesh-blob-blue-1-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{colorBlue}}" /><stop offset="60%" stop-color="rgba(59,130,246,0.3)" /><stop offset="100%" stop-color="rgba(59,130,246,0)" /></radialGradient>
+    <radialGradient id="mesh-blob-teal-1-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{colorTeal}}" /><stop offset="70%" stop-color="rgba(20,184,166,0.2)" /><stop offset="100%" stop-color="rgba(20,184,166,0)" /></radialGradient>
+    <radialGradient id="mesh-blob-pink-2-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f472b6" /><stop offset="60%" stop-color="rgba(244,114,182,0.2)" /><stop offset="100%" stop-color="rgba(244,114,182,0)" /></radialGradient>
+    <radialGradient id="mesh-blob-purple-2-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#a78bfa" /><stop offset="60%" stop-color="rgba(167,139,250,0.2)" /><stop offset="100%" stop-color="rgba(167,139,250,0)" /></radialGradient>
+    <radialGradient id="mesh-blob-blue-2-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#60a5fa" /><stop offset="70%" stop-color="rgba(96,165,250,0.15)" /><stop offset="100%" stop-color="rgba(96,165,250,0)" /></radialGradient>
+    <filter id="company-name-shadow"><feDropShadow dx="0" dy="4" stdDeviation="15" flood-color="rgba(0,0,0,0.5)" /></filter>
+    <linearGradient id="divider-line-grad" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="rgba(255,255,255,0)" /><stop offset="30%" stop-color="rgba(255,255,255,0.7)" /><stop offset="70%" stop-color="rgba(255,255,255,0.7)" /><stop offset="100%" stop-color="rgba(255,255,255,0)" /></linearGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    @keyframes mesh-blob-pink-1-anim-0 {
+      0% { transform: translate(100px, 50px); opacity: 0; }
+      5% { transform: translate(100px, 50px); opacity: 0.043; }
+      10% { transform: translate(100px, 50px); opacity: 0.081; }
+      15% { transform: translate(100px, 50px); opacity: 0.116; }
+      20% { transform: translate(100px, 50px); opacity: 0.146; }
+      25% { transform: translate(100px, 50px); opacity: 0.173; }
+      30% { transform: translate(100px, 50px); opacity: 0.197; }
+      35% { transform: translate(100px, 50px); opacity: 0.218; }
+      40% { transform: translate(100px, 50px); opacity: 0.235; }
+      45% { transform: translate(100px, 50px); opacity: 0.25; }
+      50% { transform: translate(100px, 50px); opacity: 0.263; }
+      55% { transform: translate(100px, 50px); opacity: 0.273; }
+      60% { transform: translate(100px, 50px); opacity: 0.281; }
+      65% { transform: translate(100px, 50px); opacity: 0.287; }
+      70% { transform: translate(100px, 50px); opacity: 0.292; }
+      75% { transform: translate(100px, 50px); opacity: 0.295; }
+      80% { transform: translate(100px, 50px); opacity: 0.298; }
+      85% { transform: translate(100px, 50px); opacity: 0.299; }
+      90% { transform: translate(100px, 50px); opacity: 0.3; }
+      95% { transform: translate(100px, 50px); opacity: 0.3; }
+      100% { transform: translate(100px, 50px); opacity: 0.3; }
+    }
+    @keyframes mesh-blob-pink-1-anim-1 {
+      0% { transform: translate(100px, 50px); opacity: 0.3; }
+      5% { transform: translate(100px, 49.755px); opacity: 0.3; }
+      10% { transform: translate(100px, 49.045px); opacity: 0.3; }
+      15% { transform: translate(100px, 47.939px); opacity: 0.3; }
+      20% { transform: translate(100px, 46.545px); opacity: 0.3; }
+      25% { transform: translate(100px, 45px); opacity: 0.3; }
+      30% { transform: translate(100px, 43.455px); opacity: 0.3; }
+      35% { transform: translate(100px, 42.061px); opacity: 0.3; }
+      40% { transform: translate(100px, 40.955px); opacity: 0.3; }
+      45% { transform: translate(100px, 40.245px); opacity: 0.3; }
+      50% { transform: translate(100px, 40px); opacity: 0.3; }
+      55% { transform: translate(100px, 40.245px); opacity: 0.3; }
+      60% { transform: translate(100px, 40.955px); opacity: 0.3; }
+      65% { transform: translate(100px, 42.061px); opacity: 0.3; }
+      70% { transform: translate(100px, 43.455px); opacity: 0.3; }
+      75% { transform: translate(100px, 45px); opacity: 0.3; }
+      80% { transform: translate(100px, 46.545px); opacity: 0.3; }
+      85% { transform: translate(100px, 47.939px); opacity: 0.3; }
+      90% { transform: translate(100px, 49.045px); opacity: 0.3; }
+      95% { transform: translate(100px, 49.755px); opacity: 0.3; }
+      100% { transform: translate(100px, 50px); opacity: 0.3; }
+    }
+    #mesh-blob-pink-1 {
+      transform-origin: 100px 50px;
+      transform: translate(100px, 50px);
+      opacity: 0.3;
+      animation: mesh-blob-pink-1-anim-0 1.333s 0s linear 1 normal forwards, mesh-blob-pink-1-anim-1 4s 1.333s linear 1 normal none;
+    }
+    @keyframes mesh-blob-purple-1-anim-0 {
+      0% { transform: translate(900px, -100px); opacity: 0; }
+      5% { transform: translate(900px, -100px); opacity: 0.05; }
+      10% { transform: translate(900px, -100px); opacity: 0.095; }
+      15% { transform: translate(900px, -100px); opacity: 0.135; }
+      20% { transform: translate(900px, -100px); opacity: 0.171; }
+      25% { transform: translate(900px, -100px); opacity: 0.202; }
+      30% { transform: translate(900px, -100px); opacity: 0.23; }
+      35% { transform: translate(900px, -100px); opacity: 0.254; }
+      40% { transform: translate(900px, -100px); opacity: 0.274; }
+      45% { transform: translate(900px, -100px); opacity: 0.292; }
+      50% { transform: translate(900px, -100px); opacity: 0.306; }
+      55% { transform: translate(900px, -100px); opacity: 0.318; }
+      60% { transform: translate(900px, -100px); opacity: 0.328; }
+      65% { transform: translate(900px, -100px); opacity: 0.335; }
+      70% { transform: translate(900px, -100px); opacity: 0.341; }
+      75% { transform: translate(900px, -100px); opacity: 0.345; }
+      80% { transform: translate(900px, -100px); opacity: 0.347; }
+      85% { transform: translate(900px, -100px); opacity: 0.349; }
+      90% { transform: translate(900px, -100px); opacity: 0.35; }
+      95% { transform: translate(900px, -100px); opacity: 0.35; }
+      100% { transform: translate(900px, -100px); opacity: 0.35; }
+    }
+    @keyframes mesh-blob-purple-1-anim-1 {
+      0% { transform: translate(900px, -100px); opacity: 0.35; }
+      5% { transform: translate(900px, -100.245px); opacity: 0.35; }
+      10% { transform: translate(900px, -100.955px); opacity: 0.35; }
+      15% { transform: translate(900px, -102.061px); opacity: 0.35; }
+      20% { transform: translate(900px, -103.455px); opacity: 0.35; }
+      25% { transform: translate(900px, -105px); opacity: 0.35; }
+      30% { transform: translate(900px, -106.545px); opacity: 0.35; }
+      35% { transform: translate(900px, -107.939px); opacity: 0.35; }
+      40% { transform: translate(900px, -109.045px); opacity: 0.35; }
+      45% { transform: translate(900px, -109.755px); opacity: 0.35; }
+      50% { transform: translate(900px, -110px); opacity: 0.35; }
+      55% { transform: translate(900px, -109.755px); opacity: 0.35; }
+      60% { transform: translate(900px, -109.045px); opacity: 0.35; }
+      65% { transform: translate(900px, -107.939px); opacity: 0.35; }
+      70% { transform: translate(900px, -106.545px); opacity: 0.35; }
+      75% { transform: translate(900px, -105px); opacity: 0.35; }
+      80% { transform: translate(900px, -103.455px); opacity: 0.35; }
+      85% { transform: translate(900px, -102.061px); opacity: 0.35; }
+      90% { transform: translate(900px, -100.955px); opacity: 0.35; }
+      95% { transform: translate(900px, -100.245px); opacity: 0.35; }
+      100% { transform: translate(900px, -100px); opacity: 0.35; }
+    }
+    #mesh-blob-purple-1 {
+      transform-origin: 900px -100px;
+      transform: translate(900px, -100px);
+      opacity: 0.35;
+      animation: mesh-blob-purple-1-anim-0 1.333s 0.333s linear 1 normal forwards, mesh-blob-purple-1-anim-1 4.667s 2s linear 1 normal none;
+    }
+    @keyframes mesh-blob-blue-1-anim-0 {
+      0% { transform: translate(600px, 400px); opacity: 0; }
+      5% { transform: translate(600px, 400px); opacity: 0.036; }
+      10% { transform: translate(600px, 400px); opacity: 0.068; }
+      15% { transform: translate(600px, 400px); opacity: 0.096; }
+      20% { transform: translate(600px, 400px); opacity: 0.122; }
+      25% { transform: translate(600px, 400px); opacity: 0.145; }
+      30% { transform: translate(600px, 400px); opacity: 0.164; }
+      35% { transform: translate(600px, 400px); opacity: 0.181; }
+      40% { transform: translate(600px, 400px); opacity: 0.196; }
+      45% { transform: translate(600px, 400px); opacity: 0.208; }
+      50% { transform: translate(600px, 400px); opacity: 0.219; }
+      55% { transform: translate(600px, 400px); opacity: 0.227; }
+      60% { transform: translate(600px, 400px); opacity: 0.234; }
+      65% { transform: translate(600px, 400px); opacity: 0.239; }
+      70% { transform: translate(600px, 400px); opacity: 0.243; }
+      75% { transform: translate(600px, 400px); opacity: 0.246; }
+      80% { transform: translate(600px, 400px); opacity: 0.248; }
+      85% { transform: translate(600px, 400px); opacity: 0.249; }
+      90% { transform: translate(600px, 400px); opacity: 0.25; }
+      95% { transform: translate(600px, 400px); opacity: 0.25; }
+      100% { transform: translate(600px, 400px); opacity: 0.25; }
+    }
+    @keyframes mesh-blob-blue-1-anim-1 {
+      0% { transform: translate(600px, 400px); opacity: 0.25; }
+      5% { transform: translate(600px, 400px) scale(1.002, 1.002); opacity: 0.25; }
+      10% { transform: translate(600px, 400px) scale(1.01, 1.01); opacity: 0.25; }
+      15% { transform: translate(600px, 400px) scale(1.021, 1.021); opacity: 0.25; }
+      20% { transform: translate(600px, 400px) scale(1.035, 1.035); opacity: 0.25; }
+      25% { transform: translate(600px, 400px) scale(1.05, 1.05); opacity: 0.25; }
+      30% { transform: translate(600px, 400px) scale(1.065, 1.065); opacity: 0.25; }
+      35% { transform: translate(600px, 400px) scale(1.079, 1.079); opacity: 0.25; }
+      40% { transform: translate(600px, 400px) scale(1.09, 1.09); opacity: 0.25; }
+      45% { transform: translate(600px, 400px) scale(1.098, 1.098); opacity: 0.25; }
+      50% { transform: translate(600px, 400px) scale(1.1, 1.1); opacity: 0.25; }
+      55% { transform: translate(600px, 400px) scale(1.098, 1.098); opacity: 0.25; }
+      60% { transform: translate(600px, 400px) scale(1.09, 1.09); opacity: 0.25; }
+      65% { transform: translate(600px, 400px) scale(1.079, 1.079); opacity: 0.25; }
+      70% { transform: translate(600px, 400px) scale(1.065, 1.065); opacity: 0.25; }
+      75% { transform: translate(600px, 400px) scale(1.05, 1.05); opacity: 0.25; }
+      80% { transform: translate(600px, 400px) scale(1.035, 1.035); opacity: 0.25; }
+      85% { transform: translate(600px, 400px) scale(1.021, 1.021); opacity: 0.25; }
+      90% { transform: translate(600px, 400px) scale(1.01, 1.01); opacity: 0.25; }
+      95% { transform: translate(600px, 400px) scale(1.002, 1.002); opacity: 0.25; }
+      100% { transform: translate(600px, 400px); opacity: 0.25; }
+    }
+    #mesh-blob-blue-1 {
+      transform-origin: 600px 400px;
+      transform: translate(600px, 400px);
+      opacity: 0.25;
+      animation: mesh-blob-blue-1-anim-0 1.333s 0.5s linear 1 normal forwards, mesh-blob-blue-1-anim-1 3.333s 1.667s linear 1 normal none;
+    }
+    @keyframes mesh-blob-teal-1-anim-0 {
+      0% { transform: translate(-100px, 500px); opacity: 0; }
+      5% { transform: translate(-100px, 500px); opacity: 0.043; }
+      10% { transform: translate(-100px, 500px); opacity: 0.081; }
+      15% { transform: translate(-100px, 500px); opacity: 0.116; }
+      20% { transform: translate(-100px, 500px); opacity: 0.146; }
+      25% { transform: translate(-100px, 500px); opacity: 0.173; }
+      30% { transform: translate(-100px, 500px); opacity: 0.197; }
+      35% { transform: translate(-100px, 500px); opacity: 0.218; }
+      40% { transform: translate(-100px, 500px); opacity: 0.235; }
+      45% { transform: translate(-100px, 500px); opacity: 0.25; }
+      50% { transform: translate(-100px, 500px); opacity: 0.263; }
+      55% { transform: translate(-100px, 500px); opacity: 0.273; }
+      60% { transform: translate(-100px, 500px); opacity: 0.281; }
+      65% { transform: translate(-100px, 500px); opacity: 0.287; }
+      70% { transform: translate(-100px, 500px); opacity: 0.292; }
+      75% { transform: translate(-100px, 500px); opacity: 0.295; }
+      80% { transform: translate(-100px, 500px); opacity: 0.298; }
+      85% { transform: translate(-100px, 500px); opacity: 0.299; }
+      90% { transform: translate(-100px, 500px); opacity: 0.3; }
+      95% { transform: translate(-100px, 500px); opacity: 0.3; }
+      100% { transform: translate(-100px, 500px); opacity: 0.3; }
+    }
+    @keyframes mesh-blob-teal-1-anim-1 {
+      0% { transform: translate(-100px, 500px); opacity: 0.3; }
+      5% { transform: translate(-100px, 499.755px); opacity: 0.3; }
+      10% { transform: translate(-100px, 499.045px); opacity: 0.3; }
+      15% { transform: translate(-100px, 497.939px); opacity: 0.3; }
+      20% { transform: translate(-100px, 496.545px); opacity: 0.3; }
+      25% { transform: translate(-100px, 495px); opacity: 0.3; }
+      30% { transform: translate(-100px, 493.455px); opacity: 0.3; }
+      35% { transform: translate(-100px, 492.061px); opacity: 0.3; }
+      40% { transform: translate(-100px, 490.955px); opacity: 0.3; }
+      45% { transform: translate(-100px, 490.245px); opacity: 0.3; }
+      50% { transform: translate(-100px, 490px); opacity: 0.3; }
+      55% { transform: translate(-100px, 490.245px); opacity: 0.3; }
+      60% { transform: translate(-100px, 490.955px); opacity: 0.3; }
+      65% { transform: translate(-100px, 492.061px); opacity: 0.3; }
+      70% { transform: translate(-100px, 493.455px); opacity: 0.3; }
+      75% { transform: translate(-100px, 495px); opacity: 0.3; }
+      80% { transform: translate(-100px, 496.545px); opacity: 0.3; }
+      85% { transform: translate(-100px, 497.939px); opacity: 0.3; }
+      90% { transform: translate(-100px, 499.045px); opacity: 0.3; }
+      95% { transform: translate(-100px, 499.755px); opacity: 0.3; }
+      100% { transform: translate(-100px, 500px); opacity: 0.3; }
+    }
+    #mesh-blob-teal-1 {
+      transform-origin: -100px 500px;
+      transform: translate(-100px, 500px);
+      opacity: 0.3;
+      animation: mesh-blob-teal-1-anim-0 1.333s 0.667s linear 1 normal forwards, mesh-blob-teal-1-anim-1 4.333s 2.667s linear 1 normal none;
+    }
+    @keyframes mesh-blob-pink-2-anim-0 {
+      0% { transform: translate(1200px, 500px); opacity: 0; }
+      5% { transform: translate(1200px, 500px); opacity: 0.029; }
+      10% { transform: translate(1200px, 500px); opacity: 0.054; }
+      15% { transform: translate(1200px, 500px); opacity: 0.077; }
+      20% { transform: translate(1200px, 500px); opacity: 0.098; }
+      25% { transform: translate(1200px, 500px); opacity: 0.116; }
+      30% { transform: translate(1200px, 500px); opacity: 0.131; }
+      35% { transform: translate(1200px, 500px); opacity: 0.145; }
+      40% { transform: translate(1200px, 500px); opacity: 0.157; }
+      45% { transform: translate(1200px, 500px); opacity: 0.167; }
+      50% { transform: translate(1200px, 500px); opacity: 0.175; }
+      55% { transform: translate(1200px, 500px); opacity: 0.182; }
+      60% { transform: translate(1200px, 500px); opacity: 0.187; }
+      65% { transform: translate(1200px, 500px); opacity: 0.191; }
+      70% { transform: translate(1200px, 500px); opacity: 0.195; }
+      75% { transform: translate(1200px, 500px); opacity: 0.197; }
+      80% { transform: translate(1200px, 500px); opacity: 0.198; }
+      85% { transform: translate(1200px, 500px); opacity: 0.199; }
+      90% { transform: translate(1200px, 500px); opacity: 0.2; }
+      95% { transform: translate(1200px, 500px); opacity: 0.2; }
+      100% { transform: translate(1200px, 500px); opacity: 0.2; }
+    }
+    @keyframes mesh-blob-pink-2-anim-1 {
+      0% { transform: translate(1200px, 500px); opacity: 0.2; }
+      5% { transform: translate(1200px, 500px) scale(1.002, 1.002); opacity: 0.2; }
+      10% { transform: translate(1200px, 500px) scale(1.01, 1.01); opacity: 0.2; }
+      15% { transform: translate(1200px, 500px) scale(1.021, 1.021); opacity: 0.2; }
+      20% { transform: translate(1200px, 500px) scale(1.035, 1.035); opacity: 0.2; }
+      25% { transform: translate(1200px, 500px) scale(1.05, 1.05); opacity: 0.2; }
+      30% { transform: translate(1200px, 500px) scale(1.065, 1.065); opacity: 0.2; }
+      35% { transform: translate(1200px, 500px) scale(1.079, 1.079); opacity: 0.2; }
+      40% { transform: translate(1200px, 500px) scale(1.09, 1.09); opacity: 0.2; }
+      45% { transform: translate(1200px, 500px) scale(1.098, 1.098); opacity: 0.2; }
+      50% { transform: translate(1200px, 500px) scale(1.1, 1.1); opacity: 0.2; }
+      55% { transform: translate(1200px, 500px) scale(1.098, 1.098); opacity: 0.2; }
+      60% { transform: translate(1200px, 500px) scale(1.09, 1.09); opacity: 0.2; }
+      65% { transform: translate(1200px, 500px) scale(1.079, 1.079); opacity: 0.2; }
+      70% { transform: translate(1200px, 500px) scale(1.065, 1.065); opacity: 0.2; }
+      75% { transform: translate(1200px, 500px) scale(1.05, 1.05); opacity: 0.2; }
+      80% { transform: translate(1200px, 500px) scale(1.035, 1.035); opacity: 0.2; }
+      85% { transform: translate(1200px, 500px) scale(1.021, 1.021); opacity: 0.2; }
+      90% { transform: translate(1200px, 500px) scale(1.01, 1.01); opacity: 0.2; }
+      95% { transform: translate(1200px, 500px) scale(1.002, 1.002); opacity: 0.2; }
+      100% { transform: translate(1200px, 500px); opacity: 0.2; }
+    }
+    #mesh-blob-pink-2 {
+      transform-origin: 1200px 500px;
+      transform: translate(1200px, 500px);
+      opacity: 0.2;
+      animation: mesh-blob-pink-2-anim-0 1.333s 0.833s linear 1 normal forwards, mesh-blob-pink-2-anim-1 3.667s 2.333s linear 1 normal none;
+    }
+    @keyframes mesh-blob-purple-2-anim-0 {
+      0% { transform: translate(400px, -50px); opacity: 0; }
+      5% { transform: translate(400px, -50px); opacity: 0.029; }
+      10% { transform: translate(400px, -50px); opacity: 0.054; }
+      15% { transform: translate(400px, -50px); opacity: 0.077; }
+      20% { transform: translate(400px, -50px); opacity: 0.098; }
+      25% { transform: translate(400px, -50px); opacity: 0.116; }
+      30% { transform: translate(400px, -50px); opacity: 0.131; }
+      35% { transform: translate(400px, -50px); opacity: 0.145; }
+      40% { transform: translate(400px, -50px); opacity: 0.157; }
+      45% { transform: translate(400px, -50px); opacity: 0.167; }
+      50% { transform: translate(400px, -50px); opacity: 0.175; }
+      55% { transform: translate(400px, -50px); opacity: 0.182; }
+      60% { transform: translate(400px, -50px); opacity: 0.187; }
+      65% { transform: translate(400px, -50px); opacity: 0.191; }
+      70% { transform: translate(400px, -50px); opacity: 0.195; }
+      75% { transform: translate(400px, -50px); opacity: 0.197; }
+      80% { transform: translate(400px, -50px); opacity: 0.198; }
+      85% { transform: translate(400px, -50px); opacity: 0.199; }
+      90% { transform: translate(400px, -50px); opacity: 0.2; }
+      95% { transform: translate(400px, -50px); opacity: 0.2; }
+      100% { transform: translate(400px, -50px); opacity: 0.2; }
+    }
+    @keyframes mesh-blob-purple-2-anim-1 {
+      0% { transform: translate(400px, -50px); opacity: 0.2; }
+      5% { transform: translate(400px, -50.245px); opacity: 0.2; }
+      10% { transform: translate(400px, -50.955px); opacity: 0.2; }
+      15% { transform: translate(400px, -52.061px); opacity: 0.2; }
+      20% { transform: translate(400px, -53.455px); opacity: 0.2; }
+      25% { transform: translate(400px, -55px); opacity: 0.2; }
+      30% { transform: translate(400px, -56.545px); opacity: 0.2; }
+      35% { transform: translate(400px, -57.939px); opacity: 0.2; }
+      40% { transform: translate(400px, -59.045px); opacity: 0.2; }
+      45% { transform: translate(400px, -59.755px); opacity: 0.2; }
+      50% { transform: translate(400px, -60px); opacity: 0.2; }
+      55% { transform: translate(400px, -59.755px); opacity: 0.2; }
+      60% { transform: translate(400px, -59.045px); opacity: 0.2; }
+      65% { transform: translate(400px, -57.939px); opacity: 0.2; }
+      70% { transform: translate(400px, -56.545px); opacity: 0.2; }
+      75% { transform: translate(400px, -55px); opacity: 0.2; }
+      80% { transform: translate(400px, -53.455px); opacity: 0.2; }
+      85% { transform: translate(400px, -52.061px); opacity: 0.2; }
+      90% { transform: translate(400px, -50.955px); opacity: 0.2; }
+      95% { transform: translate(400px, -50.245px); opacity: 0.2; }
+      100% { transform: translate(400px, -50px); opacity: 0.2; }
+    }
+    #mesh-blob-purple-2 {
+      transform-origin: 400px -50px;
+      transform: translate(400px, -50px);
+      opacity: 0.2;
+      animation: mesh-blob-purple-2-anim-0 1.333s 1s linear 1 normal forwards, mesh-blob-purple-2-anim-1 5s 3s linear 1 normal none;
+    }
+    @keyframes mesh-blob-blue-2-anim-0 {
+      0% { transform: translate(1400px, 100px); opacity: 0; }
+      5% { transform: translate(1400px, 100px); opacity: 0.031; }
+      10% { transform: translate(1400px, 100px); opacity: 0.06; }
+      15% { transform: translate(1400px, 100px); opacity: 0.085; }
+      20% { transform: translate(1400px, 100px); opacity: 0.107; }
+      25% { transform: translate(1400px, 100px); opacity: 0.127; }
+      30% { transform: translate(1400px, 100px); opacity: 0.145; }
+      35% { transform: translate(1400px, 100px); opacity: 0.16; }
+      40% { transform: translate(1400px, 100px); opacity: 0.172; }
+      45% { transform: translate(1400px, 100px); opacity: 0.183; }
+      50% { transform: translate(1400px, 100px); opacity: 0.193; }
+      55% { transform: translate(1400px, 100px); opacity: 0.2; }
+      60% { transform: translate(1400px, 100px); opacity: 0.206; }
+      65% { transform: translate(1400px, 100px); opacity: 0.211; }
+      70% { transform: translate(1400px, 100px); opacity: 0.214; }
+      75% { transform: translate(1400px, 100px); opacity: 0.217; }
+      80% { transform: translate(1400px, 100px); opacity: 0.218; }
+      85% { transform: translate(1400px, 100px); opacity: 0.219; }
+      90% { transform: translate(1400px, 100px); opacity: 0.22; }
+      95% { transform: translate(1400px, 100px); opacity: 0.22; }
+      100% { transform: translate(1400px, 100px); opacity: 0.22; }
+    }
+    @keyframes mesh-blob-blue-2-anim-1 {
+      0% { transform: translate(1400px, 100px); opacity: 0.22; }
+      5% { transform: translate(1400px, 100px) scale(1.002, 1.002); opacity: 0.22; }
+      10% { transform: translate(1400px, 100px) scale(1.01, 1.01); opacity: 0.22; }
+      15% { transform: translate(1400px, 100px) scale(1.021, 1.021); opacity: 0.22; }
+      20% { transform: translate(1400px, 100px) scale(1.035, 1.035); opacity: 0.22; }
+      25% { transform: translate(1400px, 100px) scale(1.05, 1.05); opacity: 0.22; }
+      30% { transform: translate(1400px, 100px) scale(1.065, 1.065); opacity: 0.22; }
+      35% { transform: translate(1400px, 100px) scale(1.079, 1.079); opacity: 0.22; }
+      40% { transform: translate(1400px, 100px) scale(1.09, 1.09); opacity: 0.22; }
+      45% { transform: translate(1400px, 100px) scale(1.098, 1.098); opacity: 0.22; }
+      50% { transform: translate(1400px, 100px) scale(1.1, 1.1); opacity: 0.22; }
+      55% { transform: translate(1400px, 100px) scale(1.098, 1.098); opacity: 0.22; }
+      60% { transform: translate(1400px, 100px) scale(1.09, 1.09); opacity: 0.22; }
+      65% { transform: translate(1400px, 100px) scale(1.079, 1.079); opacity: 0.22; }
+      70% { transform: translate(1400px, 100px) scale(1.065, 1.065); opacity: 0.22; }
+      75% { transform: translate(1400px, 100px) scale(1.05, 1.05); opacity: 0.22; }
+      80% { transform: translate(1400px, 100px) scale(1.035, 1.035); opacity: 0.22; }
+      85% { transform: translate(1400px, 100px) scale(1.021, 1.021); opacity: 0.22; }
+      90% { transform: translate(1400px, 100px) scale(1.01, 1.01); opacity: 0.22; }
+      95% { transform: translate(1400px, 100px) scale(1.002, 1.002); opacity: 0.22; }
+      100% { transform: translate(1400px, 100px); opacity: 0.22; }
+    }
+    #mesh-blob-blue-2 {
+      transform-origin: 1400px 100px;
+      transform: translate(1400px, 100px);
+      opacity: 0.22;
+      animation: mesh-blob-blue-2-anim-0 1.333s 1.167s linear 1 normal forwards, mesh-blob-blue-2-anim-1 4s 3.333s linear 1 normal none;
+    }
+    #noise-overlay {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.03;
+    }
+    @keyframes company-name-anim-0 {
+      0% { transform: translate(260px, 430px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(260px, 430px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(260px, 430px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(260px, 430px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(260px, 430px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(260px, 430px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(260px, 430px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(260px, 430px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(260px, 430px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(260px, 430px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(260px, 430px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(260px, 430px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(260px, 430px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(260px, 430px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(260px, 430px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(260px, 430px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(260px, 430px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(260px, 430px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(260px, 430px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(260px, 430px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(260px, 430px); opacity: 1; }
+    }
+    @keyframes company-name-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #company-name {
+      transform-origin: 260px 430px;
+      transform: translate(260px, 430px);
+      opacity: 1;
+      visibility: hidden;
+      animation: company-name-anim-0 1.333s 0s linear 1 normal forwards, company-name-vis 8.333s 1.667s 1 linear forwards;
+    }
+    @keyframes divider-line-anim-0 {
+      0% { transform: translate(810px, 560px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(810px, 560px) scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: translate(810px, 560px) scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: translate(810px, 560px) scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: translate(810px, 560px) scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: translate(810px, 560px) scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: translate(810px, 560px) scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: translate(810px, 560px) scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: translate(810px, 560px) scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: translate(810px, 560px) scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: translate(810px, 560px) scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: translate(810px, 560px) scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: translate(810px, 560px) scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: translate(810px, 560px) scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: translate(810px, 560px) scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: translate(810px, 560px) scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: translate(810px, 560px) scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: translate(810px, 560px) scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: translate(810px, 560px) scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: translate(810px, 560px) scale(1, 1); opacity: 1; }
+      100% { transform: translate(810px, 560px); opacity: 1; }
+    }
+    @keyframes divider-line-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #divider-line {
+      transform-origin: 810px 560px;
+      transform: translate(810px, 560px);
+      opacity: 1;
+      visibility: hidden;
+      animation: divider-line-anim-0 1s 0s linear 1 normal forwards, divider-line-vis 7.667s 2.333s 1 linear forwards;
+    }
+    @keyframes tagline-text-anim-0 {
+      0% { transform: translate(460px, 630px); opacity: 0; }
+      5% { transform: translate(460px, 622.869px); opacity: 0.143; }
+      10% { transform: translate(460px, 616.45px); opacity: 0.271; }
+      15% { transform: translate(460px, 610.706px); opacity: 0.386; }
+      20% { transform: translate(460px, 605.6px); opacity: 0.488; }
+      25% { transform: translate(460px, 601.094px); opacity: 0.578; }
+      30% { transform: translate(460px, 597.15px); opacity: 0.657; }
+      35% { transform: translate(460px, 593.731px); opacity: 0.725; }
+      40% { transform: translate(460px, 590.8px); opacity: 0.784; }
+      45% { transform: translate(460px, 588.319px); opacity: 0.834; }
+      50% { transform: translate(460px, 586.25px); opacity: 0.875; }
+      55% { transform: translate(460px, 584.556px); opacity: 0.909; }
+      60% { transform: translate(460px, 583.2px); opacity: 0.936; }
+      65% { transform: translate(460px, 582.144px); opacity: 0.957; }
+      70% { transform: translate(460px, 581.35px); opacity: 0.973; }
+      75% { transform: translate(460px, 580.781px); opacity: 0.984; }
+      80% { transform: translate(460px, 580.4px); opacity: 0.992; }
+      85% { transform: translate(460px, 580.169px); opacity: 0.997; }
+      90% { transform: translate(460px, 580.05px); opacity: 0.999; }
+      95% { transform: translate(460px, 580.006px); opacity: 1; }
+      100% { transform: translate(460px, 580px); opacity: 1; }
+    }
+    @keyframes tagline-text-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #tagline-text {
+      transform-origin: 460px 580px;
+      transform: translate(460px, 580px);
+      opacity: 1;
+      visibility: hidden;
+      animation: tagline-text-anim-0 1.167s 0s linear 1 normal forwards, tagline-text-vis 7.167s 2.833s 1 linear forwards;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a1a" />
+  </g>
+  <g id="mesh-blob-pink-1">
+    <ellipse cx="400" cy="350" rx="400" ry="350" fill="url(#mesh-blob-pink-1-grad)" />
+  </g>
+  <g id="mesh-blob-purple-1">
+    <ellipse cx="375" cy="325" rx="375" ry="325" fill="url(#mesh-blob-purple-1-grad)" />
+  </g>
+  <g id="mesh-blob-blue-1">
+    <ellipse cx="425" cy="375" rx="425" ry="375" fill="url(#mesh-blob-blue-1-grad)" />
+  </g>
+  <g id="mesh-blob-teal-1">
+    <ellipse cx="350" cy="300" rx="350" ry="300" fill="url(#mesh-blob-teal-1-grad)" />
+  </g>
+  <g id="mesh-blob-pink-2">
+    <ellipse cx="325" cy="300" rx="325" ry="300" fill="url(#mesh-blob-pink-2-grad)" />
+  </g>
+  <g id="mesh-blob-purple-2">
+    <ellipse cx="300" cy="250" rx="300" ry="250" fill="url(#mesh-blob-purple-2-grad)" />
+  </g>
+  <g id="mesh-blob-blue-2">
+    <ellipse cx="275" cy="250" rx="275" ry="250" fill="url(#mesh-blob-blue-2-grad)" />
+  </g>
+  <g id="noise-overlay" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#ffffff" />
+  </g>
+  <g id="company-name">
+    <text y="88" font-family="Inter, system-ui, sans-serif" font-size="88" font-weight="800" font-style="normal" fill="#ffffff" text-anchor="middle" letter-spacing="6" filter="url(#company-name-shadow)"><tspan x="700" dy="0">{{companyName}}</tspan></text>
+  </g>
+  <g id="divider-line">
+    <rect x="0" y="0" width="300" height="2" rx="0" ry="0" fill="url(#divider-line-grad)" />
+  </g>
+  <g id="tagline-text">
+    <text y="28" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="300" font-style="normal" fill="rgba(255,255,255,0.85)" text-anchor="middle" letter-spacing="4"><tspan x="500" dy="0">{{tagline}}</tspan></text>
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

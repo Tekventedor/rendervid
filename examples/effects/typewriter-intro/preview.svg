@@ -11,118 +11,118 @@
       opacity: 1;
     }
     @keyframes terminal-border-anim-0 {
-      0% { opacity: 0; }
-      5% { opacity: 0.143; }
-      10% { opacity: 0.271; }
-      15% { opacity: 0.386; }
-      20% { opacity: 0.488; }
-      25% { opacity: 0.578; }
-      30% { opacity: 0.657; }
-      35% { opacity: 0.725; }
-      40% { opacity: 0.784; }
-      45% { opacity: 0.834; }
-      50% { opacity: 0.875; }
-      55% { opacity: 0.909; }
-      60% { opacity: 0.936; }
-      65% { opacity: 0.957; }
-      70% { opacity: 0.973; }
-      75% { opacity: 0.984; }
-      80% { opacity: 0.992; }
-      85% { opacity: 0.997; }
-      90% { opacity: 0.999; }
-      95% { opacity: 1; }
-      100% { opacity: 1; }
+      0% { transform: translate(160px, 190px); opacity: 0; }
+      5% { transform: translate(160px, 190px); opacity: 0.143; }
+      10% { transform: translate(160px, 190px); opacity: 0.271; }
+      15% { transform: translate(160px, 190px); opacity: 0.386; }
+      20% { transform: translate(160px, 190px); opacity: 0.488; }
+      25% { transform: translate(160px, 190px); opacity: 0.578; }
+      30% { transform: translate(160px, 190px); opacity: 0.657; }
+      35% { transform: translate(160px, 190px); opacity: 0.725; }
+      40% { transform: translate(160px, 190px); opacity: 0.784; }
+      45% { transform: translate(160px, 190px); opacity: 0.834; }
+      50% { transform: translate(160px, 190px); opacity: 0.875; }
+      55% { transform: translate(160px, 190px); opacity: 0.909; }
+      60% { transform: translate(160px, 190px); opacity: 0.936; }
+      65% { transform: translate(160px, 190px); opacity: 0.957; }
+      70% { transform: translate(160px, 190px); opacity: 0.973; }
+      75% { transform: translate(160px, 190px); opacity: 0.984; }
+      80% { transform: translate(160px, 190px); opacity: 0.992; }
+      85% { transform: translate(160px, 190px); opacity: 0.997; }
+      90% { transform: translate(160px, 190px); opacity: 0.999; }
+      95% { transform: translate(160px, 190px); opacity: 1; }
+      100% { transform: translate(160px, 190px); opacity: 1; }
     }
     #terminal-border {
-      transform-origin: 0px 0px;
-      transform: none;
+      transform-origin: 160px 190px;
+      transform: translate(160px, 190px);
       opacity: 1;
       animation: terminal-border-anim-0 0.667s 0s linear 1 normal forwards;
     }
     @keyframes terminal-header-anim-0 {
-      0% { opacity: 0; }
-      5% { opacity: 0.143; }
-      10% { opacity: 0.271; }
-      15% { opacity: 0.386; }
-      20% { opacity: 0.488; }
-      25% { opacity: 0.578; }
-      30% { opacity: 0.657; }
-      35% { opacity: 0.725; }
-      40% { opacity: 0.784; }
-      45% { opacity: 0.834; }
-      50% { opacity: 0.875; }
-      55% { opacity: 0.909; }
-      60% { opacity: 0.936; }
-      65% { opacity: 0.957; }
-      70% { opacity: 0.973; }
-      75% { opacity: 0.984; }
-      80% { opacity: 0.992; }
-      85% { opacity: 0.997; }
-      90% { opacity: 0.999; }
-      95% { opacity: 1; }
-      100% { opacity: 1; }
+      0% { transform: translate(160px, 190px); opacity: 0; }
+      5% { transform: translate(160px, 190px); opacity: 0.143; }
+      10% { transform: translate(160px, 190px); opacity: 0.271; }
+      15% { transform: translate(160px, 190px); opacity: 0.386; }
+      20% { transform: translate(160px, 190px); opacity: 0.488; }
+      25% { transform: translate(160px, 190px); opacity: 0.578; }
+      30% { transform: translate(160px, 190px); opacity: 0.657; }
+      35% { transform: translate(160px, 190px); opacity: 0.725; }
+      40% { transform: translate(160px, 190px); opacity: 0.784; }
+      45% { transform: translate(160px, 190px); opacity: 0.834; }
+      50% { transform: translate(160px, 190px); opacity: 0.875; }
+      55% { transform: translate(160px, 190px); opacity: 0.909; }
+      60% { transform: translate(160px, 190px); opacity: 0.936; }
+      65% { transform: translate(160px, 190px); opacity: 0.957; }
+      70% { transform: translate(160px, 190px); opacity: 0.973; }
+      75% { transform: translate(160px, 190px); opacity: 0.984; }
+      80% { transform: translate(160px, 190px); opacity: 0.992; }
+      85% { transform: translate(160px, 190px); opacity: 0.997; }
+      90% { transform: translate(160px, 190px); opacity: 0.999; }
+      95% { transform: translate(160px, 190px); opacity: 1; }
+      100% { transform: translate(160px, 190px); opacity: 1; }
     }
     #terminal-header {
-      transform-origin: 0px 0px;
-      transform: none;
+      transform-origin: 160px 190px;
+      transform: translate(160px, 190px);
       opacity: 1;
       animation: terminal-header-anim-0 0.667s 0s linear 1 normal forwards;
     }
     @keyframes terminal-title-anim-0 {
-      0% { opacity: 0; }
-      5% { opacity: 0.143; }
-      10% { opacity: 0.271; }
-      15% { opacity: 0.386; }
-      20% { opacity: 0.488; }
-      25% { opacity: 0.578; }
-      30% { opacity: 0.657; }
-      35% { opacity: 0.725; }
-      40% { opacity: 0.784; }
-      45% { opacity: 0.834; }
-      50% { opacity: 0.875; }
-      55% { opacity: 0.909; }
-      60% { opacity: 0.936; }
-      65% { opacity: 0.957; }
-      70% { opacity: 0.973; }
-      75% { opacity: 0.984; }
-      80% { opacity: 0.992; }
-      85% { opacity: 0.997; }
-      90% { opacity: 0.999; }
-      95% { opacity: 1; }
-      100% { opacity: 1; }
+      0% { transform: translate(180px, 200px); opacity: 0; }
+      5% { transform: translate(180px, 200px); opacity: 0.143; }
+      10% { transform: translate(180px, 200px); opacity: 0.271; }
+      15% { transform: translate(180px, 200px); opacity: 0.386; }
+      20% { transform: translate(180px, 200px); opacity: 0.488; }
+      25% { transform: translate(180px, 200px); opacity: 0.578; }
+      30% { transform: translate(180px, 200px); opacity: 0.657; }
+      35% { transform: translate(180px, 200px); opacity: 0.725; }
+      40% { transform: translate(180px, 200px); opacity: 0.784; }
+      45% { transform: translate(180px, 200px); opacity: 0.834; }
+      50% { transform: translate(180px, 200px); opacity: 0.875; }
+      55% { transform: translate(180px, 200px); opacity: 0.909; }
+      60% { transform: translate(180px, 200px); opacity: 0.936; }
+      65% { transform: translate(180px, 200px); opacity: 0.957; }
+      70% { transform: translate(180px, 200px); opacity: 0.973; }
+      75% { transform: translate(180px, 200px); opacity: 0.984; }
+      80% { transform: translate(180px, 200px); opacity: 0.992; }
+      85% { transform: translate(180px, 200px); opacity: 0.997; }
+      90% { transform: translate(180px, 200px); opacity: 0.999; }
+      95% { transform: translate(180px, 200px); opacity: 1; }
+      100% { transform: translate(180px, 200px); opacity: 1; }
     }
     #terminal-title {
-      transform-origin: 0px 0px;
-      transform: none;
+      transform-origin: 180px 200px;
+      transform: translate(180px, 200px);
       opacity: 1;
       animation: terminal-title-anim-0 0.667s 0s linear 1 normal forwards;
     }
     @keyframes prompt-anim-0 {
-      0% { opacity: 0; }
-      5% { opacity: 0.143; }
-      10% { opacity: 0.271; }
-      15% { opacity: 0.386; }
-      20% { opacity: 0.488; }
-      25% { opacity: 0.578; }
-      30% { opacity: 0.657; }
-      35% { opacity: 0.725; }
-      40% { opacity: 0.784; }
-      45% { opacity: 0.834; }
-      50% { opacity: 0.875; }
-      55% { opacity: 0.909; }
-      60% { opacity: 0.936; }
-      65% { opacity: 0.957; }
-      70% { opacity: 0.973; }
-      75% { opacity: 0.984; }
-      80% { opacity: 0.992; }
-      85% { opacity: 0.997; }
-      90% { opacity: 0.999; }
-      95% { opacity: 1; }
-      100% { opacity: 1; }
+      0% { transform: translate(200px, 300px); opacity: 0; }
+      5% { transform: translate(200px, 300px); opacity: 0.143; }
+      10% { transform: translate(200px, 300px); opacity: 0.271; }
+      15% { transform: translate(200px, 300px); opacity: 0.386; }
+      20% { transform: translate(200px, 300px); opacity: 0.488; }
+      25% { transform: translate(200px, 300px); opacity: 0.578; }
+      30% { transform: translate(200px, 300px); opacity: 0.657; }
+      35% { transform: translate(200px, 300px); opacity: 0.725; }
+      40% { transform: translate(200px, 300px); opacity: 0.784; }
+      45% { transform: translate(200px, 300px); opacity: 0.834; }
+      50% { transform: translate(200px, 300px); opacity: 0.875; }
+      55% { transform: translate(200px, 300px); opacity: 0.909; }
+      60% { transform: translate(200px, 300px); opacity: 0.936; }
+      65% { transform: translate(200px, 300px); opacity: 0.957; }
+      70% { transform: translate(200px, 300px); opacity: 0.973; }
+      75% { transform: translate(200px, 300px); opacity: 0.984; }
+      80% { transform: translate(200px, 300px); opacity: 0.992; }
+      85% { transform: translate(200px, 300px); opacity: 0.997; }
+      90% { transform: translate(200px, 300px); opacity: 0.999; }
+      95% { transform: translate(200px, 300px); opacity: 1; }
+      100% { transform: translate(200px, 300px); opacity: 1; }
     }
     #prompt {
-      transform-origin: 0px 0px;
-      transform: none;
+      transform-origin: 200px 300px;
+      transform: translate(200px, 300px);
       opacity: 1;
       animation: prompt-anim-0 0.5s 0.833s linear 1 normal forwards;
     }
@@ -141,16 +141,16 @@
   <g id="background" transform="translate(0, 0)">
     <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#0a0a0a" />
   </g>
-  <g id="terminal-border" transform="translate(160, 190)">
+  <g id="terminal-border">
     <rect x="1" y="1" width="1598" height="698" rx="0" ry="0" fill="transparent" stroke="#00ff00" stroke-width="2" />
   </g>
-  <g id="terminal-header" transform="translate(160, 190)">
+  <g id="terminal-header">
     <rect x="0" y="0" width="1600" height="60" rx="0" ry="0" fill="#00ff0022" />
   </g>
-  <g id="terminal-title" transform="translate(180, 200)">
+  <g id="terminal-title">
     <text y="20" font-family="monospace" font-size="20" font-weight="bold" font-style="normal" fill="#00ff00" text-anchor="start"><tspan x="0" dy="0">TERMINAL v1.0.0</tspan></text>
   </g>
-  <g id="prompt" transform="translate(200, 300)">
+  <g id="prompt">
     <text y="32" font-family="monospace" font-size="32" font-weight="bold" font-style="normal" fill="#00ff00" text-anchor="start"><tspan x="0" dy="0">&gt; </tspan></text>
   </g>
   <g id="scan-line" transform="translate(160, 190)">

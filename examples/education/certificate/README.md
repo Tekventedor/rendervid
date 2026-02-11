@@ -6,6 +6,8 @@ Achievement certificate for course completion or awards.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

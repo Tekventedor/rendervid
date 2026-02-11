@@ -6,6 +6,8 @@ A complete 5-second video with title, subtitle, and professional animations.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 This example creates a polished intro video with gradient backgrounds, animated text, and decorative accent elements. It demonstrates multiple layer types and staggered animations.

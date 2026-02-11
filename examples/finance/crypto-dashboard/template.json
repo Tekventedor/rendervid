@@ -1,0 +1,902 @@
+{
+  "name": "Crypto Dashboard",
+  "description": "Modern fintech cryptocurrency market dashboard with live-style price cards, volume stats, and trending indicators. Dark theme with vibrant accent colors.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 7
+  },
+  "inputs": [
+    { "key": "coin1Name", "type": "string", "label": "Coin 1 Name", "required": true, "default": "BTC" },
+    { "key": "coin1Price", "type": "string", "label": "Coin 1 Price", "required": true, "default": "$67,432.18" },
+    { "key": "coin1Change", "type": "string", "label": "Coin 1 Change %", "required": true, "default": "+3.42%" },
+    { "key": "coin2Name", "type": "string", "label": "Coin 2 Name", "required": true, "default": "ETH" },
+    { "key": "coin2Price", "type": "string", "label": "Coin 2 Price", "required": true, "default": "$3,891.05" },
+    { "key": "coin2Change", "type": "string", "label": "Coin 2 Change %", "required": true, "default": "+1.87%" },
+    { "key": "coin3Name", "type": "string", "label": "Coin 3 Name", "required": true, "default": "SOL" },
+    { "key": "coin3Price", "type": "string", "label": "Coin 3 Price", "required": true, "default": "$189.24" },
+    { "key": "coin3Change", "type": "string", "label": "Coin 3 Change %", "required": true, "default": "-2.15%" },
+    { "key": "volume", "type": "string", "label": "24H Volume", "required": false, "default": "$142.8B" },
+    { "key": "date", "type": "string", "label": "Date", "required": false, "default": "FEB 10, 2026" }
+  ],
+  "defaults": {
+    "coin1Name": "BTC",
+    "coin1Price": "$67,432.18",
+    "coin1Change": "+3.42%",
+    "coin2Name": "ETH",
+    "coin2Price": "$3,891.05",
+    "coin2Change": "+1.87%",
+    "coin3Name": "SOL",
+    "coin3Price": "$189.24",
+    "coin3Change": "-2.15%",
+    "volume": "$142.8B",
+    "date": "FEB 10, 2026"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 210,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#0f1117" },
+                  { "offset": 0.5, "color": "#131620" },
+                  { "offset": 1, "color": "#0a0c12" }
+                ],
+                "angle": 160
+              }
+            }
+          },
+          {
+            "id": "grid-accent-1",
+            "type": "shape",
+            "position": { "x": -200, "y": -200 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.06,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#22c55e" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 40 }
+            ]
+          },
+          {
+            "id": "grid-accent-2",
+            "type": "shape",
+            "position": { "x": 1500, "y": 600 },
+            "size": { "width": 700, "height": 700 },
+            "opacity": 0.04,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#6366f1" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 40 }
+            ]
+          },
+          {
+            "id": "top-bar-line",
+            "type": "shape",
+            "position": { "x": 0, "y": 90 },
+            "size": { "width": 1920, "height": 1 },
+            "opacity": 0.15,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 20 }
+            ]
+          },
+          {
+            "id": "market-update-label",
+            "type": "text",
+            "position": { "x": 80, "y": 28 },
+            "size": { "width": 400, "height": 50 },
+            "props": {
+              "text": "MARKET UPDATE",
+              "fontSize": 28,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 5, "duration": 20, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "live-dot",
+            "type": "shape",
+            "position": { "x": 410, "y": 44 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#22c55e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 20, "duration": 15 },
+              { "type": "emphasis", "effect": "pulse", "delay": 40, "duration": 30 }
+            ]
+          },
+          {
+            "id": "live-text",
+            "type": "text",
+            "position": { "x": 430, "y": 32 },
+            "size": { "width": 80, "height": 40 },
+            "props": {
+              "text": "LIVE",
+              "fontSize": 16,
+              "fontWeight": "700",
+              "color": "#22c55e",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 3
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 20, "duration": 15 }
+            ]
+          },
+          {
+            "id": "date-text",
+            "type": "text",
+            "position": { "x": 1400, "y": 32 },
+            "size": { "width": 440, "height": 40 },
+            "props": {
+              "text": "{{date}}",
+              "fontSize": 18,
+              "fontWeight": "500",
+              "color": "#6b7280",
+              "textAlign": "right",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 2
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card1-bg",
+            "type": "shape",
+            "position": { "x": 80, "y": 140 },
+            "size": { "width": 560, "height": 380 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1b23",
+              "borderRadius": 20,
+              "stroke": "rgba(34, 197, 94, 0.15)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "bounceIn", "delay": 15, "duration": 30, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "card1-accent-line",
+            "type": "shape",
+            "position": { "x": 80, "y": 140 },
+            "size": { "width": 560, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#22c55e" },
+                  { "offset": 1, "color": "#15803d" }
+                ],
+                "angle": 90
+              },
+              "borderRadius": 20
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 25, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card1-coin-icon",
+            "type": "shape",
+            "position": { "x": 120, "y": 180 },
+            "size": { "width": 56, "height": 56 },
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#f7931a" },
+                  { "offset": 1, "color": "#e88a17" }
+                ],
+                "angle": 135
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 30, "duration": 20, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "card1-coin-letter",
+            "type": "text",
+            "position": { "x": 120, "y": 186 },
+            "size": { "width": 56, "height": 44 },
+            "props": {
+              "text": "B",
+              "fontSize": 26,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 35, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card1-name",
+            "type": "text",
+            "position": { "x": 195, "y": 180 },
+            "size": { "width": 200, "height": 32 },
+            "props": {
+              "text": "{{coin1Name}}",
+              "fontSize": 24,
+              "fontWeight": "700",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 35, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card1-label",
+            "type": "text",
+            "position": { "x": 195, "y": 210 },
+            "size": { "width": 200, "height": 28 },
+            "props": {
+              "text": "Bitcoin",
+              "fontSize": 15,
+              "fontWeight": "400",
+              "color": "#6b7280",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 38, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card1-price",
+            "type": "text",
+            "position": { "x": 120, "y": 280 },
+            "size": { "width": 480, "height": 60 },
+            "props": {
+              "text": "{{coin1Price}}",
+              "fontSize": 48,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": -1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 40, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "card1-change-bg",
+            "type": "shape",
+            "position": { "x": 120, "y": 365 },
+            "size": { "width": 140, "height": 42 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(34, 197, 94, 0.15)",
+              "borderRadius": 10
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 50, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card1-change-arrow",
+            "type": "text",
+            "position": { "x": 130, "y": 370 },
+            "size": { "width": 30, "height": 34 },
+            "props": {
+              "text": "\u25b2",
+              "fontSize": 16,
+              "color": "#22c55e",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card1-change",
+            "type": "text",
+            "position": { "x": 152, "y": 370 },
+            "size": { "width": 100, "height": 34 },
+            "props": {
+              "text": "{{coin1Change}}",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "color": "#22c55e",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card1-sparkline",
+            "type": "shape",
+            "position": { "x": 120, "y": 430 },
+            "size": { "width": 480, "height": 60 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "transparent" },
+                  { "offset": 0.5, "color": "rgba(34, 197, 94, 0.2)" },
+                  { "offset": 1, "color": "transparent" }
+                ],
+                "angle": 0
+              },
+              "borderRadius": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 25 }
+            ]
+          },
+          {
+            "id": "card2-bg",
+            "type": "shape",
+            "position": { "x": 680, "y": 140 },
+            "size": { "width": 560, "height": 380 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1b23",
+              "borderRadius": 20,
+              "stroke": "rgba(99, 102, 241, 0.15)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "bounceIn", "delay": 25, "duration": 30, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "card2-accent-line",
+            "type": "shape",
+            "position": { "x": 680, "y": 140 },
+            "size": { "width": 560, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#6366f1" },
+                  { "offset": 1, "color": "#818cf8" }
+                ],
+                "angle": 90
+              },
+              "borderRadius": 20
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 35, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card2-coin-icon",
+            "type": "shape",
+            "position": { "x": 720, "y": 180 },
+            "size": { "width": 56, "height": 56 },
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#627eea" },
+                  { "offset": 1, "color": "#4c63d2" }
+                ],
+                "angle": 135
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 40, "duration": 20, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "card2-coin-letter",
+            "type": "text",
+            "position": { "x": 720, "y": 186 },
+            "size": { "width": 56, "height": 44 },
+            "props": {
+              "text": "E",
+              "fontSize": 26,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 45, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card2-name",
+            "type": "text",
+            "position": { "x": 795, "y": 180 },
+            "size": { "width": 200, "height": 32 },
+            "props": {
+              "text": "{{coin2Name}}",
+              "fontSize": 24,
+              "fontWeight": "700",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 45, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card2-label",
+            "type": "text",
+            "position": { "x": 795, "y": 210 },
+            "size": { "width": 200, "height": 28 },
+            "props": {
+              "text": "Ethereum",
+              "fontSize": 15,
+              "fontWeight": "400",
+              "color": "#6b7280",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 48, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card2-price",
+            "type": "text",
+            "position": { "x": 720, "y": 280 },
+            "size": { "width": 480, "height": 60 },
+            "props": {
+              "text": "{{coin2Price}}",
+              "fontSize": 48,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": -1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 50, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "card2-change-bg",
+            "type": "shape",
+            "position": { "x": 720, "y": 365 },
+            "size": { "width": 140, "height": 42 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(34, 197, 94, 0.15)",
+              "borderRadius": 10
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 60, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card2-change-arrow",
+            "type": "text",
+            "position": { "x": 730, "y": 370 },
+            "size": { "width": 30, "height": 34 },
+            "props": {
+              "text": "\u25b2",
+              "fontSize": 16,
+              "color": "#22c55e",
+              "textAlign": "center"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 65, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card2-change",
+            "type": "text",
+            "position": { "x": 752, "y": 370 },
+            "size": { "width": 100, "height": 34 },
+            "props": {
+              "text": "{{coin2Change}}",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "color": "#22c55e",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 65, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card2-sparkline",
+            "type": "shape",
+            "position": { "x": 720, "y": 430 },
+            "size": { "width": 480, "height": 60 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "transparent" },
+                  { "offset": 0.5, "color": "rgba(99, 102, 241, 0.2)" },
+                  { "offset": 1, "color": "transparent" }
+                ],
+                "angle": 0
+              },
+              "borderRadius": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 25 }
+            ]
+          },
+          {
+            "id": "card3-bg",
+            "type": "shape",
+            "position": { "x": 1280, "y": 140 },
+            "size": { "width": 560, "height": 380 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1b23",
+              "borderRadius": 20,
+              "stroke": "rgba(239, 68, 68, 0.15)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "bounceIn", "delay": 35, "duration": 30, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "card3-accent-line",
+            "type": "shape",
+            "position": { "x": 1280, "y": 140 },
+            "size": { "width": 560, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#ef4444" },
+                  { "offset": 1, "color": "#dc2626" }
+                ],
+                "angle": 90
+              },
+              "borderRadius": 20
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 45, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card3-coin-icon",
+            "type": "shape",
+            "position": { "x": 1320, "y": 180 },
+            "size": { "width": 56, "height": 56 },
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#9945ff" },
+                  { "offset": 1, "color": "#14f195" }
+                ],
+                "angle": 135
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 50, "duration": 20, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "card3-coin-letter",
+            "type": "text",
+            "position": { "x": 1320, "y": 186 },
+            "size": { "width": 56, "height": 44 },
+            "props": {
+              "text": "S",
+              "fontSize": 26,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card3-name",
+            "type": "text",
+            "position": { "x": 1395, "y": 180 },
+            "size": { "width": 200, "height": 32 },
+            "props": {
+              "text": "{{coin3Name}}",
+              "fontSize": 24,
+              "fontWeight": "700",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card3-label",
+            "type": "text",
+            "position": { "x": 1395, "y": 210 },
+            "size": { "width": 200, "height": 28 },
+            "props": {
+              "text": "Solana",
+              "fontSize": 15,
+              "fontWeight": "400",
+              "color": "#6b7280",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 58, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card3-price",
+            "type": "text",
+            "position": { "x": 1320, "y": 280 },
+            "size": { "width": 480, "height": 60 },
+            "props": {
+              "text": "{{coin3Price}}",
+              "fontSize": 48,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": -1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 60, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "card3-change-bg",
+            "type": "shape",
+            "position": { "x": 1320, "y": 365 },
+            "size": { "width": 140, "height": 42 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(239, 68, 68, 0.15)",
+              "borderRadius": 10
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 70, "duration": 20 }
+            ]
+          },
+          {
+            "id": "card3-change-arrow",
+            "type": "text",
+            "position": { "x": 1330, "y": 370 },
+            "size": { "width": 30, "height": 34 },
+            "props": {
+              "text": "\u25bc",
+              "fontSize": 16,
+              "color": "#ef4444",
+              "textAlign": "center"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 75, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card3-change",
+            "type": "text",
+            "position": { "x": 1352, "y": 370 },
+            "size": { "width": 100, "height": 34 },
+            "props": {
+              "text": "{{coin3Change}}",
+              "fontSize": 20,
+              "fontWeight": "700",
+              "color": "#ef4444",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 75, "duration": 15 }
+            ]
+          },
+          {
+            "id": "card3-sparkline",
+            "type": "shape",
+            "position": { "x": 1320, "y": 430 },
+            "size": { "width": 480, "height": 60 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "transparent" },
+                  { "offset": 0.5, "color": "rgba(239, 68, 68, 0.2)" },
+                  { "offset": 1, "color": "transparent" }
+                ],
+                "angle": 0
+              },
+              "borderRadius": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 80, "duration": 25 }
+            ]
+          },
+          {
+            "id": "bottom-divider",
+            "type": "shape",
+            "position": { "x": 80, "y": 570 },
+            "size": { "width": 1760, "height": 1 },
+            "opacity": 0.1,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 80, "duration": 20 }
+            ]
+          },
+          {
+            "id": "volume-label",
+            "type": "text",
+            "position": { "x": 80, "y": 600 },
+            "size": { "width": 200, "height": 30 },
+            "props": {
+              "text": "24H VOLUME",
+              "fontSize": 14,
+              "fontWeight": "600",
+              "color": "#6b7280",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 3
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 85, "duration": 20 }
+            ]
+          },
+          {
+            "id": "volume-value",
+            "type": "text",
+            "position": { "x": 80, "y": 635 },
+            "size": { "width": 400, "height": 55 },
+            "props": {
+              "text": "{{volume}}",
+              "fontSize": 42,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": -1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 90, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "trending-badge-bg",
+            "type": "shape",
+            "position": { "x": 1580, "y": 610 },
+            "size": { "width": 260, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#22c55e" },
+                  { "offset": 1, "color": "#16a34a" }
+                ],
+                "angle": 90
+              },
+              "borderRadius": 25
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 95, "duration": 20, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "trending-text",
+            "type": "text",
+            "position": { "x": 1580, "y": 618 },
+            "size": { "width": 260, "height": 36 },
+            "props": {
+              "text": "TRENDING",
+              "fontSize": 18,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 100, "duration": 15 }
+            ]
+          },
+          {
+            "id": "footer-line",
+            "type": "shape",
+            "position": { "x": 0, "y": 1040 },
+            "size": { "width": 1920, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#22c55e" },
+                  { "offset": 0.33, "color": "#6366f1" },
+                  { "offset": 0.66, "color": "#ef4444" },
+                  { "offset": 1, "color": "#22c55e" }
+                ],
+                "angle": 90
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 100, "duration": 30 }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

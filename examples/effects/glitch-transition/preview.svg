@@ -17,31 +17,31 @@
       opacity: 1;
     }
     @keyframes tagline-anim-0 {
-      0% { opacity: 0; }
-      5% { opacity: 0.143; }
-      10% { opacity: 0.271; }
-      15% { opacity: 0.386; }
-      20% { opacity: 0.488; }
-      25% { opacity: 0.578; }
-      30% { opacity: 0.657; }
-      35% { opacity: 0.725; }
-      40% { opacity: 0.784; }
-      45% { opacity: 0.834; }
-      50% { opacity: 0.875; }
-      55% { opacity: 0.909; }
-      60% { opacity: 0.936; }
-      65% { opacity: 0.957; }
-      70% { opacity: 0.973; }
-      75% { opacity: 0.984; }
-      80% { opacity: 0.992; }
-      85% { opacity: 0.997; }
-      90% { opacity: 0.999; }
-      95% { opacity: 1; }
-      100% { opacity: 1; }
+      0% { transform: translate(460px, 600px); opacity: 0; }
+      5% { transform: translate(460px, 600px); opacity: 0.143; }
+      10% { transform: translate(460px, 600px); opacity: 0.271; }
+      15% { transform: translate(460px, 600px); opacity: 0.386; }
+      20% { transform: translate(460px, 600px); opacity: 0.488; }
+      25% { transform: translate(460px, 600px); opacity: 0.578; }
+      30% { transform: translate(460px, 600px); opacity: 0.657; }
+      35% { transform: translate(460px, 600px); opacity: 0.725; }
+      40% { transform: translate(460px, 600px); opacity: 0.784; }
+      45% { transform: translate(460px, 600px); opacity: 0.834; }
+      50% { transform: translate(460px, 600px); opacity: 0.875; }
+      55% { transform: translate(460px, 600px); opacity: 0.909; }
+      60% { transform: translate(460px, 600px); opacity: 0.936; }
+      65% { transform: translate(460px, 600px); opacity: 0.957; }
+      70% { transform: translate(460px, 600px); opacity: 0.973; }
+      75% { transform: translate(460px, 600px); opacity: 0.984; }
+      80% { transform: translate(460px, 600px); opacity: 0.992; }
+      85% { transform: translate(460px, 600px); opacity: 0.997; }
+      90% { transform: translate(460px, 600px); opacity: 0.999; }
+      95% { transform: translate(460px, 600px); opacity: 1; }
+      100% { transform: translate(460px, 600px); opacity: 1; }
     }
     #tagline {
-      transform-origin: 0px 0px;
-      transform: none;
+      transform-origin: 460px 600px;
+      transform: translate(460px, 600px);
       opacity: 1;
       animation: tagline-anim-0 1s 2.667s linear 1 normal forwards;
     }
@@ -65,7 +65,7 @@
     <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="{{backgroundColor}}" />
   </g>
   <!-- Unsupported layer type "custom" (line2-big) -->
-  <g id="tagline" transform="translate(460, 600)">
+  <g id="tagline">
     <text y="28" font-family="monospace" font-size="28" font-weight="normal" font-style="normal" fill="#666666" text-anchor="middle" letter-spacing="6"><tspan x="500" dy="0">{{tagline}}</tspan></text>
   </g>
   <g id="watermark" transform="translate(1520, 20)">

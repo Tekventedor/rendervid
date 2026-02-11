@@ -207,7 +207,7 @@ export function App() {
       if (layer.type === 'custom') {
         const customComponent = (layer as { customComponent?: { name: string; props?: Record<string, unknown> } }).customComponent;
         const Component = customComponent ? componentRegistry.get(customComponent.name) : undefined;
-        if (Component) {
+        if (Component && customComponent) {
           const scene = template.composition.scenes.find(
             (s) => frame >= s.startFrame && frame < s.endFrame
           );

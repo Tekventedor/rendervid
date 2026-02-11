@@ -6,6 +6,8 @@ Elegant story or quote display with gradient background and typewriter effect.
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - Beautiful aurora gradient background with animated blobs

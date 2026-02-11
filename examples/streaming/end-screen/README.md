@@ -6,6 +6,8 @@ Professional end screen with subscribe and follow CTAs.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

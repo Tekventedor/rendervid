@@ -44,6 +44,7 @@ export type {
   VideoFit,
   TextLayer,
   TextLayerProps,
+  TextSpan,
   TextAlign,
   VerticalAlign,
   FontWeight,
@@ -64,6 +65,8 @@ export type {
   CustomLayer,
   CustomLayerProps,
   CustomComponentRef,
+  GifLayer,
+  GifLayerProps,
 } from './layer';
 
 // Three.js 3D Layers
@@ -173,6 +176,14 @@ export type {
 
 // Schema
 export type { JSONSchema7, JSONSchema7TypeName } from './schema';
+
+// Encoding
+export type {
+  VideoCodec,
+  ProResProfile,
+  AudioCodec,
+  EncodingConfig,
+} from './encoding';
 
 // Fonts
 export type {

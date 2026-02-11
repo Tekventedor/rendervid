@@ -4,6 +4,8 @@
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 A serene falling snow effect with multiple layers of particles creating a realistic winter scene, perfect for seasonal and holiday content.
 
 ## Features

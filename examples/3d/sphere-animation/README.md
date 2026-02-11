@@ -6,6 +6,8 @@ A wireframe sphere with smooth rotation and futuristic styling, perfect for tech
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - 3D wireframe sphere using CSS 3D transforms

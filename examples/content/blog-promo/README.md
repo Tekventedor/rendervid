@@ -6,6 +6,8 @@ Blog post promotion card with featured image, title, and CTA.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

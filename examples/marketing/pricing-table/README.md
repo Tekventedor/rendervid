@@ -6,6 +6,8 @@ Animated pricing comparison with 3 tiers and staggered entrance animations.
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - 3-tier pricing layout

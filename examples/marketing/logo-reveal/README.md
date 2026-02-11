@@ -6,6 +6,8 @@ Animated logo reveal with professional effects.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 A sleek logo reveal animation with particle effects, glow, and smooth scaling. Features a building anticipation with light streaks before the logo appears, followed by a tagline fade-in. Perfect for brand intros and video openings.

@@ -5,6 +5,8 @@ Professional webinar announcement featuring speaker, topic, and date.
 ## Preview
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 ```bash
 pnpm run examples:render events/webinar-promo

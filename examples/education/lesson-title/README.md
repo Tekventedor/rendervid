@@ -6,6 +6,8 @@ Chapter or lesson title card for educational videos.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

@@ -33,6 +33,13 @@ const CATEGORIES = [
   'backgrounds',
   'effects',
   'custom-components',
+  'cinematic',
+  'fashion',
+  'finance',
+  'motion-blur',
+  'social',
+  'tech',
+  'youtube-lower-third',
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-frames');
 

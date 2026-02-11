@@ -33,6 +33,13 @@ const CATEGORIES = [
   'backgrounds',
   'effects',
   'custom-components',
+  'cinematic',
+  'fashion',
+  'finance',
+  'motion-blur',
+  'social',
+  'tech',
+  'youtube-lower-third',
 ];
 const TEMP_DIR = path.join(__dirname, '..', '.temp-video-frames');
 const AUDIO_FILE = path.join(__dirname, '..', 'examples', 'showcase', 'background-music.mp3');

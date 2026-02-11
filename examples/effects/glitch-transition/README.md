@@ -2,6 +2,12 @@
 
 A multi-layer text composition with varied glitch effects creating a dynamic, edgy visual.
 
+## Preview
+
+![Preview](preview.gif)
+
+[View animated SVG](preview.svg)
+
 ## Overview
 
 This template showcases multiple text layers, each with different glitch types and frequencies, creating a complex and visually striking composition. Text appears in staggered sequence with each layer experiencing its own unique glitch pattern. The varying frequencies create moments where multiple glitches happen simultaneously, producing dramatic bursts of digital chaos.

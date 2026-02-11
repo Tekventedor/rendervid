@@ -6,6 +6,8 @@ A beautiful slideshow with smooth fade transitions between images.
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 [Download MP4](./video.mp4)
 
 ## Features

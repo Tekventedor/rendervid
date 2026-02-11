@@ -6,6 +6,8 @@ Animated SVG drawing effect revealing a star logo path by path, perfect for logo
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - SVG path drawing animation (Vivus-style)

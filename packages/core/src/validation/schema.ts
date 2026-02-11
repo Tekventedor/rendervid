@@ -763,7 +763,7 @@ export const layerBaseSchema: JSONSchema7 = {
     id: { type: 'string', minLength: 1 },
     type: {
       type: 'string',
-      enum: ['image', 'video', 'text', 'shape', 'audio', 'group', 'lottie', 'custom', 'three'],
+      enum: ['image', 'video', 'text', 'shape', 'audio', 'group', 'lottie', 'custom', 'three', 'gif'],
     },
     name: { type: 'string' },
     position: positionSchema,

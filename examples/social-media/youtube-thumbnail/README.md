@@ -6,6 +6,8 @@ Eye-catching thumbnail optimized for YouTube videos.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 
 ![Preview](preview.png)
 

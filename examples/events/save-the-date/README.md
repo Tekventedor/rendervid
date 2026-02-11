@@ -5,6 +5,8 @@ Elegant invitation-style announcement for weddings, events, or important dates.
 ## Preview
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 ```bash
 pnpm run examples:render events/save-the-date

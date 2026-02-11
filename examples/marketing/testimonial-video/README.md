@@ -6,6 +6,8 @@ Display customer testimonials with professional styling.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 A professional testimonial video template featuring customer quotes with attribution. Includes decorative quote marks, fade-in animations, and clean typography for maximum readability and impact.

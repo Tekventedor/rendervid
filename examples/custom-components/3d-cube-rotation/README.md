@@ -6,6 +6,8 @@ Stunning 3D cube rotation with CSS transforms using custom component
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 **[Download Video (MP4)](video.mp4)**
 
 ## Specifications

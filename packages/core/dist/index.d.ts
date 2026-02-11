@@ -1143,7 +1143,7 @@ declare function mergeMotionBlurConfigs(global?: MotionBlurConfig, scene?: Motio
 /**
  * Available layer types.
  */
-type LayerType = 'image' | 'video' | 'text' | 'shape' | 'audio' | 'group' | 'lottie' | 'custom' | 'three';
+type LayerType = 'image' | 'video' | 'text' | 'shape' | 'audio' | 'group' | 'lottie' | 'custom' | 'three' | 'gif';
 /**
  * Position in 2D space.
  */
@@ -1281,6 +1281,33 @@ type Padding = number | {
     left: number;
 };
 /**
+ * Styled text span for rich text.
+ */
+interface TextSpan {
+    /** Text content for this span */
+    text: string;
+    /** Override font family */
+    fontFamily?: string;
+    /** Override font size */
+    fontSize?: number;
+    /** Override font weight */
+    fontWeight?: FontWeight$1;
+    /** Override font style */
+    fontStyle?: 'normal' | 'italic';
+    /** Override text color */
+    color?: string;
+    /** Override letter spacing */
+    letterSpacing?: number;
+    /** Background color for this span (highlight effect) */
+    backgroundColor?: string;
+    /** Override text decoration */
+    textDecoration?: 'none' | 'underline' | 'line-through';
+    /** Override text stroke */
+    stroke?: TextStroke;
+    /** Override text shadow */
+    textShadow?: TextShadow;
+}
+/**
  * Props for text layer.
  */
 interface TextLayerProps {
@@ -1322,6 +1349,8 @@ interface TextLayerProps {
     maxLines?: number;
     /** Overflow behavior */
     overflow?: 'visible' | 'hidden' | 'ellipsis';
+    /** Rich text spans — if provided, overrides the `text` property */
+    spans?: TextSpan[];
 }
 /**
  * Shape types.
@@ -1419,9 +1448,24 @@ interface CustomLayerProps {
     [key: string]: unknown;
 }
 /**
+ * Props for GIF layer.
+ */
+interface GifLayerProps {
+    /** GIF source URL or data URI */
+    src: string;
+    /** Image fit mode */
+    fit?: ImageFit;
+    /** Whether to loop the GIF (default true) */
+    loop?: boolean;
+    /** Playback speed multiplier (default 1) */
+    speed?: number;
+    /** Start from specific frame (default 0) */
+    startFrame?: number;
+}
+/**
  * Union of all layer props.
  */
-type LayerProps = ImageLayerProps | VideoLayerProps | TextLayerProps | ShapeLayerProps | AudioLayerProps | GroupLayerProps | LottieLayerProps | CustomLayerProps;
+type LayerProps = ImageLayerProps | VideoLayerProps | TextLayerProps | ShapeLayerProps | AudioLayerProps | GroupLayerProps | LottieLayerProps | CustomLayerProps | GifLayerProps;
 /**
  * Custom component reference.
  */
@@ -1545,9 +1589,16 @@ interface CustomLayer extends LayerBase {
     customComponent: CustomComponentRef;
 }
 /**
+ * GIF layer.
+ */
+interface GifLayer extends LayerBase {
+    type: 'gif';
+    props: GifLayerProps;
+}
+/**
  * Union of all layer types.
  */
-type Layer = ImageLayer | VideoLayer | TextLayer | ShapeLayer | AudioLayer | GroupLayer | LottieLayer | CustomLayer | ThreeLayer;
+type Layer = ImageLayer | VideoLayer | TextLayer | ShapeLayer | AudioLayer | GroupLayer | LottieLayer | CustomLayer | ThreeLayer | GifLayer;
 
 /**
  * Scene transition types.
@@ -1569,6 +1620,12 @@ interface SceneTransition {
     direction?: TransitionDirection;
     /** Easing function */
     easing?: string;
+    /** Spring-based timing configuration (used instead of easing when provided) */
+    spring?: {
+        mass?: number;
+        stiffness?: number;
+        damping?: number;
+    };
 }
 /**
  * Background image fit modes.
@@ -2791,6 +2848,30 @@ interface Template {
  */
 type PartialTemplate = Partial<Template> & Pick<Template, 'name' | 'output' | 'composition'>;
 
+/** Supported video codecs. */
+type VideoCodec = 'h264' | 'h265' | 'vp8' | 'vp9' | 'prores';
+/** ProRes profile. */
+type ProResProfile = 'proxy' | 'lt' | 'standard' | 'hq' | '4444' | '4444-xq';
+/** Audio codecs. */
+type AudioCodec = 'aac' | 'mp3' | 'wav' | 'opus' | 'flac';
+/** Encoding configuration. */
+interface EncodingConfig {
+    /** Video codec (default 'h264') */
+    videoCodec?: VideoCodec;
+    /** Audio codec (default 'aac') */
+    audioCodec?: AudioCodec;
+    /** Constant Rate Factor for quality (lower = better, codec-dependent) */
+    crf?: number;
+    /** Video bitrate (e.g., '5M', '10M') */
+    videoBitrate?: string;
+    /** Audio bitrate (e.g., '128k', '320k') */
+    audioBitrate?: string;
+    /** ProRes profile (only when videoCodec is 'prores') */
+    proresProfile?: ProResProfile;
+    /** Pixel format (default 'yuv420p') */
+    pixelFormat?: string;
+}
+
 /**
  * Font weight options for custom fonts.
  */
@@ -3567,6 +3648,140 @@ declare function getPresetsByType(type: 'entrance' | 'exit' | 'emphasis'): Prese
  */
 declare function generatePresetKeyframes(name: string, options: PresetOptions): Keyframe[];
 
+interface RGBA {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+}
+/**
+ * Parse any supported color format to RGBA components.
+ *
+ * Supports hex (#fff, #ffffff, #ffffffaa), rgb(), rgba(), hsl(), hsla(),
+ * and CSS named colors.
+ */
+declare function parseColor(color: string): RGBA;
+/**
+ * Convert RGBA components to an rgba() CSS string.
+ */
+declare function colorToString(color: RGBA): string;
+/**
+ * Map a numeric value through input/output color ranges, interpolating
+ * between colors in RGB space.
+ *
+ * @param value - The input value to map.
+ * @param inputRange - Ascending numeric breakpoints (must have same length as outputRange).
+ * @param outputRange - Color strings corresponding to each breakpoint.
+ * @returns An rgba() CSS color string.
+ *
+ * @example
+ * interpolateColors(0.5, [0, 1], ['#000', '#fff'])
+ * // => "rgba(128, 128, 128, 1)"
+ */
+declare function interpolateColors(value: number, inputRange: number[], outputRange: string[]): string;
+
+/**
+ * Return a deterministic random number in [0, 1) for a given seed.
+ * The same seed always produces the same value.
+ *
+ * @param seed - A string or number seed.
+ * @returns A deterministic value in [0, 1).
+ */
+declare function random(seed: string | number): number;
+/**
+ * Return a deterministic random number in [min, max) for a given seed.
+ *
+ * @param seed - A string or number seed.
+ * @param min - Minimum value (inclusive).
+ * @param max - Maximum value (exclusive).
+ * @returns A deterministic value in [min, max).
+ */
+declare function randomRange(seed: string | number, min: number, max: number): number;
+/**
+ * Return a deterministic random integer in [min, max] for a given seed.
+ *
+ * @param seed - A string or number seed.
+ * @param min - Minimum value (inclusive).
+ * @param max - Maximum value (inclusive).
+ * @returns A deterministic integer in [min, max].
+ */
+declare function randomInt(seed: string | number, min: number, max: number): number;
+/**
+ * Create a seeded PRNG function that returns a different value on each call.
+ * Uses mulberry32 with internal state that advances with each invocation.
+ *
+ * @param seed - A string or number seed.
+ * @returns A function that returns a new random value in [0, 1) on each call.
+ */
+declare function createRandom(seed: string | number): () => number;
+
+/**
+ * Simplex noise implementation for 2D and 3D.
+ *
+ * Based on the simplex noise algorithm by Ken Perlin, adapted from
+ * public domain / MIT-licensed reference implementations.
+ */
+/**
+ * 2D simplex noise. Returns a value in [-1, 1].
+ * Deterministic: the same seed and coordinates always produce the same result.
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+declare function noise2D(seed: string | number, x: number, y: number): number;
+/**
+ * 3D simplex noise. Returns a value in [-1, 1].
+ * Deterministic: the same seed and coordinates always produce the same result.
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param z - Z coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+declare function noise3D(seed: string | number, x: number, y: number, z: number): number;
+
+/**
+ * GIF frame metadata and timing utilities.
+ *
+ * Actual GIF decoding happens at the renderer level; this module provides
+ * metadata types and a helper to map video-timeline time to GIF frame indices.
+ */
+/** A single frame from a GIF. */
+interface GifFrame {
+    /** Frame index */
+    index: number;
+    /** Delay in milliseconds */
+    delay: number;
+    /** Disposal method (0 = none, 1 = keep, 2 = restore bg, 3 = restore prev) */
+    disposal: number;
+}
+/** Parsed GIF metadata. */
+interface GifMetadata {
+    width: number;
+    height: number;
+    frames: GifFrame[];
+    /** Total duration of one loop in milliseconds */
+    totalDuration: number;
+    /** Number of loops (0 = infinite) */
+    loopCount: number;
+}
+/**
+ * Get the GIF frame index for a given video timeline time.
+ *
+ * Maps video timeline to GIF timeline considering speed and looping.
+ * Uses cumulative frame delays to handle variable-delay GIFs correctly.
+ *
+ * @param metadata - Parsed GIF metadata with frame delays
+ * @param timeMs - Current time in the video timeline (milliseconds)
+ * @param loop - Whether to loop the GIF (default true)
+ * @param speed - Playback speed multiplier (default 1)
+ * @returns The GIF frame index to display
+ */
+declare function getGifFrameAtTime(metadata: GifMetadata, timeMs: number, loop?: boolean, speed?: number): number;
+
 /**
  * Information about a layer that could not be rendered in the SVG export.
  */
@@ -3602,6 +3817,188 @@ interface SvgExportResult {
  * is returned in the result's `unsupportedLayers` array.
  */
 declare function exportAnimatedSvg(template: Template, inputs?: Record<string, unknown>): SvgExportResult;
+
+/** Measured text dimensions */
+interface TextMeasurement {
+    width: number;
+    height: number;
+}
+/** Options for measuring text */
+interface MeasureTextOptions {
+    text: string;
+    fontFamily: string;
+    fontSize: number;
+    fontWeight?: string | number;
+    fontStyle?: string;
+    letterSpacing?: number;
+    lineHeight?: number;
+    maxWidth?: number;
+}
+/** Options for fitting text */
+interface FitTextOptions {
+    text: string;
+    withinWidth: number;
+    fontFamily: string;
+    minFontSize?: number;
+    maxFontSize?: number;
+    fontWeight?: string | number;
+    letterSpacing?: number;
+}
+/** Result of fitting text */
+interface FitTextResult {
+    fontSize: number;
+}
+/**
+ * Measure text dimensions using character-width estimation.
+ *
+ * Works in both browser and Node environments without requiring
+ * a DOM or canvas. Uses heuristic character widths based on font family.
+ */
+declare function measureText(options: MeasureTextOptions): TextMeasurement;
+/**
+ * Find the largest font size that fits text within a given width.
+ *
+ * Uses binary search with `measureText` to find the optimal size
+ * between `minFontSize` and `maxFontSize`.
+ */
+declare function fitText(options: FitTextOptions): FitTextResult;
+
+/** Decoded audio data */
+interface AudioData {
+    /** Raw channel data (Float32Array per channel) */
+    channelData: Float32Array[];
+    /** Sample rate in Hz */
+    sampleRate: number;
+    /** Number of channels */
+    numberOfChannels: number;
+    /** Duration in seconds */
+    durationInSeconds: number;
+    /** Total number of samples per channel */
+    length: number;
+}
+/** Options for visualizing audio */
+interface VisualizeAudioOptions {
+    audioData: AudioData;
+    /** Current frame number */
+    frame: number;
+    /** Frames per second */
+    fps: number;
+    /** Number of frequency samples to return (default 256) */
+    numberOfSamples?: number;
+    /** Smoothing factor 0-1 (default 0.8) */
+    smoothingTimeConstant?: number;
+}
+/** Options for waveform visualization */
+interface VisualizeWaveformOptions {
+    audioData: AudioData;
+    /** Current frame number */
+    frame: number;
+    /** Frames per second */
+    fps: number;
+    /** Number of samples to return (default 64) */
+    numberOfSamples?: number;
+}
+/** Options for getting a waveform portion */
+interface WaveformPortionOptions {
+    audioData: AudioData;
+    startTimeInSeconds: number;
+    durationInSeconds: number;
+    numberOfSamples?: number;
+}
+/**
+ * Create AudioData from raw samples.
+ * Actual audio decoding happens at the renderer level; this just wraps the data.
+ */
+declare function getAudioData(samples: Float32Array, sampleRate: number, numberOfChannels?: number): AudioData;
+/**
+ * Returns frequency spectrum array for the current frame.
+ * Values are normalized between 0 and 1.
+ */
+declare function visualizeAudio(options: VisualizeAudioOptions): number[];
+/**
+ * Returns waveform amplitude values (-1 to 1) for the current frame's audio window.
+ */
+declare function visualizeAudioWaveform(options: VisualizeWaveformOptions): number[];
+/**
+ * Returns downsampled waveform data for a specific time range.
+ * Useful for overview visualizations.
+ */
+declare function getWaveformPortion(options: WaveformPortionOptions): number[];
+/**
+ * Returns duration of the audio in seconds.
+ */
+declare function getAudioDuration(audioData: AudioData): number;
+/**
+ * Convert array of [x, y] points into a smooth SVG path string
+ * using Catmull-Rom to cubic bezier conversion.
+ */
+declare function createSmoothSvgPath(points: Array<[number, number]>): string;
+
+/**
+ * Animate SVG path drawing from invisible (progress=0) to fully drawn (progress=1).
+ * Returns stroke-dasharray and stroke-dashoffset values to apply to an SVG element.
+ */
+declare function evolvePath(d: string, progress: number): {
+    d: string;
+    strokeDasharray: string;
+    strokeDashoffset: number;
+};
+/**
+ * Calculate total length of an SVG path string.
+ */
+declare function getLength(d: string): number;
+/**
+ * Get coordinates at a specific length along the path.
+ */
+declare function getPointAtLength(d: string, length: number): {
+    x: number;
+    y: number;
+};
+/**
+ * Get tangent vector (unit length) at a specific length along the path.
+ */
+declare function getTangentAtLength(d: string, length: number): {
+    x: number;
+    y: number;
+};
+/**
+ * Calculate bounding box of a path.
+ */
+declare function getBoundingBox(d: string): {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+};
+/**
+ * Scale all coordinates in a path.
+ */
+declare function scalePath(d: string, scaleX: number, scaleY?: number): string;
+/**
+ * Translate all coordinates in a path.
+ */
+declare function translatePath(d: string, dx: number, dy: number): string;
+/**
+ * Translate path so it starts at (0, 0).
+ */
+declare function resetPath(d: string): string;
+/**
+ * Reverse drawing direction of a path.
+ */
+declare function reversePath(d: string): string;
+/**
+ * Morph between two SVG paths by linearly interpolating coordinates.
+ * If command counts differ, the shorter path is padded by repeating its last point.
+ */
+declare function interpolatePath(progress: number, d1: string, d2: string): string;
+/**
+ * Split a path into individual subpaths (one per M command).
+ */
+declare function getSubpaths(d: string): string[];
+/**
+ * Convert all relative commands to absolute commands.
+ */
+declare function normalizePath(d: string): string;
 
 /**
  * FontManager coordinates font loading for templates.
@@ -3972,4 +4369,4 @@ declare function isFontAvailable(family: string): boolean;
  */
 declare function getRandomFonts(count?: number): FontMetadata[];
 
-export { type AmbientLightConfig, type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BasicMaterialConfig, type BlendMode, type BlurPreset, type BoxGeometry, type CameraType, type Color, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type ConeGeometry, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type CylinderGeometry, DEFAULT_MOTION_BLUR_CONFIG, type DirectionalLightConfig, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FrameAwareProps, type GLTFGeometry, type GeometryType, type GoogleFontDefinition, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type HemisphereLightConfig, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LightType, type LoadedFonts, type LottieLayer, type LottieLayerProps, MOTION_BLUR_QUALITY_PRESETS, type MatCapMaterialConfig, type MaterialType, type MotionBlurConfig, type MotionBlurQuality, type NamedFontWeight, type NormalMaterialConfig, type NumericFontWeight, type OrthographicCameraConfig, type OutputConfig, type Padding, type PartialTemplate, type PerspectiveCameraConfig, type PhongMaterialConfig, type PhysicalMaterialConfig, type PlaneGeometry, type PointLightConfig, type Position, type PresetDefinition, type PresetOptions, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedMotionBlurConfig, type ResolvedStyle, type Rotation3, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SphereGeometry, type SpotLightConfig, type StandardMaterialConfig, type SvgExportResult, type SystemFont, type Template, type TemplateAuthor, TemplateProcessor, type Text3DGeometry, type TextAlign, type TextLayer, type TextLayerProps, type TextShadow, type TextStroke, type TextureConfig, type ThreeCameraConfig, type ThreeGeometry, type ThreeLayer, type ThreeLayerProps, type ThreeLightConfig, type ThreeMaterialConfig, type ThreeMeshConfig, type TorusGeometry, type TransitionDirection, type TransitionType, type UnsupportedLayerInfo, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type Vector3, type VerticalAlign, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type WeightToNumeric, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, exportAnimatedSvg, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, mergeMotionBlurConfigs, numericToNamedWeight, parseEasing, resolveMotionBlurConfig, searchFonts, templateSchema, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, weightToNumeric };
+export { type AmbientLightConfig, type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioCodec, type AudioData, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BasicMaterialConfig, type BlendMode, type BlurPreset, type BoxGeometry, type CameraType, type Color, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type ConeGeometry, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type CylinderGeometry, DEFAULT_MOTION_BLUR_CONFIG, type DirectionalLightConfig, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EncodingConfig, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FitTextOptions, type FitTextResult, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FrameAwareProps, type GLTFGeometry, type GeometryType, type GifFrame, type GifLayer, type GifLayerProps, type GifMetadata, type GoogleFontDefinition, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type HemisphereLightConfig, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LightType, type LoadedFonts, type LottieLayer, type LottieLayerProps, MOTION_BLUR_QUALITY_PRESETS, type MatCapMaterialConfig, type MaterialType, type MeasureTextOptions, type MotionBlurConfig, type MotionBlurQuality, type NamedFontWeight, type NormalMaterialConfig, type NumericFontWeight, type OrthographicCameraConfig, type OutputConfig, type Padding, type PartialTemplate, type PerspectiveCameraConfig, type PhongMaterialConfig, type PhysicalMaterialConfig, type PlaneGeometry, type PointLightConfig, type Position, type PresetDefinition, type PresetOptions, type ProResProfile, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedMotionBlurConfig, type ResolvedStyle, type Rotation3, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SphereGeometry, type SpotLightConfig, type StandardMaterialConfig, type SvgExportResult, type SystemFont, type Template, type TemplateAuthor, TemplateProcessor, type Text3DGeometry, type TextAlign, type TextLayer, type TextLayerProps, type TextMeasurement, type TextShadow, type TextSpan, type TextStroke, type TextureConfig, type ThreeCameraConfig, type ThreeGeometry, type ThreeLayer, type ThreeLayerProps, type ThreeLightConfig, type ThreeMaterialConfig, type ThreeMeshConfig, type TorusGeometry, type TransitionDirection, type TransitionType, type UnsupportedLayerInfo, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type Vector3, type VerticalAlign, type VideoCodec, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type VisualizeAudioOptions, type VisualizeWaveformOptions, type WaveformPortionOptions, type WeightToNumeric, colorToString, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createRandom, createSmoothSvgPath, createSpring, evolvePath, exportAnimatedSvg, filterToCSS, filtersToCSS, fitText, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getAudioData, getAudioDuration, getBoundingBox, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getGifFrameAtTime, getLayerSchema, getLength, getPointAtLength, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getSubpaths, getTangentAtLength, getTemplateSchema, getValueAtFrame, getVariableFonts, getWaveformPortion, interpolate, interpolateColors, interpolatePath, isFontAvailable, isNamedWeight, isNumericWeight, measureText, mergeMotionBlurConfigs, noise2D, noise3D, normalizePath, numericToNamedWeight, parseColor, parseEasing, random, randomInt, randomRange, resetPath, resolveMotionBlurConfig, reversePath, scalePath, searchFonts, templateSchema, translatePath, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, visualizeAudio, visualizeAudioWaveform, weightToNumeric };

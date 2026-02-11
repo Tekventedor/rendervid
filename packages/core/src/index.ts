@@ -69,7 +69,32 @@ export {
   generatePresetKeyframes,
   type PresetDefinition,
   type PresetOptions,
+  // Color interpolation
+  interpolateColors,
+  parseColor,
+  colorToString,
 } from './animation';
+
+// Random
+export {
+  random,
+  randomRange,
+  randomInt,
+  createRandom,
+} from './utils/random';
+
+// Noise
+export {
+  noise2D,
+  noise3D,
+} from './utils/noise';
+
+// GIF Utilities
+export {
+  getGifFrameAtTime,
+  type GifFrame,
+  type GifMetadata,
+} from './utils/gif';
 
 // SVG Export
 export {
@@ -77,6 +102,46 @@ export {
   type SvgExportResult,
   type UnsupportedLayerInfo,
 } from './export/svg-exporter';
+
+// Text Utilities
+export {
+  measureText,
+  fitText,
+  type TextMeasurement,
+  type MeasureTextOptions,
+  type FitTextOptions,
+  type FitTextResult,
+} from './utils/text';
+
+// Audio Visualization
+export {
+  getAudioData,
+  visualizeAudio,
+  visualizeAudioWaveform,
+  getWaveformPortion,
+  getAudioDuration,
+  createSmoothSvgPath,
+  type AudioData,
+  type VisualizeAudioOptions,
+  type VisualizeWaveformOptions,
+  type WaveformPortionOptions,
+} from './utils/audio';
+
+// SVG Path Utilities
+export {
+  evolvePath,
+  getLength,
+  getPointAtLength,
+  getTangentAtLength,
+  getBoundingBox,
+  scalePath,
+  translatePath,
+  resetPath,
+  reversePath,
+  interpolatePath,
+  getSubpaths,
+  normalizePath,
+} from './utils/paths';
 
 // Fonts
 export type {

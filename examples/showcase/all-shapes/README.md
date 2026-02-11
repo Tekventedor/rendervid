@@ -6,6 +6,8 @@ Demonstrates all available shape types and gradients in Rendervid.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

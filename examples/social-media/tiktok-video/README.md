@@ -6,6 +6,8 @@ Vertical video with trendy multi-scene animations for TikTok.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - 9:16 aspect ratio (1080x1920)

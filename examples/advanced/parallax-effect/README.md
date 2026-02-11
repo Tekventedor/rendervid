@@ -6,6 +6,8 @@ Multi-layer composition with different animation speeds creating a stunning dept
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - Background, midground, and foreground layers

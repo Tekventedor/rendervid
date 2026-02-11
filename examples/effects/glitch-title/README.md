@@ -2,6 +2,12 @@
 
 A dramatic cyberpunk-style title intro with advanced glitch effects.
 
+## Preview
+
+![Preview](preview.gif)
+
+[View animated SVG](preview.svg)
+
 ## Overview
 
 This template creates an edgy, tech-inspired title card using multiple glitch effect types. The title appears with a powerful RGB split effect while the subtitle features scramble distortion, creating a dramatic reveal perfect for gaming videos, tech content, or any project needing a cyberpunk aesthetic.

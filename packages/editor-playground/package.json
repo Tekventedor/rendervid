@@ -1,7 +1,8 @@
 {
   "name": "@rendervid/editor-playground",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "description": "Interactive playground for the Rendervid video editor component",
+  "files": ["dist"],
   "type": "module",
   "scripts": {
     "dev": "vite",

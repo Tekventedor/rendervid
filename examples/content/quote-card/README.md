@@ -6,6 +6,8 @@ Eye-catching quote card for sharing inspirational quotes on social media.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

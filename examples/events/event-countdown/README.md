@@ -5,6 +5,8 @@ Countdown timer display for upcoming events, launches, or announcements.
 ## Preview
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 ```bash
 pnpm run examples:render events/event-countdown

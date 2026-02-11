@@ -6,6 +6,8 @@ Compelling before/after comparison video for transformations.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 A split-screen comparison video showing before and after states. Features a sliding reveal animation, bold labels, and dramatic transitions. Perfect for fitness, home renovation, product improvements, and any transformation content.

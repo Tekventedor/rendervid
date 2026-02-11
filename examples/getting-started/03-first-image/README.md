@@ -6,6 +6,8 @@ Generate a social media image with text overlay - perfect for thumbnails, blog h
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 
 ![Preview](preview.png)
 

@@ -6,6 +6,8 @@ Side-by-side comparison demonstrating all available filter effects in Rendervid.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

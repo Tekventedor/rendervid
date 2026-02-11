@@ -6,6 +6,8 @@ Image optimized for Twitter/X cards and posts.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 
 ![Preview](preview.png)
 

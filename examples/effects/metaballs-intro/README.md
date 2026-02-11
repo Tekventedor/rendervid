@@ -6,6 +6,8 @@ Fluid metaballs animation with vibrant colors and orbital movement, perfect for 
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - Smooth metaballs effect using SVG filters

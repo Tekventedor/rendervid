@@ -6,6 +6,8 @@ Feature your product with stunning visuals, key features, and pricing.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 A professional product showcase video with three scenes: intro with product name and tagline, features display with staggered animations, and pricing with call-to-action. Perfect for product launches and promotional content.

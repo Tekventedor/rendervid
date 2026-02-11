@@ -60,3 +60,10 @@ export {
   getPresetsByType,
   generatePresetKeyframes,
 } from './presets';
+
+// Color interpolation
+export {
+  interpolateColors,
+  parseColor,
+  colorToString,
+} from './color';

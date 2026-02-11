@@ -6,6 +6,8 @@ Circular progress indicator with percentage display
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 **[Download Video (MP4)](video.mp4)**
 
 ## Specifications

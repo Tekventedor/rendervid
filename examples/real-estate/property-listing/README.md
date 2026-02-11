@@ -6,6 +6,8 @@ Real estate property showcase with key details and price.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

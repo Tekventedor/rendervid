@@ -6,6 +6,8 @@ Demonstrates an animated counter using inline custom component
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 **[Download Video (MP4)](video.mp4)**
 
 ## Specifications

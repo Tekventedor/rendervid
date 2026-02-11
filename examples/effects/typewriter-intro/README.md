@@ -6,6 +6,8 @@ Classic terminal-style typewriter intro with retro computer aesthetic and cursor
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - Terminal-style interface with border and header

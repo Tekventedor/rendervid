@@ -6,6 +6,8 @@ Dynamic text animations with words appearing, moving, and transforming.
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - Multiple animated words with different effects

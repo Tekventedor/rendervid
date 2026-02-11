@@ -6,6 +6,8 @@ A comprehensive showcase demonstrating all 8 new text animation components from 
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Duration
 18 seconds (540 frames at 30fps)
 

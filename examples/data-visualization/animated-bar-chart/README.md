@@ -6,6 +6,8 @@ Animated horizontal bar chart with staggered bar reveals.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 A professional animated bar chart with horizontal bars that slide in with staggered timing. Features customizable labels, values, and colors. Perfect for presenting market share, survey results, or any comparative data.

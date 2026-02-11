@@ -6,6 +6,8 @@ Open house announcement with date, time, and address.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

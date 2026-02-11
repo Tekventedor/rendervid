@@ -6,6 +6,8 @@ Stunning neon text with glow, flicker, and animation effects
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 **[Download Video (MP4)](video.mp4)**
 
 ## Specifications

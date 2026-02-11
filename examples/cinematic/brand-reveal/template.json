@@ -1,0 +1,370 @@
+{
+  "name": "Minimalist Brand Reveal",
+  "description": "A clean, Apple-inspired minimalist brand reveal with elegant typography, subtle animations, and refined whitespace. Perfect for luxury brands, design agencies, and premium product launches.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "brandName",
+      "type": "string",
+      "label": "Brand Name",
+      "description": "Primary brand or company name",
+      "required": true,
+      "default": "Lumiere"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "description": "Brand tagline or slogan",
+      "required": false,
+      "default": "Crafted with intention"
+    },
+    {
+      "key": "website",
+      "type": "string",
+      "label": "Website URL",
+      "description": "Brand website address",
+      "required": false,
+      "default": "www.lumiere.design"
+    },
+    {
+      "key": "accentColor",
+      "type": "color",
+      "label": "Accent Color",
+      "description": "Subtle accent color for decorative lines",
+      "required": false,
+      "default": "#1a1a1a"
+    }
+  ],
+  "defaults": {
+    "brandName": "Lumiere",
+    "tagline": "Crafted with intention",
+    "website": "www.lumiere.design",
+    "accentColor": "#1a1a1a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#fafafa"
+            }
+          },
+          {
+            "id": "bg-texture-circle-1",
+            "type": "shape",
+            "position": { "x": 1500, "y": -200 },
+            "size": { "width": 600, "height": 600 },
+            "opacity": 0.03,
+            "props": {
+              "shape": "ellipse",
+              "fill": "#000000"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 50,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "bg-texture-circle-2",
+            "type": "shape",
+            "position": { "x": -100, "y": 700 },
+            "size": { "width": 400, "height": 400 },
+            "opacity": 0.02,
+            "props": {
+              "shape": "ellipse",
+              "fill": "#000000"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 50,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "top-line",
+            "type": "shape",
+            "position": { "x": 910, "y": 380 },
+            "size": { "width": 100, "height": 1 },
+            "from": 10,
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{accentColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "brand-name",
+            "type": "text",
+            "position": { "x": 260, "y": 410 },
+            "size": { "width": 1400, "height": 130 },
+            "from": 20,
+            "props": {
+              "text": "{{brandName}}",
+              "fontSize": 96,
+              "fontWeight": "300",
+              "color": "#1a1a1a",
+              "textAlign": "center",
+              "fontFamily": "Georgia, 'Playfair Display', 'Times New Roman', serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 0,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "bottom-line",
+            "type": "shape",
+            "position": { "x": 910, "y": 560 },
+            "size": { "width": 100, "height": 1 },
+            "from": 35,
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{accentColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "tagline-text",
+            "type": "text",
+            "position": { "x": 560, "y": 575 },
+            "size": { "width": 800, "height": 50 },
+            "from": 45,
+            "props": {
+              "text": "{{tagline}}",
+              "fontSize": 20,
+              "fontWeight": "300",
+              "color": "#666666",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 6
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "website-line-left",
+            "type": "shape",
+            "position": { "x": 760, "y": 960 },
+            "size": { "width": 140, "height": 1 },
+            "from": 60,
+            "opacity": 0.2,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a1a"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "website-line-right",
+            "type": "shape",
+            "position": { "x": 1020, "y": 960 },
+            "size": { "width": 140, "height": 1 },
+            "from": 60,
+            "opacity": 0.2,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a1a"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "website-text",
+            "type": "text",
+            "position": { "x": 660, "y": 945 },
+            "size": { "width": 600, "height": 35 },
+            "from": 65,
+            "props": {
+              "text": "{{website}}",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "color": "#999999",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 3
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 25,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "corner-accent-tl",
+            "type": "shape",
+            "position": { "x": 60, "y": 60 },
+            "size": { "width": 40, "height": 1 },
+            "from": 5,
+            "opacity": 0.15,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a1a"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "corner-accent-tl-v",
+            "type": "shape",
+            "position": { "x": 60, "y": 60 },
+            "size": { "width": 1, "height": 40 },
+            "from": 5,
+            "opacity": 0.15,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a1a"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 5,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "corner-accent-br",
+            "type": "shape",
+            "position": { "x": 1820, "y": 1020 },
+            "size": { "width": 40, "height": 1 },
+            "from": 5,
+            "opacity": 0.15,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a1a"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "corner-accent-br-v",
+            "type": "shape",
+            "position": { "x": 1860, "y": 980 },
+            "size": { "width": 1, "height": 40 },
+            "from": 5,
+            "opacity": 0.15,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a1a"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 5,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

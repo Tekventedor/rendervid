@@ -6,6 +6,8 @@ Animated counting numbers with formatting.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 Dynamic number counter animation that counts up from zero to a target value. Features large typography, optional formatting (currency, percentage), and smooth easing. Perfect for showcasing statistics, achievements, and KPIs.

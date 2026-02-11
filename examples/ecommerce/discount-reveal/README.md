@@ -5,6 +5,8 @@ Animated discount code reveal with suspense and excitement.
 ## Preview
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 ```bash
 pnpm run examples:render ecommerce/discount-reveal

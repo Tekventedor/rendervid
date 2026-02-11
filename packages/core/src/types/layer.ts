@@ -16,7 +16,8 @@ export type LayerType =
   | 'group'
   | 'lottie'
   | 'custom'
-  | 'three';
+  | 'three'
+  | 'gif';
 
 /**
  * Position in 2D space.
@@ -198,6 +199,34 @@ export type Padding = number | {
 };
 
 /**
+ * Styled text span for rich text.
+ */
+export interface TextSpan {
+  /** Text content for this span */
+  text: string;
+  /** Override font family */
+  fontFamily?: string;
+  /** Override font size */
+  fontSize?: number;
+  /** Override font weight */
+  fontWeight?: FontWeight;
+  /** Override font style */
+  fontStyle?: 'normal' | 'italic';
+  /** Override text color */
+  color?: string;
+  /** Override letter spacing */
+  letterSpacing?: number;
+  /** Background color for this span (highlight effect) */
+  backgroundColor?: string;
+  /** Override text decoration */
+  textDecoration?: 'none' | 'underline' | 'line-through';
+  /** Override text stroke */
+  stroke?: TextStroke;
+  /** Override text shadow */
+  textShadow?: TextShadow;
+}
+
+/**
  * Props for text layer.
  */
 export interface TextLayerProps {
@@ -239,6 +268,8 @@ export interface TextLayerProps {
   maxLines?: number;
   /** Overflow behavior */
   overflow?: 'visible' | 'hidden' | 'ellipsis';
+  /** Rich text spans — if provided, overrides the `text` property */
+  spans?: TextSpan[];
 }
 
 /**
@@ -345,6 +376,22 @@ export interface CustomLayerProps {
 }
 
 /**
+ * Props for GIF layer.
+ */
+export interface GifLayerProps {
+  /** GIF source URL or data URI */
+  src: string;
+  /** Image fit mode */
+  fit?: ImageFit;
+  /** Whether to loop the GIF (default true) */
+  loop?: boolean;
+  /** Playback speed multiplier (default 1) */
+  speed?: number;
+  /** Start from specific frame (default 0) */
+  startFrame?: number;
+}
+
+/**
  * Union of all layer props.
  */
 export type LayerProps =
@@ -355,7 +402,8 @@ export type LayerProps =
   | AudioLayerProps
   | GroupLayerProps
   | LottieLayerProps
-  | CustomLayerProps;
+  | CustomLayerProps
+  | GifLayerProps;
 
 /**
  * Custom component reference.
@@ -512,6 +560,14 @@ export interface CustomLayer extends LayerBase {
 }
 
 /**
+ * GIF layer.
+ */
+export interface GifLayer extends LayerBase {
+  type: 'gif';
+  props: GifLayerProps;
+}
+
+/**
  * Union of all layer types.
  */
 export type Layer =
@@ -523,4 +579,5 @@ export type Layer =
   | GroupLayer
   | LottieLayer
   | CustomLayer
-  | ThreeLayer;
+  | ThreeLayer
+  | GifLayer;

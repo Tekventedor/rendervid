@@ -6,6 +6,8 @@ The simplest Rendervid template - your first animated video!
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 This example creates a 3-second video with animated text that fades in and pulses. It's the perfect starting point to understand Rendervid's template structure.

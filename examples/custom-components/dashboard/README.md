@@ -6,6 +6,8 @@ Demonstrates using multiple custom components in a single template
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 **[Download Video (MP4)](video.mp4)**
 
 ## Specifications

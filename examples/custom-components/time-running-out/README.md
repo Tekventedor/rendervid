@@ -8,6 +8,8 @@ This example demonstrates the power of **inline custom components** in Rendervid
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 
 **Duration:** 8 seconds @ 60 FPS
 **Resolution:** 1920x1080

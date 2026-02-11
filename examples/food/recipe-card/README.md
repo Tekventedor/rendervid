@@ -6,6 +6,8 @@ Recipe introduction card for cooking videos with food image.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

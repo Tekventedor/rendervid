@@ -5,6 +5,8 @@ Dramatic new product announcement with video background and reveal animation.
 ## Preview
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - Dynamic video background layer

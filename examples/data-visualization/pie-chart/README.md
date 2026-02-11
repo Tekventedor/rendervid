@@ -6,6 +6,8 @@ Animated pie chart with segment reveal.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 A dynamic pie chart animation where segments appear one by one with rotation and scale effects. Features a legend, percentage labels, and smooth transitions between segments.

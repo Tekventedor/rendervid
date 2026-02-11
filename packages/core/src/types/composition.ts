@@ -40,6 +40,12 @@ export interface SceneTransition {
   direction?: TransitionDirection;
   /** Easing function */
   easing?: string;
+  /** Spring-based timing configuration (used instead of easing when provided) */
+  spring?: {
+    mass?: number;      // default 1
+    stiffness?: number; // default 100
+    damping?: number;   // default 10
+  };
 }
 
 /**

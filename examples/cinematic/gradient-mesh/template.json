@@ -1,0 +1,436 @@
+{
+  "name": "Gradient Mesh Background",
+  "description": "A mesmerizing animated gradient mesh with overlapping colorful ellipses that float and pulse organically. Features centered text overlay perfect for brand presentations, creative intros, and artistic backgrounds.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 10
+  },
+  "inputs": [
+    {
+      "key": "companyName",
+      "type": "string",
+      "label": "Company Name",
+      "description": "Primary company or brand name",
+      "required": true,
+      "default": "AURORA STUDIO"
+    },
+    {
+      "key": "tagline",
+      "type": "string",
+      "label": "Tagline",
+      "description": "Short tagline or slogan",
+      "required": false,
+      "default": "Design Beyond Boundaries"
+    },
+    {
+      "key": "colorPink",
+      "type": "color",
+      "label": "Pink Accent",
+      "description": "Hot pink gradient color",
+      "required": false,
+      "default": "#ec4899"
+    },
+    {
+      "key": "colorPurple",
+      "type": "color",
+      "label": "Purple Accent",
+      "description": "Purple gradient color",
+      "required": false,
+      "default": "#8b5cf6"
+    },
+    {
+      "key": "colorBlue",
+      "type": "color",
+      "label": "Blue Accent",
+      "description": "Blue gradient color",
+      "required": false,
+      "default": "#3b82f6"
+    },
+    {
+      "key": "colorTeal",
+      "type": "color",
+      "label": "Teal Accent",
+      "description": "Teal gradient color",
+      "required": false,
+      "default": "#14b8a6"
+    }
+  ],
+  "defaults": {
+    "companyName": "AURORA STUDIO",
+    "tagline": "Design Beyond Boundaries",
+    "colorPink": "#ec4899",
+    "colorPurple": "#8b5cf6",
+    "colorBlue": "#3b82f6",
+    "colorTeal": "#14b8a6"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 300,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0a0a1a"
+            }
+          },
+          {
+            "id": "mesh-blob-pink-1",
+            "type": "shape",
+            "position": { "x": 100, "y": 50 },
+            "size": { "width": 800, "height": 700 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{colorPink}}" },
+                  { "offset": 0.7, "color": "rgba(236,72,153,0.3)" },
+                  { "offset": 1, "color": "rgba(236,72,153,0)" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "emphasis",
+                "effect": "float",
+                "delay": 40,
+                "duration": 120,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "mesh-blob-purple-1",
+            "type": "shape",
+            "position": { "x": 900, "y": -100 },
+            "size": { "width": 750, "height": 650 },
+            "opacity": 0.35,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{colorPurple}}" },
+                  { "offset": 0.6, "color": "rgba(139,92,246,0.3)" },
+                  { "offset": 1, "color": "rgba(139,92,246,0)" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "emphasis",
+                "effect": "float",
+                "delay": 60,
+                "duration": 140,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "mesh-blob-blue-1",
+            "type": "shape",
+            "position": { "x": 600, "y": 400 },
+            "size": { "width": 850, "height": 750 },
+            "opacity": 0.25,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{colorBlue}}" },
+                  { "offset": 0.6, "color": "rgba(59,130,246,0.3)" },
+                  { "offset": 1, "color": "rgba(59,130,246,0)" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 50,
+                "duration": 100,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "mesh-blob-teal-1",
+            "type": "shape",
+            "position": { "x": -100, "y": 500 },
+            "size": { "width": 700, "height": 600 },
+            "opacity": 0.3,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "{{colorTeal}}" },
+                  { "offset": 0.7, "color": "rgba(20,184,166,0.2)" },
+                  { "offset": 1, "color": "rgba(20,184,166,0)" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 20,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "emphasis",
+                "effect": "float",
+                "delay": 80,
+                "duration": 130,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "mesh-blob-pink-2",
+            "type": "shape",
+            "position": { "x": 1200, "y": 500 },
+            "size": { "width": 650, "height": 600 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#f472b6" },
+                  { "offset": 0.6, "color": "rgba(244,114,182,0.2)" },
+                  { "offset": 1, "color": "rgba(244,114,182,0)" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 70,
+                "duration": 110,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "mesh-blob-purple-2",
+            "type": "shape",
+            "position": { "x": 400, "y": -50 },
+            "size": { "width": 600, "height": 500 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#a78bfa" },
+                  { "offset": 0.6, "color": "rgba(167,139,250,0.2)" },
+                  { "offset": 1, "color": "rgba(167,139,250,0)" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 30,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "emphasis",
+                "effect": "float",
+                "delay": 90,
+                "duration": 150,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "mesh-blob-blue-2",
+            "type": "shape",
+            "position": { "x": 1400, "y": 100 },
+            "size": { "width": 550, "height": 500 },
+            "opacity": 0.22,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#60a5fa" },
+                  { "offset": 0.7, "color": "rgba(96,165,250,0.15)" },
+                  { "offset": 1, "color": "rgba(96,165,250,0)" }
+                ]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 35,
+                "duration": 40,
+                "easing": "easeOutCubic"
+              },
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 100,
+                "duration": 120,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "noise-overlay",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "opacity": 0.03,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff"
+            }
+          },
+          {
+            "id": "company-name",
+            "type": "text",
+            "position": { "x": 260, "y": 430 },
+            "size": { "width": 1400, "height": 120 },
+            "from": 50,
+            "props": {
+              "text": "{{companyName}}",
+              "fontSize": 88,
+              "fontWeight": "800",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 6,
+              "textShadow": "0 4px 30px rgba(0,0,0,0.5)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 40,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "divider-line",
+            "type": "shape",
+            "position": { "x": 810, "y": 560 },
+            "size": { "width": 300, "height": 2 },
+            "from": 70,
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "rgba(255,255,255,0)" },
+                  { "offset": 0.3, "color": "rgba(255,255,255,0.7)" },
+                  { "offset": 0.7, "color": "rgba(255,255,255,0.7)" },
+                  { "offset": 1, "color": "rgba(255,255,255,0)" }
+                ],
+                "angle": 0
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "tagline-text",
+            "type": "text",
+            "position": { "x": 460, "y": 580 },
+            "size": { "width": 1000, "height": 60 },
+            "from": 85,
+            "props": {
+              "text": "{{tagline}}",
+              "fontSize": 28,
+              "fontWeight": "300",
+              "color": "rgba(255,255,255,0.85)",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "delay": 0,
+                "duration": 35,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

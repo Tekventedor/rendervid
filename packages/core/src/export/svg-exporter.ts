@@ -18,7 +18,7 @@ import { getPropertiesAtFrame } from '../animation/interpolation';
 // Number of sample points for baking easing into CSS keyframes
 const SAMPLE_COUNT = 20;
 
-const UNSUPPORTED_TYPES = ['video', 'audio', 'lottie', 'custom', 'three'] as const;
+const UNSUPPORTED_TYPES = ['video', 'audio', 'lottie', 'custom', 'three', 'gif'] as const;
 
 const UNSUPPORTED_REASONS: Record<string, string> = {
   video: 'Video playback cannot be represented in static SVG',
@@ -26,6 +26,7 @@ const UNSUPPORTED_REASONS: Record<string, string> = {
   lottie: 'Lottie animations require a dedicated runtime player',
   custom: 'Custom React components cannot be serialized to SVG',
   three: 'Three.js 3D scenes require WebGL which is not available in SVG',
+  gif: 'Animated GIFs require frame-by-frame decoding which is not available in SVG',
 };
 
 /**
@@ -193,7 +194,7 @@ function convertLayer(
   for (let ai = 0; ai < anims.length; ai++) {
     const anim = anims[ai];
     const animId = `${layerId}-anim-${ai}`;
-    const result = generateAnimationCSS(anim, animId, fps, canvasSize);
+    const result = generateAnimationCSS(anim, animId, fps, canvasSize, x, y, baseScaleX, baseScaleY, baseRotation, baseOpacity);
     if (result) {
       styles.push(result.keyframes);
       animRules.push(result.rule(sceneOffsetSec));
@@ -208,11 +209,30 @@ function convertLayer(
   const visStart = (scene.startFrame + layerFrom) / fps;
   const visDur = layerDuration / fps;
 
+  // Determine if this layer has real (non-visibility) animations
+  const hasAnimations = animRules.length > 0;
+
   // Build CSS for this layer
   const cssRules: string[] = [];
-  cssRules.push(`      transform-origin: ${transformOrigin};`);
-  cssRules.push(`      transform: ${baseTransform};`);
-  cssRules.push(`      opacity: ${baseOpacity};`);
+
+  if (hasAnimations) {
+    // When CSS animations are present, the base position is baked into every
+    // keyframe's translate values, so the inline transform on <g> is removed.
+    // transform-origin must be offset by the layer's base position so it stays
+    // correct relative to the element's actual rendered location.
+    cssRules.push(`      transform-origin: ${round(anchorPxX + x)}px ${round(anchorPxY + y)}px;`);
+    // Set initial transform with base position so the element is correctly
+    // positioned before the animation starts (animation fill-mode is forwards,
+    // not backwards, so the element needs a sensible initial state).
+    cssRules.push(`      transform: ${buildTransform(x, y, baseScaleX, baseScaleY, baseRotation)};`);
+    cssRules.push(`      opacity: ${baseOpacity};`);
+  } else {
+    // No CSS animations - the inline transform on <g> handles positioning,
+    // so transform-origin is relative to the element's local coordinate space.
+    cssRules.push(`      transform-origin: ${transformOrigin};`);
+    cssRules.push(`      transform: ${baseTransform};`);
+    cssRules.push(`      opacity: ${baseOpacity};`);
+  }
 
   // Visibility: hide before start and after end if layer doesn't span full scene
   if (layerFrom > 0 || layerDuration < sceneDurationFrames) {
@@ -234,11 +254,21 @@ function convertLayer(
 
   styles.push(`    #${layerId} {\n${cssRules.join('\n')}\n    }`);
 
-  elements.push(
-    `  <g id="${layerId}" transform="translate(${round(x)}, ${round(y)})">`,
-    `    ${content}`,
-    `  </g>`,
-  );
+  if (hasAnimations) {
+    // No inline transform - all positioning is in the CSS animation keyframes.
+    elements.push(
+      `  <g id="${layerId}">`,
+      `    ${content}`,
+      `  </g>`,
+    );
+  } else {
+    // No animations - use inline transform for base positioning.
+    elements.push(
+      `  <g id="${layerId}" transform="translate(${round(x)}, ${round(y)})">`,
+      `    ${content}`,
+      `  </g>`,
+    );
+  }
 }
 
 // ─── Text layer ──────────────────────────────────────────────
@@ -273,9 +303,31 @@ function convertTextLayer(layer: TextLayer, defs: string[], layerId: string): st
     startY = fontSize;
   }
 
-  const tspans = lines.map((line, i) =>
-    `<tspan x="${textX}" dy="${i === 0 ? 0 : lineSpacing}">${esc(line)}</tspan>`,
-  ).join('');
+  // Rich text spans or plain text lines
+  let tspans: string;
+  if (props.spans && props.spans.length > 0) {
+    tspans = props.spans.map((span) => {
+      const spanAttrs: string[] = [];
+      if (span.fontFamily) spanAttrs.push(`font-family="${esc(span.fontFamily)}"`);
+      if (span.fontSize !== undefined) spanAttrs.push(`font-size="${span.fontSize}"`);
+      if (span.fontWeight) spanAttrs.push(`font-weight="${span.fontWeight}"`);
+      if (span.fontStyle) spanAttrs.push(`font-style="${span.fontStyle}"`);
+      if (span.color) spanAttrs.push(`fill="${esc(span.color)}"`);
+      if (span.letterSpacing !== undefined) spanAttrs.push(`letter-spacing="${span.letterSpacing}"`);
+      if (span.textDecoration) spanAttrs.push(`text-decoration="${span.textDecoration}"`);
+      if (span.stroke) {
+        spanAttrs.push(`stroke="${esc(span.stroke.color)}"`);
+        spanAttrs.push(`stroke-width="${span.stroke.width}"`);
+        spanAttrs.push(`paint-order="stroke"`);
+      }
+      const attrStr = spanAttrs.length > 0 ? ` ${spanAttrs.join(' ')}` : '';
+      return `<tspan${attrStr}>${esc(span.text)}</tspan>`;
+    }).join('');
+  } else {
+    tspans = lines.map((line, i) =>
+      `<tspan x="${textX}" dy="${i === 0 ? 0 : lineSpacing}">${esc(line)}</tspan>`,
+    ).join('');
+  }
 
   const attrs: string[] = [
     `font-family="${esc(fontFamily)}"`,
@@ -430,6 +482,12 @@ function generateAnimationCSS(
   animId: string,
   fps: number,
   canvasSize: Size,
+  baseX: number,
+  baseY: number,
+  baseScaleX: number,
+  baseScaleY: number,
+  baseRotation: number,
+  baseOpacity: number,
 ): AnimationCSSResult | null {
   const duration = anim.duration;
   if (duration <= 0) return null;
@@ -456,24 +514,29 @@ function generateAnimationCSS(
     const props = getPropertiesAtFrame(kfs, frame);
     const pct = Math.round((i / SAMPLE_COUNT) * 100);
 
+    // Bake the base position into the animation keyframe translate values.
+    // CSS animation transforms override the inline transform on the <g>,
+    // so we must include the base x,y offset in every keyframe.
+    const tx = baseX + (props.x ?? 0);
+    const ty = baseY + (props.y ?? 0);
+    const sx = (props.scaleX ?? 1) * baseScaleX;
+    const sy = (props.scaleY ?? 1) * baseScaleY;
+    const rot = (props.rotation ?? 0) + baseRotation;
+
     const transformParts: string[] = [];
-    if (props.x !== undefined || props.y !== undefined) {
-      transformParts.push(`translate(${round(props.x ?? 0)}px, ${round(props.y ?? 0)}px)`);
+    transformParts.push(`translate(${round(tx)}px, ${round(ty)}px)`);
+    if (sx !== 1 || sy !== 1) {
+      transformParts.push(`scale(${round(sx)}, ${round(sy)})`);
     }
-    if (props.scaleX !== undefined || props.scaleY !== undefined) {
-      transformParts.push(`scale(${round(props.scaleX ?? 1)}, ${round(props.scaleY ?? 1)})`);
-    }
-    if (props.rotation !== undefined) {
-      transformParts.push(`rotate(${round(props.rotation)}deg)`);
+    if (rot !== 0) {
+      transformParts.push(`rotate(${round(rot)}deg)`);
     }
 
     const cssParts: string[] = [];
-    if (transformParts.length > 0) {
-      cssParts.push(`transform: ${transformParts.join(' ')}`);
-    }
-    if (props.opacity !== undefined) {
-      cssParts.push(`opacity: ${round(props.opacity)}`);
-    }
+    cssParts.push(`transform: ${transformParts.join(' ')}`);
+    // Bake base opacity into animation keyframe opacity values
+    const effectiveOpacity = (props.opacity ?? 1) * baseOpacity;
+    cssParts.push(`opacity: ${round(effectiveOpacity)}`);
 
     if (cssParts.length > 0) {
       stops.push(`      ${pct}% { ${cssParts.join('; ')}; }`);

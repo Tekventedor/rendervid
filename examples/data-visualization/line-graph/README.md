@@ -6,6 +6,8 @@ Animated line graph with point-by-point reveal.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 An animated line graph that draws progressively, revealing data points one by one. Features grid lines, axis labels, and smooth line drawing animation. Ideal for showing trends, growth metrics, and time-series data.

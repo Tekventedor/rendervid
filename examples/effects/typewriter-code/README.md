@@ -6,6 +6,8 @@ Code typing effect with VS Code-style dark theme and matrix-style green cursor.
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Features
 
 - Authentic VS Code dark theme styling

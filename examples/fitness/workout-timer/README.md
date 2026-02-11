@@ -6,6 +6,8 @@ Exercise interval timer with workout name and countdown.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

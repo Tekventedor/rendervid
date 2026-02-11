@@ -5,6 +5,8 @@ Professional speaker introduction card for conferences, panels, and presentation
 ## Preview
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 ```bash
 pnpm run examples:render events/conference-intro

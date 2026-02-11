@@ -6,6 +6,8 @@ Real estate price reduction announcement.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

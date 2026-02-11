@@ -6,6 +6,8 @@ A complex 3D scene demonstrating multiple objects with different geometries, mat
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 [View full video (video.mp4)](./video.mp4)
 
 ## Features

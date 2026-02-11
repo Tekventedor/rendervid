@@ -6,6 +6,8 @@ Professional banner for LinkedIn company pages and profiles.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 
 ![Preview](preview.png)
 

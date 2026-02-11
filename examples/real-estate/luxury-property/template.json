@@ -1,0 +1,891 @@
+{
+  "name": "Luxury Property Listing",
+  "description": "Cinematic luxury real estate listing with hero property image, dark gradient overlays, gold accents, feature cards grid, and agent contact details. Two-scene premium presentation.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 10
+  },
+  "inputs": [
+    { "key": "propertyName", "type": "string", "label": "Property Name", "required": true, "default": "The Belmont Estate" },
+    { "key": "location", "type": "string", "label": "Location", "required": true, "default": "Pacific Palisades, California" },
+    { "key": "price", "type": "string", "label": "Price", "required": true, "default": "$4,500,000" },
+    { "key": "bedrooms", "type": "string", "label": "Bedrooms", "required": true, "default": "5" },
+    { "key": "bathrooms", "type": "string", "label": "Bathrooms", "required": true, "default": "4" },
+    { "key": "sqft", "type": "string", "label": "Square Feet", "required": true, "default": "6,200" },
+    { "key": "agentName", "type": "string", "label": "Agent Name", "required": true, "default": "Victoria Sterling" },
+    { "key": "agentPhone", "type": "string", "label": "Agent Phone", "required": true, "default": "+1 (310) 555-0182" },
+    { "key": "propertyImage", "type": "url", "label": "Property Image", "required": false, "default": "property.jpg" }
+  ],
+  "defaults": {
+    "propertyName": "The Belmont Estate",
+    "location": "Pacific Palisades, California",
+    "price": "$4,500,000",
+    "bedrooms": "5",
+    "bathrooms": "4",
+    "sqft": "6,200",
+    "agentName": "Victoria Sterling",
+    "agentPhone": "+1 (310) 555-0182",
+    "propertyImage": "property.jpg"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "scene-1-hero",
+        "startFrame": 0,
+        "endFrame": 150,
+        "layers": [
+          {
+            "id": "s1-bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1a1a1a"
+            }
+          },
+          {
+            "id": "s1-property-image",
+            "type": "image",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "src": "{{propertyImage}}",
+              "fit": "cover"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 30 }
+            ]
+          },
+          {
+            "id": "s1-gradient-overlay-bottom",
+            "type": "shape",
+            "position": { "x": 0, "y": 400 },
+            "size": { "width": 1920, "height": 680 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "transparent" },
+                  { "offset": 0.4, "color": "rgba(10,10,10,0.7)" },
+                  { "offset": 1, "color": "rgba(10,10,10,0.95)" }
+                ],
+                "angle": 180
+              }
+            }
+          },
+          {
+            "id": "s1-gradient-overlay-top",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 200 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "rgba(10,10,10,0.6)" },
+                  { "offset": 1, "color": "transparent" }
+                ],
+                "angle": 180
+              }
+            }
+          },
+          {
+            "id": "s1-gold-line-top",
+            "type": "shape",
+            "position": { "x": 100, "y": 620 },
+            "size": { "width": 80, "height": 2 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#c8a97e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 15, "duration": 20, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s1-exclusive-label",
+            "type": "text",
+            "position": { "x": 100, "y": 580 },
+            "size": { "width": 400, "height": 30 },
+            "props": {
+              "text": "EXCLUSIVE LISTING",
+              "fontSize": 14,
+              "fontWeight": "500",
+              "color": "#c8a97e",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 6
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s1-property-name",
+            "type": "text",
+            "position": { "x": 100, "y": 650 },
+            "size": { "width": 1200, "height": 100 },
+            "props": {
+              "text": "{{propertyName}}",
+              "fontSize": 72,
+              "fontWeight": "300",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Georgia, 'Times New Roman', serif",
+              "letterSpacing": 3,
+              "lineHeight": 1.1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 10, "duration": 30, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s1-location-icon",
+            "type": "shape",
+            "position": { "x": 100, "y": 778 },
+            "size": { "width": 10, "height": 10 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#c8a97e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 30, "duration": 15 }
+            ]
+          },
+          {
+            "id": "s1-location",
+            "type": "text",
+            "position": { "x": 120, "y": 770 },
+            "size": { "width": 800, "height": 35 },
+            "props": {
+              "text": "{{location}}",
+              "fontSize": 22,
+              "fontWeight": "300",
+              "color": "rgba(255,255,255,0.7)",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 2
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s1-price-bg",
+            "type": "shape",
+            "position": { "x": 1380, "y": 640 },
+            "size": { "width": 440, "height": 100 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "rgba(200,169,126,0.15)" },
+                  { "offset": 1, "color": "rgba(200,169,126,0.05)" }
+                ],
+                "angle": 90
+              },
+              "borderRadius": 8,
+              "stroke": "rgba(200,169,126,0.3)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 25, "duration": 25, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "s1-price-label",
+            "type": "text",
+            "position": { "x": 1380, "y": 650 },
+            "size": { "width": 440, "height": 24 },
+            "props": {
+              "text": "ASKING PRICE",
+              "fontSize": 12,
+              "fontWeight": "500",
+              "color": "#c8a97e",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 35, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s1-price",
+            "type": "text",
+            "position": { "x": 1380, "y": 678 },
+            "size": { "width": 440, "height": 55 },
+            "props": {
+              "text": "{{price}}",
+              "fontSize": 44,
+              "fontWeight": "300",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Georgia, 'Times New Roman', serif",
+              "letterSpacing": 2
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 35, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s1-bottom-bar",
+            "type": "shape",
+            "position": { "x": 0, "y": 1070 },
+            "size": { "width": 1920, "height": 10 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#c8a97e" },
+                  { "offset": 0.5, "color": "#d4b896" },
+                  { "offset": 1, "color": "#c8a97e" }
+                ],
+                "angle": 90
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 25 }
+            ]
+          },
+          {
+            "id": "s1-watermark",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "scene-2-details",
+        "startFrame": 150,
+        "endFrame": 300,
+        "layers": [
+          {
+            "id": "s2-bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#1a1a1a" },
+                  { "offset": 1, "color": "#0f0f0f" }
+                ],
+                "angle": 160
+              }
+            }
+          },
+          {
+            "id": "s2-glow",
+            "type": "shape",
+            "position": { "x": 600, "y": -200 },
+            "size": { "width": 700, "height": 500 },
+            "opacity": 0.05,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#c8a97e" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            }
+          },
+          {
+            "id": "s2-title-label",
+            "type": "text",
+            "position": { "x": 100, "y": 80 },
+            "size": { "width": 500, "height": 30 },
+            "props": {
+              "text": "PROPERTY FEATURES",
+              "fontSize": 14,
+              "fontWeight": "500",
+              "color": "#c8a97e",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 6
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-title-line",
+            "type": "shape",
+            "position": { "x": 100, "y": 120 },
+            "size": { "width": 60, "height": 2 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#c8a97e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 8, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-property-name-repeat",
+            "type": "text",
+            "position": { "x": 100, "y": 140 },
+            "size": { "width": 1000, "height": 60 },
+            "props": {
+              "text": "{{propertyName}}",
+              "fontSize": 48,
+              "fontWeight": "300",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Georgia, 'Times New Roman', serif",
+              "letterSpacing": 2
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 5, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card1-bg",
+            "type": "shape",
+            "position": { "x": 100, "y": 280 },
+            "size": { "width": 400, "height": 280 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "rgba(200,169,126,0.08)" },
+                  { "offset": 1, "color": "rgba(200,169,126,0.02)" }
+                ],
+                "angle": 160
+              },
+              "borderRadius": 16,
+              "stroke": "rgba(200,169,126,0.2)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 15, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card1-icon",
+            "type": "shape",
+            "position": { "x": 160, "y": 330 },
+            "size": { "width": 50, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(200,169,126,0.15)",
+              "borderRadius": 12
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 25, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-card1-icon-dot",
+            "type": "shape",
+            "position": { "x": 175, "y": 345 },
+            "size": { "width": 20, "height": 20 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#c8a97e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 28, "duration": 15 }
+            ]
+          },
+          {
+            "id": "s2-card1-number",
+            "type": "text",
+            "position": { "x": 140, "y": 410 },
+            "size": { "width": 320, "height": 70 },
+            "props": {
+              "text": "{{bedrooms}}",
+              "fontSize": 64,
+              "fontWeight": "200",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Georgia, 'Times New Roman', serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 25, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card1-label",
+            "type": "text",
+            "position": { "x": 140, "y": 490 },
+            "size": { "width": 320, "height": 30 },
+            "props": {
+              "text": "BEDROOMS",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "color": "#c8a97e",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-card2-bg",
+            "type": "shape",
+            "position": { "x": 540, "y": 280 },
+            "size": { "width": 400, "height": 280 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "rgba(200,169,126,0.08)" },
+                  { "offset": 1, "color": "rgba(200,169,126,0.02)" }
+                ],
+                "angle": 160
+              },
+              "borderRadius": 16,
+              "stroke": "rgba(200,169,126,0.2)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 22, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card2-icon",
+            "type": "shape",
+            "position": { "x": 600, "y": 330 },
+            "size": { "width": 50, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(200,169,126,0.15)",
+              "borderRadius": 12
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 32, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-card2-icon-dot",
+            "type": "shape",
+            "position": { "x": 615, "y": 345 },
+            "size": { "width": 20, "height": 20 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#c8a97e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 35, "duration": 15 }
+            ]
+          },
+          {
+            "id": "s2-card2-number",
+            "type": "text",
+            "position": { "x": 580, "y": 410 },
+            "size": { "width": 320, "height": 70 },
+            "props": {
+              "text": "{{bathrooms}}",
+              "fontSize": 64,
+              "fontWeight": "200",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Georgia, 'Times New Roman', serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 32, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card2-label",
+            "type": "text",
+            "position": { "x": 580, "y": 490 },
+            "size": { "width": 320, "height": 30 },
+            "props": {
+              "text": "BATHROOMS",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "color": "#c8a97e",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 37, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-card3-bg",
+            "type": "shape",
+            "position": { "x": 980, "y": 280 },
+            "size": { "width": 400, "height": 280 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "rgba(200,169,126,0.08)" },
+                  { "offset": 1, "color": "rgba(200,169,126,0.02)" }
+                ],
+                "angle": 160
+              },
+              "borderRadius": 16,
+              "stroke": "rgba(200,169,126,0.2)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 29, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card3-icon",
+            "type": "shape",
+            "position": { "x": 1040, "y": 330 },
+            "size": { "width": 50, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(200,169,126,0.15)",
+              "borderRadius": 12
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 39, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-card3-icon-dot",
+            "type": "shape",
+            "position": { "x": 1055, "y": 345 },
+            "size": { "width": 20, "height": 20 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#c8a97e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 42, "duration": 15 }
+            ]
+          },
+          {
+            "id": "s2-card3-number",
+            "type": "text",
+            "position": { "x": 1020, "y": 410 },
+            "size": { "width": 320, "height": 70 },
+            "props": {
+              "text": "{{sqft}}",
+              "fontSize": 64,
+              "fontWeight": "200",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Georgia, 'Times New Roman', serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 39, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card3-label",
+            "type": "text",
+            "position": { "x": 1020, "y": 490 },
+            "size": { "width": 320, "height": 30 },
+            "props": {
+              "text": "SQ FT",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "color": "#c8a97e",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 44, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-card4-bg",
+            "type": "shape",
+            "position": { "x": 1420, "y": 280 },
+            "size": { "width": 400, "height": 280 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "rgba(200,169,126,0.08)" },
+                  { "offset": 1, "color": "rgba(200,169,126,0.02)" }
+                ],
+                "angle": 160
+              },
+              "borderRadius": 16,
+              "stroke": "rgba(200,169,126,0.2)",
+              "strokeWidth": 1
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 36, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card4-icon",
+            "type": "shape",
+            "position": { "x": 1480, "y": 330 },
+            "size": { "width": 50, "height": 50 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(200,169,126,0.15)",
+              "borderRadius": 12
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 46, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-card4-icon-dot",
+            "type": "shape",
+            "position": { "x": 1495, "y": 345 },
+            "size": { "width": 20, "height": 20 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#c8a97e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 49, "duration": 15 }
+            ]
+          },
+          {
+            "id": "s2-card4-number",
+            "type": "text",
+            "position": { "x": 1460, "y": 410 },
+            "size": { "width": 320, "height": 70 },
+            "props": {
+              "text": "3",
+              "fontSize": 64,
+              "fontWeight": "200",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Georgia, 'Times New Roman', serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeInUp", "delay": 46, "duration": 25, "easing": "easeOutCubic" }
+            ]
+          },
+          {
+            "id": "s2-card4-label",
+            "type": "text",
+            "position": { "x": 1460, "y": 490 },
+            "size": { "width": 320, "height": 30 },
+            "props": {
+              "text": "CAR GARAGE",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "color": "#c8a97e",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 51, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-divider",
+            "type": "shape",
+            "position": { "x": 100, "y": 640 },
+            "size": { "width": 1720, "height": 1 },
+            "opacity": 0.15,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#c8a97e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-agent-label",
+            "type": "text",
+            "position": { "x": 100, "y": 680 },
+            "size": { "width": 300, "height": 25 },
+            "props": {
+              "text": "YOUR AGENT",
+              "fontSize": 12,
+              "fontWeight": "500",
+              "color": "#c8a97e",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 5
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 55, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-agent-avatar-bg",
+            "type": "shape",
+            "position": { "x": 100, "y": 720 },
+            "size": { "width": 70, "height": 70 },
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#c8a97e" },
+                  { "offset": 1, "color": "#a08060" }
+                ],
+                "angle": 135
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 58, "duration": 20, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "s2-agent-avatar-letter",
+            "type": "text",
+            "position": { "x": 100, "y": 732 },
+            "size": { "width": 70, "height": 46 },
+            "props": {
+              "text": "VS",
+              "fontSize": 22,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 62, "duration": 15 }
+            ]
+          },
+          {
+            "id": "s2-agent-name",
+            "type": "text",
+            "position": { "x": 190, "y": 725 },
+            "size": { "width": 500, "height": 35 },
+            "props": {
+              "text": "{{agentName}}",
+              "fontSize": 26,
+              "fontWeight": "400",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "Georgia, 'Times New Roman', serif",
+              "letterSpacing": 2
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-agent-phone",
+            "type": "text",
+            "position": { "x": 190, "y": 762 },
+            "size": { "width": 500, "height": 28 },
+            "props": {
+              "text": "{{agentPhone}}",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "rgba(255,255,255,0.5)",
+              "textAlign": "left",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 2
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 65, "duration": 20 }
+            ]
+          },
+          {
+            "id": "s2-cta-bg",
+            "type": "shape",
+            "position": { "x": 1440, "y": 710 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#c8a97e" },
+                  { "offset": 1, "color": "#a08060" }
+                ],
+                "angle": 90
+              },
+              "borderRadius": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 65, "duration": 25, "easing": "easeOutBack" }
+            ]
+          },
+          {
+            "id": "s2-cta-text",
+            "type": "text",
+            "position": { "x": 1440, "y": 722 },
+            "size": { "width": 380, "height": 36 },
+            "props": {
+              "text": "SCHEDULE A VIEWING",
+              "fontSize": 15,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif",
+              "letterSpacing": 4
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 72, "duration": 15 }
+            ]
+          },
+          {
+            "id": "s2-bottom-bar",
+            "type": "shape",
+            "position": { "x": 0, "y": 1070 },
+            "size": { "width": 1920, "height": 10 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "colors": [
+                  { "offset": 0, "color": "#c8a97e" },
+                  { "offset": 0.5, "color": "#d4b896" },
+                  { "offset": 1, "color": "#c8a97e" }
+                ],
+                "angle": 90
+              }
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 25 }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

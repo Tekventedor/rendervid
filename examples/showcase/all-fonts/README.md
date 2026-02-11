@@ -6,6 +6,8 @@ Demonstrates all available fonts in Rendervid, each displayed for 1.5 seconds.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

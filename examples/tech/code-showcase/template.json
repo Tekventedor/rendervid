@@ -1,0 +1,944 @@
+{
+  "name": "Code Showcase",
+  "description": "Developer-focused code presentation mimicking a VS Code editor with syntax-highlighted code lines, title bar with window controls, file tabs, line numbers, and staggered typewriter-style entrance animations.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
+  "inputs": [
+    { "key": "title", "type": "string", "label": "Title / Filename", "required": true, "default": "app.tsx" },
+    { "key": "language", "type": "string", "label": "Language", "required": false, "default": "TypeScript React" }
+  ],
+  "defaults": {
+    "title": "app.tsx",
+    "language": "TypeScript React"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e1e1e"
+            }
+          },
+          {
+            "id": "sidebar",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 50, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#252526"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }
+            ]
+          },
+          {
+            "id": "sidebar-icon-1",
+            "type": "shape",
+            "position": { "x": 15, "y": 60 },
+            "size": { "width": 20, "height": 20 },
+            "opacity": 0.4,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#cccccc",
+              "borderRadius": 3
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 10 }
+            ]
+          },
+          {
+            "id": "sidebar-icon-2",
+            "type": "shape",
+            "position": { "x": 15, "y": 100 },
+            "size": { "width": 20, "height": 20 },
+            "opacity": 0.25,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#cccccc",
+              "borderRadius": 3
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 12, "duration": 10 }
+            ]
+          },
+          {
+            "id": "sidebar-icon-3",
+            "type": "shape",
+            "position": { "x": 15, "y": 140 },
+            "size": { "width": 20, "height": 20 },
+            "opacity": 0.25,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#cccccc",
+              "borderRadius": 3
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 14, "duration": 10 }
+            ]
+          },
+          {
+            "id": "title-bar",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 36 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#323233"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 15 }
+            ]
+          },
+          {
+            "id": "window-btn-red",
+            "type": "shape",
+            "position": { "x": 18, "y": 12 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#ff5f57"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 8, "duration": 12 }
+            ]
+          },
+          {
+            "id": "window-btn-yellow",
+            "type": "shape",
+            "position": { "x": 38, "y": 12 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#febc2e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 10, "duration": 12 }
+            ]
+          },
+          {
+            "id": "window-btn-green",
+            "type": "shape",
+            "position": { "x": 58, "y": 12 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#28c840"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "scaleIn", "delay": 12, "duration": 12 }
+            ]
+          },
+          {
+            "id": "title-bar-text",
+            "type": "text",
+            "position": { "x": 660, "y": 8 },
+            "size": { "width": 600, "height": 24 },
+            "props": {
+              "text": "{{title}} - RenderVid Editor",
+              "fontSize": 13,
+              "fontWeight": "400",
+              "color": "rgba(255,255,255,0.5)",
+              "textAlign": "center",
+              "fontFamily": "'SF Mono', 'Fira Code', 'Cascadia Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 15 }
+            ]
+          },
+          {
+            "id": "tab-bar",
+            "type": "shape",
+            "position": { "x": 50, "y": 36 },
+            "size": { "width": 1870, "height": 36 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#252526"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 15 }
+            ]
+          },
+          {
+            "id": "active-tab-bg",
+            "type": "shape",
+            "position": { "x": 50, "y": 36 },
+            "size": { "width": 180, "height": 36 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e1e1e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 8, "duration": 15 }
+            ]
+          },
+          {
+            "id": "active-tab-accent",
+            "type": "shape",
+            "position": { "x": 50, "y": 36 },
+            "size": { "width": 180, "height": 2 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#007acc"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 15 }
+            ]
+          },
+          {
+            "id": "tab-icon",
+            "type": "shape",
+            "position": { "x": 62, "y": 46 },
+            "size": { "width": 14, "height": 14 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#519aba",
+              "borderRadius": 2
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 12, "duration": 10 }
+            ]
+          },
+          {
+            "id": "tab-text",
+            "type": "text",
+            "position": { "x": 82, "y": 44 },
+            "size": { "width": 140, "height": 22 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 13,
+              "fontWeight": "400",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', 'Cascadia Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 12, "duration": 15 }
+            ]
+          },
+          {
+            "id": "inactive-tab-bg",
+            "type": "shape",
+            "position": { "x": 230, "y": 36 },
+            "size": { "width": 160, "height": 36 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#2d2d2d"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 15 }
+            ]
+          },
+          {
+            "id": "inactive-tab-text",
+            "type": "text",
+            "position": { "x": 248, "y": 44 },
+            "size": { "width": 130, "height": 22 },
+            "props": {
+              "text": "styles.css",
+              "fontSize": 13,
+              "fontWeight": "400",
+              "color": "rgba(255,255,255,0.4)",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', 'Cascadia Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 14, "duration": 15 }
+            ]
+          },
+          {
+            "id": "line-numbers-bg",
+            "type": "shape",
+            "position": { "x": 50, "y": 72 },
+            "size": { "width": 60, "height": 1008 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e1e1e"
+            }
+          },
+          {
+            "id": "line-num-1",
+            "type": "text",
+            "position": { "x": 60, "y": 100 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "1", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 20, "duration": 8 }]
+          },
+          {
+            "id": "line-num-2",
+            "type": "text",
+            "position": { "x": 60, "y": 140 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "2", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 8 }]
+          },
+          {
+            "id": "line-num-3",
+            "type": "text",
+            "position": { "x": 60, "y": 180 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "3", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 8 }]
+          },
+          {
+            "id": "line-num-4",
+            "type": "text",
+            "position": { "x": 60, "y": 220 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "4", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 8 }]
+          },
+          {
+            "id": "line-num-5",
+            "type": "text",
+            "position": { "x": 60, "y": 260 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "5", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 8 }]
+          },
+          {
+            "id": "line-num-6",
+            "type": "text",
+            "position": { "x": 60, "y": 300 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "6", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 8 }]
+          },
+          {
+            "id": "line-num-7",
+            "type": "text",
+            "position": { "x": 60, "y": 340 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "7", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 80, "duration": 8 }]
+          },
+          {
+            "id": "line-num-8",
+            "type": "text",
+            "position": { "x": 60, "y": 380 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "8", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 90, "duration": 8 }]
+          },
+          {
+            "id": "line-num-9",
+            "type": "text",
+            "position": { "x": 60, "y": 420 },
+            "size": { "width": 40, "height": 34 },
+            "props": { "text": "9", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 100, "duration": 8 }]
+          },
+          {
+            "id": "line-num-10",
+            "type": "text",
+            "position": { "x": 55, "y": 460 },
+            "size": { "width": 45, "height": 34 },
+            "props": { "text": "10", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 110, "duration": 8 }]
+          },
+          {
+            "id": "line-num-11",
+            "type": "text",
+            "position": { "x": 55, "y": 500 },
+            "size": { "width": 45, "height": 34 },
+            "props": { "text": "11", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 120, "duration": 8 }]
+          },
+          {
+            "id": "line-num-12",
+            "type": "text",
+            "position": { "x": 55, "y": 540 },
+            "size": { "width": 45, "height": 34 },
+            "props": { "text": "12", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 130, "duration": 8 }]
+          },
+          {
+            "id": "line-num-13",
+            "type": "text",
+            "position": { "x": 55, "y": 580 },
+            "size": { "width": 45, "height": 34 },
+            "props": { "text": "13", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 140, "duration": 8 }]
+          },
+          {
+            "id": "line-num-14",
+            "type": "text",
+            "position": { "x": 55, "y": 620 },
+            "size": { "width": 45, "height": 34 },
+            "props": { "text": "14", "fontSize": 16, "color": "#858585", "textAlign": "right", "fontFamily": "'SF Mono', 'Fira Code', monospace" },
+            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 150, "duration": 8 }]
+          },
+          {
+            "id": "code-line-1-comment",
+            "type": "text",
+            "position": { "x": 130, "y": 100 },
+            "size": { "width": 1200, "height": 34 },
+            "props": {
+              "text": "// RenderVid - Programmatic Video Generation",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#6a9955",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', 'Cascadia Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 20, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-2-import-kw",
+            "type": "text",
+            "position": { "x": 130, "y": 140 },
+            "size": { "width": 80, "height": 34 },
+            "props": {
+              "text": "import",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#c586c0",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-2-braces",
+            "type": "text",
+            "position": { "x": 210, "y": 140 },
+            "size": { "width": 700, "height": 34 },
+            "props": {
+              "text": "{ RenderVid, Scene, Layer }",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#9cdcfe",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-2-from",
+            "type": "text",
+            "position": { "x": 610, "y": 140 },
+            "size": { "width": 60, "height": 34 },
+            "props": {
+              "text": "from",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#c586c0",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-2-string",
+            "type": "text",
+            "position": { "x": 670, "y": 140 },
+            "size": { "width": 300, "height": 34 },
+            "props": {
+              "text": "'@rendervid/core';",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#ce9178",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-3-empty",
+            "type": "text",
+            "position": { "x": 130, "y": 180 },
+            "size": { "width": 20, "height": 34 },
+            "props": {
+              "text": " ",
+              "fontSize": 18,
+              "color": "#d4d4d4",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 8 }
+            ]
+          },
+          {
+            "id": "code-line-4-const",
+            "type": "text",
+            "position": { "x": 130, "y": 220 },
+            "size": { "width": 80, "height": 34 },
+            "props": {
+              "text": "const",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#569cd6",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-4-fn-name",
+            "type": "text",
+            "position": { "x": 210, "y": 220 },
+            "size": { "width": 200, "height": 34 },
+            "props": {
+              "text": "createVideo",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#dcdcaa",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-4-rest",
+            "type": "text",
+            "position": { "x": 370, "y": 220 },
+            "size": { "width": 400, "height": 34 },
+            "props": {
+              "text": " = () => {",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#d4d4d4",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-5-return",
+            "type": "text",
+            "position": { "x": 170, "y": 260 },
+            "size": { "width": 100, "height": 34 },
+            "props": {
+              "text": "return",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#c586c0",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-5-paren",
+            "type": "text",
+            "position": { "x": 270, "y": 260 },
+            "size": { "width": 30, "height": 34 },
+            "props": {
+              "text": "(",
+              "fontSize": 18,
+              "color": "#d4d4d4",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 60, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-6-scene",
+            "type": "text",
+            "position": { "x": 210, "y": 300 },
+            "size": { "width": 600, "height": 34 },
+            "props": {
+              "text": "<Scene width={1920} height={1080}>",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#569cd6",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 70, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-7-layer",
+            "type": "text",
+            "position": { "x": 250, "y": 340 },
+            "size": { "width": 200, "height": 34 },
+            "props": {
+              "text": "<Layer",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#569cd6",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 80, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-8-type",
+            "type": "text",
+            "position": { "x": 290, "y": 380 },
+            "size": { "width": 100, "height": 34 },
+            "props": {
+              "text": "type=",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#9cdcfe",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 90, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-8-string-val",
+            "type": "text",
+            "position": { "x": 380, "y": 380 },
+            "size": { "width": 150, "height": 34 },
+            "props": {
+              "text": "\"text\"",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#ce9178",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 90, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-9-content",
+            "type": "text",
+            "position": { "x": 290, "y": 420 },
+            "size": { "width": 120, "height": 34 },
+            "props": {
+              "text": "content=",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#9cdcfe",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 100, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-9-string-val",
+            "type": "text",
+            "position": { "x": 410, "y": 420 },
+            "size": { "width": 400, "height": 34 },
+            "props": {
+              "text": "\"Hello, World!\"",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#ce9178",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 100, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-10-anim",
+            "type": "text",
+            "position": { "x": 290, "y": 460 },
+            "size": { "width": 160, "height": 34 },
+            "props": {
+              "text": "animation=",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#9cdcfe",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 110, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-10-string-val",
+            "type": "text",
+            "position": { "x": 450, "y": 460 },
+            "size": { "width": 200, "height": 34 },
+            "props": {
+              "text": "\"fadeInUp\"",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#ce9178",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 110, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-11-close-layer",
+            "type": "text",
+            "position": { "x": 250, "y": 500 },
+            "size": { "width": 100, "height": 34 },
+            "props": {
+              "text": "/>",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#569cd6",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 120, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-12-close-scene",
+            "type": "text",
+            "position": { "x": 210, "y": 540 },
+            "size": { "width": 200, "height": 34 },
+            "props": {
+              "text": "</Scene>",
+              "fontSize": 18,
+              "fontWeight": "400",
+              "color": "#569cd6",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 130, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-13-close-paren",
+            "type": "text",
+            "position": { "x": 170, "y": 580 },
+            "size": { "width": 40, "height": 34 },
+            "props": {
+              "text": ");",
+              "fontSize": 18,
+              "color": "#d4d4d4",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 140, "duration": 12 }
+            ]
+          },
+          {
+            "id": "code-line-14-close-fn",
+            "type": "text",
+            "position": { "x": 130, "y": 620 },
+            "size": { "width": 40, "height": 34 },
+            "props": {
+              "text": "};",
+              "fontSize": 18,
+              "color": "#d4d4d4",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 150, "duration": 12 }
+            ]
+          },
+          {
+            "id": "cursor-line-highlight",
+            "type": "shape",
+            "position": { "x": 110, "y": 416 },
+            "size": { "width": 1760, "height": 34 },
+            "opacity": 0.06,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#ffffff"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 100, "duration": 10 }
+            ]
+          },
+          {
+            "id": "cursor",
+            "type": "shape",
+            "position": { "x": 620, "y": 420 },
+            "size": { "width": 2, "height": 24 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#aeafad"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 100, "duration": 5 },
+              { "type": "emphasis", "effect": "flash", "delay": 110, "duration": 30 }
+            ]
+          },
+          {
+            "id": "minimap-bg",
+            "type": "shape",
+            "position": { "x": 1830, "y": 72 },
+            "size": { "width": 90, "height": 1008 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#1e1e1e"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 15 }
+            ]
+          },
+          {
+            "id": "minimap-lines",
+            "type": "shape",
+            "position": { "x": 1840, "y": 95 },
+            "size": { "width": 60, "height": 200 },
+            "opacity": 0.15,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#808080",
+              "borderRadius": 2
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 25, "duration": 20 }
+            ]
+          },
+          {
+            "id": "minimap-highlight",
+            "type": "shape",
+            "position": { "x": 1835, "y": 140 },
+            "size": { "width": 70, "height": 30 },
+            "opacity": 0.1,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#007acc"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 15 }
+            ]
+          },
+          {
+            "id": "status-bar",
+            "type": "shape",
+            "position": { "x": 0, "y": 1055 },
+            "size": { "width": 1920, "height": 25 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#007acc"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 15 }
+            ]
+          },
+          {
+            "id": "status-branch",
+            "type": "text",
+            "position": { "x": 20, "y": 1058 },
+            "size": { "width": 200, "height": 20 },
+            "props": {
+              "text": "main",
+              "fontSize": 12,
+              "fontWeight": "400",
+              "color": "#ffffff",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 10 }
+            ]
+          },
+          {
+            "id": "status-language",
+            "type": "text",
+            "position": { "x": 1680, "y": 1058 },
+            "size": { "width": 220, "height": 20 },
+            "props": {
+              "text": "{{language}}",
+              "fontSize": 12,
+              "fontWeight": "400",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 10 }
+            ]
+          },
+          {
+            "id": "status-encoding",
+            "type": "text",
+            "position": { "x": 1450, "y": 1058 },
+            "size": { "width": 200, "height": 20 },
+            "props": {
+              "text": "UTF-8  LF",
+              "fontSize": 12,
+              "fontWeight": "400",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 10 }
+            ]
+          },
+          {
+            "id": "built-with-text",
+            "type": "text",
+            "position": { "x": 130, "y": 720 },
+            "size": { "width": 800, "height": 40 },
+            "props": {
+              "text": "// Built with \u2764 by RenderVid",
+              "fontSize": 20,
+              "fontWeight": "400",
+              "color": "#6a9955",
+              "textAlign": "left",
+              "fontFamily": "'SF Mono', 'Fira Code', monospace"
+            },
+            "animations": [
+              { "type": "entrance", "effect": "fadeIn", "delay": 160, "duration": 20 }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

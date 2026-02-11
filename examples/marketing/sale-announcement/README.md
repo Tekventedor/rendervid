@@ -6,6 +6,8 @@ Eye-catching promotional video for sales and special offers.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 A dynamic sale announcement video with bold typography, animated discount display, and urgency-building elements. Features gradient backgrounds, pulsing effects, and staggered text reveals.

@@ -1,0 +1,1219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#000000" />
+  <defs>
+    <linearGradient id="background-grad" x1="96.985%" y1="67.101%" x2="3.015%" y2="32.899%"><stop offset="0%" stop-color="#0f0f23" /><stop offset="50%" stop-color="#151533" /><stop offset="100%" stop-color="#1a1a3e" /></linearGradient>
+    <radialGradient id="glow-orb-primary-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{primaryColor}}" /><stop offset="50%" stop-color="rgba(99,102,241,0.2)" /><stop offset="100%" stop-color="rgba(99,102,241,0)" /></radialGradient>
+    <radialGradient id="glow-orb-secondary-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{secondaryColor}}" /><stop offset="50%" stop-color="rgba(139,92,246,0.15)" /><stop offset="100%" stop-color="rgba(139,92,246,0)" /></radialGradient>
+    <radialGradient id="glow-orb-cyan-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#06b6d4" /><stop offset="60%" stop-color="rgba(6,182,212,0.1)" /><stop offset="100%" stop-color="rgba(6,182,212,0)" /></radialGradient>
+    <linearGradient id="badge-bg-grad" x1="50%" y1="100%" x2="50%" y2="0%"><stop offset="0%" stop-color="rgba(99,102,241,0.2)" /><stop offset="100%" stop-color="rgba(139,92,246,0.2)" /></linearGradient>
+    <linearGradient id="cta-button-bg-grad" x1="85.355%" y1="85.355%" x2="14.645%" y2="14.645%"><stop offset="0%" stop-color="{{primaryColor}}" /><stop offset="100%" stop-color="{{secondaryColor}}" /></linearGradient>
+    <linearGradient id="mockup-card-bg-grad" x1="85.355%" y1="85.355%" x2="14.645%" y2="14.645%"><stop offset="0%" stop-color="rgba(255,255,255,0.08)" /><stop offset="100%" stop-color="rgba(255,255,255,0.02)" /></linearGradient>
+    <linearGradient id="mockup-chart-bar-1-grad" x1="100%" y1="50%" x2="0%" y2="50%"><stop offset="0%" stop-color="{{primaryColor}}" /><stop offset="100%" stop-color="rgba(99,102,241,0.3)" /></linearGradient>
+    <linearGradient id="mockup-chart-bar-2-grad" x1="100%" y1="50%" x2="0%" y2="50%"><stop offset="0%" stop-color="{{secondaryColor}}" /><stop offset="100%" stop-color="rgba(139,92,246,0.3)" /></linearGradient>
+    <linearGradient id="mockup-chart-bar-3-grad" x1="100%" y1="50%" x2="0%" y2="50%"><stop offset="0%" stop-color="#06b6d4" /><stop offset="100%" stop-color="rgba(6,182,212,0.3)" /></linearGradient>
+    <linearGradient id="mockup-chart-bar-4-grad" x1="100%" y1="50%" x2="0%" y2="50%"><stop offset="0%" stop-color="#22c55e" /><stop offset="100%" stop-color="rgba(34,197,94,0.3)" /></linearGradient>
+    <radialGradient id="mockup-glow-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="{{primaryColor}}" /><stop offset="100%" stop-color="rgba(99,102,241,0)" /></radialGradient>
+    <linearGradient id="bottom-gradient-grad" x1="100%" y1="50%" x2="0%" y2="50%"><stop offset="0%" stop-color="rgba(15,15,35,0)" /><stop offset="100%" stop-color="#0f0f23" /></linearGradient>
+    <filter id="watermark-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)" /></filter>
+  </defs>
+
+  <style>
+    #background {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #grid-line-h1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.04;
+    }
+    #grid-line-h2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.04;
+    }
+    #grid-line-h3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.04;
+    }
+    #grid-line-v1 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.04;
+    }
+    #grid-line-v2 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.04;
+    }
+    #grid-line-v3 {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 0.04;
+    }
+    @keyframes glow-orb-primary-anim-0 {
+      0% { transform: translate(1200px, 100px); opacity: 0; }
+      5% { transform: translate(1200px, 100px); opacity: 0.017; }
+      10% { transform: translate(1200px, 100px); opacity: 0.033; }
+      15% { transform: translate(1200px, 100px); opacity: 0.046; }
+      20% { transform: translate(1200px, 100px); opacity: 0.059; }
+      25% { transform: translate(1200px, 100px); opacity: 0.069; }
+      30% { transform: translate(1200px, 100px); opacity: 0.079; }
+      35% { transform: translate(1200px, 100px); opacity: 0.087; }
+      40% { transform: translate(1200px, 100px); opacity: 0.094; }
+      45% { transform: translate(1200px, 100px); opacity: 0.1; }
+      50% { transform: translate(1200px, 100px); opacity: 0.105; }
+      55% { transform: translate(1200px, 100px); opacity: 0.109; }
+      60% { transform: translate(1200px, 100px); opacity: 0.112; }
+      65% { transform: translate(1200px, 100px); opacity: 0.115; }
+      70% { transform: translate(1200px, 100px); opacity: 0.117; }
+      75% { transform: translate(1200px, 100px); opacity: 0.118; }
+      80% { transform: translate(1200px, 100px); opacity: 0.119; }
+      85% { transform: translate(1200px, 100px); opacity: 0.12; }
+      90% { transform: translate(1200px, 100px); opacity: 0.12; }
+      95% { transform: translate(1200px, 100px); opacity: 0.12; }
+      100% { transform: translate(1200px, 100px); opacity: 0.12; }
+    }
+    @keyframes glow-orb-primary-anim-1 {
+      0% { transform: translate(1200px, 100px); opacity: 0.12; }
+      5% { transform: translate(1200px, 100px) scale(1.002, 1.002); opacity: 0.12; }
+      10% { transform: translate(1200px, 100px) scale(1.01, 1.01); opacity: 0.12; }
+      15% { transform: translate(1200px, 100px) scale(1.021, 1.021); opacity: 0.12; }
+      20% { transform: translate(1200px, 100px) scale(1.035, 1.035); opacity: 0.12; }
+      25% { transform: translate(1200px, 100px) scale(1.05, 1.05); opacity: 0.12; }
+      30% { transform: translate(1200px, 100px) scale(1.065, 1.065); opacity: 0.12; }
+      35% { transform: translate(1200px, 100px) scale(1.079, 1.079); opacity: 0.12; }
+      40% { transform: translate(1200px, 100px) scale(1.09, 1.09); opacity: 0.12; }
+      45% { transform: translate(1200px, 100px) scale(1.098, 1.098); opacity: 0.12; }
+      50% { transform: translate(1200px, 100px) scale(1.1, 1.1); opacity: 0.12; }
+      55% { transform: translate(1200px, 100px) scale(1.098, 1.098); opacity: 0.12; }
+      60% { transform: translate(1200px, 100px) scale(1.09, 1.09); opacity: 0.12; }
+      65% { transform: translate(1200px, 100px) scale(1.079, 1.079); opacity: 0.12; }
+      70% { transform: translate(1200px, 100px) scale(1.065, 1.065); opacity: 0.12; }
+      75% { transform: translate(1200px, 100px) scale(1.05, 1.05); opacity: 0.12; }
+      80% { transform: translate(1200px, 100px) scale(1.035, 1.035); opacity: 0.12; }
+      85% { transform: translate(1200px, 100px) scale(1.021, 1.021); opacity: 0.12; }
+      90% { transform: translate(1200px, 100px) scale(1.01, 1.01); opacity: 0.12; }
+      95% { transform: translate(1200px, 100px) scale(1.002, 1.002); opacity: 0.12; }
+      100% { transform: translate(1200px, 100px); opacity: 0.12; }
+    }
+    #glow-orb-primary {
+      transform-origin: 1200px 100px;
+      transform: translate(1200px, 100px);
+      opacity: 0.12;
+      animation: glow-orb-primary-anim-0 1.333s 0s linear 1 normal forwards, glow-orb-primary-anim-1 4s 2s linear 1 normal none;
+    }
+    @keyframes glow-orb-secondary-anim-0 {
+      0% { transform: translate(-100px, 500px); opacity: 0; }
+      5% { transform: translate(-100px, 500px); opacity: 0.011; }
+      10% { transform: translate(-100px, 500px); opacity: 0.022; }
+      15% { transform: translate(-100px, 500px); opacity: 0.031; }
+      20% { transform: translate(-100px, 500px); opacity: 0.039; }
+      25% { transform: translate(-100px, 500px); opacity: 0.046; }
+      30% { transform: translate(-100px, 500px); opacity: 0.053; }
+      35% { transform: translate(-100px, 500px); opacity: 0.058; }
+      40% { transform: translate(-100px, 500px); opacity: 0.063; }
+      45% { transform: translate(-100px, 500px); opacity: 0.067; }
+      50% { transform: translate(-100px, 500px); opacity: 0.07; }
+      55% { transform: translate(-100px, 500px); opacity: 0.073; }
+      60% { transform: translate(-100px, 500px); opacity: 0.075; }
+      65% { transform: translate(-100px, 500px); opacity: 0.077; }
+      70% { transform: translate(-100px, 500px); opacity: 0.078; }
+      75% { transform: translate(-100px, 500px); opacity: 0.079; }
+      80% { transform: translate(-100px, 500px); opacity: 0.079; }
+      85% { transform: translate(-100px, 500px); opacity: 0.08; }
+      90% { transform: translate(-100px, 500px); opacity: 0.08; }
+      95% { transform: translate(-100px, 500px); opacity: 0.08; }
+      100% { transform: translate(-100px, 500px); opacity: 0.08; }
+    }
+    @keyframes glow-orb-secondary-anim-1 {
+      0% { transform: translate(-100px, 500px); opacity: 0.08; }
+      5% { transform: translate(-100px, 499.755px); opacity: 0.08; }
+      10% { transform: translate(-100px, 499.045px); opacity: 0.08; }
+      15% { transform: translate(-100px, 497.939px); opacity: 0.08; }
+      20% { transform: translate(-100px, 496.545px); opacity: 0.08; }
+      25% { transform: translate(-100px, 495px); opacity: 0.08; }
+      30% { transform: translate(-100px, 493.455px); opacity: 0.08; }
+      35% { transform: translate(-100px, 492.061px); opacity: 0.08; }
+      40% { transform: translate(-100px, 490.955px); opacity: 0.08; }
+      45% { transform: translate(-100px, 490.245px); opacity: 0.08; }
+      50% { transform: translate(-100px, 490px); opacity: 0.08; }
+      55% { transform: translate(-100px, 490.245px); opacity: 0.08; }
+      60% { transform: translate(-100px, 490.955px); opacity: 0.08; }
+      65% { transform: translate(-100px, 492.061px); opacity: 0.08; }
+      70% { transform: translate(-100px, 493.455px); opacity: 0.08; }
+      75% { transform: translate(-100px, 495px); opacity: 0.08; }
+      80% { transform: translate(-100px, 496.545px); opacity: 0.08; }
+      85% { transform: translate(-100px, 497.939px); opacity: 0.08; }
+      90% { transform: translate(-100px, 499.045px); opacity: 0.08; }
+      95% { transform: translate(-100px, 499.755px); opacity: 0.08; }
+      100% { transform: translate(-100px, 500px); opacity: 0.08; }
+    }
+    #glow-orb-secondary {
+      transform-origin: -100px 500px;
+      transform: translate(-100px, 500px);
+      opacity: 0.08;
+      animation: glow-orb-secondary-anim-0 1.333s 0.333s linear 1 normal forwards, glow-orb-secondary-anim-1 3.333s 2.667s linear 1 normal none;
+    }
+    @keyframes glow-orb-cyan-anim-0 {
+      0% { transform: translate(800px, 700px); opacity: 0; }
+      5% { transform: translate(800px, 700px); opacity: 0.009; }
+      10% { transform: translate(800px, 700px); opacity: 0.016; }
+      15% { transform: translate(800px, 700px); opacity: 0.023; }
+      20% { transform: translate(800px, 700px); opacity: 0.029; }
+      25% { transform: translate(800px, 700px); opacity: 0.035; }
+      30% { transform: translate(800px, 700px); opacity: 0.039; }
+      35% { transform: translate(800px, 700px); opacity: 0.044; }
+      40% { transform: translate(800px, 700px); opacity: 0.047; }
+      45% { transform: translate(800px, 700px); opacity: 0.05; }
+      50% { transform: translate(800px, 700px); opacity: 0.053; }
+      55% { transform: translate(800px, 700px); opacity: 0.055; }
+      60% { transform: translate(800px, 700px); opacity: 0.056; }
+      65% { transform: translate(800px, 700px); opacity: 0.057; }
+      70% { transform: translate(800px, 700px); opacity: 0.058; }
+      75% { transform: translate(800px, 700px); opacity: 0.059; }
+      80% { transform: translate(800px, 700px); opacity: 0.06; }
+      85% { transform: translate(800px, 700px); opacity: 0.06; }
+      90% { transform: translate(800px, 700px); opacity: 0.06; }
+      95% { transform: translate(800px, 700px); opacity: 0.06; }
+      100% { transform: translate(800px, 700px); opacity: 0.06; }
+    }
+    #glow-orb-cyan {
+      transform-origin: 800px 700px;
+      transform: translate(800px, 700px);
+      opacity: 0.06;
+      animation: glow-orb-cyan-anim-0 1.333s 0.667s linear 1 normal forwards;
+    }
+    @keyframes badge-bg-anim-0 {
+      0% { transform: translate(130px, 200px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(130px, 200px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(130px, 200px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(130px, 200px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(130px, 200px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(130px, 200px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(130px, 200px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(130px, 200px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(130px, 200px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(130px, 200px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(130px, 200px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(130px, 200px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(130px, 200px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(130px, 200px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(130px, 200px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(130px, 200px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(130px, 200px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(130px, 200px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(130px, 200px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(130px, 200px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(130px, 200px); opacity: 1; }
+    }
+    @keyframes badge-bg-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #badge-bg {
+      transform-origin: 130px 200px;
+      transform: translate(130px, 200px);
+      opacity: 1;
+      visibility: hidden;
+      animation: badge-bg-anim-0 0.667s 0s linear 1 normal forwards, badge-bg-vis 7.5s 0.5s 1 linear forwards;
+    }
+    @keyframes badge-dot-anim-0 {
+      0% { transform: translate(148px, 212px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(148px, 212px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(148px, 212px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(148px, 212px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(148px, 212px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(148px, 212px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(148px, 212px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(148px, 212px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(148px, 212px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(148px, 212px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(148px, 212px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(148px, 212px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(148px, 212px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(148px, 212px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(148px, 212px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(148px, 212px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(148px, 212px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(148px, 212px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(148px, 212px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(148px, 212px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(148px, 212px); opacity: 1; }
+    }
+    @keyframes badge-dot-anim-1 {
+      0% { transform: translate(148px, 212px); opacity: 1; }
+      5% { transform: translate(148px, 212px) scale(1.002, 1.002); opacity: 1; }
+      10% { transform: translate(148px, 212px) scale(1.01, 1.01); opacity: 1; }
+      15% { transform: translate(148px, 212px) scale(1.021, 1.021); opacity: 1; }
+      20% { transform: translate(148px, 212px) scale(1.035, 1.035); opacity: 1; }
+      25% { transform: translate(148px, 212px) scale(1.05, 1.05); opacity: 1; }
+      30% { transform: translate(148px, 212px) scale(1.065, 1.065); opacity: 1; }
+      35% { transform: translate(148px, 212px) scale(1.079, 1.079); opacity: 1; }
+      40% { transform: translate(148px, 212px) scale(1.09, 1.09); opacity: 1; }
+      45% { transform: translate(148px, 212px) scale(1.098, 1.098); opacity: 1; }
+      50% { transform: translate(148px, 212px) scale(1.1, 1.1); opacity: 1; }
+      55% { transform: translate(148px, 212px) scale(1.098, 1.098); opacity: 1; }
+      60% { transform: translate(148px, 212px) scale(1.09, 1.09); opacity: 1; }
+      65% { transform: translate(148px, 212px) scale(1.079, 1.079); opacity: 1; }
+      70% { transform: translate(148px, 212px) scale(1.065, 1.065); opacity: 1; }
+      75% { transform: translate(148px, 212px) scale(1.05, 1.05); opacity: 1; }
+      80% { transform: translate(148px, 212px) scale(1.035, 1.035); opacity: 1; }
+      85% { transform: translate(148px, 212px) scale(1.021, 1.021); opacity: 1; }
+      90% { transform: translate(148px, 212px) scale(1.01, 1.01); opacity: 1; }
+      95% { transform: translate(148px, 212px) scale(1.002, 1.002); opacity: 1; }
+      100% { transform: translate(148px, 212px); opacity: 1; }
+    }
+    @keyframes badge-dot-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #badge-dot {
+      transform-origin: 148px 212px;
+      transform: translate(148px, 212px);
+      opacity: 1;
+      visibility: hidden;
+      animation: badge-dot-anim-0 0.5s 0.333s linear 1 normal forwards, badge-dot-anim-1 2s 1.333s linear 1 normal none, badge-dot-vis 7.5s 0.5s 1 linear forwards;
+    }
+    @keyframes badge-text-anim-0 {
+      0% { transform: translate(165px, 203px); opacity: 0; }
+      5% { transform: translate(165px, 203px); opacity: 0.143; }
+      10% { transform: translate(165px, 203px); opacity: 0.271; }
+      15% { transform: translate(165px, 203px); opacity: 0.386; }
+      20% { transform: translate(165px, 203px); opacity: 0.488; }
+      25% { transform: translate(165px, 203px); opacity: 0.578; }
+      30% { transform: translate(165px, 203px); opacity: 0.657; }
+      35% { transform: translate(165px, 203px); opacity: 0.725; }
+      40% { transform: translate(165px, 203px); opacity: 0.784; }
+      45% { transform: translate(165px, 203px); opacity: 0.834; }
+      50% { transform: translate(165px, 203px); opacity: 0.875; }
+      55% { transform: translate(165px, 203px); opacity: 0.909; }
+      60% { transform: translate(165px, 203px); opacity: 0.936; }
+      65% { transform: translate(165px, 203px); opacity: 0.957; }
+      70% { transform: translate(165px, 203px); opacity: 0.973; }
+      75% { transform: translate(165px, 203px); opacity: 0.984; }
+      80% { transform: translate(165px, 203px); opacity: 0.992; }
+      85% { transform: translate(165px, 203px); opacity: 0.997; }
+      90% { transform: translate(165px, 203px); opacity: 0.999; }
+      95% { transform: translate(165px, 203px); opacity: 1; }
+      100% { transform: translate(165px, 203px); opacity: 1; }
+    }
+    @keyframes badge-text-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #badge-text {
+      transform-origin: 165px 203px;
+      transform: translate(165px, 203px);
+      opacity: 1;
+      visibility: hidden;
+      animation: badge-text-anim-0 0.667s 0.333s linear 1 normal forwards, badge-text-vis 7.5s 0.5s 1 linear forwards;
+    }
+    @keyframes headline-text-anim-0 {
+      0% { transform: translate(130px, 1340px); opacity: 1; }
+      5% { transform: translate(130px, 1185.965px); opacity: 1; }
+      10% { transform: translate(130px, 1047.32px); opacity: 1; }
+      15% { transform: translate(130px, 923.255px); opacity: 1; }
+      20% { transform: translate(130px, 812.96px); opacity: 1; }
+      25% { transform: translate(130px, 715.625px); opacity: 1; }
+      30% { transform: translate(130px, 630.44px); opacity: 1; }
+      35% { transform: translate(130px, 556.595px); opacity: 1; }
+      40% { transform: translate(130px, 493.28px); opacity: 1; }
+      45% { transform: translate(130px, 439.685px); opacity: 1; }
+      50% { transform: translate(130px, 395px); opacity: 1; }
+      55% { transform: translate(130px, 358.415px); opacity: 1; }
+      60% { transform: translate(130px, 329.12px); opacity: 1; }
+      65% { transform: translate(130px, 306.305px); opacity: 1; }
+      70% { transform: translate(130px, 289.16px); opacity: 1; }
+      75% { transform: translate(130px, 276.875px); opacity: 1; }
+      80% { transform: translate(130px, 268.64px); opacity: 1; }
+      85% { transform: translate(130px, 263.645px); opacity: 1; }
+      90% { transform: translate(130px, 261.08px); opacity: 1; }
+      95% { transform: translate(130px, 260.135px); opacity: 1; }
+      100% { transform: translate(130px, 260px); opacity: 1; }
+    }
+    @keyframes headline-text-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #headline-text {
+      transform-origin: 130px 260px;
+      transform: translate(130px, 260px);
+      opacity: 1;
+      visibility: hidden;
+      animation: headline-text-anim-0 1s 0s linear 1 normal forwards, headline-text-vis 7s 1s 1 linear forwards;
+    }
+    @keyframes feature-bullet-1-anim-0 {
+      0% { transform: translate(130px, 510px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(130px, 510px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(130px, 510px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(130px, 510px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(130px, 510px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(130px, 510px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(130px, 510px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(130px, 510px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(130px, 510px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(130px, 510px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(130px, 510px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(130px, 510px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(130px, 510px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(130px, 510px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(130px, 510px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(130px, 510px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(130px, 510px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(130px, 510px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(130px, 510px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(130px, 510px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(130px, 510px); opacity: 1; }
+    }
+    @keyframes feature-bullet-1-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #feature-bullet-1 {
+      transform-origin: 130px 510px;
+      transform: translate(130px, 510px);
+      opacity: 1;
+      visibility: hidden;
+      animation: feature-bullet-1-anim-0 0.5s 0s linear 1 normal forwards, feature-bullet-1-vis 6s 2s 1 linear forwards;
+    }
+    @keyframes feature-text-1-anim-0 {
+      0% { transform: translate(155px, 548px); opacity: 0; }
+      5% { transform: translate(155px, 540.869px); opacity: 0.143; }
+      10% { transform: translate(155px, 534.45px); opacity: 0.271; }
+      15% { transform: translate(155px, 528.706px); opacity: 0.386; }
+      20% { transform: translate(155px, 523.6px); opacity: 0.488; }
+      25% { transform: translate(155px, 519.094px); opacity: 0.578; }
+      30% { transform: translate(155px, 515.15px); opacity: 0.657; }
+      35% { transform: translate(155px, 511.731px); opacity: 0.725; }
+      40% { transform: translate(155px, 508.8px); opacity: 0.784; }
+      45% { transform: translate(155px, 506.319px); opacity: 0.834; }
+      50% { transform: translate(155px, 504.25px); opacity: 0.875; }
+      55% { transform: translate(155px, 502.556px); opacity: 0.909; }
+      60% { transform: translate(155px, 501.2px); opacity: 0.936; }
+      65% { transform: translate(155px, 500.144px); opacity: 0.957; }
+      70% { transform: translate(155px, 499.35px); opacity: 0.973; }
+      75% { transform: translate(155px, 498.781px); opacity: 0.984; }
+      80% { transform: translate(155px, 498.4px); opacity: 0.992; }
+      85% { transform: translate(155px, 498.169px); opacity: 0.997; }
+      90% { transform: translate(155px, 498.05px); opacity: 0.999; }
+      95% { transform: translate(155px, 498.006px); opacity: 1; }
+      100% { transform: translate(155px, 498px); opacity: 1; }
+    }
+    @keyframes feature-text-1-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #feature-text-1 {
+      transform-origin: 155px 498px;
+      transform: translate(155px, 498px);
+      opacity: 1;
+      visibility: hidden;
+      animation: feature-text-1-anim-0 0.833s 0s linear 1 normal forwards, feature-text-1-vis 6s 2s 1 linear forwards;
+    }
+    @keyframes feature-bullet-2-anim-0 {
+      0% { transform: translate(130px, 555px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(130px, 555px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(130px, 555px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(130px, 555px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(130px, 555px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(130px, 555px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(130px, 555px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(130px, 555px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(130px, 555px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(130px, 555px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(130px, 555px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(130px, 555px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(130px, 555px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(130px, 555px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(130px, 555px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(130px, 555px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(130px, 555px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(130px, 555px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(130px, 555px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(130px, 555px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(130px, 555px); opacity: 1; }
+    }
+    @keyframes feature-bullet-2-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #feature-bullet-2 {
+      transform-origin: 130px 555px;
+      transform: translate(130px, 555px);
+      opacity: 1;
+      visibility: hidden;
+      animation: feature-bullet-2-anim-0 0.5s 0s linear 1 normal forwards, feature-bullet-2-vis 5.6s 2.4s 1 linear forwards;
+    }
+    @keyframes feature-text-2-anim-0 {
+      0% { transform: translate(155px, 593px); opacity: 0; }
+      5% { transform: translate(155px, 585.869px); opacity: 0.143; }
+      10% { transform: translate(155px, 579.45px); opacity: 0.271; }
+      15% { transform: translate(155px, 573.706px); opacity: 0.386; }
+      20% { transform: translate(155px, 568.6px); opacity: 0.488; }
+      25% { transform: translate(155px, 564.094px); opacity: 0.578; }
+      30% { transform: translate(155px, 560.15px); opacity: 0.657; }
+      35% { transform: translate(155px, 556.731px); opacity: 0.725; }
+      40% { transform: translate(155px, 553.8px); opacity: 0.784; }
+      45% { transform: translate(155px, 551.319px); opacity: 0.834; }
+      50% { transform: translate(155px, 549.25px); opacity: 0.875; }
+      55% { transform: translate(155px, 547.556px); opacity: 0.909; }
+      60% { transform: translate(155px, 546.2px); opacity: 0.936; }
+      65% { transform: translate(155px, 545.144px); opacity: 0.957; }
+      70% { transform: translate(155px, 544.35px); opacity: 0.973; }
+      75% { transform: translate(155px, 543.781px); opacity: 0.984; }
+      80% { transform: translate(155px, 543.4px); opacity: 0.992; }
+      85% { transform: translate(155px, 543.169px); opacity: 0.997; }
+      90% { transform: translate(155px, 543.05px); opacity: 0.999; }
+      95% { transform: translate(155px, 543.006px); opacity: 1; }
+      100% { transform: translate(155px, 543px); opacity: 1; }
+    }
+    @keyframes feature-text-2-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #feature-text-2 {
+      transform-origin: 155px 543px;
+      transform: translate(155px, 543px);
+      opacity: 1;
+      visibility: hidden;
+      animation: feature-text-2-anim-0 0.833s 0s linear 1 normal forwards, feature-text-2-vis 5.6s 2.4s 1 linear forwards;
+    }
+    @keyframes feature-bullet-3-anim-0 {
+      0% { transform: translate(130px, 600px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(130px, 600px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(130px, 600px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(130px, 600px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(130px, 600px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(130px, 600px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(130px, 600px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(130px, 600px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(130px, 600px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(130px, 600px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(130px, 600px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(130px, 600px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(130px, 600px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(130px, 600px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(130px, 600px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(130px, 600px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(130px, 600px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(130px, 600px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(130px, 600px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(130px, 600px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(130px, 600px); opacity: 1; }
+    }
+    @keyframes feature-bullet-3-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #feature-bullet-3 {
+      transform-origin: 130px 600px;
+      transform: translate(130px, 600px);
+      opacity: 1;
+      visibility: hidden;
+      animation: feature-bullet-3-anim-0 0.5s 0s linear 1 normal forwards, feature-bullet-3-vis 5.2s 2.8s 1 linear forwards;
+    }
+    @keyframes feature-text-3-anim-0 {
+      0% { transform: translate(155px, 638px); opacity: 0; }
+      5% { transform: translate(155px, 630.869px); opacity: 0.143; }
+      10% { transform: translate(155px, 624.45px); opacity: 0.271; }
+      15% { transform: translate(155px, 618.706px); opacity: 0.386; }
+      20% { transform: translate(155px, 613.6px); opacity: 0.488; }
+      25% { transform: translate(155px, 609.094px); opacity: 0.578; }
+      30% { transform: translate(155px, 605.15px); opacity: 0.657; }
+      35% { transform: translate(155px, 601.731px); opacity: 0.725; }
+      40% { transform: translate(155px, 598.8px); opacity: 0.784; }
+      45% { transform: translate(155px, 596.319px); opacity: 0.834; }
+      50% { transform: translate(155px, 594.25px); opacity: 0.875; }
+      55% { transform: translate(155px, 592.556px); opacity: 0.909; }
+      60% { transform: translate(155px, 591.2px); opacity: 0.936; }
+      65% { transform: translate(155px, 590.144px); opacity: 0.957; }
+      70% { transform: translate(155px, 589.35px); opacity: 0.973; }
+      75% { transform: translate(155px, 588.781px); opacity: 0.984; }
+      80% { transform: translate(155px, 588.4px); opacity: 0.992; }
+      85% { transform: translate(155px, 588.169px); opacity: 0.997; }
+      90% { transform: translate(155px, 588.05px); opacity: 0.999; }
+      95% { transform: translate(155px, 588.006px); opacity: 1; }
+      100% { transform: translate(155px, 588px); opacity: 1; }
+    }
+    @keyframes feature-text-3-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #feature-text-3 {
+      transform-origin: 155px 588px;
+      transform: translate(155px, 588px);
+      opacity: 1;
+      visibility: hidden;
+      animation: feature-text-3-anim-0 0.833s 0s linear 1 normal forwards, feature-text-3-vis 5.2s 2.8s 1 linear forwards;
+    }
+    @keyframes cta-button-bg-anim-0 {
+      0% { transform: translate(130px, 670px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(130px, 670px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(130px, 670px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(130px, 670px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(130px, 670px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(130px, 670px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(130px, 670px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(130px, 670px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(130px, 670px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(130px, 670px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(130px, 670px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(130px, 670px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(130px, 670px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(130px, 670px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(130px, 670px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(130px, 670px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(130px, 670px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(130px, 670px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(130px, 670px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(130px, 670px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(130px, 670px); opacity: 1; }
+    }
+    @keyframes cta-button-bg-anim-1 {
+      0% { transform: translate(130px, 670px); opacity: 1; }
+      5% { transform: translate(130px, 670px) scale(1.002, 1.002); opacity: 1; }
+      10% { transform: translate(130px, 670px) scale(1.01, 1.01); opacity: 1; }
+      15% { transform: translate(130px, 670px) scale(1.021, 1.021); opacity: 1; }
+      20% { transform: translate(130px, 670px) scale(1.035, 1.035); opacity: 1; }
+      25% { transform: translate(130px, 670px) scale(1.05, 1.05); opacity: 1; }
+      30% { transform: translate(130px, 670px) scale(1.065, 1.065); opacity: 1; }
+      35% { transform: translate(130px, 670px) scale(1.079, 1.079); opacity: 1; }
+      40% { transform: translate(130px, 670px) scale(1.09, 1.09); opacity: 1; }
+      45% { transform: translate(130px, 670px) scale(1.098, 1.098); opacity: 1; }
+      50% { transform: translate(130px, 670px) scale(1.1, 1.1); opacity: 1; }
+      55% { transform: translate(130px, 670px) scale(1.098, 1.098); opacity: 1; }
+      60% { transform: translate(130px, 670px) scale(1.09, 1.09); opacity: 1; }
+      65% { transform: translate(130px, 670px) scale(1.079, 1.079); opacity: 1; }
+      70% { transform: translate(130px, 670px) scale(1.065, 1.065); opacity: 1; }
+      75% { transform: translate(130px, 670px) scale(1.05, 1.05); opacity: 1; }
+      80% { transform: translate(130px, 670px) scale(1.035, 1.035); opacity: 1; }
+      85% { transform: translate(130px, 670px) scale(1.021, 1.021); opacity: 1; }
+      90% { transform: translate(130px, 670px) scale(1.01, 1.01); opacity: 1; }
+      95% { transform: translate(130px, 670px) scale(1.002, 1.002); opacity: 1; }
+      100% { transform: translate(130px, 670px); opacity: 1; }
+    }
+    @keyframes cta-button-bg-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #cta-button-bg {
+      transform-origin: 130px 670px;
+      transform: translate(130px, 670px);
+      opacity: 1;
+      visibility: hidden;
+      animation: cta-button-bg-anim-0 0.833s 0s linear 1 normal forwards, cta-button-bg-anim-1 2.667s 2s linear 1 normal none, cta-button-bg-vis 4.667s 3.333s 1 linear forwards;
+    }
+    @keyframes cta-button-text-anim-0 {
+      0% { transform: translate(130px, 680px); opacity: 0; }
+      5% { transform: translate(130px, 680px); opacity: 0.143; }
+      10% { transform: translate(130px, 680px); opacity: 0.271; }
+      15% { transform: translate(130px, 680px); opacity: 0.386; }
+      20% { transform: translate(130px, 680px); opacity: 0.488; }
+      25% { transform: translate(130px, 680px); opacity: 0.578; }
+      30% { transform: translate(130px, 680px); opacity: 0.657; }
+      35% { transform: translate(130px, 680px); opacity: 0.725; }
+      40% { transform: translate(130px, 680px); opacity: 0.784; }
+      45% { transform: translate(130px, 680px); opacity: 0.834; }
+      50% { transform: translate(130px, 680px); opacity: 0.875; }
+      55% { transform: translate(130px, 680px); opacity: 0.909; }
+      60% { transform: translate(130px, 680px); opacity: 0.936; }
+      65% { transform: translate(130px, 680px); opacity: 0.957; }
+      70% { transform: translate(130px, 680px); opacity: 0.973; }
+      75% { transform: translate(130px, 680px); opacity: 0.984; }
+      80% { transform: translate(130px, 680px); opacity: 0.992; }
+      85% { transform: translate(130px, 680px); opacity: 0.997; }
+      90% { transform: translate(130px, 680px); opacity: 0.999; }
+      95% { transform: translate(130px, 680px); opacity: 1; }
+      100% { transform: translate(130px, 680px); opacity: 1; }
+    }
+    @keyframes cta-button-text-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #cta-button-text {
+      transform-origin: 130px 680px;
+      transform: translate(130px, 680px);
+      opacity: 1;
+      visibility: hidden;
+      animation: cta-button-text-anim-0 0.667s 0.333s linear 1 normal forwards, cta-button-text-vis 4.667s 3.333s 1 linear forwards;
+    }
+    @keyframes cta-arrow-anim-0 {
+      0% { transform: translate(400px, 680px); opacity: 0; }
+      5% { transform: translate(400px, 680px); opacity: 0.143; }
+      10% { transform: translate(400px, 680px); opacity: 0.271; }
+      15% { transform: translate(400px, 680px); opacity: 0.386; }
+      20% { transform: translate(400px, 680px); opacity: 0.488; }
+      25% { transform: translate(400px, 680px); opacity: 0.578; }
+      30% { transform: translate(400px, 680px); opacity: 0.657; }
+      35% { transform: translate(400px, 680px); opacity: 0.725; }
+      40% { transform: translate(400px, 680px); opacity: 0.784; }
+      45% { transform: translate(400px, 680px); opacity: 0.834; }
+      50% { transform: translate(400px, 680px); opacity: 0.875; }
+      55% { transform: translate(400px, 680px); opacity: 0.909; }
+      60% { transform: translate(400px, 680px); opacity: 0.936; }
+      65% { transform: translate(400px, 680px); opacity: 0.957; }
+      70% { transform: translate(400px, 680px); opacity: 0.973; }
+      75% { transform: translate(400px, 680px); opacity: 0.984; }
+      80% { transform: translate(400px, 680px); opacity: 0.992; }
+      85% { transform: translate(400px, 680px); opacity: 0.997; }
+      90% { transform: translate(400px, 680px); opacity: 0.999; }
+      95% { transform: translate(400px, 680px); opacity: 1; }
+      100% { transform: translate(400px, 680px); opacity: 1; }
+    }
+    @keyframes cta-arrow-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #cta-arrow {
+      transform-origin: 400px 680px;
+      transform: translate(400px, 680px);
+      opacity: 1;
+      visibility: hidden;
+      animation: cta-arrow-anim-0 0.5s 0s linear 1 normal forwards, cta-arrow-vis 4.333s 3.667s 1 linear forwards;
+    }
+    @keyframes mockup-card-bg-anim-0 {
+      0% { transform: translate(1050px, 1260px); opacity: 1; }
+      5% { transform: translate(1050px, 1105.965px); opacity: 1; }
+      10% { transform: translate(1050px, 967.32px); opacity: 1; }
+      15% { transform: translate(1050px, 843.255px); opacity: 1; }
+      20% { transform: translate(1050px, 732.96px); opacity: 1; }
+      25% { transform: translate(1050px, 635.625px); opacity: 1; }
+      30% { transform: translate(1050px, 550.44px); opacity: 1; }
+      35% { transform: translate(1050px, 476.595px); opacity: 1; }
+      40% { transform: translate(1050px, 413.28px); opacity: 1; }
+      45% { transform: translate(1050px, 359.685px); opacity: 1; }
+      50% { transform: translate(1050px, 315px); opacity: 1; }
+      55% { transform: translate(1050px, 278.415px); opacity: 1; }
+      60% { transform: translate(1050px, 249.12px); opacity: 1; }
+      65% { transform: translate(1050px, 226.305px); opacity: 1; }
+      70% { transform: translate(1050px, 209.16px); opacity: 1; }
+      75% { transform: translate(1050px, 196.875px); opacity: 1; }
+      80% { transform: translate(1050px, 188.64px); opacity: 1; }
+      85% { transform: translate(1050px, 183.645px); opacity: 1; }
+      90% { transform: translate(1050px, 181.08px); opacity: 1; }
+      95% { transform: translate(1050px, 180.135px); opacity: 1; }
+      100% { transform: translate(1050px, 180px); opacity: 1; }
+    }
+    @keyframes mockup-card-bg-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-card-bg {
+      transform-origin: 1050px 180px;
+      transform: translate(1050px, 180px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-card-bg-anim-0 1.167s 0s linear 1 normal forwards, mockup-card-bg-vis 6.667s 1.333s 1 linear forwards;
+    }
+    @keyframes mockup-header-bar-anim-0 {
+      0% { transform: translate(1050px, 1260px); opacity: 1; }
+      5% { transform: translate(1050px, 1105.965px); opacity: 1; }
+      10% { transform: translate(1050px, 967.32px); opacity: 1; }
+      15% { transform: translate(1050px, 843.255px); opacity: 1; }
+      20% { transform: translate(1050px, 732.96px); opacity: 1; }
+      25% { transform: translate(1050px, 635.625px); opacity: 1; }
+      30% { transform: translate(1050px, 550.44px); opacity: 1; }
+      35% { transform: translate(1050px, 476.595px); opacity: 1; }
+      40% { transform: translate(1050px, 413.28px); opacity: 1; }
+      45% { transform: translate(1050px, 359.685px); opacity: 1; }
+      50% { transform: translate(1050px, 315px); opacity: 1; }
+      55% { transform: translate(1050px, 278.415px); opacity: 1; }
+      60% { transform: translate(1050px, 249.12px); opacity: 1; }
+      65% { transform: translate(1050px, 226.305px); opacity: 1; }
+      70% { transform: translate(1050px, 209.16px); opacity: 1; }
+      75% { transform: translate(1050px, 196.875px); opacity: 1; }
+      80% { transform: translate(1050px, 188.64px); opacity: 1; }
+      85% { transform: translate(1050px, 183.645px); opacity: 1; }
+      90% { transform: translate(1050px, 181.08px); opacity: 1; }
+      95% { transform: translate(1050px, 180.135px); opacity: 1; }
+      100% { transform: translate(1050px, 180px); opacity: 1; }
+    }
+    @keyframes mockup-header-bar-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-header-bar {
+      transform-origin: 1050px 180px;
+      transform: translate(1050px, 180px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-header-bar-anim-0 1.167s 0s linear 1 normal forwards, mockup-header-bar-vis 6.667s 1.333s 1 linear forwards;
+    }
+    @keyframes mockup-dot-1-anim-0 {
+      0% { transform: translate(1075px, 198px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(1075px, 198px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(1075px, 198px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(1075px, 198px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(1075px, 198px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(1075px, 198px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(1075px, 198px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(1075px, 198px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(1075px, 198px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(1075px, 198px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(1075px, 198px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(1075px, 198px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(1075px, 198px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(1075px, 198px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(1075px, 198px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(1075px, 198px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(1075px, 198px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(1075px, 198px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(1075px, 198px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(1075px, 198px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(1075px, 198px); opacity: 1; }
+    }
+    @keyframes mockup-dot-1-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-dot-1 {
+      transform-origin: 1075px 198px;
+      transform: translate(1075px, 198px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-dot-1-anim-0 0.5s 0s linear 1 normal forwards, mockup-dot-1-vis 6.167s 1.833s 1 linear forwards;
+    }
+    @keyframes mockup-dot-2-anim-0 {
+      0% { transform: translate(1097px, 198px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(1097px, 198px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(1097px, 198px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(1097px, 198px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(1097px, 198px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(1097px, 198px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(1097px, 198px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(1097px, 198px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(1097px, 198px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(1097px, 198px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(1097px, 198px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(1097px, 198px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(1097px, 198px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(1097px, 198px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(1097px, 198px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(1097px, 198px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(1097px, 198px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(1097px, 198px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(1097px, 198px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(1097px, 198px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(1097px, 198px); opacity: 1; }
+    }
+    @keyframes mockup-dot-2-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-dot-2 {
+      transform-origin: 1097px 198px;
+      transform: translate(1097px, 198px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-dot-2-anim-0 0.5s 0s linear 1 normal forwards, mockup-dot-2-vis 6.1s 1.9s 1 linear forwards;
+    }
+    @keyframes mockup-dot-3-anim-0 {
+      0% { transform: translate(1119px, 198px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(1119px, 198px) scale(0.219, 0.219); opacity: 0.219; }
+      10% { transform: translate(1119px, 198px) scale(0.409, 0.409); opacity: 0.409; }
+      15% { transform: translate(1119px, 198px) scale(0.57, 0.57); opacity: 0.57; }
+      20% { transform: translate(1119px, 198px) scale(0.706, 0.706); opacity: 0.706; }
+      25% { transform: translate(1119px, 198px) scale(0.817, 0.817); opacity: 0.817; }
+      30% { transform: translate(1119px, 198px) scale(0.907, 0.907); opacity: 0.907; }
+      35% { transform: translate(1119px, 198px) scale(0.977, 0.977); opacity: 0.977; }
+      40% { transform: translate(1119px, 198px) scale(1.029, 1.029); opacity: 1.029; }
+      45% { transform: translate(1119px, 198px) scale(1.065, 1.065); opacity: 1.065; }
+      50% { transform: translate(1119px, 198px) scale(1.088, 1.088); opacity: 1.088; }
+      55% { transform: translate(1119px, 198px) scale(1.098, 1.098); opacity: 1.098; }
+      60% { transform: translate(1119px, 198px) scale(1.099, 1.099); opacity: 1.099; }
+      65% { transform: translate(1119px, 198px) scale(1.093, 1.093); opacity: 1.093; }
+      70% { transform: translate(1119px, 198px) scale(1.08, 1.08); opacity: 1.08; }
+      75% { transform: translate(1119px, 198px) scale(1.064, 1.064); opacity: 1.064; }
+      80% { transform: translate(1119px, 198px) scale(1.046, 1.046); opacity: 1.046; }
+      85% { transform: translate(1119px, 198px) scale(1.029, 1.029); opacity: 1.029; }
+      90% { transform: translate(1119px, 198px) scale(1.014, 1.014); opacity: 1.014; }
+      95% { transform: translate(1119px, 198px) scale(1.004, 1.004); opacity: 1.004; }
+      100% { transform: translate(1119px, 198px); opacity: 1; }
+    }
+    @keyframes mockup-dot-3-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-dot-3 {
+      transform-origin: 1119px 198px;
+      transform: translate(1119px, 198px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-dot-3-anim-0 0.5s 0s linear 1 normal forwards, mockup-dot-3-vis 6.033s 1.967s 1 linear forwards;
+    }
+    @keyframes mockup-content-line-1-anim-0 {
+      0% { transform: translate(1090px, 260px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(1090px, 260px) scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: translate(1090px, 260px) scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: translate(1090px, 260px) scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: translate(1090px, 260px) scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: translate(1090px, 260px) scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: translate(1090px, 260px) scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: translate(1090px, 260px) scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: translate(1090px, 260px) scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: translate(1090px, 260px) scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: translate(1090px, 260px) scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: translate(1090px, 260px) scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: translate(1090px, 260px) scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: translate(1090px, 260px) scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: translate(1090px, 260px) scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: translate(1090px, 260px) scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: translate(1090px, 260px) scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: translate(1090px, 260px) scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: translate(1090px, 260px) scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: translate(1090px, 260px) scale(1, 1); opacity: 1; }
+      100% { transform: translate(1090px, 260px); opacity: 1; }
+    }
+    @keyframes mockup-content-line-1-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-content-line-1 {
+      transform-origin: 1090px 260px;
+      transform: translate(1090px, 260px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-content-line-1-anim-0 0.667s 0s linear 1 normal forwards, mockup-content-line-1-vis 5.833s 2.167s 1 linear forwards;
+    }
+    @keyframes mockup-content-line-2-anim-0 {
+      0% { transform: translate(1090px, 288px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(1090px, 288px) scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: translate(1090px, 288px) scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: translate(1090px, 288px) scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: translate(1090px, 288px) scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: translate(1090px, 288px) scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: translate(1090px, 288px) scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: translate(1090px, 288px) scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: translate(1090px, 288px) scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: translate(1090px, 288px) scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: translate(1090px, 288px) scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: translate(1090px, 288px) scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: translate(1090px, 288px) scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: translate(1090px, 288px) scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: translate(1090px, 288px) scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: translate(1090px, 288px) scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: translate(1090px, 288px) scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: translate(1090px, 288px) scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: translate(1090px, 288px) scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: translate(1090px, 288px) scale(1, 1); opacity: 1; }
+      100% { transform: translate(1090px, 288px); opacity: 1; }
+    }
+    @keyframes mockup-content-line-2-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-content-line-2 {
+      transform-origin: 1090px 288px;
+      transform: translate(1090px, 288px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-content-line-2-anim-0 0.667s 0s linear 1 normal forwards, mockup-content-line-2-vis 5.667s 2.333s 1 linear forwards;
+    }
+    @keyframes mockup-content-line-3-anim-0 {
+      0% { transform: translate(1090px, 308px) scale(0, 0); opacity: 0; }
+      5% { transform: translate(1090px, 308px) scale(0.143, 0.143); opacity: 0.143; }
+      10% { transform: translate(1090px, 308px) scale(0.271, 0.271); opacity: 0.271; }
+      15% { transform: translate(1090px, 308px) scale(0.386, 0.386); opacity: 0.386; }
+      20% { transform: translate(1090px, 308px) scale(0.488, 0.488); opacity: 0.488; }
+      25% { transform: translate(1090px, 308px) scale(0.578, 0.578); opacity: 0.578; }
+      30% { transform: translate(1090px, 308px) scale(0.657, 0.657); opacity: 0.657; }
+      35% { transform: translate(1090px, 308px) scale(0.725, 0.725); opacity: 0.725; }
+      40% { transform: translate(1090px, 308px) scale(0.784, 0.784); opacity: 0.784; }
+      45% { transform: translate(1090px, 308px) scale(0.834, 0.834); opacity: 0.834; }
+      50% { transform: translate(1090px, 308px) scale(0.875, 0.875); opacity: 0.875; }
+      55% { transform: translate(1090px, 308px) scale(0.909, 0.909); opacity: 0.909; }
+      60% { transform: translate(1090px, 308px) scale(0.936, 0.936); opacity: 0.936; }
+      65% { transform: translate(1090px, 308px) scale(0.957, 0.957); opacity: 0.957; }
+      70% { transform: translate(1090px, 308px) scale(0.973, 0.973); opacity: 0.973; }
+      75% { transform: translate(1090px, 308px) scale(0.984, 0.984); opacity: 0.984; }
+      80% { transform: translate(1090px, 308px) scale(0.992, 0.992); opacity: 0.992; }
+      85% { transform: translate(1090px, 308px) scale(0.997, 0.997); opacity: 0.997; }
+      90% { transform: translate(1090px, 308px) scale(0.999, 0.999); opacity: 0.999; }
+      95% { transform: translate(1090px, 308px) scale(1, 1); opacity: 1; }
+      100% { transform: translate(1090px, 308px); opacity: 1; }
+    }
+    @keyframes mockup-content-line-3-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-content-line-3 {
+      transform-origin: 1090px 308px;
+      transform: translate(1090px, 308px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-content-line-3-anim-0 0.667s 0s linear 1 normal forwards, mockup-content-line-3-vis 5.567s 2.433s 1 linear forwards;
+    }
+    @keyframes mockup-chart-bar-1-anim-0 {
+      0% { transform: translate(1090px, 1560px); opacity: 1; }
+      5% { transform: translate(1090px, 1323.038px); opacity: 1; }
+      10% { transform: translate(1090px, 1118.466px); opacity: 1; }
+      15% { transform: translate(1090px, 944.094px); opacity: 1; }
+      20% { transform: translate(1090px, 797.734px); opacity: 1; }
+      25% { transform: translate(1090px, 677.198px); opacity: 1; }
+      30% { transform: translate(1090px, 580.297px); opacity: 1; }
+      35% { transform: translate(1090px, 504.844px); opacity: 1; }
+      40% { transform: translate(1090px, 448.65px); opacity: 1; }
+      45% { transform: translate(1090px, 409.527px); opacity: 1; }
+      50% { transform: translate(1090px, 385.287px); opacity: 1; }
+      55% { transform: translate(1090px, 373.74px); opacity: 1; }
+      60% { transform: translate(1090px, 372.7px); opacity: 1; }
+      65% { transform: translate(1090px, 379.978px); opacity: 1; }
+      70% { transform: translate(1090px, 393.384px); opacity: 1; }
+      75% { transform: translate(1090px, 410.733px); opacity: 1; }
+      80% { transform: translate(1090px, 429.833px); opacity: 1; }
+      85% { transform: translate(1090px, 448.499px); opacity: 1; }
+      90% { transform: translate(1090px, 464.541px); opacity: 1; }
+      95% { transform: translate(1090px, 475.77px); opacity: 1; }
+      100% { transform: translate(1090px, 480px); opacity: 1; }
+    }
+    @keyframes mockup-chart-bar-1-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-chart-bar-1 {
+      transform-origin: 1090px 480px;
+      transform: translate(1090px, 480px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-chart-bar-1-anim-0 0.833s 0s linear 1 normal forwards, mockup-chart-bar-1-vis 5.333s 2.667s 1 linear forwards;
+    }
+    @keyframes mockup-chart-bar-2-anim-0 {
+      0% { transform: translate(1170px, 1520px); opacity: 1; }
+      5% { transform: translate(1170px, 1283.038px); opacity: 1; }
+      10% { transform: translate(1170px, 1078.466px); opacity: 1; }
+      15% { transform: translate(1170px, 904.094px); opacity: 1; }
+      20% { transform: translate(1170px, 757.734px); opacity: 1; }
+      25% { transform: translate(1170px, 637.198px); opacity: 1; }
+      30% { transform: translate(1170px, 540.297px); opacity: 1; }
+      35% { transform: translate(1170px, 464.844px); opacity: 1; }
+      40% { transform: translate(1170px, 408.65px); opacity: 1; }
+      45% { transform: translate(1170px, 369.527px); opacity: 1; }
+      50% { transform: translate(1170px, 345.287px); opacity: 1; }
+      55% { transform: translate(1170px, 333.74px); opacity: 1; }
+      60% { transform: translate(1170px, 332.7px); opacity: 1; }
+      65% { transform: translate(1170px, 339.978px); opacity: 1; }
+      70% { transform: translate(1170px, 353.384px); opacity: 1; }
+      75% { transform: translate(1170px, 370.733px); opacity: 1; }
+      80% { transform: translate(1170px, 389.833px); opacity: 1; }
+      85% { transform: translate(1170px, 408.499px); opacity: 1; }
+      90% { transform: translate(1170px, 424.541px); opacity: 1; }
+      95% { transform: translate(1170px, 435.77px); opacity: 1; }
+      100% { transform: translate(1170px, 440px); opacity: 1; }
+    }
+    @keyframes mockup-chart-bar-2-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-chart-bar-2 {
+      transform-origin: 1170px 440px;
+      transform: translate(1170px, 440px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-chart-bar-2-anim-0 0.833s 0s linear 1 normal forwards, mockup-chart-bar-2-vis 5.167s 2.833s 1 linear forwards;
+    }
+    @keyframes mockup-chart-bar-3-anim-0 {
+      0% { transform: translate(1250px, 1480px); opacity: 1; }
+      5% { transform: translate(1250px, 1243.038px); opacity: 1; }
+      10% { transform: translate(1250px, 1038.466px); opacity: 1; }
+      15% { transform: translate(1250px, 864.094px); opacity: 1; }
+      20% { transform: translate(1250px, 717.734px); opacity: 1; }
+      25% { transform: translate(1250px, 597.198px); opacity: 1; }
+      30% { transform: translate(1250px, 500.297px); opacity: 1; }
+      35% { transform: translate(1250px, 424.844px); opacity: 1; }
+      40% { transform: translate(1250px, 368.65px); opacity: 1; }
+      45% { transform: translate(1250px, 329.527px); opacity: 1; }
+      50% { transform: translate(1250px, 305.287px); opacity: 1; }
+      55% { transform: translate(1250px, 293.74px); opacity: 1; }
+      60% { transform: translate(1250px, 292.7px); opacity: 1; }
+      65% { transform: translate(1250px, 299.978px); opacity: 1; }
+      70% { transform: translate(1250px, 313.384px); opacity: 1; }
+      75% { transform: translate(1250px, 330.733px); opacity: 1; }
+      80% { transform: translate(1250px, 349.833px); opacity: 1; }
+      85% { transform: translate(1250px, 368.499px); opacity: 1; }
+      90% { transform: translate(1250px, 384.541px); opacity: 1; }
+      95% { transform: translate(1250px, 395.77px); opacity: 1; }
+      100% { transform: translate(1250px, 400px); opacity: 1; }
+    }
+    @keyframes mockup-chart-bar-3-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-chart-bar-3 {
+      transform-origin: 1250px 400px;
+      transform: translate(1250px, 400px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-chart-bar-3-anim-0 0.833s 0s linear 1 normal forwards, mockup-chart-bar-3-vis 5s 3s 1 linear forwards;
+    }
+    @keyframes mockup-chart-bar-4-anim-0 {
+      0% { transform: translate(1330px, 1440px); opacity: 1; }
+      5% { transform: translate(1330px, 1203.038px); opacity: 1; }
+      10% { transform: translate(1330px, 998.466px); opacity: 1; }
+      15% { transform: translate(1330px, 824.094px); opacity: 1; }
+      20% { transform: translate(1330px, 677.734px); opacity: 1; }
+      25% { transform: translate(1330px, 557.198px); opacity: 1; }
+      30% { transform: translate(1330px, 460.297px); opacity: 1; }
+      35% { transform: translate(1330px, 384.844px); opacity: 1; }
+      40% { transform: translate(1330px, 328.65px); opacity: 1; }
+      45% { transform: translate(1330px, 289.527px); opacity: 1; }
+      50% { transform: translate(1330px, 265.287px); opacity: 1; }
+      55% { transform: translate(1330px, 253.74px); opacity: 1; }
+      60% { transform: translate(1330px, 252.7px); opacity: 1; }
+      65% { transform: translate(1330px, 259.978px); opacity: 1; }
+      70% { transform: translate(1330px, 273.384px); opacity: 1; }
+      75% { transform: translate(1330px, 290.733px); opacity: 1; }
+      80% { transform: translate(1330px, 309.833px); opacity: 1; }
+      85% { transform: translate(1330px, 328.499px); opacity: 1; }
+      90% { transform: translate(1330px, 344.541px); opacity: 1; }
+      95% { transform: translate(1330px, 355.77px); opacity: 1; }
+      100% { transform: translate(1330px, 360px); opacity: 1; }
+    }
+    @keyframes mockup-chart-bar-4-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-chart-bar-4 {
+      transform-origin: 1330px 360px;
+      transform: translate(1330px, 360px);
+      opacity: 1;
+      visibility: hidden;
+      animation: mockup-chart-bar-4-anim-0 0.833s 0s linear 1 normal forwards, mockup-chart-bar-4-vis 4.833s 3.167s 1 linear forwards;
+    }
+    @keyframes mockup-glow-anim-0 {
+      0% { transform: translate(1100px, 250px); opacity: 0; }
+      5% { transform: translate(1100px, 250px); opacity: 0.011; }
+      10% { transform: translate(1100px, 250px); opacity: 0.022; }
+      15% { transform: translate(1100px, 250px); opacity: 0.031; }
+      20% { transform: translate(1100px, 250px); opacity: 0.039; }
+      25% { transform: translate(1100px, 250px); opacity: 0.046; }
+      30% { transform: translate(1100px, 250px); opacity: 0.053; }
+      35% { transform: translate(1100px, 250px); opacity: 0.058; }
+      40% { transform: translate(1100px, 250px); opacity: 0.063; }
+      45% { transform: translate(1100px, 250px); opacity: 0.067; }
+      50% { transform: translate(1100px, 250px); opacity: 0.07; }
+      55% { transform: translate(1100px, 250px); opacity: 0.073; }
+      60% { transform: translate(1100px, 250px); opacity: 0.075; }
+      65% { transform: translate(1100px, 250px); opacity: 0.077; }
+      70% { transform: translate(1100px, 250px); opacity: 0.078; }
+      75% { transform: translate(1100px, 250px); opacity: 0.079; }
+      80% { transform: translate(1100px, 250px); opacity: 0.079; }
+      85% { transform: translate(1100px, 250px); opacity: 0.08; }
+      90% { transform: translate(1100px, 250px); opacity: 0.08; }
+      95% { transform: translate(1100px, 250px); opacity: 0.08; }
+      100% { transform: translate(1100px, 250px); opacity: 0.08; }
+    }
+    @keyframes mockup-glow-vis {
+      0%, 100% { visibility: visible; }
+    }
+    #mockup-glow {
+      transform-origin: 1100px 250px;
+      transform: translate(1100px, 250px);
+      opacity: 0.08;
+      visibility: hidden;
+      animation: mockup-glow-anim-0 1.333s 0.667s linear 1 normal forwards, mockup-glow-vis 6.667s 1.333s 1 linear forwards;
+    }
+    #bottom-gradient {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+    #watermark {
+      transform-origin: 0px 0px;
+      transform: none;
+      opacity: 1;
+    }
+  </style>
+
+  <g id="background" transform="translate(0, 0)">
+    <rect x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="url(#background-grad)" />
+  </g>
+  <g id="grid-line-h1" transform="translate(0, 270)">
+    <rect x="0" y="0" width="1920" height="1" rx="0" ry="0" fill="#ffffff" />
+  </g>
+  <g id="grid-line-h2" transform="translate(0, 540)">
+    <rect x="0" y="0" width="1920" height="1" rx="0" ry="0" fill="#ffffff" />
+  </g>
+  <g id="grid-line-h3" transform="translate(0, 810)">
+    <rect x="0" y="0" width="1920" height="1" rx="0" ry="0" fill="#ffffff" />
+  </g>
+  <g id="grid-line-v1" transform="translate(480, 0)">
+    <rect x="0" y="0" width="1" height="1080" rx="0" ry="0" fill="#ffffff" />
+  </g>
+  <g id="grid-line-v2" transform="translate(960, 0)">
+    <rect x="0" y="0" width="1" height="1080" rx="0" ry="0" fill="#ffffff" />
+  </g>
+  <g id="grid-line-v3" transform="translate(1440, 0)">
+    <rect x="0" y="0" width="1" height="1080" rx="0" ry="0" fill="#ffffff" />
+  </g>
+  <g id="glow-orb-primary">
+    <ellipse cx="350" cy="350" rx="350" ry="350" fill="url(#glow-orb-primary-grad)" />
+  </g>
+  <g id="glow-orb-secondary">
+    <ellipse cx="300" cy="300" rx="300" ry="300" fill="url(#glow-orb-secondary-grad)" />
+  </g>
+  <g id="glow-orb-cyan">
+    <ellipse cx="250" cy="250" rx="250" ry="250" fill="url(#glow-orb-cyan-grad)" />
+  </g>
+  <g id="badge-bg">
+    <rect x="0.5" y="0.5" width="199" height="35" rx="18" ry="18" fill="url(#badge-bg-grad)" stroke="rgba(99,102,241,0.4)" stroke-width="1" />
+  </g>
+  <g id="badge-dot">
+    <ellipse cx="5" cy="5" rx="5" ry="5" fill="#22c55e" />
+  </g>
+  <g id="badge-text">
+    <text y="12" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" font-style="normal" fill="#a5b4fc" text-anchor="middle" letter-spacing="2"><tspan x="80" dy="0">{{badgeText}}</tspan></text>
+  </g>
+  <g id="headline-text">
+    <text y="72" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="800" font-style="normal" fill="#ffffff" text-anchor="start" letter-spacing="-1"><tspan x="0" dy="0">{{headline}}</tspan></text>
+  </g>
+  <g id="feature-bullet-1">
+    <ellipse cx="4" cy="4" rx="4" ry="4" fill="{{primaryColor}}" />
+  </g>
+  <g id="feature-text-1">
+    <text y="20" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="400" font-style="normal" fill="#c4c4d4" text-anchor="start"><tspan x="0" dy="0">{{feature1}}</tspan></text>
+  </g>
+  <g id="feature-bullet-2">
+    <ellipse cx="4" cy="4" rx="4" ry="4" fill="{{primaryColor}}" />
+  </g>
+  <g id="feature-text-2">
+    <text y="20" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="400" font-style="normal" fill="#c4c4d4" text-anchor="start"><tspan x="0" dy="0">{{feature2}}</tspan></text>
+  </g>
+  <g id="feature-bullet-3">
+    <ellipse cx="4" cy="4" rx="4" ry="4" fill="{{primaryColor}}" />
+  </g>
+  <g id="feature-text-3">
+    <text y="20" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="400" font-style="normal" fill="#c4c4d4" text-anchor="start"><tspan x="0" dy="0">{{feature3}}</tspan></text>
+  </g>
+  <g id="cta-button-bg">
+    <rect x="0" y="0" width="260" height="56" rx="12" ry="12" fill="url(#cta-button-bg-grad)" />
+  </g>
+  <g id="cta-button-text">
+    <text y="18" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="middle" letter-spacing="1"><tspan x="130" dy="0">{{ctaText}}</tspan></text>
+  </g>
+  <g id="cta-arrow">
+    <text y="18" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="400" font-style="normal" fill="rgba(255,255,255,0.6)" text-anchor="start"><tspan x="0" dy="0">-&gt;</tspan></text>
+  </g>
+  <g id="mockup-card-bg">
+    <rect x="0.5" y="0.5" width="739" height="479" rx="20" ry="20" fill="url(#mockup-card-bg-grad)" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+  </g>
+  <g id="mockup-header-bar">
+    <rect x="0" y="0" width="740" height="50" rx="20" ry="20" fill="rgba(255,255,255,0.05)" />
+  </g>
+  <g id="mockup-dot-1">
+    <ellipse cx="6" cy="6" rx="6" ry="6" fill="#ef4444" />
+  </g>
+  <g id="mockup-dot-2">
+    <ellipse cx="6" cy="6" rx="6" ry="6" fill="#eab308" />
+  </g>
+  <g id="mockup-dot-3">
+    <ellipse cx="6" cy="6" rx="6" ry="6" fill="#22c55e" />
+  </g>
+  <g id="mockup-content-line-1">
+    <rect x="0" y="0" width="300" height="12" rx="6" ry="6" fill="rgba(99,102,241,0.3)" />
+  </g>
+  <g id="mockup-content-line-2">
+    <rect x="0" y="0" width="450" height="8" rx="4" ry="4" fill="rgba(255,255,255,0.08)" />
+  </g>
+  <g id="mockup-content-line-3">
+    <rect x="0" y="0" width="380" height="8" rx="4" ry="4" fill="rgba(255,255,255,0.06)" />
+  </g>
+  <g id="mockup-chart-bar-1">
+    <rect x="0" y="0" width="60" height="140" rx="6" ry="6" fill="url(#mockup-chart-bar-1-grad)" />
+  </g>
+  <g id="mockup-chart-bar-2">
+    <rect x="0" y="0" width="60" height="180" rx="6" ry="6" fill="url(#mockup-chart-bar-2-grad)" />
+  </g>
+  <g id="mockup-chart-bar-3">
+    <rect x="0" y="0" width="60" height="220" rx="6" ry="6" fill="url(#mockup-chart-bar-3-grad)" />
+  </g>
+  <g id="mockup-chart-bar-4">
+    <rect x="0" y="0" width="60" height="260" rx="6" ry="6" fill="url(#mockup-chart-bar-4-grad)" />
+  </g>
+  <g id="mockup-glow">
+    <ellipse cx="320" cy="200" rx="320" ry="200" fill="url(#mockup-glow-grad)" />
+  </g>
+  <g id="bottom-gradient" transform="translate(0, 900)">
+    <rect x="0" y="0" width="1920" height="180" rx="0" ry="0" fill="url(#bottom-gradient-grad)" />
+  </g>
+  <g id="watermark" transform="translate(1520, 20)">
+    <text y="16" font-family="sans-serif" font-size="16" font-weight="600" font-style="normal" fill="#ffffff" text-anchor="end" filter="url(#watermark-shadow)"><tspan x="380" dy="0">RenderVid by</tspan><tspan x="380" dy="20.8">FlowHunt.io</tspan></text>
+  </g>
+</svg>

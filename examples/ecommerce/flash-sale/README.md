@@ -5,6 +5,8 @@ High-energy flash sale announcement with countdown timer and urgency messaging.
 ## Preview
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 ```bash
 pnpm run examples:render ecommerce/flash-sale

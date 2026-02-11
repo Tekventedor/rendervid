@@ -80,7 +80,7 @@ var layerBaseSchema = {
     id: { type: "string", minLength: 1 },
     type: {
       type: "string",
-      enum: ["image", "video", "text", "shape", "audio", "group", "lottie", "custom", "three"]
+      enum: ["image", "video", "text", "shape", "audio", "group", "lottie", "custom", "three", "gif"]
     },
     name: { type: "string" },
     position: positionSchema,
@@ -795,8 +795,8 @@ function createCubicBezier(x1, y1, x2, y2) {
       intervalStart += kSampleStepSize;
     }
     --currentSample;
-    const dist = (x - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
-    const guessForT = intervalStart + dist * kSampleStepSize;
+    const dist2 = (x - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
+    const guessForT = intervalStart + dist2 * kSampleStepSize;
     const initialSlope = getSlope(guessForT, x1, x2);
     if (initialSlope >= NEWTON_MIN_SLOPE) {
       return newtonRaphsonIterate(x, guessForT, x1, x2);
@@ -1603,6 +1603,213 @@ function generatePresetKeyframes(name, options) {
   const preset = presets[name];
   if (!preset) return [];
   return preset.generate(options);
+}
+
+// src/animation/color.ts
+var NAMED_COLORS = {
+  transparent: [0, 0, 0, 0],
+  black: [0, 0, 0, 1],
+  white: [255, 255, 255, 1],
+  red: [255, 0, 0, 1],
+  green: [0, 128, 0, 1],
+  blue: [0, 0, 255, 1],
+  yellow: [255, 255, 0, 1],
+  cyan: [0, 255, 255, 1],
+  magenta: [255, 0, 255, 1],
+  orange: [255, 165, 0, 1],
+  purple: [128, 0, 128, 1],
+  pink: [255, 192, 203, 1],
+  lime: [0, 255, 0, 1],
+  navy: [0, 0, 128, 1],
+  teal: [0, 128, 128, 1],
+  maroon: [128, 0, 0, 1],
+  olive: [128, 128, 0, 1],
+  aqua: [0, 255, 255, 1],
+  fuchsia: [255, 0, 255, 1],
+  silver: [192, 192, 192, 1],
+  gray: [128, 128, 128, 1],
+  grey: [128, 128, 128, 1],
+  coral: [255, 127, 80, 1],
+  salmon: [250, 128, 114, 1],
+  tomato: [255, 99, 71, 1],
+  gold: [255, 215, 0, 1],
+  khaki: [240, 230, 140, 1],
+  violet: [238, 130, 238, 1],
+  indigo: [75, 0, 130, 1],
+  crimson: [220, 20, 60, 1],
+  plum: [221, 160, 221, 1],
+  orchid: [218, 112, 214, 1],
+  tan: [210, 180, 140, 1],
+  beige: [245, 245, 220, 1],
+  ivory: [255, 255, 240, 1],
+  linen: [250, 240, 230, 1],
+  lavender: [230, 230, 250, 1],
+  skyblue: [135, 206, 235, 1],
+  steelblue: [70, 130, 180, 1],
+  royalblue: [65, 105, 225, 1],
+  midnightblue: [25, 25, 112, 1],
+  darkblue: [0, 0, 139, 1],
+  darkgreen: [0, 100, 0, 1],
+  darkred: [139, 0, 0, 1],
+  darkorange: [255, 140, 0, 1],
+  darkviolet: [148, 0, 211, 1],
+  deeppink: [255, 20, 147, 1],
+  dodgerblue: [30, 144, 255, 1],
+  firebrick: [178, 34, 34, 1],
+  forestgreen: [34, 139, 34, 1],
+  hotpink: [255, 105, 180, 1],
+  limegreen: [50, 205, 50, 1],
+  orangered: [255, 69, 0, 1],
+  seagreen: [46, 139, 87, 1],
+  sienna: [160, 82, 45, 1],
+  slateblue: [106, 90, 205, 1],
+  slategray: [112, 128, 144, 1],
+  springgreen: [0, 255, 127, 1],
+  turquoise: [64, 224, 208, 1],
+  wheat: [245, 222, 179, 1],
+  whitesmoke: [245, 245, 245, 1],
+  yellowgreen: [154, 205, 50, 1]
+};
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+function parseHex(hex) {
+  const h = hex.startsWith("#") ? hex.slice(1) : hex;
+  let r, g, b, a;
+  if (h.length === 3) {
+    r = parseInt(h[0] + h[0], 16);
+    g = parseInt(h[1] + h[1], 16);
+    b = parseInt(h[2] + h[2], 16);
+    a = 1;
+  } else if (h.length === 4) {
+    r = parseInt(h[0] + h[0], 16);
+    g = parseInt(h[1] + h[1], 16);
+    b = parseInt(h[2] + h[2], 16);
+    a = parseInt(h[3] + h[3], 16) / 255;
+  } else if (h.length === 6) {
+    r = parseInt(h.slice(0, 2), 16);
+    g = parseInt(h.slice(2, 4), 16);
+    b = parseInt(h.slice(4, 6), 16);
+    a = 1;
+  } else if (h.length === 8) {
+    r = parseInt(h.slice(0, 2), 16);
+    g = parseInt(h.slice(2, 4), 16);
+    b = parseInt(h.slice(4, 6), 16);
+    a = parseInt(h.slice(6, 8), 16) / 255;
+  } else {
+    return null;
+  }
+  if (isNaN(r) || isNaN(g) || isNaN(b) || isNaN(a)) return null;
+  return { r, g, b, a };
+}
+function parseRgb(str) {
+  const match = str.match(
+    /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+))?\s*\)$/
+  );
+  if (!match) return null;
+  return {
+    r: clamp(Math.round(Number(match[1])), 0, 255),
+    g: clamp(Math.round(Number(match[2])), 0, 255),
+    b: clamp(Math.round(Number(match[3])), 0, 255),
+    a: match[4] !== void 0 ? clamp(Number(match[4]), 0, 1) : 1
+  };
+}
+function hslToRgb(h, s, l) {
+  h = (h % 360 + 360) % 360;
+  s = clamp(s, 0, 100) / 100;
+  l = clamp(l, 0, 100) / 100;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs(h / 60 % 2 - 1));
+  const m = l - c / 2;
+  let r, g, b;
+  if (h < 60) {
+    [r, g, b] = [c, x, 0];
+  } else if (h < 120) {
+    [r, g, b] = [x, c, 0];
+  } else if (h < 180) {
+    [r, g, b] = [0, c, x];
+  } else if (h < 240) {
+    [r, g, b] = [0, x, c];
+  } else if (h < 300) {
+    [r, g, b] = [x, 0, c];
+  } else {
+    [r, g, b] = [c, 0, x];
+  }
+  return [
+    Math.round((r + m) * 255),
+    Math.round((g + m) * 255),
+    Math.round((b + m) * 255)
+  ];
+}
+function parseHsl(str) {
+  const match = str.match(
+    /^hsla?\(\s*([\d.]+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*(?:,\s*([\d.]+))?\s*\)$/
+  );
+  if (!match) return null;
+  const [r, g, b] = hslToRgb(Number(match[1]), Number(match[2]), Number(match[3]));
+  return {
+    r,
+    g,
+    b,
+    a: match[4] !== void 0 ? clamp(Number(match[4]), 0, 1) : 1
+  };
+}
+function parseColor(color) {
+  const trimmed = color.trim().toLowerCase();
+  if (trimmed in NAMED_COLORS) {
+    const [r, g, b, a] = NAMED_COLORS[trimmed];
+    return { r, g, b, a };
+  }
+  if (trimmed.startsWith("#")) {
+    const result = parseHex(trimmed);
+    if (result) return result;
+  }
+  if (trimmed.startsWith("rgb")) {
+    const result = parseRgb(trimmed);
+    if (result) return result;
+  }
+  if (trimmed.startsWith("hsl")) {
+    const result = parseHsl(trimmed);
+    if (result) return result;
+  }
+  return { r: 0, g: 0, b: 0, a: 0 };
+}
+function colorToString(color) {
+  const r = clamp(Math.round(color.r), 0, 255);
+  const g = clamp(Math.round(color.g), 0, 255);
+  const b = clamp(Math.round(color.b), 0, 255);
+  const a = clamp(color.a, 0, 1);
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+function lerpColor(from, to, t) {
+  return {
+    r: from.r + (to.r - from.r) * t,
+    g: from.g + (to.g - from.g) * t,
+    b: from.b + (to.b - from.b) * t,
+    a: from.a + (to.a - from.a) * t
+  };
+}
+function interpolateColors(value, inputRange, outputRange) {
+  if (inputRange.length !== outputRange.length) {
+    throw new Error("inputRange and outputRange must have the same length");
+  }
+  if (inputRange.length < 2) {
+    throw new Error("inputRange must have at least 2 values");
+  }
+  const parsedColors = outputRange.map(parseColor);
+  if (value <= inputRange[0]) {
+    return colorToString(parsedColors[0]);
+  }
+  if (value >= inputRange[inputRange.length - 1]) {
+    return colorToString(parsedColors[parsedColors.length - 1]);
+  }
+  for (let i = 0; i < inputRange.length - 1; i++) {
+    if (value >= inputRange[i] && value <= inputRange[i + 1]) {
+      const segmentProgress = (value - inputRange[i]) / (inputRange[i + 1] - inputRange[i]);
+      return colorToString(lerpColor(parsedColors[i], parsedColors[i + 1], segmentProgress));
+    }
+  }
+  return colorToString(parsedColors[parsedColors.length - 1]);
 }
 
 // src/engine.ts
@@ -2742,15 +2949,292 @@ var ComponentPropsResolver = class {
   }
 };
 
+// src/utils/random.ts
+function hashSeed(seed) {
+  if (typeof seed === "number") return seed >>> 0;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = (hash << 5) - hash + char | 0;
+  }
+  return hash >>> 0;
+}
+function mulberry32(seed) {
+  let t = seed + 1831565813 | 0;
+  t = Math.imul(t ^ t >>> 15, t | 1);
+  t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+  return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+function random(seed) {
+  return mulberry32(hashSeed(seed));
+}
+function randomRange(seed, min, max) {
+  return min + random(seed) * (max - min);
+}
+function randomInt(seed, min, max) {
+  return Math.floor(min + random(seed) * (max - min + 1));
+}
+function createRandom(seed) {
+  let state = hashSeed(seed);
+  return function next() {
+    state = state + 1831565813 | 0;
+    let t = state;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+// src/utils/noise.ts
+var GRAD2 = [
+  [1, 1],
+  [-1, 1],
+  [1, -1],
+  [-1, -1],
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, -1]
+];
+var GRAD3 = [
+  [1, 1, 0],
+  [-1, 1, 0],
+  [1, -1, 0],
+  [-1, -1, 0],
+  [1, 0, 1],
+  [-1, 0, 1],
+  [1, 0, -1],
+  [-1, 0, -1],
+  [0, 1, 1],
+  [0, -1, 1],
+  [0, 1, -1],
+  [0, -1, -1]
+];
+var F2 = 0.5 * (Math.sqrt(3) - 1);
+var G2 = (3 - Math.sqrt(3)) / 6;
+var F3 = 1 / 3;
+var G3 = 1 / 6;
+function buildPermutationTable(seed) {
+  const perm = new Uint8Array(512);
+  const source = new Uint8Array(256);
+  for (let i = 0; i < 256; i++) {
+    source[i] = i;
+  }
+  let s = seed >>> 0;
+  for (let i = 255; i > 0; i--) {
+    s = s + 1831565813 | 0;
+    let t = s;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    const r = ((t ^ t >>> 14) >>> 0) % (i + 1);
+    const tmp = source[i];
+    source[i] = source[r];
+    source[r] = tmp;
+  }
+  for (let i = 0; i < 256; i++) {
+    perm[i] = source[i];
+    perm[i + 256] = source[i];
+  }
+  return perm;
+}
+function hashSeed2(seed) {
+  if (typeof seed === "number") return seed >>> 0;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = (hash << 5) - hash + char | 0;
+  }
+  return hash >>> 0;
+}
+var permCache = /* @__PURE__ */ new Map();
+function getPermTable(seed) {
+  const numericSeed = hashSeed2(seed);
+  let perm = permCache.get(numericSeed);
+  if (!perm) {
+    perm = buildPermutationTable(numericSeed);
+    permCache.set(numericSeed, perm);
+  }
+  return perm;
+}
+function noise2D(seed, x, y) {
+  const perm = getPermTable(seed);
+  const s = (x + y) * F2;
+  const i = Math.floor(x + s);
+  const j = Math.floor(y + s);
+  const t = (i + j) * G2;
+  const X0 = i - t;
+  const Y0 = j - t;
+  const x0 = x - X0;
+  const y0 = y - Y0;
+  let i1, j1;
+  if (x0 > y0) {
+    i1 = 1;
+    j1 = 0;
+  } else {
+    i1 = 0;
+    j1 = 1;
+  }
+  const x1 = x0 - i1 + G2;
+  const y1 = y0 - j1 + G2;
+  const x2 = x0 - 1 + 2 * G2;
+  const y2 = y0 - 1 + 2 * G2;
+  const ii = i & 255;
+  const jj = j & 255;
+  let n0 = 0, n12 = 0, n2 = 0;
+  let t0 = 0.5 - x0 * x0 - y0 * y0;
+  if (t0 >= 0) {
+    const gi0 = perm[ii + perm[jj]] % 8;
+    t0 *= t0;
+    n0 = t0 * t0 * (GRAD2[gi0][0] * x0 + GRAD2[gi0][1] * y0);
+  }
+  let t1 = 0.5 - x1 * x1 - y1 * y1;
+  if (t1 >= 0) {
+    const gi1 = perm[ii + i1 + perm[jj + j1]] % 8;
+    t1 *= t1;
+    n12 = t1 * t1 * (GRAD2[gi1][0] * x1 + GRAD2[gi1][1] * y1);
+  }
+  let t2 = 0.5 - x2 * x2 - y2 * y2;
+  if (t2 >= 0) {
+    const gi2 = perm[ii + 1 + perm[jj + 1]] % 8;
+    t2 *= t2;
+    n2 = t2 * t2 * (GRAD2[gi2][0] * x2 + GRAD2[gi2][1] * y2);
+  }
+  return 70 * (n0 + n12 + n2);
+}
+function noise3D(seed, x, y, z) {
+  const perm = getPermTable(seed);
+  const s = (x + y + z) * F3;
+  const i = Math.floor(x + s);
+  const j = Math.floor(y + s);
+  const k = Math.floor(z + s);
+  const t = (i + j + k) * G3;
+  const X0 = i - t;
+  const Y0 = j - t;
+  const Z0 = k - t;
+  const x0 = x - X0;
+  const y0 = y - Y0;
+  const z0 = z - Z0;
+  let i1, j1, k1;
+  let i2, j2, k2;
+  if (x0 >= y0) {
+    if (y0 >= z0) {
+      i1 = 1;
+      j1 = 0;
+      k1 = 0;
+      i2 = 1;
+      j2 = 1;
+      k2 = 0;
+    } else if (x0 >= z0) {
+      i1 = 1;
+      j1 = 0;
+      k1 = 0;
+      i2 = 1;
+      j2 = 0;
+      k2 = 1;
+    } else {
+      i1 = 0;
+      j1 = 0;
+      k1 = 1;
+      i2 = 1;
+      j2 = 0;
+      k2 = 1;
+    }
+  } else {
+    if (y0 < z0) {
+      i1 = 0;
+      j1 = 0;
+      k1 = 1;
+      i2 = 0;
+      j2 = 1;
+      k2 = 1;
+    } else if (x0 < z0) {
+      i1 = 0;
+      j1 = 1;
+      k1 = 0;
+      i2 = 0;
+      j2 = 1;
+      k2 = 1;
+    } else {
+      i1 = 0;
+      j1 = 1;
+      k1 = 0;
+      i2 = 1;
+      j2 = 1;
+      k2 = 0;
+    }
+  }
+  const x1 = x0 - i1 + G3;
+  const y1 = y0 - j1 + G3;
+  const z1 = z0 - k1 + G3;
+  const x2 = x0 - i2 + 2 * G3;
+  const y2 = y0 - j2 + 2 * G3;
+  const z2 = z0 - k2 + 2 * G3;
+  const x3 = x0 - 1 + 3 * G3;
+  const y3 = y0 - 1 + 3 * G3;
+  const z3 = z0 - 1 + 3 * G3;
+  const ii = i & 255;
+  const jj = j & 255;
+  const kk = k & 255;
+  let n0 = 0, n12 = 0, n2 = 0, n3 = 0;
+  let t0 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
+  if (t0 >= 0) {
+    const gi0 = perm[ii + perm[jj + perm[kk]]] % 12;
+    t0 *= t0;
+    n0 = t0 * t0 * (GRAD3[gi0][0] * x0 + GRAD3[gi0][1] * y0 + GRAD3[gi0][2] * z0);
+  }
+  let t1 = 0.6 - x1 * x1 - y1 * y1 - z1 * z1;
+  if (t1 >= 0) {
+    const gi1 = perm[ii + i1 + perm[jj + j1 + perm[kk + k1]]] % 12;
+    t1 *= t1;
+    n12 = t1 * t1 * (GRAD3[gi1][0] * x1 + GRAD3[gi1][1] * y1 + GRAD3[gi1][2] * z1);
+  }
+  let t2 = 0.6 - x2 * x2 - y2 * y2 - z2 * z2;
+  if (t2 >= 0) {
+    const gi2 = perm[ii + i2 + perm[jj + j2 + perm[kk + k2]]] % 12;
+    t2 *= t2;
+    n2 = t2 * t2 * (GRAD3[gi2][0] * x2 + GRAD3[gi2][1] * y2 + GRAD3[gi2][2] * z2);
+  }
+  let t3 = 0.6 - x3 * x3 - y3 * y3 - z3 * z3;
+  if (t3 >= 0) {
+    const gi3 = perm[ii + 1 + perm[jj + 1 + perm[kk + 1]]] % 12;
+    t3 *= t3;
+    n3 = t3 * t3 * (GRAD3[gi3][0] * x3 + GRAD3[gi3][1] * y3 + GRAD3[gi3][2] * z3);
+  }
+  return 32 * (n0 + n12 + n2 + n3);
+}
+
+// src/utils/gif.ts
+function getGifFrameAtTime(metadata, timeMs, loop = true, speed = 1) {
+  const { frames, totalDuration } = metadata;
+  if (frames.length === 0) return 0;
+  if (totalDuration <= 0) return 0;
+  let effectiveTime = timeMs * speed;
+  if (loop) {
+    effectiveTime = effectiveTime % totalDuration;
+    if (effectiveTime < 0) effectiveTime += totalDuration;
+  } else {
+    effectiveTime = Math.max(0, Math.min(effectiveTime, totalDuration));
+  }
+  let cumulative = 0;
+  for (let i = 0; i < frames.length; i++) {
+    cumulative += frames[i].delay;
+    if (effectiveTime < cumulative) {
+      return i;
+    }
+  }
+  return frames.length - 1;
+}
+
 // src/export/svg-exporter.ts
 var SAMPLE_COUNT = 20;
-var UNSUPPORTED_TYPES = ["video", "audio", "lottie", "custom", "three"];
+var UNSUPPORTED_TYPES = ["video", "audio", "lottie", "custom", "three", "gif"];
 var UNSUPPORTED_REASONS = {
   video: "Video playback cannot be represented in static SVG",
   audio: "Audio has no visual representation in SVG",
   lottie: "Lottie animations require a dedicated runtime player",
   custom: "Custom React components cannot be serialized to SVG",
-  three: "Three.js 3D scenes require WebGL which is not available in SVG"
+  three: "Three.js 3D scenes require WebGL which is not available in SVG",
+  gif: "Animated GIFs require frame-by-frame decoding which is not available in SVG"
 };
 function exportAnimatedSvg(template, inputs) {
   let resolved = template;
@@ -2846,7 +3330,7 @@ function convertLayer(layer, scene, sceneOffsetSec, sceneDurationFrames, fps, ca
   for (let ai = 0; ai < anims.length; ai++) {
     const anim = anims[ai];
     const animId = `${layerId}-anim-${ai}`;
-    const result = generateAnimationCSS(anim, animId, fps, canvasSize);
+    const result = generateAnimationCSS(anim, animId, fps, canvasSize, x, y, baseScaleX, baseScaleY, baseRotation, baseOpacity);
     if (result) {
       styles.push(result.keyframes);
       animRules.push(result.rule(sceneOffsetSec));
@@ -2856,10 +3340,17 @@ function convertLayer(layer, scene, sceneOffsetSec, sceneDurationFrames, fps, ca
   const layerDuration = layer.duration === void 0 || layer.duration === -1 ? sceneDurationFrames - layerFrom : layer.duration;
   const visStart = (scene.startFrame + layerFrom) / fps;
   const visDur = layerDuration / fps;
+  const hasAnimations = animRules.length > 0;
   const cssRules = [];
-  cssRules.push(`      transform-origin: ${transformOrigin};`);
-  cssRules.push(`      transform: ${baseTransform};`);
-  cssRules.push(`      opacity: ${baseOpacity};`);
+  if (hasAnimations) {
+    cssRules.push(`      transform-origin: ${round(anchorPxX + x)}px ${round(anchorPxY + y)}px;`);
+    cssRules.push(`      transform: ${buildTransform(x, y, baseScaleX, baseScaleY, baseRotation)};`);
+    cssRules.push(`      opacity: ${baseOpacity};`);
+  } else {
+    cssRules.push(`      transform-origin: ${transformOrigin};`);
+    cssRules.push(`      transform: ${baseTransform};`);
+    cssRules.push(`      opacity: ${baseOpacity};`);
+  }
   if (layerFrom > 0 || layerDuration < sceneDurationFrames) {
     cssRules.push(`      visibility: hidden;`);
     const visAnimId = `${layerId}-vis`;
@@ -2878,11 +3369,19 @@ function convertLayer(layer, scene, sceneOffsetSec, sceneDurationFrames, fps, ca
   styles.push(`    #${layerId} {
 ${cssRules.join("\n")}
     }`);
-  elements.push(
-    `  <g id="${layerId}" transform="translate(${round(x)}, ${round(y)})">`,
-    `    ${content}`,
-    `  </g>`
-  );
+  if (hasAnimations) {
+    elements.push(
+      `  <g id="${layerId}">`,
+      `    ${content}`,
+      `  </g>`
+    );
+  } else {
+    elements.push(
+      `  <g id="${layerId}" transform="translate(${round(x)}, ${round(y)})">`,
+      `    ${content}`,
+      `  </g>`
+    );
+  }
 }
 function convertTextLayer(layer, defs, layerId) {
   const props = layer.props;
@@ -2908,9 +3407,30 @@ function convertTextLayer(layer, defs, layerId) {
   } else {
     startY = fontSize;
   }
-  const tspans = lines.map(
-    (line, i) => `<tspan x="${textX}" dy="${i === 0 ? 0 : lineSpacing}">${esc(line)}</tspan>`
-  ).join("");
+  let tspans;
+  if (props.spans && props.spans.length > 0) {
+    tspans = props.spans.map((span) => {
+      const spanAttrs = [];
+      if (span.fontFamily) spanAttrs.push(`font-family="${esc(span.fontFamily)}"`);
+      if (span.fontSize !== void 0) spanAttrs.push(`font-size="${span.fontSize}"`);
+      if (span.fontWeight) spanAttrs.push(`font-weight="${span.fontWeight}"`);
+      if (span.fontStyle) spanAttrs.push(`font-style="${span.fontStyle}"`);
+      if (span.color) spanAttrs.push(`fill="${esc(span.color)}"`);
+      if (span.letterSpacing !== void 0) spanAttrs.push(`letter-spacing="${span.letterSpacing}"`);
+      if (span.textDecoration) spanAttrs.push(`text-decoration="${span.textDecoration}"`);
+      if (span.stroke) {
+        spanAttrs.push(`stroke="${esc(span.stroke.color)}"`);
+        spanAttrs.push(`stroke-width="${span.stroke.width}"`);
+        spanAttrs.push(`paint-order="stroke"`);
+      }
+      const attrStr = spanAttrs.length > 0 ? ` ${spanAttrs.join(" ")}` : "";
+      return `<tspan${attrStr}>${esc(span.text)}</tspan>`;
+    }).join("");
+  } else {
+    tspans = lines.map(
+      (line, i) => `<tspan x="${textX}" dy="${i === 0 ? 0 : lineSpacing}">${esc(line)}</tspan>`
+    ).join("");
+  }
   const attrs = [
     `font-family="${esc(fontFamily)}"`,
     `font-size="${fontSize}"`,
@@ -3012,7 +3532,7 @@ function convertGroupLayer(layer, scene, sceneOffsetSec, sceneDurationFrames, fp
   }
   return childElements.join("\n    ");
 }
-function generateAnimationCSS(anim, animId, fps, canvasSize) {
+function generateAnimationCSS(anim, animId, fps, canvasSize, baseX, baseY, baseScaleX, baseScaleY, baseRotation, baseOpacity) {
   const duration = anim.duration;
   if (duration <= 0) return null;
   let kfs;
@@ -3033,23 +3553,23 @@ function generateAnimationCSS(anim, animId, fps, canvasSize) {
     const frame = i / SAMPLE_COUNT * duration;
     const props = getPropertiesAtFrame(kfs, frame);
     const pct = Math.round(i / SAMPLE_COUNT * 100);
+    const tx = baseX + (props.x ?? 0);
+    const ty = baseY + (props.y ?? 0);
+    const sx = (props.scaleX ?? 1) * baseScaleX;
+    const sy = (props.scaleY ?? 1) * baseScaleY;
+    const rot = (props.rotation ?? 0) + baseRotation;
     const transformParts = [];
-    if (props.x !== void 0 || props.y !== void 0) {
-      transformParts.push(`translate(${round(props.x ?? 0)}px, ${round(props.y ?? 0)}px)`);
+    transformParts.push(`translate(${round(tx)}px, ${round(ty)}px)`);
+    if (sx !== 1 || sy !== 1) {
+      transformParts.push(`scale(${round(sx)}, ${round(sy)})`);
     }
-    if (props.scaleX !== void 0 || props.scaleY !== void 0) {
-      transformParts.push(`scale(${round(props.scaleX ?? 1)}, ${round(props.scaleY ?? 1)})`);
-    }
-    if (props.rotation !== void 0) {
-      transformParts.push(`rotate(${round(props.rotation)}deg)`);
+    if (rot !== 0) {
+      transformParts.push(`rotate(${round(rot)}deg)`);
     }
     const cssParts = [];
-    if (transformParts.length > 0) {
-      cssParts.push(`transform: ${transformParts.join(" ")}`);
-    }
-    if (props.opacity !== void 0) {
-      cssParts.push(`opacity: ${round(props.opacity)}`);
-    }
+    cssParts.push(`transform: ${transformParts.join(" ")}`);
+    const effectiveOpacity = (props.opacity ?? 1) * baseOpacity;
+    cssParts.push(`opacity: ${round(effectiveOpacity)}`);
     if (cssParts.length > 0) {
       stops.push(`      ${pct}% { ${cssParts.join("; ")}; }`);
     }
@@ -3121,6 +3641,7 @@ function createGradientDef(gradient, id) {
 }
 function buildTransform(x, y, scaleX, scaleY, rotation) {
   const parts = [];
+  if (x !== 0 || y !== 0) parts.push(`translate(${round(x)}px, ${round(y)}px)`);
   if (scaleX !== 1 || scaleY !== 1) parts.push(`scale(${round(scaleX)}, ${round(scaleY)})`);
   if (rotation !== 0) parts.push(`rotate(${round(rotation)}deg)`);
   return parts.length > 0 ? parts.join(" ") : "none";
@@ -3134,6 +3655,1363 @@ function esc(s) {
 }
 function sanitizeId(id) {
   return id.replace(/[^a-zA-Z0-9_-]/g, "_");
+}
+
+// src/utils/text.ts
+function getCharWidthRatio(fontFamily) {
+  const lower = fontFamily.toLowerCase();
+  if (lower.includes("serif") && !lower.includes("sans")) {
+    return 0.55;
+  }
+  return 0.6;
+}
+function measureText(options) {
+  const {
+    text,
+    fontFamily,
+    fontSize,
+    fontWeight,
+    letterSpacing = 0,
+    lineHeight = 1.2,
+    maxWidth
+  } = options;
+  const baseRatio = getCharWidthRatio(fontFamily);
+  let weightMultiplier = 1;
+  if (fontWeight !== void 0) {
+    const w = typeof fontWeight === "number" ? fontWeight : parseInt(String(fontWeight), 10);
+    if (!isNaN(w) && w >= 700) {
+      weightMultiplier = 1.05;
+    } else if (fontWeight === "bold") {
+      weightMultiplier = 1.05;
+    }
+  }
+  const charWidth = fontSize * baseRatio * weightMultiplier + letterSpacing;
+  const lineHeightPx = fontSize * lineHeight;
+  const lines = text.split("\n");
+  if (maxWidth === void 0) {
+    let maxLineWidth2 = 0;
+    for (const line of lines) {
+      const w = line.length * charWidth;
+      if (w > maxLineWidth2) maxLineWidth2 = w;
+    }
+    return {
+      width: maxLineWidth2,
+      height: lines.length * lineHeightPx
+    };
+  }
+  let totalLines = 0;
+  let maxLineWidth = 0;
+  for (const line of lines) {
+    if (line.length === 0) {
+      totalLines++;
+      continue;
+    }
+    const words = line.split(/\s+/);
+    let currentLineWidth = 0;
+    let firstWord = true;
+    for (const word of words) {
+      const wordWidth = word.length * charWidth;
+      const spaceWidth = firstWord ? 0 : charWidth;
+      if (!firstWord && currentLineWidth + spaceWidth + wordWidth > maxWidth) {
+        if (currentLineWidth > maxLineWidth) maxLineWidth = currentLineWidth;
+        currentLineWidth = wordWidth;
+        totalLines++;
+      } else {
+        currentLineWidth += spaceWidth + wordWidth;
+      }
+      firstWord = false;
+    }
+    if (currentLineWidth > maxLineWidth) maxLineWidth = currentLineWidth;
+    totalLines++;
+  }
+  return {
+    width: Math.min(maxLineWidth, maxWidth),
+    height: totalLines * lineHeightPx
+  };
+}
+function fitText(options) {
+  const {
+    text,
+    withinWidth,
+    fontFamily,
+    minFontSize = 1,
+    maxFontSize = 200,
+    fontWeight,
+    letterSpacing
+  } = options;
+  let lo = minFontSize;
+  let hi = maxFontSize;
+  while (hi - lo > 0.5) {
+    const mid = (lo + hi) / 2;
+    const measurement = measureText({
+      text,
+      fontFamily,
+      fontSize: mid,
+      fontWeight,
+      letterSpacing
+    });
+    if (measurement.width <= withinWidth) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  return { fontSize: Math.floor(lo) };
+}
+
+// src/utils/audio.ts
+var DEFAULT_FFT_SIZE = 2048;
+function fft(re, im) {
+  const n = re.length;
+  for (let i = 1, j = 0; i < n; i++) {
+    let bit = n >> 1;
+    while (j & bit) {
+      j ^= bit;
+      bit >>= 1;
+    }
+    j ^= bit;
+    if (i < j) {
+      let tmp = re[i];
+      re[i] = re[j];
+      re[j] = tmp;
+      tmp = im[i];
+      im[i] = im[j];
+      im[j] = tmp;
+    }
+  }
+  for (let len = 2; len <= n; len *= 2) {
+    const halfLen = len / 2;
+    const angle = -2 * Math.PI / len;
+    const wRe = Math.cos(angle);
+    const wIm = Math.sin(angle);
+    for (let i = 0; i < n; i += len) {
+      let curRe = 1;
+      let curIm = 0;
+      for (let j = 0; j < halfLen; j++) {
+        const evenIdx = i + j;
+        const oddIdx = i + j + halfLen;
+        const tRe = curRe * re[oddIdx] - curIm * im[oddIdx];
+        const tIm = curRe * im[oddIdx] + curIm * re[oddIdx];
+        re[oddIdx] = re[evenIdx] - tRe;
+        im[oddIdx] = im[evenIdx] - tIm;
+        re[evenIdx] += tRe;
+        im[evenIdx] += tIm;
+        const nextRe = curRe * wRe - curIm * wIm;
+        const nextIm = curRe * wIm + curIm * wRe;
+        curRe = nextRe;
+        curIm = nextIm;
+      }
+    }
+  }
+}
+function applyHanningWindow(samples) {
+  const n = samples.length;
+  for (let i = 0; i < n; i++) {
+    samples[i] *= 0.5 * (1 - Math.cos(2 * Math.PI * i / (n - 1)));
+  }
+}
+function nextPowerOf2(n) {
+  let p = 1;
+  while (p < n) p *= 2;
+  return p;
+}
+function mixToMono(audioData) {
+  if (audioData.numberOfChannels === 1) {
+    return audioData.channelData[0];
+  }
+  const length = audioData.length;
+  const mono = new Float32Array(length);
+  const numChannels = audioData.numberOfChannels;
+  for (let i = 0; i < length; i++) {
+    let sum = 0;
+    for (let ch = 0; ch < numChannels; ch++) {
+      sum += audioData.channelData[ch][i];
+    }
+    mono[i] = sum / numChannels;
+  }
+  return mono;
+}
+function getAudioData(samples, sampleRate, numberOfChannels = 1) {
+  const length = Math.floor(samples.length / numberOfChannels);
+  const channelData = [];
+  for (let ch = 0; ch < numberOfChannels; ch++) {
+    const channel = new Float32Array(length);
+    for (let i = 0; i < length; i++) {
+      channel[i] = samples[ch + i * numberOfChannels];
+    }
+    channelData.push(channel);
+  }
+  return {
+    channelData,
+    sampleRate,
+    numberOfChannels,
+    durationInSeconds: length / sampleRate,
+    length
+  };
+}
+function visualizeAudio(options) {
+  const {
+    audioData,
+    frame,
+    fps,
+    numberOfSamples = 256,
+    smoothingTimeConstant = 0.8
+  } = options;
+  const mono = mixToMono(audioData);
+  const startSample = Math.floor(frame / fps * audioData.sampleRate);
+  const windowSize = nextPowerOf2(Math.max(DEFAULT_FFT_SIZE, numberOfSamples * 2));
+  const re = new Float64Array(windowSize);
+  const im = new Float64Array(windowSize);
+  for (let i = 0; i < windowSize; i++) {
+    const idx = startSample + i;
+    re[i] = idx >= 0 && idx < mono.length ? mono[idx] : 0;
+  }
+  applyHanningWindow(re);
+  fft(re, im);
+  const halfSize = windowSize / 2;
+  const magnitudes = new Float64Array(halfSize);
+  let maxMag = 0;
+  for (let i = 0; i < halfSize; i++) {
+    magnitudes[i] = Math.sqrt(re[i] * re[i] + im[i] * im[i]);
+    if (magnitudes[i] > maxMag) maxMag = magnitudes[i];
+  }
+  if (maxMag > 0) {
+    for (let i = 0; i < halfSize; i++) {
+      magnitudes[i] /= maxMag;
+    }
+  }
+  if (smoothingTimeConstant > 0 && smoothingTimeConstant < 1) {
+    for (let i = 0; i < halfSize; i++) {
+      magnitudes[i] = magnitudes[i] * (1 - smoothingTimeConstant) + smoothingTimeConstant * magnitudes[i];
+    }
+  }
+  const result = new Array(numberOfSamples);
+  const binSize = halfSize / numberOfSamples;
+  for (let i = 0; i < numberOfSamples; i++) {
+    const start = Math.floor(i * binSize);
+    const end = Math.floor((i + 1) * binSize);
+    let sum = 0;
+    const count = Math.max(1, end - start);
+    for (let j = start; j < end && j < halfSize; j++) {
+      sum += magnitudes[j];
+    }
+    result[i] = sum / count;
+  }
+  return result;
+}
+function visualizeAudioWaveform(options) {
+  const { audioData, frame, fps, numberOfSamples = 64 } = options;
+  const mono = mixToMono(audioData);
+  const startSample = Math.floor(frame / fps * audioData.sampleRate);
+  const samplesPerFrame = Math.ceil(audioData.sampleRate / fps);
+  const result = new Array(numberOfSamples);
+  const binSize = samplesPerFrame / numberOfSamples;
+  for (let i = 0; i < numberOfSamples; i++) {
+    const start = startSample + Math.floor(i * binSize);
+    const end = startSample + Math.floor((i + 1) * binSize);
+    let sum = 0;
+    const count = Math.max(1, end - start);
+    for (let j = start; j < end; j++) {
+      const idx = Math.max(0, Math.min(j, mono.length - 1));
+      sum += mono[idx];
+    }
+    result[i] = sum / count;
+  }
+  return result;
+}
+function getWaveformPortion(options) {
+  const { audioData, startTimeInSeconds, durationInSeconds, numberOfSamples = 64 } = options;
+  const mono = mixToMono(audioData);
+  const startSample = Math.floor(startTimeInSeconds * audioData.sampleRate);
+  const totalSamples = Math.floor(durationInSeconds * audioData.sampleRate);
+  const result = new Array(numberOfSamples);
+  const binSize = totalSamples / numberOfSamples;
+  for (let i = 0; i < numberOfSamples; i++) {
+    const start = startSample + Math.floor(i * binSize);
+    const end = startSample + Math.floor((i + 1) * binSize);
+    let sum = 0;
+    const count = Math.max(1, end - start);
+    for (let j = start; j < end; j++) {
+      const idx = Math.max(0, Math.min(j, mono.length - 1));
+      sum += mono[idx];
+    }
+    result[i] = sum / count;
+  }
+  return result;
+}
+function getAudioDuration(audioData) {
+  return audioData.durationInSeconds;
+}
+function createSmoothSvgPath(points) {
+  if (points.length === 0) return "";
+  if (points.length === 1) return `M ${points[0][0]} ${points[0][1]}`;
+  let d = `M ${points[0][0]} ${points[0][1]}`;
+  if (points.length === 2) {
+    d += ` L ${points[1][0]} ${points[1][1]}`;
+    return d;
+  }
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[Math.max(0, i - 1)];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[Math.min(points.length - 1, i + 2)];
+    const cp1x = p1[0] + (p2[0] - p0[0]) / 6;
+    const cp1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const cp2x = p2[0] - (p3[0] - p1[0]) / 6;
+    const cp2y = p2[1] - (p3[1] - p1[1]) / 6;
+    d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
+
+// src/utils/paths.ts
+var COMMAND_RE = /([MmLlHhVvCcSsQqTtAaZz])/;
+function tokenize(d) {
+  return d.split(COMMAND_RE).map((s) => s.trim()).filter((s) => s.length > 0);
+}
+function parseNumbers(str) {
+  const matches = str.match(/-?\d*\.?\d+(?:e[+-]?\d+)?/gi);
+  return matches ? matches.map(Number) : [];
+}
+function argsPerCommand(cmd) {
+  switch (cmd.toUpperCase()) {
+    case "M":
+    case "L":
+    case "T":
+      return 2;
+    case "H":
+    case "V":
+      return 1;
+    case "C":
+      return 6;
+    case "S":
+    case "Q":
+      return 4;
+    case "A":
+      return 7;
+    case "Z":
+      return 0;
+    default:
+      return 0;
+  }
+}
+function parsePath(d) {
+  const tokens = tokenize(d);
+  const commands = [];
+  let i = 0;
+  while (i < tokens.length) {
+    const cmd = tokens[i];
+    i++;
+    if (cmd.toUpperCase() === "Z") {
+      commands.push({ command: cmd, args: [] });
+      continue;
+    }
+    const argCount = argsPerCommand(cmd);
+    if (argCount === 0) {
+      commands.push({ command: cmd, args: [] });
+      continue;
+    }
+    const numStr = i < tokens.length ? tokens[i] : "";
+    i++;
+    const nums = parseNumbers(numStr);
+    let offset = 0;
+    let isFirst = true;
+    while (offset + argCount <= nums.length) {
+      const args = nums.slice(offset, offset + argCount);
+      if (isFirst) {
+        commands.push({ command: cmd, args });
+        isFirst = false;
+      } else {
+        const implicitCmd = cmd === "M" ? "L" : cmd === "m" ? "l" : cmd;
+        commands.push({ command: implicitCmd, args });
+      }
+      offset += argCount;
+    }
+    if (isFirst && nums.length > 0) {
+      commands.push({ command: cmd, args: nums });
+    }
+  }
+  return commands;
+}
+function serializePath(commands) {
+  return commands.map((c) => {
+    if (c.args.length === 0) return c.command;
+    return c.command + " " + c.args.map((n) => roundNum(n)).join(" ");
+  }).join(" ");
+}
+function roundNum(n) {
+  const r = Math.round(n * 1e3) / 1e3;
+  return String(r);
+}
+function toAbsolute(commands) {
+  const result = [];
+  let cx = 0;
+  let cy = 0;
+  let subpathStartX = 0;
+  let subpathStartY = 0;
+  for (const { command, args } of commands) {
+    const isRelative = command === command.toLowerCase() && command !== "Z" && command !== "z";
+    const upper = command.toUpperCase();
+    if (upper === "Z") {
+      result.push({ command: "Z", args: [] });
+      cx = subpathStartX;
+      cy = subpathStartY;
+      continue;
+    }
+    const absArgs = [...args];
+    switch (upper) {
+      case "M":
+        if (isRelative) {
+          absArgs[0] += cx;
+          absArgs[1] += cy;
+        }
+        cx = absArgs[0];
+        cy = absArgs[1];
+        subpathStartX = cx;
+        subpathStartY = cy;
+        break;
+      case "L":
+        if (isRelative) {
+          absArgs[0] += cx;
+          absArgs[1] += cy;
+        }
+        cx = absArgs[0];
+        cy = absArgs[1];
+        break;
+      case "H":
+        if (isRelative) {
+          absArgs[0] += cx;
+        }
+        cx = absArgs[0];
+        break;
+      case "V":
+        if (isRelative) {
+          absArgs[0] += cy;
+        }
+        cy = absArgs[0];
+        break;
+      case "C":
+        if (isRelative) {
+          absArgs[0] += cx;
+          absArgs[1] += cy;
+          absArgs[2] += cx;
+          absArgs[3] += cy;
+          absArgs[4] += cx;
+          absArgs[5] += cy;
+        }
+        cx = absArgs[4];
+        cy = absArgs[5];
+        break;
+      case "S":
+        if (isRelative) {
+          absArgs[0] += cx;
+          absArgs[1] += cy;
+          absArgs[2] += cx;
+          absArgs[3] += cy;
+        }
+        cx = absArgs[2];
+        cy = absArgs[3];
+        break;
+      case "Q":
+        if (isRelative) {
+          absArgs[0] += cx;
+          absArgs[1] += cy;
+          absArgs[2] += cx;
+          absArgs[3] += cy;
+        }
+        cx = absArgs[2];
+        cy = absArgs[3];
+        break;
+      case "T":
+        if (isRelative) {
+          absArgs[0] += cx;
+          absArgs[1] += cy;
+        }
+        cx = absArgs[0];
+        cy = absArgs[1];
+        break;
+      case "A":
+        if (isRelative) {
+          absArgs[5] += cx;
+          absArgs[6] += cy;
+        }
+        cx = absArgs[5];
+        cy = absArgs[6];
+        break;
+    }
+    result.push({ command: upper, args: absArgs });
+  }
+  return result;
+}
+function dist(a, b) {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+function lerpPoint(a, b, t) {
+  return { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t) };
+}
+function cubicBezierPoint(p0, p1, p2, p3, t) {
+  const mt = 1 - t;
+  const mt2 = mt * mt;
+  const mt3 = mt2 * mt;
+  const t2 = t * t;
+  const t3 = t2 * t;
+  return {
+    x: mt3 * p0.x + 3 * mt2 * t * p1.x + 3 * mt * t2 * p2.x + t3 * p3.x,
+    y: mt3 * p0.y + 3 * mt2 * t * p1.y + 3 * mt * t2 * p2.y + t3 * p3.y
+  };
+}
+function cubicBezierTangent(p0, p1, p2, p3, t) {
+  const mt = 1 - t;
+  const mt2 = mt * mt;
+  const t2 = t * t;
+  const dx = 3 * mt2 * (p1.x - p0.x) + 6 * mt * t * (p2.x - p1.x) + 3 * t2 * (p3.x - p2.x);
+  const dy = 3 * mt2 * (p1.y - p0.y) + 6 * mt * t * (p2.y - p1.y) + 3 * t2 * (p3.y - p2.y);
+  const len = Math.sqrt(dx * dx + dy * dy);
+  if (len === 0) return { x: 0, y: 0 };
+  return { x: dx / len, y: dy / len };
+}
+function quadBezierPoint(p0, p1, p2, t) {
+  const mt = 1 - t;
+  const mt2 = mt * mt;
+  const t2 = t * t;
+  return {
+    x: mt2 * p0.x + 2 * mt * t * p1.x + t2 * p2.x,
+    y: mt2 * p0.y + 2 * mt * t * p1.y + t2 * p2.y
+  };
+}
+function quadBezierTangent(p0, p1, p2, t) {
+  const mt = 1 - t;
+  const dx = 2 * mt * (p1.x - p0.x) + 2 * t * (p2.x - p1.x);
+  const dy = 2 * mt * (p1.y - p0.y) + 2 * t * (p2.y - p1.y);
+  const len = Math.sqrt(dx * dx + dy * dy);
+  if (len === 0) return { x: 0, y: 0 };
+  return { x: dx / len, y: dy / len };
+}
+function arcToPoints(cx, cy, rx, ry, phi, theta1, dtheta, steps) {
+  const points = [];
+  const cosPhi = Math.cos(phi);
+  const sinPhi = Math.sin(phi);
+  for (let i = 0; i <= steps; i++) {
+    const t = theta1 + dtheta * i / steps;
+    const cosT = Math.cos(t);
+    const sinT = Math.sin(t);
+    points.push({
+      x: cosPhi * rx * cosT - sinPhi * ry * sinT + cx,
+      y: sinPhi * rx * cosT + cosPhi * ry * sinT + cy
+    });
+  }
+  return points;
+}
+function endpointToCenter(x1, y1, rx, ry, phi, largeArc, sweep, x2, y2) {
+  const cosPhi = Math.cos(phi);
+  const sinPhi = Math.sin(phi);
+  const dx = (x1 - x2) / 2;
+  const dy = (y1 - y2) / 2;
+  const x1p = cosPhi * dx + sinPhi * dy;
+  const y1p = -sinPhi * dx + cosPhi * dy;
+  let rxSq = rx * rx;
+  let rySq = ry * ry;
+  const x1pSq = x1p * x1p;
+  const y1pSq = y1p * y1p;
+  const lambda = x1pSq / rxSq + y1pSq / rySq;
+  if (lambda > 1) {
+    const sqrtLambda = Math.sqrt(lambda);
+    rx *= sqrtLambda;
+    ry *= sqrtLambda;
+    rxSq = rx * rx;
+    rySq = ry * ry;
+  }
+  let num = rxSq * rySq - rxSq * y1pSq - rySq * x1pSq;
+  let den = rxSq * y1pSq + rySq * x1pSq;
+  if (den === 0) {
+    return { cx: (x1 + x2) / 2, cy: (y1 + y2) / 2, theta1: 0, dtheta: 0, rx, ry };
+  }
+  let sq = Math.sqrt(Math.max(0, num / den));
+  if (largeArc === sweep) sq = -sq;
+  const cxp = sq * rx * y1p / ry;
+  const cyp = -sq * ry * x1p / rx;
+  const cx = cosPhi * cxp - sinPhi * cyp + (x1 + x2) / 2;
+  const cy = sinPhi * cxp + cosPhi * cyp + (y1 + y2) / 2;
+  const theta1 = Math.atan2((y1p - cyp) / ry, (x1p - cxp) / rx);
+  let dtheta = Math.atan2((-y1p - cyp) / ry, (-x1p - cxp) / rx) - theta1;
+  if (sweep && dtheta < 0) dtheta += 2 * Math.PI;
+  if (!sweep && dtheta > 0) dtheta -= 2 * Math.PI;
+  return { cx, cy, theta1, dtheta, rx, ry };
+}
+var CURVE_STEPS = 64;
+function buildSegments(commands) {
+  const segments = [];
+  let cx = 0;
+  let cy = 0;
+  let subpathStartX = 0;
+  let subpathStartY = 0;
+  let lastControlX = 0;
+  let lastControlY = 0;
+  let lastCommand = "";
+  for (const { command, args } of commands) {
+    const start = { x: cx, y: cy };
+    switch (command) {
+      case "M":
+        cx = args[0];
+        cy = args[1];
+        subpathStartX = cx;
+        subpathStartY = cy;
+        lastCommand = "M";
+        continue;
+      case "L": {
+        const end = { x: args[0], y: args[1] };
+        const segLen = dist(start, end);
+        segments.push({
+          start,
+          end,
+          length: segLen,
+          pointAtLength: (t) => lerpPoint(start, end, t),
+          tangentAtLength: () => {
+            const d = dist(start, end);
+            if (d === 0) return { x: 0, y: 0 };
+            return { x: (end.x - start.x) / d, y: (end.y - start.y) / d };
+          }
+        });
+        cx = end.x;
+        cy = end.y;
+        lastCommand = "L";
+        break;
+      }
+      case "H": {
+        const end = { x: args[0], y: cy };
+        const segLen = Math.abs(args[0] - cx);
+        segments.push({
+          start,
+          end,
+          length: segLen,
+          pointAtLength: (t) => lerpPoint(start, end, t),
+          tangentAtLength: () => {
+            const dx = end.x - start.x;
+            return { x: dx >= 0 ? 1 : -1, y: 0 };
+          }
+        });
+        cx = end.x;
+        lastCommand = "H";
+        break;
+      }
+      case "V": {
+        const end = { x: cx, y: args[0] };
+        const segLen = Math.abs(args[0] - cy);
+        segments.push({
+          start,
+          end,
+          length: segLen,
+          pointAtLength: (t) => lerpPoint(start, end, t),
+          tangentAtLength: () => {
+            const dy = end.y - start.y;
+            return { x: 0, y: dy >= 0 ? 1 : -1 };
+          }
+        });
+        cy = end.y;
+        lastCommand = "V";
+        break;
+      }
+      case "C": {
+        const p0 = start;
+        const p1 = { x: args[0], y: args[1] };
+        const p2 = { x: args[2], y: args[3] };
+        const p3 = { x: args[4], y: args[5] };
+        const lut = buildCubicLUT(p0, p1, p2, p3);
+        segments.push({
+          start: p0,
+          end: p3,
+          length: lut.totalLength,
+          pointAtLength: (t) => cubicPointFromLUT(lut, t, p0, p1, p2, p3),
+          tangentAtLength: (t) => cubicTangentFromLUT(lut, t, p0, p1, p2, p3)
+        });
+        lastControlX = p2.x;
+        lastControlY = p2.y;
+        cx = p3.x;
+        cy = p3.y;
+        lastCommand = "C";
+        break;
+      }
+      case "S": {
+        const p0 = start;
+        let cp1x, cp1y;
+        if (lastCommand === "C" || lastCommand === "S") {
+          cp1x = 2 * cx - lastControlX;
+          cp1y = 2 * cy - lastControlY;
+        } else {
+          cp1x = cx;
+          cp1y = cy;
+        }
+        const p1 = { x: cp1x, y: cp1y };
+        const p2 = { x: args[0], y: args[1] };
+        const p3 = { x: args[2], y: args[3] };
+        const lut = buildCubicLUT(p0, p1, p2, p3);
+        segments.push({
+          start: p0,
+          end: p3,
+          length: lut.totalLength,
+          pointAtLength: (t) => cubicPointFromLUT(lut, t, p0, p1, p2, p3),
+          tangentAtLength: (t) => cubicTangentFromLUT(lut, t, p0, p1, p2, p3)
+        });
+        lastControlX = p2.x;
+        lastControlY = p2.y;
+        cx = p3.x;
+        cy = p3.y;
+        lastCommand = "S";
+        break;
+      }
+      case "Q": {
+        const p0 = start;
+        const p1 = { x: args[0], y: args[1] };
+        const p2 = { x: args[2], y: args[3] };
+        const lut = buildQuadLUT(p0, p1, p2);
+        segments.push({
+          start: p0,
+          end: p2,
+          length: lut.totalLength,
+          pointAtLength: (t) => quadPointFromLUT(lut, t, p0, p1, p2),
+          tangentAtLength: (t) => quadTangentFromLUT(lut, t, p0, p1, p2)
+        });
+        lastControlX = p1.x;
+        lastControlY = p1.y;
+        cx = p2.x;
+        cy = p2.y;
+        lastCommand = "Q";
+        break;
+      }
+      case "T": {
+        const p0 = start;
+        let cp1x, cp1y;
+        if (lastCommand === "Q" || lastCommand === "T") {
+          cp1x = 2 * cx - lastControlX;
+          cp1y = 2 * cy - lastControlY;
+        } else {
+          cp1x = cx;
+          cp1y = cy;
+        }
+        const p1 = { x: cp1x, y: cp1y };
+        const p2 = { x: args[0], y: args[1] };
+        const lut = buildQuadLUT(p0, p1, p2);
+        segments.push({
+          start: p0,
+          end: p2,
+          length: lut.totalLength,
+          pointAtLength: (t) => quadPointFromLUT(lut, t, p0, p1, p2),
+          tangentAtLength: (t) => quadTangentFromLUT(lut, t, p0, p1, p2)
+        });
+        lastControlX = p1.x;
+        lastControlY = p1.y;
+        cx = p2.x;
+        cy = p2.y;
+        lastCommand = "T";
+        break;
+      }
+      case "A": {
+        const rxArg = Math.abs(args[0]);
+        const ryArg = Math.abs(args[1]);
+        const phi = args[2] * Math.PI / 180;
+        const largeArc = args[3] !== 0;
+        const sweep = args[4] !== 0;
+        const ex = args[5];
+        const ey = args[6];
+        const end = { x: ex, y: ey };
+        if (rxArg === 0 || ryArg === 0) {
+          const segLen = dist(start, end);
+          segments.push({
+            start,
+            end,
+            length: segLen,
+            pointAtLength: (t) => lerpPoint(start, end, t),
+            tangentAtLength: () => {
+              const d = dist(start, end);
+              if (d === 0) return { x: 0, y: 0 };
+              return { x: (end.x - start.x) / d, y: (end.y - start.y) / d };
+            }
+          });
+        } else {
+          const center = endpointToCenter(
+            cx,
+            cy,
+            rxArg,
+            ryArg,
+            phi,
+            largeArc,
+            sweep,
+            ex,
+            ey
+          );
+          const steps = CURVE_STEPS;
+          const points = arcToPoints(
+            center.cx,
+            center.cy,
+            center.rx,
+            center.ry,
+            phi,
+            center.theta1,
+            center.dtheta,
+            steps
+          );
+          let totalLen = 0;
+          const cumLengths = [0];
+          for (let i = 1; i < points.length; i++) {
+            totalLen += dist(points[i - 1], points[i]);
+            cumLengths.push(totalLen);
+          }
+          segments.push({
+            start,
+            end,
+            length: totalLen,
+            pointAtLength: (t) => polylinePointAt(points, cumLengths, totalLen, t),
+            tangentAtLength: (t) => polylineTangentAt(points, cumLengths, totalLen, t)
+          });
+        }
+        cx = ex;
+        cy = ey;
+        lastCommand = "A";
+        break;
+      }
+      case "Z": {
+        const end = { x: subpathStartX, y: subpathStartY };
+        const segLen = dist(start, end);
+        if (segLen > 0) {
+          segments.push({
+            start,
+            end,
+            length: segLen,
+            pointAtLength: (t) => lerpPoint(start, end, t),
+            tangentAtLength: () => {
+              const d = segLen;
+              return { x: (end.x - start.x) / d, y: (end.y - start.y) / d };
+            }
+          });
+        }
+        cx = subpathStartX;
+        cy = subpathStartY;
+        lastCommand = "Z";
+        break;
+      }
+    }
+  }
+  return segments;
+}
+function buildCubicLUT(p0, p1, p2, p3) {
+  let totalLength = 0;
+  const cumLengths = [0];
+  let prev = p0;
+  for (let i = 1; i <= CURVE_STEPS; i++) {
+    const t = i / CURVE_STEPS;
+    const pt = cubicBezierPoint(p0, p1, p2, p3, t);
+    totalLength += dist(prev, pt);
+    cumLengths.push(totalLength);
+    prev = pt;
+  }
+  return { totalLength, cumLengths };
+}
+function buildQuadLUT(p0, p1, p2) {
+  let totalLength = 0;
+  const cumLengths = [0];
+  let prev = p0;
+  for (let i = 1; i <= CURVE_STEPS; i++) {
+    const t = i / CURVE_STEPS;
+    const pt = quadBezierPoint(p0, p1, p2, t);
+    totalLength += dist(prev, pt);
+    cumLengths.push(totalLength);
+    prev = pt;
+  }
+  return { totalLength, cumLengths };
+}
+function lengthToParam(lut, t) {
+  const targetLen = t * lut.totalLength;
+  const n = lut.cumLengths.length - 1;
+  let lo = 0;
+  let hi = n;
+  while (lo < hi) {
+    const mid = lo + hi >> 1;
+    if (lut.cumLengths[mid] < targetLen) {
+      lo = mid + 1;
+    } else {
+      hi = mid;
+    }
+  }
+  if (lo === 0) return 0;
+  const segStart = lut.cumLengths[lo - 1];
+  const segEnd = lut.cumLengths[lo];
+  const segLen = segEnd - segStart;
+  const frac = segLen > 0 ? (targetLen - segStart) / segLen : 0;
+  return (lo - 1 + frac) / n;
+}
+function cubicPointFromLUT(lut, t, p0, p1, p2, p3) {
+  const param = lengthToParam(lut, t);
+  return cubicBezierPoint(p0, p1, p2, p3, param);
+}
+function cubicTangentFromLUT(lut, t, p0, p1, p2, p3) {
+  const param = lengthToParam(lut, t);
+  return cubicBezierTangent(p0, p1, p2, p3, param);
+}
+function quadPointFromLUT(lut, t, p0, p1, p2) {
+  const param = lengthToParam(lut, t);
+  return quadBezierPoint(p0, p1, p2, param);
+}
+function quadTangentFromLUT(lut, t, p0, p1, p2) {
+  const param = lengthToParam(lut, t);
+  return quadBezierTangent(p0, p1, p2, param);
+}
+function polylinePointAt(points, cumLengths, totalLength, t) {
+  if (totalLength === 0 || points.length === 0) return points[0] ?? { x: 0, y: 0 };
+  const targetLen = t * totalLength;
+  for (let i = 1; i < cumLengths.length; i++) {
+    if (cumLengths[i] >= targetLen) {
+      const segLen = cumLengths[i] - cumLengths[i - 1];
+      const frac = segLen > 0 ? (targetLen - cumLengths[i - 1]) / segLen : 0;
+      return lerpPoint(points[i - 1], points[i], frac);
+    }
+  }
+  return points[points.length - 1];
+}
+function polylineTangentAt(points, cumLengths, totalLength, t) {
+  if (totalLength === 0 || points.length < 2) return { x: 1, y: 0 };
+  const targetLen = t * totalLength;
+  for (let i = 1; i < cumLengths.length; i++) {
+    if (cumLengths[i] >= targetLen) {
+      const d2 = dist(points[i - 1], points[i]);
+      if (d2 === 0) return { x: 1, y: 0 };
+      return {
+        x: (points[i].x - points[i - 1].x) / d2,
+        y: (points[i].y - points[i - 1].y) / d2
+      };
+    }
+  }
+  const last = points.length - 1;
+  const d = dist(points[last - 1], points[last]);
+  if (d === 0) return { x: 1, y: 0 };
+  return {
+    x: (points[last].x - points[last - 1].x) / d,
+    y: (points[last].y - points[last - 1].y) / d
+  };
+}
+function getSegments(d) {
+  const commands = toAbsolute(parsePath(d));
+  return buildSegments(commands);
+}
+function getTotalLength(segments) {
+  let total = 0;
+  for (const seg of segments) {
+    total += seg.length;
+  }
+  return total;
+}
+function findSegmentAtLength(segments, targetLength) {
+  if (segments.length === 0) return null;
+  let accum = 0;
+  for (const seg of segments) {
+    if (accum + seg.length >= targetLength) {
+      const localLen = targetLength - accum;
+      const t = seg.length > 0 ? localLen / seg.length : 0;
+      return { segment: seg, t: Math.max(0, Math.min(1, t)) };
+    }
+    accum += seg.length;
+  }
+  const last = segments[segments.length - 1];
+  return { segment: last, t: 1 };
+}
+function evolvePath(d, progress) {
+  const length = getLength(d);
+  const clampedProgress = Math.max(0, Math.min(1, progress));
+  return {
+    d,
+    strokeDasharray: `${roundNum(length)}`,
+    strokeDashoffset: length * (1 - clampedProgress)
+  };
+}
+function getLength(d) {
+  if (!d || d.trim().length === 0) return 0;
+  const segments = getSegments(d);
+  return getTotalLength(segments);
+}
+function getPointAtLength(d, length) {
+  if (!d || d.trim().length === 0) return { x: 0, y: 0 };
+  const segments = getSegments(d);
+  const totalLength = getTotalLength(segments);
+  const clampedLength = Math.max(0, Math.min(totalLength, length));
+  const result = findSegmentAtLength(segments, clampedLength);
+  if (!result) return { x: 0, y: 0 };
+  return result.segment.pointAtLength(result.t);
+}
+function getTangentAtLength(d, length) {
+  if (!d || d.trim().length === 0) return { x: 0, y: 0 };
+  const segments = getSegments(d);
+  const totalLength = getTotalLength(segments);
+  const clampedLength = Math.max(0, Math.min(totalLength, length));
+  const result = findSegmentAtLength(segments, clampedLength);
+  if (!result) return { x: 0, y: 0 };
+  return result.segment.tangentAtLength(result.t);
+}
+function getBoundingBox(d) {
+  if (!d || d.trim().length === 0) return { x: 0, y: 0, width: 0, height: 0 };
+  const segments = getSegments(d);
+  if (segments.length === 0) {
+    const commands = toAbsolute(parsePath(d));
+    for (const cmd of commands) {
+      if (cmd.command === "M") {
+        return { x: cmd.args[0], y: cmd.args[1], width: 0, height: 0 };
+      }
+    }
+    return { x: 0, y: 0, width: 0, height: 0 };
+  }
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  function updateBounds(p) {
+    if (p.x < minX) minX = p.x;
+    if (p.y < minY) minY = p.y;
+    if (p.x > maxX) maxX = p.x;
+    if (p.y > maxY) maxY = p.y;
+  }
+  const sampleCount = 32;
+  for (const seg of segments) {
+    updateBounds(seg.start);
+    updateBounds(seg.end);
+    for (let i = 1; i < sampleCount; i++) {
+      const t = i / sampleCount;
+      updateBounds(seg.pointAtLength(t));
+    }
+  }
+  return {
+    x: minX,
+    y: minY,
+    width: maxX - minX,
+    height: maxY - minY
+  };
+}
+function scalePath(d, scaleX, scaleY) {
+  if (!d || d.trim().length === 0) return d;
+  const sy = scaleY ?? scaleX;
+  const commands = parsePath(d);
+  const scaled = [];
+  for (const { command, args } of commands) {
+    const upper = command.toUpperCase();
+    switch (upper) {
+      case "M":
+      case "L":
+      case "T":
+        scaled.push({
+          command,
+          args: [args[0] * scaleX, args[1] * sy]
+        });
+        break;
+      case "H":
+        scaled.push({ command, args: [args[0] * scaleX] });
+        break;
+      case "V":
+        scaled.push({ command, args: [args[0] * sy] });
+        break;
+      case "C":
+        scaled.push({
+          command,
+          args: [
+            args[0] * scaleX,
+            args[1] * sy,
+            args[2] * scaleX,
+            args[3] * sy,
+            args[4] * scaleX,
+            args[5] * sy
+          ]
+        });
+        break;
+      case "S":
+      case "Q":
+        scaled.push({
+          command,
+          args: [
+            args[0] * scaleX,
+            args[1] * sy,
+            args[2] * scaleX,
+            args[3] * sy
+          ]
+        });
+        break;
+      case "A":
+        scaled.push({
+          command,
+          args: [
+            args[0] * scaleX,
+            args[1] * sy,
+            args[2],
+            args[3],
+            args[4],
+            args[5] * scaleX,
+            args[6] * sy
+          ]
+        });
+        break;
+      case "Z":
+        scaled.push({ command, args: [] });
+        break;
+      default:
+        scaled.push({ command, args: [...args] });
+        break;
+    }
+  }
+  return serializePath(scaled);
+}
+function translatePath(d, dx, dy) {
+  if (!d || d.trim().length === 0) return d;
+  const commands = parsePath(d);
+  const translated = [];
+  for (const { command, args } of commands) {
+    const upper = command.toUpperCase();
+    const isRelative = command !== upper;
+    if (isRelative || upper === "Z") {
+      translated.push({ command, args: [...args] });
+      continue;
+    }
+    switch (upper) {
+      case "M":
+      case "L":
+      case "T":
+        translated.push({
+          command,
+          args: [args[0] + dx, args[1] + dy]
+        });
+        break;
+      case "H":
+        translated.push({ command, args: [args[0] + dx] });
+        break;
+      case "V":
+        translated.push({ command, args: [args[0] + dy] });
+        break;
+      case "C":
+        translated.push({
+          command,
+          args: [
+            args[0] + dx,
+            args[1] + dy,
+            args[2] + dx,
+            args[3] + dy,
+            args[4] + dx,
+            args[5] + dy
+          ]
+        });
+        break;
+      case "S":
+      case "Q":
+        translated.push({
+          command,
+          args: [
+            args[0] + dx,
+            args[1] + dy,
+            args[2] + dx,
+            args[3] + dy
+          ]
+        });
+        break;
+      case "A":
+        translated.push({
+          command,
+          args: [
+            args[0],
+            args[1],
+            args[2],
+            args[3],
+            args[4],
+            args[5] + dx,
+            args[6] + dy
+          ]
+        });
+        break;
+      default:
+        translated.push({ command, args: [...args] });
+        break;
+    }
+  }
+  return serializePath(translated);
+}
+function resetPath(d) {
+  if (!d || d.trim().length === 0) return d;
+  const commands = toAbsolute(parsePath(d));
+  for (const cmd of commands) {
+    if (cmd.command === "M") {
+      return translatePath(
+        serializePath(commands),
+        -cmd.args[0],
+        -cmd.args[1]
+      );
+    }
+  }
+  return d;
+}
+function reversePath(d) {
+  if (!d || d.trim().length === 0) return d;
+  const commands = toAbsolute(parsePath(d));
+  if (commands.length === 0) return d;
+  const points = [];
+  const segCommands = [];
+  let cx = 0;
+  let cy = 0;
+  let subpathStartX = 0;
+  let subpathStartY = 0;
+  let hasClose = false;
+  for (const { command, args } of commands) {
+    switch (command) {
+      case "M":
+        cx = args[0];
+        cy = args[1];
+        subpathStartX = cx;
+        subpathStartY = cy;
+        points.push({ x: cx, y: cy });
+        segCommands.push({ command: "M", args: [cx, cy] });
+        break;
+      case "L":
+        cx = args[0];
+        cy = args[1];
+        points.push({ x: cx, y: cy });
+        segCommands.push({ command: "L", args: [cx, cy] });
+        break;
+      case "H":
+        cx = args[0];
+        points.push({ x: cx, y: cy });
+        segCommands.push({ command: "L", args: [cx, cy] });
+        break;
+      case "V":
+        cy = args[0];
+        points.push({ x: cx, y: cy });
+        segCommands.push({ command: "L", args: [cx, cy] });
+        break;
+      case "C":
+        points.push({ x: args[4], y: args[5] });
+        segCommands.push({
+          command: "C",
+          args: [args[2], args[3], args[0], args[1], cx, cy]
+        });
+        cx = args[4];
+        cy = args[5];
+        break;
+      case "Q":
+        points.push({ x: args[2], y: args[3] });
+        segCommands.push({
+          command: "Q",
+          args: [args[0], args[1], cx, cy]
+        });
+        cx = args[2];
+        cy = args[3];
+        break;
+      case "Z":
+        hasClose = true;
+        if (cx !== subpathStartX || cy !== subpathStartY) {
+          points.push({ x: subpathStartX, y: subpathStartY });
+          segCommands.push({ command: "L", args: [subpathStartX, subpathStartY] });
+        }
+        cx = subpathStartX;
+        cy = subpathStartY;
+        break;
+      default:
+        points.push({ x: cx, y: cy });
+        segCommands.push({ command, args: [...args] });
+        break;
+    }
+  }
+  const reversed = [];
+  if (points.length === 0) return d;
+  const lastPt = points[points.length - 1];
+  reversed.push({ command: "M", args: [lastPt.x, lastPt.y] });
+  for (let i = segCommands.length - 1; i >= 1; i--) {
+    const cmd = segCommands[i];
+    if (cmd.command === "M") continue;
+    if (cmd.command === "C") {
+      const prevPt = points[i - 1];
+      reversed.push({
+        command: "C",
+        args: [cmd.args[0], cmd.args[1], cmd.args[2], cmd.args[3], prevPt.x, prevPt.y]
+      });
+    } else if (cmd.command === "Q") {
+      const prevPt = points[i - 1];
+      reversed.push({
+        command: "Q",
+        args: [cmd.args[0], cmd.args[1], prevPt.x, prevPt.y]
+      });
+    } else if (cmd.command === "L") {
+      const prevPt = points[i - 1];
+      reversed.push({ command: "L", args: [prevPt.x, prevPt.y] });
+    } else {
+      const prevPt = points[i - 1];
+      reversed.push({ command: "L", args: [prevPt.x, prevPt.y] });
+    }
+  }
+  if (hasClose) {
+    reversed.push({ command: "Z", args: [] });
+  }
+  return serializePath(reversed);
+}
+function interpolatePath(progress, d12, d2) {
+  if (!d12 || !d2) return d12 || d2 || "";
+  const cmds1 = toAbsolute(parsePath(d12));
+  const cmds2 = toAbsolute(parsePath(d2));
+  const maxLen = Math.max(cmds1.length, cmds2.length);
+  while (cmds1.length < maxLen) {
+    const last = cmds1[cmds1.length - 1];
+    if (last) {
+      cmds1.push({ command: last.command, args: [...last.args] });
+    } else {
+      cmds1.push({ command: "M", args: [0, 0] });
+    }
+  }
+  while (cmds2.length < maxLen) {
+    const last = cmds2[cmds2.length - 1];
+    if (last) {
+      cmds2.push({ command: last.command, args: [...last.args] });
+    } else {
+      cmds2.push({ command: "M", args: [0, 0] });
+    }
+  }
+  const t = Math.max(0, Math.min(1, progress));
+  const result = [];
+  for (let i = 0; i < maxLen; i++) {
+    const c12 = cmds1[i];
+    const c22 = cmds2[i];
+    const cmd = c12.command === "Z" && c22.command !== "Z" ? c22.command : c12.command;
+    if (cmd === "Z") {
+      result.push({ command: "Z", args: [] });
+      continue;
+    }
+    const argCount = Math.max(c12.args.length, c22.args.length);
+    const args = [];
+    for (let j = 0; j < argCount; j++) {
+      const a = j < c12.args.length ? c12.args[j] : 0;
+      const b = j < c22.args.length ? c22.args[j] : 0;
+      args.push(lerp(a, b, t));
+    }
+    result.push({ command: cmd, args });
+  }
+  return serializePath(result);
+}
+function getSubpaths(d) {
+  if (!d || d.trim().length === 0) return [];
+  const commands = parsePath(d);
+  const subpaths = [];
+  let current = [];
+  for (const cmd of commands) {
+    if (cmd.command === "M" || cmd.command === "m") {
+      if (current.length > 0) {
+        subpaths.push(current);
+      }
+      current = [cmd];
+    } else {
+      current.push(cmd);
+    }
+  }
+  if (current.length > 0) {
+    subpaths.push(current);
+  }
+  return subpaths.map(serializePath);
+}
+function normalizePath(d) {
+  if (!d || d.trim().length === 0) return d;
+  return serializePath(toAbsolute(parsePath(d)));
 }
 
 // src/fonts/types.ts
@@ -4760,6 +6638,6 @@ function getRandomFonts(count = 1) {
   return shuffled.slice(0, count);
 }
 
-export { ComponentDefaultsManager, ComponentPropsResolver, DEFAULT_MOTION_BLUR_CONFIG, FONT_CONSTANTS, FontLoadingError, FontManager, MOTION_BLUR_QUALITY_PRESETS, RendervidEngine, TemplateProcessor, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createSpring, exportAnimatedSvg, filterToCSS, filtersToCSS, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getLayerSchema, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getTemplateSchema, getValueAtFrame, getVariableFonts, interpolate, isFontAvailable, isNamedWeight, isNumericWeight, mergeMotionBlurConfigs, numericToNamedWeight, parseEasing, resolveMotionBlurConfig, searchFonts, templateSchema, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, weightToNumeric };
+export { ComponentDefaultsManager, ComponentPropsResolver, DEFAULT_MOTION_BLUR_CONFIG, FONT_CONSTANTS, FontLoadingError, FontManager, MOTION_BLUR_QUALITY_PRESETS, RendervidEngine, TemplateProcessor, colorToString, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createRandom, createSmoothSvgPath, createSpring, evolvePath, exportAnimatedSvg, filterToCSS, filtersToCSS, fitText, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getAudioData, getAudioDuration, getBoundingBox, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getGifFrameAtTime, getLayerSchema, getLength, getPointAtLength, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getSubpaths, getTangentAtLength, getTemplateSchema, getValueAtFrame, getVariableFonts, getWaveformPortion, interpolate, interpolateColors, interpolatePath, isFontAvailable, isNamedWeight, isNumericWeight, measureText, mergeMotionBlurConfigs, noise2D, noise3D, normalizePath, numericToNamedWeight, parseColor, parseEasing, random, randomInt, randomRange, resetPath, resolveMotionBlurConfig, reversePath, scalePath, searchFonts, templateSchema, translatePath, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, visualizeAudio, visualizeAudioWaveform, weightToNumeric };
 //# sourceMappingURL=index.mjs.map
 //# sourceMappingURL=index.mjs.map

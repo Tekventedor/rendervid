@@ -6,6 +6,8 @@ Episode preview with audio waveform visual effect.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Usage
 
 ```bash

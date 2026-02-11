@@ -40,6 +40,8 @@ describe('GCPBackend', () => {
   };
 
   const testTemplate: Template = {
+    name: 'Test Template',
+    inputs: [],
     output: {
       type: 'video' as const,
       width: 1920,

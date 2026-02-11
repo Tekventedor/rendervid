@@ -8,6 +8,8 @@ import type { Template } from '@rendervid/core';
 
 describe('Frame Renderer', () => {
   const validTemplate: Template = {
+    name: 'Test Template',
+    inputs: [],
     output: {
       type: 'video' as const,
       width: 1920,
@@ -92,6 +94,8 @@ describe('Frame Renderer', () => {
 
     it('should report missing width/height', () => {
       const template: Template = {
+        name: 'Test Template',
+        inputs: [],
         output: { type: 'video' as const, width: 0, height: 0, fps: 30, duration: 10 },
         composition: validTemplate.composition,
       };
@@ -104,6 +108,8 @@ describe('Frame Renderer', () => {
 
     it('should report missing fps', () => {
       const template: Template = {
+        name: 'Test Template',
+        inputs: [],
         output: { type: 'video' as const, width: 1920, height: 1080, fps: 0, duration: 10 },
         composition: validTemplate.composition,
       };
@@ -116,6 +122,8 @@ describe('Frame Renderer', () => {
 
     it('should report missing duration', () => {
       const template: Template = {
+        name: 'Test Template',
+        inputs: [],
         output: { type: 'video' as const, width: 1920, height: 1080, fps: 30 },
         composition: validTemplate.composition,
       };
@@ -128,6 +136,8 @@ describe('Frame Renderer', () => {
 
     it('should report missing scenes', () => {
       const template: Template = {
+        name: 'Test Template',
+        inputs: [],
         output: validTemplate.output,
         composition: { scenes: [] },
       };
@@ -140,6 +150,8 @@ describe('Frame Renderer', () => {
 
     it('should report scenes with missing frame range', () => {
       const template: Template = {
+        name: 'Test Template',
+        inputs: [],
         output: validTemplate.output,
         composition: {
           scenes: [
@@ -171,6 +183,8 @@ describe('Frame Renderer', () => {
 
     it('should report scenes with no layers', () => {
       const template: Template = {
+        name: 'Test Template',
+        inputs: [],
         output: validTemplate.output,
         composition: {
           scenes: [
@@ -201,6 +215,8 @@ describe('Frame Renderer', () => {
 
     it('should throw when duration is missing', () => {
       const template: Template = {
+        name: 'Test Template',
+        inputs: [],
         output: { type: 'video' as const, width: 1920, height: 1080, fps: 30 },
         composition: validTemplate.composition,
       };
@@ -212,6 +228,8 @@ describe('Frame Renderer', () => {
 
     it('should ceil for fractional frames', () => {
       const template: Template = {
+        name: 'Test Template',
+        inputs: [],
         output: { type: 'video' as const, width: 1920, height: 1080, fps: 30, duration: 10.1 },
         composition: validTemplate.composition,
       };

@@ -1,0 +1,370 @@
+{
+  "name": "Matrix Digital Rain",
+  "description": "Iconic Matrix-style digital rain effect with cascading green characters over a dark background. Features a custom animated rain component with centered glowing title text. Perfect for tech, hacker, or sci-fi themed content.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 8
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Main Title",
+      "required": true,
+      "default": "ENTER THE SYSTEM"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "required": false,
+      "default": "The Matrix has you..."
+    }
+  ],
+  "defaults": {
+    "title": "ENTER THE SYSTEM",
+    "subtitle": "The Matrix has you..."
+  },
+  "customComponents": {
+    "MatrixRain": {
+      "type": "inline",
+      "code": "function MatrixRain(props) { var frame = props.frame || 0; var w = (props.layerSize && props.layerSize.width) || 1920; var h = (props.layerSize && props.layerSize.height) || 1080; var cols = 48; var colW = w / cols; var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*(){}[]|;:<>?/~'; var elements = []; for (var c = 0; c < cols; c++) { var seed = (c * 7 + 3) % 17; var speed = 2 + (seed % 5); var startOffset = (seed * 13) % 40; var numChars = 12 + (seed % 10); for (var r = 0; r < numChars; r++) { var yBase = ((frame + startOffset) * speed + r * 40) % (h + 400) - 200; var charIdx = (c * 31 + r * 7 + frame * 3 + seed) % chars.length; var brightness = 1 - (r / numChars); var green = Math.floor(100 + brightness * 155); var alpha = brightness * 0.9; if (r === 0) { alpha = 1; green = 255; } var style = { position: 'absolute', left: (c * colW + colW * 0.2) + 'px', top: yBase + 'px', color: r === 0 ? '#ffffff' : 'rgba(0,' + green + ',0,' + alpha + ')', fontSize: '18px', fontFamily: 'monospace', fontWeight: r === 0 ? '700' : '400', textShadow: r === 0 ? '0 0 10px #00ff00, 0 0 20px #00ff00' : '0 0 5px rgba(0,255,0,0.3)' }; elements.push(React.createElement('span', { key: c + '-' + r, style: style }, chars[charIdx])); } } return React.createElement('div', { style: { position: 'relative', width: '100%', height: '100%', overflow: 'hidden', background: 'transparent' } }, elements); }",
+      "description": "Animated Matrix-style falling character rain effect"
+    }
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 240,
+        "layers": [
+          {
+            "id": "bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000000"
+            }
+          },
+          {
+            "id": "bg-glow",
+            "type": "shape",
+            "position": { "x": 660, "y": 340 },
+            "size": { "width": 600, "height": 400 },
+            "opacity": 0.08,
+            "props": {
+              "shape": "ellipse",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#00ff00" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              }
+            }
+          },
+          {
+            "id": "matrix-rain",
+            "type": "custom",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "customComponent": {
+              "name": "MatrixRain",
+              "props": {}
+            }
+          },
+          {
+            "id": "overlay-darken",
+            "type": "shape",
+            "position": { "x": 510, "y": 360 },
+            "size": { "width": 900, "height": 360 },
+            "opacity": 0.7,
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "radial",
+                "colors": [
+                  { "offset": 0, "color": "#000000" },
+                  { "offset": 1, "color": "transparent" }
+                ]
+              },
+              "borderRadius": 20
+            }
+          },
+          {
+            "id": "title-glow-1",
+            "type": "text",
+            "position": { "x": 260, "y": 420 },
+            "size": { "width": 1400, "height": 120 },
+            "opacity": 0.4,
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 84,
+              "fontWeight": "900",
+              "color": "#00ff00",
+              "textAlign": "center",
+              "fontFamily": "'Courier New', monospace",
+              "letterSpacing": 10,
+              "textShadow": "0 0 40px #00ff00, 0 0 80px #00ff00, 0 0 120px #00ff00"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 40,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "title-main",
+            "type": "text",
+            "position": { "x": 260, "y": 420 },
+            "size": { "width": 1400, "height": 120 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 84,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "'Courier New', monospace",
+              "letterSpacing": 10,
+              "textShadow": "0 0 10px #00ff00, 0 0 30px rgba(0,255,0,0.5)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 40,
+                "duration": 30,
+                "easing": "easeOutBack"
+              }
+            ]
+          },
+          {
+            "id": "cursor-blink",
+            "type": "shape",
+            "position": { "x": 1380, "y": 435 },
+            "size": { "width": 4, "height": 70 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#00ff00"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 70,
+                "duration": 5,
+                "easing": "linear"
+              },
+              {
+                "type": "emphasis",
+                "effect": "flash",
+                "delay": 75,
+                "duration": 120,
+                "easing": "linear"
+              }
+            ]
+          },
+          {
+            "id": "subtitle-text",
+            "type": "text",
+            "position": { "x": 460, "y": 560 },
+            "size": { "width": 1000, "height": 50 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 26,
+              "fontWeight": "400",
+              "color": "#00cc00",
+              "textAlign": "center",
+              "fontFamily": "'Courier New', monospace",
+              "letterSpacing": 3,
+              "textShadow": "0 0 10px rgba(0,255,0,0.5)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeInUp",
+                "delay": 80,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "line-top",
+            "type": "shape",
+            "position": { "x": 560, "y": 410 },
+            "size": { "width": 800, "height": 1 },
+            "opacity": 0.5,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#00ff00"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 60,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "line-bottom",
+            "type": "shape",
+            "position": { "x": 560, "y": 610 },
+            "size": { "width": 800, "height": 1 },
+            "opacity": 0.5,
+            "props": {
+              "shape": "rectangle",
+              "fill": "#00ff00"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 60,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "access-text",
+            "type": "text",
+            "position": { "x": 40, "y": 40 },
+            "size": { "width": 500, "height": 30 },
+            "props": {
+              "text": "root@system:~$ ./access --granted",
+              "fontSize": 16,
+              "fontWeight": "400",
+              "color": "#00aa00",
+              "fontFamily": "'Courier New', monospace"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 10,
+                "duration": 15,
+                "easing": "linear"
+              }
+            ]
+          },
+          {
+            "id": "status-text",
+            "type": "text",
+            "position": { "x": 40, "y": 70 },
+            "size": { "width": 500, "height": 30 },
+            "props": {
+              "text": "Connection established... decrypting...",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "color": "#008800",
+              "fontFamily": "'Courier New', monospace"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 10,
+                "easing": "linear"
+              }
+            ]
+          },
+          {
+            "id": "hex-text-bl",
+            "type": "text",
+            "position": { "x": 40, "y": 950 },
+            "size": { "width": 600, "height": 30 },
+            "opacity": 0.3,
+            "props": {
+              "text": "0xDEADBEEF 0xCAFEBABE 0x8BADF00D",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "color": "#00ff00",
+              "fontFamily": "'Courier New', monospace"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 5,
+                "duration": 10,
+                "easing": "linear"
+              }
+            ]
+          },
+          {
+            "id": "corner-dot-tl",
+            "type": "shape",
+            "position": { "x": 25, "y": 25 },
+            "size": { "width": 6, "height": 6 },
+            "opacity": 0.6,
+            "props": {
+              "shape": "ellipse",
+              "fill": "#00ff00"
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 0,
+                "duration": 60,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "corner-dot-br",
+            "type": "shape",
+            "position": { "x": 1890, "y": 1050 },
+            "size": { "width": 6, "height": 6 },
+            "opacity": 0.6,
+            "props": {
+              "shape": "ellipse",
+              "fill": "#00ff00"
+            },
+            "animations": [
+              {
+                "type": "emphasis",
+                "effect": "pulse",
+                "delay": 15,
+                "duration": 60,
+                "easing": "easeInOutSine"
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -6,6 +6,8 @@ Professional product visualization example demonstrating advanced Three.js featu
 
 ![Preview](./preview.gif)
 
+[View animated SVG](preview.svg)
+
 [View full video (video.mp4)](./video.mp4)
 
 ## Features

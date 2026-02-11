@@ -6,6 +6,8 @@ Square video template optimized for Instagram feed posts.
 
 ![Preview](preview.gif)
 
+[View animated SVG](preview.svg)
+
 ## Description
 
 Professional square format video with clean typography and subtle animations. Great for tips, quotes, and educational content.
