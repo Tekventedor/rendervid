@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import type { Template } from '@rendervid/core';
 import { TemplateProcessor } from '@rendervid/core';
 import { useEditorStore } from '../context/EditorStore';
 import { Preview } from './Preview/Preview';
 import { Timeline } from './Timeline/Timeline';
-import { LayerPanel } from './LayerPanel/LayerPanel';
 import { PropertyPanel } from './PropertyPanel/PropertyPanel';
 import { InputPanel } from './InputPanel/InputPanel';
 import { ExportDialog } from './ExportDialog/ExportDialog';
@@ -56,6 +55,7 @@ export function VideoEditor({
     deleteLayer,
     duplicateLayer,
     reorderLayers,
+    moveLayerToScene,
     addScene,
     updateScene,
     deleteScene,
@@ -66,6 +66,43 @@ export function VideoEditor({
   } = useEditorStore();
 
   const [showExportDialog, setShowExportDialog] = useState(false);
+  const [timelineHeight, setTimelineHeight] = useState(250);
+  const [rightPanelWidth, setRightPanelWidth] = useState(300);
+  const dragRef = useRef<{ type: 'timeline' | 'right-panel'; startPos: number; startSize: number } | null>(null);
+
+  const handleResizeMouseDown = useCallback((e: React.MouseEvent, type: 'timeline' | 'right-panel') => {
+    e.preventDefault();
+    dragRef.current = {
+      type,
+      startPos: type === 'timeline' ? e.clientY : e.clientX,
+      startSize: type === 'timeline' ? timelineHeight : rightPanelWidth,
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!dragRef.current) return;
+      const { type, startPos, startSize } = dragRef.current;
+      if (type === 'timeline') {
+        const delta = startPos - e.clientY;
+        setTimelineHeight(Math.max(100, Math.min(600, startSize + delta)));
+      } else {
+        const delta = startPos - e.clientX;
+        setRightPanelWidth(Math.max(200, Math.min(600, startSize + delta)));
+      }
+    };
+
+    const handleMouseUp = () => {
+      dragRef.current = null;
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+
+    document.body.style.cursor = type === 'timeline' ? 'ns-resize' : 'ew-resize';
+    document.body.style.userSelect = 'none';
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+  }, [timelineHeight, rightPanelWidth]);
 
   // Resolve template with input values for preview rendering
   const resolvedTemplate = useMemo(() => {
@@ -292,23 +329,6 @@ export function VideoEditor({
 
       {/* Main Content Area */}
       <div style={{ flex: 1, display: 'flex', minHeight: 0 }}>
-        {/* Left Sidebar - Layer Panel */}
-        <div style={{ width: '250px', borderRight: '1px solid #444', display: 'flex', flexDirection: 'column' }}>
-          <LayerPanel
-            scenes={template.composition.scenes}
-            selectedSceneId={currentSceneId}
-            selectedLayerId={selectedLayerId}
-            onSelectScene={selectScene}
-            onSelectLayer={selectLayer}
-            onAddLayer={handleAddLayer}
-            onDeleteLayer={deleteLayer}
-            onReorderLayers={reorderLayers}
-            onDuplicateLayer={duplicateLayer}
-            onAddScene={handleAddScene}
-            onDeleteScene={deleteScene}
-          />
-        </div>
-
         {/* Center - Preview */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#1a1a1a', minWidth: 0 }}>
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'auto', padding: '20px' }}>
@@ -434,7 +454,21 @@ export function VideoEditor({
         </div>
 
         {/* Right Sidebar - Input Panel + Property Panel */}
-        <div style={{ width: '300px', borderLeft: '1px solid #444', overflowY: 'auto' }}>
+        <div style={{ width: `${rightPanelWidth}px`, position: 'relative', display: 'flex', flexShrink: 0 }}>
+          {/* Resize handle */}
+          <div
+            onMouseDown={(e) => handleResizeMouseDown(e, 'right-panel')}
+            style={{
+              width: '4px',
+              cursor: 'ew-resize',
+              backgroundColor: 'transparent',
+              flexShrink: 0,
+              borderLeft: '1px solid #444',
+            }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#555')}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = 'transparent')}
+          />
+        <div style={{ flex: 1, overflowY: 'auto' }}>
           {template.inputs && template.inputs.length > 0 && (
             <InputPanel
               inputs={template.inputs}
@@ -452,10 +486,25 @@ export function VideoEditor({
             onUpdateScene={(updates) => currentSceneId && updateScene(currentSceneId, updates)}
           />
         </div>
+        </div>
       </div>
 
+      {/* Timeline resize handle */}
+      <div
+        onMouseDown={(e) => handleResizeMouseDown(e, 'timeline')}
+        style={{
+          height: '4px',
+          cursor: 'ns-resize',
+          backgroundColor: 'transparent',
+          borderTop: '1px solid #444',
+          flexShrink: 0,
+        }}
+        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#555')}
+        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = 'transparent')}
+      />
+
       {/* Timeline */}
-      <div style={{ height: '100px', borderTop: '1px solid #444' }}>
+      <div style={{ height: `${timelineHeight}px`, flexShrink: 0 }}>
         <Timeline
           totalFrames={totalFrames || 300}
           fps={template.output.fps || 30}
@@ -463,6 +512,19 @@ export function VideoEditor({
           onFrameChange={setCurrentFrame}
           zoom={zoom}
           onZoomChange={setZoom}
+          scenes={template.composition.scenes}
+          selectedSceneId={currentSceneId}
+          selectedLayerId={selectedLayerId}
+          onSelectScene={selectScene}
+          onSelectLayer={selectLayer}
+          onUpdateLayer={(id, updates) => updateLayer(id, updates)}
+          onDeleteLayer={deleteLayer}
+          onDuplicateLayer={duplicateLayer}
+          onDeleteScene={deleteScene}
+          onAddLayer={handleAddLayer}
+          onAddScene={handleAddScene}
+          onReorderLayers={reorderLayers}
+          onMoveLayerToScene={moveLayerToScene}
         />
       </div>
 

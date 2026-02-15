@@ -79,10 +79,11 @@ describe('VideoEditor', () => {
     expect(screen.getByText(/Redo/)).toBeTruthy();
   });
 
-  it('should show layer panel with layers heading', () => {
+  it('should show Add Scene and Add Layer buttons in timeline', () => {
     const template = createTestTemplate();
     render(<VideoEditor template={template} />);
-    expect(screen.getByText('Scenes & Layers')).toBeTruthy();
+    expect(screen.getByText('+ Add Scene')).toBeTruthy();
+    expect(screen.getByText(/Add Layer/)).toBeTruthy();
   });
 
   it('should show properties panel', () => {

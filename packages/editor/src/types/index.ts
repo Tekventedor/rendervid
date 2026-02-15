@@ -57,6 +57,19 @@ export interface TimelineProps {
   markers?: TimelineMarker[];
   zoom?: number;
   onZoomChange?: (zoom: number) => void;
+  scenes: any[];
+  selectedSceneId: string | null;
+  selectedLayerId: string | null;
+  onSelectScene: (sceneId: string) => void;
+  onSelectLayer: (layerId: string | null) => void;
+  onUpdateLayer: (layerId: string, updates: any) => void;
+  onDeleteLayer: (layerId: string) => void;
+  onDuplicateLayer: (layerId: string) => void;
+  onDeleteScene: (sceneId: string) => void;
+  onAddLayer: (type: string) => void;
+  onAddScene: () => void;
+  onReorderLayers: (sceneId: string, layerIds: string[]) => void;
+  onMoveLayerToScene: (layerId: string, fromSceneId: string, toSceneId: string, insertIndex: number) => void;
 }
 
 /**

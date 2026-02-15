@@ -41,6 +41,7 @@ interface EditorStore extends EditorState {
   deleteLayer: (layerId: string) => void;
   duplicateLayer: (layerId: string) => void;
   reorderLayers: (sceneId: string, layerIds: string[]) => void;
+  moveLayerToScene: (layerId: string, fromSceneId: string, toSceneId: string, insertIndex: number) => void;
 
   // Scene actions
   addScene: (scene: any) => void;
@@ -366,6 +367,38 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         ...state.template.composition,
         scenes: newScenes,
       },
+    };
+    return {
+      template: newTemplate,
+      history: state.config.enableHistory ? {
+        past: [...state.history.past, state.history.present].slice(-MAX_HISTORY_SIZE),
+        present: newTemplate,
+        future: [],
+      } : state.history,
+    };
+  }),
+
+  moveLayerToScene: (layerId, fromSceneId, toSceneId, insertIndex) => set((state) => {
+    let movedLayer: any = null;
+    const newScenes = state.template.composition.scenes.map((scene: any) => {
+      if (scene.id === fromSceneId) {
+        const layer = scene.layers?.find((l: any) => l.id === layerId);
+        if (layer) movedLayer = layer;
+        return { ...scene, layers: scene.layers?.filter((l: any) => l.id !== layerId) || [] };
+      }
+      return scene;
+    }).map((scene: any) => {
+      if (scene.id === toSceneId && movedLayer) {
+        const layers = [...(scene.layers || [])];
+        layers.splice(insertIndex, 0, movedLayer);
+        return { ...scene, layers };
+      }
+      return scene;
+    });
+    if (!movedLayer) return {};
+    const newTemplate = {
+      ...state.template,
+      composition: { ...state.template.composition, scenes: newScenes },
     };
     return {
       template: newTemplate,
