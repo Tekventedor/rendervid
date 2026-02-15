@@ -6,3 +6,6 @@ export type { LineChartProps } from './LineChart';
 
 export { PieChart } from './PieChart';
 export type { PieChartProps, PieChartData } from './PieChart';
+
+export { Gauge } from './Gauge';
+export type { GaugeProps } from './Gauge';

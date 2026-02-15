@@ -3,6 +3,7 @@ import type { LayerStyle } from './style';
 import type { Filter } from './filter';
 import type { ThreeLayer } from './three';
 import type { MotionBlurConfig } from './motion-blur';
+import type { AudioEffect, VolumeKeyframe } from './audio-effects';
 
 /**
  * Available layer types.
@@ -17,7 +18,8 @@ export type LayerType =
   | 'lottie'
   | 'custom'
   | 'three'
-  | 'gif';
+  | 'gif'
+  | 'canvas';
 
 /**
  * Position in 2D space.
@@ -343,6 +345,12 @@ export interface AudioLayerProps {
   fadeIn?: number;
   /** Fade out duration (frames) */
   fadeOut?: number;
+  /** Audio effects chain */
+  effects?: AudioEffect[];
+  /** Stereo pan position (-1 = full left, 0 = center, 1 = full right) */
+  pan?: number;
+  /** Volume automation keyframes */
+  volumeEnvelope?: VolumeKeyframe[];
 }
 
 /**
@@ -392,6 +400,126 @@ export interface GifLayerProps {
 }
 
 /**
+ * Canvas drawing command types.
+ */
+export type CanvasDrawCommandType =
+  | 'path'
+  | 'gradient'
+  | 'textOnPath'
+  | 'pattern'
+  | 'clipPath'
+  | 'circle'
+  | 'rect'
+  | 'line';
+
+/**
+ * A single canvas drawing command.
+ */
+export interface CanvasDrawCommand {
+  /** Type of drawing command */
+  type: CanvasDrawCommandType;
+  /** SVG path data (for path, textOnPath, clipPath) */
+  pathData?: string;
+  /** Fill color or gradient reference */
+  fill?: string;
+  /** Stroke color */
+  stroke?: string;
+  /** Stroke width */
+  strokeWidth?: number;
+  /** Stroke dash array */
+  strokeDash?: number[];
+  /** Stroke line cap */
+  lineCap?: 'butt' | 'round' | 'square';
+  /** Stroke line join */
+  lineJoin?: 'miter' | 'round' | 'bevel';
+  /** Text content (for textOnPath) */
+  text?: string;
+  /** Font size (for textOnPath) */
+  fontSize?: number;
+  /** Font family (for textOnPath) */
+  fontFamily?: string;
+  /** Gradient configuration (for gradient) */
+  gradient?: CanvasGradientConfig;
+  /** Circle center x (for circle) */
+  cx?: number;
+  /** Circle center y (for circle) */
+  cy?: number;
+  /** Circle radius (for circle) */
+  r?: number;
+  /** Rectangle x (for rect) */
+  x?: number;
+  /** Rectangle y (for rect) */
+  y?: number;
+  /** Rectangle width (for rect) */
+  width?: number;
+  /** Rectangle height (for rect) */
+  height?: number;
+  /** Rectangle border radius (for rect) */
+  borderRadius?: number;
+  /** Line start x (for line) */
+  x1?: number;
+  /** Line start y (for line) */
+  y1?: number;
+  /** Line end x (for line) */
+  x2?: number;
+  /** Line end y (for line) */
+  y2?: number;
+  /** Opacity (0-1) */
+  opacity?: number;
+}
+
+/**
+ * Gradient types for canvas drawing.
+ */
+export type CanvasGradientType = 'linear' | 'radial' | 'conic';
+
+/**
+ * Canvas gradient stop.
+ */
+export interface CanvasGradientStop {
+  /** Offset (0-1) */
+  offset: number;
+  /** Color at this stop */
+  color: string;
+}
+
+/**
+ * Canvas gradient configuration.
+ */
+export interface CanvasGradientConfig {
+  /** Gradient type */
+  type: CanvasGradientType;
+  /** Color stops */
+  stops: CanvasGradientStop[];
+  /** Start x (linear) or center x (radial/conic) */
+  x0?: number;
+  /** Start y (linear) or center y (radial/conic) */
+  y0?: number;
+  /** End x (linear) */
+  x1?: number;
+  /** End y (linear) */
+  y1?: number;
+  /** Inner radius (radial) */
+  r0?: number;
+  /** Outer radius (radial) */
+  r1?: number;
+  /** Start angle in degrees (conic) */
+  startAngle?: number;
+}
+
+/**
+ * Props for canvas layer.
+ */
+export interface CanvasLayerProps {
+  /** Array of drawing commands to execute */
+  commands: CanvasDrawCommand[];
+  /** Background color */
+  backgroundColor?: string;
+  /** Whether to anti-alias (default true) */
+  antialias?: boolean;
+}
+
+/**
  * Union of all layer props.
  */
 export type LayerProps =
@@ -403,7 +531,8 @@ export type LayerProps =
   | GroupLayerProps
   | LottieLayerProps
   | CustomLayerProps
-  | GifLayerProps;
+  | GifLayerProps
+  | CanvasLayerProps;
 
 /**
  * Custom component reference.
@@ -568,6 +697,14 @@ export interface GifLayer extends LayerBase {
 }
 
 /**
+ * Canvas layer.
+ */
+export interface CanvasLayer extends LayerBase {
+  type: 'canvas';
+  props: CanvasLayerProps;
+}
+
+/**
  * Union of all layer types.
  */
 export type Layer =
@@ -580,4 +717,5 @@ export type Layer =
   | LottieLayer
   | CustomLayer
   | ThreeLayer
-  | GifLayer;
+  | GifLayer
+  | CanvasLayer;

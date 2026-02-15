@@ -39,3 +39,9 @@ export {
   type VideoMuxer,
   type WebMMuxerOptions,
 } from './muxer';
+
+export {
+  createGifEncoder,
+  type GifEncoderOptions,
+  type GifEncoder,
+} from './gif-encoder';

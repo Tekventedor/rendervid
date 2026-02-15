@@ -67,6 +67,13 @@ export type {
   CustomComponentRef,
   GifLayer,
   GifLayerProps,
+  CanvasLayer,
+  CanvasLayerProps,
+  CanvasDrawCommand,
+  CanvasDrawCommandType,
+  CanvasGradientConfig,
+  CanvasGradientStop,
+  CanvasGradientType,
 } from './layer';
 
 // Three.js 3D Layers
@@ -177,6 +184,23 @@ export type {
 // Schema
 export type { JSONSchema7, JSONSchema7TypeName } from './schema';
 
+// Audio Effects
+export type {
+  AudioEffect,
+  EQEffect,
+  EQBand,
+  ReverbEffect,
+  CompressorEffect,
+  DelayEffect,
+  GainEffect,
+  LowPassFilter,
+  HighPassFilter,
+  VolumeKeyframe,
+  VolumeEnvelope,
+  AudioMixerTrack,
+  AudioMixerConfig,
+} from './audio-effects';
+
 // Encoding
 export type {
   VideoCodec,
@@ -194,3 +218,10 @@ export type {
   FontFamily,
   FontConfiguration,
 } from './fonts';
+
+// Registry / Marketplace
+export type {
+  TemplateManifest,
+  RegistrySearchResult,
+  RegistryPackage,
+} from './registry';

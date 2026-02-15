@@ -95,3 +95,9 @@ export type { NoiseBackgroundProps, NoiseType } from './NoiseBackground';
 
 export { NoiseDistortion } from './NoiseDistortion';
 export type { NoiseDistortionProps } from './NoiseDistortion';
+
+export { AudioWaveform } from './AudioWaveform';
+export type { AudioWaveformProps, WaveformStyle } from './AudioWaveform';
+
+export { AudioSpectrum } from './AudioSpectrum';
+export type { AudioSpectrumProps, SpectrumLayout } from './AudioSpectrum';

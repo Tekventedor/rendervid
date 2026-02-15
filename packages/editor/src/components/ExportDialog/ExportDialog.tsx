@@ -3,6 +3,7 @@ import type { Template } from '@rendervid/core';
 import { exportAnimatedSvg } from '@rendervid/core';
 import {
   createBrowserRenderer,
+  createGifEncoder,
   downloadBlob,
   isWebCodecsSupported,
   type RenderProgress,
@@ -16,7 +17,7 @@ export interface ExportDialogProps {
   onClose: () => void;
 }
 
-type ExportFormat = 'mp4' | 'webm' | 'svg';
+type ExportFormat = 'mp4' | 'webm' | 'svg' | 'gif';
 type ExportState = 'idle' | 'exporting' | 'done' | 'error';
 
 export function ExportDialog({ template, inputValues, onClose }: ExportDialogProps) {
@@ -118,6 +119,96 @@ export function ExportDialog({ template, inputValues, onClose }: ExportDialogPro
     }
   }, [template, inputValues]);
 
+  const handleExportGif = useCallback(async () => {
+    setState('exporting');
+    setError(null);
+    setProgress(null);
+
+    try {
+      const registry = buildRegistry(template.customComponents);
+      const opts: BrowserRendererOptions = { registry };
+      const renderer = createBrowserRenderer(opts);
+      rendererRef.current = renderer;
+
+      const { width, height, fps = 30 } = template.output;
+      const totalFrames = getTotalFrames(template);
+      const startTime = performance.now();
+      const frameTimes: number[] = [];
+
+      // Create GIF encoder
+      const gifEncoder = createGifEncoder({ width, height, fps, quality: 10 });
+
+      // Use an offscreen canvas to extract ImageData from each captured frame
+      const offscreen = document.createElement('canvas');
+      offscreen.width = width;
+      offscreen.height = height;
+      const offCtx = offscreen.getContext('2d')!;
+
+      // Render each frame using the same pattern as video export
+      // We need to use renderImage for each frame to get canvas data
+      for (let frame = 0; frame < totalFrames; frame++) {
+        const frameStartTime = performance.now();
+
+        // Render frame and get image blob
+        const result = await renderer.renderImage({
+          template,
+          inputs: inputValues,
+          frame,
+          format: 'png',
+        });
+
+        // Convert blob to ImageData via canvas
+        const bitmap = await createImageBitmap(result.blob);
+        offCtx.clearRect(0, 0, width, height);
+        offCtx.drawImage(bitmap, 0, 0);
+        bitmap.close();
+
+        const imageData = offCtx.getImageData(0, 0, width, height);
+        gifEncoder.addFrame(imageData);
+
+        // Track frame time for estimation
+        frameTimes.push(performance.now() - frameStartTime);
+        if (frameTimes.length > 10) frameTimes.shift();
+
+        const avgFrameTime = frameTimes.reduce((a, b) => a + b, 0) / frameTimes.length;
+        const remainingFrames = totalFrames - frame - 1;
+        const estimatedTimeRemaining = (remainingFrames * avgFrameTime) / 1000;
+
+        setProgress({
+          currentFrame: frame,
+          totalFrames,
+          percentage: ((frame + 1) / totalFrames) * 100,
+          phase: 'capturing',
+          estimatedTimeRemaining,
+        });
+      }
+
+      // Finalize GIF
+      setProgress({
+        currentFrame: totalFrames,
+        totalFrames,
+        percentage: 100,
+        phase: 'encoding',
+      });
+
+      const blob = gifEncoder.finish();
+
+      setResultSize(blob.size);
+      setState('done');
+
+      const filename = `${template.name || 'animation'}.gif`.replace(/\s+/g, '-').toLowerCase();
+      downloadBlob(blob, filename);
+
+      renderer.dispose();
+      rendererRef.current = null;
+    } catch (err) {
+      setState('error');
+      setError(err instanceof Error ? err.message : String(err));
+      rendererRef.current?.dispose();
+      rendererRef.current = null;
+    }
+  }, [template, inputValues]);
+
   const progressPercent = progress ? Math.round(progress.percentage) : 0;
   const eta = progress?.estimatedTimeRemaining;
 
@@ -177,16 +268,25 @@ export function ExportDialog({ template, inputValues, onClose }: ExportDialogPro
                 >
                   SVG
                 </button>
+                <button
+                  onClick={() => setFormat('gif')}
+                  style={{
+                    ...formatButtonStyle,
+                    ...(format === 'gif' ? formatButtonActiveStyle : {}),
+                  }}
+                >
+                  GIF
+                </button>
               </div>
               <div style={{ fontSize: '11px', color: '#888', marginTop: '4px' }}>
-                {format === 'mp4' ? 'H.264 via WebCodecs - best compatibility' : format === 'webm' ? 'VP9 via MediaRecorder - browser native' : 'Animated SVG - lightweight, scalable, CSS animations'}
+                {format === 'mp4' ? 'H.264 via WebCodecs - best compatibility' : format === 'webm' ? 'VP9 via MediaRecorder - browser native' : format === 'gif' ? 'Animated GIF - optimized palette, small file size' : 'Animated SVG - lightweight, scalable, CSS animations'}
               </div>
             </div>
 
             {/* Actions */}
             <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-              <button onClick={format === 'svg' ? handleExportSvg : handleExport} style={exportButtonStyle}>
-                {format === 'svg' ? 'Export SVG' : 'Export Video'}
+              <button onClick={format === 'svg' ? handleExportSvg : format === 'gif' ? handleExportGif : handleExport} style={exportButtonStyle}>
+                {format === 'svg' ? 'Export SVG' : format === 'gif' ? 'Export GIF' : 'Export Video'}
               </button>
               <button onClick={handleExportImage} style={imageButtonStyle}>
                 Export Frame (PNG)

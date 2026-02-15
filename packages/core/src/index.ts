@@ -152,6 +152,35 @@ export {
   type WaveformPortionOptions,
 } from './utils/audio';
 
+// Audio Analysis
+export {
+  detectBeats,
+  getBeatAtFrame,
+  getFrequencyBands,
+  getAmplitudeEnvelope,
+  type Beat,
+  type BeatDetectionOptions,
+  type FrequencyBand,
+} from './utils/audio-analysis';
+
+// Canvas Drawing Utilities
+export {
+  drawPath,
+  drawGradient,
+  drawTextOnPath,
+  createPattern,
+  applyClipPath,
+  createCanvasGradient,
+  drawCircle,
+  drawRoundedRect,
+  type DrawPathOptions,
+  type GradientConfig,
+  type GradientType,
+  type Bounds,
+  type TextOnPathOptions,
+  type PatternRepetition,
+} from './utils/canvas-draw';
+
 // SVG Path Utilities
 export {
   evolvePath,
@@ -216,3 +245,30 @@ export {
   isFontAvailable,
   getRandomFonts,
 } from './fonts';
+
+// Template Packager
+export {
+  validateManifest,
+  packageTemplate,
+  unpackTemplate,
+  generateManifest,
+  TEMPLATE_CATEGORIES,
+  type TemplateCategory,
+} from './utils/template-packager';
+
+// Registry Client
+export {
+  RegistryClient,
+  RegistryError,
+  type RegistryClientOptions,
+  type SearchOptions,
+} from './utils/registry-client';
+
+// Template CLI Utilities
+export {
+  initTemplate,
+  validateTemplateDir,
+  searchTemplates,
+  getAvailableCategories,
+  type InitTemplateOptions,
+} from './utils/template-cli';

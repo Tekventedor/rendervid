@@ -13,6 +13,21 @@ export type { EncodeOptions, GifOptions, HardwareAccelerationOptions } from './f
 export { ImageSequenceExporter, createImageSequenceExporter } from './image-sequence-exporter';
 export { generateFrameFilename, validateFrameRange } from './image-sequence-exporter';
 
+// Audio effects FFmpeg converter
+export {
+  buildAudioFilterGraph,
+  buildTrackFilterChain,
+  effectsToFFmpegFilters,
+  volumeEnvelopeToFFmpeg,
+  eqToFFmpeg,
+  reverbToFFmpeg,
+  compressorToFFmpeg,
+  delayToFFmpeg,
+  gainToFFmpeg,
+  lowpassToFFmpeg,
+  highpassToFFmpeg,
+} from './audio-effects-ffmpeg';
+
 // GPU detector
 export {
   detectGPUCapabilities,

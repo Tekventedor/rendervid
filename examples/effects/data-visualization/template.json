@@ -1,0 +1,273 @@
+{
+  "name": "Data Visualization Dashboard",
+  "description": "Animated dashboard with bar chart, line chart, pie chart, and gauge components, showcasing data visualization capabilities.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Dashboard Title",
+      "required": false,
+      "default": "Analytics Dashboard"
+    },
+    {
+      "key": "gaugeValue",
+      "type": "number",
+      "label": "Gauge Value (0-100)",
+      "required": false,
+      "default": 78
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0f172a"
+    }
+  ],
+  "defaults": {
+    "title": "Analytics Dashboard",
+    "gaugeValue": 78,
+    "backgroundColor": "#0f172a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "dashboard",
+        "duration": 150,
+        "background": {
+          "type": "color",
+          "color": "{{backgroundColor}}"
+        },
+        "layers": [
+          {
+            "type": "text",
+            "id": "title",
+            "position": { "x": 960, "y": 60 },
+            "size": { "width": 800, "height": 60 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 42,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "preset": "fadeIn",
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "type": "custom",
+            "id": "bar-chart",
+            "position": { "x": 60, "y": 140 },
+            "size": { "width": 880, "height": 420 },
+            "customComponent": {
+              "name": "BarChart",
+              "props": {
+                "data": [120, 200, 150, 280, 180, 220, 310],
+                "labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                "colors": ["#3b82f6", "#6366f1", "#8b5cf6", "#a855f7", "#c084fc", "#d8b4fe", "#e9d5ff"],
+                "width": 880,
+                "height": 420,
+                "animationDuration": 45,
+                "showValues": true,
+                "showLabels": true,
+                "borderRadius": 6,
+                "fontSize": 14,
+                "textColor": "#e2e8f0",
+                "easing": "easeOut"
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "preset": "fadeIn",
+                "duration": 15,
+                "delay": 5
+              }
+            ]
+          },
+          {
+            "type": "custom",
+            "id": "line-chart",
+            "position": { "x": 980, "y": 140 },
+            "size": { "width": 880, "height": 420 },
+            "customComponent": {
+              "name": "LineChart",
+              "props": {
+                "data": [45, 62, 55, 78, 72, 85, 90, 88, 95, 102, 98, 110],
+                "labels": ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
+                "color": "#10b981",
+                "width": 880,
+                "height": 420,
+                "animationDuration": 60,
+                "smooth": true,
+                "fillArea": true,
+                "showPoints": true,
+                "showGrid": true,
+                "gridColor": "rgba(255, 255, 255, 0.05)",
+                "textColor": "#e2e8f0",
+                "fontSize": 12
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "preset": "fadeIn",
+                "duration": 15,
+                "delay": 10
+              }
+            ]
+          },
+          {
+            "type": "custom",
+            "id": "pie-chart",
+            "position": { "x": 60, "y": 600 },
+            "size": { "width": 440, "height": 440 },
+            "customComponent": {
+              "name": "PieChart",
+              "props": {
+                "data": [
+                  { "value": 45, "label": "Desktop" },
+                  { "value": 30, "label": "Mobile" },
+                  { "value": 15, "label": "Tablet" },
+                  { "value": 10, "label": "Other" }
+                ],
+                "size": 440,
+                "innerRadius": 0.5,
+                "animationDuration": 60,
+                "showPercentages": true,
+                "showLabels": true,
+                "textColor": "#e2e8f0",
+                "fontSize": 13,
+                "strokeColor": "#0f172a",
+                "strokeWidth": 3
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "preset": "fadeIn",
+                "duration": 15,
+                "delay": 15
+              }
+            ]
+          },
+          {
+            "type": "custom",
+            "id": "gauge-cpu",
+            "position": { "x": 560, "y": 620 },
+            "size": { "width": 350, "height": 350 },
+            "customComponent": {
+              "name": "Gauge",
+              "props": {
+                "value": "{{gaugeValue}}",
+                "min": 0,
+                "max": 100,
+                "size": 350,
+                "strokeWidth": 24,
+                "animationDuration": 60,
+                "showValue": true,
+                "suffix": "%",
+                "label": "CPU Usage",
+                "fontSize": 52,
+                "labelFontSize": 16,
+                "textColor": "#e2e8f0",
+                "trackColor": "rgba(255, 255, 255, 0.08)",
+                "roundCaps": true,
+                "gradientColors": ["#3b82f6", "#ef4444"]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "preset": "fadeIn",
+                "duration": 15,
+                "delay": 20
+              }
+            ]
+          },
+          {
+            "type": "custom",
+            "id": "gauge-memory",
+            "position": { "x": 960, "y": 620 },
+            "size": { "width": 350, "height": 350 },
+            "customComponent": {
+              "name": "Gauge",
+              "props": {
+                "value": 62,
+                "min": 0,
+                "max": 100,
+                "size": 350,
+                "strokeWidth": 24,
+                "animationDuration": 60,
+                "showValue": true,
+                "suffix": "%",
+                "label": "Memory",
+                "fontSize": 52,
+                "labelFontSize": 16,
+                "textColor": "#e2e8f0",
+                "trackColor": "rgba(255, 255, 255, 0.08)",
+                "roundCaps": true,
+                "gradientColors": ["#10b981", "#f59e0b"]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "preset": "fadeIn",
+                "duration": 15,
+                "delay": 25
+              }
+            ]
+          },
+          {
+            "type": "custom",
+            "id": "gauge-disk",
+            "position": { "x": 1360, "y": 620 },
+            "size": { "width": 350, "height": 350 },
+            "customComponent": {
+              "name": "Gauge",
+              "props": {
+                "value": 45,
+                "min": 0,
+                "max": 100,
+                "size": 350,
+                "strokeWidth": 24,
+                "animationDuration": 60,
+                "showValue": true,
+                "suffix": "%",
+                "label": "Disk I/O",
+                "fontSize": 52,
+                "labelFontSize": 16,
+                "textColor": "#e2e8f0",
+                "trackColor": "rgba(255, 255, 255, 0.08)",
+                "roundCaps": true,
+                "gradientColors": ["#8b5cf6", "#ec4899"]
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "preset": "fadeIn",
+                "duration": 15,
+                "delay": 30
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

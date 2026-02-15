@@ -1,0 +1,194 @@
+{
+  "version": "1.0",
+  "name": "Audio Mixing Example",
+  "description": "Demonstrates multi-track audio mixing with effects, volume envelopes, and stereo panning",
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 10
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "from": 0,
+        "duration": 300,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "gradient": {
+                "type": "linear",
+                "angle": 135,
+                "colors": [
+                  { "offset": 0, "color": "#1a1a2e" },
+                  { "offset": 1, "color": "#16213e" }
+                ]
+              }
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 960, "y": 200 },
+            "size": { "width": 1200, "height": 100 },
+            "props": {
+              "text": "Audio Mixing Demo",
+              "fontSize": 72,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "preset": "fadeIn",
+                "duration": 30
+              }
+            ]
+          },
+          {
+            "id": "background-music",
+            "type": "audio",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 0, "height": 0 },
+            "props": {
+              "src": "./assets/background-music.mp3",
+              "volume": 0.5,
+              "fadeIn": 30,
+              "fadeOut": 60,
+              "pan": 0,
+              "effects": [
+                {
+                  "type": "eq",
+                  "bands": [
+                    { "frequency": 80, "gain": 2, "Q": 0.7, "type": "lowshelf" },
+                    { "frequency": 3000, "gain": -1, "Q": 1.4, "type": "peaking" }
+                  ]
+                },
+                {
+                  "type": "lowpass",
+                  "frequency": 12000,
+                  "Q": 0.707
+                }
+              ],
+              "volumeEnvelope": [
+                { "frame": 0, "volume": 0 },
+                { "frame": 30, "volume": 0.5 },
+                { "frame": 240, "volume": 0.5 },
+                { "frame": 300, "volume": 0 }
+              ]
+            }
+          },
+          {
+            "id": "voiceover",
+            "type": "audio",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 0, "height": 0 },
+            "from": 30,
+            "duration": 210,
+            "props": {
+              "src": "./assets/voiceover.wav",
+              "volume": 1.0,
+              "pan": 0,
+              "effects": [
+                {
+                  "type": "highpass",
+                  "frequency": 80,
+                  "Q": 0.707
+                },
+                {
+                  "type": "compressor",
+                  "threshold": -18,
+                  "ratio": 3,
+                  "attack": 5,
+                  "release": 150,
+                  "knee": 4
+                }
+              ]
+            }
+          },
+          {
+            "id": "transition-sfx",
+            "type": "audio",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 0, "height": 0 },
+            "from": 60,
+            "duration": 30,
+            "props": {
+              "src": "./assets/whoosh.wav",
+              "volume": 0.4,
+              "pan": 0.7,
+              "effects": [
+                {
+                  "type": "reverb",
+                  "roomSize": 0.3,
+                  "damping": 0.6,
+                  "wetDry": 0.2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "audioMixer": {
+    "tracks": [
+      {
+        "src": "./assets/background-music.mp3",
+        "volume": 0.5,
+        "pan": 0,
+        "effects": [
+          {
+            "type": "eq",
+            "bands": [
+              { "frequency": 80, "gain": 2, "Q": 0.7, "type": "lowshelf" },
+              { "frequency": 3000, "gain": -1, "Q": 1.4, "type": "peaking" }
+            ]
+          }
+        ],
+        "startTime": 0,
+        "fadeIn": 2,
+        "fadeOut": 3
+      },
+      {
+        "src": "./assets/voiceover.wav",
+        "volume": 1.0,
+        "pan": 0,
+        "effects": [
+          { "type": "highpass", "frequency": 80, "Q": 0.707 },
+          { "type": "compressor", "threshold": -18, "ratio": 3, "attack": 5, "release": 150, "knee": 4 }
+        ],
+        "startTime": 1,
+        "endTime": 8
+      },
+      {
+        "src": "./assets/whoosh.wav",
+        "volume": 0.4,
+        "pan": 0.7,
+        "effects": [
+          { "type": "reverb", "roomSize": 0.3, "damping": 0.6, "wetDry": 0.2 }
+        ],
+        "startTime": 2,
+        "endTime": 3
+      }
+    ],
+    "masterVolume": 0.9,
+    "masterEffects": [
+      {
+        "type": "compressor",
+        "threshold": -10,
+        "ratio": 2,
+        "attack": 10,
+        "release": 200,
+        "knee": 6
+      }
+    ]
+  }
+}

@@ -25,6 +25,7 @@ export {
   BarChart,
   LineChart,
   PieChart,
+  Gauge,
 } from './charts';
 
 // Social Media
@@ -67,6 +68,8 @@ export {
   DistortText,
   NoiseBackground,
   NoiseDistortion,
+  AudioWaveform,
+  AudioSpectrum,
 } from './effects';
 export type {
   ThreeSceneProps,
@@ -127,6 +130,10 @@ export type {
   NoiseBackgroundProps,
   NoiseType,
   NoiseDistortionProps,
+  AudioWaveformProps,
+  WaveformStyle,
+  AudioSpectrumProps,
+  SpectrumLayout,
 } from './effects';
 
 // Utilities
@@ -186,6 +193,7 @@ export type {
   LineChartProps,
   PieChartProps,
   PieChartData,
+  GaugeProps,
 } from './charts';
 
 // Social Media Types

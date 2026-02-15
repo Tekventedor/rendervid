@@ -1,0 +1,187 @@
+{
+  "name": "Audio Visualization",
+  "description": "Audio-reactive waveform and spectrum visualization with beat detection, frequency analysis, and multiple display styles.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 10
+  },
+  "inputs": [
+    {
+      "key": "audioSrc",
+      "type": "string",
+      "label": "Audio Source URL",
+      "required": true,
+      "default": "audio.mp3"
+    },
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title Text",
+      "required": false,
+      "default": "AUDIO VISUALIZER"
+    },
+    {
+      "key": "waveformColor",
+      "type": "color",
+      "label": "Waveform Color",
+      "required": false,
+      "default": "#00ff88"
+    },
+    {
+      "key": "spectrumColor1",
+      "type": "color",
+      "label": "Spectrum Start Color",
+      "required": false,
+      "default": "#ff0066"
+    },
+    {
+      "key": "spectrumColor2",
+      "type": "color",
+      "label": "Spectrum End Color",
+      "required": false,
+      "default": "#00ccff"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#0a0a0a"
+    }
+  ],
+  "defaults": {
+    "audioSrc": "audio.mp3",
+    "title": "AUDIO VISUALIZER",
+    "waveformColor": "#00ff88",
+    "spectrumColor1": "#ff0066",
+    "spectrumColor2": "#00ccff",
+    "backgroundColor": "#0a0a0a"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 300,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "audio-track",
+            "type": "audio",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 0, "height": 0 },
+            "props": {
+              "src": "{{audioSrc}}",
+              "volume": 1
+            }
+          },
+          {
+            "id": "waveform",
+            "type": "AudioWaveform",
+            "position": { "x": 160, "y": 600 },
+            "size": { "width": 1600, "height": 200 },
+            "props": {
+              "waveformStyle": "mirror",
+              "barWidth": 4,
+              "barGap": 2,
+              "color": "{{waveformColor}}",
+              "numberOfSamples": 64,
+              "barRadius": 2
+            }
+          },
+          {
+            "id": "spectrum",
+            "type": "AudioSpectrum",
+            "position": { "x": 160, "y": 200 },
+            "size": { "width": 1600, "height": 350 },
+            "props": {
+              "layout": "bars",
+              "bands": 48,
+              "minFreq": 20,
+              "maxFreq": 16000,
+              "colorMap": ["{{spectrumColor1}}", "{{spectrumColor2}}"],
+              "smoothing": 0.6,
+              "barRadius": 3,
+              "barGap": 3
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 360, "y": 60 },
+            "size": { "width": 1200, "height": 100 },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 48,
+              "fontWeight": "700",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 6,
+              "textShadow": "0 2px 20px rgba(0, 255, 136, 0.3)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 460, "y": 870 },
+            "size": { "width": 1000, "height": 60 },
+            "props": {
+              "text": "Beat Detection \u2022 Frequency Analysis \u2022 Waveform Display",
+              "fontSize": 20,
+              "fontWeight": "300",
+              "color": "#888888",
+              "textAlign": "center",
+              "letterSpacing": 2
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": { "x": 1520, "y": 20 },
+            "size": { "width": 380, "height": 60 },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

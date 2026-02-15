@@ -94,4 +94,8 @@ export {
   type AudioChunk,
   type VideoMuxer,
   type WebMMuxerOptions,
+  // GIF
+  createGifEncoder,
+  type GifEncoderOptions,
+  type GifEncoder,
 } from './encoder';
