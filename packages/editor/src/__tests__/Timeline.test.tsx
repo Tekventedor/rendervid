@@ -31,6 +31,7 @@ const defaultProps = {
   onAddScene: () => {},
   onReorderLayers: () => {},
   onMoveLayerToScene: () => {},
+  onUpdateScene: () => {},
 };
 
 describe('Editor Timeline', () => {

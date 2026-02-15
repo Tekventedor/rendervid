@@ -87,8 +87,9 @@ export function exportAnimatedSvg(
   let idCounter = 0;
   const nextId = () => `rv-${++idCounter}`;
 
-  // Iterate scenes
+  // Iterate scenes (skip hidden)
   for (const scene of resolved.composition.scenes) {
+    if ((scene as any).hidden) continue;
     const sceneOffsetSec = scene.startFrame / fps;
     const sceneDurationFrames = scene.endFrame - scene.startFrame;
 

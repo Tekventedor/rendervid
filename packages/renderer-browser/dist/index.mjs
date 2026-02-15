@@ -773,17 +773,16 @@ var init_ShapeLayer = __esm({
     init_resolver();
   }
 });
-function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
+function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = false }) {
   const audioRef = useRef(null);
-  const src = layer.props.src;
-  if (!src) return null;
+  const src = layer.props?.src || "";
   const {
     volume = 1,
     loop = false,
     startTime = 0,
     fadeIn = 0,
     fadeOut = 0
-  } = layer.props;
+  } = layer.props || {};
   const layerStartFrame = layer.from ?? 0;
   const layerDuration = layer.duration ?? sceneDuration;
   const localFrame = frame - layerStartFrame;
@@ -797,10 +796,10 @@ function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
   }
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !src) return;
     const targetTime = startTime + localFrame / fps;
     if (Math.abs(audio.currentTime - targetTime) > 0.1) {
-      audio.currentTime = targetTime;
+      audio.currentTime = Math.max(0, targetTime);
     }
     if (isPlaying && audio.paused) {
       audio.play().catch(() => {
@@ -808,18 +807,21 @@ function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true }) {
     } else if (!isPlaying && !audio.paused) {
       audio.pause();
     }
-  }, [frame, fps, startTime, isPlaying, localFrame]);
+  }, [frame, fps, startTime, isPlaying, localFrame, src]);
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = Math.max(0, Math.min(1, currentVolume));
   }, [currentVolume]);
+  if (!src) return null;
   return /* @__PURE__ */ jsx(
     "audio",
     {
       ref: audioRef,
       src,
       loop,
+      crossOrigin: "anonymous",
+      preload: "auto",
       style: { display: "none" }
     }
   );
@@ -2000,21 +2002,22 @@ function TemplateRenderer({
   isPlaying = true,
   registry
 }) {
+  const visibleScenes = scenes.filter((s) => !s.hidden);
   let currentScene = null;
   let nextScene = null;
   let localFrame = frame;
   let transitionProgress = 0;
   let transitionType = null;
   let transitionDirection = void 0;
-  for (let i = 0; i < scenes.length; i++) {
-    const scene = scenes[i];
+  for (let i = 0; i < visibleScenes.length; i++) {
+    const scene = visibleScenes[i];
     if (frame >= scene.startFrame && frame < scene.endFrame) {
       currentScene = scene;
       localFrame = frame - scene.startFrame;
-      if (scene.transition && scene.transition.duration > 0 && i < scenes.length - 1) {
+      if (scene.transition && scene.transition.duration > 0 && i < visibleScenes.length - 1) {
         const transitionStart = scene.endFrame - scene.transition.duration;
         if (frame >= transitionStart && frame < scene.endFrame) {
-          nextScene = scenes[i + 1];
+          nextScene = visibleScenes[i + 1];
           transitionType = scene.transition.type;
           transitionDirection = scene.transition.direction;
           transitionProgress = (frame - transitionStart) / scene.transition.duration;
@@ -2023,8 +2026,8 @@ function TemplateRenderer({
       break;
     }
   }
-  if (!currentScene && scenes.length > 0) {
-    const lastScene = scenes[scenes.length - 1];
+  if (!currentScene && visibleScenes.length > 0) {
+    const lastScene = visibleScenes[visibleScenes.length - 1];
     if (frame >= lastScene.endFrame) {
       currentScene = lastScene;
       localFrame = lastScene.endFrame - lastScene.startFrame - 1;

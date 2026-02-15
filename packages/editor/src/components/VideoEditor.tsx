@@ -525,6 +525,7 @@ export function VideoEditor({
           onAddScene={handleAddScene}
           onReorderLayers={reorderLayers}
           onMoveLayerToScene={moveLayerToScene}
+          onUpdateScene={(id, updates) => updateScene(id, updates)}
         />
       </div>
 

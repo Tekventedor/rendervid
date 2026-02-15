@@ -3607,6 +3607,7 @@ function exportAnimatedSvg(template, inputs) {
   let idCounter = 0;
   const nextId = () => `rv-${++idCounter}`;
   for (const scene of resolved.composition.scenes) {
+    if (scene.hidden) continue;
     const sceneOffsetSec = scene.startFrame / fps;
     const sceneDurationFrames = scene.endFrame - scene.startFrame;
     if (scene.backgroundColor) {

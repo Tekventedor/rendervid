@@ -136,6 +136,9 @@ export function TemplateRenderer({
   isPlaying = true,
   registry,
 }: TemplateRendererProps) {
+  // Filter out hidden scenes
+  const visibleScenes = scenes.filter((s) => !(s as any).hidden);
+
   // Find the current scene and check for transitions
   let currentScene: Scene | null = null;
   let nextScene: Scene | null = null;
@@ -145,18 +148,18 @@ export function TemplateRenderer({
   let transitionType: string | null = null;
   let transitionDirection: string | undefined = undefined;
 
-  for (let i = 0; i < scenes.length; i++) {
-    const scene = scenes[i];
+  for (let i = 0; i < visibleScenes.length; i++) {
+    const scene = visibleScenes[i];
     if (frame >= scene.startFrame && frame < scene.endFrame) {
       currentScene = scene;
       currentSceneIndex = i;
       localFrame = frame - scene.startFrame;
 
       // Check if we're in a transition period
-      if (scene.transition && scene.transition.duration > 0 && i < scenes.length - 1) {
+      if (scene.transition && scene.transition.duration > 0 && i < visibleScenes.length - 1) {
         const transitionStart = scene.endFrame - scene.transition.duration;
         if (frame >= transitionStart && frame < scene.endFrame) {
-          nextScene = scenes[i + 1];
+          nextScene = visibleScenes[i + 1];
           transitionType = scene.transition.type;
           transitionDirection = scene.transition.direction;
           transitionProgress = (frame - transitionStart) / scene.transition.duration;
@@ -167,8 +170,8 @@ export function TemplateRenderer({
   }
 
   // If no scene found, try to show the last frame of the last scene
-  if (!currentScene && scenes.length > 0) {
-    const lastScene = scenes[scenes.length - 1];
+  if (!currentScene && visibleScenes.length > 0) {
+    const lastScene = visibleScenes[visibleScenes.length - 1];
     if (frame >= lastScene.endFrame) {
       currentScene = lastScene;
       localFrame = lastScene.endFrame - lastScene.startFrame - 1;

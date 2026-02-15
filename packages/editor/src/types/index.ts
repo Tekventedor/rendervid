@@ -70,6 +70,7 @@ export interface TimelineProps {
   onAddScene: () => void;
   onReorderLayers: (sceneId: string, layerIds: string[]) => void;
   onMoveLayerToScene: (layerId: string, fromSceneId: string, toSceneId: string, insertIndex: number) => void;
+  onUpdateScene: (sceneId: string, updates: any) => void;
 }
 
 /**

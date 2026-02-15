@@ -128,6 +128,11 @@ export interface Scene {
   motionBlur?: MotionBlurConfig;
 
   /**
+   * Scene is hidden (not rendered)
+   */
+  hidden?: boolean;
+
+  /**
    * Layers in this scene
    */
   layers: Layer[];

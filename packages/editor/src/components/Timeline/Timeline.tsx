@@ -45,6 +45,7 @@ export function Timeline({
   onAddScene,
   onReorderLayers,
   onMoveLayerToScene,
+  onUpdateScene,
 }: TimelineProps) {
   const trackAreaRef = useRef<HTMLDivElement>(null);
   const labelListRef = useRef<HTMLDivElement>(null);
@@ -246,6 +247,7 @@ export function Timeline({
     sceneDuration?: number;
     collapsed?: boolean;
     hasLayers?: boolean;
+    hidden?: boolean;
   }> = [];
 
   for (const scene of scenes) {
@@ -263,6 +265,7 @@ export function Timeline({
       endFrame: sceneEnd,
       collapsed: isCollapsed,
       hasLayers: layers.length > 0,
+      hidden: !!s.hidden,
     });
     if (!isCollapsed) {
       for (const layer of layers) {
@@ -281,6 +284,7 @@ export function Timeline({
           duration: dur,
           sceneStartFrame: sceneStart,
           sceneDuration,
+          hidden: !!l.hidden,
         });
       }
     }
@@ -538,12 +542,14 @@ export function Timeline({
                   }}
                   onContextMenu={(e) => handleContextMenu(e, row.type, row.id)}
                   onMouseEnter={(e) => {
-                    const btn = e.currentTarget.querySelector('.timeline-row-delete') as HTMLElement;
-                    if (btn) btn.style.opacity = '1';
+                    e.currentTarget.querySelectorAll('.timeline-row-action').forEach((el) => {
+                      (el as HTMLElement).style.opacity = '1';
+                    });
                   }}
                   onMouseLeave={(e) => {
-                    const btn = e.currentTarget.querySelector('.timeline-row-delete') as HTMLElement;
-                    if (btn) btn.style.opacity = '0';
+                    e.currentTarget.querySelectorAll('.timeline-row-action').forEach((el) => {
+                      (el as HTMLElement).style.opacity = (el as HTMLElement).dataset.alwaysShow === 'true' ? '1' : '0';
+                    });
                   }}
                   style={{
                     height: `${ROW_HEIGHT}px`,
@@ -612,11 +618,47 @@ export function Timeline({
                       {LAYER_TYPE_ICONS[row.layerType || 'custom']}
                     </span>
                   )}
-                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', flex: 1 }}>
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, opacity: row.hidden ? 0.4 : 1 }}>
                     {row.type === 'scene' ? row.label : `${row.layerType}`}
                   </span>
                   <span
-                    className="timeline-row-delete"
+                    className="timeline-row-action"
+                    data-always-show={row.hidden ? 'true' : 'false'}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (row.type === 'scene') {
+                        onUpdateScene(row.id, { hidden: !row.hidden });
+                      } else {
+                        onUpdateLayer(row.id, { hidden: !row.hidden });
+                      }
+                    }}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '11px',
+                      color: row.hidden ? '#666' : '#888',
+                      width: '16px',
+                      height: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: '3px',
+                      flexShrink: 0,
+                      opacity: row.hidden ? 1 : 0,
+                      transition: 'opacity 0.1s',
+                      cursor: 'pointer',
+                    }}
+                    title={row.hidden ? 'Show' : 'Hide'}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.backgroundColor = '#444';
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent';
+                    }}
+                  >
+                    {row.hidden ? '⚫' : '👁'}
+                  </span>
+                  <span
+                    className="timeline-row-action"
                     onClick={(e) => {
                       e.stopPropagation();
                       if (row.type === 'scene') {
@@ -764,7 +806,7 @@ export function Timeline({
                       top: '3px',
                       bottom: '3px',
                       backgroundColor: row.type === 'scene' ? 'rgba(100,100,120,0.3)' : color,
-                      opacity: row.type === 'scene' ? 1 : 0.8,
+                      opacity: row.hidden ? 0.25 : row.type === 'scene' ? 1 : 0.8,
                       borderRadius: '3px',
                       border: isSelected ? '1px solid #fff' : row.type === 'scene' ? '1px solid #666' : '1px solid transparent',
                       cursor: row.type === 'layer' ? 'grab' : 'pointer',
