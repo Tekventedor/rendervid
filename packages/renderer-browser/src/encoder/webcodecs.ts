@@ -148,6 +148,17 @@ export function createWebCodecsEncoder(options: WebCodecsEncoderOptions): WebCod
     if (frame instanceof VideoFrame) {
       videoFrame = frame;
     } else {
+      // Ensure canvas has a valid 2D context before creating VideoFrame
+      // (VideoFrame reads colorSpace from the context, which fails if context is null)
+      if (frame instanceof HTMLCanvasElement) {
+        const ctx = frame.getContext('2d');
+        if (!ctx) {
+          throw new Error(
+            'Cannot create VideoFrame: canvas has no 2D context. ' +
+            'This can happen if the canvas was created with a different context type (e.g., WebGL).'
+          );
+        }
+      }
       videoFrame = new VideoFrame(frame, {
         timestamp: timestamp * 1000, // Convert ms to microseconds
         duration: frameDuration,
@@ -207,6 +218,14 @@ export function canvasToVideoFrame(
   timestamp: number,
   fps: number
 ): VideoFrame {
+  // Ensure canvas has a valid 2D context (VideoFrame reads colorSpace from it)
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    throw new Error(
+      'Cannot create VideoFrame: canvas has no 2D context. ' +
+      'Ensure the canvas was not previously used with a WebGL context.'
+    );
+  }
   const frameDuration = Math.floor(1_000_000 / fps);
   return new VideoFrame(canvas, {
     timestamp: timestamp * 1000, // Convert ms to microseconds
