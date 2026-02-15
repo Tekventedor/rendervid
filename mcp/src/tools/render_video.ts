@@ -331,6 +331,12 @@ LAYER TYPES: text, image, shape, video, audio, custom
 ANIMATION TYPES: entrance, exit, emphasis
 EASING CATEGORIES: basic, in, out (recommended), inout, back, bounce, elastic
 
+VISIBILITY CONTROL:
+- Scenes and layers support "hidden": true/false (optional, default: false)
+- Hidden scenes are skipped during rendering entirely
+- Hidden layers are not rendered but remain in the template
+- Example: { "id": "debug-overlay", "type": "text", "hidden": true, ... }
+
 ⚠️ CRITICAL: ANIMATION RESTRICTIONS - CAUSES BLACK SCENES IF VIOLATED
 
 **SUPPORTED ANIMATIONS ONLY:**

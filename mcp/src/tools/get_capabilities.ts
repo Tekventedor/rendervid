@@ -19,6 +19,12 @@ This tool returns a comprehensive overview of what Rendervid can do, including:
 - lottie: Lottie animations
 - custom: Custom React components (create new components with inline React code!)
 
+**Scene & Layer Visibility:**
+- Scenes and layers support a "hidden" property (boolean)
+- hidden: true — the scene/layer is skipped during rendering
+- Useful for temporarily disabling content without deleting it
+- Example: { "id": "scene-1", "hidden": true, ... } or { "id": "layer-1", "hidden": true, ... }
+
 **Animation Presets (40+):**
 - Entrance: fadeIn, slideIn, zoomIn, bounceIn, rotateIn, etc.
 - Exit: fadeOut, slideOut, zoomOut, bounceOut, rotateOut, etc.

@@ -23,6 +23,13 @@ Available component types:
 - audio: Audio layers for background music/effects
 - custom: Custom React components
 
+Common properties available on ALL layer types:
+- hidden: boolean (optional) — Hide the layer from rendering without deleting it
+- locked: boolean (optional) — Lock the layer in the editor (prevents accidental edits)
+
+Scenes also support:
+- hidden: boolean (optional) — Hide entire scene from rendering
+
 Example: get_component_docs({ componentType: "text" })`,
   inputSchema: zodToJsonSchema(GetComponentDocsInputSchema),
 };

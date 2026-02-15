@@ -192,7 +192,7 @@ describe('createWebCodecsEncoder', () => {
       codec: 'avc1.42001f',
     });
     const config = encoder.getConfig();
-    expect(config.avc).toEqual({ format: 'annexb' });
+    expect(config.avc).toEqual({ format: 'avc' });
   });
 
   it('should not include AVC format for non-H.264 codecs', () => {
