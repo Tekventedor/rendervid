@@ -100,7 +100,7 @@ interface DurableObjectId {
 }
 
 interface DurableObjectStub {
-  fetch(input: RequestInfo, init?: RequestInit): Promise<Response>;
+  fetch(input: string | URL | Request, init?: RequestInit): Promise<Response>;
 }
 
 /**
