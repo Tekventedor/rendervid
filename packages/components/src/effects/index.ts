@@ -89,3 +89,9 @@ export type { MorphTextProps, MorphEasing } from './MorphText';
 export { LetterMorph } from './LetterMorph';
 export type { LetterMorphProps, MorphMode } from './LetterMorph';
 export type { MorphEasing as LetterMorphEasing } from './LetterMorph';
+
+export { NoiseBackground } from './NoiseBackground';
+export type { NoiseBackgroundProps, NoiseType } from './NoiseBackground';
+
+export { NoiseDistortion } from './NoiseDistortion';
+export type { NoiseDistortionProps } from './NoiseDistortion';

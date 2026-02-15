@@ -1,5 +1,5 @@
 /**
- * Simplex noise implementation for 2D and 3D.
+ * Noise functions: simplex, Perlin, Worley, and value noise in 2D and 3D.
  *
  * Based on the simplex noise algorithm by Ken Perlin, adapted from
  * public domain / MIT-licensed reference implementations.
@@ -272,4 +272,346 @@ export function noise3D(
 
   // Scale to [-1, 1]
   return 32.0 * (n0 + n1 + n2 + n3);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INTERPOLATION HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+/** Quintic fade curve: 6t^5 - 15t^4 + 10t^3 */
+function fade(t: number): number {
+  return t * t * t * (t * (t * 6 - 15) + 10);
+}
+
+function lerp(a: number, b: number, t: number): number {
+  return a + t * (b - a);
+}
+
+/** Dot product of a gradient vector (from perm table) with a distance vector in 2D */
+function grad2(hash: number, x: number, y: number): number {
+  const g = GRAD2[hash % 8];
+  return g[0] * x + g[1] * y;
+}
+
+/** Dot product of a gradient vector (from perm table) with a distance vector in 3D */
+function grad3(hash: number, x: number, y: number, z: number): number {
+  const g = GRAD3[hash % 12];
+  return g[0] * x + g[1] * y + g[2] * z;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 2D PERLIN NOISE
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * 2D classic Perlin noise. Returns a value in [-1, 1].
+ * Deterministic: the same seed and coordinates always produce the same result.
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+export function perlin2D(seed: string | number, x: number, y: number): number {
+  const perm = getPermTable(seed);
+
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const xf = x - xi;
+  const yf = y - yi;
+  const u = fade(xf);
+  const v = fade(yf);
+
+  const ii = xi & 255;
+  const jj = yi & 255;
+
+  const aa = perm[ii + perm[jj]];
+  const ab = perm[ii + perm[jj + 1]];
+  const ba = perm[ii + 1 + perm[jj]];
+  const bb = perm[ii + 1 + perm[jj + 1]];
+
+  const x1 = lerp(grad2(aa, xf, yf), grad2(ba, xf - 1, yf), u);
+  const x2 = lerp(grad2(ab, xf, yf - 1), grad2(bb, xf - 1, yf - 1), u);
+
+  return lerp(x1, x2, v);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 3D PERLIN NOISE
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * 3D classic Perlin noise. Returns a value in [-1, 1].
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param z - Z coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+export function perlin3D(
+  seed: string | number,
+  x: number,
+  y: number,
+  z: number
+): number {
+  const perm = getPermTable(seed);
+
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const zi = Math.floor(z);
+  const xf = x - xi;
+  const yf = y - yi;
+  const zf = z - zi;
+  const u = fade(xf);
+  const v = fade(yf);
+  const w = fade(zf);
+
+  const ii = xi & 255;
+  const jj = yi & 255;
+  const kk = zi & 255;
+
+  const aaa = perm[ii + perm[jj + perm[kk]]];
+  const aab = perm[ii + perm[jj + perm[kk + 1]]];
+  const aba = perm[ii + perm[jj + 1 + perm[kk]]];
+  const abb = perm[ii + perm[jj + 1 + perm[kk + 1]]];
+  const baa = perm[ii + 1 + perm[jj + perm[kk]]];
+  const bab = perm[ii + 1 + perm[jj + perm[kk + 1]]];
+  const bba = perm[ii + 1 + perm[jj + 1 + perm[kk]]];
+  const bbb = perm[ii + 1 + perm[jj + 1 + perm[kk + 1]]];
+
+  const x1 = lerp(
+    grad3(aaa, xf, yf, zf),
+    grad3(baa, xf - 1, yf, zf),
+    u
+  );
+  const x2 = lerp(
+    grad3(aba, xf, yf - 1, zf),
+    grad3(bba, xf - 1, yf - 1, zf),
+    u
+  );
+  const x3 = lerp(
+    grad3(aab, xf, yf, zf - 1),
+    grad3(bab, xf - 1, yf, zf - 1),
+    u
+  );
+  const x4 = lerp(
+    grad3(abb, xf, yf - 1, zf - 1),
+    grad3(bbb, xf - 1, yf - 1, zf - 1),
+    u
+  );
+
+  const y1 = lerp(x1, x2, v);
+  const y2 = lerp(x3, x4, v);
+
+  return lerp(y1, y2, w);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SEEDED PRNG FOR WORLEY/VALUE NOISE
+// ═══════════════════════════════════════════════════════════════
+
+/** Simple hash function for generating deterministic random values from integer coordinates */
+function hash2(perm: Uint8Array, ix: number, iy: number): number {
+  return perm[((ix & 255) + perm[iy & 255]) & 511];
+}
+
+function hash3(perm: Uint8Array, ix: number, iy: number, iz: number): number {
+  return perm[((ix & 255) + perm[((iy & 255) + perm[iz & 255]) & 511]) & 511];
+}
+
+/** Convert a hash value to a float in [0, 1) */
+function hashToFloat(h: number): number {
+  return h / 256;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 2D WORLEY (CELLULAR) NOISE
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * 2D Worley (cellular) noise. Returns a value in [-1, 1].
+ * Returns the distance to the nearest feature point, mapped to [-1, 1].
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+export function worley2D(seed: string | number, x: number, y: number): number {
+  const perm = getPermTable(seed);
+
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+
+  let minDist = Infinity;
+
+  // Check surrounding 3x3 grid of cells
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      const cx = xi + dx;
+      const cy = yi + dy;
+
+      // Generate feature point position within this cell
+      const h1 = hash2(perm, cx, cy);
+      const h2 = hash2(perm, cx + 243, cy + 127);
+
+      const fpx = cx + hashToFloat(h1);
+      const fpy = cy + hashToFloat(h2);
+
+      const distX = fpx - x;
+      const distY = fpy - y;
+      const dist = distX * distX + distY * distY;
+
+      if (dist < minDist) {
+        minDist = dist;
+      }
+    }
+  }
+
+  // sqrt and map to [-1, 1]. Max possible distance in a cell grid ~= sqrt(2) ~= 1.414
+  return Math.sqrt(minDist) * 2 - 1;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 3D WORLEY (CELLULAR) NOISE
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * 3D Worley (cellular) noise. Returns a value in [-1, 1].
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param z - Z coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+export function worley3D(
+  seed: string | number,
+  x: number,
+  y: number,
+  z: number
+): number {
+  const perm = getPermTable(seed);
+
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const zi = Math.floor(z);
+
+  let minDist = Infinity;
+
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dz = -1; dz <= 1; dz++) {
+        const cx = xi + dx;
+        const cy = yi + dy;
+        const cz = zi + dz;
+
+        const h1 = hash3(perm, cx, cy, cz);
+        const h2 = hash3(perm, cx + 243, cy + 127, cz + 71);
+        const h3 = hash3(perm, cx + 59, cy + 191, cz + 157);
+
+        const fpx = cx + hashToFloat(h1);
+        const fpy = cy + hashToFloat(h2);
+        const fpz = cz + hashToFloat(h3);
+
+        const distX = fpx - x;
+        const distY = fpy - y;
+        const distZ = fpz - z;
+        const dist = distX * distX + distY * distY + distZ * distZ;
+
+        if (dist < minDist) {
+          minDist = dist;
+        }
+      }
+    }
+  }
+
+  return Math.sqrt(minDist) * 2 - 1;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 2D VALUE NOISE
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * 2D value noise. Returns a value in [-1, 1].
+ * Interpolates random values at integer grid points using quintic fade.
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+export function valueNoise2D(seed: string | number, x: number, y: number): number {
+  const perm = getPermTable(seed);
+
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const xf = x - xi;
+  const yf = y - yi;
+  const u = fade(xf);
+  const v = fade(yf);
+
+  // Random values at corners, mapped to [-1, 1]
+  const c00 = hashToFloat(hash2(perm, xi, yi)) * 2 - 1;
+  const c10 = hashToFloat(hash2(perm, xi + 1, yi)) * 2 - 1;
+  const c01 = hashToFloat(hash2(perm, xi, yi + 1)) * 2 - 1;
+  const c11 = hashToFloat(hash2(perm, xi + 1, yi + 1)) * 2 - 1;
+
+  const x1 = lerp(c00, c10, u);
+  const x2 = lerp(c01, c11, u);
+
+  return lerp(x1, x2, v);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 3D VALUE NOISE
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * 3D value noise. Returns a value in [-1, 1].
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param z - Z coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+export function valueNoise3D(
+  seed: string | number,
+  x: number,
+  y: number,
+  z: number
+): number {
+  const perm = getPermTable(seed);
+
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const zi = Math.floor(z);
+  const xf = x - xi;
+  const yf = y - yi;
+  const zf = z - zi;
+  const u = fade(xf);
+  const v = fade(yf);
+  const w = fade(zf);
+
+  const c000 = hashToFloat(hash3(perm, xi, yi, zi)) * 2 - 1;
+  const c100 = hashToFloat(hash3(perm, xi + 1, yi, zi)) * 2 - 1;
+  const c010 = hashToFloat(hash3(perm, xi, yi + 1, zi)) * 2 - 1;
+  const c110 = hashToFloat(hash3(perm, xi + 1, yi + 1, zi)) * 2 - 1;
+  const c001 = hashToFloat(hash3(perm, xi, yi, zi + 1)) * 2 - 1;
+  const c101 = hashToFloat(hash3(perm, xi + 1, yi, zi + 1)) * 2 - 1;
+  const c011 = hashToFloat(hash3(perm, xi, yi + 1, zi + 1)) * 2 - 1;
+  const c111 = hashToFloat(hash3(perm, xi + 1, yi + 1, zi + 1)) * 2 - 1;
+
+  const x1 = lerp(c000, c100, u);
+  const x2 = lerp(c010, c110, u);
+  const x3 = lerp(c001, c101, u);
+  const x4 = lerp(c011, c111, u);
+
+  const y1 = lerp(x1, x2, v);
+  const y2 = lerp(x3, x4, v);
+
+  return lerp(y1, y2, w);
 }

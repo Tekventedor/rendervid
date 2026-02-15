@@ -11,7 +11,7 @@ export interface CloudBackend {
   readonly name: string;
 
   /** Cloud provider identifier */
-  readonly provider: 'aws' | 'azure' | 'gcp' | 'docker';
+  readonly provider: 'aws' | 'azure' | 'gcp' | 'docker' | 'cloudflare';
 
   /**
    * Render video synchronously (waits for completion)

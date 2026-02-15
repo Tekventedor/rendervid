@@ -87,7 +87,24 @@ export {
 export {
   noise2D,
   noise3D,
+  perlin2D,
+  perlin3D,
+  worley2D,
+  worley3D,
+  valueNoise2D,
+  valueNoise3D,
 } from './utils/noise';
+
+// Noise Helpers
+export {
+  fbm,
+  turbulence,
+  ridgedNoise,
+  domainWarp,
+  animatedNoise,
+  type NoiseFn2D,
+  type FractalNoiseOptions,
+} from './utils/noise-helpers';
 
 // GIF Utilities
 export {
@@ -95,6 +112,14 @@ export {
   type GifFrame,
   type GifMetadata,
 } from './utils/gif';
+
+// GIF Optimizer
+export {
+  estimateGifFileSize,
+  calculateOptimalColors,
+  getGifOptimizationPreset,
+  type GifOptimizationPreset,
+} from './utils/gif-optimizer';
 
 // SVG Export
 export {

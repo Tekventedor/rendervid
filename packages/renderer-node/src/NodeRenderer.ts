@@ -12,6 +12,7 @@ import type {
   VideoRenderOptions,
   ImageRenderOptions,
   SequenceRenderOptions,
+  GifRenderOptions,
   RenderResult,
   RenderProgress,
   GPUConfig,
@@ -62,7 +63,7 @@ export class NodeRenderer {
   /**
    * Convert GPUConfig to FFmpeg HardwareAccelerationOptions
    */
-  private createHardwareAccelerationConfig(gpuConfig: GPUConfig) {
+  private createHardwareAccelerationConfig(gpuConfig: GPUConfig, codec?: string) {
     // If encoding is 'none', disable hardware acceleration
     if (gpuConfig.encoding === 'none') {
       return {
@@ -75,13 +76,23 @@ export class NodeRenderer {
     let preferredEncoder: HardwareEncoder | undefined;
 
     if (gpuConfig.encoding && gpuConfig.encoding !== 'auto') {
-      // Map vendor name to specific encoder (H.264)
-      const encoderMap: Record<string, HardwareEncoder> = {
+      const isHevc = codec === 'libx265' || codec === 'hevc';
+
+      // Map vendor name to specific encoder based on codec
+      const h264EncoderMap: Record<string, HardwareEncoder> = {
         nvidia: 'h264_nvenc',
         intel: 'h264_qsv',
         amd: 'h264_amf',
         apple: 'h264_videotoolbox',
       };
+      const hevcEncoderMap: Record<string, HardwareEncoder> = {
+        nvidia: 'hevc_nvenc',
+        intel: 'hevc_qsv',
+        amd: 'hevc_amf',
+        apple: 'hevc_videotoolbox',
+      };
+
+      const encoderMap = isHevc ? hevcEncoderMap : h264EncoderMap;
       preferredEncoder = encoderMap[gpuConfig.encoding];
     }
 
@@ -325,7 +336,7 @@ export class NodeRenderer {
       template,
       inputs = {},
       outputPath,
-      codec = 'libx264',
+      codec: rawCodec = 'libx264',
       quality = 23,
       bitrate,
       preset,
@@ -342,6 +353,33 @@ export class NodeRenderer {
       useStreaming = false,
       hardwareAcceleration,
     } = options;
+
+    // Route to renderGif if format is 'gif' or output path ends in .gif
+    const detectedFormat = options.format || path.extname(outputPath).toLowerCase().slice(1);
+    if (detectedFormat === 'gif') {
+      return this.renderGif({
+        template,
+        inputs,
+        outputPath,
+        tempDir,
+        keepTempFiles,
+        playwrightOptions,
+        renderWaitTime,
+        onProgress,
+        onFrame,
+        concurrency,
+      });
+    }
+
+    // Resolve codec aliases
+    const codec = rawCodec === 'hevc' ? 'libx265' : rawCodec;
+
+    // Use HEVC-appropriate default quality (28) if not explicitly set and codec is libx265
+    const effectiveQuality = (codec === 'libx265' && options.quality === undefined) ? 28 : quality;
+
+    // Update hardware acceleration config for HEVC codec if needed
+    const effectiveHardwareAcceleration = hardwareAcceleration ??
+      (codec === 'libx265' ? this.createHardwareAccelerationConfig(this.gpuConfig, codec) : undefined);
 
     // Resolve template variables with inputs
     const resolvedTemplate = this.resolveTemplate(template, inputs);
@@ -426,13 +464,13 @@ export class NodeRenderer {
           width,
           height,
           codec,
-          quality,
+          quality: effectiveQuality,
           bitrate,
           preset,
           pixelFormat,
           audioCodec,
           audioBitrate,
-          hardwareAcceleration,
+          hardwareAcceleration: effectiveHardwareAcceleration,
           onProgress: onProgress ? (progress) => {
             onProgress({
               ...progress,
@@ -550,13 +588,13 @@ export class NodeRenderer {
           width,
           height,
           codec,
-          quality,
+          quality: effectiveQuality,
           bitrate,
           preset,
           pixelFormat,
           audioCodec,
           audioBitrate,
-          hardwareAcceleration,
+          hardwareAcceleration: effectiveHardwareAcceleration,
           onProgress: onProgress ? (progress) => {
             onProgress({
               ...progress,
@@ -821,6 +859,198 @@ export class NodeRenderer {
         width,
         height,
         frameCount,
+        renderTime: Date.now() - startTime,
+        error: errorMessage,
+      };
+    }
+  }
+
+  /**
+   * Render a GIF from a template
+   */
+  async renderGif(options: GifRenderOptions): Promise<RenderResult> {
+    const startTime = Date.now();
+    const {
+      template,
+      inputs = {},
+      outputPath,
+      colors = 256,
+      dither = 'floyd_steinberg',
+      loop = 0,
+      optimizationLevel = 'basic',
+      maxFileSize,
+      tempDir,
+      keepTempFiles = false,
+      playwrightOptions = this.options.playwrightOptions,
+      renderWaitTime,
+      onProgress,
+      onFrame,
+      concurrency = this.options.concurrency || 1,
+    } = options;
+
+    // Resolve template variables with inputs
+    const resolvedTemplate = this.resolveTemplate(template, inputs);
+
+    const templateWidth = resolvedTemplate.output.width;
+    const templateHeight = resolvedTemplate.output.height;
+    const width = options.width ?? templateWidth;
+    const height = options.height ?? templateHeight;
+    const fps = options.fps ?? resolvedTemplate.output.fps ?? 30;
+    const totalFrames = getCompositionDuration(resolvedTemplate.composition);
+
+    if (totalFrames === 0) {
+      throw new Error('Template has no frames to render');
+    }
+
+    // If maxFileSize is set, calculate optimal colors
+    let effectiveColors = colors;
+    if (maxFileSize) {
+      const { calculateOptimalColors } = await import('@rendervid/core');
+      effectiveColors = calculateOptimalColors(maxFileSize, width, height, totalFrames);
+      console.error(`[NodeRenderer] Auto-optimized colors to ${effectiveColors} for target size ${maxFileSize} bytes`);
+    }
+
+    // Ensure output directory exists
+    await fs.mkdir(path.dirname(outputPath), { recursive: true });
+
+    const capturers: FrameCapturer[] = [];
+    let workDir: string | undefined;
+    let framesDir: string | undefined;
+
+    try {
+      // Initialize frame capturers
+      const numCapturers = Math.min(concurrency, totalFrames);
+      for (let i = 0; i < numCapturers; i++) {
+        const capturer = createFrameCapturer({
+          template: resolvedTemplate,
+          inputs: {},
+          playwrightOptions,
+          renderWaitTime,
+          registry: this.registry,
+          useGPU: this.gpuConfig.rendering,
+        });
+        await capturer.initialize();
+        capturers.push(capturer);
+      }
+
+      // Report preparing phase
+      if (onProgress) {
+        onProgress({
+          phase: 'preparing',
+          currentFrame: 0,
+          totalFrames,
+          percent: 0,
+          elapsed: (Date.now() - startTime) / 1000,
+        });
+      }
+
+      // Write frames to disk
+      workDir = tempDir || await fs.mkdtemp(path.join(os.tmpdir(), 'rendervid-gif-'));
+      framesDir = path.join(workDir, 'frames');
+      await fs.mkdir(framesDir, { recursive: true });
+
+      // Capture frames
+      let completedFrames = 0;
+      const renderStartTime = Date.now();
+      const capturer = capturers[0];
+
+      for (let frame = 0; frame < totalFrames; frame++) {
+        const frameBuffer = await capturer.captureFrame(frame);
+        const framePath = path.join(framesDir, `frame-${frame.toString().padStart(6, '0')}.png`);
+        await fs.writeFile(framePath, frameBuffer);
+
+        completedFrames++;
+        if (onFrame) {
+          onFrame(frame, totalFrames);
+        }
+
+        if (onProgress) {
+          const elapsed = (Date.now() - startTime) / 1000;
+          const currentFps = completedFrames / (Date.now() - renderStartTime) * 1000;
+          const remainingFrames = totalFrames - completedFrames;
+          const eta = currentFps > 0 ? remainingFrames / currentFps : undefined;
+
+          onProgress({
+            phase: 'rendering',
+            currentFrame: completedFrames,
+            totalFrames,
+            percent: (completedFrames / totalFrames) * 50,
+            eta,
+            elapsed,
+            fps: currentFps,
+          });
+        }
+      }
+
+      // Close all capturers
+      await Promise.all(capturers.map(c => c.close()));
+      capturers.length = 0;
+
+      // Encode frames to GIF
+      const framePattern = path.join(framesDir, 'frame-%06d.png');
+
+      await this.ffmpegEncoder.encodeToGif({
+        inputPattern: framePattern,
+        outputPath,
+        fps,
+        width,
+        height,
+        colors: effectiveColors,
+        dither,
+        loop,
+        optimizationLevel,
+        onProgress: onProgress ? (progress) => {
+          onProgress({
+            ...progress,
+            percent: 50 + (progress.percent * 0.5),
+          });
+        } : undefined,
+        totalFrames,
+      });
+
+      // Clean up temp files
+      if (!keepTempFiles && workDir) {
+        await fs.rm(workDir, { recursive: true, force: true });
+      }
+
+      // Get file stats
+      const fileSize = await this.ffmpegEncoder.getFileSize(outputPath);
+      const duration = totalFrames / fps;
+
+      // Report completion
+      if (onProgress) {
+        onProgress({
+          phase: 'complete',
+          currentFrame: totalFrames,
+          totalFrames,
+          percent: 100,
+          elapsed: (Date.now() - startTime) / 1000,
+        });
+      }
+
+      return {
+        success: true,
+        outputPath,
+        duration,
+        fileSize,
+        width,
+        height,
+        frameCount: totalFrames,
+        renderTime: Date.now() - startTime,
+      };
+    } catch (error) {
+      // Clean up on error
+      await Promise.all(capturers.map(c => c.close().catch(() => {})));
+      if (!keepTempFiles && workDir && tempDir !== workDir) {
+        await fs.rm(workDir, { recursive: true, force: true }).catch(() => {});
+      }
+
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      return {
+        success: false,
+        outputPath,
+        width,
+        height,
         renderTime: Date.now() - startTime,
         error: errorMessage,
       };

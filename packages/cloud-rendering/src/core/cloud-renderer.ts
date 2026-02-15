@@ -1,14 +1,14 @@
 import type { CloudBackend } from './cloud-backend.interface';
 import type { RenderOptions, RenderResult } from '../types/render-options';
 import type { JobStatus } from '../types/job-status';
-import type { AWSConfig, AzureConfig, GCPConfig, DockerConfig } from '../types/provider-config';
+import type { AWSConfig, AzureConfig, GCPConfig, DockerConfig, CloudflareConfig } from '../types/provider-config';
 
 /**
  * Options for initializing CloudRenderer
  */
 export interface CloudRendererOptions {
   /** Cloud provider to use */
-  provider: 'aws' | 'azure' | 'gcp' | 'docker';
+  provider: 'aws' | 'azure' | 'gcp' | 'docker' | 'cloudflare';
 
   /** AWS configuration (required if provider='aws') */
   awsConfig?: AWSConfig;
@@ -21,6 +21,9 @@ export interface CloudRendererOptions {
 
   /** Docker configuration (required if provider='docker') */
   dockerConfig?: DockerConfig;
+
+  /** Cloudflare configuration (required if provider='cloudflare') */
+  cloudflareConfig?: CloudflareConfig;
 }
 
 /**
@@ -86,6 +89,15 @@ export class CloudRenderer {
         }
         const { DockerBackend } = require('../providers/docker/docker-backend');
         this.backend = new DockerBackend(options.dockerConfig);
+        break;
+      }
+
+      case 'cloudflare': {
+        if (!options.cloudflareConfig) {
+          throw new Error('cloudflareConfig is required when provider is "cloudflare"');
+        }
+        const { CloudflareBackend } = require('../providers/cloudflare/cloudflare-backend');
+        this.backend = new CloudflareBackend(options.cloudflareConfig);
         break;
       }
 
@@ -214,7 +226,7 @@ export class CloudRenderer {
   /**
    * Get the cloud provider name
    */
-  getProvider(): 'aws' | 'azure' | 'gcp' | 'docker' {
+  getProvider(): 'aws' | 'azure' | 'gcp' | 'docker' | 'cloudflare' {
     return this.backend.provider;
   }
 }

@@ -147,6 +147,41 @@ export interface DockerConfig {
 }
 
 /**
+ * Configuration for Cloudflare Workers backend
+ */
+export interface CloudflareConfig {
+  /** Cloudflare account ID */
+  accountId: string;
+
+  /** Cloudflare API token */
+  apiToken?: string;
+
+  /** R2 bucket name for storing render jobs */
+  r2Bucket: string;
+
+  /** R2 access key ID (S3-compatible API) */
+  r2AccessKeyId?: string;
+
+  /** R2 secret access key (S3-compatible API) */
+  r2SecretAccessKey?: string;
+
+  /** R2 endpoint URL (default: https://{accountId}.r2.cloudflarestorage.com) */
+  r2Endpoint?: string;
+
+  /** Worker name for render functions (default: 'rendervid-worker') */
+  workerName?: string;
+
+  /** Durable Object namespace for job coordination */
+  durableObjectNamespace?: string;
+
+  /** Queue name for chunk distribution (default: 'rendervid-chunks') */
+  queueName?: string;
+
+  /** R2 key prefix (default: 'rendervid') */
+  storagePrefix?: string;
+}
+
+/**
  * Provider-specific quality presets
  */
 export interface ProviderPresets {

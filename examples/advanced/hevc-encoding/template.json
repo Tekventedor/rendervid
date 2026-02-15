@@ -1,0 +1,135 @@
+{
+  "name": "HEVC Encoding Demo",
+  "description": "Demonstrates H.265/HEVC encoding with Rendervid for high-quality, efficient video output.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 4
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title",
+      "required": true,
+      "default": "H.265 / HEVC"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "required": false,
+      "default": "High Efficiency Video Coding"
+    }
+  ],
+  "defaults": {
+    "title": "H.265 / HEVC",
+    "subtitle": "High Efficiency Video Coding"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 120,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#0f172a"
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 160,
+              "y": 380
+            },
+            "size": {
+              "width": 1600,
+              "height": 180
+            },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 120,
+              "fontWeight": "bold",
+              "color": "#f8fafc",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 0,
+                "duration": 20,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": {
+              "x": 360,
+              "y": 560
+            },
+            "size": {
+              "width": 1200,
+              "height": 80
+            },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 36,
+              "color": "#94a3b8",
+              "textAlign": "center"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 20
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

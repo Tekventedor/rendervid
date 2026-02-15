@@ -166,8 +166,7 @@ export class FrameCapturer {
 
     // Check WebGL availability (required for Three.js layers)
     const webglAvailable = await this.page.evaluate(() => {
-      // @ts-expect-error - window extensions are defined in the browser context
-      return window.RENDERVID_WEBGL_AVAILABLE;
+      return (window as any).RENDERVID_WEBGL_AVAILABLE;
     });
     if (webglAvailable) {
       console.error('[FrameCapturer] WebGL is available - Three.js layers will work');
@@ -738,15 +737,10 @@ export class FrameCapturer {
 
     // Call the render function for this frame
     await this.page.evaluate((frameNum) => {
-      // @ts-expect-error - window extensions are defined in the browser context
-      if (window.__rendervidRenderFrame) {
-        // @ts-expect-error - window extensions are defined in the browser context
-        window.__rendervidRenderFrame(frameNum);
-        // @ts-expect-error - window extensions are defined in the browser context
-      } else if (window.renderFrame) {
-        // Fallback for custom renderer
-        // @ts-expect-error - window extensions are defined in the browser context
-        window.renderFrame(frameNum);
+      if ((window as any).__rendervidRenderFrame) {
+        (window as any).__rendervidRenderFrame(frameNum);
+      } else if ((window as any).renderFrame) {
+        (window as any).renderFrame(frameNum);
       }
     }, frame);
 
@@ -842,15 +836,10 @@ export class FrameCapturer {
 
     // Call the render function for this frame
     await this.page.evaluate((frameNum) => {
-      // @ts-expect-error - window extensions are defined in the browser context
-      if (window.__rendervidRenderFrame) {
-        // @ts-expect-error - window extensions are defined in the browser context
-        window.__rendervidRenderFrame(frameNum);
-        // @ts-expect-error - window extensions are defined in the browser context
-      } else if (window.renderFrame) {
-        // Fallback for custom renderer
-        // @ts-expect-error - window extensions are defined in the browser context
-        window.renderFrame(frameNum);
+      if ((window as any).__rendervidRenderFrame) {
+        (window as any).__rendervidRenderFrame(frameNum);
+      } else if ((window as any).renderFrame) {
+        (window as any).renderFrame(frameNum);
       }
     }, frame);
 
@@ -926,6 +915,98 @@ export class FrameCapturer {
     const screenshot = await this.page.screenshot({
       type: 'jpeg',
       quality,
+      clip: {
+        x: 0,
+        y: 0,
+        width: this.config.template.output.width,
+        height: this.config.template.output.height,
+      },
+    });
+
+    return screenshot as Buffer;
+  }
+
+  /**
+   * Capture a frame as WebP
+   */
+  async captureFrameWebp(frame: number, quality = 90): Promise<Buffer> {
+    if (!this.page) {
+      throw new Error('Frame capturer not initialized');
+    }
+
+    // Render the frame
+    await this.page.evaluate((frameNum) => {
+      if ((window as any).__rendervidRenderFrame) {
+        (window as any).__rendervidRenderFrame(frameNum);
+      } else if ((window as any).renderFrame) {
+        (window as any).renderFrame(frameNum);
+      }
+    }, frame);
+
+    // Wait for rendering to complete (same logic as captureFrameJpeg)
+    await this.page.evaluate(`
+      new Promise(async (resolve) => {
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+        if (document.fonts) {
+          try {
+            await Promise.race([
+              document.fonts.ready,
+              new Promise(r => setTimeout(r, 2000))
+            ]);
+          } catch (e) {
+            console.warn('[Frame] Font ready check failed:', e);
+          }
+        }
+
+        const images = Array.from(document.querySelectorAll('img'));
+        const imagePromises = images.map(img => {
+          if (img.complete && img.naturalWidth > 0) {
+            return Promise.resolve();
+          }
+          return new Promise((resolveImg) => {
+            img.onload = () => resolveImg();
+            img.onerror = () => {
+              console.error('[Frame] Image failed to load:', img.src);
+              resolveImg();
+            };
+            setTimeout(resolveImg, 5000);
+          });
+        });
+
+        const videos = Array.from(document.querySelectorAll('video'));
+        const videoPromises = videos.map(video => {
+          if (video.readyState >= 2) {
+            return Promise.resolve();
+          }
+          return new Promise((resolveVideo) => {
+            video.onloadeddata = () => resolveVideo();
+            video.onerror = () => {
+              console.error('[Frame] Video failed to load:', video.src);
+              resolveVideo();
+            };
+            setTimeout(resolveVideo, 5000);
+          });
+        });
+
+        await Promise.all([...imagePromises, ...videoPromises]);
+
+        const canvases = Array.from(document.querySelectorAll('canvas'));
+        if (canvases.length > 0) {
+          await new Promise(r => setTimeout(r, 500));
+        }
+
+        await new Promise(r => setTimeout(r, ${this.renderWaitTime}));
+
+        resolve();
+      })
+    `);
+
+    // Capture as PNG first, then we'll rely on the caller to convert if needed
+    // Playwright doesn't support WebP screenshots natively, so we capture as PNG
+    // and the ImageSequenceExporter handles conversion via canvas or FFmpeg
+    const screenshot = await this.page.screenshot({
+      type: 'png',
       clip: {
         x: 0,
         y: 0,

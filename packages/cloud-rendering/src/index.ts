@@ -16,6 +16,7 @@ export type {
   AWSConfig,
   AzureConfig,
   GCPConfig,
+  CloudflareConfig,
   QualityPreset,
   ProviderPresets,
 } from './types/provider-config';
@@ -68,6 +69,13 @@ export { AzureBackend } from './providers/azure/azure-backend';
 // GCP-specific exports
 export { GCPStorageClient } from './providers/gcp/gcp-storage-client';
 export { GCPBackend } from './providers/gcp/gcp-backend';
+
+// Cloudflare-specific exports
+export { CloudflareR2Client } from './providers/cloudflare/cloudflare-r2-client';
+export { CloudflareBackend } from './providers/cloudflare/cloudflare-backend';
+export type { WorkerRenderRequest, WorkerRenderResponse, WorkerEnv } from './providers/cloudflare/cloudflare-worker-function';
+export { CLOUDFLARE_QUALITY_PRESETS } from './providers/cloudflare/cloudflare-worker-function';
+export { JobCoordinator } from './providers/cloudflare/cloudflare-durable-object';
 
 // Error handling & reliability
 export { retryWithBackoff, isRetryableError } from './core/retry-handler';

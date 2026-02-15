@@ -105,6 +105,14 @@ export interface GifOptions {
   colors?: number;
   /** Dithering algorithm */
   dither?: 'none' | 'floyd_steinberg' | 'bayer';
+  /** Loop count (0 = infinite loop, -1 = no loop, N = loop N times, default: 0) */
+  loop?: number;
+  /** Optimization level (default: 'basic') */
+  optimizationLevel?: 'none' | 'basic' | 'aggressive';
+  /** Progress callback */
+  onProgress?: (progress: RenderProgress) => void;
+  /** Total frames for progress calculation */
+  totalFrames?: number;
 }
 
 /**
@@ -401,8 +409,24 @@ export class FFmpegEncoder {
             `-row-mt 1`, // Enable row-based multithreading
             `-pix_fmt ${pixelFormat}`
           );
+        } else if (codec === 'libx265') {
+          // HEVC/H.265 specific options
+          if (bitrate) {
+            outputOptions.push(`-b:v ${bitrate}`);
+          } else {
+            outputOptions.push(
+              `-crf ${quality}`,
+              `-b:v 0` // Use constant quality mode
+            );
+          }
+          outputOptions.push(
+            `-pix_fmt ${pixelFormat}`,
+            `-preset ${preset}`,
+            `-tag:v hvc1`, // Apple/QuickTime compatibility
+            `-x265-params log-level=error`
+          );
         } else {
-          // Default options for other codecs (libx264, libx265, etc.)
+          // Default options for other codecs (libx264, etc.)
           if (bitrate) {
             outputOptions.push(`-b:v ${bitrate}`);
           } else {
@@ -592,6 +616,19 @@ export class FFmpegEncoder {
             '-row-mt', '1',
             '-pix_fmt', pixelFormat
           );
+        } else if (codec === 'libx265') {
+          // HEVC/H.265 specific options
+          if (bitrate) {
+            args.push('-b:v', bitrate);
+          } else {
+            args.push('-crf', quality.toString(), '-b:v', '0');
+          }
+          args.push(
+            '-pix_fmt', pixelFormat,
+            '-preset', preset,
+            '-tag:v', 'hvc1', // Apple/QuickTime compatibility
+            '-x265-params', 'log-level=error'
+          );
         } else {
           if (bitrate) {
             args.push('-b:v', bitrate);
@@ -728,11 +765,38 @@ export class FFmpegEncoder {
       height,
       colors = 256,
       dither = 'floyd_steinberg',
+      loop = 0,
+      optimizationLevel = 'basic',
+      onProgress,
+      totalFrames = 0,
     } = options;
+
+    const startTime = Date.now();
+
+    this.log('Starting GIF encoding...');
+    this.log('FPS:', fps);
+    this.log('Colors:', colors);
+    this.log('Dither:', dither);
+    this.log('Loop:', loop);
+    this.log('Optimization:', optimizationLevel);
+
+    // Determine palettegen stats_mode based on optimization level
+    const statsMode = optimizationLevel === 'aggressive' ? 'diff' : 'full';
 
     // Create a palette first for better quality
     const tempDir = path.dirname(outputPath);
-    const palettePath = path.join(tempDir, 'palette.png');
+    const palettePath = path.join(tempDir, `palette-${Date.now()}.png`);
+
+    // Report palette generation phase
+    if (onProgress && totalFrames > 0) {
+      onProgress({
+        phase: 'encoding',
+        currentFrame: 0,
+        totalFrames,
+        percent: 0,
+        elapsed: 0,
+      });
+    }
 
     // Generate palette
     await new Promise<void>((resolve, reject) => {
@@ -740,13 +804,14 @@ export class FFmpegEncoder {
       if (width || height) {
         filterStr += `,scale=${width || -1}:${height || -1}:flags=lanczos`;
       }
-      filterStr += `,palettegen=max_colors=${colors}`;
+      filterStr += `,palettegen=max_colors=${colors}:stats_mode=${statsMode}`;
 
       ffmpeg()
         .input(inputPattern)
         .inputFPS(fps)
         .complexFilter(filterStr)
         .output(palettePath)
+        .outputOptions(['-y'])
         .on('error', reject)
         .on('end', () => resolve())
         .run();
@@ -759,17 +824,60 @@ export class FFmpegEncoder {
         filterStr += `,scale=${width || -1}:${height || -1}:flags=lanczos`;
       }
 
-      const ditherStr = dither === 'none' ? '' : `:dither=${dither}`;
-      const paletteFilter = `[0:v][1:v]paletteuse${ditherStr}`;
+      // Build paletteuse options
+      const paletteuseOpts: string[] = [];
+      if (dither !== 'none') {
+        paletteuseOpts.push(`dither=${dither}`);
+      }
+      if (optimizationLevel === 'aggressive') {
+        paletteuseOpts.push('diff_mode=rectangle');
+      }
+      const paletteuseStr = paletteuseOpts.length > 0
+        ? `:${paletteuseOpts.join(':')}`
+        : '';
+      const paletteFilter = `[0:v][1:v]paletteuse${paletteuseStr}`;
 
-      ffmpeg()
+      const outputOptions: string[] = ['-y'];
+
+      // Set loop option (-loop for GIF: 0 = infinite, -1 = no loop, N = loop N times)
+      outputOptions.push(`-loop`, `${loop}`);
+
+      const command = ffmpeg()
         .input(inputPattern)
         .inputFPS(fps)
         .input(palettePath)
         .complexFilter([filterStr, paletteFilter].join(';'))
-        .output(outputPath)
+        .outputOptions(outputOptions)
+        .output(outputPath);
+
+      // Parse FFmpeg stderr for progress
+      command.on('progress', (progress) => {
+        if (onProgress && totalFrames > 0) {
+          const elapsed = (Date.now() - startTime) / 1000;
+          const currentFrame = progress.frames || 0;
+          const percent = (currentFrame / totalFrames) * 100;
+          const currentFps = progress.currentFps || (elapsed > 0 ? currentFrame / elapsed : 0);
+          const remainingFrames = totalFrames - currentFrame;
+          const eta = currentFps > 0 ? remainingFrames / currentFps : undefined;
+
+          onProgress({
+            phase: 'encoding',
+            currentFrame,
+            totalFrames,
+            percent: Math.min(100, percent),
+            eta,
+            elapsed,
+            fps: currentFps,
+          });
+        }
+      });
+
+      command
         .on('error', reject)
-        .on('end', () => resolve())
+        .on('end', () => {
+          this.log('GIF encoding completed successfully');
+          resolve();
+        })
         .run();
     });
 

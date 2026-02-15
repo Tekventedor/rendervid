@@ -11,8 +11,8 @@ export interface VideoRenderOptions {
   inputs?: Record<string, unknown>;
   /** Output file path */
   outputPath: string;
-  /** Video codec (default: 'libx264') */
-  codec?: 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'libaom-av1' | 'prores';
+  /** Video codec (default: 'libx264'). 'hevc' is an alias for 'libx265'. */
+  codec?: 'libx264' | 'libx265' | 'hevc' | 'libvpx' | 'libvpx-vp9' | 'libaom-av1' | 'prores';
   /** Video format (default: derived from outputPath extension) */
   format?: 'mp4' | 'webm' | 'mov' | 'gif';
   /** Video quality CRF (0-51, lower is better quality, default: 23) */
@@ -216,6 +216,132 @@ export interface GPUConfig {
    * If false, throws an error when GPU acceleration is unavailable
    */
   fallback?: boolean;
+}
+
+/**
+ * Options for image sequence export
+ */
+export interface ImageSequenceExportOptions {
+  /** The template to render */
+  template: Template;
+  /** Input values for template variables */
+  inputs?: Record<string, unknown>;
+  /** Output directory path */
+  outputDir: string;
+  /** Naming pattern using tokens: {number}, {name}, {hash} (default: 'frame-{number}') */
+  namingPattern?: string;
+  /** Prefix for filenames */
+  prefix?: string;
+  /** Suffix for filenames (before extension) */
+  suffix?: string;
+  /** Image format (default: 'png') */
+  format?: 'png' | 'jpeg' | 'webp';
+  /** Quality for lossy formats (0-100, default: 90) */
+  quality?: number;
+  /** Start frame (default: 0) */
+  startFrame?: number;
+  /** End frame (default: total frames) */
+  endFrame?: number;
+  /** Number of concurrent browser instances for parallel capture (default: 1) */
+  concurrency?: number;
+  /** Preserve alpha channel for PNG format (default: false) */
+  includeAlpha?: boolean;
+  /** Embed metadata in frames via FFmpeg (default: false) */
+  embedMetadata?: boolean;
+  /** Generate a JSON manifest listing all exported frames (default: false) */
+  generateManifest?: boolean;
+  /** Playwright launch options */
+  playwrightOptions?: PlaywrightLaunchOptions;
+  /** Time to wait after rendering before capturing (ms, default: 50) */
+  renderWaitTime?: number;
+  /** Progress callback */
+  onProgress?: (progress: RenderProgress) => void;
+}
+
+/**
+ * Entry in the image sequence manifest
+ */
+export interface ImageSequenceManifestFrame {
+  /** Frame number */
+  frame: number;
+  /** Filename */
+  filename: string;
+  /** File size in bytes */
+  fileSize: number;
+  /** Image format */
+  format: 'png' | 'jpeg' | 'webp';
+}
+
+/**
+ * Image sequence export manifest
+ */
+export interface ImageSequenceManifest {
+  /** Template name */
+  templateName: string;
+  /** Output dimensions */
+  width: number;
+  /** Output dimensions */
+  height: number;
+  /** Frames per second */
+  fps: number;
+  /** Image format */
+  format: 'png' | 'jpeg' | 'webp';
+  /** Quality setting */
+  quality: number;
+  /** Total number of frames */
+  totalFrames: number;
+  /** Frame range */
+  startFrame: number;
+  /** Frame range */
+  endFrame: number;
+  /** Total file size in bytes */
+  totalSize: number;
+  /** Export timestamp */
+  exportedAt: string;
+  /** List of exported frames */
+  frames: ImageSequenceManifestFrame[];
+}
+
+/**
+ * Options for GIF rendering with optimization support
+ */
+export interface GifRenderOptions {
+  /** The template to render */
+  template: Template;
+  /** Input values for template variables */
+  inputs?: Record<string, unknown>;
+  /** Output file path */
+  outputPath: string;
+  /** Number of colors (2-256, default: 256) */
+  colors?: number;
+  /** Dithering algorithm (default: 'floyd_steinberg') */
+  dither?: 'none' | 'floyd_steinberg' | 'bayer';
+  /** Loop count (0 = infinite loop, -1 = no loop, N = loop N times, default: 0) */
+  loop?: number;
+  /** Optimization level (default: 'basic') */
+  optimizationLevel?: 'none' | 'basic' | 'aggressive';
+  /** Target max file size in bytes (will adjust colors to try to meet target) */
+  maxFileSize?: number;
+  /** Override width (default: from template) */
+  width?: number;
+  /** Override height (default: from template) */
+  height?: number;
+  /** Override fps (default: from template) */
+  fps?: number;
+  /** Temporary directory for frame storage */
+  tempDir?: string;
+  /** Keep temporary files after rendering (default: false) */
+  keepTempFiles?: boolean;
+  /** Playwright launch options */
+  playwrightOptions?: PlaywrightLaunchOptions;
+  /** Time to wait after rendering before capturing (ms, default: 50) */
+  renderWaitTime?: number;
+  /** Progress callback */
+  onProgress?: (progress: RenderProgress) => void;
+  /** Frame rendered callback */
+  onFrame?: (frame: number, total: number) => void;
+  /** Number of concurrent browser instances for parallel rendering (default: 1) */
+  concurrency?: number;
 }
 
 /**

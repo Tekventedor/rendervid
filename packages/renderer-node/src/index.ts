@@ -9,6 +9,10 @@ export type { FrameCapturerConfig } from './frame-capturer';
 export { FFmpegEncoder, createFFmpegEncoder } from './ffmpeg-encoder';
 export type { EncodeOptions, GifOptions, HardwareAccelerationOptions } from './ffmpeg-encoder';
 
+// Image sequence exporter
+export { ImageSequenceExporter, createImageSequenceExporter } from './image-sequence-exporter';
+export { generateFrameFilename, validateFrameRange } from './image-sequence-exporter';
+
 // GPU detector
 export {
   detectGPUCapabilities,
@@ -29,4 +33,8 @@ export type {
   NodeRendererOptions,
   GPUConfig,
   GPUEncodingType,
+  GifRenderOptions,
+  ImageSequenceExportOptions,
+  ImageSequenceManifest,
+  ImageSequenceManifestFrame,
 } from './types';

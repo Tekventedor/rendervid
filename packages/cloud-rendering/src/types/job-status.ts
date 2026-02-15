@@ -65,7 +65,7 @@ export interface JobManifest {
   quality: 'draft' | 'standard' | 'high';
 
   /** Cloud provider used */
-  provider: 'aws' | 'azure' | 'gcp';
+  provider: 'aws' | 'azure' | 'gcp' | 'cloudflare';
 }
 
 /**

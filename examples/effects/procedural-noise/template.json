@@ -1,0 +1,182 @@
+{
+  "name": "Procedural Noise",
+  "description": "Animated procedural noise backgrounds using simplex, Perlin, Worley, and value noise algorithms with fBm layering.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 6
+  },
+  "inputs": [
+    {
+      "key": "title",
+      "type": "string",
+      "label": "Title Text",
+      "required": false,
+      "default": "PROCEDURAL NOISE"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle Text",
+      "required": false,
+      "default": "Organic Patterns in Motion"
+    },
+    {
+      "key": "noiseType",
+      "type": "string",
+      "label": "Noise Type (simplex, perlin, worley, value)",
+      "required": false,
+      "default": "simplex"
+    },
+    {
+      "key": "primaryColor",
+      "type": "color",
+      "label": "Primary Color",
+      "required": false,
+      "default": "#000000"
+    },
+    {
+      "key": "secondaryColor",
+      "type": "color",
+      "label": "Secondary Color",
+      "required": false,
+      "default": "#1a237e"
+    },
+    {
+      "key": "accentColor",
+      "type": "color",
+      "label": "Accent Color",
+      "required": false,
+      "default": "#e91e63"
+    }
+  ],
+  "defaults": {
+    "title": "PROCEDURAL NOISE",
+    "subtitle": "Organic Patterns in Motion",
+    "noiseType": "simplex",
+    "primaryColor": "#000000",
+    "secondaryColor": "#1a237e",
+    "accentColor": "#e91e63"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "layers": [
+          {
+            "id": "noise-bg",
+            "type": "NoiseBackground",
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "props": {
+              "noiseType": "{{noiseType}}",
+              "seed": 42,
+              "scale": 0.005,
+              "speed": 1,
+              "colors": [
+                "{{primaryColor}}",
+                "{{secondaryColor}}",
+                "#4a148c",
+                "{{accentColor}}"
+              ],
+              "octaves": 4,
+              "resolution": 6
+            }
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "position": {
+              "x": 360,
+              "y": 420
+            },
+            "size": {
+              "width": 1200,
+              "height": 120
+            },
+            "props": {
+              "text": "{{title}}",
+              "fontSize": 84,
+              "fontWeight": "900",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 8,
+              "textShadow": "0 4px 30px rgba(0, 0, 0, 0.9)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 30,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": {
+              "x": 460,
+              "y": 560
+            },
+            "size": {
+              "width": 1000,
+              "height": 70
+            },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 32,
+              "fontWeight": "300",
+              "color": "#e0e0e0",
+              "textAlign": "center",
+              "letterSpacing": 4,
+              "textShadow": "0 2px 20px rgba(0, 0, 0, 0.8)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 45,
+                "duration": 25
+              }
+            ]
+          },
+          {
+            "id": "watermark",
+            "type": "text",
+            "position": {
+              "x": 1520,
+              "y": 20
+            },
+            "size": {
+              "width": 380,
+              "height": 60
+            },
+            "props": {
+              "text": "RenderVid by\nFlowHunt.io",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "color": "#ffffff",
+              "textAlign": "right",
+              "lineHeight": 1.3,
+              "opacity": 0.7,
+              "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

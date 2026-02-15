@@ -65,6 +65,8 @@ export {
   LetterMorph,
   MorphText,
   DistortText,
+  NoiseBackground,
+  NoiseDistortion,
 } from './effects';
 export type {
   ThreeSceneProps,
@@ -122,6 +124,9 @@ export type {
   MorphEasing,
   DistortTextProps,
   DistortionType,
+  NoiseBackgroundProps,
+  NoiseType,
+  NoiseDistortionProps,
 } from './effects';
 
 // Utilities

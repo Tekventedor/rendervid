@@ -1,0 +1,154 @@
+{
+  "name": "Animated GIF",
+  "description": "Optimized animated GIF template for social media and web use.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 480,
+    "height": 480,
+    "fps": 15,
+    "duration": 3
+  },
+  "inputs": [
+    {
+      "key": "headline",
+      "type": "string",
+      "label": "Headline",
+      "description": "Main headline text",
+      "required": true,
+      "default": "Check This Out"
+    },
+    {
+      "key": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "description": "Supporting text",
+      "required": false,
+      "default": "Something amazing is happening"
+    },
+    {
+      "key": "accentColor",
+      "type": "color",
+      "label": "Accent Color",
+      "required": false,
+      "default": "#f97316"
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "label": "Background Color",
+      "required": false,
+      "default": "#18181b"
+    }
+  ],
+  "defaults": {
+    "headline": "Check This Out",
+    "subtitle": "Something amazing is happening",
+    "accentColor": "#f97316",
+    "backgroundColor": "#18181b"
+  },
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 45,
+        "layers": [
+          {
+            "id": "background",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 480, "height": 480 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{backgroundColor}}"
+            }
+          },
+          {
+            "id": "accent-circle",
+            "type": "shape",
+            "position": { "x": 140, "y": 80 },
+            "size": { "width": 200, "height": 200 },
+            "opacity": 0.2,
+            "props": {
+              "shape": "ellipse",
+              "fill": "{{accentColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 0,
+                "duration": 15,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "headline",
+            "type": "text",
+            "position": { "x": 40, "y": 200 },
+            "size": { "width": 400, "height": 80 },
+            "props": {
+              "text": "{{headline}}",
+              "fontSize": 48,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInUp",
+                "delay": 5,
+                "duration": 15,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 40, "y": 300 },
+            "size": { "width": 400, "height": 60 },
+            "props": {
+              "text": "{{subtitle}}",
+              "fontSize": 24,
+              "fontWeight": "normal",
+              "color": "#a1a1aa",
+              "textAlign": "center",
+              "fontFamily": "Inter, system-ui, sans-serif"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 15,
+                "duration": 15
+              }
+            ]
+          },
+          {
+            "id": "accent-line",
+            "type": "shape",
+            "position": { "x": 190, "y": 380 },
+            "size": { "width": 100, "height": 4 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "{{accentColor}}"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "scaleIn",
+                "delay": 20,
+                "duration": 10
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
