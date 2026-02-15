@@ -9,19 +9,17 @@ export interface AudioLayerProps {
   isPlaying?: boolean;
 }
 
-export function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true }: AudioLayerProps) {
+export function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = false }: AudioLayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const src = layer.props.src;
-  if (!src) return null;
-
+  const src = layer.props?.src || '';
   const {
     volume = 1,
     loop = false,
     startTime = 0,
     fadeIn = 0,
     fadeOut = 0,
-  } = layer.props;
+  } = layer.props || {};
 
   // Calculate current volume with fade in/out
   const layerStartFrame = layer.from ?? 0;
@@ -44,25 +42,25 @@ export function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true 
   // Sync audio time with frame
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !src) return;
 
     // Calculate the target time based on frame
     const targetTime = startTime + localFrame / fps;
 
     // Only seek if difference is significant
     if (Math.abs(audio.currentTime - targetTime) > 0.1) {
-      audio.currentTime = targetTime;
+      audio.currentTime = Math.max(0, targetTime);
     }
 
     // Control playback
     if (isPlaying && audio.paused) {
       audio.play().catch(() => {
-        // Autoplay might be blocked
+        // Autoplay might be blocked by browser policy
       });
     } else if (!isPlaying && !audio.paused) {
       audio.pause();
     }
-  }, [frame, fps, startTime, isPlaying, localFrame]);
+  }, [frame, fps, startTime, isPlaying, localFrame, src]);
 
   // Update volume
   useEffect(() => {
@@ -71,12 +69,17 @@ export function AudioLayer({ layer, frame, fps, sceneDuration, isPlaying = true 
     audio.volume = Math.max(0, Math.min(1, currentVolume));
   }, [currentVolume]);
 
+  // No src - render nothing but keep hooks consistent
+  if (!src) return null;
+
   // Audio layers are invisible
   return (
     <audio
       ref={audioRef}
       src={src}
       loop={loop}
+      crossOrigin="anonymous"
+      preload="auto"
       style={{ display: 'none' }}
     />
   );

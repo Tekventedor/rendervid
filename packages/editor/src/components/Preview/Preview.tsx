@@ -189,6 +189,7 @@ export function Preview({
             fps={fps}
             width={templateWidth}
             height={templateHeight}
+            isPlaying={isPlaying}
             registry={registry}
           />
           {layers && onSelectLayer && onUpdateLayer && onUpdateLayerWithoutHistory && (

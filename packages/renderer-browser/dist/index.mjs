@@ -2618,6 +2618,14 @@ function createWebCodecsEncoder(options) {
     if (frame instanceof VideoFrame) {
       videoFrame = frame;
     } else {
+      if (frame instanceof HTMLCanvasElement) {
+        const ctx = frame.getContext("2d");
+        if (!ctx) {
+          throw new Error(
+            "Cannot create VideoFrame: canvas has no 2D context. This can happen if the canvas was created with a different context type (e.g., WebGL)."
+          );
+        }
+      }
       videoFrame = new VideoFrame(frame, {
         timestamp: timestamp * 1e3,
         // Convert ms to microseconds
@@ -2660,6 +2668,12 @@ function createWebCodecsEncoder(options) {
   };
 }
 function canvasToVideoFrame(canvas, timestamp, fps) {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    throw new Error(
+      "Cannot create VideoFrame: canvas has no 2D context. Ensure the canvas was not previously used with a WebGL context."
+    );
+  }
   const frameDuration = Math.floor(1e6 / fps);
   return new VideoFrame(canvas, {
     timestamp: timestamp * 1e3,
@@ -2973,6 +2987,9 @@ var BrowserRenderer = class {
     canvas.width = width;
     canvas.height = height;
     const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      throw new Error("Failed to get 2D context from canvas for MediaRecorder export");
+    }
     const stream = canvas.captureStream(fps);
     const mediaRecorder = new MediaRecorder(stream, {
       mimeType: "video/webm;codecs=vp9",
@@ -3362,6 +3379,307 @@ function createFrameByFrameRecorder(options) {
   };
 }
 
-export { AudioLayer, BrowserRenderer, CustomLayer, GroupLayer, ImageLayer, LayerRenderer, LottieLayer, SceneRenderer, ShapeLayer, TemplateRenderer, TextLayer, ThreeLayer, VideoLayer, arrayBufferToBlob, blobToArrayBuffer, calculateTotalDuration, calculateTotalFrames, canvasToVideoFrame, createBrowserRenderer, createFrameByFrameRecorder, createFrameCapturer, createMediaRecorderEncoder, createMp4Muxer, createOffscreenCapturer, createWebCodecsEncoder, createWebMMuxer, downloadArrayBuffer, downloadBlob, getBestMimeType, getRecommendedCodec, getSceneAtFrame, getStyleClassName, isMediaRecorderSupported, isWebCodecsSupported, mergeStyles, resolveStyle, useLayerAnimation };
+// src/encoder/gif-encoder.ts
+function createGifEncoder(options) {
+  const { width, height, fps, quality = 10 } = options;
+  const delay = Math.round(100 / fps);
+  const sampleInterval = Math.max(1, Math.min(30, quality));
+  const outputData = [];
+  let frameIndex = 0;
+  function writeByte(b) {
+    outputData.push(b & 255);
+  }
+  function writeShort(s) {
+    writeByte(s & 255);
+    writeByte(s >> 8 & 255);
+  }
+  function writeString(s) {
+    for (let i = 0; i < s.length; i++) {
+      outputData.push(s.charCodeAt(i));
+    }
+  }
+  function computeBox(colors) {
+    let rMin = 255, rMax = 0, gMin = 255, gMax = 0, bMin = 255, bMax = 0;
+    for (let i = 0; i < colors.length; i++) {
+      const c = colors[i];
+      if (c[0] < rMin) rMin = c[0];
+      if (c[0] > rMax) rMax = c[0];
+      if (c[1] < gMin) gMin = c[1];
+      if (c[1] > gMax) gMax = c[1];
+      if (c[2] < bMin) bMin = c[2];
+      if (c[2] > bMax) bMax = c[2];
+    }
+    return { colors, rMin, rMax, gMin, gMax, bMin, bMax };
+  }
+  function splitBox(box) {
+    const rRange = box.rMax - box.rMin;
+    const gRange = box.gMax - box.gMin;
+    const bRange = box.bMax - box.bMin;
+    let sortIndex;
+    if (rRange >= gRange && rRange >= bRange) {
+      sortIndex = 0;
+    } else if (gRange >= rRange && gRange >= bRange) {
+      sortIndex = 1;
+    } else {
+      sortIndex = 2;
+    }
+    box.colors.sort((a, b) => a[sortIndex] - b[sortIndex]);
+    const mid = Math.floor(box.colors.length / 2);
+    return [
+      computeBox(box.colors.slice(0, mid)),
+      computeBox(box.colors.slice(mid))
+    ];
+  }
+  function medianCut(pixels, numColors, sample) {
+    const colors = [];
+    for (let i = 0; i < pixels.length; i += 4 * sample) {
+      colors.push([pixels[i], pixels[i + 1], pixels[i + 2]]);
+    }
+    if (colors.length === 0) {
+      const palette2 = [];
+      for (let i = 0; i < numColors; i++) {
+        palette2.push([0, 0, 0]);
+      }
+      return palette2;
+    }
+    let boxes = [computeBox(colors)];
+    while (boxes.length < numColors) {
+      let maxVolume = -1;
+      let maxIndex = 0;
+      for (let i = 0; i < boxes.length; i++) {
+        const b2 = boxes[i];
+        if (b2.colors.length < 2) continue;
+        const volume = (b2.rMax - b2.rMin) * (b2.gMax - b2.gMin) * (b2.bMax - b2.bMin);
+        if (volume > maxVolume) {
+          maxVolume = volume;
+          maxIndex = i;
+        }
+      }
+      if (maxVolume <= 0 || boxes[maxIndex].colors.length < 2) break;
+      const [a, b] = splitBox(boxes[maxIndex]);
+      boxes.splice(maxIndex, 1, a, b);
+    }
+    const palette = [];
+    for (const box of boxes) {
+      let rSum = 0, gSum = 0, bSum = 0;
+      for (const c of box.colors) {
+        rSum += c[0];
+        gSum += c[1];
+        bSum += c[2];
+      }
+      const n = box.colors.length;
+      palette.push([
+        Math.round(rSum / n),
+        Math.round(gSum / n),
+        Math.round(bSum / n)
+      ]);
+    }
+    while (palette.length < numColors) {
+      palette.push([0, 0, 0]);
+    }
+    return palette;
+  }
+  function findClosestColor(palette, r, g, b) {
+    let minDist = Infinity;
+    let minIndex = 0;
+    for (let i = 0; i < palette.length; i++) {
+      const pr = palette[i][0];
+      const pg = palette[i][1];
+      const pb = palette[i][2];
+      const dist = (r - pr) * (r - pr) + (g - pg) * (g - pg) + (b - pb) * (b - pb);
+      if (dist < minDist) {
+        minDist = dist;
+        minIndex = i;
+        if (dist === 0) break;
+      }
+    }
+    return minIndex;
+  }
+  function indexPixels(pixels, palette) {
+    const numPixels = pixels.length / 4;
+    const indexed = new Uint8Array(numPixels);
+    for (let i = 0; i < numPixels; i++) {
+      const offset = i * 4;
+      indexed[i] = findClosestColor(
+        palette,
+        pixels[offset],
+        pixels[offset + 1],
+        pixels[offset + 2]
+      );
+    }
+    return indexed;
+  }
+  function lzwEncode(indexedPixels, colorDepth) {
+    const minCodeSize = Math.max(2, colorDepth);
+    const clearCode = 1 << minCodeSize;
+    const eoiCode = clearCode + 1;
+    let codeSize = minCodeSize + 1;
+    let nextCode = eoiCode + 1;
+    const maxCodeSize = 12;
+    const maxCode = 1 << maxCodeSize;
+    const codeTable = /* @__PURE__ */ new Map();
+    function initTable() {
+      codeTable.clear();
+      for (let i = 0; i < clearCode; i++) {
+        codeTable.set(String(i), i);
+      }
+      nextCode = eoiCode + 1;
+      codeSize = minCodeSize + 1;
+    }
+    const output = [];
+    let bitBuffer = 0;
+    let bitCount = 0;
+    function emitCode(code) {
+      bitBuffer |= code << bitCount;
+      bitCount += codeSize;
+      while (bitCount >= 8) {
+        output.push(bitBuffer & 255);
+        bitBuffer >>= 8;
+        bitCount -= 8;
+      }
+    }
+    initTable();
+    emitCode(clearCode);
+    if (indexedPixels.length === 0) {
+      emitCode(eoiCode);
+      if (bitCount > 0) {
+        output.push(bitBuffer & 255);
+      }
+      return output;
+    }
+    let current = String(indexedPixels[0]);
+    for (let i = 1; i < indexedPixels.length; i++) {
+      const pixel = indexedPixels[i];
+      const combined = current + "," + pixel;
+      if (codeTable.has(combined)) {
+        current = combined;
+      } else {
+        emitCode(codeTable.get(current));
+        if (nextCode < maxCode) {
+          codeTable.set(combined, nextCode);
+          nextCode++;
+          if (nextCode > 1 << codeSize && codeSize < maxCodeSize) {
+            codeSize++;
+          }
+        } else {
+          emitCode(clearCode);
+          initTable();
+        }
+        current = String(pixel);
+      }
+    }
+    emitCode(codeTable.get(current));
+    emitCode(eoiCode);
+    if (bitCount > 0) {
+      output.push(bitBuffer & 255);
+    }
+    return output;
+  }
+  function writeSubBlocks(data) {
+    let offset = 0;
+    while (offset < data.length) {
+      const blockSize = Math.min(255, data.length - offset);
+      writeByte(blockSize);
+      for (let i = 0; i < blockSize; i++) {
+        writeByte(data[offset + i]);
+      }
+      offset += blockSize;
+    }
+    writeByte(0);
+  }
+  function writeHeader() {
+    writeString("GIF89a");
+  }
+  function writeLogicalScreenDescriptor(palette) {
+    writeShort(width);
+    writeShort(height);
+    const packed = 128 | // Global Color Table flag
+    7 << 4 | // Color resolution (8 bits)
+    0 | // Sort flag
+    7;
+    writeByte(packed);
+    writeByte(0);
+    writeByte(0);
+    for (let i = 0; i < 256; i++) {
+      if (i < palette.length) {
+        writeByte(palette[i][0]);
+        writeByte(palette[i][1]);
+        writeByte(palette[i][2]);
+      } else {
+        writeByte(0);
+        writeByte(0);
+        writeByte(0);
+      }
+    }
+  }
+  function writeNetscapeExt() {
+    writeByte(33);
+    writeByte(255);
+    writeByte(11);
+    writeString("NETSCAPE2.0");
+    writeByte(3);
+    writeByte(1);
+    writeShort(0);
+    writeByte(0);
+  }
+  function writeGraphicControlExt() {
+    writeByte(33);
+    writeByte(249);
+    writeByte(4);
+    writeByte(0);
+    writeShort(delay);
+    writeByte(0);
+    writeByte(0);
+  }
+  function writeImageDescriptor() {
+    writeByte(44);
+    writeShort(0);
+    writeShort(0);
+    writeShort(width);
+    writeShort(height);
+    writeByte(0);
+  }
+  function writeImageData(indexedPixels) {
+    const minCodeSize = 8;
+    writeByte(minCodeSize);
+    const lzwData = lzwEncode(indexedPixels, minCodeSize);
+    writeSubBlocks(lzwData);
+  }
+  function writeTrailer() {
+    writeByte(59);
+  }
+  let globalPalette = null;
+  let headerWritten = false;
+  return {
+    addFrame(imageData) {
+      const pixels = imageData.data;
+      if (frameIndex === 0) {
+        globalPalette = medianCut(pixels, 256, sampleInterval);
+        writeHeader();
+        writeLogicalScreenDescriptor(globalPalette);
+        writeNetscapeExt();
+        headerWritten = true;
+      }
+      if (!globalPalette || !headerWritten) {
+        throw new Error("GIF encoder: header not written");
+      }
+      const indexedPixels = indexPixels(pixels, globalPalette);
+      writeGraphicControlExt();
+      writeImageDescriptor();
+      writeImageData(indexedPixels);
+      frameIndex++;
+    },
+    finish() {
+      if (frameIndex === 0) {
+        throw new Error("GIF encoder: no frames added");
+      }
+      writeTrailer();
+      const buffer = new Uint8Array(outputData);
+      return new Blob([buffer], { type: "image/gif" });
+    }
+  };
+}
+
+export { AudioLayer, BrowserRenderer, CustomLayer, GroupLayer, ImageLayer, LayerRenderer, LottieLayer, SceneRenderer, ShapeLayer, TemplateRenderer, TextLayer, ThreeLayer, VideoLayer, arrayBufferToBlob, blobToArrayBuffer, calculateTotalDuration, calculateTotalFrames, canvasToVideoFrame, createBrowserRenderer, createFrameByFrameRecorder, createFrameCapturer, createGifEncoder, createMediaRecorderEncoder, createMp4Muxer, createOffscreenCapturer, createWebCodecsEncoder, createWebMMuxer, downloadArrayBuffer, downloadBlob, getBestMimeType, getRecommendedCodec, getSceneAtFrame, getStyleClassName, isMediaRecorderSupported, isWebCodecsSupported, mergeStyles, resolveStyle, useLayerAnimation };
 //# sourceMappingURL=index.mjs.map
 //# sourceMappingURL=index.mjs.map

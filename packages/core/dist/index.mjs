@@ -1,5 +1,8 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
+import * as fs2 from 'fs';
+import * as path2 from 'path';
+import * as zlib from 'zlib';
 
 // src/validation/validator.ts
 
@@ -312,7 +315,7 @@ function getLayerSchema(type) {
 
 // src/validation/validator.ts
 function ajvErrorToValidationError(error) {
-  const path = error.instancePath || "/";
+  const path3 = error.instancePath || "/";
   let message = error.message || "Unknown error";
   let code = error.keyword;
   switch (error.keyword) {
@@ -356,7 +359,7 @@ function ajvErrorToValidationError(error) {
   return {
     code,
     message,
-    path,
+    path: path3,
     expected: error.schema?.toString(),
     actual: error.data?.toString()
   };
@@ -3202,6 +3205,259 @@ function noise3D(seed, x, y, z) {
   }
   return 32 * (n0 + n12 + n2 + n3);
 }
+function fade(t) {
+  return t * t * t * (t * (t * 6 - 15) + 10);
+}
+function lerp(a, b, t) {
+  return a + t * (b - a);
+}
+function grad2(hash, x, y) {
+  const g = GRAD2[hash % 8];
+  return g[0] * x + g[1] * y;
+}
+function grad3(hash, x, y, z) {
+  const g = GRAD3[hash % 12];
+  return g[0] * x + g[1] * y + g[2] * z;
+}
+function perlin2D(seed, x, y) {
+  const perm = getPermTable(seed);
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const xf = x - xi;
+  const yf = y - yi;
+  const u = fade(xf);
+  const v = fade(yf);
+  const ii = xi & 255;
+  const jj = yi & 255;
+  const aa = perm[ii + perm[jj]];
+  const ab = perm[ii + perm[jj + 1]];
+  const ba = perm[ii + 1 + perm[jj]];
+  const bb = perm[ii + 1 + perm[jj + 1]];
+  const x1 = lerp(grad2(aa, xf, yf), grad2(ba, xf - 1, yf), u);
+  const x2 = lerp(grad2(ab, xf, yf - 1), grad2(bb, xf - 1, yf - 1), u);
+  return lerp(x1, x2, v);
+}
+function perlin3D(seed, x, y, z) {
+  const perm = getPermTable(seed);
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const zi = Math.floor(z);
+  const xf = x - xi;
+  const yf = y - yi;
+  const zf = z - zi;
+  const u = fade(xf);
+  const v = fade(yf);
+  const w = fade(zf);
+  const ii = xi & 255;
+  const jj = yi & 255;
+  const kk = zi & 255;
+  const aaa = perm[ii + perm[jj + perm[kk]]];
+  const aab = perm[ii + perm[jj + perm[kk + 1]]];
+  const aba = perm[ii + perm[jj + 1 + perm[kk]]];
+  const abb = perm[ii + perm[jj + 1 + perm[kk + 1]]];
+  const baa = perm[ii + 1 + perm[jj + perm[kk]]];
+  const bab = perm[ii + 1 + perm[jj + perm[kk + 1]]];
+  const bba = perm[ii + 1 + perm[jj + 1 + perm[kk]]];
+  const bbb = perm[ii + 1 + perm[jj + 1 + perm[kk + 1]]];
+  const x1 = lerp(
+    grad3(aaa, xf, yf, zf),
+    grad3(baa, xf - 1, yf, zf),
+    u
+  );
+  const x2 = lerp(
+    grad3(aba, xf, yf - 1, zf),
+    grad3(bba, xf - 1, yf - 1, zf),
+    u
+  );
+  const x3 = lerp(
+    grad3(aab, xf, yf, zf - 1),
+    grad3(bab, xf - 1, yf, zf - 1),
+    u
+  );
+  const x4 = lerp(
+    grad3(abb, xf, yf - 1, zf - 1),
+    grad3(bbb, xf - 1, yf - 1, zf - 1),
+    u
+  );
+  const y1 = lerp(x1, x2, v);
+  const y2 = lerp(x3, x4, v);
+  return lerp(y1, y2, w);
+}
+function hash2(perm, ix, iy) {
+  return perm[(ix & 255) + perm[iy & 255] & 511];
+}
+function hash3(perm, ix, iy, iz) {
+  return perm[(ix & 255) + perm[(iy & 255) + perm[iz & 255] & 511] & 511];
+}
+function hashToFloat(h) {
+  return h / 256;
+}
+function worley2D(seed, x, y) {
+  const perm = getPermTable(seed);
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  let minDist = Infinity;
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      const cx = xi + dx;
+      const cy = yi + dy;
+      const h1 = hash2(perm, cx, cy);
+      const h2 = hash2(perm, cx + 243, cy + 127);
+      const fpx = cx + hashToFloat(h1);
+      const fpy = cy + hashToFloat(h2);
+      const distX = fpx - x;
+      const distY = fpy - y;
+      const dist2 = distX * distX + distY * distY;
+      if (dist2 < minDist) {
+        minDist = dist2;
+      }
+    }
+  }
+  return Math.sqrt(minDist) * 2 - 1;
+}
+function worley3D(seed, x, y, z) {
+  const perm = getPermTable(seed);
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const zi = Math.floor(z);
+  let minDist = Infinity;
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dz = -1; dz <= 1; dz++) {
+        const cx = xi + dx;
+        const cy = yi + dy;
+        const cz = zi + dz;
+        const h1 = hash3(perm, cx, cy, cz);
+        const h2 = hash3(perm, cx + 243, cy + 127, cz + 71);
+        const h3 = hash3(perm, cx + 59, cy + 191, cz + 157);
+        const fpx = cx + hashToFloat(h1);
+        const fpy = cy + hashToFloat(h2);
+        const fpz = cz + hashToFloat(h3);
+        const distX = fpx - x;
+        const distY = fpy - y;
+        const distZ = fpz - z;
+        const dist2 = distX * distX + distY * distY + distZ * distZ;
+        if (dist2 < minDist) {
+          minDist = dist2;
+        }
+      }
+    }
+  }
+  return Math.sqrt(minDist) * 2 - 1;
+}
+function valueNoise2D(seed, x, y) {
+  const perm = getPermTable(seed);
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const xf = x - xi;
+  const yf = y - yi;
+  const u = fade(xf);
+  const v = fade(yf);
+  const c00 = hashToFloat(hash2(perm, xi, yi)) * 2 - 1;
+  const c10 = hashToFloat(hash2(perm, xi + 1, yi)) * 2 - 1;
+  const c01 = hashToFloat(hash2(perm, xi, yi + 1)) * 2 - 1;
+  const c11 = hashToFloat(hash2(perm, xi + 1, yi + 1)) * 2 - 1;
+  const x1 = lerp(c00, c10, u);
+  const x2 = lerp(c01, c11, u);
+  return lerp(x1, x2, v);
+}
+function valueNoise3D(seed, x, y, z) {
+  const perm = getPermTable(seed);
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const zi = Math.floor(z);
+  const xf = x - xi;
+  const yf = y - yi;
+  const zf = z - zi;
+  const u = fade(xf);
+  const v = fade(yf);
+  const w = fade(zf);
+  const c000 = hashToFloat(hash3(perm, xi, yi, zi)) * 2 - 1;
+  const c100 = hashToFloat(hash3(perm, xi + 1, yi, zi)) * 2 - 1;
+  const c010 = hashToFloat(hash3(perm, xi, yi + 1, zi)) * 2 - 1;
+  const c110 = hashToFloat(hash3(perm, xi + 1, yi + 1, zi)) * 2 - 1;
+  const c001 = hashToFloat(hash3(perm, xi, yi, zi + 1)) * 2 - 1;
+  const c101 = hashToFloat(hash3(perm, xi + 1, yi, zi + 1)) * 2 - 1;
+  const c011 = hashToFloat(hash3(perm, xi, yi + 1, zi + 1)) * 2 - 1;
+  const c111 = hashToFloat(hash3(perm, xi + 1, yi + 1, zi + 1)) * 2 - 1;
+  const x1 = lerp(c000, c100, u);
+  const x2 = lerp(c010, c110, u);
+  const x3 = lerp(c001, c101, u);
+  const x4 = lerp(c011, c111, u);
+  const y1 = lerp(x1, x2, v);
+  const y2 = lerp(x3, x4, v);
+  return lerp(y1, y2, w);
+}
+
+// src/utils/noise-helpers.ts
+function fbm(noiseFn, seed, x, y, options) {
+  const octaves = options?.octaves ?? 6;
+  const lacunarity = options?.lacunarity ?? 2;
+  const persistence = options?.persistence ?? 0.5;
+  let value = 0;
+  let amplitude = 1;
+  let frequency = 1;
+  let maxAmplitude = 0;
+  for (let i = 0; i < octaves; i++) {
+    value += amplitude * noiseFn(seed, x * frequency, y * frequency);
+    maxAmplitude += amplitude;
+    amplitude *= persistence;
+    frequency *= lacunarity;
+  }
+  return value / maxAmplitude;
+}
+function turbulence(noiseFn, seed, x, y, options) {
+  const octaves = options?.octaves ?? 6;
+  const lacunarity = options?.lacunarity ?? 2;
+  const persistence = options?.persistence ?? 0.5;
+  let value = 0;
+  let amplitude = 1;
+  let frequency = 1;
+  let maxAmplitude = 0;
+  for (let i = 0; i < octaves; i++) {
+    value += amplitude * Math.abs(noiseFn(seed, x * frequency, y * frequency));
+    maxAmplitude += amplitude;
+    amplitude *= persistence;
+    frequency *= lacunarity;
+  }
+  return value / maxAmplitude * 2 - 1;
+}
+function ridgedNoise(noiseFn, seed, x, y, options) {
+  const octaves = options?.octaves ?? 6;
+  const lacunarity = options?.lacunarity ?? 2;
+  const persistence = options?.persistence ?? 0.5;
+  let value = 0;
+  let amplitude = 1;
+  let frequency = 1;
+  let weight = 1;
+  let maxAmplitude = 0;
+  for (let i = 0; i < octaves; i++) {
+    let signal = noiseFn(seed, x * frequency, y * frequency);
+    signal = 1 - Math.abs(signal);
+    signal *= signal;
+    signal *= weight;
+    weight = Math.min(Math.max(signal * 2, 0), 1);
+    value += amplitude * signal;
+    maxAmplitude += amplitude;
+    amplitude *= persistence;
+    frequency *= lacunarity;
+  }
+  return value / maxAmplitude * 2 - 1;
+}
+function domainWarp(noiseFn, seed, x, y, warpAmount = 1) {
+  const seedStr = String(seed);
+  const warpX = noiseFn(seedStr + "_wx", x, y) * warpAmount;
+  const warpY = noiseFn(seedStr + "_wy", x, y) * warpAmount;
+  return noiseFn(seed, x + warpX, y + warpY);
+}
+function animatedNoise(noiseFn, seed, x, y, time, speed = 1) {
+  const timeOffset = time * speed;
+  return noiseFn(
+    seed,
+    x + Math.sin(timeOffset * 0.7) * 100,
+    y + Math.cos(timeOffset * 0.7) * 100
+  );
+}
 
 // src/utils/gif.ts
 function getGifFrameAtTime(metadata, timeMs, loop = true, speed = 1) {
@@ -3223,6 +3479,77 @@ function getGifFrameAtTime(metadata, timeMs, loop = true, speed = 1) {
     }
   }
   return frames.length - 1;
+}
+
+// src/utils/gif-optimizer.ts
+function estimateGifFileSize(width, height, frameCount, colors = 256) {
+  if (width <= 0 || height <= 0 || frameCount <= 0 || colors <= 0) {
+    return 0;
+  }
+  const clampedColors = Math.min(256, Math.max(2, colors));
+  const bitsPerPixel = Math.ceil(Math.log2(clampedColors));
+  const rawFrameSize = width * height * bitsPerPixel / 8;
+  const compressionRatio = 0.5;
+  const frameOverhead = 20;
+  const globalOverhead = 800 + clampedColors * 3;
+  const estimatedSize = globalOverhead + frameCount * (rawFrameSize * compressionRatio + frameOverhead);
+  return Math.ceil(estimatedSize);
+}
+function calculateOptimalColors(targetSizeBytes, width, height, frameCount) {
+  if (targetSizeBytes <= 0 || width <= 0 || height <= 0 || frameCount <= 0) {
+    return 2;
+  }
+  let low = 2;
+  let high = 256;
+  let result = 2;
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const estimated = estimateGifFileSize(width, height, frameCount, mid);
+    if (estimated <= targetSizeBytes) {
+      result = mid;
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+  return result;
+}
+function getGifOptimizationPreset(purpose) {
+  switch (purpose) {
+    case "social":
+      return {
+        maxWidth: 480,
+        maxHeight: 480,
+        fps: 15,
+        colors: 128,
+        dither: "floyd_steinberg",
+        maxFileSize: 8 * 1024 * 1024,
+        // 8MB (Twitter/X limit)
+        loop: 0
+      };
+    case "web":
+      return {
+        maxWidth: 640,
+        maxHeight: 480,
+        fps: 20,
+        colors: 256,
+        dither: "floyd_steinberg",
+        maxFileSize: 5 * 1024 * 1024,
+        // 5MB for web performance
+        loop: 0
+      };
+    case "email":
+      return {
+        maxWidth: 320,
+        maxHeight: 240,
+        fps: 10,
+        colors: 64,
+        dither: "bayer",
+        maxFileSize: 1 * 1024 * 1024,
+        // 1MB for email clients
+        loop: 0
+      };
+  }
 }
 
 // src/export/svg-exporter.ts
@@ -3964,10 +4291,554 @@ function createSmoothSvgPath(points) {
   return d;
 }
 
-// src/utils/paths.ts
+// src/utils/audio-analysis.ts
+var DEFAULT_FFT_SIZE2 = 2048;
+function fft2(re, im) {
+  const n = re.length;
+  for (let i = 1, j = 0; i < n; i++) {
+    let bit = n >> 1;
+    while (j & bit) {
+      j ^= bit;
+      bit >>= 1;
+    }
+    j ^= bit;
+    if (i < j) {
+      let tmp = re[i];
+      re[i] = re[j];
+      re[j] = tmp;
+      tmp = im[i];
+      im[i] = im[j];
+      im[j] = tmp;
+    }
+  }
+  for (let len = 2; len <= n; len *= 2) {
+    const halfLen = len / 2;
+    const angle = -2 * Math.PI / len;
+    const wRe = Math.cos(angle);
+    const wIm = Math.sin(angle);
+    for (let i = 0; i < n; i += len) {
+      let curRe = 1;
+      let curIm = 0;
+      for (let j = 0; j < halfLen; j++) {
+        const evenIdx = i + j;
+        const oddIdx = i + j + halfLen;
+        const tRe = curRe * re[oddIdx] - curIm * im[oddIdx];
+        const tIm = curRe * im[oddIdx] + curIm * re[oddIdx];
+        re[oddIdx] = re[evenIdx] - tRe;
+        im[oddIdx] = im[evenIdx] - tIm;
+        re[evenIdx] += tRe;
+        im[evenIdx] += tIm;
+        const nextRe = curRe * wRe - curIm * wIm;
+        const nextIm = curRe * wIm + curIm * wRe;
+        curRe = nextRe;
+        curIm = nextIm;
+      }
+    }
+  }
+}
+function applyHanningWindow2(samples) {
+  const n = samples.length;
+  for (let i = 0; i < n; i++) {
+    samples[i] *= 0.5 * (1 - Math.cos(2 * Math.PI * i / (n - 1)));
+  }
+}
+function nextPowerOf22(n) {
+  let p = 1;
+  while (p < n) p *= 2;
+  return p;
+}
+function mixToMono2(audioData) {
+  if (audioData.numberOfChannels === 1) {
+    return audioData.channelData[0];
+  }
+  const length = audioData.length;
+  const mono = new Float32Array(length);
+  const numChannels = audioData.numberOfChannels;
+  for (let i = 0; i < length; i++) {
+    let sum = 0;
+    for (let ch = 0; ch < numChannels; ch++) {
+      sum += audioData.channelData[ch][i];
+    }
+    mono[i] = sum / numChannels;
+  }
+  return mono;
+}
+var DEFAULT_BANDS = [
+  { name: "sub-bass", minFreq: 20, maxFreq: 60 },
+  { name: "bass", minFreq: 60, maxFreq: 250 },
+  { name: "low-mid", minFreq: 250, maxFreq: 500 },
+  { name: "mid", minFreq: 500, maxFreq: 2e3 },
+  { name: "high-mid", minFreq: 2e3, maxFreq: 4e3 },
+  { name: "presence", minFreq: 4e3, maxFreq: 6e3 },
+  { name: "brilliance", minFreq: 6e3, maxFreq: 2e4 }
+];
+function detectBeats(audioData, options = {}) {
+  const {
+    minInterval = 0.3,
+    threshold = 1.5,
+    windowSize = 0.5,
+    sensitivity = 0.5
+  } = options;
+  const mono = mixToMono2(audioData);
+  const sampleRate = audioData.sampleRate;
+  const hopSamples = Math.floor(sampleRate * 0.01);
+  const frameSamples = Math.floor(sampleRate * 0.02);
+  const numFrames = Math.floor((mono.length - frameSamples) / hopSamples);
+  if (numFrames <= 0) return [];
+  const energies = new Float64Array(numFrames);
+  for (let i = 0; i < numFrames; i++) {
+    const start = i * hopSamples;
+    let energy = 0;
+    for (let j = 0; j < frameSamples; j++) {
+      const idx = start + j;
+      if (idx < mono.length) {
+        energy += mono[idx] * mono[idx];
+      }
+    }
+    energies[i] = energy / frameSamples;
+  }
+  const windowFrames = Math.max(1, Math.floor(windowSize / 0.01));
+  const beats = [];
+  const minIntervalFrames = Math.floor(minInterval / 0.01);
+  let lastBeatFrame = -minIntervalFrames;
+  const effectiveThreshold = threshold * (1.5 - sensitivity);
+  for (let i = 0; i < numFrames; i++) {
+    const halfWindow = Math.floor(windowFrames / 2);
+    const wStart = Math.max(0, i - halfWindow);
+    const wEnd = Math.min(numFrames, i + halfWindow);
+    let avgEnergy = 0;
+    for (let j = wStart; j < wEnd; j++) {
+      avgEnergy += energies[j];
+    }
+    avgEnergy /= wEnd - wStart;
+    if (energies[i] > avgEnergy * effectiveThreshold && i - lastBeatFrame >= minIntervalFrames && energies[i] > 0) {
+      const time = i * hopSamples / sampleRate;
+      beats.push({
+        frame: 0,
+        // will be set below
+        time,
+        intensity: 0
+        // will be normalized below
+      });
+      lastBeatFrame = i;
+    }
+  }
+  if (beats.length > 0) {
+    let maxEnergy = 0;
+    const beatEnergies = [];
+    for (const beat of beats) {
+      const frameIdx = Math.floor(beat.time / 0.01);
+      const e = frameIdx >= 0 && frameIdx < numFrames ? energies[frameIdx] : 0;
+      beatEnergies.push(e);
+      if (e > maxEnergy) maxEnergy = e;
+    }
+    for (let i = 0; i < beats.length; i++) {
+      beats[i].intensity = maxEnergy > 0 ? beatEnergies[i] / maxEnergy : 0;
+    }
+  }
+  return beats;
+}
+function getBeatAtFrame(beats, frame, fps, decayFrames = 8) {
+  if (beats.length === 0) return 0;
+  let maxIntensity = 0;
+  for (const beat of beats) {
+    const beatFrame = beat.time * fps;
+    const frameDiff = frame - beatFrame;
+    if (frameDiff < 0) continue;
+    if (frameDiff <= decayFrames) {
+      const decay = Math.exp(-3 * (frameDiff / decayFrames));
+      const intensity = beat.intensity * decay;
+      if (intensity > maxIntensity) {
+        maxIntensity = intensity;
+      }
+    }
+  }
+  return Math.min(1, maxIntensity);
+}
+function getFrequencyBands(audioData, frame, fps, bands) {
+  const bandDefs = bands || DEFAULT_BANDS;
+  const mono = mixToMono2(audioData);
+  const startSample = Math.floor(frame / fps * audioData.sampleRate);
+  const windowSize = nextPowerOf22(DEFAULT_FFT_SIZE2);
+  const re = new Float64Array(windowSize);
+  const im = new Float64Array(windowSize);
+  for (let i = 0; i < windowSize; i++) {
+    const idx = startSample + i;
+    re[i] = idx >= 0 && idx < mono.length ? mono[idx] : 0;
+  }
+  applyHanningWindow2(re);
+  fft2(re, im);
+  const halfSize = windowSize / 2;
+  const magnitudes = new Float64Array(halfSize);
+  for (let i = 0; i < halfSize; i++) {
+    magnitudes[i] = Math.sqrt(re[i] * re[i] + im[i] * im[i]);
+  }
+  const freqPerBin = audioData.sampleRate / windowSize;
+  const result = [];
+  let maxEnergy = 0;
+  for (const band of bandDefs) {
+    const minBin = Math.max(0, Math.floor(band.minFreq / freqPerBin));
+    const maxBin = Math.min(halfSize - 1, Math.ceil(band.maxFreq / freqPerBin));
+    let energy = 0;
+    let count = 0;
+    for (let i = minBin; i <= maxBin; i++) {
+      energy += magnitudes[i];
+      count++;
+    }
+    energy = count > 0 ? energy / count : 0;
+    result.push({
+      name: band.name,
+      minFreq: band.minFreq,
+      maxFreq: band.maxFreq,
+      energy
+    });
+    if (energy > maxEnergy) maxEnergy = energy;
+  }
+  if (maxEnergy > 0) {
+    for (const band of result) {
+      band.energy /= maxEnergy;
+    }
+  }
+  return result;
+}
+function getAmplitudeEnvelope(audioData, frame, fps, windowSize) {
+  const mono = mixToMono2(audioData);
+  const samplesPerFrame = Math.ceil(audioData.sampleRate / fps);
+  const effectiveWindow = windowSize ?? samplesPerFrame;
+  const centerSample = Math.floor(frame / fps * audioData.sampleRate);
+  const halfWindow = Math.floor(effectiveWindow / 2);
+  const start = Math.max(0, centerSample - halfWindow);
+  const end = Math.min(mono.length, centerSample + halfWindow);
+  if (start >= end) return 0;
+  let sumSquares = 0;
+  for (let i = start; i < end; i++) {
+    sumSquares += mono[i] * mono[i];
+  }
+  const rms = Math.sqrt(sumSquares / (end - start));
+  return Math.min(1, rms * 2);
+}
+
+// src/utils/canvas-draw.ts
 var COMMAND_RE = /([MmLlHhVvCcSsQqTtAaZz])/;
+function parsePathNumbers(str) {
+  const matches = str.match(/-?\d*\.?\d+(?:e[+-]?\d+)?/gi);
+  return matches ? matches.map(Number) : [];
+}
+function parsePathData(d) {
+  const tokens = d.split(COMMAND_RE).map((s) => s.trim()).filter((s) => s.length > 0);
+  const segments = [];
+  let currentCommand = "";
+  for (const token of tokens) {
+    if (/^[MmLlHhVvCcSsQqTtAaZz]$/.test(token)) {
+      currentCommand = token;
+    } else {
+      const nums = parsePathNumbers(token);
+      segments.push({ command: currentCommand, args: nums });
+    }
+  }
+  return segments;
+}
+function createPath2DFromSvg(pathData) {
+  return new Path2D(pathData);
+}
+function drawPath(ctx, pathData, options = {}) {
+  const {
+    fill,
+    stroke,
+    strokeWidth = 1,
+    strokeDash,
+    lineCap = "butt",
+    lineJoin = "miter",
+    opacity = 1
+  } = options;
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  const path3 = createPath2DFromSvg(pathData);
+  if (fill) {
+    ctx.fillStyle = fill;
+    ctx.fill(path3);
+  }
+  if (stroke) {
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = strokeWidth;
+    ctx.lineCap = lineCap;
+    ctx.lineJoin = lineJoin;
+    if (strokeDash) {
+      ctx.setLineDash(strokeDash);
+    }
+    ctx.stroke(path3);
+    if (strokeDash) {
+      ctx.setLineDash([]);
+    }
+  }
+  ctx.restore();
+}
+function createCanvasGradient(ctx, gradient, bounds) {
+  let canvasGradient;
+  if (gradient.type === "radial") {
+    const cx = gradient.x0 ?? bounds.x + bounds.width / 2;
+    const cy = gradient.y0 ?? bounds.y + bounds.height / 2;
+    const r0 = gradient.r0 ?? 0;
+    const r1 = gradient.r1 ?? Math.max(bounds.width, bounds.height) / 2;
+    canvasGradient = ctx.createRadialGradient(cx, cy, r0, cx, cy, r1);
+  } else if (gradient.type === "conic") {
+    const cx = gradient.x0 ?? bounds.x + bounds.width / 2;
+    const cy = gradient.y0 ?? bounds.y + bounds.height / 2;
+    const startAngle = (gradient.startAngle ?? 0) * Math.PI / 180;
+    canvasGradient = ctx.createConicGradient(startAngle, cx, cy);
+  } else {
+    const x0 = gradient.x0 ?? bounds.x;
+    const y0 = gradient.y0 ?? bounds.y;
+    const x1 = gradient.x1 ?? bounds.x + bounds.width;
+    const y1 = gradient.y1 ?? bounds.y;
+    canvasGradient = ctx.createLinearGradient(x0, y0, x1, y1);
+  }
+  for (const stop of gradient.stops) {
+    canvasGradient.addColorStop(
+      Math.max(0, Math.min(1, stop.offset)),
+      stop.color
+    );
+  }
+  return canvasGradient;
+}
+function drawGradient(ctx, gradient, bounds) {
+  ctx.save();
+  const canvasGradient = createCanvasGradient(ctx, gradient, bounds);
+  ctx.fillStyle = canvasGradient;
+  ctx.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+  ctx.restore();
+}
+function samplePathPoints(pathData, numSamples) {
+  const segments = parsePathData(pathData);
+  const points = [];
+  let cx = 0;
+  let cy = 0;
+  let startX = 0;
+  let startY = 0;
+  const allPoints = [];
+  for (const seg of segments) {
+    const cmd = seg.command;
+    const a = seg.args;
+    switch (cmd) {
+      case "M":
+        cx = a[0];
+        cy = a[1];
+        startX = cx;
+        startY = cy;
+        allPoints.push({ x: cx, y: cy });
+        break;
+      case "m":
+        cx += a[0];
+        cy += a[1];
+        startX = cx;
+        startY = cy;
+        allPoints.push({ x: cx, y: cy });
+        break;
+      case "L":
+        cx = a[0];
+        cy = a[1];
+        allPoints.push({ x: cx, y: cy });
+        break;
+      case "l":
+        cx += a[0];
+        cy += a[1];
+        allPoints.push({ x: cx, y: cy });
+        break;
+      case "H":
+        cx = a[0];
+        allPoints.push({ x: cx, y: cy });
+        break;
+      case "h":
+        cx += a[0];
+        allPoints.push({ x: cx, y: cy });
+        break;
+      case "V":
+        cy = a[0];
+        allPoints.push({ x: cx, y: cy });
+        break;
+      case "v":
+        cy += a[0];
+        allPoints.push({ x: cx, y: cy });
+        break;
+      case "C":
+        for (let t = 0.25; t <= 1; t += 0.25) {
+          const t2 = t * t;
+          const t3 = t2 * t;
+          const mt = 1 - t;
+          const mt2 = mt * mt;
+          const mt3 = mt2 * mt;
+          const x = mt3 * cx + 3 * mt2 * t * a[0] + 3 * mt * t2 * a[2] + t3 * a[4];
+          const y = mt3 * cy + 3 * mt2 * t * a[1] + 3 * mt * t2 * a[3] + t3 * a[5];
+          allPoints.push({ x, y });
+        }
+        cx = a[4];
+        cy = a[5];
+        break;
+      case "Q":
+        for (let t = 0.25; t <= 1; t += 0.25) {
+          const mt = 1 - t;
+          const x = mt * mt * cx + 2 * mt * t * a[0] + t * t * a[2];
+          const y = mt * mt * cy + 2 * mt * t * a[1] + t * t * a[3];
+          allPoints.push({ x, y });
+        }
+        cx = a[2];
+        cy = a[3];
+        break;
+      case "Z":
+      case "z":
+        cx = startX;
+        cy = startY;
+        allPoints.push({ x: cx, y: cy });
+        break;
+    }
+  }
+  if (allPoints.length < 2) {
+    return [];
+  }
+  const distances = [0];
+  let totalLength = 0;
+  for (let i = 1; i < allPoints.length; i++) {
+    const dx = allPoints[i].x - allPoints[i - 1].x;
+    const dy = allPoints[i].y - allPoints[i - 1].y;
+    totalLength += Math.sqrt(dx * dx + dy * dy);
+    distances.push(totalLength);
+  }
+  if (totalLength === 0) return [];
+  for (let i = 0; i < numSamples; i++) {
+    const t = i / Math.max(1, numSamples - 1) * totalLength;
+    let segIdx = 0;
+    for (let j = 1; j < distances.length; j++) {
+      if (distances[j] >= t) {
+        segIdx = j - 1;
+        break;
+      }
+      segIdx = j - 1;
+    }
+    const segLen = distances[segIdx + 1] - distances[segIdx];
+    const localT = segLen > 0 ? (t - distances[segIdx]) / segLen : 0;
+    const p0 = allPoints[segIdx];
+    const p1 = allPoints[Math.min(segIdx + 1, allPoints.length - 1)];
+    const x = p0.x + (p1.x - p0.x) * localT;
+    const y = p0.y + (p1.y - p0.y) * localT;
+    const angle = Math.atan2(p1.y - p0.y, p1.x - p0.x);
+    points.push({ x, y, angle });
+  }
+  return points;
+}
+function drawTextOnPath(ctx, text, pathData, options = {}) {
+  const {
+    fontSize = 16,
+    fontFamily = "sans-serif",
+    fontWeight = "normal",
+    fill = "#000000",
+    stroke,
+    strokeWidth = 1,
+    letterSpacing = 0,
+    startOffset = 0
+  } = options;
+  ctx.save();
+  ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+  ctx.textBaseline = "middle";
+  let totalWidth = 0;
+  const charWidths = [];
+  for (const char of text) {
+    const w = ctx.measureText(char).width + letterSpacing;
+    charWidths.push(w);
+    totalWidth += w;
+  }
+  const numSamples = Math.max(text.length * 4, 100);
+  const pathPoints = samplePathPoints(pathData, numSamples);
+  if (pathPoints.length < 2) {
+    ctx.restore();
+    return;
+  }
+  let currentDist = startOffset * totalWidth;
+  for (let i = 0; i < text.length; i++) {
+    const charWidth = charWidths[i];
+    const charCenter = currentDist + charWidth / 2;
+    const t = Math.max(0, Math.min(1, charCenter / totalWidth));
+    const idx = Math.min(
+      Math.floor(t * (pathPoints.length - 1)),
+      pathPoints.length - 1
+    );
+    const point = pathPoints[idx];
+    ctx.save();
+    ctx.translate(point.x, point.y);
+    ctx.rotate(point.angle);
+    if (fill) {
+      ctx.fillStyle = fill;
+      ctx.fillText(text[i], -charWidth / 2, 0);
+    }
+    if (stroke) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = strokeWidth;
+      ctx.strokeText(text[i], -charWidth / 2, 0);
+    }
+    ctx.restore();
+    currentDist += charWidth;
+  }
+  ctx.restore();
+}
+function createPattern(ctx, source, repetition = "repeat") {
+  return ctx.createPattern(source, repetition);
+}
+function applyClipPath(ctx, pathData) {
+  const path3 = createPath2DFromSvg(pathData);
+  ctx.clip(path3);
+}
+function drawCircle(ctx, cx, cy, r, options = {}) {
+  const { fill, stroke, strokeWidth = 1, opacity = 1 } = options;
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  if (fill) {
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+  if (stroke) {
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = strokeWidth;
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function drawRoundedRect(ctx, x, y, width, height, borderRadius = 0, options = {}) {
+  const { fill, stroke, strokeWidth = 1, opacity = 1 } = options;
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.beginPath();
+  if (borderRadius > 0) {
+    const r = Math.min(borderRadius, width / 2, height / 2);
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + width - r, y);
+    ctx.arcTo(x + width, y, x + width, y + r, r);
+    ctx.lineTo(x + width, y + height - r);
+    ctx.arcTo(x + width, y + height, x + width - r, y + height, r);
+    ctx.lineTo(x + r, y + height);
+    ctx.arcTo(x, y + height, x, y + height - r, r);
+    ctx.lineTo(x, y + r);
+    ctx.arcTo(x, y, x + r, y, r);
+  } else {
+    ctx.rect(x, y, width, height);
+  }
+  ctx.closePath();
+  if (fill) {
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+  if (stroke) {
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = strokeWidth;
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// src/utils/paths.ts
+var COMMAND_RE2 = /([MmLlHhVvCcSsQqTtAaZz])/;
 function tokenize(d) {
-  return d.split(COMMAND_RE).map((s) => s.trim()).filter((s) => s.length > 0);
+  return d.split(COMMAND_RE2).map((s) => s.trim()).filter((s) => s.length > 0);
 }
 function parseNumbers(str) {
   const matches = str.match(/-?\d*\.?\d+(?:e[+-]?\d+)?/gi);
@@ -4148,11 +5019,11 @@ function dist(a, b) {
   const dy = b.y - a.y;
   return Math.sqrt(dx * dx + dy * dy);
 }
-function lerp(a, b, t) {
+function lerp2(a, b, t) {
   return a + (b - a) * t;
 }
 function lerpPoint(a, b, t) {
-  return { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t) };
+  return { x: lerp2(a.x, b.x, t), y: lerp2(a.y, b.y, t) };
 }
 function cubicBezierPoint(p0, p1, p2, p3, t) {
   const mt = 1 - t;
@@ -4983,7 +5854,7 @@ function interpolatePath(progress, d12, d2) {
     for (let j = 0; j < argCount; j++) {
       const a = j < c12.args.length ? c12.args[j] : 0;
       const b = j < c22.args.length ? c22.args[j] : 0;
-      args.push(lerp(a, b, t));
+      args.push(lerp2(a, b, t));
     }
     result.push({ command: cmd, args });
   }
@@ -6637,7 +7508,646 @@ function getRandomFonts(count = 1) {
   const shuffled = [...catalog.fonts].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, count);
 }
+var REQUIRED_MANIFEST_FIELDS = [
+  "name",
+  "version",
+  "description",
+  "author",
+  "license",
+  "tags",
+  "category",
+  "rendervid",
+  "inputs",
+  "files"
+];
+var TEMPLATE_CATEGORIES = [
+  "social-media",
+  "presentation",
+  "marketing",
+  "education",
+  "entertainment",
+  "e-commerce",
+  "news",
+  "sports",
+  "music",
+  "corporate",
+  "event",
+  "real-estate",
+  "other"
+];
+function validateManifest(manifest) {
+  const errors = [];
+  const warnings = [];
+  for (const field of REQUIRED_MANIFEST_FIELDS) {
+    if (manifest[field] === void 0 || manifest[field] === null) {
+      errors.push({
+        code: "MISSING_FIELD",
+        message: `Missing required field: ${field}`,
+        path: field
+      });
+    }
+  }
+  if (manifest.name) {
+    const namePattern = /^(@[a-z0-9-]+\/)?[a-z0-9-]+$/;
+    if (!namePattern.test(manifest.name)) {
+      errors.push({
+        code: "INVALID_NAME",
+        message: "Name must be lowercase alphanumeric with hyphens, optionally scoped (e.g. @scope/name)",
+        path: "name",
+        expected: "@scope/template-name or template-name",
+        actual: manifest.name
+      });
+    }
+  }
+  if (manifest.version) {
+    const semverPattern = /^\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?(\+[a-zA-Z0-9.]+)?$/;
+    if (!semverPattern.test(manifest.version)) {
+      errors.push({
+        code: "INVALID_VERSION",
+        message: "Version must follow semantic versioning (e.g. 1.0.0)",
+        path: "version",
+        expected: "X.Y.Z",
+        actual: manifest.version
+      });
+    }
+  }
+  if (manifest.author) {
+    if (!manifest.author.name || typeof manifest.author.name !== "string") {
+      errors.push({
+        code: "INVALID_AUTHOR",
+        message: "Author must have a name string",
+        path: "author.name"
+      });
+    }
+  }
+  if (manifest.rendervid) {
+    const rv = manifest.rendervid;
+    if (!rv.minVersion) {
+      errors.push({
+        code: "MISSING_FIELD",
+        message: "rendervid.minVersion is required",
+        path: "rendervid.minVersion"
+      });
+    }
+    if (!rv.resolution || !rv.resolution.width || !rv.resolution.height) {
+      errors.push({
+        code: "INVALID_RESOLUTION",
+        message: "rendervid.resolution must have width and height",
+        path: "rendervid.resolution"
+      });
+    }
+    if (rv.fps && (rv.fps < 1 || rv.fps > 120)) {
+      warnings.push({
+        code: "UNUSUAL_FPS",
+        message: `FPS value ${rv.fps} is unusual`,
+        path: "rendervid.fps",
+        suggestion: "Common values are 24, 30, or 60"
+      });
+    }
+  }
+  if (manifest.tags && !Array.isArray(manifest.tags)) {
+    errors.push({
+      code: "INVALID_TAGS",
+      message: "Tags must be an array of strings",
+      path: "tags"
+    });
+  }
+  if (manifest.category && !TEMPLATE_CATEGORIES.includes(manifest.category)) {
+    warnings.push({
+      code: "UNKNOWN_CATEGORY",
+      message: `Unknown category: ${manifest.category}`,
+      path: "category",
+      suggestion: `Valid categories: ${TEMPLATE_CATEGORIES.join(", ")}`
+    });
+  }
+  if (manifest.files && Array.isArray(manifest.files)) {
+    if (manifest.files.length === 0) {
+      errors.push({
+        code: "EMPTY_FILES",
+        message: "Files list must contain at least one file",
+        path: "files"
+      });
+    }
+    const hasTemplateJson = manifest.files.some(
+      (f) => f === "template.json" || f.endsWith("/template.json")
+    );
+    if (!hasTemplateJson) {
+      warnings.push({
+        code: "MISSING_TEMPLATE_JSON",
+        message: "Files list should include template.json",
+        path: "files",
+        suggestion: "Add template.json to the files array"
+      });
+    }
+  }
+  return {
+    valid: errors.length === 0,
+    errors,
+    warnings
+  };
+}
+function createTarBuffer(entries) {
+  const blocks = [];
+  for (const entry of entries) {
+    const header = Buffer.alloc(512);
+    header.write(entry.name.slice(0, 100), 0, 100, "utf-8");
+    header.write("0000644\0", 100, 8, "utf-8");
+    header.write("0001000\0", 108, 8, "utf-8");
+    header.write("0001000\0", 116, 8, "utf-8");
+    const sizeOctal = entry.content.length.toString(8).padStart(11, "0");
+    header.write(sizeOctal + "\0", 124, 12, "utf-8");
+    const mtime = Math.floor(Date.now() / 1e3).toString(8).padStart(11, "0");
+    header.write(mtime + "\0", 136, 12, "utf-8");
+    header.write("0", 156, 1, "utf-8");
+    header.write("        ", 148, 8, "utf-8");
+    let checksum = 0;
+    for (let i = 0; i < 512; i++) {
+      checksum += header[i];
+    }
+    const checksumStr = checksum.toString(8).padStart(6, "0") + "\0 ";
+    header.write(checksumStr, 148, 8, "utf-8");
+    blocks.push(header);
+    blocks.push(entry.content);
+    const remainder = entry.content.length % 512;
+    if (remainder > 0) {
+      blocks.push(Buffer.alloc(512 - remainder));
+    }
+  }
+  blocks.push(Buffer.alloc(1024));
+  return Buffer.concat(blocks);
+}
+function extractTarBuffer(tarBuffer) {
+  const entries = [];
+  let offset = 0;
+  while (offset < tarBuffer.length - 512) {
+    const header = tarBuffer.subarray(offset, offset + 512);
+    let allZero = true;
+    for (let i = 0; i < 512; i++) {
+      if (header[i] !== 0) {
+        allZero = false;
+        break;
+      }
+    }
+    if (allZero) break;
+    let nameEnd = 0;
+    while (nameEnd < 100 && header[nameEnd] !== 0) nameEnd++;
+    const name = header.subarray(0, nameEnd).toString("utf-8");
+    const sizeStr = header.subarray(124, 135).toString("utf-8").trim();
+    const size = parseInt(sizeStr, 8);
+    offset += 512;
+    const content = tarBuffer.subarray(offset, offset + size);
+    entries.push({ name, content: Buffer.from(content) });
+    offset += size;
+    const remainder = size % 512;
+    if (remainder > 0) {
+      offset += 512 - remainder;
+    }
+  }
+  return entries;
+}
+async function packageTemplate(dir) {
+  const manifestPath = path2.join(dir, "template.json");
+  if (!fs2.existsSync(manifestPath)) {
+    throw new Error(`No template.json found in ${dir}`);
+  }
+  const manifestContent = fs2.readFileSync(manifestPath, "utf-8");
+  let manifest;
+  try {
+    manifest = JSON.parse(manifestContent);
+  } catch {
+    throw new Error("Failed to parse template.json: invalid JSON");
+  }
+  const validation = validateManifest(manifest);
+  if (!validation.valid) {
+    const errorMessages = validation.errors.map((e) => `  - ${e.message}`).join("\n");
+    throw new Error(`Invalid manifest:
+${errorMessages}`);
+  }
+  const filesToPackage = manifest.files && manifest.files.length > 0 ? manifest.files : collectFiles(dir);
+  const entries = [];
+  for (const file of filesToPackage) {
+    const filePath = path2.join(dir, file);
+    if (fs2.existsSync(filePath)) {
+      const content = fs2.readFileSync(filePath);
+      entries.push({ name: file, content });
+    }
+  }
+  if (!filesToPackage.includes("template.json")) {
+    entries.unshift({
+      name: "template.json",
+      content: Buffer.from(manifestContent, "utf-8")
+    });
+  }
+  const tarBuffer = createTarBuffer(entries);
+  const tarball = await new Promise((resolve, reject) => {
+    zlib.gzip(tarBuffer, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
+  return { tarball, manifest };
+}
+function collectFiles(dir, prefix = "") {
+  const files = [];
+  const IGNORED = /* @__PURE__ */ new Set(["node_modules", ".git", ".DS_Store", "dist", "build"]);
+  const entries = fs2.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    if (IGNORED.has(entry.name)) continue;
+    const relativePath = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      files.push(...collectFiles(path2.join(dir, entry.name), relativePath));
+    } else {
+      files.push(relativePath);
+    }
+  }
+  return files;
+}
+async function unpackTemplate(tarball, targetDir) {
+  const tarBuffer = await new Promise((resolve, reject) => {
+    zlib.gunzip(tarball, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
+  const entries = extractTarBuffer(tarBuffer);
+  fs2.mkdirSync(targetDir, { recursive: true });
+  let manifest = null;
+  for (const entry of entries) {
+    const filePath = path2.join(targetDir, entry.name);
+    const fileDir = path2.dirname(filePath);
+    fs2.mkdirSync(fileDir, { recursive: true });
+    fs2.writeFileSync(filePath, entry.content);
+    if (entry.name === "template.json") {
+      manifest = JSON.parse(entry.content.toString("utf-8"));
+    }
+  }
+  if (!manifest) {
+    throw new Error("No template.json found in package");
+  }
+  return manifest;
+}
+function generateManifest(template, options) {
+  const duration = template.output.duration ? `${template.output.duration}s` : "0s";
+  const inputs = {};
+  if (template.inputs) {
+    for (const input of template.inputs) {
+      inputs[input.key] = {
+        type: input.type,
+        required: input.required,
+        default: input.default,
+        description: input.label || input.key
+      };
+    }
+  }
+  const manifest = {
+    name: options?.name || template.name.toLowerCase().replace(/\s+/g, "-"),
+    version: options?.version || template.version || "1.0.0",
+    description: options?.description || template.description || "",
+    author: options?.author || {
+      name: template.author?.name || "Unknown",
+      url: template.author?.url
+    },
+    license: options?.license || "MIT",
+    tags: options?.tags || template.tags || [],
+    category: options?.category || "other",
+    rendervid: options?.rendervid || {
+      minVersion: "1.0.0",
+      resolution: {
+        width: template.output.width,
+        height: template.output.height
+      },
+      duration,
+      fps: template.output.fps || 30
+    },
+    inputs,
+    files: options?.files || ["template.json"],
+    ...options?.preview && { preview: options.preview },
+    ...options?.repository && { repository: options.repository }
+  };
+  return manifest;
+}
 
-export { ComponentDefaultsManager, ComponentPropsResolver, DEFAULT_MOTION_BLUR_CONFIG, FONT_CONSTANTS, FontLoadingError, FontManager, MOTION_BLUR_QUALITY_PRESETS, RendervidEngine, TemplateProcessor, colorToString, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createRandom, createSmoothSvgPath, createSpring, evolvePath, exportAnimatedSvg, filterToCSS, filtersToCSS, fitText, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getAudioData, getAudioDuration, getBoundingBox, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getGifFrameAtTime, getLayerSchema, getLength, getPointAtLength, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getSubpaths, getTangentAtLength, getTemplateSchema, getValueAtFrame, getVariableFonts, getWaveformPortion, interpolate, interpolateColors, interpolatePath, isFontAvailable, isNamedWeight, isNumericWeight, measureText, mergeMotionBlurConfigs, noise2D, noise3D, normalizePath, numericToNamedWeight, parseColor, parseEasing, random, randomInt, randomRange, resetPath, resolveMotionBlurConfig, reversePath, scalePath, searchFonts, templateSchema, translatePath, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, visualizeAudio, visualizeAudioWaveform, weightToNumeric };
+// src/utils/registry-client.ts
+var RegistryClient = class {
+  registryUrl;
+  authToken;
+  constructor(options) {
+    this.registryUrl = options.registryUrl.replace(/\/+$/, "");
+    this.authToken = options.authToken;
+  }
+  /**
+   * Search for templates in the registry.
+   */
+  async search(query, options) {
+    const params = new URLSearchParams({ q: query });
+    if (options?.tags && options.tags.length > 0) {
+      params.set("tags", options.tags.join(","));
+    }
+    if (options?.category) {
+      params.set("category", options.category);
+    }
+    if (options?.limit) {
+      params.set("limit", String(options.limit));
+    }
+    if (options?.offset) {
+      params.set("offset", String(options.offset));
+    }
+    const response = await this.fetch(`/api/v1/search?${params.toString()}`);
+    return response;
+  }
+  /**
+   * Get full package details from the registry.
+   */
+  async getPackage(name, version) {
+    const encodedName = encodeURIComponent(name);
+    const url = version ? `/api/v1/packages/${encodedName}/${version}` : `/api/v1/packages/${encodedName}`;
+    const response = await this.fetch(url);
+    return response;
+  }
+  /**
+   * Publish a template package to the registry.
+   *
+   * Requires authentication (authToken).
+   */
+  async publish(tarball, manifest) {
+    if (!this.authToken) {
+      throw new Error("Authentication required to publish. Set authToken in client options.");
+    }
+    const body = JSON.stringify({
+      manifest,
+      tarball: tarball.toString("base64")
+    });
+    await this.fetch("/api/v1/packages", {
+      method: "PUT",
+      body,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  }
+  /**
+   * Unpublish a specific version of a template from the registry.
+   *
+   * Requires authentication (authToken).
+   */
+  async unpublish(name, version) {
+    if (!this.authToken) {
+      throw new Error("Authentication required to unpublish. Set authToken in client options.");
+    }
+    const encodedName = encodeURIComponent(name);
+    await this.fetch(`/api/v1/packages/${encodedName}/${version}`, {
+      method: "DELETE"
+    });
+  }
+  /**
+   * List all available template categories.
+   */
+  async listCategories() {
+    const response = await this.fetch("/api/v1/categories");
+    return response;
+  }
+  /**
+   * List popular templates.
+   */
+  async listPopular(limit) {
+    const params = limit ? `?limit=${limit}` : "";
+    const response = await this.fetch(`/api/v1/popular${params}`);
+    return response;
+  }
+  /**
+   * Download a template tarball from the registry.
+   */
+  async download(name, version) {
+    const encodedName = encodeURIComponent(name);
+    const url = version ? `/api/v1/packages/${encodedName}/${version}/download` : `/api/v1/packages/${encodedName}/download`;
+    const fullUrl = `${this.registryUrl}${url}`;
+    const headers = {};
+    if (this.authToken) {
+      headers["Authorization"] = `Bearer ${this.authToken}`;
+    }
+    const response = await fetch(fullUrl, { headers });
+    if (!response.ok) {
+      throw new RegistryError(
+        `Download failed: ${response.status} ${response.statusText}`,
+        response.status
+      );
+    }
+    const arrayBuffer = await response.arrayBuffer();
+    return Buffer.from(arrayBuffer);
+  }
+  /**
+   * Internal fetch helper with authentication and error handling.
+   */
+  async fetch(urlPath, options) {
+    const url = `${this.registryUrl}${urlPath}`;
+    const headers = {
+      Accept: "application/json",
+      ...options?.headers || {}
+    };
+    if (this.authToken) {
+      headers["Authorization"] = `Bearer ${this.authToken}`;
+    }
+    let response;
+    try {
+      response = await fetch(url, {
+        method: options?.method || "GET",
+        headers,
+        body: options?.body
+      });
+    } catch (err) {
+      throw new RegistryError(
+        `Network error connecting to registry at ${this.registryUrl}: ${err instanceof Error ? err.message : String(err)}`,
+        0
+      );
+    }
+    if (!response.ok) {
+      let errorMessage;
+      try {
+        const errorBody = await response.json();
+        errorMessage = errorBody.error || errorBody.message || response.statusText;
+      } catch {
+        errorMessage = response.statusText;
+      }
+      throw new RegistryError(
+        `Registry error: ${errorMessage}`,
+        response.status
+      );
+    }
+    return response.json();
+  }
+};
+var RegistryError = class extends Error {
+  /** HTTP status code (0 for network errors) */
+  statusCode;
+  constructor(message, statusCode) {
+    super(message);
+    this.name = "RegistryError";
+    this.statusCode = statusCode;
+  }
+};
+async function initTemplate(dir, options) {
+  fs2.mkdirSync(dir, { recursive: true });
+  const templateJsonPath = path2.join(dir, "template.json");
+  if (fs2.existsSync(templateJsonPath)) {
+    throw new Error(`template.json already exists in ${dir}`);
+  }
+  const dirName = path2.basename(dir);
+  const name = options?.name || dirName.toLowerCase().replace(/\s+/g, "-");
+  const manifest = {
+    name,
+    version: "1.0.0",
+    description: options?.description || `A rendervid template: ${name}`,
+    author: {
+      name: options?.authorName || "Your Name",
+      url: options?.authorUrl
+    },
+    license: options?.license || "MIT",
+    tags: [],
+    category: options?.category || "other",
+    rendervid: {
+      minVersion: "1.0.0",
+      resolution: {
+        width: options?.width || 1920,
+        height: options?.height || 1080
+      },
+      duration: `${options?.duration || 5}s`,
+      fps: options?.fps || 30
+    },
+    inputs: {},
+    files: ["template.json"]
+  };
+  fs2.writeFileSync(
+    templateJsonPath,
+    JSON.stringify(manifest, null, 2) + "\n",
+    "utf-8"
+  );
+  const compositionPath = path2.join(dir, "composition.json");
+  if (!fs2.existsSync(compositionPath)) {
+    const composition = {
+      name: manifest.description,
+      output: {
+        type: "video",
+        width: manifest.rendervid.resolution.width,
+        height: manifest.rendervid.resolution.height,
+        fps: manifest.rendervid.fps,
+        duration: options?.duration || 5
+      },
+      inputs: [],
+      composition: {
+        scenes: [
+          {
+            id: "scene-1",
+            startFrame: 0,
+            endFrame: (options?.duration || 5) * (options?.fps || 30),
+            layers: []
+          }
+        ]
+      }
+    };
+    fs2.writeFileSync(
+      compositionPath,
+      JSON.stringify(composition, null, 2) + "\n",
+      "utf-8"
+    );
+  }
+}
+async function validateTemplateDir(dir) {
+  const errors = [];
+  const warnings = [];
+  if (!fs2.existsSync(dir)) {
+    return {
+      valid: false,
+      errors: [
+        {
+          code: "DIR_NOT_FOUND",
+          message: `Directory not found: ${dir}`,
+          path: ""
+        }
+      ],
+      warnings: []
+    };
+  }
+  const manifestPath = path2.join(dir, "template.json");
+  if (!fs2.existsSync(manifestPath)) {
+    return {
+      valid: false,
+      errors: [
+        {
+          code: "MANIFEST_NOT_FOUND",
+          message: "No template.json found in directory",
+          path: "template.json"
+        }
+      ],
+      warnings: []
+    };
+  }
+  let manifest;
+  try {
+    const content = fs2.readFileSync(manifestPath, "utf-8");
+    manifest = JSON.parse(content);
+  } catch (err) {
+    return {
+      valid: false,
+      errors: [
+        {
+          code: "INVALID_JSON",
+          message: `Failed to parse template.json: ${err instanceof Error ? err.message : String(err)}`,
+          path: "template.json"
+        }
+      ],
+      warnings: []
+    };
+  }
+  const manifestValidation = validateManifest(manifest);
+  errors.push(...manifestValidation.errors);
+  warnings.push(...manifestValidation.warnings);
+  if (manifest.files && Array.isArray(manifest.files)) {
+    for (const file of manifest.files) {
+      const filePath = path2.join(dir, file);
+      if (!fs2.existsSync(filePath)) {
+        errors.push({
+          code: "FILE_NOT_FOUND",
+          message: `Referenced file not found: ${file}`,
+          path: `files[${manifest.files.indexOf(file)}]`
+        });
+      }
+    }
+  }
+  if (manifest.preview) {
+    const previewFields = [
+      "thumbnail",
+      "video",
+      "gif"
+    ];
+    for (const field of previewFields) {
+      const value = manifest.preview[field];
+      if (value && !value.startsWith("http://") && !value.startsWith("https://")) {
+        const previewPath = path2.join(dir, value);
+        if (!fs2.existsSync(previewPath)) {
+          warnings.push({
+            code: "PREVIEW_NOT_FOUND",
+            message: `Preview file not found: ${value}`,
+            path: `preview.${field}`,
+            suggestion: "Ensure the file exists or use an absolute URL"
+          });
+        }
+      }
+    }
+  }
+  return {
+    valid: errors.length === 0,
+    errors,
+    warnings
+  };
+}
+async function searchTemplates(query, registryUrl, options) {
+  const client = new RegistryClient({ registryUrl });
+  return client.search(query, options);
+}
+function getAvailableCategories() {
+  return TEMPLATE_CATEGORIES;
+}
+
+export { ComponentDefaultsManager, ComponentPropsResolver, DEFAULT_MOTION_BLUR_CONFIG, FONT_CONSTANTS, FontLoadingError, FontManager, MOTION_BLUR_QUALITY_PRESETS, RegistryClient, RegistryError, RendervidEngine, TEMPLATE_CATEGORIES, TemplateProcessor, animatedNoise, applyClipPath, calculateOptimalColors, colorToString, compileAnimation, createCanvasGradient, createCubicBezier, createDefaultComponentDefaultsManager, createPattern, createRandom, createSmoothSvgPath, createSpring, detectBeats, domainWarp, drawCircle, drawGradient, drawPath, drawRoundedRect, drawTextOnPath, estimateGifFileSize, evolvePath, exportAnimatedSvg, fbm, filterToCSS, filtersToCSS, fitText, generateManifest, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getAmplitudeEnvelope, getAudioData, getAudioDuration, getAvailableCategories, getBeatAtFrame, getBoundingBox, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getFrequencyBands, getGifFrameAtTime, getGifOptimizationPreset, getLayerSchema, getLength, getPointAtLength, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getSubpaths, getTangentAtLength, getTemplateSchema, getValueAtFrame, getVariableFonts, getWaveformPortion, initTemplate, interpolate, interpolateColors, interpolatePath, isFontAvailable, isNamedWeight, isNumericWeight, measureText, mergeMotionBlurConfigs, noise2D, noise3D, normalizePath, numericToNamedWeight, packageTemplate, parseColor, parseEasing, perlin2D, perlin3D, random, randomInt, randomRange, resetPath, resolveMotionBlurConfig, reversePath, ridgedNoise, scalePath, searchFonts, searchTemplates, templateSchema, translatePath, turbulence, unpackTemplate, validateInputs, validateManifest, validateMotionBlurConfig, validateSceneOrder, validateTemplate, validateTemplateDir, valueNoise2D, valueNoise3D, visualizeAudio, visualizeAudioWaveform, weightToNumeric, worley2D, worley3D };
 //# sourceMappingURL=index.mjs.map
 //# sourceMappingURL=index.mjs.map

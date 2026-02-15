@@ -174,7 +174,7 @@
             "position": { "x": 0, "y": 0 },
             "size": { "width": 0, "height": 0 },
             "props": {
-              "src": "./assets/background-music.mp3",
+              "src": "https://archive.org/download/FlightOfTheBumblebee/flight_of_the_bumblebee_2.mp3",
               "volume": 0.7,
               "fadeIn": 15,
               "fadeOut": 30

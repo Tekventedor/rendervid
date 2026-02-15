@@ -1141,9 +1141,167 @@ declare function validateMotionBlurConfig(config: MotionBlurConfig): string[];
 declare function mergeMotionBlurConfigs(global?: MotionBlurConfig, scene?: MotionBlurConfig, layer?: MotionBlurConfig): MotionBlurConfig | undefined;
 
 /**
+ * Audio Effects & Mixing Pipeline
+ *
+ * Types for building audio effect chains, multi-track mixing,
+ * and volume automation for video rendering.
+ */
+/**
+ * EQ band type for parametric equalization.
+ */
+interface EQBand {
+    /** Center frequency in Hz */
+    frequency: number;
+    /** Gain in dB (-24 to +24) */
+    gain: number;
+    /** Quality factor (bandwidth) */
+    Q: number;
+    /** Filter type */
+    type: 'lowshelf' | 'highshelf' | 'peaking';
+}
+/**
+ * Parametric equalizer effect.
+ * Maps to FFmpeg `equalizer` filter.
+ */
+interface EQEffect {
+    type: 'eq';
+    /** EQ bands to apply */
+    bands: EQBand[];
+}
+/**
+ * Reverb effect using echo simulation.
+ * Maps to FFmpeg `aecho` filter.
+ */
+interface ReverbEffect {
+    type: 'reverb';
+    /** Room size (0-1, controls delay time) */
+    roomSize: number;
+    /** Damping factor (0-1, controls high-frequency absorption) */
+    damping: number;
+    /** Wet/dry mix (0 = fully dry, 1 = fully wet) */
+    wetDry: number;
+}
+/**
+ * Dynamic range compressor effect.
+ * Maps to FFmpeg `acompressor` filter.
+ */
+interface CompressorEffect {
+    type: 'compressor';
+    /** Threshold in dB (signal level above which compression begins) */
+    threshold: number;
+    /** Compression ratio (e.g., 4 means 4:1) */
+    ratio: number;
+    /** Attack time in milliseconds */
+    attack: number;
+    /** Release time in milliseconds */
+    release: number;
+    /** Knee width in dB (soft knee transition range) */
+    knee: number;
+}
+/**
+ * Delay effect.
+ * Maps to FFmpeg `adelay` filter.
+ */
+interface DelayEffect {
+    type: 'delay';
+    /** Delay time in milliseconds */
+    time: number;
+    /** Feedback amount (0-1) */
+    feedback: number;
+    /** Wet/dry mix (0 = fully dry, 1 = fully wet) */
+    wetDry: number;
+}
+/**
+ * Gain/volume adjustment effect.
+ * Maps to FFmpeg `volume` filter.
+ */
+interface GainEffect {
+    type: 'gain';
+    /** Gain value (1.0 = unity, 0.5 = -6dB, 2.0 = +6dB) */
+    value: number;
+}
+/**
+ * Low-pass filter effect.
+ * Maps to FFmpeg `lowpass` filter.
+ */
+interface LowPassFilter {
+    type: 'lowpass';
+    /** Cutoff frequency in Hz */
+    frequency: number;
+    /** Quality factor (resonance) */
+    Q: number;
+}
+/**
+ * High-pass filter effect.
+ * Maps to FFmpeg `highpass` filter.
+ */
+interface HighPassFilter {
+    type: 'highpass';
+    /** Cutoff frequency in Hz */
+    frequency: number;
+    /** Quality factor (resonance) */
+    Q: number;
+}
+/**
+ * Union type for all supported audio effects.
+ */
+type AudioEffect = EQEffect | ReverbEffect | CompressorEffect | DelayEffect | GainEffect | LowPassFilter | HighPassFilter;
+/**
+ * A single keyframe in a volume envelope.
+ */
+interface VolumeKeyframe {
+    /** Frame number */
+    frame: number;
+    /** Volume level (0-1) */
+    volume: number;
+    /** Easing function name (default: 'linear') */
+    easing?: string;
+}
+/**
+ * Volume envelope for automating volume over time.
+ */
+interface VolumeEnvelope {
+    /** Ordered list of volume keyframes */
+    keyframes: VolumeKeyframe[];
+}
+/**
+ * A single audio track in the mixer.
+ */
+interface AudioMixerTrack {
+    /** Audio source file path or URL */
+    src: string;
+    /** Track volume (0-1, default 1.0) */
+    volume: number;
+    /** Stereo pan position (-1 = full left, 0 = center, 1 = full right) */
+    pan: number;
+    /** Audio effects chain applied to this track */
+    effects: AudioEffect[];
+    /** Start time offset in seconds */
+    startTime: number;
+    /** End time in seconds (optional, defaults to end of audio) */
+    endTime?: number;
+    /** Fade in duration in seconds */
+    fadeIn?: number;
+    /** Fade out duration in seconds */
+    fadeOut?: number;
+}
+/**
+ * Configuration for the audio mixer.
+ * Defines multiple tracks with effects and a master bus.
+ */
+interface AudioMixerConfig {
+    /** Audio tracks to mix together */
+    tracks: AudioMixerTrack[];
+    /** Master output volume (0-1, default 1.0) */
+    masterVolume: number;
+    /** Effects applied to the mixed master output */
+    masterEffects: AudioEffect[];
+}
+
+/**
  * Available layer types.
  */
-type LayerType = 'image' | 'video' | 'text' | 'shape' | 'audio' | 'group' | 'lottie' | 'custom' | 'three' | 'gif';
+type LayerType = 'image' | 'video' | 'text' | 'shape' | 'audio' | 'group' | 'lottie' | 'custom' | 'three' | 'gif' | 'canvas';
 /**
  * Position in 2D space.
  */
@@ -1419,6 +1577,12 @@ interface AudioLayerProps {
     fadeIn?: number;
     /** Fade out duration (frames) */
     fadeOut?: number;
+    /** Audio effects chain */
+    effects?: AudioEffect[];
+    /** Stereo pan position (-1 = full left, 0 = center, 1 = full right) */
+    pan?: number;
+    /** Volume automation keyframes */
+    volumeEnvelope?: VolumeKeyframe[];
 }
 /**
  * Props for group layer.
@@ -1463,9 +1627,115 @@ interface GifLayerProps {
     startFrame?: number;
 }
 /**
+ * Canvas drawing command types.
+ */
+type CanvasDrawCommandType = 'path' | 'gradient' | 'textOnPath' | 'pattern' | 'clipPath' | 'circle' | 'rect' | 'line';
+/**
+ * A single canvas drawing command.
+ */
+interface CanvasDrawCommand {
+    /** Type of drawing command */
+    type: CanvasDrawCommandType;
+    /** SVG path data (for path, textOnPath, clipPath) */
+    pathData?: string;
+    /** Fill color or gradient reference */
+    fill?: string;
+    /** Stroke color */
+    stroke?: string;
+    /** Stroke width */
+    strokeWidth?: number;
+    /** Stroke dash array */
+    strokeDash?: number[];
+    /** Stroke line cap */
+    lineCap?: 'butt' | 'round' | 'square';
+    /** Stroke line join */
+    lineJoin?: 'miter' | 'round' | 'bevel';
+    /** Text content (for textOnPath) */
+    text?: string;
+    /** Font size (for textOnPath) */
+    fontSize?: number;
+    /** Font family (for textOnPath) */
+    fontFamily?: string;
+    /** Gradient configuration (for gradient) */
+    gradient?: CanvasGradientConfig;
+    /** Circle center x (for circle) */
+    cx?: number;
+    /** Circle center y (for circle) */
+    cy?: number;
+    /** Circle radius (for circle) */
+    r?: number;
+    /** Rectangle x (for rect) */
+    x?: number;
+    /** Rectangle y (for rect) */
+    y?: number;
+    /** Rectangle width (for rect) */
+    width?: number;
+    /** Rectangle height (for rect) */
+    height?: number;
+    /** Rectangle border radius (for rect) */
+    borderRadius?: number;
+    /** Line start x (for line) */
+    x1?: number;
+    /** Line start y (for line) */
+    y1?: number;
+    /** Line end x (for line) */
+    x2?: number;
+    /** Line end y (for line) */
+    y2?: number;
+    /** Opacity (0-1) */
+    opacity?: number;
+}
+/**
+ * Gradient types for canvas drawing.
+ */
+type CanvasGradientType = 'linear' | 'radial' | 'conic';
+/**
+ * Canvas gradient stop.
+ */
+interface CanvasGradientStop {
+    /** Offset (0-1) */
+    offset: number;
+    /** Color at this stop */
+    color: string;
+}
+/**
+ * Canvas gradient configuration.
+ */
+interface CanvasGradientConfig {
+    /** Gradient type */
+    type: CanvasGradientType;
+    /** Color stops */
+    stops: CanvasGradientStop[];
+    /** Start x (linear) or center x (radial/conic) */
+    x0?: number;
+    /** Start y (linear) or center y (radial/conic) */
+    y0?: number;
+    /** End x (linear) */
+    x1?: number;
+    /** End y (linear) */
+    y1?: number;
+    /** Inner radius (radial) */
+    r0?: number;
+    /** Outer radius (radial) */
+    r1?: number;
+    /** Start angle in degrees (conic) */
+    startAngle?: number;
+}
+/**
+ * Props for canvas layer.
+ */
+interface CanvasLayerProps {
+    /** Array of drawing commands to execute */
+    commands: CanvasDrawCommand[];
+    /** Background color */
+    backgroundColor?: string;
+    /** Whether to anti-alias (default true) */
+    antialias?: boolean;
+}
+/**
  * Union of all layer props.
  */
-type LayerProps = ImageLayerProps | VideoLayerProps | TextLayerProps | ShapeLayerProps | AudioLayerProps | GroupLayerProps | LottieLayerProps | CustomLayerProps | GifLayerProps;
+type LayerProps = ImageLayerProps | VideoLayerProps | TextLayerProps | ShapeLayerProps | AudioLayerProps | GroupLayerProps | LottieLayerProps | CustomLayerProps | GifLayerProps | CanvasLayerProps;
 /**
  * Custom component reference.
  */
@@ -1596,9 +1866,16 @@ interface GifLayer extends LayerBase {
     props: GifLayerProps;
 }
 /**
+ * Canvas layer.
+ */
+interface CanvasLayer extends LayerBase {
+    type: 'canvas';
+    props: CanvasLayerProps;
+}
+/**
  * Union of all layer types.
  */
-type Layer = ImageLayer | VideoLayer | TextLayer | ShapeLayer | AudioLayer | GroupLayer | LottieLayer | CustomLayer | ThreeLayer | GifLayer;
+type Layer = ImageLayer | VideoLayer | TextLayer | ShapeLayer | AudioLayer | GroupLayer | LottieLayer | CustomLayer | ThreeLayer | GifLayer | CanvasLayer;
 
 /**
  * Scene transition types.
@@ -2951,6 +3228,99 @@ interface FontFamily {
 }
 
 /**
+ * Template Registry & Marketplace Types
+ *
+ * Types for publishing, discovering, and installing templates
+ * from a template registry/marketplace.
+ */
+/**
+ * Template manifest for registry publishing.
+ * This is the metadata that accompanies a published template package.
+ */
+interface TemplateManifest {
+    /** Scoped package name, e.g. @scope/template-name */
+    name: string;
+    /** Semantic version string, e.g. "1.0.0" */
+    version: string;
+    /** Human-readable description of the template */
+    description: string;
+    /** Author information */
+    author: {
+        name: string;
+        url?: string;
+    };
+    /** SPDX license identifier */
+    license: string;
+    /** Searchable tags */
+    tags: string[];
+    /** Template category (e.g. "social-media", "presentation", "marketing") */
+    category: string;
+    /** Rendervid engine compatibility and output configuration */
+    rendervid: {
+        /** Minimum rendervid version required */
+        minVersion: string;
+        /** Output resolution */
+        resolution: {
+            width: number;
+            height: number;
+        };
+        /** Duration string, e.g. "5s" or "10s" */
+        duration: string;
+        /** Frames per second */
+        fps: number;
+    };
+    /** Template input definitions */
+    inputs: Record<string, {
+        type: string;
+        required?: boolean;
+        default?: unknown;
+        description: string;
+    }>;
+    /** Preview assets */
+    preview?: {
+        thumbnail?: string;
+        video?: string;
+        gif?: string;
+    };
+    /** List of files included in the template package */
+    files: string[];
+    /** Source repository URL */
+    repository?: string;
+}
+/**
+ * Search result from the template registry.
+ */
+interface RegistrySearchResult {
+    /** Package name */
+    name: string;
+    /** Latest version */
+    version: string;
+    /** Package description */
+    description: string;
+    /** Author name */
+    author: string;
+    /** Total download count */
+    downloads: number;
+    /** Searchable tags */
+    tags: string[];
+    /** Template category */
+    category: string;
+}
+/**
+ * Full package information from the registry.
+ */
+interface RegistryPackage extends TemplateManifest {
+    /** README content (markdown) */
+    readme?: string;
+    /** All published versions */
+    versions: string[];
+    /** ISO date string of first publish */
+    createdAt: string;
+    /** ISO date string of last update */
+    updatedAt: string;
+}
+
+/**
  * Validation error.
  */
 interface ValidationError$1 {
@@ -3716,7 +4086,7 @@ declare function randomInt(seed: string | number, min: number, max: number): num
 declare function createRandom(seed: string | number): () => number;
 
 /**
- * Simplex noise implementation for 2D and 3D.
+ * Noise functions: simplex, Perlin, Worley, and value noise in 2D and 3D.
  *
  * Based on the simplex noise algorithm by Ken Perlin, adapted from
  * public domain / MIT-licensed reference implementations.
@@ -3742,6 +4112,151 @@ declare function noise2D(seed: string | number, x: number, y: number): number;
  * @returns A noise value in [-1, 1].
  */
 declare function noise3D(seed: string | number, x: number, y: number, z: number): number;
+/**
+ * 2D classic Perlin noise. Returns a value in [-1, 1].
+ * Deterministic: the same seed and coordinates always produce the same result.
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+declare function perlin2D(seed: string | number, x: number, y: number): number;
+/**
+ * 3D classic Perlin noise. Returns a value in [-1, 1].
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param z - Z coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+declare function perlin3D(seed: string | number, x: number, y: number, z: number): number;
+/**
+ * 2D Worley (cellular) noise. Returns a value in [-1, 1].
+ * Returns the distance to the nearest feature point, mapped to [-1, 1].
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+declare function worley2D(seed: string | number, x: number, y: number): number;
+/**
+ * 3D Worley (cellular) noise. Returns a value in [-1, 1].
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param z - Z coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+declare function worley3D(seed: string | number, x: number, y: number, z: number): number;
+/**
+ * 2D value noise. Returns a value in [-1, 1].
+ * Interpolates random values at integer grid points using quintic fade.
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+declare function valueNoise2D(seed: string | number, x: number, y: number): number;
+/**
+ * 3D value noise. Returns a value in [-1, 1].
+ *
+ * @param seed - A string or number seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param z - Z coordinate.
+ * @returns A noise value in [-1, 1].
+ */
+declare function valueNoise3D(seed: string | number, x: number, y: number, z: number): number;
+
+/**
+ * Higher-level noise composition functions.
+ *
+ * These functions combine base noise functions to create more complex patterns
+ * like fractal Brownian motion, turbulence, ridged multifractal, and domain warping.
+ */
+/**
+ * A 2D noise function signature: (seed, x, y) => number in [-1, 1].
+ */
+type NoiseFn2D = (seed: string | number, x: number, y: number) => number;
+/**
+ * Options for fractal noise functions (fbm, turbulence, ridgedNoise).
+ */
+interface FractalNoiseOptions {
+    /** Number of octaves to layer (default: 6) */
+    octaves?: number;
+    /** Frequency multiplier per octave (default: 2.0) */
+    lacunarity?: number;
+    /** Amplitude multiplier per octave (default: 0.5) */
+    persistence?: number;
+}
+/**
+ * Fractal Brownian Motion (fBm).
+ * Layers multiple octaves of noise with decreasing amplitude and increasing frequency.
+ *
+ * @param noiseFn - Any 2D noise function with signature (seed, x, y) => number.
+ * @param seed - Seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param options - Fractal noise options.
+ * @returns A noise value (range depends on octave count, roughly [-1, 1]).
+ */
+declare function fbm(noiseFn: NoiseFn2D, seed: string | number, x: number, y: number, options?: FractalNoiseOptions): number;
+/**
+ * Turbulence noise.
+ * Like fBm but uses the absolute value of each noise octave, creating sharp creases.
+ *
+ * @param noiseFn - Any 2D noise function.
+ * @param seed - Seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param options - Fractal noise options.
+ * @returns A noise value in [0, 1].
+ */
+declare function turbulence(noiseFn: NoiseFn2D, seed: string | number, x: number, y: number, options?: FractalNoiseOptions): number;
+/**
+ * Ridged multifractal noise.
+ * Inverts the absolute value of noise and squares it, creating sharp ridges.
+ *
+ * @param noiseFn - Any 2D noise function.
+ * @param seed - Seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param options - Fractal noise options.
+ * @returns A noise value in [-1, 1].
+ */
+declare function ridgedNoise(noiseFn: NoiseFn2D, seed: string | number, x: number, y: number, options?: FractalNoiseOptions): number;
+/**
+ * Domain warping.
+ * Uses noise to offset the input coordinates before sampling the main noise,
+ * creating swirling, distorted patterns.
+ *
+ * @param noiseFn - Any 2D noise function.
+ * @param seed - Seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param warpAmount - How much to warp the domain (default: 1.0).
+ * @returns A noise value in [-1, 1].
+ */
+declare function domainWarp(noiseFn: NoiseFn2D, seed: string | number, x: number, y: number, warpAmount?: number): number;
+/**
+ * Animated noise.
+ * Convenience function for time-varying noise. Uses the time parameter
+ * to offset the noise coordinates, creating smooth animation.
+ *
+ * @param noiseFn - Any 2D noise function.
+ * @param seed - Seed for the noise field.
+ * @param x - X coordinate.
+ * @param y - Y coordinate.
+ * @param time - Time value (e.g., frame / fps).
+ * @param speed - Animation speed multiplier (default: 1.0).
+ * @returns A noise value in [-1, 1].
+ */
+declare function animatedNoise(noiseFn: NoiseFn2D, seed: string | number, x: number, y: number, time: number, speed?: number): number;
 
 /**
  * GIF frame metadata and timing utilities.
@@ -3781,6 +4296,62 @@ interface GifMetadata {
  * @returns The GIF frame index to display
  */
 declare function getGifFrameAtTime(metadata: GifMetadata, timeMs: number, loop?: boolean, speed?: number): number;
+
+/**
+ * GIF optimization utilities for estimating file sizes and selecting optimal settings.
+ */
+/**
+ * GIF optimization preset configuration
+ */
+interface GifOptimizationPreset {
+    /** Maximum width */
+    maxWidth: number;
+    /** Maximum height */
+    maxHeight: number;
+    /** Frame rate */
+    fps: number;
+    /** Number of colors (2-256) */
+    colors: number;
+    /** Dithering algorithm */
+    dither: 'none' | 'floyd_steinberg' | 'bayer';
+    /** Target max file size in bytes */
+    maxFileSize: number;
+    /** Loop count (0 = infinite) */
+    loop: number;
+}
+/**
+ * Estimate GIF file size in bytes.
+ *
+ * GIF uses LZW compression, so the actual size depends heavily on content complexity.
+ * This provides a rough upper-bound estimate assuming moderate compression.
+ *
+ * @param width - Frame width in pixels
+ * @param height - Frame height in pixels
+ * @param frameCount - Total number of frames
+ * @param colors - Number of colors in palette (2-256)
+ * @returns Estimated file size in bytes
+ */
+declare function estimateGifFileSize(width: number, height: number, frameCount: number, colors?: number): number;
+/**
+ * Calculate optimal number of colors to meet a target file size.
+ *
+ * Uses binary search to find the highest color count that keeps
+ * the estimated file size under the target.
+ *
+ * @param targetSizeBytes - Target maximum file size in bytes
+ * @param width - Frame width in pixels
+ * @param height - Frame height in pixels
+ * @param frameCount - Total number of frames
+ * @returns Optimal number of colors (2-256)
+ */
+declare function calculateOptimalColors(targetSizeBytes: number, width: number, height: number, frameCount: number): number;
+/**
+ * Get a GIF optimization preset for a specific purpose.
+ *
+ * @param purpose - The intended use case
+ * @returns Preset configuration
+ */
+declare function getGifOptimizationPreset(purpose: 'social' | 'web' | 'email'): GifOptimizationPreset;
 
 /**
  * Information about a layer that could not be rendered in the SVG export.
@@ -3933,6 +4504,251 @@ declare function getAudioDuration(audioData: AudioData): number;
  * using Catmull-Rom to cubic bezier conversion.
  */
 declare function createSmoothSvgPath(points: Array<[number, number]>): string;
+
+/** A detected beat event */
+interface Beat {
+    /** Frame number where the beat occurs */
+    frame: number;
+    /** Time in seconds */
+    time: number;
+    /** Beat intensity (0-1 normalized) */
+    intensity: number;
+}
+/** Options for beat detection */
+interface BeatDetectionOptions {
+    /** Minimum time between beats in seconds (default 0.3) */
+    minInterval?: number;
+    /** Energy threshold multiplier above local average to count as beat (default 1.5) */
+    threshold?: number;
+    /** Window size in seconds for local energy average (default 0.5) */
+    windowSize?: number;
+    /** Sensitivity 0-1: lower = fewer beats detected (default 0.5) */
+    sensitivity?: number;
+}
+/** Frequency band with name and energy level */
+interface FrequencyBand {
+    /** Band name */
+    name: string;
+    /** Lower frequency bound in Hz */
+    minFreq: number;
+    /** Upper frequency bound in Hz */
+    maxFreq: number;
+    /** Energy level (0-1 normalized) */
+    energy: number;
+}
+/**
+ * Detect beats in audio data using energy-based onset detection.
+ * Returns an array of Beat objects sorted by time.
+ *
+ * This is a pure/deterministic function suitable for video rendering.
+ */
+declare function detectBeats(audioData: AudioData, options?: BeatDetectionOptions): Beat[];
+/**
+ * Get beat intensity at a specific frame.
+ * Returns a value 0-1 indicating proximity and intensity of the nearest beat.
+ * The intensity decays exponentially from the beat position.
+ *
+ * @param beats - Array of detected beats
+ * @param frame - Current video frame number
+ * @param fps - Video frames per second
+ * @param decayFrames - Number of frames over which the beat intensity decays (default 8)
+ */
+declare function getBeatAtFrame(beats: Beat[], frame: number, fps: number, decayFrames?: number): number;
+/**
+ * Get energy in frequency bands at a specific frame.
+ * Uses FFT analysis to decompose the audio into frequency bands.
+ *
+ * @param audioData - The audio data to analyze
+ * @param frame - Current video frame number
+ * @param fps - Video frames per second
+ * @param bands - Optional custom frequency band definitions
+ */
+declare function getFrequencyBands(audioData: AudioData, frame: number, fps: number, bands?: Array<{
+    name: string;
+    minFreq: number;
+    maxFreq: number;
+}>): FrequencyBand[];
+/**
+ * Get smoothed amplitude envelope at a specific frame.
+ * Returns a value between 0 and 1 representing the RMS amplitude
+ * of the audio at the given frame, smoothed over a window.
+ *
+ * @param audioData - The audio data to analyze
+ * @param frame - Current video frame number
+ * @param fps - Video frames per second
+ * @param windowSize - Smoothing window size in samples (default: sampleRate / fps, i.e., one frame)
+ */
+declare function getAmplitudeEnvelope(audioData: AudioData, frame: number, fps: number, windowSize?: number): number;
+
+/**
+ * Canvas Drawing Utilities
+ *
+ * Provides functions for drawing SVG-like paths, gradients, text on paths,
+ * pattern fills, and clip paths on an HTML Canvas 2D context.
+ *
+ * These utilities bridge the gap between SVG path data and Canvas 2D drawing,
+ * enabling the canvas layer type to render complex vector graphics.
+ */
+/**
+ * Options for drawing a path on canvas.
+ */
+interface DrawPathOptions {
+    /** Fill color or CSS color string */
+    fill?: string;
+    /** Stroke color */
+    stroke?: string;
+    /** Stroke width in pixels */
+    strokeWidth?: number;
+    /** Stroke dash array */
+    strokeDash?: number[];
+    /** Stroke line cap */
+    lineCap?: CanvasLineCap;
+    /** Stroke line join */
+    lineJoin?: CanvasLineJoin;
+    /** Opacity (0-1) */
+    opacity?: number;
+    /** Whether to close the path */
+    closePath?: boolean;
+}
+/**
+ * Gradient type: linear, radial, or conic.
+ */
+type GradientType = 'linear' | 'radial' | 'conic';
+/**
+ * Configuration for a gradient.
+ */
+interface GradientConfig {
+    /** Gradient type */
+    type: GradientType;
+    /** Color stops */
+    stops: Array<{
+        offset: number;
+        color: string;
+    }>;
+    /** Start x (linear) or center x (radial/conic) */
+    x0?: number;
+    /** Start y (linear) or center y (radial/conic) */
+    y0?: number;
+    /** End x (linear) */
+    x1?: number;
+    /** End y (linear) */
+    y1?: number;
+    /** Inner radius (radial) */
+    r0?: number;
+    /** Outer radius (radial) */
+    r1?: number;
+    /** Start angle in degrees (conic) */
+    startAngle?: number;
+}
+/**
+ * Bounding rectangle.
+ */
+interface Bounds {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+/**
+ * Options for rendering text along a path.
+ */
+interface TextOnPathOptions {
+    /** Font size in pixels */
+    fontSize?: number;
+    /** Font family */
+    fontFamily?: string;
+    /** Font weight */
+    fontWeight?: string;
+    /** Fill color for text */
+    fill?: string;
+    /** Stroke color for text */
+    stroke?: string;
+    /** Stroke width for text */
+    strokeWidth?: number;
+    /** Letter spacing in pixels */
+    letterSpacing?: number;
+    /** Start offset along path (0-1) */
+    startOffset?: number;
+    /** Text alignment on path */
+    textAlign?: 'left' | 'center' | 'right';
+}
+/**
+ * Draw an SVG-like path on a Canvas 2D context.
+ *
+ * @param ctx - Canvas 2D rendering context
+ * @param pathData - SVG path data string (e.g., "M 10 10 L 100 100")
+ * @param options - Drawing options (fill, stroke, etc.)
+ */
+declare function drawPath(ctx: CanvasRenderingContext2D, pathData: string, options?: DrawPathOptions): void;
+/**
+ * Create a canvas gradient from a GradientConfig.
+ *
+ * @param ctx - Canvas 2D rendering context
+ * @param gradient - Gradient configuration
+ * @param bounds - Bounding rectangle for default positioning
+ * @returns A CanvasGradient object
+ */
+declare function createCanvasGradient(ctx: CanvasRenderingContext2D, gradient: GradientConfig, bounds: Bounds): CanvasGradient;
+/**
+ * Draw a gradient fill within a rectangular area.
+ *
+ * @param ctx - Canvas 2D rendering context
+ * @param gradient - Gradient configuration
+ * @param bounds - Bounding rectangle to fill
+ */
+declare function drawGradient(ctx: CanvasRenderingContext2D, gradient: GradientConfig, bounds: Bounds): void;
+/**
+ * Render text along an SVG path.
+ *
+ * @param ctx - Canvas 2D rendering context
+ * @param text - Text to render
+ * @param pathData - SVG path data string
+ * @param options - Text rendering options
+ */
+declare function drawTextOnPath(ctx: CanvasRenderingContext2D, text: string, pathData: string, options?: TextOnPathOptions): void;
+/**
+ * Pattern repetition modes.
+ */
+type PatternRepetition = 'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat';
+/**
+ * Create a pattern fill from an image or canvas element.
+ *
+ * @param ctx - Canvas 2D rendering context
+ * @param source - Image, canvas, or other pattern source
+ * @param repetition - How the pattern repeats
+ * @returns A CanvasPattern or null
+ */
+declare function createPattern(ctx: CanvasRenderingContext2D, source: CanvasImageSource, repetition?: PatternRepetition): CanvasPattern | null;
+/**
+ * Apply an SVG path as a clip region on the canvas context.
+ * Call ctx.restore() to remove the clip.
+ *
+ * @param ctx - Canvas 2D rendering context
+ * @param pathData - SVG path data string
+ */
+declare function applyClipPath(ctx: CanvasRenderingContext2D, pathData: string): void;
+/**
+ * Draw a circle on the canvas.
+ *
+ * @param ctx - Canvas 2D rendering context
+ * @param cx - Center x
+ * @param cy - Center y
+ * @param r - Radius
+ * @param options - Drawing options
+ */
+declare function drawCircle(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, options?: DrawPathOptions): void;
+/**
+ * Draw a rounded rectangle on the canvas.
+ *
+ * @param ctx - Canvas 2D rendering context
+ * @param x - Top-left x
+ * @param y - Top-left y
+ * @param width - Width
+ * @param height - Height
+ * @param borderRadius - Corner radius
+ * @param options - Drawing options
+ */
+declare function drawRoundedRect(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, borderRadius?: number, options?: DrawPathOptions): void;
 
 /**
  * Animate SVG path drawing from invisible (progress=0) to fully drawn (progress=1).
@@ -4369,4 +5185,204 @@ declare function isFontAvailable(family: string): boolean;
  */
 declare function getRandomFonts(count?: number): FontMetadata[];
 
-export { type AmbientLightConfig, type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioCodec, type AudioData, type AudioLayer, type AudioLayerProps, type BackgroundFit, type BackgroundGradient, type BasicMaterialConfig, type BlendMode, type BlurPreset, type BoxGeometry, type CameraType, type Color, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type ConeGeometry, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type CylinderGeometry, DEFAULT_MOTION_BLUR_CONFIG, type DirectionalLightConfig, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EncodingConfig, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FitTextOptions, type FitTextResult, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FrameAwareProps, type GLTFGeometry, type GeometryType, type GifFrame, type GifLayer, type GifLayerProps, type GifMetadata, type GoogleFontDefinition, type Gradient, type GradientStop, type GroupLayer, type GroupLayerProps, type HemisphereLightConfig, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LightType, type LoadedFonts, type LottieLayer, type LottieLayerProps, MOTION_BLUR_QUALITY_PRESETS, type MatCapMaterialConfig, type MaterialType, type MeasureTextOptions, type MotionBlurConfig, type MotionBlurQuality, type NamedFontWeight, type NormalMaterialConfig, type NumericFontWeight, type OrthographicCameraConfig, type OutputConfig, type Padding, type PartialTemplate, type PerspectiveCameraConfig, type PhongMaterialConfig, type PhysicalMaterialConfig, type PlaneGeometry, type PointLightConfig, type Position, type PresetDefinition, type PresetOptions, type ProResProfile, type PropResolutionResult, type PropertySchema, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedMotionBlurConfig, type ResolvedStyle, type Rotation3, type Scale, type Scene, type SceneTransition, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SphereGeometry, type SpotLightConfig, type StandardMaterialConfig, type SvgExportResult, type SystemFont, type Template, type TemplateAuthor, TemplateProcessor, type Text3DGeometry, type TextAlign, type TextLayer, type TextLayerProps, type TextMeasurement, type TextShadow, type TextSpan, type TextStroke, type TextureConfig, type ThreeCameraConfig, type ThreeGeometry, type ThreeLayer, type ThreeLayerProps, type ThreeLightConfig, type ThreeMaterialConfig, type ThreeMeshConfig, type TorusGeometry, type TransitionDirection, type TransitionType, type UnsupportedLayerInfo, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type Vector3, type VerticalAlign, type VideoCodec, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type VisualizeAudioOptions, type VisualizeWaveformOptions, type WaveformPortionOptions, type WeightToNumeric, colorToString, compileAnimation, createCubicBezier, createDefaultComponentDefaultsManager, createRandom, createSmoothSvgPath, createSpring, evolvePath, exportAnimatedSvg, filterToCSS, filtersToCSS, fitText, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getAudioData, getAudioDuration, getBoundingBox, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getGifFrameAtTime, getLayerSchema, getLength, getPointAtLength, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getSubpaths, getTangentAtLength, getTemplateSchema, getValueAtFrame, getVariableFonts, getWaveformPortion, interpolate, interpolateColors, interpolatePath, isFontAvailable, isNamedWeight, isNumericWeight, measureText, mergeMotionBlurConfigs, noise2D, noise3D, normalizePath, numericToNamedWeight, parseColor, parseEasing, random, randomInt, randomRange, resetPath, resolveMotionBlurConfig, reversePath, scalePath, searchFonts, templateSchema, translatePath, validateInputs, validateMotionBlurConfig, validateSceneOrder, validateTemplate, visualizeAudio, visualizeAudioWaveform, weightToNumeric };
+/**
+ * Template Packager
+ *
+ * Utilities for validating, packaging, and unpacking template packages
+ * for the template registry/marketplace.
+ */
+
+/**
+ * Valid template categories.
+ */
+declare const TEMPLATE_CATEGORIES: readonly ["social-media", "presentation", "marketing", "education", "entertainment", "e-commerce", "news", "sports", "music", "corporate", "event", "real-estate", "other"];
+type TemplateCategory = (typeof TEMPLATE_CATEGORIES)[number];
+/**
+ * Validate a TemplateManifest for completeness and correctness.
+ */
+declare function validateManifest(manifest: TemplateManifest): ValidationResult;
+/**
+ * Package a template directory into a gzipped tarball.
+ *
+ * Reads the template directory, validates the manifest, and creates
+ * a .tar.gz buffer suitable for publishing to the registry.
+ */
+declare function packageTemplate(dir: string): Promise<{
+    tarball: Buffer;
+    manifest: TemplateManifest;
+}>;
+/**
+ * Unpack a gzipped tarball into a target directory.
+ *
+ * Extracts the template package and returns the manifest.
+ */
+declare function unpackTemplate(tarball: Buffer, targetDir: string): Promise<TemplateManifest>;
+/**
+ * Generate a TemplateManifest from an existing Template object.
+ *
+ * Creates a manifest suitable for publishing based on the template's
+ * configuration, with optional overrides.
+ */
+declare function generateManifest(template: Template, options?: Partial<TemplateManifest>): TemplateManifest;
+
+/**
+ * Registry Client
+ *
+ * HTTP client for interacting with a rendervid template registry.
+ * This is a client-side stub that communicates with a generic REST API.
+ */
+
+/**
+ * Options for creating a RegistryClient instance.
+ */
+interface RegistryClientOptions {
+    /** Base URL of the registry API */
+    registryUrl: string;
+    /** Optional authentication token */
+    authToken?: string;
+}
+/**
+ * Search options for querying the registry.
+ */
+interface SearchOptions {
+    /** Filter by tags */
+    tags?: string[];
+    /** Filter by category */
+    category?: string;
+    /** Maximum number of results */
+    limit?: number;
+    /** Offset for pagination */
+    offset?: number;
+}
+/**
+ * Client for the rendervid template registry.
+ *
+ * Provides methods for searching, fetching, publishing, and managing
+ * templates in a remote registry. Communicates via a standard REST API.
+ *
+ * @example
+ * ```typescript
+ * const client = new RegistryClient({
+ *   registryUrl: 'https://registry.rendervid.dev',
+ *   authToken: 'your-token-here',
+ * });
+ *
+ * // Search for templates
+ * const results = await client.search('social media', { category: 'social-media' });
+ *
+ * // Get a specific package
+ * const pkg = await client.getPackage('@rendervid/instagram-story');
+ * ```
+ */
+declare class RegistryClient {
+    private readonly registryUrl;
+    private readonly authToken?;
+    constructor(options: RegistryClientOptions);
+    /**
+     * Search for templates in the registry.
+     */
+    search(query: string, options?: SearchOptions): Promise<RegistrySearchResult[]>;
+    /**
+     * Get full package details from the registry.
+     */
+    getPackage(name: string, version?: string): Promise<RegistryPackage>;
+    /**
+     * Publish a template package to the registry.
+     *
+     * Requires authentication (authToken).
+     */
+    publish(tarball: Buffer, manifest: TemplateManifest): Promise<void>;
+    /**
+     * Unpublish a specific version of a template from the registry.
+     *
+     * Requires authentication (authToken).
+     */
+    unpublish(name: string, version: string): Promise<void>;
+    /**
+     * List all available template categories.
+     */
+    listCategories(): Promise<string[]>;
+    /**
+     * List popular templates.
+     */
+    listPopular(limit?: number): Promise<RegistrySearchResult[]>;
+    /**
+     * Download a template tarball from the registry.
+     */
+    download(name: string, version?: string): Promise<Buffer>;
+    /**
+     * Internal fetch helper with authentication and error handling.
+     */
+    private fetch;
+}
+/**
+ * Error thrown by registry operations.
+ */
+declare class RegistryError extends Error {
+    /** HTTP status code (0 for network errors) */
+    readonly statusCode: number;
+    constructor(message: string, statusCode: number);
+}
+
+/**
+ * Template CLI Utilities
+ *
+ * Helper functions for CLI commands related to template
+ * initialization, validation, and registry interaction.
+ */
+
+/**
+ * Options for template initialization.
+ */
+interface InitTemplateOptions {
+    /** Template package name */
+    name?: string;
+    /** Template category */
+    category?: string;
+    /** Template description */
+    description?: string;
+    /** Author name */
+    authorName?: string;
+    /** Author URL */
+    authorUrl?: string;
+    /** License */
+    license?: string;
+    /** Output width */
+    width?: number;
+    /** Output height */
+    height?: number;
+    /** Frames per second */
+    fps?: number;
+    /** Duration in seconds */
+    duration?: number;
+}
+/**
+ * Initialize a new template directory with a scaffold template.json.
+ *
+ * Creates a template.json manifest file in the specified directory
+ * with sensible defaults that can be customized.
+ */
+declare function initTemplate(dir: string, options?: InitTemplateOptions): Promise<void>;
+/**
+ * Validate a template directory.
+ *
+ * Checks that the directory contains a valid template.json manifest
+ * and that all referenced files exist.
+ */
+declare function validateTemplateDir(dir: string): Promise<ValidationResult>;
+/**
+ * Search for templates in the registry.
+ *
+ * A convenience wrapper around RegistryClient.search() for CLI use.
+ */
+declare function searchTemplates(query: string, registryUrl: string, options?: {
+    tags?: string[];
+    category?: string;
+    limit?: number;
+}): Promise<RegistrySearchResult[]>;
+/**
+ * Get available template categories.
+ */
+declare function getAvailableCategories(): readonly string[];
+
+export { type AmbientLightConfig, type Anchor, type AnimatableProperties, type Animation, type AnimationPreset, type AnimationType, type AssetDefinition, type AssetType, type AudioCodec, type AudioData, type AudioEffect, type AudioLayer, type AudioLayerProps, type AudioMixerConfig, type AudioMixerTrack, type BackgroundFit, type BackgroundGradient, type BasicMaterialConfig, type Beat, type BeatDetectionOptions, type BlendMode, type BlurPreset, type Bounds, type BoxGeometry, type CameraType, type CanvasDrawCommand, type CanvasDrawCommandType, type CanvasGradientConfig, type CanvasGradientStop, type CanvasGradientType, type CanvasLayer, type CanvasLayerProps, type Color, type CompiledAnimation, type ComponentConfig, type ComponentDefaults, ComponentDefaultsManager, type ComponentInfo, ComponentPropsResolver, type ComponentRegistry, type ComponentSchema, type ComponentSourceType, type ComponentType, type ValidationError as ComponentValidationError, type Composition, type CompressorEffect, type ConeGeometry, type CustomComponentDefinition, type CustomComponentRef, type CustomFontDefinition, type CustomFontStyle, type CustomFontWeight, type CustomLayer, type CustomLayerProps, type CylinderGeometry, DEFAULT_MOTION_BLUR_CONFIG, type DelayEffect, type DirectionalLightConfig, type DrawPathOptions, type EQBand, type EQEffect, type Easing, type EasingFunction, type EasingName, type ElementCapability, type EmphasisAnimation, type EncodingConfig, type EngineCapabilities, type EngineOptions, type EntranceAnimation, type EnumOption, type ExitAnimation, FONT_CONSTANTS, type Filter, type FilterAnimation, type FilterType, type FitTextOptions, type FitTextResult, type FontCacheEntry, type FontCategory$1 as FontCategory, type FontConfiguration, type FontDisplay$1 as FontDisplay, type FontFallback, type FontFamily, type FontFormat, type FontLoadResult, FontLoadingError, type FontLoadingState, type FontLoadingStrategy, FontManager, type FontMetadata$1 as FontMetadata, type FontMetrics, type FontReference, type FontSource, type FontStyle$1 as FontStyle, type FontUploadOptions, type FontValidationResult, type FontWeight, type FractalNoiseOptions, type FrameAwareProps, type FrequencyBand, type GLTFGeometry, type GainEffect, type GeometryType, type GifFrame, type GifLayer, type GifLayerProps, type GifMetadata, type GifOptimizationPreset, type GoogleFontDefinition, type Gradient, type GradientConfig, type GradientStop, type GradientType, type GroupLayer, type GroupLayerProps, type HemisphereLightConfig, type HighPassFilter, type ImageFit, type ImageLayer, type ImageLayerProps, type ImageResult, type InitTemplateOptions, type InputDefinition, type InputType, type InputUI, type InputValidation, type JSONSchema7, type JSONSchema7TypeName, type Keyframe, type Layer, type LayerBase, type LayerProps, type LayerStyle, type LayerType, type LicenseInfo, type LightType, type LoadedFonts, type LottieLayer, type LottieLayerProps, type LowPassFilter, MOTION_BLUR_QUALITY_PRESETS, type MatCapMaterialConfig, type MaterialType, type MeasureTextOptions, type MotionBlurConfig, type MotionBlurQuality, type NamedFontWeight, type NoiseFn2D, type NormalMaterialConfig, type NumericFontWeight, type OrthographicCameraConfig, type OutputConfig, type Padding, type PartialTemplate, type PatternRepetition, type PerspectiveCameraConfig, type PhongMaterialConfig, type PhysicalMaterialConfig, type PlaneGeometry, type PointLightConfig, type Position, type PresetDefinition, type PresetOptions, type ProResProfile, type PropResolutionResult, type PropertySchema, RegistryClient, type RegistryClientOptions, RegistryError, type RegistryPackage, type RegistrySearchResult, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, RendervidEngine, type ResolvedCustomLayer, type ResolvedMotionBlurConfig, type ResolvedStyle, type ReverbEffect, type Rotation3, type Scale, type Scene, type SceneTransition, type SearchOptions, type Shadow, type ShadowPreset, type ShapeLayer, type ShapeLayerProps, type ShapeType, type Size, type SphereGeometry, type SpotLightConfig, type StandardMaterialConfig, type SvgExportResult, type SystemFont, TEMPLATE_CATEGORIES, type Template, type TemplateAuthor, type TemplateCategory, type TemplateManifest, TemplateProcessor, type Text3DGeometry, type TextAlign, type TextLayer, type TextLayerProps, type TextMeasurement, type TextOnPathOptions, type TextShadow, type TextSpan, type TextStroke, type TextureConfig, type ThreeCameraConfig, type ThreeGeometry, type ThreeLayer, type ThreeLayerProps, type ThreeLightConfig, type ThreeMaterialConfig, type ThreeMeshConfig, type TorusGeometry, type TransitionDirection, type TransitionType, type UnsupportedLayerInfo, type ValidationError$1 as ValidationError, type ValidationResult, type ValidationWarning, type Vector3, type VerticalAlign, type VideoCodec, type VideoFit, type VideoLayer, type VideoLayerProps, type VideoResult, type VisualizeAudioOptions, type VisualizeWaveformOptions, type VolumeEnvelope, type VolumeKeyframe, type WaveformPortionOptions, type WeightToNumeric, animatedNoise, applyClipPath, calculateOptimalColors, colorToString, compileAnimation, createCanvasGradient, createCubicBezier, createDefaultComponentDefaultsManager, createPattern, createRandom, createSmoothSvgPath, createSpring, detectBeats, domainWarp, drawCircle, drawGradient, drawPath, drawRoundedRect, drawTextOnPath, estimateGifFileSize, evolvePath, exportAnimatedSvg, fbm, filterToCSS, filtersToCSS, fitText, generateManifest, generatePresetKeyframes, getAllEasingNames, getAllPresetNames, getAmplitudeEnvelope, getAudioData, getAudioDuration, getAvailableCategories, getBeatAtFrame, getBoundingBox, getCatalogStats, getCompositionDuration, getDefaultRegistry, getEasing, getFontCatalog, getFontMetadata, getFontsByCategory, getFontsByWeight, getFontsWithItalic, getFrequencyBands, getGifFrameAtTime, getGifOptimizationPreset, getLayerSchema, getLength, getPointAtLength, getPopularFonts, getPreset, getPresetsByType, getPropertiesAtFrame, getRandomFonts, getSceneAtFrame, getSubpaths, getTangentAtLength, getTemplateSchema, getValueAtFrame, getVariableFonts, getWaveformPortion, initTemplate, interpolate, interpolateColors, interpolatePath, isFontAvailable, isNamedWeight, isNumericWeight, measureText, mergeMotionBlurConfigs, noise2D, noise3D, normalizePath, numericToNamedWeight, packageTemplate, parseColor, parseEasing, perlin2D, perlin3D, random, randomInt, randomRange, resetPath, resolveMotionBlurConfig, reversePath, ridgedNoise, scalePath, searchFonts, searchTemplates, templateSchema, translatePath, turbulence, unpackTemplate, validateInputs, validateManifest, validateMotionBlurConfig, validateSceneOrder, validateTemplate, validateTemplateDir, valueNoise2D, valueNoise3D, visualizeAudio, visualizeAudioWaveform, weightToNumeric, worley2D, worley3D };

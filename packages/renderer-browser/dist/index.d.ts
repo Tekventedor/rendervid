@@ -546,4 +546,35 @@ declare function downloadBlob(blob: Blob, filename: string): void;
  */
 declare function downloadArrayBuffer(buffer: ArrayBuffer, filename: string, mimeType: string): void;
 
-export { type AudioChunk, AudioLayer, type AudioLayerProps, BrowserRenderer, type BrowserRendererOptions, type CaptureOptions, type CaptureResult, CustomLayer, type CustomLayerProps, type EncodedChunk, type FrameByFrameRecorder, type FrameByFrameRecorderOptions, type FrameCapturer, GroupLayer, type GroupLayerProps, ImageLayer, type ImageLayerProps, type ImageResult, LayerRenderer, type LayerRendererProps, LottieLayer, type LottieLayerProps, type MediaRecorderEncoder, type MediaRecorderEncoderOptions, type MuxerOptions, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, SceneRenderer, type SceneRendererProps, ShapeLayer, type ShapeLayerProps, TemplateRenderer, type TemplateRendererProps, TextLayer, type TextLayerProps, ThreeLayer, type ThreeLayerProps, type UseLayerAnimationResult, VideoLayer, type VideoLayerProps, type VideoMuxer, type VideoResult, type WebCodecsEncoder, type WebCodecsEncoderOptions, type WebMMuxerOptions, arrayBufferToBlob, blobToArrayBuffer, calculateTotalDuration, calculateTotalFrames, canvasToVideoFrame, createBrowserRenderer, createFrameByFrameRecorder, createFrameCapturer, createMediaRecorderEncoder, createMp4Muxer, createOffscreenCapturer, createWebCodecsEncoder, createWebMMuxer, downloadArrayBuffer, downloadBlob, getBestMimeType, getRecommendedCodec, getSceneAtFrame, getStyleClassName, isMediaRecorderSupported, isWebCodecsSupported, mergeStyles, resolveStyle, useLayerAnimation };
+/**
+ * Minimal browser-side GIF encoder with LZW compression.
+ * No external dependencies - self-contained implementation.
+ *
+ * Supports:
+ * - Animated GIF generation from ImageData frames
+ * - Configurable frame rate via delay
+ * - Median cut color quantization (256 colors max)
+ * - LZW compression per GIF spec
+ */
+interface GifEncoderOptions {
+    /** Width of the GIF in pixels */
+    width: number;
+    /** Height of the GIF in pixels */
+    height: number;
+    /** Frames per second */
+    fps: number;
+    /** Color quantization quality (1-30, lower = better quality but slower). Default: 10 */
+    quality?: number;
+}
+interface GifEncoder {
+    /** Add a frame from ImageData */
+    addFrame(imageData: ImageData): void;
+    /** Finalize and return the GIF as a Blob */
+    finish(): Blob;
+}
+/**
+ * Create a GIF encoder instance.
+ */
+declare function createGifEncoder(options: GifEncoderOptions): GifEncoder;
+
+export { type AudioChunk, AudioLayer, type AudioLayerProps, BrowserRenderer, type BrowserRendererOptions, type CaptureOptions, type CaptureResult, CustomLayer, type CustomLayerProps, type EncodedChunk, type FrameByFrameRecorder, type FrameByFrameRecorderOptions, type FrameCapturer, type GifEncoder, type GifEncoderOptions, GroupLayer, type GroupLayerProps, ImageLayer, type ImageLayerProps, type ImageResult, LayerRenderer, type LayerRendererProps, LottieLayer, type LottieLayerProps, type MediaRecorderEncoder, type MediaRecorderEncoderOptions, type MuxerOptions, type RenderImageOptions, type RenderProgress, type RenderVideoOptions, SceneRenderer, type SceneRendererProps, ShapeLayer, type ShapeLayerProps, TemplateRenderer, type TemplateRendererProps, TextLayer, type TextLayerProps, ThreeLayer, type ThreeLayerProps, type UseLayerAnimationResult, VideoLayer, type VideoLayerProps, type VideoMuxer, type VideoResult, type WebCodecsEncoder, type WebCodecsEncoderOptions, type WebMMuxerOptions, arrayBufferToBlob, blobToArrayBuffer, calculateTotalDuration, calculateTotalFrames, canvasToVideoFrame, createBrowserRenderer, createFrameByFrameRecorder, createFrameCapturer, createGifEncoder, createMediaRecorderEncoder, createMp4Muxer, createOffscreenCapturer, createWebCodecsEncoder, createWebMMuxer, downloadArrayBuffer, downloadBlob, getBestMimeType, getRecommendedCodec, getSceneAtFrame, getStyleClassName, isMediaRecorderSupported, isWebCodecsSupported, mergeStyles, resolveStyle, useLayerAnimation };
