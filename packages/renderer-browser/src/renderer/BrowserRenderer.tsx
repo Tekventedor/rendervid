@@ -115,7 +115,7 @@ export class BrowserRenderer {
       top: 0;
       pointer-events: none;
       opacity: 0;
-      z-index: -1;
+      z-index: -9999;
     `;
     document.body.appendChild(container);
     return container;

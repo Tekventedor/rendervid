@@ -99,7 +99,7 @@ export function createWebCodecsEncoder(options: WebCodecsEncoderOptions): WebCod
     framerate: fps,
     hardwareAcceleration,
     latencyMode,
-    avc: codec.startsWith('avc1') ? { format: 'annexb' } : undefined,
+    avc: codec.startsWith('avc1') ? { format: 'avc' } : undefined,
   };
 
   function isSupported(): boolean {
@@ -170,20 +170,20 @@ export function createWebCodecsEncoder(options: WebCodecsEncoderOptions): WebCod
     if (frame instanceof VideoFrame) {
       videoFrame = frame;
     } else if (frame instanceof HTMLCanvasElement) {
-      // Draw source canvas onto a fresh OffscreenCanvas to ensure valid pixel data
-      const offscreen = new OffscreenCanvas(width, height);
-      const ctx = offscreen.getContext('2d');
+      // Ensure the canvas has a 2D context so VideoFrame can read colorSpace
+      const ctx = frame.getContext('2d');
       if (!ctx) {
-        throw new Error('Failed to get 2d context from OffscreenCanvas');
+        throw new Error(
+          'Cannot create VideoFrame: canvas has no 2D context.'
+        );
       }
-      ctx.drawImage(frame, 0, 0, width, height);
       try {
-        videoFrame = new VideoFrame(offscreen, {
+        videoFrame = new VideoFrame(frame, {
           timestamp: timestamp * 1000,
           duration: frameDuration,
         });
       } catch (e) {
-        // Fallback: try ImageData approach
+        // Fallback: use ImageData approach
         const imageData = ctx.getImageData(0, 0, width, height);
         videoFrame = new VideoFrame(imageData.data, {
           format: 'RGBA',

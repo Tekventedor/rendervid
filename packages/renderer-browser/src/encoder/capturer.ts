@@ -36,11 +36,86 @@ export interface FrameCapturer {
 }
 
 /**
+ * Snapshot WebGL canvases from the live DOM and paint them onto matching
+ * canvases in the html2canvas clone. This avoids touching the live DOM
+ * (which would destroy the WebGL context).
+ */
+function snapshotWebGLCanvases(
+  liveRoot: HTMLElement,
+): Map<HTMLCanvasElement, ImageData> {
+  const snapshots = new Map<HTMLCanvasElement, ImageData>();
+
+  const canvases = liveRoot.querySelectorAll('canvas');
+  for (const original of canvases) {
+    // Get the existing WebGL context (do NOT create a new one)
+    const gl =
+      (original as any).__webglContext ??
+      original.getContext('webgl2') ??
+      original.getContext('webgl');
+    if (!gl) continue;
+
+    const w = original.width;
+    const h = original.height;
+    if (w === 0 || h === 0) continue;
+
+    const pixels = new Uint8Array(w * h * 4);
+    gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+
+    // WebGL readPixels returns bottom-up; flip vertically
+    const rowSize = w * 4;
+    const tempRow = new Uint8Array(rowSize);
+    for (let y = 0; y < Math.floor(h / 2); y++) {
+      const topOffset = y * rowSize;
+      const botOffset = (h - 1 - y) * rowSize;
+      tempRow.set(pixels.subarray(topOffset, topOffset + rowSize));
+      pixels.copyWithin(topOffset, botOffset, botOffset + rowSize);
+      pixels.set(tempRow, botOffset);
+    }
+
+    const imageData = new ImageData(new Uint8ClampedArray(pixels.buffer), w, h);
+    snapshots.set(original, imageData);
+  }
+
+  return snapshots;
+}
+
+/**
+ * In the cloned document, find canvases that correspond to WebGL originals
+ * and paint the snapshot data onto them (as 2D canvases).
+ */
+function applyWebGLSnapshots(
+  liveRoot: HTMLElement,
+  clonedRoot: HTMLElement,
+  snapshots: Map<HTMLCanvasElement, ImageData>,
+): void {
+  if (snapshots.size === 0) return;
+
+  const liveCanvases = Array.from(liveRoot.querySelectorAll('canvas'));
+  const clonedCanvases = Array.from(clonedRoot.querySelectorAll('canvas'));
+
+  for (let i = 0; i < liveCanvases.length; i++) {
+    const imageData = snapshots.get(liveCanvases[i]);
+    if (!imageData || !clonedCanvases[i]) continue;
+
+    const clonedCanvas = clonedCanvases[i];
+    clonedCanvas.width = imageData.width;
+    clonedCanvas.height = imageData.height;
+    const ctx = clonedCanvas.getContext('2d');
+    if (ctx) {
+      ctx.putImageData(imageData, 0, 0);
+    }
+  }
+}
+
+/**
  * Frame capturer using html2canvas for DOM-to-canvas conversion.
  */
 export function createFrameCapturer(): FrameCapturer {
   async function captureFrame(options: CaptureOptions): Promise<CaptureResult> {
     const startTime = performance.now();
+
+    // Snapshot WebGL canvases from the live DOM before html2canvas clones it
+    const snapshots = snapshotWebGLCanvases(options.element);
 
     const canvas = await html2canvas(options.element, {
       width: options.width,
@@ -52,9 +127,12 @@ export function createFrameCapturer(): FrameCapturer {
       logging: false,
       allowTaint: false,
       foreignObjectRendering: false,
-      // Optimize for video rendering
       imageTimeout: 15000,
       removeContainer: true,
+      onclone: (_doc: Document, clonedElement: HTMLElement) => {
+        // Paint WebGL snapshots onto the cloned canvases
+        applyWebGLSnapshots(options.element, clonedElement, snapshots);
+      },
     });
 
     const captureTime = performance.now() - startTime;
