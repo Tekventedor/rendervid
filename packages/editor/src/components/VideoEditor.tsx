@@ -69,6 +69,7 @@ export function VideoEditor({
   const [timelineHeight, setTimelineHeight] = useState(250);
   const [rightPanelWidth, setRightPanelWidth] = useState(300);
   const dragRef = useRef<{ type: 'timeline' | 'right-panel'; startPos: number; startSize: number } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleResizeMouseDown = useCallback((e: React.MouseEvent, type: 'timeline' | 'right-panel') => {
     e.preventDefault();
@@ -212,6 +213,33 @@ export function VideoEditor({
     }
   };
 
+  const handleLoadTemplate = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const json = JSON.parse(event.target?.result as string);
+        if (json && json.output && json.composition) {
+          setTemplate(json as Template);
+        } else {
+          callbacks.onError?.(new Error('Invalid template file: missing "output" or "composition"'));
+        }
+      } catch (err) {
+        callbacks.onError?.(new Error(`Failed to parse template file: ${(err as Error).message}`));
+      }
+    };
+    reader.readAsText(file);
+
+    // Reset input so the same file can be loaded again
+    e.target.value = '';
+  }, [setTemplate, callbacks]);
+
   const handleAddScene = () => {
     const scenes = template.composition.scenes;
     const lastScene = scenes[scenes.length - 1] as any;
@@ -292,6 +320,29 @@ export function VideoEditor({
           title="Redo (Cmd/Ctrl+Shift+Z)"
         >
           ↷ Redo
+        </button>
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".json"
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+        <button
+          onClick={handleLoadTemplate}
+          style={{
+            padding: '6px 16px',
+            fontSize: '12px',
+            backgroundColor: '#444',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+          title="Load template from JSON file"
+        >
+          Load
         </button>
 
         {callbacks.onSave && (
