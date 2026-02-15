@@ -3,6 +3,7 @@
   "name": "Audio Mixing Example",
   "description": "Demonstrates multi-track audio mixing with effects, volume envelopes, and stereo panning",
   "output": {
+    "type": "video",
     "width": 1920,
     "height": 1080,
     "fps": 30,
@@ -12,8 +13,8 @@
     "scenes": [
       {
         "id": "main",
-        "from": 0,
-        "duration": 300,
+        "startFrame": 0,
+        "endFrame": 300,
         "layers": [
           {
             "id": "background",

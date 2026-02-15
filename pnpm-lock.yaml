@@ -216,6 +216,9 @@ importers:
       '@codemirror/view':
         specifier: ^6.39.13
         version: 6.39.13
+      '@rendervid/components':
+        specifier: workspace:*
+        version: link:../components
       '@rendervid/core':
         specifier: workspace:*
         version: link:../core

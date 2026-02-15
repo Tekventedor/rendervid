@@ -367,7 +367,68 @@ export function PropertyPanel({ selectedLayer, onUpdateLayer, template, onUpdate
       {/* ═══ LAYER PROPERTIES ═══ */}
       {selectedLayer && (
         <>
-          {/* ─── Transform ─── */}
+          {/* ─── Audio Properties (audio layers only, no transform/animations) ─── */}
+          {selectedLayer.type === 'audio' && (
+            <Section title="Audio">
+              <div style={fieldStyle}>
+                <label style={labelStyle}>Source URL</label>
+                <input type="text" value={selectedLayer.props?.src || ''} onChange={(e) => handlePropChange('src', e.target.value)} placeholder="audio.mp3 or https://..." style={inputStyle} />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div>
+                  <label style={labelStyle}>Volume</label>
+                  <input type="number" min={0} max={1} step={0.05} value={selectedLayer.props?.volume ?? 1} onChange={(e) => handlePropChange('volume', parseFloat(e.target.value))} style={inputStyle} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Loop</label>
+                  <select value={selectedLayer.props?.loop ? 'yes' : 'no'} onChange={(e) => handlePropChange('loop', e.target.value === 'yes')} style={{ ...inputStyle, cursor: 'pointer' }}>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginTop: '6px' }}>
+                <div>
+                  <label style={labelStyle}>Start Time (s)</label>
+                  <input type="number" min={0} step={0.1} value={selectedLayer.props?.startTime ?? 0} onChange={(e) => handlePropChange('startTime', parseFloat(e.target.value))} style={inputStyle} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Pan</label>
+                  <input type="number" min={-1} max={1} step={0.1} value={selectedLayer.props?.pan ?? 0} onChange={(e) => handlePropChange('pan', parseFloat(e.target.value))} style={inputStyle} title="-1 = left, 0 = center, 1 = right" />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginTop: '6px' }}>
+                <div>
+                  <label style={labelStyle}>Fade In (frames)</label>
+                  <input type="number" min={0} value={selectedLayer.props?.fadeIn ?? 0} onChange={(e) => handlePropChange('fadeIn', parseInt(e.target.value) || 0)} style={inputStyle} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Fade Out (frames)</label>
+                  <input type="number" min={0} value={selectedLayer.props?.fadeOut ?? 0} onChange={(e) => handlePropChange('fadeOut', parseInt(e.target.value) || 0)} style={inputStyle} />
+                </div>
+              </div>
+
+              <div style={{ marginTop: '6px' }}>
+                <label style={labelStyle}>Layer Timing</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                  <div>
+                    <label style={labelStyle}>From (frame)</label>
+                    <input type="number" min={0} value={selectedLayer.from ?? 0} onChange={(e) => handleChange('from', parseInt(e.target.value) || 0)} style={inputStyle} />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Duration (frames)</label>
+                    <input type="number" min={-1} value={selectedLayer.duration ?? -1} onChange={(e) => handleChange('duration', parseInt(e.target.value))} style={inputStyle} title="-1 = entire scene" />
+                  </div>
+                </div>
+              </div>
+            </Section>
+          )}
+
+          {/* ─── Transform (hidden for audio layers) ─── */}
+          {selectedLayer.type !== 'audio' && (
           <Section title="Transform">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
               <div>
@@ -429,8 +490,10 @@ export function PropertyPanel({ selectedLayer, onUpdateLayer, template, onUpdate
               </select>
             </div>
           </Section>
+          )}
 
-          {/* ─── Animations ─── */}
+          {/* ─── Animations (hidden for audio layers) ─── */}
+          {selectedLayer.type !== 'audio' && (
           <Section title={`Animations (${animations.length})`}>
             {animations.map((anim: any, idx: number) => (
               <AnimationEditor
@@ -450,6 +513,7 @@ export function PropertyPanel({ selectedLayer, onUpdateLayer, template, onUpdate
               <button onClick={() => handleAddAnimation('keyframe')} style={addBtnStyle}>+ Keyframe</button>
             </div>
           </Section>
+          )}
 
           {/* ─── Text Properties ─── */}
           {selectedLayer.type === 'text' && (

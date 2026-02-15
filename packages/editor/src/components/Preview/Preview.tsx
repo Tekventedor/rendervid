@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import type { Template, ComponentRegistry } from '@rendervid/core';
 import { TemplateRenderer } from '@rendervid/renderer-browser';
 import { SelectionOverlay } from './SelectionOverlay';
+import {
+  BarChart, LineChart, PieChart, Gauge,
+  AudioWaveform, AudioSpectrum,
+  ParticleSystem,
+} from '@rendervid/components';
 
 /**
  * Compile inline component code string into a React component function.
@@ -29,6 +34,17 @@ export function compileInlineComponent(code: string): React.ComponentType<any> |
 export function buildRegistry(customComponents: Template['customComponents']): ComponentRegistry {
   const components = new Map<string, any>();
 
+  // Register built-in components from @rendervid/components
+  const builtins: Record<string, any> = {
+    BarChart, LineChart, PieChart, Gauge,
+    AudioWaveform, AudioSpectrum,
+    ParticleSystem,
+  };
+  for (const [name, comp] of Object.entries(builtins)) {
+    components.set(name, comp);
+  }
+
+  // Register template-defined inline custom components (override builtins if same name)
   if (customComponents) {
     for (const [name, def] of Object.entries(customComponents)) {
       if (def.type === 'inline' && def.code) {

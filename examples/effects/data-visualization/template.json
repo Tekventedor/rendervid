@@ -41,11 +41,8 @@
     "scenes": [
       {
         "id": "dashboard",
-        "duration": 150,
-        "background": {
-          "type": "color",
-          "color": "{{backgroundColor}}"
-        },
+        "startFrame": 0,
+        "endFrame": 150,
         "layers": [
           {
             "type": "text",

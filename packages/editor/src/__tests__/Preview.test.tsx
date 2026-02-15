@@ -13,6 +13,17 @@ vi.mock('@rendervid/renderer-browser', () => ({
   ),
 }));
 
+// Mock @rendervid/components to avoid lottie-web dependency
+vi.mock('@rendervid/components', () => ({
+  BarChart: () => null,
+  LineChart: () => null,
+  PieChart: () => null,
+  Gauge: () => null,
+  AudioWaveform: () => null,
+  AudioSpectrum: () => null,
+  ParticleSystem: () => null,
+}));
+
 function createTestTemplate(): Template {
   return {
     name: 'Test',
