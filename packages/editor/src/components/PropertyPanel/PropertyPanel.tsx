@@ -635,6 +635,47 @@ export function PropertyPanel({ selectedLayer, onUpdateLayer, template, onUpdate
             </Section>
           )}
 
+          {/* ─── Video Properties ─── */}
+          {selectedLayer.type === 'video' && (
+            <Section title="Video">
+              <div style={fieldStyle}>
+                <label style={labelStyle}>Source URL</label>
+                <input type="text" value={selectedLayer.props?.videoSrc || selectedLayer.props?.src || ''} onChange={(e) => handlePropChange('videoSrc', e.target.value)} placeholder="video.mp4 or https://..." style={inputStyle} />
+              </div>
+              <div style={fieldStyle}>
+                <label style={labelStyle}>Object Fit</label>
+                <select value={selectedLayer.props?.fit || 'cover'} onChange={(e) => handlePropChange('fit', e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
+                  <option value="cover">Cover</option>
+                  <option value="contain">Contain</option>
+                  <option value="fill">Fill</option>
+                </select>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div>
+                  <label style={labelStyle}>Volume</label>
+                  <input type="number" min={0} max={1} step={0.05} value={selectedLayer.props?.volume ?? 1} onChange={(e) => handlePropChange('volume', parseFloat(e.target.value))} style={inputStyle} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Loop</label>
+                  <select value={selectedLayer.props?.loop ? 'yes' : 'no'} onChange={(e) => handlePropChange('loop', e.target.value === 'yes')} style={{ ...inputStyle, cursor: 'pointer' }}>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                  </select>
+                </div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginTop: '6px' }}>
+                <div>
+                  <label style={labelStyle}>Start Time (s)</label>
+                  <input type="number" min={0} step={0.1} value={selectedLayer.props?.startTime ?? 0} onChange={(e) => handlePropChange('startTime', parseFloat(e.target.value))} style={inputStyle} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Playback Rate</label>
+                  <input type="number" min={0.1} max={4} step={0.1} value={selectedLayer.props?.playbackRate ?? 1} onChange={(e) => handlePropChange('playbackRate', parseFloat(e.target.value))} style={inputStyle} />
+                </div>
+              </div>
+            </Section>
+          )}
+
           {/* ─── Custom Component Properties ─── */}
           {selectedLayer.type === 'custom' && selectedLayer.customComponent && (
             <Section title="Custom Component">

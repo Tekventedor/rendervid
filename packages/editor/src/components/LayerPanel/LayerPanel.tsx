@@ -21,6 +21,7 @@ export function LayerPanel({
     { type: 'shape', label: 'Shape', icon: '▢' },
     { type: 'image', label: 'Image', icon: '🖼' },
     { type: 'video', label: 'Video', icon: '🎬' },
+    { type: 'audio', label: 'Audio', icon: '🔊' },
   ];
 
   const handleDragStart = (e: React.DragEvent, layerId: string, sceneId: string) => {

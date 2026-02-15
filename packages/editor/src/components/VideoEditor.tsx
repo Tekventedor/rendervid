@@ -137,11 +137,12 @@ export function VideoEditor({
     const scene = getSelectedScene() || template.composition.scenes[0];
     if (!scene) return;
 
+    const isAudio = type === 'audio';
     const newLayer = {
       id: `layer-${Date.now()}`,
       type,
-      position: { x: 100, y: 100 },
-      size: { width: 400, height: 300 },
+      position: isAudio ? { x: 0, y: 0 } : { x: 100, y: 100 },
+      size: isAudio ? { width: 0, height: 0 } : { width: 400, height: 300 },
       props: getDefaultLayerProps(type),
     };
 
@@ -502,6 +503,12 @@ function getDefaultLayerProps(type: string): any {
       return {
         videoSrc: '',
         fit: 'cover',
+      };
+    case 'audio':
+      return {
+        src: '',
+        volume: 1.0,
+        loop: false,
       };
     default:
       return {};
