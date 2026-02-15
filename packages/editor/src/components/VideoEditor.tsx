@@ -226,6 +226,16 @@ export function VideoEditor({
       try {
         const json = JSON.parse(event.target?.result as string);
         if (json && json.output && json.composition) {
+          // Ensure scenes and layers have unique IDs
+          const scenes = json.composition.scenes || [];
+          for (let si = 0; si < scenes.length; si++) {
+            if (!scenes[si].id) scenes[si].id = `scene-${Date.now()}-${si}`;
+            if (!scenes[si].name) scenes[si].name = `Scene ${si + 1}`;
+            const layers = scenes[si].layers || [];
+            for (let li = 0; li < layers.length; li++) {
+              if (!layers[li].id) layers[li].id = `layer-${Date.now()}-${si}-${li}`;
+            }
+          }
           setTemplate(json as Template);
         } else {
           callbacks.onError?.(new Error('Invalid template file: missing "output" or "composition"'));

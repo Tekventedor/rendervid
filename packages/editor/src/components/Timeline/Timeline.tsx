@@ -250,17 +250,18 @@ export function Timeline({
     hidden?: boolean;
   }> = [];
 
-  for (const scene of scenes) {
-    const s = scene as any;
+  for (let si = 0; si < scenes.length; si++) {
+    const s = scenes[si] as any;
+    const sceneId = s.id || `scene-${si}`;
     const sceneStart = s.startFrame ?? 0;
     const sceneEnd = s.endFrame ?? sceneStart + 150;
     const sceneDuration = sceneEnd - sceneStart;
-    const isCollapsed = collapsedScenes.has(s.id);
+    const isCollapsed = collapsedScenes.has(sceneId);
     const layers = s.layers || [];
     rows.push({
       type: 'scene',
-      id: s.id,
-      label: s.name || s.id,
+      id: sceneId,
+      label: s.name || sceneId,
       startFrame: sceneStart,
       endFrame: sceneEnd,
       collapsed: isCollapsed,
@@ -268,16 +269,17 @@ export function Timeline({
       hidden: !!s.hidden,
     });
     if (!isCollapsed) {
-      for (const layer of layers) {
-        const l = layer as any;
+      for (let li = 0; li < layers.length; li++) {
+        const l = layers[li] as any;
+        const layerId = l.id || `${sceneId}-layer-${li}`;
         const from = l.from ?? 0;
         const dur = l.duration ?? sceneDuration;
         rows.push({
           type: 'layer',
-          id: l.id,
-          label: l.id.replace('layer-', '').slice(0, 8),
+          id: layerId,
+          label: (l.name || l.id || l.type || `layer-${li}`).replace('layer-', '').slice(0, 12),
           layerType: l.type || 'custom',
-          sceneId: s.id,
+          sceneId,
           startFrame: sceneStart + from,
           endFrame: sceneStart + from + dur,
           from,

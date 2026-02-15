@@ -145,7 +145,7 @@ export function CodeEditorDialog({ isOpen, code, componentName, onSave, onClose 
         </div>
 
         {/* Editor */}
-        <div ref={editorRef} style={{ flex: 1, overflow: 'hidden' }} />
+        <div ref={editorRef} style={{ flex: 1, minHeight: 0, overflow: 'auto' }} />
       </div>
     </div>
   );
