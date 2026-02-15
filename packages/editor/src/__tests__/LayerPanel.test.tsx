@@ -3,33 +3,43 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { LayerPanel } from '../components/LayerPanel/LayerPanel';
 
-const mockLayers = [
+const mockScenes = [
   {
-    id: 'layer-1',
-    type: 'text',
-    position: { x: 0, y: 0 },
-    size: { width: 200, height: 100 },
-    props: { text: 'Hello' },
-  },
-  {
-    id: 'layer-2',
-    type: 'shape',
-    position: { x: 100, y: 100 },
-    size: { width: 300, height: 200 },
-    props: { shape: 'rectangle' },
+    id: 'scene-1',
+    startFrame: 0,
+    endFrame: 300,
+    layers: [
+      {
+        id: 'layer-1',
+        type: 'text',
+        position: { x: 0, y: 0 },
+        size: { width: 200, height: 100 },
+        props: { text: 'Hello' },
+      },
+      {
+        id: 'layer-2',
+        type: 'shape',
+        position: { x: 100, y: 100 },
+        size: { width: 300, height: 200 },
+        props: { shape: 'rectangle' },
+      },
+    ],
   },
 ];
 
 function renderLayerPanel(overrides = {}) {
   const defaultProps = {
-    sceneId: 'scene-1',
-    layers: mockLayers,
+    scenes: mockScenes,
+    selectedSceneId: 'scene-1',
     selectedLayerId: null as string | null,
+    onSelectScene: vi.fn(),
     onSelectLayer: vi.fn(),
     onAddLayer: vi.fn(),
     onDeleteLayer: vi.fn(),
     onReorderLayers: vi.fn(),
     onDuplicateLayer: vi.fn(),
+    onAddScene: vi.fn(),
+    onDeleteScene: vi.fn(),
     ...overrides,
   };
   return { ...render(<LayerPanel {...defaultProps} />), props: defaultProps };
@@ -45,9 +55,9 @@ describe('LayerPanel', () => {
     expect(container.querySelector('.rendervid-layer-panel')).toBeTruthy();
   });
 
-  it('should display Layers heading', () => {
+  it('should display Scenes & Layers heading', () => {
     renderLayerPanel();
-    expect(screen.getByText('Layers')).toBeTruthy();
+    expect(screen.getByText('Scenes & Layers')).toBeTruthy();
   });
 
   it('should display layer list', () => {
@@ -62,9 +72,14 @@ describe('LayerPanel', () => {
     expect(screen.getByText('shape')).toBeTruthy();
   });
 
-  it('should display empty state when no layers', () => {
-    renderLayerPanel({ layers: [] });
-    expect(screen.getByText('No layers. Add a layer to get started.')).toBeTruthy();
+  it('should display empty state when no scenes', () => {
+    renderLayerPanel({ scenes: [] });
+    expect(screen.getByText('No scenes. Add a scene to get started.')).toBeTruthy();
+  });
+
+  it('should display no layers message when scene has no layers', () => {
+    renderLayerPanel({ scenes: [{ id: 'scene-1', startFrame: 0, endFrame: 100, layers: [] }] });
+    expect(screen.getByText('No layers')).toBeTruthy();
   });
 
   it('should call onSelectLayer when layer is clicked', () => {

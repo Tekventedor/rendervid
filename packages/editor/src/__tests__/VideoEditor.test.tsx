@@ -71,7 +71,7 @@ describe('VideoEditor', () => {
   it('should show layer panel with layers heading', () => {
     const template = createTestTemplate();
     render(<VideoEditor template={template} />);
-    expect(screen.getByText('Layers')).toBeTruthy();
+    expect(screen.getByText('Scenes & Layers')).toBeTruthy();
   });
 
   it('should show properties panel', () => {

@@ -3,13 +3,33 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { PropertyPanel } from '../components/PropertyPanel/PropertyPanel';
 
+const defaultTemplate = {
+  name: 'Test',
+  output: { type: 'video' as const, width: 1920, height: 1080, fps: 30 },
+  inputs: [],
+  composition: { scenes: [] },
+};
+
+function renderPropertyPanel(overrides: Record<string, any> = {}) {
+  const defaultProps = {
+    selectedLayer: null as any,
+    onUpdateLayer: vi.fn(),
+    template: defaultTemplate,
+    onUpdateCustomComponentCode: vi.fn(),
+    selectedScene: null as any,
+    onUpdateScene: vi.fn(),
+    ...overrides,
+  };
+  return { ...render(<PropertyPanel {...defaultProps} />), props: defaultProps };
+}
+
 describe('PropertyPanel', () => {
   it('should be exported from the package', () => {
     expect(typeof PropertyPanel).toBe('function');
   });
 
   it('should show empty state when no layer selected', () => {
-    render(<PropertyPanel selectedLayer={null} onUpdateLayer={vi.fn()} />);
+    renderPropertyPanel();
     expect(screen.getByText('Select a layer to edit its properties')).toBeTruthy();
   });
 
@@ -22,7 +42,7 @@ describe('PropertyPanel', () => {
       props: { text: 'Hello' },
       opacity: 1,
     };
-    render(<PropertyPanel selectedLayer={layer} onUpdateLayer={vi.fn()} />);
+    renderPropertyPanel({ selectedLayer: layer });
     expect(screen.getByText('Properties')).toBeTruthy();
   });
 
@@ -34,7 +54,7 @@ describe('PropertyPanel', () => {
       size: { width: 200, height: 100 },
       props: { text: 'Hello' },
     };
-    render(<PropertyPanel selectedLayer={layer} onUpdateLayer={vi.fn()} />);
+    renderPropertyPanel({ selectedLayer: layer });
     expect(screen.getByText(/text/)).toBeTruthy();
     expect(screen.getByText(/layer-1/)).toBeTruthy();
   });
@@ -47,10 +67,10 @@ describe('PropertyPanel', () => {
       size: { width: 200, height: 100 },
       props: { text: 'Hello' },
     };
-    render(<PropertyPanel selectedLayer={layer} onUpdateLayer={vi.fn()} />);
+    renderPropertyPanel({ selectedLayer: layer });
     expect(screen.getByText('Transform')).toBeTruthy();
-    expect(screen.getByText('Position X')).toBeTruthy();
-    expect(screen.getByText('Position Y')).toBeTruthy();
+    expect(screen.getByText('X')).toBeTruthy();
+    expect(screen.getByText('Y')).toBeTruthy();
     expect(screen.getByText('Width')).toBeTruthy();
     expect(screen.getByText('Height')).toBeTruthy();
   });
@@ -63,7 +83,7 @@ describe('PropertyPanel', () => {
       size: { width: 200, height: 100 },
       props: { text: 'Hello', fontSize: 24, color: '#ffffff' },
     };
-    render(<PropertyPanel selectedLayer={layer} onUpdateLayer={vi.fn()} />);
+    renderPropertyPanel({ selectedLayer: layer });
     expect(screen.getByText('Content')).toBeTruthy();
     expect(screen.getByText('Font Size')).toBeTruthy();
   });
@@ -76,7 +96,7 @@ describe('PropertyPanel', () => {
       size: { width: 200, height: 100 },
       props: { shape: 'rectangle', fill: '#ff0000' },
     };
-    render(<PropertyPanel selectedLayer={layer} onUpdateLayer={vi.fn()} />);
+    renderPropertyPanel({ selectedLayer: layer });
     expect(screen.getByText('Fill Color')).toBeTruthy();
     expect(screen.getByText('Border Radius')).toBeTruthy();
   });
@@ -89,12 +109,12 @@ describe('PropertyPanel', () => {
       size: { width: 200, height: 100 },
       props: { src: 'image.png', fit: 'cover' },
     };
-    render(<PropertyPanel selectedLayer={layer} onUpdateLayer={vi.fn()} />);
+    renderPropertyPanel({ selectedLayer: layer });
     expect(screen.getByText('Source URL')).toBeTruthy();
     expect(screen.getByText('Object Fit')).toBeTruthy();
   });
 
-  it('should show appearance section', () => {
+  it('should show opacity field in transform section', () => {
     const layer = {
       id: 'layer-1',
       type: 'text',
@@ -103,9 +123,9 @@ describe('PropertyPanel', () => {
       props: { text: 'Hello' },
       opacity: 0.8,
     };
-    render(<PropertyPanel selectedLayer={layer} onUpdateLayer={vi.fn()} />);
-    expect(screen.getByText('Appearance')).toBeTruthy();
+    renderPropertyPanel({ selectedLayer: layer });
     expect(screen.getByText('Opacity')).toBeTruthy();
+    expect(screen.getByDisplayValue('0.8')).toBeTruthy();
   });
 
   it('should call onUpdateLayer when position changes', () => {
@@ -117,7 +137,7 @@ describe('PropertyPanel', () => {
       size: { width: 200, height: 100 },
       props: { text: 'Hello' },
     };
-    render(<PropertyPanel selectedLayer={layer} onUpdateLayer={onUpdateLayer} />);
+    renderPropertyPanel({ selectedLayer: layer, onUpdateLayer });
 
     const posXInput = screen.getByDisplayValue('50');
     fireEvent.change(posXInput, { target: { value: '75' } });
