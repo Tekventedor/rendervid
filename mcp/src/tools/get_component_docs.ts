@@ -21,6 +21,8 @@ Available component types:
 - shape: Geometric shapes (rectangle, ellipse, triangle, star, polygon)
 - video: Video layers with playback control
 - audio: Audio layers for background music/effects
+- gif: Animated GIF images with frame-synced playback
+- caption: Subtitles/captions with SRT/VTT support
 - custom: Custom React components
 
 Common properties available on ALL layer types:
@@ -378,6 +380,131 @@ const COMPONENT_DOCS = {
       },
     },
     note: 'Audio layers do not need position or size properties',
+  },
+
+  gif: {
+    type: 'gif',
+    description: 'Display animated GIF images synced to the video timeline',
+    required: ['id', 'type', 'position', 'size', 'props'],
+    props: {
+      src: {
+        type: 'string',
+        required: true,
+        description: 'GIF source URL or data URI',
+        example: 'https://example.com/animation.gif',
+      },
+      fit: {
+        type: 'string',
+        required: false,
+        default: 'cover',
+        description: 'How to fit the GIF: "cover", "contain", "fill", "none"',
+        example: 'contain',
+      },
+      loop: {
+        type: 'boolean',
+        required: false,
+        default: true,
+        description: 'Whether to loop the GIF animation',
+        example: true,
+      },
+      speed: {
+        type: 'number',
+        required: false,
+        default: 1,
+        description: 'Playback speed multiplier (1 = normal)',
+        example: 1.5,
+      },
+    },
+    example: {
+      id: 'animated-sticker',
+      type: 'gif',
+      position: { x: 100, y: 100 },
+      size: { width: 300, height: 300 },
+      props: {
+        src: 'https://example.com/sticker.gif',
+        fit: 'contain',
+        loop: true,
+        speed: 1,
+      },
+    },
+  },
+
+  caption: {
+    type: 'caption',
+    description: 'Display subtitles/captions with SRT or VTT format support. Cues appear and disappear based on timestamps synced to the video timeline.',
+    required: ['id', 'type', 'position', 'size', 'props'],
+    props: {
+      content: {
+        type: 'string',
+        required: false,
+        description: 'Raw subtitle content in SRT, VTT, or plain text format',
+        example: '1\n00:00:01,000 --> 00:00:04,000\nHello World\n\n2\n00:00:05,000 --> 00:00:08,000\nWelcome to the video',
+      },
+      format: {
+        type: 'string',
+        required: false,
+        description: 'Subtitle format: "srt", "vtt", or "plain" (auto-detected if omitted)',
+        example: 'srt',
+      },
+      cues: {
+        type: 'array',
+        required: false,
+        description: 'Pre-parsed cue array (alternative to content string). Each cue has startTime, endTime (seconds), and text.',
+        example: [
+          { startTime: 1, endTime: 4, text: 'Hello World' },
+          { startTime: 5, endTime: 8, text: 'Welcome' },
+        ],
+      },
+      fontSize: {
+        type: 'number',
+        required: false,
+        default: 32,
+        description: 'Font size in pixels',
+        example: 48,
+      },
+      color: {
+        type: 'string',
+        required: false,
+        default: '#ffffff',
+        description: 'Text color',
+        example: '#ffffff',
+      },
+      backgroundColor: {
+        type: 'string',
+        required: false,
+        default: 'rgba(0, 0, 0, 0.75)',
+        description: 'Background color behind the caption text',
+        example: 'rgba(0, 0, 0, 0.75)',
+      },
+      textAlign: {
+        type: 'string',
+        required: false,
+        default: 'center',
+        description: 'Text alignment: "left", "center", "right"',
+        example: 'center',
+      },
+      fontFamily: {
+        type: 'string',
+        required: false,
+        default: 'sans-serif',
+        description: 'Font family',
+        example: 'Inter, sans-serif',
+      },
+    },
+    example: {
+      id: 'subtitles',
+      type: 'caption',
+      position: { x: 0, y: 800 },
+      size: { width: 1920, height: 280 },
+      props: {
+        content: '1\n00:00:01,000 --> 00:00:04,000\nHello World\n\n2\n00:00:05,000 --> 00:00:08,000\nWelcome to the video',
+        format: 'srt',
+        fontSize: 48,
+        color: '#ffffff',
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        textAlign: 'center',
+      },
+    },
   },
 
   custom: {

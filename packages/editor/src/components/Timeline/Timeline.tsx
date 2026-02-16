@@ -11,6 +11,8 @@ const LAYER_COLORS: Record<string, string> = {
   image: '#4aff6b',
   video: '#ff4aef',
   audio: '#ffaa4a',
+  gif: '#ff66aa',
+  caption: '#66ddff',
   custom: '#999',
 };
 
@@ -20,10 +22,12 @@ const LAYER_TYPE_ICONS: Record<string, string> = {
   image: '🖼',
   video: '▶',
   audio: '♪',
+  gif: '🎞',
+  caption: 'CC',
   custom: '⚙',
 };
 
-const LAYER_TYPES = ['text', 'shape', 'image', 'video', 'audio'];
+const LAYER_TYPES = ['text', 'shape', 'image', 'video', 'audio', 'gif', 'caption'];
 
 export function Timeline({
   totalFrames,

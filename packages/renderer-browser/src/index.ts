@@ -31,6 +31,8 @@ export {
   LottieLayer,
   CustomLayer,
   ThreeLayer,
+  GifLayer,
+  CaptionLayer,
   LayerRenderer,
   type ImageLayerProps,
   type TextLayerProps,
@@ -41,6 +43,8 @@ export {
   type LottieLayerProps,
   type CustomLayerProps,
   type ThreeLayerProps,
+  type GifLayerProps,
+  type CaptionLayerProps,
   type LayerRendererProps,
 } from './layers';
 

@@ -19,7 +19,8 @@ export type LayerType =
   | 'custom'
   | 'three'
   | 'gif'
-  | 'canvas';
+  | 'canvas'
+  | 'caption';
 
 /**
  * Position in 2D space.
@@ -400,6 +401,53 @@ export interface GifLayerProps {
 }
 
 /**
+ * A single caption/subtitle cue.
+ */
+export interface CaptionCue {
+  /** Start time in seconds */
+  startTime: number;
+  /** End time in seconds */
+  endTime: number;
+  /** Text content */
+  text: string;
+}
+
+/**
+ * Caption/subtitle format.
+ */
+export type CaptionFormat = 'srt' | 'vtt' | 'plain';
+
+/**
+ * Props for caption/subtitle layer.
+ */
+export interface CaptionLayerProps {
+  /** Raw subtitle content (SRT, VTT, or plain text) */
+  content?: string;
+  /** Subtitle format (auto-detected if not specified) */
+  format?: CaptionFormat;
+  /** Pre-parsed cues (alternative to content) */
+  cues?: CaptionCue[];
+  /** Font size in pixels */
+  fontSize?: number;
+  /** Font family */
+  fontFamily?: string;
+  /** Font weight */
+  fontWeight?: FontWeight;
+  /** Text color */
+  color?: string;
+  /** Background color behind text */
+  backgroundColor?: string;
+  /** Text alignment */
+  textAlign?: TextAlign;
+  /** Padding around text in pixels */
+  padding?: number;
+  /** Border radius of background in pixels */
+  borderRadius?: number;
+  /** Line height multiplier */
+  lineHeight?: number;
+}
+
+/**
  * Canvas drawing command types.
  */
 export type CanvasDrawCommandType =
@@ -532,7 +580,8 @@ export type LayerProps =
   | LottieLayerProps
   | CustomLayerProps
   | GifLayerProps
-  | CanvasLayerProps;
+  | CanvasLayerProps
+  | CaptionLayerProps;
 
 /**
  * Custom component reference.
@@ -705,6 +754,14 @@ export interface CanvasLayer extends LayerBase {
 }
 
 /**
+ * Caption/subtitle layer.
+ */
+export interface CaptionLayer extends LayerBase {
+  type: 'caption';
+  props: CaptionLayerProps;
+}
+
+/**
  * Union of all layer types.
  */
 export type Layer =
@@ -718,4 +775,5 @@ export type Layer =
   | CustomLayer
   | ThreeLayer
   | GifLayer
-  | CanvasLayer;
+  | CanvasLayer
+  | CaptionLayer;

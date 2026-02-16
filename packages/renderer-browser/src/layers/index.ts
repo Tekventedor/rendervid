@@ -7,4 +7,6 @@ export { GroupLayer, type GroupLayerProps } from './GroupLayer';
 export { LottieLayer, type LottieLayerProps } from './LottieLayer';
 export { CustomLayer, type CustomLayerProps } from './CustomLayer';
 export { ThreeLayer, type ThreeLayerProps } from './ThreeLayer';
+export { GifLayer, type GifLayerProps } from './GifLayer';
+export { CaptionLayer, type CaptionLayerProps } from './CaptionLayer';
 export { LayerRenderer, type LayerRendererProps } from './LayerRenderer';

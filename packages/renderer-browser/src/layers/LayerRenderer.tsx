@@ -9,6 +9,8 @@ import { GroupLayer } from './GroupLayer';
 import { LottieLayer } from './LottieLayer';
 import { CustomLayer } from './CustomLayer';
 import { ThreeLayer } from './ThreeLayer';
+import { GifLayer } from './GifLayer';
+import { CaptionLayer } from './CaptionLayer';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CustomComponentType = React.ComponentType<any>;
@@ -87,6 +89,12 @@ export function LayerRenderer({
 
     case 'three':
       return <ThreeLayer layer={layer} {...commonProps} />;
+
+    case 'gif':
+      return <GifLayer layer={layer} {...commonProps} />;
+
+    case 'caption':
+      return <CaptionLayer layer={layer} {...commonProps} />;
 
     case 'custom':
       return (

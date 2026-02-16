@@ -17,6 +17,8 @@ This tool returns a comprehensive overview of what Rendervid can do, including:
 - audio: Background music and sound effects
 - group: Container for organizing layers
 - lottie: Lottie animations
+- gif: Animated GIF images with frame-synced playback
+- caption: Subtitles/captions with SRT/VTT parsing
 - custom: Custom React components (create new components with inline React code!)
 
 **Scene & Layer Visibility:**

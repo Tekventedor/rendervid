@@ -634,6 +634,21 @@ function getDefaultLayerProps(type: string): any {
         volume: 1.0,
         loop: false,
       };
+    case 'gif':
+      return {
+        src: '',
+        loop: true,
+        speed: 1,
+      };
+    case 'caption':
+      return {
+        content: '1\n00:00:00,000 --> 00:00:03,000\nSample subtitle text',
+        format: 'srt',
+        fontSize: 32,
+        color: '#ffffff',
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        textAlign: 'center',
+      };
     default:
       return {};
   }

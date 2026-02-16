@@ -113,6 +113,14 @@ export {
   type GifMetadata,
 } from './utils/gif';
 
+// Caption Parser
+export {
+  parseSRT,
+  parseVTT,
+  parseCaptions,
+  getActiveCues,
+} from './utils/caption-parser';
+
 // GIF Optimizer
 export {
   estimateGifFileSize,

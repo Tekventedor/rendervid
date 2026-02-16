@@ -676,6 +676,90 @@ export function PropertyPanel({ selectedLayer, onUpdateLayer, template, onUpdate
             </Section>
           )}
 
+          {/* ─── GIF Properties ─── */}
+          {selectedLayer.type === 'gif' && (
+            <Section title="GIF">
+              <div style={fieldStyle}>
+                <label style={labelStyle}>Source URL</label>
+                <input type="text" value={selectedLayer.props?.src || ''} onChange={(e) => handlePropChange('src', e.target.value)} placeholder="https://example.com/animation.gif" style={inputStyle} />
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div>
+                  <label style={labelStyle}>Loop</label>
+                  <select value={selectedLayer.props?.loop !== false ? 'yes' : 'no'} onChange={(e) => handlePropChange('loop', e.target.value === 'yes')} style={{ ...inputStyle, cursor: 'pointer' }}>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <div>
+                  <label style={labelStyle}>Speed</label>
+                  <input type="number" min={0.1} max={10} step={0.1} value={selectedLayer.props?.speed ?? 1} onChange={(e) => handlePropChange('speed', parseFloat(e.target.value))} style={inputStyle} />
+                </div>
+              </div>
+              <div style={{ marginTop: '6px' }}>
+                <label style={labelStyle}>Object Fit</label>
+                <select value={selectedLayer.props?.fit || 'cover'} onChange={(e) => handlePropChange('fit', e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
+                  <option value="cover">Cover</option>
+                  <option value="contain">Contain</option>
+                  <option value="fill">Fill</option>
+                  <option value="none">None</option>
+                </select>
+              </div>
+            </Section>
+          )}
+
+          {/* ─── Caption Properties ─── */}
+          {selectedLayer.type === 'caption' && (
+            <Section title="Caption">
+              <div style={fieldStyle}>
+                <label style={labelStyle}>Subtitle Content</label>
+                <textarea
+                  value={selectedLayer.props?.content || ''}
+                  onChange={(e) => handlePropChange('content', e.target.value)}
+                  rows={6}
+                  placeholder={'1\n00:00:01,000 --> 00:00:04,000\nHello World'}
+                  style={{ ...inputStyle, resize: 'vertical', fontFamily: 'monospace', fontSize: '11px' }}
+                />
+              </div>
+              <div style={fieldStyle}>
+                <label style={labelStyle}>Format</label>
+                <select value={selectedLayer.props?.format || 'srt'} onChange={(e) => handlePropChange('format', e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
+                  <option value="srt">SRT</option>
+                  <option value="vtt">WebVTT</option>
+                  <option value="plain">Plain Text</option>
+                </select>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div>
+                  <label style={labelStyle}>Font Size</label>
+                  <input type="number" min={8} value={selectedLayer.props?.fontSize ?? 32} onChange={(e) => handlePropChange('fontSize', parseInt(e.target.value))} style={inputStyle} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Text Align</label>
+                  <select value={selectedLayer.props?.textAlign || 'center'} onChange={(e) => handlePropChange('textAlign', e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                  </select>
+                </div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginTop: '6px' }}>
+                <div>
+                  <label style={labelStyle}>Text Color</label>
+                  <input type="color" value={selectedLayer.props?.color || '#ffffff'} onChange={(e) => handlePropChange('color', e.target.value)} style={{ ...inputStyle, height: '32px', padding: '2px', cursor: 'pointer' }} />
+                </div>
+                <div>
+                  <label style={labelStyle}>BG Color</label>
+                  <input type="text" value={selectedLayer.props?.backgroundColor || 'rgba(0,0,0,0.75)'} onChange={(e) => handlePropChange('backgroundColor', e.target.value)} placeholder="rgba(0,0,0,0.75)" style={inputStyle} />
+                </div>
+              </div>
+              <div style={{ marginTop: '6px' }}>
+                <label style={labelStyle}>Font Family</label>
+                <input type="text" value={selectedLayer.props?.fontFamily || ''} onChange={(e) => handlePropChange('fontFamily', e.target.value)} placeholder="sans-serif" style={inputStyle} />
+              </div>
+            </Section>
+          )}
+
           {/* ─── Custom Component Properties ─── */}
           {selectedLayer.type === 'custom' && selectedLayer.customComponent && (
             <Section title="Custom Component">

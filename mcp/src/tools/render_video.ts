@@ -327,7 +327,7 @@ NEED MORE DETAILS? Use these tools for just-in-time documentation:
 - get_capabilities({}) - Full list of available features
 - list_examples({}) - Browse example templates
 
-LAYER TYPES: text, image, shape, video, audio, custom
+LAYER TYPES: text, image, shape, video, audio, gif, caption, custom
 ANIMATION TYPES: entrance, exit, emphasis
 EASING CATEGORIES: basic, in, out (recommended), inout, back, bounce, elastic
 
