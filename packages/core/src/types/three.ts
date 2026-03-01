@@ -591,6 +591,25 @@ export interface ThreeMeshConfig {
   renderOrder?: number;
   /** Auto-rotation speed [x, y, z] per frame */
   autoRotate?: Vector3;
+  /** Physics rigid body configuration */
+  rigidBody?: {
+    type: 'dynamic' | 'static' | 'kinematic';
+    mass?: number;
+    linearVelocity?: Vector3;
+    angularVelocity?: Vector3;
+    linearDamping?: number;
+    angularDamping?: number;
+    gravityScale?: number;
+    friction?: number;
+    restitution?: number;
+  };
+  /** Physics collider configuration */
+  collider?: {
+    type: 'cuboid' | 'sphere' | 'capsule';
+    halfExtents?: Vector3;
+    radius?: number;
+    halfHeight?: number;
+  };
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -677,6 +696,20 @@ export interface ThreeLayerProps {
     fragmentShader?: string;
     /** Uniform values */
     uniforms?: Record<string, unknown>;
+  };
+
+  /**
+   * Physics world configuration.
+   */
+  physics?: {
+    /** Enable physics simulation */
+    enabled: boolean;
+    /** Gravity vector [x, y, z] */
+    gravity?: Vector3;
+    /** Fixed timestep for physics simulation */
+    timestep?: number;
+    /** Show debug visualization */
+    debug?: boolean;
   };
 }
 

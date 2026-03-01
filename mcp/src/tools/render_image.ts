@@ -11,44 +11,12 @@ const logger = createLogger('render_image');
 
 export const renderImageTool = {
   name: 'render_image',
-  description: `Generate a static image from a Rendervid template at a specific frame.
+  description: `Render a static image from a Rendervid template at a specific frame.
 
-USE FOR:
-Social media posts (Instagram, Twitter, LinkedIn), video thumbnails (YouTube, Vimeo),
-blog post headers, presentation slides, infographics, quote graphics, product mockups,
-preview images, marketing materials, web banners
+Parameters: template (JSON object), outputPath, format (png/jpeg/webp), quality (1-100 for JPEG/WebP), frame number (default: 0), renderWaitTime.
+Same template structure as render_video. Pass template as JSON OBJECT, always include "inputs": [].
 
-OUTPUT:
-- Format: PNG (lossless), JPEG (compressed), or WebP (modern)
-- Location: Specified by outputPath parameter
-- Quality: 1-100 for JPEG/WebP (default: 90)
-- Frame: Captures specified frame number (default: 0)
-- Max resolution: 7680x4320 (8K)
-
-TEMPLATE REQUIREMENTS:
-- Same JSON structure as video templates
-- Animations evaluated at specified frame
-- Supports all layer types (text, image, shape, custom)
-- Use output.type: "video" or "image" (both work)
-- ⚠️ MUST include "inputs": [] field (even if empty for static templates)
-
-REQUIRED TEMPLATE FIELDS:
-{
-  "name": "string",           // Template name (REQUIRED)
-  "output": { ... },           // Output configuration (REQUIRED)
-  "inputs": [],                // Input definitions (REQUIRED - use [] if no dynamic inputs)
-  "composition": { ... }       // Scenes and layers (REQUIRED)
-}
-
-TYPICAL USE:
-1. Render frame 0 as thumbnail
-2. Capture mid-animation frame for preview
-3. Generate social media image with custom text
-4. Create static graphics from animated template
-
-⚠️ CRITICAL: Pass template as JSON OBJECT, not string
-✅ CORRECT: { "template": {"name": "Image", "inputs": [], ...} }
-❌ COMMON ERROR: Missing "inputs" field - always include it!`,
+Use get_docs({ topic: "overview" }) for capabilities. Use get_docs({ topic: "template" }) for structure.`,
   inputSchema: zodToJsonSchema(RenderImageInputSchema),
 };
 
@@ -137,6 +105,7 @@ export async function executeRenderImage(args: unknown): Promise<string> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const renderer = createNodeRenderer({
       componentDefaultsManager: defaultsManager as any,
+      gpu: { encoding: 'none' },
     });
 
     // Merge inputs with template defaults

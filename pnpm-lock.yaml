@@ -306,6 +306,25 @@ importers:
         specifier: ^6.4.1
         version: 6.4.1(@types/node@25.2.3)(jiti@1.21.7)(tsx@4.21.0)
 
+  packages/physics:
+    dependencies:
+      '@dimforge/rapier3d-compat':
+        specifier: ^0.11.2
+        version: 0.11.2
+    devDependencies:
+      '@rendervid/core':
+        specifier: workspace:*
+        version: link:../core
+      tsup:
+        specifier: ^8.0.1
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+      vitest:
+        specifier: ^1.2.0
+        version: 1.6.1(@types/node@25.2.3)(jsdom@23.2.0(canvas@3.2.1))
+
   packages/player:
     dependencies:
       '@rendervid/core':
@@ -1102,6 +1121,9 @@ packages:
   '@csstools/css-tokenizer@3.0.4':
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
     engines: {node: '>=18'}
+
+  '@dimforge/rapier3d-compat@0.11.2':
+    resolution: {integrity: sha512-vdWmlkpS3G8nGAzLuK7GYTpNdrkn/0NKCe0l1Jqxc7ZZOB3N0q9uG/Ap9l9bothWuAvxscIt0U97GVLr0lXWLg==}
 
   '@dimforge/rapier3d-compat@0.12.0':
     resolution: {integrity: sha512-uekIGetywIgopfD97oDL5PfeezkFpNhwlzlaEYNOA0N6ghdsOvh/HYjSMek5Q2O1PYvRSDFcqFVJl4r4ZBwOow==}
@@ -7805,6 +7827,8 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
 
   '@csstools/css-tokenizer@3.0.4': {}
+
+  '@dimforge/rapier3d-compat@0.11.2': {}
 
   '@dimforge/rapier3d-compat@0.12.0': {}
 

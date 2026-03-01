@@ -1,53 +1,22 @@
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { GetExampleInputSchema } from '../types.js';
-import { readExampleTemplate, readExampleReadme, exampleExists } from '../utils/examples.js';
+import { readExampleTemplate, readExampleReadme, exampleExists, listAllExamples, getExampleCategories } from '../utils/examples.js';
 import { createLogger } from '../utils/logger.js';
 
 const logger = createLogger('get_example');
 
 export const getExampleTool = {
   name: 'get_example',
-  description: `Load a specific example template by path.
+  description: `Browse and load Rendervid example templates.
 
-This tool retrieves a complete example template including:
-- template: The full Rendervid JSON template ready to use
-- readme: Documentation explaining how the template works (if available)
-- path: The example path for reference
+Without examplePath: lists all available examples (50+) organized by category.
+With examplePath: loads a specific example template ready to render.
 
-The template can be used immediately with render_video or render_image tools.
-You can also modify the template's inputs or structure before rendering.
+Categories: getting-started, social-media, marketing, data-visualization, ecommerce, events, content, education, real-estate, streaming, fitness, food, advanced, showcase
 
-**Example paths format:**
-category/example-name
+Example paths: "getting-started/01-hello-world", "social-media/instagram-story", "marketing/product-showcase"
 
-**Common examples:**
-- getting-started/01-hello-world: Simplest template, animated text
-- getting-started/02-first-video: Basic 5-second video
-- social-media/instagram-story: 1080x1920 Instagram story template
-- social-media/youtube-thumbnail: 1280x720 YouTube thumbnail
-- marketing/product-showcase: Product feature video
-- data-visualization/animated-bar-chart: Animated bar chart
-
-**Using the template:**
-1. Load example: get_example({ examplePath: "category/name" })
-2. Review template structure and inputs
-3. Customize inputs with your own values
-4. Render with render_video or render_image
-
-**Customizing:**
-Templates have an "inputs" array defining what can be customized.
-Each input has a key, type, label, and default value.
-Pass your custom values to the inputs parameter when rendering.
-
-Example:
-{
-  "inputs": [
-    { "key": "title", "type": "string", "default": "Hello" },
-    { "key": "color", "type": "color", "default": "#3B82F6" }
-  ]
-}
-
-Render with: { inputs: { title: "My Title", color: "#FF0000" } }`,
+After loading, use render_video or render_image to render the template.`,
   inputSchema: zodToJsonSchema(GetExampleInputSchema),
 };
 
@@ -55,6 +24,11 @@ export async function executeGetExample(args: unknown): Promise<string> {
   try {
     // Parse input
     const input = GetExampleInputSchema.parse(args);
+
+    // If no examplePath provided, list examples
+    if (!input.examplePath) {
+      return await listExamples(input.category);
+    }
 
     logger.info('Getting example', { examplePath: input.examplePath });
 
@@ -64,7 +38,7 @@ export async function executeGetExample(args: unknown): Promise<string> {
     if (!exists) {
       return JSON.stringify({
         error: `Example not found: ${input.examplePath}`,
-        suggestion: 'Use list_examples to see available examples',
+        suggestion: 'Use get_example() without arguments to list all available examples',
         hint: 'Path format should be: category/example-name (e.g., "getting-started/01-hello-world")',
       }, null, 2);
     }
@@ -140,7 +114,40 @@ export async function executeGetExample(args: unknown): Promise<string> {
     return JSON.stringify({
       error: 'Failed to load example',
       details: errorMessage,
-      suggestion: 'Check that the example path is correct using list_examples',
+      suggestion: 'Use get_example() without arguments to list all available examples',
     }, null, 2);
   }
+}
+
+async function listExamples(category?: string): Promise<string> {
+  logger.info('Listing examples', { category: category || 'all' });
+
+  const examples = await listAllExamples(category);
+
+  // Group by category
+  const byCategory: Record<string, typeof examples> = {};
+  for (const example of examples) {
+    if (!byCategory[example.category]) {
+      byCategory[example.category] = [];
+    }
+    byCategory[example.category].push(example);
+  }
+
+  const allCategories = await getExampleCategories();
+
+  logger.info('Examples listed', {
+    total: examples.length,
+    categories: Object.keys(byCategory).length,
+  });
+
+  return JSON.stringify({
+    totalExamples: examples.length,
+    categories: Object.keys(byCategory),
+    allCategories,
+    examples: byCategory,
+    usage: {
+      message: 'Use get_example with examplePath to load a specific template',
+      example: 'get_example({ examplePath: "getting-started/01-hello-world" })',
+    },
+  }, null, 2);
 }

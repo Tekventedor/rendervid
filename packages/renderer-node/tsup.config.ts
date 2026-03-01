@@ -1,4 +1,29 @@
 import { defineConfig } from 'tsup';
+import type { Plugin } from 'esbuild';
+
+/**
+ * esbuild plugin that shims Node.js built-in modules for browser builds.
+ * @rendervid/core re-exports utilities (template-packager, audio, etc.) that
+ * import fs/path/zlib, but those code paths are never reached in the browser
+ * bundle injected into Puppeteer.
+ */
+const nodeBuiltinsShim: Plugin = {
+  name: 'node-builtins-shim',
+  setup(build) {
+    const builtins = ['fs', 'path', 'zlib', 'os', 'crypto', 'stream', 'util', 'url', 'http', 'https', 'net', 'tls', 'child_process', 'worker_threads'];
+    const filter = new RegExp(`^(node:)?(${builtins.join('|')})$`);
+
+    build.onResolve({ filter }, (args) => ({
+      path: args.path,
+      namespace: 'node-builtin-shim',
+    }));
+
+    build.onLoad({ filter: /.*/, namespace: 'node-builtin-shim' }, () => ({
+      contents: 'export default {};',
+      loader: 'js',
+    }));
+  },
+};
 
 export default defineConfig([
   // Main package build
@@ -37,6 +62,7 @@ export default defineConfig([
       '@react-three/fiber',
       '@react-three/drei',
     ],
+    esbuildPlugins: [nodeBuiltinsShim],
     esbuildOptions(options) {
       // Ensure globalName is set for IIFE format
       options.globalName = 'RendervidBrowserRenderer';
