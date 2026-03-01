@@ -2,6 +2,12 @@
 
 Demonstrates 15+ behavior presets with multiple behaviors per object.
 
+## Preview
+
+![Demo](output.gif)
+
+[📹 Watch full video (MP4)](output.mp4)
+
 ## Features
 
 - 5 objects with different behaviors

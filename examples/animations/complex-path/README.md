@@ -2,6 +2,12 @@
 
 Demonstrates advanced keyframe animation system with 30+ easing functions.
 
+## Preview
+
+![Demo](output.gif)
+
+[📹 Watch full video (MP4)](output.mp4)
+
 ## Features
 
 - Multiple easing functions on single object

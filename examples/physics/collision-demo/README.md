@@ -2,6 +2,12 @@
 
 Demonstrates collision event system with particle spawning on impact.
 
+## Preview
+
+![Demo](output.gif)
+
+[📹 Watch full video (MP4)](output.mp4)
+
 ## Features
 
 - Real-time collision detection

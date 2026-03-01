@@ -2,6 +2,12 @@
 
 Advanced GPU-accelerated particle system with 5000 particles demonstrating fire explosion effect.
 
+## Preview
+
+![Demo](output.gif)
+
+[📹 Watch full video (MP4)](output.mp4)
+
 ## Features
 
 - **5000 Particles**: GPU-accelerated rendering for high particle counts

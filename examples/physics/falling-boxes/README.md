@@ -2,6 +2,12 @@
 
 Demonstration of physics simulation with three boxes falling and bouncing on a ground plane.
 
+## Preview
+
+![Demo](output.gif)
+
+[📹 Watch full video (MP4)](output.mp4)
+
 ## Features
 
 - **Dynamic rigid bodies**: Three boxes with different bounce properties
