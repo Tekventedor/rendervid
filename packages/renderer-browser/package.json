@@ -29,7 +29,8 @@
     "@rendervid/core": "workspace:*",
     "html2canvas": "^1.4.1",
     "mp4-muxer": "^5.2.2",
-    "three": "^0.163.0"
+    "three": "^0.163.0",
+    "@rendervid/physics": "workspace:*"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",

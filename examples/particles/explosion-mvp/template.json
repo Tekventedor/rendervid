@@ -1,0 +1,59 @@
+{
+  "name": "Particle Explosion - MVP Demo",
+  "description": "Simple particle explosion effect",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 3
+  },
+  "inputs": [],
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 180,
+        "backgroundColor": "#000000",
+        "layers": [
+          {
+            "id": "three-scene",
+            "type": "three",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "camera": {
+                "type": "perspective",
+                "fov": 60,
+                "position": [0, 0, 10]
+              },
+              "lights": [
+                {
+                  "type": "ambient",
+                  "intensity": 1
+                }
+              ],
+              "meshes": [],
+              "particles": [
+                {
+                  "id": "explosion",
+                  "count": 1000,
+                  "position": [0, 0, 0],
+                  "lifetime": 2,
+                  "velocity": {
+                    "min": [-5, -5, -5],
+                    "max": [5, 5, 5]
+                  },
+                  "size": 0.1,
+                  "color": "#ff6b6b"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

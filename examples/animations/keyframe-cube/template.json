@@ -1,0 +1,73 @@
+{
+  "name": "Animated Cube - Keyframe Demo",
+  "description": "Cube with keyframe animations",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 5
+  },
+  "inputs": [],
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 300,
+        "backgroundColor": "#1a1a2e",
+        "layers": [
+          {
+            "id": "three-scene",
+            "type": "three",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "camera": {
+                "type": "perspective",
+                "fov": 60,
+                "position": [0, 0, 10]
+              },
+              "lights": [
+                {
+                  "type": "ambient",
+                  "intensity": 0.5
+                },
+                {
+                  "type": "directional",
+                  "position": [5, 5, 5],
+                  "intensity": 1
+                }
+              ],
+              "meshes": [
+                {
+                  "id": "cube",
+                  "geometry": { "type": "box", "width": 1, "height": 1, "depth": 1 },
+                  "material": { "type": "standard", "color": "#ffe66d", "metalness": 0.5, "roughness": 0.5 },
+                  "animations": [
+                    {
+                      "property": "position.y",
+                      "keyframes": [
+                        { "frame": 0, "value": 0 },
+                        { "frame": 150, "value": 3 },
+                        { "frame": 300, "value": 0 }
+                      ]
+                    },
+                    {
+                      "property": "rotation.y",
+                      "keyframes": [
+                        { "frame": 0, "value": 0 },
+                        { "frame": 300, "value": 6.28 }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

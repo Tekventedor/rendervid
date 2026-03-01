@@ -1,0 +1,71 @@
+{
+  "name": "Orbiting Cube - Behavior Demo",
+  "description": "Cube orbiting with behavior preset",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 5
+  },
+  "inputs": [],
+  "composition": {
+    "scenes": [
+      {
+        "id": "main",
+        "startFrame": 0,
+        "endFrame": 300,
+        "backgroundColor": "#1a1a2e",
+        "layers": [
+          {
+            "id": "three-scene",
+            "type": "three",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 1920, "height": 1080 },
+            "props": {
+              "camera": {
+                "type": "perspective",
+                "fov": 60,
+                "position": [0, 0, 15]
+              },
+              "lights": [
+                {
+                  "type": "ambient",
+                  "intensity": 0.5
+                },
+                {
+                  "type": "directional",
+                  "position": [5, 5, 5],
+                  "intensity": 1
+                }
+              ],
+              "meshes": [
+                {
+                  "id": "cube",
+                  "geometry": { "type": "box", "width": 1, "height": 1, "depth": 1 },
+                  "material": { "type": "standard", "color": "#4ecdc4", "metalness": 0.5, "roughness": 0.5 },
+                  "behaviors": [
+                    {
+                      "type": "orbit",
+                      "params": {
+                        "radius": 5,
+                        "speed": 0.02
+                      }
+                    },
+                    {
+                      "type": "spin",
+                      "params": {
+                        "speed": 0.03
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

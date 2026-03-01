@@ -404,6 +404,9 @@ importers:
       '@rendervid/core':
         specifier: workspace:*
         version: link:../core
+      '@rendervid/physics':
+        specifier: workspace:*
+        version: link:../physics
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1

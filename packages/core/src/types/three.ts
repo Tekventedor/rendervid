@@ -610,6 +610,20 @@ export interface ThreeMeshConfig {
     radius?: number;
     halfHeight?: number;
   };
+  /** Keyframe animations */
+  animations?: Array<{
+    property: string;
+    keyframes: Array<{
+      frame: number;
+      value: number | number[];
+      easing?: string;
+    }>;
+  }>;
+  /** Behavior presets */
+  behaviors?: Array<{
+    type: string;
+    params?: Record<string, any>;
+  }>;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -710,6 +724,29 @@ export interface ThreeLayerProps {
     timestep?: number;
     /** Show debug visualization */
     debug?: boolean;
+  };
+
+  /**
+   * Particle systems.
+   */
+  particles?: Array<{
+    id: string;
+    count: number;
+    position: Vector3;
+    lifetime: number;
+    velocity: { min: Vector3; max: Vector3 };
+    size: number;
+    color: string;
+  }>;
+
+  /**
+   * Post-processing effects (MVP - basic bloom only).
+   */
+  postProcessing?: {
+    bloom?: {
+      intensity?: number;
+      threshold?: number;
+    };
   };
 }
 
