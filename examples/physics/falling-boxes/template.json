@@ -1,27 +1,69 @@
 {
-  "name": "Physics Simulation",
-  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
+  "name": "Physics Simulation - Falling Objects",
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
-      "endFrame": 90,
+      "endFrame": 150,
       "backgroundColor": "#1a1a2e",
-      "layers": [{
-        "id": "title",
-        "type": "text",
-        "position": {"x": 160, "y": 350},
-        "size": {"width": 1600, "height": 150},
-        "props": {"text": "Physics Simulation", "fontSize": 80, "color": "#00ffff", "fontWeight": "bold", "textAlign": "center"},
-        "animations": [{"type": "entrance", "effect": "fadeInUp", "duration": 30}]
-      }, {
-        "id": "desc",
-        "type": "text",
-        "position": {"x": 260, "y": 550},
-        "size": {"width": 1400, "height": 200},
-        "props": {"text": "Rapier3D • Rigid Bodies • Collisions\nDynamic Physics • 100+ Objects @ 60fps", "fontSize": 32, "color": "#888888", "textAlign": "center"},
-        "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
-      }]
+      "layers": [
+        {
+          "id": "title",
+          "type": "text",
+          "position": {"x": 160, "y": 50},
+          "size": {"width": 1600, "height": 100},
+          "props": {"text": "Physics Simulation - Rapier3D", "fontSize": 48, "color": "#00ffff", "fontWeight": "bold", "textAlign": "center"},
+          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 20}]
+        },
+        {
+          "id": "ground",
+          "type": "shape",
+          "position": {"x": 160, "y": 900},
+          "size": {"width": 1600, "height": 40},
+          "props": {"shape": "rectangle", "fill": "#333333"}
+        },
+        {
+          "id": "box1",
+          "type": "shape",
+          "position": {"x": 400, "y": 200},
+          "size": {"width": 100, "height": 100},
+          "props": {"shape": "rectangle", "fill": "#ff0000", "cornerRadius": 5},
+          "animations": [
+            {"type": "custom", "property": "position.y", "from": 200, "to": 800, "duration": 90, "easing": "easeInQuad"},
+            {"type": "custom", "property": "rotation", "from": 0, "to": 180, "duration": 90, "easing": "linear"}
+          ]
+        },
+        {
+          "id": "box2",
+          "type": "shape",
+          "position": {"x": 800, "y": 150},
+          "size": {"width": 100, "height": 100},
+          "props": {"shape": "rectangle", "fill": "#00ff00", "cornerRadius": 5},
+          "animations": [
+            {"type": "custom", "property": "position.y", "from": 150, "to": 800, "duration": 100, "easing": "easeInQuad"},
+            {"type": "custom", "property": "rotation", "from": 0, "to": -180, "duration": 100, "easing": "linear"}
+          ]
+        },
+        {
+          "id": "box3",
+          "type": "shape",
+          "position": {"x": 1200, "y": 250},
+          "size": {"width": 100, "height": 100},
+          "props": {"shape": "rectangle", "fill": "#0000ff", "cornerRadius": 5},
+          "animations": [
+            {"type": "custom", "property": "position.y", "from": 250, "to": 800, "duration": 85, "easing": "easeInQuad"},
+            {"type": "custom", "property": "rotation", "from": 0, "to": 270, "duration": 85, "easing": "linear"}
+          ]
+        },
+        {
+          "id": "label",
+          "type": "text",
+          "position": {"x": 560, "y": 950},
+          "size": {"width": 800, "height": 80},
+          "props": {"text": "Rigid Bodies • Collisions • Gravity", "fontSize": 28, "color": "#888888", "textAlign": "center"}
+        }
+      ]
     }]
   }
 }

@@ -1,27 +1,43 @@
 {
-  "name": "Complex Path Animation",
-  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
+  "name": "Complex Path",
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
-      "endFrame": 90,
+      "endFrame": 150,
       "backgroundColor": "#1a1a2e",
-      "layers": [{
-        "id": "title",
-        "type": "text",
-        "position": {"x": 160, "y": 350},
-        "size": {"width": 1600, "height": 150},
-        "props": {"text": "Complex Path", "fontSize": 80, "color": "#00ff00", "fontWeight": "bold", "textAlign": "center"},
-        "animations": [{"type": "entrance", "effect": "bounceIn", "duration": 30}]
-      }, {
-        "id": "desc",
-        "type": "text",
-        "position": {"x": 260, "y": 550},
-        "size": {"width": 1400, "height": 200},
-        "props": {"text": "Multiple Easing Functions\nElastic • Bounce • Back • Cubic", "fontSize": 32, "color": "#888888", "textAlign": "center"},
-        "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
-      }]
+      "layers": [
+        {
+          "id": "title",
+          "type": "text",
+          "position": {"x": 160, "y": 50},
+          "size": {"width": 1600, "height": 100},
+          "props": {"text": "Complex Path - Multiple Easings", "fontSize": 48, "color": "#00ff00", "fontWeight": "bold", "textAlign": "center"},
+          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 20}]
+        },
+        {
+          "id": "path",
+          "type": "shape",
+          "position": {"x": 910, "y": 490},
+          "size": {"width": 100, "height": 100},
+          "props": {"shape": "circle", "fill": "#00ff00"},
+          "animations": [
+            {"type": "custom", "property": "position.x", "keyframes": [
+              {"frame": 0, "value": 200},
+              {"frame": 50, "value": 1720},
+              {"frame": 100, "value": 200},
+              {"frame": 150, "value": 1720}
+            ], "easing": "easeInOutElastic"},
+            {"type": "custom", "property": "position.y", "keyframes": [
+              {"frame": 0, "value": 300},
+              {"frame": 50, "value": 780},
+              {"frame": 100, "value": 300},
+              {"frame": 150, "value": 780}
+            ], "easing": "easeInOutBack"}
+          ]
+        }
+      ]
     }]
   }
 }

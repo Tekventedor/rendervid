@@ -1,27 +1,55 @@
 {
   "name": "Fire Explosion",
-  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
-      "endFrame": 90,
+      "endFrame": 150,
       "backgroundColor": "#0a0000",
-      "layers": [{
-        "id": "title",
-        "type": "text",
-        "position": {"x": 160, "y": 350},
-        "size": {"width": 1600, "height": 150},
-        "props": {"text": "Fire Explosion", "fontSize": 80, "color": "#ff6600", "fontWeight": "bold", "textAlign": "center"},
-        "animations": [{"type": "entrance", "effect": "fadeInUp", "duration": 30}]
-      }, {
-        "id": "desc",
-        "type": "text",
-        "position": {"x": 260, "y": 550},
-        "size": {"width": 1400, "height": 200},
-        "props": {"text": "5000 Particles • GPU Accelerated\nColor Gradients • Turbulence • Attractors", "fontSize": 32, "color": "#ff9944", "textAlign": "center"},
-        "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
-      }]
+      "layers": [
+        {
+          "id": "title",
+          "type": "text",
+          "position": {"x": 160, "y": 50},
+          "size": {"width": 1600, "height": 100},
+          "props": {"text": "Fire Explosion - 5000 Particles", "fontSize": 48, "color": "#ff6600", "fontWeight": "bold", "textAlign": "center"},
+          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 20}]
+        },
+        {
+          "id": "center",
+          "type": "shape",
+          "position": {"x": 910, "y": 490},
+          "size": {"width": 100, "height": 100},
+          "props": {"shape": "circle", "fill": "#ffff00"},
+          "animations": [
+            {"type": "custom", "property": "scale", "from": 0.5, "to": 3, "duration": 60, "easing": "easeOutQuad"},
+            {"type": "custom", "property": "opacity", "from": 1, "to": 0, "duration": 60, "easing": "linear"}
+          ]
+        },
+        {
+          "id": "ring1",
+          "type": "shape",
+          "position": {"x": 860, "y": 440},
+          "size": {"width": 200, "height": 200},
+          "props": {"shape": "circle", "fill": "transparent", "stroke": "#ff6600", "strokeWidth": 4},
+          "animations": [
+            {"type": "custom", "property": "scale", "from": 0.3, "to": 2.5, "duration": 80, "easing": "easeOutQuad"},
+            {"type": "custom", "property": "opacity", "from": 1, "to": 0, "duration": 80, "easing": "linear"}
+          ]
+        },
+        {
+          "id": "ring2",
+          "type": "shape",
+          "position": {"x": 860, "y": 440},
+          "size": {"width": 200, "height": 200},
+          "props": {"shape": "circle", "fill": "transparent", "stroke": "#ff3300", "strokeWidth": 3},
+          "animations": [
+            {"type": "custom", "property": "scale", "from": 0.5, "to": 2, "duration": 70, "easing": "easeOutQuad"},
+            {"type": "custom", "property": "opacity", "from": 1, "to": 0, "duration": 70, "easing": "linear"}
+          ]
+        }
+      ]
     }]
   }
 }

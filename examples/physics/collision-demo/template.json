@@ -1,27 +1,57 @@
 {
   "name": "Collision Events",
-  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
-      "endFrame": 90,
+      "endFrame": 150,
       "backgroundColor": "#1a1a2e",
-      "layers": [{
-        "id": "title",
-        "type": "text",
-        "position": {"x": 160, "y": 350},
-        "size": {"width": 1600, "height": 150},
-        "props": {"text": "Collision Events", "fontSize": 80, "color": "#00ffff", "fontWeight": "bold", "textAlign": "center"},
-        "animations": [{"type": "entrance", "effect": "fadeInUp", "duration": 30}]
-      }, {
-        "id": "desc",
-        "type": "text",
-        "position": {"x": 260, "y": 550},
-        "size": {"width": 1400, "height": 200},
-        "props": {"text": "Event System • Particle Spawning\nSound • Color Change • Force Application", "fontSize": 32, "color": "#888888", "textAlign": "center"},
-        "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
-      }]
+      "layers": [
+        {
+          "id": "title",
+          "type": "text",
+          "position": {"x": 160, "y": 50},
+          "size": {"width": 1600, "height": 100},
+          "props": {"text": "Collision Events - Particle Spawning", "fontSize": 48, "color": "#00ffff", "fontWeight": "bold", "textAlign": "center"},
+          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 20}]
+        },
+        {
+          "id": "ball",
+          "type": "shape",
+          "position": {"x": 860, "y": 200},
+          "size": {"width": 100, "height": 100},
+          "props": {"shape": "circle", "fill": "#00ffff"},
+          "animations": [
+            {"type": "custom", "property": "position.y", "keyframes": [
+              {"frame": 0, "value": 200},
+              {"frame": 40, "value": 800},
+              {"frame": 50, "value": 400},
+              {"frame": 80, "value": 800},
+              {"frame": 90, "value": 600},
+              {"frame": 110, "value": 800}
+            ], "easing": "easeInQuad"}
+          ]
+        },
+        {
+          "id": "ground",
+          "type": "shape",
+          "position": {"x": 160, "y": 900},
+          "size": {"width": 1600, "height": 40},
+          "props": {"shape": "rectangle", "fill": "#333333"}
+        },
+        {
+          "id": "impact1",
+          "type": "shape",
+          "position": {"x": 910, "y": 850},
+          "size": {"width": 40, "height": 40},
+          "props": {"shape": "circle", "fill": "#ffff00"},
+          "animations": [
+            {"type": "custom", "property": "scale", "from": 0, "to": 2, "duration": 10, "delay": 40, "easing": "easeOutQuad"},
+            {"type": "custom", "property": "opacity", "from": 1, "to": 0, "duration": 10, "delay": 40, "easing": "linear"}
+          ]
+        }
+      ]
     }]
   }
 }
