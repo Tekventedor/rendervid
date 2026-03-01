@@ -51,13 +51,13 @@ export class FrameCapturer {
     const { width, height } = this.config.template.output;
 
     // Build GPU-related flags based on configuration
-    // Playwright has better WebGL support than Puppeteer, especially in headless mode
+    // Use SwiftShader for software WebGL rendering (works in headless mode)
     const gpuFlags = this.useGPU && !this.gpuFallback
       ? [
-          '--enable-gpu',
-          '--use-gl=desktop', // Use desktop GL for better WebGL support
+          '--use-gl=swiftshader',
           '--enable-webgl',
           '--enable-webgl2',
+          '--enable-unsafe-swiftshader',
         ]
       : [
           '--disable-gpu',
