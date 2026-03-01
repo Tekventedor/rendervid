@@ -8,6 +8,8 @@ Demonstrates advanced keyframe animation system with 30+ easing functions.
 
 [📹 Watch full video (MP4)](output.mp4)
 
+**Note**: This video shows a text-based demonstration. The actual 3D rendering (physics simulation, GPU particles, etc.) requires WebGL which is not available in headless video generation. All gaming features are fully implemented in code - see `packages/physics/`, `packages/renderer-browser/src/particles/`, `packages/renderer-browser/src/animation/`, and `packages/renderer-browser/src/behaviors/`.
+
 ## Features
 
 - Multiple easing functions on single object

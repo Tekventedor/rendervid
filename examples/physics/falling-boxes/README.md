@@ -8,6 +8,8 @@ Demonstration of physics simulation with three boxes falling and bouncing on a g
 
 [📹 Watch full video (MP4)](output.mp4)
 
+**Note**: This video shows a text-based demonstration. The actual 3D physics simulation requires WebGL rendering which is not available in headless video generation. The physics engine (Rapier3D) is fully implemented and integrated - see the code in `packages/physics/` and `packages/renderer-browser/src/physics/`.
+
 ## Features
 
 - **Dynamic rigid bodies**: Three boxes with different bounce properties
