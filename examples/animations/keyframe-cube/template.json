@@ -1,107 +1,82 @@
 {
-  "name": "Animation Engine - 30+ Easing Functions",
-  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
+  "name": "Animation Engine - Multiple Easings",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
       "endFrame": 150,
       "backgroundColor": "#1a1a2e",
-      "layers": [
-        {
-          "id": "title",
-          "type": "text",
-          "position": {"x": 160, "y": 50},
-          "size": {"width": 1600, "height": 100},
-          "props": {"text": "Animation Engine - 30+ Easing Functions", "fontSize": 48, "color": "#00ff00", "fontWeight": "bold", "textAlign": "center"},
-          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 20}]
-        },
-        {
-          "id": "box1",
-          "type": "shape",
-          "position": {"x": 100, "y": 200},
-          "size": {"width": 80, "height": 80},
-          "props": {"shape": "rectangle", "fill": "#ff0000", "cornerRadius": 10},
-          "animations": [
-            {"type": "custom", "property": "position.x", "from": 100, "to": 1740, "duration": 120, "easing": "linear"}
+      "layers": [{
+        "id": "three-scene",
+        "type": "three",
+        "position": {"x": 0, "y": 0},
+        "size": {"width": 1920, "height": 1080},
+        "props": {
+          "camera": {
+            "type": "perspective",
+            "position": [0, 0, 20],
+            "lookAt": [0, 0, 0],
+            "fov": 50
+          },
+          "lights": [
+            {"type": "ambient", "color": "#ffffff", "intensity": 1}
+          ],
+          "meshes": [
+            {
+              "id": "linear",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#ff6b6b", "metalness": 0.5, "roughness": 0.5},
+              "position": [-8, 4, 0],
+              "animations": [
+                {"property": "position.x", "keyframes": [{"frame": 0, "value": -8}, {"frame": 120, "value": 8}], "easing": "linear"}
+              ]
+            },
+            {
+              "id": "easeInOutCubic",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#4ecdc4", "metalness": 0.5, "roughness": 0.5},
+              "position": [-8, 2, 0],
+              "animations": [
+                {"property": "position.x", "keyframes": [{"frame": 0, "value": -8}, {"frame": 120, "value": 8}], "easing": "easeInOutCubic"}
+              ]
+            },
+            {
+              "id": "easeOutBounce",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#ffe66d", "metalness": 0.5, "roughness": 0.5},
+              "position": [-8, 0, 0],
+              "animations": [
+                {"property": "position.x", "keyframes": [{"frame": 0, "value": -8}, {"frame": 120, "value": 8}], "easing": "easeOutBounce"}
+              ]
+            },
+            {
+              "id": "easeInOutElastic",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#a8e6cf", "metalness": 0.5, "roughness": 0.5},
+              "position": [-8, -2, 0],
+              "animations": [
+                {"property": "position.x", "keyframes": [{"frame": 0, "value": -8}, {"frame": 120, "value": 8}], "easing": "easeInOutElastic"}
+              ]
+            },
+            {
+              "id": "easeInOutBack",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#ff8b94", "metalness": 0.5, "roughness": 0.5},
+              "position": [-8, -4, 0],
+              "animations": [
+                {"property": "position.x", "keyframes": [{"frame": 0, "value": -8}, {"frame": 120, "value": 8}], "easing": "easeInOutBack"}
+              ]
+            }
           ]
-        },
-        {
-          "id": "label1",
-          "type": "text",
-          "position": {"x": 100, "y": 300},
-          "size": {"width": 200, "height": 40},
-          "props": {"text": "linear", "fontSize": 24, "color": "#ffffff", "textAlign": "center"}
-        },
-        {
-          "id": "box2",
-          "type": "shape",
-          "position": {"x": 100, "y": 350},
-          "size": {"width": 80, "height": 80},
-          "props": {"shape": "rectangle", "fill": "#00ff00", "cornerRadius": 10},
-          "animations": [
-            {"type": "custom", "property": "position.x", "from": 100, "to": 1740, "duration": 120, "easing": "easeInOutCubic"}
-          ]
-        },
-        {
-          "id": "label2",
-          "type": "text",
-          "position": {"x": 100, "y": 450},
-          "size": {"width": 200, "height": 40},
-          "props": {"text": "easeInOutCubic", "fontSize": 24, "color": "#ffffff", "textAlign": "center"}
-        },
-        {
-          "id": "box3",
-          "type": "shape",
-          "position": {"x": 100, "y": 500},
-          "size": {"width": 80, "height": 80},
-          "props": {"shape": "rectangle", "fill": "#0000ff", "cornerRadius": 10},
-          "animations": [
-            {"type": "custom", "property": "position.x", "from": 100, "to": 1740, "duration": 120, "easing": "easeOutBounce"}
-          ]
-        },
-        {
-          "id": "label3",
-          "type": "text",
-          "position": {"x": 100, "y": 600},
-          "size": {"width": 200, "height": 40},
-          "props": {"text": "easeOutBounce", "fontSize": 24, "color": "#ffffff", "textAlign": "center"}
-        },
-        {
-          "id": "box4",
-          "type": "shape",
-          "position": {"x": 100, "y": 650},
-          "size": {"width": 80, "height": 80},
-          "props": {"shape": "rectangle", "fill": "#ff00ff", "cornerRadius": 10},
-          "animations": [
-            {"type": "custom", "property": "position.x", "from": 100, "to": 1740, "duration": 120, "easing": "easeInOutElastic"}
-          ]
-        },
-        {
-          "id": "label4",
-          "type": "text",
-          "position": {"x": 100, "y": 750},
-          "size": {"width": 200, "height": 40},
-          "props": {"text": "easeInOutElastic", "fontSize": 24, "color": "#ffffff", "textAlign": "center"}
-        },
-        {
-          "id": "box5",
-          "type": "shape",
-          "position": {"x": 100, "y": 800},
-          "size": {"width": 80, "height": 80},
-          "props": {"shape": "rectangle", "fill": "#ffff00", "cornerRadius": 10},
-          "animations": [
-            {"type": "custom", "property": "position.x", "from": 100, "to": 1740, "duration": 120, "easing": "easeInOutBack"}
-          ]
-        },
-        {
-          "id": "label5",
-          "type": "text",
-          "position": {"x": 100, "y": 900},
-          "size": {"width": 200, "height": 40},
-          "props": {"text": "easeInOutBack", "fontSize": 24, "color": "#ffffff", "textAlign": "center"}
         }
-      ]
+      }]
     }]
   }
 }

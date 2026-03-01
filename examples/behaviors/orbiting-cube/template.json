@@ -1,79 +1,76 @@
 {
-  "name": "Behavior System - Animated Motion",
-  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
+  "name": "Behavior System - Orbiting Cubes",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
       "endFrame": 150,
-      "backgroundColor": "#1a1a2e",
-      "layers": [
-        {
-          "id": "title",
-          "type": "text",
-          "position": {"x": 160, "y": 50},
-          "size": {"width": 1600, "height": 100},
-          "props": {"text": "Behavior System - 15+ Presets", "fontSize": 48, "color": "#ff00ff", "fontWeight": "bold", "textAlign": "center"},
-          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 20}]
-        },
-        {
-          "id": "orbit",
-          "type": "shape",
-          "position": {"x": 860, "y": 440},
-          "size": {"width": 60, "height": 60},
-          "props": {"shape": "circle", "fill": "#ff0000"},
-          "animations": [
-            {"type": "custom", "property": "position.x", "keyframes": [
-              {"frame": 0, "value": 860},
-              {"frame": 37, "value": 1060},
-              {"frame": 75, "value": 860},
-              {"frame": 112, "value": 660},
-              {"frame": 150, "value": 860}
-            ], "easing": "linear"},
-            {"type": "custom", "property": "position.y", "keyframes": [
-              {"frame": 0, "value": 440},
-              {"frame": 37, "value": 540},
-              {"frame": 75, "value": 640},
-              {"frame": 112, "value": 540},
-              {"frame": 150, "value": 440}
-            ], "easing": "linear"}
+      "backgroundColor": "#0a0a1a",
+      "layers": [{
+        "id": "three-scene",
+        "type": "three",
+        "position": {"x": 0, "y": 0},
+        "size": {"width": 1920, "height": 1080},
+        "props": {
+          "camera": {
+            "type": "perspective",
+            "position": [0, 5, 12],
+            "lookAt": [0, 0, 0],
+            "fov": 50
+          },
+          "lights": [
+            {"type": "ambient", "color": "#404040", "intensity": 0.6},
+            {"type": "point", "color": "#ffffff", "intensity": 1, "position": [0, 5, 5]}
+          ],
+          "meshes": [
+            {
+              "id": "orbit-cube",
+              "geometry": {"type": "box", "width": 0.8, "height": 0.8, "depth": 0.8},
+              "material": {"type": "standard", "color": "#ff0066", "metalness": 0.5, "roughness": 0.5},
+              "position": [0, 0, 0],
+              "behaviors": [
+                {"type": "orbit", "params": {"radius": 4, "speed": 2, "axis": "y"}},
+                {"type": "spin", "params": {"speed": 3, "axis": "y"}}
+              ]
+            },
+            {
+              "id": "pulse-cube",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#00ff88", "metalness": 0.5, "roughness": 0.5},
+              "position": [0, 0, 0],
+              "behaviors": [
+                {"type": "pulse", "params": {"min": 0.7, "max": 1.3, "speed": 3}}
+              ]
+            },
+            {
+              "id": "bounce-cube",
+              "geometry": {"type": "box", "width": 0.8, "height": 0.8, "depth": 0.8},
+              "material": {"type": "standard", "color": "#4488ff", "metalness": 0.5, "roughness": 0.5},
+              "position": [3, 0, 0],
+              "behaviors": [
+                {"type": "bounce", "params": {"height": 3, "speed": 4, "offset": 0}}
+              ]
+            },
+            {
+              "id": "float-cube",
+              "geometry": {"type": "box", "width": 0.8, "height": 0.8, "depth": 0.8},
+              "material": {"type": "standard", "color": "#ffaa00", "metalness": 0.5, "roughness": 0.5},
+              "position": [-3, 0, 0],
+              "behaviors": [
+                {"type": "float", "params": {"amplitude": 1.5, "speed": 2, "offset": 2}},
+                {"type": "wobble", "params": {"amount": 0.3, "speed": 2}}
+              ]
+            }
           ]
-        },
-        {
-          "id": "pulse",
-          "type": "shape",
-          "position": {"x": 360, "y": 490},
-          "size": {"width": 100, "height": 100},
-          "props": {"shape": "rectangle", "fill": "#00ff00", "cornerRadius": 10},
-          "animations": [
-            {"type": "emphasis", "effect": "pulse", "duration": 150, "repeat": true}
-          ]
-        },
-        {
-          "id": "bounce",
-          "type": "shape",
-          "position": {"x": 1460, "y": 340},
-          "size": {"width": 80, "height": 80},
-          "props": {"shape": "rectangle", "fill": "#0000ff", "cornerRadius": 10},
-          "animations": [
-            {"type": "custom", "property": "position.y", "keyframes": [
-              {"frame": 0, "value": 340},
-              {"frame": 30, "value": 640},
-              {"frame": 60, "value": 340},
-              {"frame": 90, "value": 640},
-              {"frame": 120, "value": 340},
-              {"frame": 150, "value": 640}
-            ], "easing": "easeOutBounce"}
-          ]
-        },
-        {
-          "id": "label1",
-          "type": "text",
-          "position": {"x": 760, "y": 750},
-          "size": {"width": 400, "height": 60},
-          "props": {"text": "Orbit • Pulse • Bounce", "fontSize": 32, "color": "#888888", "textAlign": "center"}
         }
-      ]
+      }]
     }]
   }
 }

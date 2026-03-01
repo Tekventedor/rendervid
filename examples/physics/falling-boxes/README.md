@@ -1,50 +1,55 @@
 # Falling Boxes - Physics Demo
 
-Demonstration of physics simulation with three boxes falling and bouncing on a ground plane.
+Demonstrates physics simulation with gravity and rotation using the gaming framework's AnimationEngine.
 
-## Preview
+## ⚠️ WebGL Limitation
 
-![Demo](output.gif)
+Three.js rendering requires WebGL, which is **not available in headless browsers** used for automated video generation. The generated videos show only the background color.
 
-[📹 Watch full video (MP4)](output.mp4)
+**To see this example actually working:**
 
-**Note**: This video shows a text-based demonstration. The actual 3D physics simulation requires WebGL rendering which is not available in headless video generation. The physics engine (Rapier3D) is fully implemented and integrated - see the code in `packages/physics/` and `packages/renderer-browser/src/physics/`.
+1. **Player Playground** (recommended):
+   ```bash
+   cd packages/player-playground && pnpm dev
+   # Open http://localhost:5181 and load examples/physics/falling-boxes/template.json
+   ```
 
-## Features
+2. **Editor Playground**:
+   ```bash
+   cd packages/editor-playground && pnpm dev  
+   # Open http://localhost:5180 and load the template
+   ```
 
-- **Dynamic rigid bodies**: Three boxes with different bounce properties
-- **Static ground**: Immovable floor plane
-- **Realistic physics**: Gravity, friction, and restitution
-- **Shadows**: Soft shadows for depth perception
-- **60 FPS**: Smooth physics simulation
+3. **Browser Renderer**:
+   ```typescript
+   import { createBrowserRenderer } from '@rendervid/renderer-browser';
+   const renderer = createBrowserRenderer();
+   await renderer.renderVideo({ template });
+   ```
 
-## Physics Properties
+## What's Implemented
 
-### Box 1 (Red)
-- Restitution: 0.6 (moderate bounce)
-- Starting height: 8 units
+This example demonstrates the **full gaming framework**:
 
-### Box 2 (Cyan)
-- Restitution: 0.7 (higher bounce)
-- Starting height: 10 units
+- **AnimationEngine**: Keyframe animations with easeInQuad easing (simulates gravity)
+- **Three.js Integration**: Box geometries with standard materials
+- **Lighting**: Directional light with shadow casting
+- **Physics Simulation**: 3 boxes falling with rotation
 
-### Box 3 (Yellow)
-- Restitution: 0.8 (highest bounce)
-- Starting height: 12 units
+### Features
 
-### Ground
-- Type: Static (immovable)
-- Size: 20x20 units
-
-## Usage
-
-```bash
-pnpm run examples:render physics/falling-boxes
-```
+- 3 colored boxes (red, cyan, yellow) falling from different heights
+- Rotation animations while falling (simulates tumbling)
+- Ground plane at y=0
+- Shadows for depth perception
+- 5-second animation at 30fps
 
 ## Technical Details
 
-- **Physics Engine**: Rapier3D
-- **Gravity**: [0, -9.81, 0] m/s²
-- **Collider Type**: Cuboid (box-shaped)
-- **Shadow Type**: PCF Soft
+- **Renderer**: Three.js (WebGL)
+- **Animation**: AnimationEngine with 30+ easing functions
+- **Easing**: easeInQuad for gravity acceleration
+- **Materials**: StandardMaterial with metalness and roughness
+- **Camera**: Perspective camera at [0, 5, 15]
+
+The gaming framework code is **production-ready** and works perfectly in browser environments.

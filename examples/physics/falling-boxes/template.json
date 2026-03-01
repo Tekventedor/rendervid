@@ -1,69 +1,80 @@
 {
-  "name": "Physics Simulation - Falling Objects",
-  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
+  "name": "Physics Simulation - Falling Boxes",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
       "endFrame": 150,
       "backgroundColor": "#1a1a2e",
-      "layers": [
-        {
-          "id": "title",
-          "type": "text",
-          "position": {"x": 160, "y": 50},
-          "size": {"width": 1600, "height": 100},
-          "props": {"text": "Physics Simulation - Rapier3D", "fontSize": 48, "color": "#00ffff", "fontWeight": "bold", "textAlign": "center"},
-          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 20}]
-        },
-        {
-          "id": "ground",
-          "type": "shape",
-          "position": {"x": 160, "y": 900},
-          "size": {"width": 1600, "height": 40},
-          "props": {"shape": "rectangle", "fill": "#333333"}
-        },
-        {
-          "id": "box1",
-          "type": "shape",
-          "position": {"x": 400, "y": 200},
-          "size": {"width": 100, "height": 100},
-          "props": {"shape": "rectangle", "fill": "#ff0000", "cornerRadius": 5},
-          "animations": [
-            {"type": "custom", "property": "position.y", "from": 200, "to": 800, "duration": 90, "easing": "easeInQuad"},
-            {"type": "custom", "property": "rotation", "from": 0, "to": 180, "duration": 90, "easing": "linear"}
+      "layers": [{
+        "id": "three-scene",
+        "type": "three",
+        "position": {"x": 0, "y": 0},
+        "size": {"width": 1920, "height": 1080},
+        "props": {
+          "camera": {
+            "type": "perspective",
+            "position": [0, 5, 15],
+            "lookAt": [0, 0, 0],
+            "fov": 50
+          },
+          "lights": [
+            {"type": "ambient", "color": "#404040", "intensity": 0.5},
+            {"type": "directional", "color": "#ffffff", "intensity": 1, "position": [5, 10, 5], "castShadow": true}
+          ],
+          "meshes": [
+            {
+              "id": "box1",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#ff6b6b", "metalness": 0.3, "roughness": 0.7},
+              "position": [-3, 8, 0],
+              "castShadow": true,
+              "animations": [
+                {"property": "position.y", "keyframes": [{"frame": 0, "value": 8}, {"frame": 90, "value": 0.5}], "easing": "easeInQuad"},
+                {"property": "rotation.x", "keyframes": [{"frame": 0, "value": 0}, {"frame": 90, "value": 6.28}], "easing": "linear"},
+                {"property": "rotation.z", "keyframes": [{"frame": 0, "value": 0}, {"frame": 90, "value": 3.14}], "easing": "linear"}
+              ]
+            },
+            {
+              "id": "box2",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#4ecdc4", "metalness": 0.3, "roughness": 0.7},
+              "position": [0, 10, 0],
+              "castShadow": true,
+              "animations": [
+                {"property": "position.y", "keyframes": [{"frame": 0, "value": 10}, {"frame": 100, "value": 0.5}], "easing": "easeInQuad"},
+                {"property": "rotation.y", "keyframes": [{"frame": 0, "value": 0}, {"frame": 100, "value": 6.28}], "easing": "linear"}
+              ]
+            },
+            {
+              "id": "box3",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#ffe66d", "metalness": 0.3, "roughness": 0.7},
+              "position": [3, 6, 0],
+              "castShadow": true,
+              "animations": [
+                {"property": "position.y", "keyframes": [{"frame": 0, "value": 6}, {"frame": 80, "value": 0.5}], "easing": "easeInQuad"},
+                {"property": "rotation.x", "keyframes": [{"frame": 0, "value": 0}, {"frame": 80, "value": -6.28}], "easing": "linear"}
+              ]
+            },
+            {
+              "id": "ground",
+              "geometry": {"type": "plane", "width": 20, "height": 20},
+              "material": {"type": "standard", "color": "#2d3561", "metalness": 0.1, "roughness": 0.9},
+              "position": [0, 0, 0],
+              "rotation": [-1.57, 0, 0],
+              "receiveShadow": true
+            }
           ]
-        },
-        {
-          "id": "box2",
-          "type": "shape",
-          "position": {"x": 800, "y": 150},
-          "size": {"width": 100, "height": 100},
-          "props": {"shape": "rectangle", "fill": "#00ff00", "cornerRadius": 5},
-          "animations": [
-            {"type": "custom", "property": "position.y", "from": 150, "to": 800, "duration": 100, "easing": "easeInQuad"},
-            {"type": "custom", "property": "rotation", "from": 0, "to": -180, "duration": 100, "easing": "linear"}
-          ]
-        },
-        {
-          "id": "box3",
-          "type": "shape",
-          "position": {"x": 1200, "y": 250},
-          "size": {"width": 100, "height": 100},
-          "props": {"shape": "rectangle", "fill": "#0000ff", "cornerRadius": 5},
-          "animations": [
-            {"type": "custom", "property": "position.y", "from": 250, "to": 800, "duration": 85, "easing": "easeInQuad"},
-            {"type": "custom", "property": "rotation", "from": 0, "to": 270, "duration": 85, "easing": "linear"}
-          ]
-        },
-        {
-          "id": "label",
-          "type": "text",
-          "position": {"x": 560, "y": 950},
-          "size": {"width": 800, "height": 80},
-          "props": {"text": "Rigid Bodies • Collisions • Gravity", "fontSize": 28, "color": "#888888", "textAlign": "center"}
         }
-      ]
+      }]
     }]
   }
 }
