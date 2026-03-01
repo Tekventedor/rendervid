@@ -1,0 +1,80 @@
+{
+  "name": "Complex Motion - Multiple Behaviors",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 10
+  },
+  "composition": {
+    "scenes": [{
+      "id": "main",
+      "startFrame": 0,
+      "endFrame": 600,
+      "backgroundColor": "#0a0a1a",
+      "layers": [{
+        "id": "behaviors",
+        "type": "three",
+        "props": {
+          "camera": {
+            "type": "perspective",
+            "position": [0, 5, 20],
+            "lookAt": [0, 0, 0]
+          },
+          "meshes": [
+            {
+              "id": "spiral-sphere",
+              "geometry": { "type": "sphere", "radius": 0.5 },
+              "material": { "type": "standard", "color": "#ff0000" },
+              "behaviors": [
+                { "type": "spiral", "params": { "radius": 5, "height": 10, "speed": 1 } }
+              ]
+            },
+            {
+              "id": "wobble-cube",
+              "geometry": { "type": "box", "width": 1, "height": 1, "depth": 1 },
+              "material": { "type": "standard", "color": "#00ff00" },
+              "position": [5, 0, 0],
+              "behaviors": [
+                { "type": "wobble", "params": { "amount": 0.3, "speed": 3 } },
+                { "type": "float", "params": { "amplitude": 2, "speed": 1 } }
+              ]
+            },
+            {
+              "id": "pulse-cylinder",
+              "geometry": { "type": "cylinder", "radius": 0.5, "height": 2 },
+              "material": { "type": "standard", "color": "#0000ff" },
+              "position": [-5, 0, 0],
+              "behaviors": [
+                { "type": "pulse", "params": { "min": 0.5, "max": 1.5, "speed": 2 } },
+                { "type": "spin", "params": { "speed": 2, "axis": "y" } }
+              ]
+            },
+            {
+              "id": "figure8-torus",
+              "geometry": { "type": "torus", "radius": 0.5, "tube": 0.2 },
+              "material": { "type": "standard", "color": "#ffff00" },
+              "behaviors": [
+                { "type": "figure8", "params": { "size": 4, "speed": 0.5 } }
+              ]
+            },
+            {
+              "id": "hover-cone",
+              "geometry": { "type": "cone", "radius": 0.5, "height": 1 },
+              "material": { "type": "standard", "color": "#ff00ff" },
+              "position": [0, 0, 5],
+              "behaviors": [
+                { "type": "hover", "params": { "height": 3, "wobbleAmount": 0.5, "speed": 1 } }
+              ]
+            }
+          ],
+          "lights": [
+            { "type": "ambient", "color": "#404040", "intensity": 0.5 },
+            { "type": "point", "color": "#ffffff", "intensity": 1, "position": [0, 10, 0] }
+          ]
+        }
+      }]
+    }]
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "name": "Collision Demo - Physics Events",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration": 5
+  },
+  "composition": {
+    "scenes": [{
+      "id": "main",
+      "startFrame": 0,
+      "endFrame": 300,
+      "backgroundColor": "#1a1a2e",
+      "layers": [{
+        "id": "physics",
+        "type": "three",
+        "props": {
+          "camera": {
+            "type": "perspective",
+            "position": [0, 5, 15],
+            "lookAt": [0, 0, 0]
+          },
+          "physics": {
+            "enabled": true,
+            "gravity": [0, -9.81, 0],
+            "debug": false
+          },
+          "meshes": [
+            {
+              "id": "ground",
+              "geometry": { "type": "box", "width": 20, "height": 0.5, "depth": 20 },
+              "material": { "type": "standard", "color": "#333333" },
+              "position": [0, -2, 0],
+              "rigidBody": { "type": "static" },
+              "collider": { "type": "cuboid", "halfExtents": [10, 0.25, 10] }
+            },
+            {
+              "id": "ball1",
+              "geometry": { "type": "sphere", "radius": 0.5 },
+              "material": { "type": "standard", "color": "#ff0000" },
+              "position": [-3, 5, 0],
+              "rigidBody": {
+                "type": "dynamic",
+                "mass": 1,
+                "restitution": 0.8,
+                "friction": 0.5
+              },
+              "collider": { "type": "sphere", "radius": 0.5 },
+              "collisionEvents": {
+                "onCollisionStart": {
+                  "actions": [
+                    {
+                      "type": "spawnParticles",
+                      "params": {
+                        "count": 50,
+                        "lifetime": 0.5,
+                        "velocity": { "min": [-2, 0, -2], "max": [2, 3, 2] },
+                        "color": "#ff0000"
+                      }
+                    },
+                    {
+                      "type": "playSound",
+                      "params": { "sound": "impact.mp3", "volume": 0.5 }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "ball2",
+              "geometry": { "type": "sphere", "radius": 0.5 },
+              "material": { "type": "standard", "color": "#00ff00" },
+              "position": [0, 7, 0],
+              "rigidBody": {
+                "type": "dynamic",
+                "mass": 1,
+                "restitution": 0.9,
+                "friction": 0.3
+              },
+              "collider": { "type": "sphere", "radius": 0.5 },
+              "collisionEvents": {
+                "onCollisionStart": {
+                  "minImpulse": 5,
+                  "actions": [
+                    {
+                      "type": "spawnParticles",
+                      "params": {
+                        "count": 100,
+                        "lifetime": 0.8,
+                        "velocity": { "min": [-3, 1, -3], "max": [3, 5, 3] },
+                        "color": "#00ff00"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "ball3",
+              "geometry": { "type": "sphere", "radius": 0.5 },
+              "material": { "type": "standard", "color": "#0000ff" },
+              "position": [3, 6, 0],
+              "rigidBody": {
+                "type": "dynamic",
+                "mass": 1,
+                "restitution": 0.7,
+                "friction": 0.4
+              },
+              "collider": { "type": "sphere", "radius": 0.5 },
+              "collisionEvents": {
+                "onCollisionStart": {
+                  "actions": [
+                    {
+                      "type": "changeColor",
+                      "params": { "color": "#ffff00", "duration": 0.2 }
+                    },
+                    {
+                      "type": "spawnParticles",
+                      "params": {
+                        "count": 75,
+                        "lifetime": 0.6,
+                        "velocity": { "min": [-2, 0, -2], "max": [2, 4, 2] },
+                        "color": "#0000ff"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "lights": [
+            { "type": "ambient", "color": "#404040", "intensity": 0.5 },
+            { "type": "directional", "color": "#ffffff", "intensity": 1, "position": [5, 10, 5] }
+          ]
+        }
+      }]
+    }]
+  }
+}
