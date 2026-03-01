@@ -1,5 +1,5 @@
 {
-  "name": "Particle System Demo",
+  "name": "GPU Particle System",
   "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
   "composition": {
     "scenes": [{
@@ -10,16 +10,16 @@
       "layers": [{
         "id": "title",
         "type": "text",
-        "position": {"x": 960, "y": 400},
-        "size": {"width": 1600, "height": 200},
+        "position": {"x": 160, "y": 350},
+        "size": {"width": 1600, "height": 150},
         "props": {"text": "GPU Particle System", "fontSize": 80, "color": "#ff6600", "fontWeight": "bold", "textAlign": "center"},
         "animations": [{"type": "entrance", "effect": "fadeInUp", "duration": 30}]
       }, {
         "id": "desc",
         "type": "text",
-        "position": {"x": 960, "y": 540},
-        "size": {"width": 1400, "height": 300},
-        "props": {"text": "10,000+ Particles • GPU Shaders\nColor Gradients • Turbulence • Attractors", "fontSize": 36, "color": "#888888", "textAlign": "center"},
+        "position": {"x": 260, "y": 550},
+        "size": {"width": 1400, "height": 200},
+        "props": {"text": "10,000+ Particles • GPU Shaders\nColor Gradients • Turbulence • Attractors", "fontSize": 32, "color": "#888888", "textAlign": "center"},
         "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
       }]
     }]

@@ -10,16 +10,16 @@
       "layers": [{
         "id": "title",
         "type": "text",
-        "position": {"x": 960, "y": 400},
-        "size": {"width": 1600, "height": 200},
+        "position": {"x": 160, "y": 350},
+        "size": {"width": 1600, "height": 150},
         "props": {"text": "Complex Path", "fontSize": 80, "color": "#00ff00", "fontWeight": "bold", "textAlign": "center"},
         "animations": [{"type": "entrance", "effect": "bounceIn", "duration": 30}]
       }, {
         "id": "desc",
         "type": "text",
-        "position": {"x": 960, "y": 540},
-        "size": {"width": 1400, "height": 300},
-        "props": {"text": "Multiple Easing Functions\nElastic • Bounce • Back • Cubic", "fontSize": 36, "color": "#888888", "textAlign": "center"},
+        "position": {"x": 260, "y": 550},
+        "size": {"width": 1400, "height": 200},
+        "props": {"text": "Multiple Easing Functions\nElastic • Bounce • Back • Cubic", "fontSize": 32, "color": "#888888", "textAlign": "center"},
         "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
       }]
     }]

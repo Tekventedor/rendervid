@@ -1,5 +1,5 @@
 {
-  "name": "Physics Simulation Demo",
+  "name": "Physics Simulation",
   "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
   "composition": {
     "scenes": [{
@@ -10,16 +10,16 @@
       "layers": [{
         "id": "title",
         "type": "text",
-        "position": {"x": 960, "y": 400},
-        "size": {"width": 1600, "height": 200},
+        "position": {"x": 160, "y": 350},
+        "size": {"width": 1600, "height": 150},
         "props": {"text": "Physics Simulation", "fontSize": 80, "color": "#00ffff", "fontWeight": "bold", "textAlign": "center"},
         "animations": [{"type": "entrance", "effect": "fadeInUp", "duration": 30}]
       }, {
         "id": "desc",
         "type": "text",
-        "position": {"x": 960, "y": 540},
-        "size": {"width": 1400, "height": 300},
-        "props": {"text": "Rapier3D • Rigid Bodies • Collisions\nDynamic Physics • 100+ Objects @ 60fps", "fontSize": 36, "color": "#888888", "textAlign": "center"},
+        "position": {"x": 260, "y": 550},
+        "size": {"width": 1400, "height": 200},
+        "props": {"text": "Rapier3D • Rigid Bodies • Collisions\nDynamic Physics • 100+ Objects @ 60fps", "fontSize": 32, "color": "#888888", "textAlign": "center"},
         "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
       }]
     }]
