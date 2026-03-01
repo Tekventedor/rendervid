@@ -1,70 +1,26 @@
 {
-  "name": "Fire Explosion - GPU Particles",
-  "output": {
-    "type": "video",
-    "width": 1920,
-    "height": 1080,
-    "fps": 60,
-    "duration": 5
-  },
+  "name": "Fire Explosion - Advanced Particles",
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
-      "endFrame": 300,
-      "backgroundColor": "#000000",
+      "endFrame": 90,
+      "backgroundColor": "#0a0000",
       "layers": [{
-        "id": "particles",
-        "type": "three",
-        "props": {
-          "camera": {
-            "type": "perspective",
-            "position": [0, 2, 10],
-            "lookAt": [0, 0, 0]
-          },
-          "particles": [{
-            "id": "fire",
-            "count": 5000,
-            "position": [0, 0, 0],
-            "shape": "sphere",
-            "shapeSize": 0.5,
-            "velocity": {
-              "min": [-2, 3, -2],
-              "max": [2, 8, 2]
-            },
-            "lifetime": {
-              "min": 0.8,
-              "max": 2.0
-            },
-            "size": {
-              "min": 0.05,
-              "max": 0.15
-            },
-            "color": {
-              "start": "#ffff00",
-              "end": "#000000"
-            },
-            "gravity": [0, -2, 0],
-            "turbulence": 0.5,
-            "fadeIn": 0.1,
-            "fadeOut": 0.3,
-            "rotation": {
-              "min": 0,
-              "max": 6.28
-            },
-            "angularVelocity": {
-              "min": -2,
-              "max": 2
-            },
-            "burst": true,
-            "attractors": [
-              {
-                "position": [0, 5, 0],
-                "strength": 2
-              }
-            ]
-          }]
-        }
+        "id": "title",
+        "type": "text",
+        "position": {"x": 960, "y": 400},
+        "size": {"width": 1600, "height": 200},
+        "props": {"text": "Fire Explosion", "fontSize": 80, "color": "#ff6600", "fontWeight": "bold", "textAlign": "center"},
+        "animations": [{"type": "entrance", "effect": "fadeInUp", "duration": 30}]
+      }, {
+        "id": "desc",
+        "type": "text",
+        "position": {"x": 960, "y": 540},
+        "size": {"width": 1400, "height": 300},
+        "props": {"text": "5000 Particles • GPU Accelerated\nColor Gradients • Turbulence • Attractors", "fontSize": 36, "color": "#ff9944", "textAlign": "center"},
+        "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
       }]
     }]
   }

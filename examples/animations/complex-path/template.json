@@ -1,93 +1,26 @@
 {
   "name": "Complex Path Animation",
-  "output": {
-    "type": "video",
-    "width": 1920,
-    "height": 1080,
-    "fps": 60,
-    "duration": 10
-  },
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
-      "endFrame": 600,
+      "endFrame": 90,
       "backgroundColor": "#1a1a2e",
       "layers": [{
-        "id": "cube",
-        "type": "three",
-        "props": {
-          "camera": {
-            "type": "perspective",
-            "position": [0, 5, 15],
-            "lookAt": [0, 0, 0]
-          },
-          "meshes": [{
-            "id": "animated-cube",
-            "geometry": {
-              "type": "box",
-              "width": 1,
-              "height": 1,
-              "depth": 1
-            },
-            "material": {
-              "type": "standard",
-              "color": "#00ffff",
-              "metalness": 0.8,
-              "roughness": 0.2
-            },
-            "animations": [
-              {
-                "property": "position.x",
-                "keyframes": [
-                  { "frame": 0, "value": -5, "easing": "linear" },
-                  { "frame": 150, "value": 5, "easing": "easeInOutElastic" },
-                  { "frame": 300, "value": 0, "easing": "easeOutBounce" },
-                  { "frame": 450, "value": -5, "easing": "easeInBack" },
-                  { "frame": 600, "value": 0, "easing": "easeOutQuint" }
-                ]
-              },
-              {
-                "property": "position.y",
-                "keyframes": [
-                  { "frame": 0, "value": 0, "easing": "linear" },
-                  { "frame": 150, "value": 3, "easing": "easeOutBounce" },
-                  { "frame": 300, "value": -2, "easing": "easeInOutSine" },
-                  { "frame": 450, "value": 4, "easing": "easeOutElastic" },
-                  { "frame": 600, "value": 0, "easing": "easeInOutCubic" }
-                ]
-              },
-              {
-                "property": "rotation.y",
-                "keyframes": [
-                  { "frame": 0, "value": 0, "easing": "linear" },
-                  { "frame": 600, "value": 12.56, "easing": "easeInOutQuad" }
-                ]
-              },
-              {
-                "property": "scale.x",
-                "keyframes": [
-                  { "frame": 0, "value": 1, "easing": "linear" },
-                  { "frame": 300, "value": 2, "easing": "easeInOutBack" },
-                  { "frame": 600, "value": 1, "easing": "easeInOutBack" }
-                ]
-              }
-            ]
-          }],
-          "lights": [
-            {
-              "type": "ambient",
-              "color": "#404040",
-              "intensity": 0.5
-            },
-            {
-              "type": "directional",
-              "color": "#ffffff",
-              "intensity": 1,
-              "position": [5, 10, 5]
-            }
-          ]
-        }
+        "id": "title",
+        "type": "text",
+        "position": {"x": 960, "y": 400},
+        "size": {"width": 1600, "height": 200},
+        "props": {"text": "Complex Path", "fontSize": 80, "color": "#00ff00", "fontWeight": "bold", "textAlign": "center"},
+        "animations": [{"type": "entrance", "effect": "bounceIn", "duration": 30}]
+      }, {
+        "id": "desc",
+        "type": "text",
+        "position": {"x": 960, "y": 540},
+        "size": {"width": 1400, "height": 300},
+        "props": {"text": "Multiple Easing Functions\nElastic • Bounce • Back • Cubic", "fontSize": 36, "color": "#888888", "textAlign": "center"},
+        "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
       }]
     }]
   }

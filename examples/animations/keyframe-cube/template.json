@@ -1,73 +1,27 @@
 {
-  "name": "Animated Cube - Keyframe Demo",
-  "description": "Cube with keyframe animations",
-  "version": "1.0.0",
-  "output": {
-    "type": "video",
-    "width": 1920,
-    "height": 1080,
-    "fps": 60,
-    "duration": 5
-  },
-  "inputs": [],
+  "name": "Animation Engine Demo",
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
   "composition": {
-    "scenes": [
-      {
-        "id": "main",
-        "startFrame": 0,
-        "endFrame": 300,
-        "backgroundColor": "#1a1a2e",
-        "layers": [
-          {
-            "id": "three-scene",
-            "type": "three",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "props": {
-              "camera": {
-                "type": "perspective",
-                "fov": 60,
-                "position": [0, 0, 10]
-              },
-              "lights": [
-                {
-                  "type": "ambient",
-                  "intensity": 0.5
-                },
-                {
-                  "type": "directional",
-                  "position": [5, 5, 5],
-                  "intensity": 1
-                }
-              ],
-              "meshes": [
-                {
-                  "id": "cube",
-                  "geometry": { "type": "box", "width": 1, "height": 1, "depth": 1 },
-                  "material": { "type": "standard", "color": "#ffe66d", "metalness": 0.5, "roughness": 0.5 },
-                  "animations": [
-                    {
-                      "property": "position.y",
-                      "keyframes": [
-                        { "frame": 0, "value": 0 },
-                        { "frame": 150, "value": 3 },
-                        { "frame": 300, "value": 0 }
-                      ]
-                    },
-                    {
-                      "property": "rotation.y",
-                      "keyframes": [
-                        { "frame": 0, "value": 0 },
-                        { "frame": 300, "value": 6.28 }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        ]
-      }
-    ]
+    "scenes": [{
+      "id": "main",
+      "startFrame": 0,
+      "endFrame": 90,
+      "backgroundColor": "#1a1a2e",
+      "layers": [{
+        "id": "title",
+        "type": "text",
+        "position": {"x": 960, "y": 400},
+        "size": {"width": 1600, "height": 200},
+        "props": {"text": "Animation Engine", "fontSize": 80, "color": "#00ff00", "fontWeight": "bold", "textAlign": "center"},
+        "animations": [{"type": "entrance", "effect": "bounceIn", "duration": 30}]
+      }, {
+        "id": "desc",
+        "type": "text",
+        "position": {"x": 960, "y": 540},
+        "size": {"width": 1400, "height": 300},
+        "props": {"text": "30+ Easing Functions\nElastic • Bounce • Back • Cubic • Sine", "fontSize": 36, "color": "#888888", "textAlign": "center"},
+        "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 30, "delay": 15}]
+      }]
+    }]
   }
 }
