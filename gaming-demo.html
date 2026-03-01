@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gaming Framework Demo</title>
+  <style>
+    body { margin: 0; padding: 20px; font-family: system-ui; background: #1a1a2e; color: #fff; }
+    h1 { margin: 0 0 20px 0; }
+    #container { width: 960px; height: 540px; border: 2px solid #444; margin: 20px 0; }
+    button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; }
+    select { padding: 10px; font-size: 16px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>🎮 Gaming Framework Demo</h1>
+  
+  <select id="example">
+    <option value="physics">Physics - Falling Boxes</option>
+    <option value="particles">Particles - Explosion</option>
+    <option value="animations">Animations - Multiple Easings</option>
+    <option value="behaviors">Behaviors - Orbit & Pulse</option>
+  </select>
+  
+  <button onclick="loadExample()">Load Example</button>
+  <button onclick="startRender()">Start Render</button>
+  
+  <div id="container"></div>
+  
+  <script type="module">
+    import { Player } from './packages/player/dist/index.js';
+    import { createRoot } from 'react-dom/client';
+    import React from 'react';
+    
+    const templates = {
+      physics: await fetch('./examples/physics/falling-boxes/template.json').then(r => r.json()),
+      particles: await fetch('./examples/particles/explosion-mvp/template.json').then(r => r.json()),
+      animations: await fetch('./examples/animations/keyframe-cube/template.json').then(r => r.json()),
+      behaviors: await fetch('./examples/behaviors/orbiting-cube/template.json').then(r => r.json()),
+    };
+    
+    let root = null;
+    
+    window.loadExample = () => {
+      const example = document.getElementById('example').value;
+      const container = document.getElementById('container');
+      
+      if (!root) {
+        root = createRoot(container);
+      }
+      
+      root.render(React.createElement(Player, {
+        template: templates[example],
+        autoplay: false,
+        controls: true
+      }));
+    };
+    
+    window.startRender = () => {
+      // Trigger play
+      const video = document.querySelector('video');
+      if (video) video.play();
+    };
+    
+    // Load first example on page load
+    loadExample();
+  </script>
+</body>
+</html>
