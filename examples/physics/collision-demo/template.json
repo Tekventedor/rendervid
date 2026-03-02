@@ -1,0 +1,169 @@
+{
+  "name": "Collision Events",
+  "description": "Real 2D elastic collision physics simulation — frame-by-frame equations of motion with wall bouncing.",
+  "version": "2.0.0",
+  "output": {
+    "type": "video",
+    "width": 3840,
+    "height": 2160,
+    "fps": 30,
+    "duration": 8
+  },
+  "customComponents": {
+    "CollisionPhysics": {
+      "type": "inline",
+      "description": "Elastic collision physics: two balls approach, collide at center, bounce off walls. Uses 1D elastic collision equations: v1' = ((m1-m2)v1 + 2m2*v2)/(m1+m2), v2' = ((m2-m1)v2 + 2m1*v1)/(m1+m2). Particles scatter radially with gravity.",
+      "code": "function(props){var f=props.frame,W=props.layerSize.width,H=props.layerSize.height,yC=H/2,CF=60,r=120,m1=5,m2=4.5,v1i=27,v2i=-27,v1f=((m1-m2)*v1i+2*m2*v2i)/(m1+m2),v2f=((m2-m1)*v2i+2*m1*v1i)/(m1+m2);function bounce(x0,v0,n){var x=x0,v=v0;for(var t=0;t<n;t++){x+=v;if(x<r){x=2*r-x;v=Math.abs(v);}if(x>W-r){x=2*(W-r)-x;v=-Math.abs(v);}}return x;}var dt=f>=CF?f-CF:0,x1=f<CF?180+v1i*f:bounce(1800,v1f,dt),x2=f<CF?3660+v2i*f:bounce(2040,v2f,dt),els=[],pC=['#ffff00','#ff8800','#00ff88','#ff4444','#ffaa00','#aa44ff','#44ff88','#ff8844','#ccff00','#ff00aa'],pS=[50,70,45,60,40,55,35,65,42,52];if(f>=CF){for(var i=0;i<10;i++){var al=Math.max(0,1-dt/80);if(al>0){var ang=(i/10)*2*Math.PI,spd=20+(i%3)*10;els.push(React.createElement('ellipse',{key:'p'+i,cx:1920+Math.cos(ang)*spd*dt,cy:yC+Math.sin(ang)*spd*dt+0.15*dt*dt,rx:pS[i],ry:pS[i],fill:pC[i],opacity:al}));}}if(dt<20){var gR=130+dt*25,gO=0.6*(1-dt/20),fR=80*(1-dt/20);els.push(React.createElement('ellipse',{key:'gl',cx:1920,cy:yC,rx:gR,ry:gR,fill:'none',stroke:'#aaffff',strokeWidth:8,opacity:gO}));els.push(React.createElement('ellipse',{key:'fl',cx:1920,cy:yC,rx:fR,ry:fR,fill:'#ffffff',opacity:gO}));}}els.push(React.createElement('ellipse',{key:'a',cx:x1,cy:yC,rx:r,ry:r,fill:'#00ccff'}));els.push(React.createElement('ellipse',{key:'b',cx:x2,cy:yC,rx:r,ry:r,fill:'#ff44ff'}));return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0,overflow:'hidden'}},...els);}"
+    }
+  },
+  "composition": {
+    "scenes": [{
+      "id": "main",
+      "startFrame": 0,
+      "endFrame": 240,
+      "layers": [
+        {
+          "id": "bg",
+          "type": "shape",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 3840, "height": 2160},
+          "props": {"shape": "rectangle", "fill": "#050510"}
+        },
+        {
+          "id": "ch-h",
+          "type": "shape",
+          "position": {"x": 0, "y": 1078},
+          "size": {"width": 3840, "height": 4},
+          "props": {"shape": "rectangle", "fill": "#1a1a44"}
+        },
+        {
+          "id": "ch-v",
+          "type": "shape",
+          "position": {"x": 1918, "y": 0},
+          "size": {"width": 4, "height": 2160},
+          "props": {"shape": "rectangle", "fill": "#1a1a44"}
+        },
+        {
+          "id": "physics",
+          "type": "custom",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 3840, "height": 2160},
+          "customComponent": {
+            "name": "CollisionPhysics",
+            "props": {}
+          }
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "position": {"x": 0, "y": 100},
+          "size": {"width": 3840, "height": 160},
+          "props": {
+            "text": "COLLISION EVENTS",
+            "fontSize": 120,
+            "fontWeight": "bold",
+            "color": "#00ffff",
+            "textAlign": "center",
+            "letterSpacing": 16
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 241}]
+        },
+        {
+          "id": "subtitle",
+          "type": "text",
+          "position": {"x": 0, "y": 270},
+          "size": {"width": 3840, "height": 80},
+          "props": {
+            "text": "1D Elastic Collision  •  Frame-by-Frame Physics Simulation",
+            "fontSize": 48,
+            "color": "#445566",
+            "textAlign": "center"
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 15, "duration": 226}]
+        },
+        {
+          "id": "label-a",
+          "type": "text",
+          "position": {"x": 160, "y": 940},
+          "size": {"width": 960, "height": 260},
+          "props": {
+            "text": "PARTICLE A\nv₀ = +810 px/s\nm = 5.0 kg",
+            "fontSize": 52,
+            "color": "#00ccff",
+            "lineHeight": 1.6
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 236}]
+        },
+        {
+          "id": "label-b",
+          "type": "text",
+          "position": {"x": 2720, "y": 940},
+          "size": {"width": 960, "height": 260},
+          "props": {
+            "text": "PARTICLE B\nv₀ = −810 px/s\nm = 4.5 kg",
+            "fontSize": 52,
+            "color": "#ff44ff",
+            "textAlign": "right",
+            "lineHeight": 1.6
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 5, "duration": 236}]
+        },
+        {
+          "id": "banner",
+          "type": "text",
+          "position": {"x": 0, "y": 1680},
+          "size": {"width": 3840, "height": 120},
+          "props": {
+            "text": "⚡  ELASTIC COLLISION  —  v₁' = −724.8 px/s  •  v₂' = +895.2 px/s  ⚡",
+            "fontSize": 56,
+            "color": "#ffff00",
+            "textAlign": "center",
+            "fontWeight": "bold"
+          },
+          "animations": [{"type": "entrance", "effect": "slideInDown", "delay": 65, "duration": 176}]
+        },
+        {
+          "id": "energy",
+          "type": "text",
+          "position": {"x": 0, "y": 1840},
+          "size": {"width": 3840, "height": 80},
+          "props": {
+            "text": "KE_initial = 3,463 J   →   KE_final = 3,463 J   •   ΔKE = 0   •   Δp = 0   •   η = 100%",
+            "fontSize": 44,
+            "color": "#556677",
+            "textAlign": "center"
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 90, "duration": 151}]
+        },
+        {
+          "id": "equation",
+          "type": "text",
+          "position": {"x": 0, "y": 1960},
+          "size": {"width": 3840, "height": 80},
+          "props": {
+            "text": "v₁' = ((m₁−m₂)v₁ + 2m₂v₂) / (m₁+m₂)   •   v₂' = ((m₂−m₁)v₂ + 2m₁v₁) / (m₁+m₂)",
+            "fontSize": 38,
+            "color": "#334455",
+            "textAlign": "center"
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 120, "duration": 121}]
+        },
+        {
+          "id": "watermark",
+          "type": "text",
+          "position": {"x": 3040, "y": 40},
+          "size": {"width": 760, "height": 120},
+          "props": {
+            "text": "RenderVid by\nFlowHunt.io",
+            "fontSize": 32,
+            "fontWeight": "600",
+            "color": "#ffffff",
+            "textAlign": "right",
+            "lineHeight": 1.3,
+            "opacity": 0.5
+          }
+        }
+      ]
+    }]
+  }
+}

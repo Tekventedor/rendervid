@@ -32,6 +32,7 @@ export function ThreeLayer({ layer, frame, fps, sceneDuration }: ThreeLayerProps
     camera,
     lights,
     meshes,
+    particles,
     background,
     fog,
     antialias = true,
@@ -76,6 +77,7 @@ export function ThreeLayer({ layer, frame, fps, sceneDuration }: ThreeLayerProps
           camera={camera}
           lights={lights}
           meshes={meshes}
+          particles={particles}
           background={background}
           fog={fog}
           shadows={shadows}

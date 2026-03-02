@@ -1,0 +1,855 @@
+{
+  "name": "Asteroid Battle - Space Combat",
+  "description": "Epic space battle scene inspired by classic arcade space shooters. Player fighter versus enemy squadron amid asteroid field, with full game HUD overlay.",
+  "version": "1.0.0",
+  "output": {
+    "type": "video",
+    "width": 3840,
+    "height": 2160,
+    "fps": 30,
+    "duration": 10
+  },
+  "inputs": [],
+  "composition": {
+    "scenes": [
+      {
+        "id": "space-battle",
+        "startFrame": 0,
+        "endFrame": 300,
+        "layers": [
+          {
+            "id": "space-bg",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 3840, "height": 2160 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "#000008"
+            }
+          },
+          {
+            "id": "nebula-left",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 3840, "height": 2160 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "radial-gradient(ellipse at 20% 40%, rgba(60,20,100,0.35) 0%, rgba(0,0,20,0) 55%)"
+            }
+          },
+          {
+            "id": "nebula-right",
+            "type": "shape",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 3840, "height": 2160 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "radial-gradient(ellipse at 80% 60%, rgba(20,40,100,0.3) 0%, rgba(0,0,20,0) 50%)"
+            }
+          },
+          {
+            "id": "three-scene",
+            "type": "three",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 3840, "height": 2160 },
+            "props": {
+              "camera": {
+                "type": "perspective",
+                "fov": 70,
+                "position": [0, 3.5, 14],
+                "lookAt": [0, 0, 0]
+              },
+              "lights": [
+                {
+                  "type": "ambient",
+                  "color": "#0a0f2a",
+                  "intensity": 0.5
+                },
+                {
+                  "type": "directional",
+                  "color": "#fffadc",
+                  "intensity": 1.8,
+                  "position": [15, 12, 8]
+                },
+                {
+                  "type": "point",
+                  "color": "#4466ff",
+                  "intensity": 2.5,
+                  "position": [0, -0.5, 11],
+                  "distance": 10
+                },
+                {
+                  "type": "point",
+                  "color": "#ff8844",
+                  "intensity": 4.0,
+                  "position": [-4, 1, -2],
+                  "distance": 14
+                },
+                {
+                  "type": "point",
+                  "color": "#ff3300",
+                  "intensity": 2.0,
+                  "position": [5, 2, -5],
+                  "distance": 10
+                }
+              ],
+              "meshes": [
+                {
+                  "id": "player-body",
+                  "geometry": { "type": "box", "width": 1.5, "height": 0.35, "depth": 3.0 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#aabbdd",
+                    "metalness": 0.7,
+                    "roughness": 0.25,
+                    "emissive": "#112244",
+                    "emissiveIntensity": 0.3
+                  },
+                  "position": [0, 0, 10],
+                  "castShadow": true
+                },
+                {
+                  "id": "player-cockpit",
+                  "geometry": { "type": "box", "width": 0.6, "height": 0.5, "depth": 1.2 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#2255aa",
+                    "metalness": 0.3,
+                    "roughness": 0.1,
+                    "emissive": "#0033aa",
+                    "emissiveIntensity": 0.6
+                  },
+                  "position": [0, 0.32, 10.2]
+                },
+                {
+                  "id": "player-lwing",
+                  "geometry": { "type": "box", "width": 3.0, "height": 0.1, "depth": 1.8 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#8899bb",
+                    "metalness": 0.65,
+                    "roughness": 0.35
+                  },
+                  "position": [-2.0, -0.1, 10.6],
+                  "castShadow": true
+                },
+                {
+                  "id": "player-rwing",
+                  "geometry": { "type": "box", "width": 3.0, "height": 0.1, "depth": 1.8 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#8899bb",
+                    "metalness": 0.65,
+                    "roughness": 0.35
+                  },
+                  "position": [2.0, -0.1, 10.6],
+                  "castShadow": true
+                },
+                {
+                  "id": "player-engine",
+                  "geometry": { "type": "cylinder", "radiusTop": 0.12, "radiusBottom": 0.22, "height": 0.5, "radialSegments": 12 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#2244ff",
+                    "metalness": 0,
+                    "roughness": 1,
+                    "emissive": "#2244ff",
+                    "emissiveIntensity": 3.0
+                  },
+                  "position": [0, 0, 11.65],
+                  "rotation": [1.5708, 0, 0]
+                },
+                {
+                  "id": "player-lwing-engine",
+                  "geometry": { "type": "cylinder", "radiusTop": 0.07, "radiusBottom": 0.12, "height": 0.35, "radialSegments": 8 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#4488ff",
+                    "emissive": "#4488ff",
+                    "emissiveIntensity": 2.0,
+                    "metalness": 0,
+                    "roughness": 1
+                  },
+                  "position": [-2.0, -0.1, 11.5],
+                  "rotation": [1.5708, 0, 0]
+                },
+                {
+                  "id": "player-rwing-engine",
+                  "geometry": { "type": "cylinder", "radiusTop": 0.07, "radiusBottom": 0.12, "height": 0.35, "radialSegments": 8 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#4488ff",
+                    "emissive": "#4488ff",
+                    "emissiveIntensity": 2.0,
+                    "metalness": 0,
+                    "roughness": 1
+                  },
+                  "position": [2.0, -0.1, 11.5],
+                  "rotation": [1.5708, 0, 0]
+                },
+                {
+                  "id": "enemy-1",
+                  "geometry": { "type": "cone", "radius": 0.85, "height": 3.2, "radialSegments": 6 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#cc3322",
+                    "metalness": 0.65,
+                    "roughness": 0.3,
+                    "emissive": "#881100",
+                    "emissiveIntensity": 0.4
+                  },
+                  "position": [-5.5, 1.5, -3],
+                  "rotation": [-1.5708, 0, 0.3],
+                  "castShadow": true,
+                  "autoRotate": [0, 0.02, 0]
+                },
+                {
+                  "id": "enemy-2",
+                  "geometry": { "type": "cone", "radius": 0.85, "height": 3.2, "radialSegments": 6 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#cc3322",
+                    "metalness": 0.65,
+                    "roughness": 0.3,
+                    "emissive": "#881100",
+                    "emissiveIntensity": 0.4
+                  },
+                  "position": [5.0, -0.8, -1.5],
+                  "rotation": [-1.5708, 0, -0.25],
+                  "castShadow": true,
+                  "autoRotate": [0, -0.02, 0]
+                },
+                {
+                  "id": "enemy-3",
+                  "geometry": { "type": "cone", "radius": 0.75, "height": 2.8, "radialSegments": 6 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#aa2211",
+                    "metalness": 0.65,
+                    "roughness": 0.3,
+                    "emissive": "#661100",
+                    "emissiveIntensity": 0.4
+                  },
+                  "position": [0, 3.5, -9],
+                  "rotation": [-1.5708, 0, 0],
+                  "castShadow": true,
+                  "autoRotate": [0.015, 0.02, 0]
+                },
+                {
+                  "id": "enemy-4",
+                  "geometry": { "type": "cone", "radius": 0.9, "height": 3.5, "radialSegments": 6 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#dd4433",
+                    "metalness": 0.6,
+                    "roughness": 0.35,
+                    "emissive": "#991100",
+                    "emissiveIntensity": 0.5
+                  },
+                  "position": [-2.5, -1.5, -7],
+                  "rotation": [-1.5708, 0, 0.15],
+                  "castShadow": true,
+                  "autoRotate": [0, 0.025, 0]
+                },
+                {
+                  "id": "planet",
+                  "geometry": { "type": "sphere", "radius": 15, "widthSegments": 48, "heightSegments": 24 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#1a4a8a",
+                    "metalness": 0.05,
+                    "roughness": 0.95,
+                    "emissive": "#0a2050",
+                    "emissiveIntensity": 0.15
+                  },
+                  "position": [-22, -10, -55],
+                  "autoRotate": [0, 0.002, 0]
+                },
+                {
+                  "id": "planet-ring",
+                  "geometry": { "type": "torus", "radius": 17, "tube": 0.9, "radialSegments": 16, "tubularSegments": 80 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#4488cc",
+                    "metalness": 0.1,
+                    "roughness": 0.6,
+                    "emissive": "#2266aa",
+                    "emissiveIntensity": 0.35,
+                    "transparent": true,
+                    "opacity": 0.55
+                  },
+                  "position": [-22, -10, -55],
+                  "rotation": [0.3, 0, 0.2],
+                  "autoRotate": [0, 0.002, 0]
+                },
+                {
+                  "id": "moon",
+                  "geometry": { "type": "sphere", "radius": 3.2, "widthSegments": 32, "heightSegments": 16 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#888877",
+                    "metalness": 0.1,
+                    "roughness": 0.9
+                  },
+                  "position": [-8, 8, -35],
+                  "autoRotate": [0, 0.005, 0.001]
+                },
+                {
+                  "id": "asteroid-1",
+                  "geometry": { "type": "sphere", "radius": 2.1, "widthSegments": 8, "heightSegments": 6 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#554433",
+                    "metalness": 0.1,
+                    "roughness": 0.97
+                  },
+                  "position": [-9, 1.5, 0],
+                  "autoRotate": [0.008, 0.012, 0.006]
+                },
+                {
+                  "id": "asteroid-2",
+                  "geometry": { "type": "sphere", "radius": 1.3, "widthSegments": 7, "heightSegments": 5 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#665544",
+                    "metalness": 0.1,
+                    "roughness": 0.97
+                  },
+                  "position": [7.5, -1.5, -5],
+                  "autoRotate": [0.015, 0.008, 0.012]
+                },
+                {
+                  "id": "asteroid-3",
+                  "geometry": { "type": "sphere", "radius": 0.8, "widthSegments": 6, "heightSegments": 5 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#443322",
+                    "metalness": 0.1,
+                    "roughness": 0.97
+                  },
+                  "position": [3.2, 3.5, -3],
+                  "autoRotate": [0.02, 0.015, 0.018]
+                },
+                {
+                  "id": "asteroid-4",
+                  "geometry": { "type": "sphere", "radius": 3.5, "widthSegments": 8, "heightSegments": 6 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#4a3a2a",
+                    "metalness": 0.1,
+                    "roughness": 0.97
+                  },
+                  "position": [13, -3, -18],
+                  "autoRotate": [0.004, 0.007, 0.003]
+                },
+                {
+                  "id": "asteroid-5",
+                  "geometry": { "type": "sphere", "radius": 1.6, "widthSegments": 7, "heightSegments": 5 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#554444",
+                    "metalness": 0.1,
+                    "roughness": 0.97
+                  },
+                  "position": [-13, -2.5, -10],
+                  "autoRotate": [0.01, 0.006, 0.014]
+                },
+                {
+                  "id": "debris-1",
+                  "geometry": { "type": "box", "width": 0.4, "height": 0.35, "depth": 0.3 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#ff6622",
+                    "emissive": "#ff4400",
+                    "emissiveIntensity": 1.5,
+                    "metalness": 0.8,
+                    "roughness": 0.2
+                  },
+                  "position": [-4.2, 1.2, -2],
+                  "autoRotate": [0.05, 0.04, 0.07]
+                },
+                {
+                  "id": "debris-2",
+                  "geometry": { "type": "box", "width": 0.3, "height": 0.4, "depth": 0.25 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#ff8833",
+                    "emissive": "#ff5500",
+                    "emissiveIntensity": 1.8,
+                    "metalness": 0.7,
+                    "roughness": 0.3
+                  },
+                  "position": [-3.5, 1.8, -1.5],
+                  "autoRotate": [0.08, 0.03, 0.06]
+                },
+                {
+                  "id": "debris-3",
+                  "geometry": { "type": "box", "width": 0.25, "height": 0.3, "depth": 0.4 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#ff4400",
+                    "emissive": "#ff2200",
+                    "emissiveIntensity": 2.0,
+                    "metalness": 0.9,
+                    "roughness": 0.1
+                  },
+                  "position": [-4.8, 0.6, -2.5],
+                  "autoRotate": [0.06, 0.09, 0.04]
+                },
+                {
+                  "id": "debris-4",
+                  "geometry": { "type": "box", "width": 0.2, "height": 0.25, "depth": 0.2 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#ffaa44",
+                    "emissive": "#ff8800",
+                    "emissiveIntensity": 1.5,
+                    "metalness": 0.8,
+                    "roughness": 0.2
+                  },
+                  "position": [-3.8, 0.3, -1.8],
+                  "autoRotate": [0.07, 0.05, 0.09]
+                },
+                {
+                  "id": "debris-5",
+                  "geometry": { "type": "box", "width": 0.35, "height": 0.2, "depth": 0.3 },
+                  "material": {
+                    "type": "standard",
+                    "color": "#ff9933",
+                    "emissive": "#ff6600",
+                    "emissiveIntensity": 1.2,
+                    "metalness": 0.85,
+                    "roughness": 0.15
+                  },
+                  "position": [-4.5, 1.8, -3.2],
+                  "autoRotate": [0.09, 0.07, 0.05]
+                }
+              ],
+              "antialias": true,
+              "toneMapping": {
+                "type": "aces",
+                "exposure": 1.2
+              }
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "duration": 20
+              }
+            ]
+          },
+
+          {
+            "id": "hud-hull-label",
+            "type": "text",
+            "position": { "x": 120, "y": 24 },
+            "size": { "width": 440, "height": 44 },
+            "props": {
+              "text": "HULL",
+              "fontSize": 26,
+              "color": "#44ff88",
+              "fontWeight": "bold",
+              "letterSpacing": 6
+            }
+          },
+          {
+            "id": "hud-hull-bg",
+            "type": "shape",
+            "position": { "x": 120, "y": 64 },
+            "size": { "width": 440, "height": 44 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(0,0,0,0.65)",
+              "cornerRadius": 6
+            }
+          },
+          {
+            "id": "hud-hull-bar",
+            "type": "shape",
+            "position": { "x": 126, "y": 70 },
+            "size": { "width": 376, "height": 32 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "linear-gradient(90deg, #22cc44, #88ff44)",
+              "cornerRadius": 4
+            }
+          },
+          {
+            "id": "hud-shield-label",
+            "type": "text",
+            "position": { "x": 120, "y": 124 },
+            "size": { "width": 440, "height": 44 },
+            "props": {
+              "text": "SHIELD",
+              "fontSize": 26,
+              "color": "#4488ff",
+              "fontWeight": "bold",
+              "letterSpacing": 6
+            }
+          },
+          {
+            "id": "hud-shield-bg",
+            "type": "shape",
+            "position": { "x": 120, "y": 164 },
+            "size": { "width": 440, "height": 44 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(0,0,0,0.65)",
+              "cornerRadius": 6
+            }
+          },
+          {
+            "id": "hud-shield-bar",
+            "type": "shape",
+            "position": { "x": 126, "y": 170 },
+            "size": { "width": 260, "height": 32 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "linear-gradient(90deg, #2244ff, #44aaff)",
+              "cornerRadius": 4
+            }
+          },
+          {
+            "id": "hud-energy-label",
+            "type": "text",
+            "position": { "x": 120, "y": 224 },
+            "size": { "width": 440, "height": 44 },
+            "props": {
+              "text": "ENERGY",
+              "fontSize": 26,
+              "color": "#ffcc44",
+              "fontWeight": "bold",
+              "letterSpacing": 6
+            }
+          },
+          {
+            "id": "hud-energy-bg",
+            "type": "shape",
+            "position": { "x": 120, "y": 264 },
+            "size": { "width": 440, "height": 44 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(0,0,0,0.65)",
+              "cornerRadius": 6
+            }
+          },
+          {
+            "id": "hud-energy-bar",
+            "type": "shape",
+            "position": { "x": 126, "y": 270 },
+            "size": { "width": 420, "height": 32 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "linear-gradient(90deg, #ffaa00, #ffdd44)",
+              "cornerRadius": 4
+            }
+          },
+
+          {
+            "id": "hud-score-bg",
+            "type": "shape",
+            "position": { "x": 3120, "y": 40 },
+            "size": { "width": 620, "height": 180 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(0,0,0,0.7)",
+              "cornerRadius": 12
+            }
+          },
+          {
+            "id": "hud-score",
+            "type": "text",
+            "position": { "x": 3130, "y": 56 },
+            "size": { "width": 600, "height": 70 },
+            "props": {
+              "text": "SCORE: 14,250",
+              "fontSize": 44,
+              "color": "#ffdd44",
+              "fontWeight": "bold",
+              "textAlign": "right",
+              "letterSpacing": 4
+            }
+          },
+          {
+            "id": "hud-kills",
+            "type": "text",
+            "position": { "x": 3130, "y": 124 },
+            "size": { "width": 600, "height": 56 },
+            "props": {
+              "text": "KILLS: 3  |  WAVE: 2",
+              "fontSize": 32,
+              "color": "#ff8866",
+              "textAlign": "right",
+              "letterSpacing": 4
+            }
+          },
+          {
+            "id": "hud-sector",
+            "type": "text",
+            "position": { "x": 3130, "y": 174 },
+            "size": { "width": 600, "height": 48 },
+            "props": {
+              "text": "SECTOR 7  •  HOSTILE ZONE",
+              "fontSize": 26,
+              "color": "#888888",
+              "textAlign": "right",
+              "letterSpacing": 2
+            }
+          },
+
+          {
+            "id": "radar-bg",
+            "type": "shape",
+            "position": { "x": 1720, "y": 1740 },
+            "size": { "width": 400, "height": 400 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "rgba(0,15,0,0.8)"
+            }
+          },
+          {
+            "id": "radar-ring-outer",
+            "type": "shape",
+            "position": { "x": 1710, "y": 1730 },
+            "size": { "width": 420, "height": 420 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "transparent",
+              "border": "4px solid rgba(0,200,0,0.5)"
+            }
+          },
+          {
+            "id": "radar-ring-inner",
+            "type": "shape",
+            "position": { "x": 1786, "y": 1806 },
+            "size": { "width": 268, "height": 268 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "transparent",
+              "border": "2px solid rgba(0,150,0,0.3)"
+            }
+          },
+          {
+            "id": "radar-crosshair-h",
+            "type": "shape",
+            "position": { "x": 1720, "y": 1938 },
+            "size": { "width": 400, "height": 2 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(0,150,0,0.3)"
+            }
+          },
+          {
+            "id": "radar-crosshair-v",
+            "type": "shape",
+            "position": { "x": 1918, "y": 1740 },
+            "size": { "width": 2, "height": 400 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(0,150,0,0.3)"
+            }
+          },
+          {
+            "id": "radar-player",
+            "type": "shape",
+            "position": { "x": 1912, "y": 1932 },
+            "size": { "width": 16, "height": 16 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#00ff44"
+            }
+          },
+          {
+            "id": "radar-enemy1",
+            "type": "shape",
+            "position": { "x": 1808, "y": 1844 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#ff3300"
+            }
+          },
+          {
+            "id": "radar-enemy2",
+            "type": "shape",
+            "position": { "x": 2016, "y": 1870 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#ff3300"
+            }
+          },
+          {
+            "id": "radar-enemy3",
+            "type": "shape",
+            "position": { "x": 1916, "y": 1816 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#ff3300"
+            }
+          },
+          {
+            "id": "radar-enemy4",
+            "type": "shape",
+            "position": { "x": 1852, "y": 1910 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "#ff4422"
+            }
+          },
+          {
+            "id": "radar-label",
+            "type": "text",
+            "position": { "x": 1720, "y": 2148 },
+            "size": { "width": 400, "height": 40 },
+            "props": {
+              "text": "TACTICAL RADAR",
+              "fontSize": 22,
+              "color": "#00aa44",
+              "textAlign": "center",
+              "letterSpacing": 4
+            }
+          },
+
+          {
+            "id": "warning-bg",
+            "type": "shape",
+            "position": { "x": 1450, "y": 1660 },
+            "size": { "width": 940, "height": 72 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(180,0,0,0.7)",
+              "cornerRadius": 8
+            }
+          },
+          {
+            "id": "warning-text",
+            "type": "text",
+            "position": { "x": 1450, "y": 1668 },
+            "size": { "width": 940, "height": 72 },
+            "props": {
+              "text": "⚠  ENEMY CONTACT DETECTED  ⚠",
+              "fontSize": 36,
+              "color": "#ffffff",
+              "fontWeight": "bold",
+              "textAlign": "center",
+              "letterSpacing": 4
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 40,
+                "duration": 15
+              }
+            ]
+          },
+
+          {
+            "id": "crosshair-outer",
+            "type": "shape",
+            "position": { "x": 1770, "y": 940 },
+            "size": { "width": 300, "height": 300 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "transparent",
+              "border": "2px solid rgba(255,255,255,0.4)"
+            }
+          },
+          {
+            "id": "crosshair-inner",
+            "type": "shape",
+            "position": { "x": 1840, "y": 1010 },
+            "size": { "width": 160, "height": 160 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "transparent",
+              "border": "2px solid rgba(255,255,255,0.6)"
+            }
+          },
+          {
+            "id": "crosshair-dot",
+            "type": "shape",
+            "position": { "x": 1914, "y": 1084 },
+            "size": { "width": 12, "height": 12 },
+            "props": {
+              "shape": "ellipse",
+              "fill": "rgba(255,255,255,0.8)"
+            }
+          },
+          {
+            "id": "crosshair-h",
+            "type": "shape",
+            "position": { "x": 1760, "y": 1088 },
+            "size": { "width": 320, "height": 2 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(255,255,255,0.3)"
+            }
+          },
+          {
+            "id": "crosshair-v",
+            "type": "shape",
+            "position": { "x": 1918, "y": 930 },
+            "size": { "width": 2, "height": 320 },
+            "props": {
+              "shape": "rectangle",
+              "fill": "rgba(255,255,255,0.3)"
+            }
+          },
+
+          {
+            "id": "title",
+            "type": "text",
+            "position": { "x": 1920, "y": 70 },
+            "anchor": { "x": 0.5, "y": 0 },
+            "size": { "width": 1800, "height": 130 },
+            "props": {
+              "text": "ASTEROID BATTLE",
+              "fontSize": 104,
+              "fontWeight": "bold",
+              "color": "#ffffff",
+              "textAlign": "center",
+              "letterSpacing": 16,
+              "textShadow": "0 0 30px rgba(100,180,255,0.9), 0 0 60px rgba(60,120,255,0.4)"
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "slideInDown",
+                "delay": 8,
+                "duration": 22,
+                "easing": "easeOutCubic"
+              }
+            ]
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "position": { "x": 1920, "y": 196 },
+            "anchor": { "x": 0.5, "y": 0 },
+            "size": { "width": 1400, "height": 70 },
+            "props": {
+              "text": "SECTOR 7  •  THREE.JS SPACE COMBAT DEMO",
+              "fontSize": 36,
+              "color": "#4488ff",
+              "textAlign": "center",
+              "letterSpacing": 8
+            },
+            "animations": [
+              {
+                "type": "entrance",
+                "effect": "fadeIn",
+                "delay": 25,
+                "duration": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

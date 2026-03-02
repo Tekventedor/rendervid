@@ -591,6 +591,39 @@ export interface ThreeMeshConfig {
   renderOrder?: number;
   /** Auto-rotation speed [x, y, z] per frame */
   autoRotate?: Vector3;
+  /** Physics rigid body configuration */
+  rigidBody?: {
+    type: 'dynamic' | 'static' | 'kinematic';
+    mass?: number;
+    linearVelocity?: Vector3;
+    angularVelocity?: Vector3;
+    linearDamping?: number;
+    angularDamping?: number;
+    gravityScale?: number;
+    friction?: number;
+    restitution?: number;
+  };
+  /** Physics collider configuration */
+  collider?: {
+    type: 'cuboid' | 'sphere' | 'capsule';
+    halfExtents?: Vector3;
+    radius?: number;
+    halfHeight?: number;
+  };
+  /** Keyframe animations */
+  animations?: Array<{
+    property: string;
+    keyframes: Array<{
+      frame: number;
+      value: number | number[];
+      easing?: string;
+    }>;
+  }>;
+  /** Behavior presets */
+  behaviors?: Array<{
+    type: string;
+    params?: Record<string, any>;
+  }>;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -677,6 +710,43 @@ export interface ThreeLayerProps {
     fragmentShader?: string;
     /** Uniform values */
     uniforms?: Record<string, unknown>;
+  };
+
+  /**
+   * Physics world configuration.
+   */
+  physics?: {
+    /** Enable physics simulation */
+    enabled: boolean;
+    /** Gravity vector [x, y, z] */
+    gravity?: Vector3;
+    /** Fixed timestep for physics simulation */
+    timestep?: number;
+    /** Show debug visualization */
+    debug?: boolean;
+  };
+
+  /**
+   * Particle systems.
+   */
+  particles?: Array<{
+    id: string;
+    count: number;
+    position: Vector3;
+    lifetime: number;
+    velocity: { min: Vector3; max: Vector3 };
+    size: number;
+    color: string;
+  }>;
+
+  /**
+   * Post-processing effects (MVP - basic bloom only).
+   */
+  postProcessing?: {
+    bloom?: {
+      intensity?: number;
+      threshold?: number;
+    };
   };
 }
 

@@ -18,13 +18,9 @@ import {
   executeListRenderJobs,
 } from './tools/render_video_async.js';
 import { validateTemplateTool, executeValidateTemplate } from './tools/validate_template.js';
-import { getCapabilitiesTool, executeGetCapabilities } from './tools/get_capabilities.js';
-import { listExamplesTool, executeListExamples } from './tools/list_examples.js';
+import { getDocsTool, executeGetDocs } from './tools/get_docs.js';
 import { getExampleTool, executeGetExample } from './tools/get_example.js';
-import { getComponentDocsTool, executeGetComponentDocs } from './tools/get_component_docs.js';
 import { getComponentDefaultsTool, executeGetComponentDefaults } from './tools/get_component_defaults.js';
-import { getAnimationDocsTool, executeGetAnimationDocs } from './tools/get_animation_docs.js';
-import { getEasingDocsTool, executeGetEasingDocs } from './tools/get_easing_docs.js';
 
 const logger = createLogger('mcp-server');
 
@@ -66,13 +62,9 @@ class RendervidMcpServer {
           listRenderJobsTool,
           renderImageTool,
           validateTemplateTool,
-          getCapabilitiesTool,
-          listExamplesTool,
+          getDocsTool,
           getExampleTool,
-          getComponentDocsTool,
           getComponentDefaultsTool,
-          getAnimationDocsTool,
-          getEasingDocsTool,
         ],
       };
     });
@@ -111,32 +103,16 @@ class RendervidMcpServer {
             result = await executeValidateTemplate(args);
             break;
 
-          case 'get_capabilities':
-            result = await executeGetCapabilities();
-            break;
-
-          case 'list_examples':
-            result = await executeListExamples(args);
+          case 'get_docs':
+            result = await executeGetDocs(args);
             break;
 
           case 'get_example':
             result = await executeGetExample(args);
             break;
 
-          case 'get_component_docs':
-            result = await executeGetComponentDocs(args);
-            break;
-
           case 'get_component_defaults':
             result = await executeGetComponentDefaults(args);
-            break;
-
-          case 'get_animation_docs':
-            result = await executeGetAnimationDocs(args);
-            break;
-
-          case 'get_easing_docs':
-            result = await executeGetEasingDocs(args);
             break;
 
           default:
@@ -243,12 +219,9 @@ class RendervidMcpServer {
         'render_video',
         'render_image',
         'validate_template',
-        'get_capabilities',
-        'list_examples',
+        'get_docs',
         'get_example',
-        'get_component_docs',
-        'get_animation_docs',
-        'get_easing_docs',
+        'get_component_defaults',
       ],
     });
   }

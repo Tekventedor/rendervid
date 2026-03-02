@@ -1,0 +1,76 @@
+{
+  "name": "Behavior System - Orbiting Cubes",
+  "output": {
+    "type": "video",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 5
+  },
+  "composition": {
+    "scenes": [{
+      "id": "main",
+      "startFrame": 0,
+      "endFrame": 150,
+      "backgroundColor": "#0a0a1a",
+      "layers": [{
+        "id": "three-scene",
+        "type": "three",
+        "position": {"x": 0, "y": 0},
+        "size": {"width": 1920, "height": 1080},
+        "props": {
+          "camera": {
+            "type": "perspective",
+            "position": [0, 5, 12],
+            "lookAt": [0, 0, 0],
+            "fov": 50
+          },
+          "lights": [
+            {"type": "ambient", "color": "#404040", "intensity": 0.6},
+            {"type": "point", "color": "#ffffff", "intensity": 1, "position": [0, 5, 5]}
+          ],
+          "meshes": [
+            {
+              "id": "orbit-cube",
+              "geometry": {"type": "box", "width": 0.8, "height": 0.8, "depth": 0.8},
+              "material": {"type": "standard", "color": "#ff0066", "metalness": 0.5, "roughness": 0.5},
+              "position": [0, 0, 0],
+              "behaviors": [
+                {"type": "orbit", "params": {"radius": 4, "speed": 2, "axis": "y"}},
+                {"type": "spin", "params": {"speed": 3, "axis": "y"}}
+              ]
+            },
+            {
+              "id": "pulse-cube",
+              "geometry": {"type": "box", "width": 1, "height": 1, "depth": 1},
+              "material": {"type": "standard", "color": "#00ff88", "metalness": 0.5, "roughness": 0.5},
+              "position": [0, 0, 0],
+              "behaviors": [
+                {"type": "pulse", "params": {"min": 0.7, "max": 1.3, "speed": 3}}
+              ]
+            },
+            {
+              "id": "bounce-cube",
+              "geometry": {"type": "box", "width": 0.8, "height": 0.8, "depth": 0.8},
+              "material": {"type": "standard", "color": "#4488ff", "metalness": 0.5, "roughness": 0.5},
+              "position": [3, 0, 0],
+              "behaviors": [
+                {"type": "bounce", "params": {"height": 3, "speed": 4, "offset": 0}}
+              ]
+            },
+            {
+              "id": "float-cube",
+              "geometry": {"type": "box", "width": 0.8, "height": 0.8, "depth": 0.8},
+              "material": {"type": "standard", "color": "#ffaa00", "metalness": 0.5, "roughness": 0.5},
+              "position": [-3, 0, 0],
+              "behaviors": [
+                {"type": "float", "params": {"amplitude": 1.5, "speed": 2, "offset": 2}},
+                {"type": "wobble", "params": {"amount": 0.3, "speed": 2}}
+              ]
+            }
+          ]
+        }
+      }]
+    }]
+  }
+}

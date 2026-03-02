@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useThree } from '@react-three/fiber';
+import React, { useEffect, useRef } from 'react';
+import { useThree, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type {
   ThreeCameraConfig,
@@ -11,11 +11,13 @@ import type {
 import { Camera } from './Camera';
 import { Lights } from './Lights';
 import { Mesh } from './Mesh';
+import { ParticleSystem } from '../../particles/ParticleSystem';
 
 export interface ThreeSceneProps {
   camera: ThreeCameraConfig;
   lights?: ThreeLightConfig[];
   meshes: ThreeMeshConfig[];
+  particles?: any[];
   background?: Color | TextureConfig;
   fog?: {
     color: Color;
@@ -36,12 +38,13 @@ export interface ThreeSceneProps {
 
 /**
  * Main Three.js scene container.
- * Sets up the scene, camera, lights, and meshes.
+ * Sets up the scene, camera, lights, meshes, and particles.
  */
 export function ThreeScene({
   camera,
   lights = [],
   meshes,
+  particles = [],
   background,
   fog,
   shadows,
@@ -50,6 +53,41 @@ export function ThreeScene({
   layerSize,
 }: ThreeSceneProps) {
   const { scene, gl, invalidate } = useThree();
+  const particleSystemsRef = useRef<ParticleSystem[]>([]);
+  const lastFrameRef = useRef<number>(0);
+
+  // Initialize particle systems
+  useEffect(() => {
+    // Clean up existing systems
+    particleSystemsRef.current.forEach(ps => {
+      scene.remove(ps.getObject());
+    });
+    particleSystemsRef.current = [];
+
+    // Create new systems
+    particles.forEach(particleConfig => {
+      const ps = new ParticleSystem(particleConfig);
+      scene.add(ps.getObject());
+      particleSystemsRef.current.push(ps);
+    });
+
+    return () => {
+      particleSystemsRef.current.forEach(ps => {
+        scene.remove(ps.getObject());
+      });
+      particleSystemsRef.current = [];
+    };
+  }, [particles, scene]);
+
+  // Update particles every frame
+  useFrame(() => {
+    const deltaTime = (frame - lastFrameRef.current) / 60; // Assume 60fps
+    lastFrameRef.current = frame;
+
+    particleSystemsRef.current.forEach(ps => {
+      ps.update(deltaTime);
+    });
+  });
 
   // Trigger render when frame changes
   useEffect(() => {

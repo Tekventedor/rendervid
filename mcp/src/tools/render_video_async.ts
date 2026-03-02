@@ -278,6 +278,7 @@ async function executeRenderInBackground(jobId: string): Promise<void> {
     const defaultsManager = createDefaultComponentDefaultsManager();
     const renderer = createNodeRenderer({
       componentDefaultsManager: defaultsManager as any,
+      gpu: { encoding: 'none' },
     });
 
     // Get codec settings
@@ -315,8 +316,10 @@ async function executeRenderInBackground(jobId: string): Promise<void> {
       outputPath: job.renderOptions.outputPath,
       codec: codecSettings.codec,
       quality: codecSettings.quality,
+      preset: codecSettings.preset,
       renderWaitTime: renderWaitTime,
       motionBlur: job.renderOptions.motionBlur,
+      useStreaming: true,
       onProgress: (progress: any) => {
         jobManager.updateProgress(jobId, {
           phase: progress.phase,
@@ -371,6 +374,7 @@ function detectMediaLayers(template: any): boolean {
 function getCodecSettings(format: string, quality: string): {
   codec: 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'prores';
   quality: number;
+  preset: 'fast' | 'medium' | 'slow' | 'veryslow';
 } {
   const codecMap: Record<string, 'libx264' | 'libx265' | 'libvpx' | 'libvpx-vp9' | 'prores'> = {
     mp4: 'libx264',
@@ -386,8 +390,16 @@ function getCodecSettings(format: string, quality: string): {
     lossless: 0,
   };
 
+  const presetMap: Record<string, 'fast' | 'medium' | 'slow' | 'veryslow'> = {
+    draft: 'fast',
+    standard: 'medium',
+    high: 'slow',
+    lossless: 'medium', // CRF 0 is mathematically lossless regardless of preset
+  };
+
   return {
     codec: codecMap[format] || 'libx264',
     quality: qualityMap[quality] || 23,
+    preset: presetMap[quality] || 'medium',
   };
 }

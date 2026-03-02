@@ -108,17 +108,13 @@ export const ValidateTemplateInputSchema = z.object({
 });
 
 /**
- * Zod schema for list_examples tool input
- */
-export const ListExamplesInputSchema = z.object({
-  category: z.string().optional(),
-});
-
-/**
  * Zod schema for get_example tool input
  */
 export const GetExampleInputSchema = z.object({
-  examplePath: z.string(),
+  examplePath: z.string().optional()
+    .describe('Path to load a specific example (e.g., "getting-started/01-hello-world"). Omit to list all examples.'),
+  category: z.string().optional()
+    .describe('Filter examples by category when listing (e.g., "social-media", "marketing"). Only used when examplePath is omitted.'),
 });
 
 /**

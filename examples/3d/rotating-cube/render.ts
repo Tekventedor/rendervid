@@ -18,11 +18,11 @@ async function main() {
   console.log(`Duration: ${template.output.duration}s @ ${template.output.fps} FPS`);
   console.log(`Resolution: ${template.output.width}x${template.output.height}\n`);
 
-  // Create renderer with GPU acceleration
+  // Create renderer with GPU rendering but software encoding for highest quality
   const renderer = createNodeRenderer({
     gpu: {
       rendering: true,
-      encoding: 'auto',
+      encoding: 'none',
       fallback: true,
     },
   });
@@ -30,12 +30,15 @@ async function main() {
   // Render video
   const outputPath = join(EXAMPLE_DIR, 'video.mp4');
 
-  console.log('🎥 Rendering video...');
+  console.log('🎥 Rendering video at 4K with highest quality settings...');
   const startTime = Date.now();
 
   await renderer.renderVideo({
     template,
     outputPath,
+    hardwareAcceleration: { enabled: false },
+    bitrate: '16M',
+    preset: 'slow',
   });
 
   const renderTime = ((Date.now() - startTime) / 1000).toFixed(2);

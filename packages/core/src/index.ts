@@ -280,3 +280,12 @@ export {
   getAvailableCategories,
   type InitTemplateOptions,
 } from './utils/template-cli';
+
+// Documentation
+export {
+  getDocumentation,
+  getDocumentationTopics,
+  type DocResult,
+  type DocSection,
+  type DocProperty,
+} from './docs/index';
