@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "output": {
     "type": "video",
-    "width": 1920,
-    "height": 1080,
+    "width": 3840,
+    "height": 2160,
     "fps": 30,
     "duration": 6
   },
@@ -55,14 +55,8 @@
           {
             "id": "background",
             "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 3840, "height": 2160 },
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0f"
@@ -71,14 +65,8 @@
           {
             "id": "bg-gradient-1",
             "type": "shape",
-            "position": {
-              "x": -100,
-              "y": -100
-            },
-            "size": {
-              "width": 800,
-              "height": 800
-            },
+            "position": { "x": -200, "y": -200 },
+            "size": { "width": 1600, "height": 1600 },
             "opacity": 0.1,
             "props": {
               "shape": "circle",
@@ -88,14 +76,8 @@
           {
             "id": "bg-gradient-2",
             "type": "shape",
-            "position": {
-              "x": 1220,
-              "y": 380
-            },
-            "size": {
-              "width": 600,
-              "height": 600
-            },
+            "position": { "x": 2440, "y": 760 },
+            "size": { "width": 1200, "height": 1200 },
             "opacity": 0.08,
             "props": {
               "shape": "circle",
@@ -104,32 +86,62 @@
           },
           {
             "id": "three-scene",
-            "type": "custom",
-            "position": {
-              "x": 510,
-              "y": 240
-            },
-            "size": {
-              "width": 600,
-              "height": 600
-            },
-            "customComponent": {
-              "name": "ThreeScene",
-              "props": {
-                "frame": 0,
-                "fps": 30,
-                "geometry": "sphere",
-                "color": "{{sphereColor}}",
-                "wireframe": true,
-                "rotation": {
-                  "x": 0.2,
-                  "y": 0.4,
-                  "z": 0
+            "type": "three",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 3840, "height": 2160 },
+            "props": {
+              "camera": {
+                "type": "perspective",
+                "fov": 50,
+                "position": [0, 0, 6],
+                "lookAt": [0, 0, 0]
+              },
+              "lights": [
+                {
+                  "type": "ambient",
+                  "color": "#ffffff",
+                  "intensity": 2.0
+                }
+              ],
+              "meshes": [
+                {
+                  "id": "sphere",
+                  "geometry": {
+                    "type": "sphere",
+                    "radius": 2.5,
+                    "widthSegments": 24,
+                    "heightSegments": 16
+                  },
+                  "material": {
+                    "type": "standard",
+                    "color": "{{sphereColor}}",
+                    "wireframe": true,
+                    "metalness": 0.0,
+                    "roughness": 1.0
+                  },
+                  "autoRotate": [0.003, 0.007, 0]
                 },
-                "scale": 2,
-                "cameraDistance": 700,
-                "lighting": "ambient"
-              }
+                {
+                  "id": "sphere-inner",
+                  "geometry": {
+                    "type": "sphere",
+                    "radius": 1.8,
+                    "widthSegments": 16,
+                    "heightSegments": 12
+                  },
+                  "material": {
+                    "type": "standard",
+                    "color": "{{accentColor}}",
+                    "wireframe": true,
+                    "metalness": 0.0,
+                    "roughness": 1.0,
+                    "transparent": true,
+                    "opacity": 0.4
+                  },
+                  "autoRotate": [-0.005, 0.01, 0.003]
+                }
+              ],
+              "antialias": true
             },
             "animations": [
               {
@@ -143,21 +155,15 @@
           {
             "id": "title",
             "type": "text",
-            "position": {
-              "x": 360,
-              "y": 120
-            },
-            "size": {
-              "width": 1200,
-              "height": 100
-            },
+            "position": { "x": 720, "y": 240 },
+            "size": { "width": 2400, "height": 200 },
             "props": {
               "text": "{{title}}",
-              "fontSize": 84,
+              "fontSize": 168,
               "fontWeight": "900",
               "color": "#ffffff",
               "textAlign": "center",
-              "letterSpacing": 12
+              "letterSpacing": 24
             },
             "animations": [
               {
@@ -172,14 +178,8 @@
           {
             "id": "title-accent",
             "type": "shape",
-            "position": {
-              "x": 860,
-              "y": 205
-            },
-            "size": {
-              "width": 200,
-              "height": 4
-            },
+            "position": { "x": 1720, "y": 410 },
+            "size": { "width": 400, "height": 8 },
             "props": {
               "shape": "rectangle",
               "fill": "{{accentColor}}"
@@ -196,21 +196,15 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": {
-              "x": 560,
-              "y": 880
-            },
-            "size": {
-              "width": 800,
-              "height": 80
-            },
+            "position": { "x": 1120, "y": 1760 },
+            "size": { "width": 1600, "height": 160 },
             "props": {
               "text": "{{subtitle}}",
-              "fontSize": 36,
+              "fontSize": 72,
               "fontWeight": "300",
               "color": "{{sphereColor}}",
               "textAlign": "center",
-              "letterSpacing": 4
+              "letterSpacing": 8
             },
             "animations": [
               {
@@ -224,17 +218,11 @@
           {
             "id": "watermark",
             "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
+            "position": { "x": 3040, "y": 40 },
+            "size": { "width": 760, "height": 120 },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
-              "fontSize": 16,
+              "fontSize": 32,
               "fontWeight": "600",
               "color": "#ffffff",
               "textAlign": "right",

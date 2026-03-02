@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "output": {
     "type": "video",
-    "width": 1920,
-    "height": 1080,
+    "width": 3840,
+    "height": 2160,
     "fps": 30,
     "duration": 5
   },
@@ -40,7 +40,7 @@
             "id": "background",
             "type": "shape",
             "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "size": { "width": 3840, "height": 2160 },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -50,7 +50,7 @@
             "id": "three-scene",
             "type": "three",
             "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
+            "size": { "width": 3840, "height": 2160 },
             "props": {
               "camera": {
                 "type": "perspective",
@@ -93,16 +93,16 @@
           {
             "id": "title",
             "type": "text",
-            "position": { "x": 960, "y": 900 },
+            "position": { "x": 1920, "y": 1800 },
             "anchor": { "x": 0.5, "y": 0.5 },
-            "size": { "width": 1000, "height": 100 },
+            "size": { "width": 2000, "height": 200 },
             "props": {
               "text": "BASIC ROTATING CUBE",
-              "fontSize": 48,
+              "fontSize": 96,
               "fontWeight": "bold",
               "color": "#ffffff",
               "textAlign": "center",
-              "letterSpacing": 4
+              "letterSpacing": 8
             },
             "animations": [
               {

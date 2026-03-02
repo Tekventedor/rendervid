@@ -1,11 +1,11 @@
 {
   "name": "3D Rotating Cube",
-  "description": "A 3D rotating cube with customizable colors and rotation speed, showcasing ThreeScene component capabilities.",
+  "description": "A 3D rotating cube with customizable colors and rotation speed, showcasing Three.js layer capabilities.",
   "version": "1.0.0",
   "output": {
     "type": "video",
-    "width": 1920,
-    "height": 1080,
+    "width": 3840,
+    "height": 2160,
     "fps": 30,
     "duration": 5
   },
@@ -47,14 +47,8 @@
           {
             "id": "background",
             "type": "shape",
-            "position": {
-              "x": 0,
-              "y": 0
-            },
-            "size": {
-              "width": 1920,
-              "height": 1080
-            },
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 3840, "height": 2160 },
             "props": {
               "shape": "rectangle",
               "fill": "{{backgroundColor}}"
@@ -62,61 +56,76 @@
           },
           {
             "id": "three-scene",
-            "type": "custom",
-            "position": {
-              "x": 760,
-              "y": 290
-            },
-            "size": {
-              "width": 400,
-              "height": 400
-            },
-            "customComponent": {
-              "name": "ThreeScene",
-              "props": {
-                "frame": 0,
-                "fps": 30,
-                "geometry": "box",
-                "color": "{{cubeColor}}",
-                "wireframe": false,
-                "rotation": {
-                  "x": 0.5,
-                  "y": 1,
-                  "z": 0.3
+            "type": "three",
+            "position": { "x": 0, "y": 0 },
+            "size": { "width": 3840, "height": 2160 },
+            "props": {
+              "camera": {
+                "type": "perspective",
+                "fov": 60,
+                "position": [0, 1, 5],
+                "lookAt": [0, 0, 0]
+              },
+              "lights": [
+                {
+                  "type": "ambient",
+                  "color": "#ffffff",
+                  "intensity": 0.5
                 },
-                "scale": 1.5,
-                "cameraDistance": 600,
-                "lighting": "directional"
-              }
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "scaleIn",
-                "delay": 10,
-                "duration": 20,
-                "easing": "easeOutBack"
-              }
-            ]
+                {
+                  "type": "directional",
+                  "color": "#ffffff",
+                  "intensity": 1.2,
+                  "position": [5, 5, 5]
+                },
+                {
+                  "type": "directional",
+                  "color": "#8899ff",
+                  "intensity": 0.4,
+                  "position": [-5, -2, -3]
+                }
+              ],
+              "meshes": [
+                {
+                  "id": "cube",
+                  "geometry": {
+                    "type": "box",
+                    "width": 2.2,
+                    "height": 2.2,
+                    "depth": 2.2
+                  },
+                  "material": {
+                    "type": "standard",
+                    "color": "{{cubeColor}}",
+                    "metalness": 0.4,
+                    "roughness": 0.3,
+                    "emissive": "{{cubeColor}}",
+                    "emissiveIntensity": 0.05
+                  },
+                  "castShadow": true,
+                  "receiveShadow": true,
+                  "autoRotate": [0.01, 0.02, 0.006]
+                }
+              ],
+              "toneMapping": {
+                "type": "aces",
+                "exposure": 1.1
+              },
+              "antialias": true
+            }
           },
           {
             "id": "title",
             "type": "text",
-            "position": {
-              "x": 460,
-              "y": 780
-            },
-            "size": {
-              "width": 1000,
-              "height": 120
-            },
+            "position": { "x": 920, "y": 1560 },
+            "size": { "width": 2000, "height": 240 },
             "props": {
               "text": "{{title}}",
-              "fontSize": 72,
+              "fontSize": 144,
               "fontWeight": "bold",
               "color": "#ffffff",
               "textAlign": "center",
-              "letterSpacing": 8
+              "letterSpacing": 16
             },
             "animations": [
               {
@@ -130,17 +139,11 @@
           {
             "id": "subtitle",
             "type": "text",
-            "position": {
-              "x": 560,
-              "y": 880
-            },
-            "size": {
-              "width": 800,
-              "height": 60
-            },
+            "position": { "x": 1120, "y": 1760 },
+            "size": { "width": 1600, "height": 120 },
             "props": {
-              "text": "Powered by ThreeScene",
-              "fontSize": 28,
+              "text": "Powered by Three.js • React Three Fiber",
+              "fontSize": 56,
               "color": "#a0a0a0",
               "textAlign": "center"
             },
@@ -156,17 +159,11 @@
           {
             "id": "watermark",
             "type": "text",
-            "position": {
-              "x": 1520,
-              "y": 20
-            },
-            "size": {
-              "width": 380,
-              "height": 60
-            },
+            "position": { "x": 3040, "y": 40 },
+            "size": { "width": 760, "height": 120 },
             "props": {
               "text": "RenderVid by\nFlowHunt.io",
-              "fontSize": 16,
+              "fontSize": 32,
               "fontWeight": "600",
               "color": "#ffffff",
               "textAlign": "right",
