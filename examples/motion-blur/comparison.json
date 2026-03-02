@@ -1,188 +1,89 @@
 {
-  "name": "Motion Blur - Side-by-Side Comparison",
-  "description": "Compare no blur vs motion blur side by side",
-  "version": "1.0.0",
-  "output": {
-    "type": "video",
-    "width": 1920,
-    "height": 1080,
-    "fps": 30,
-    "duration": 4
+  "name": "Motion Blur - Speed Comparison",
+  "description": "Side-by-side: slow box (7 px/frame, subtle blur) vs fast box (53 px/frame, heavy blur) — both with motion blur enabled",
+  "version": "2.0.0",
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 4},
+  "customComponents": {
+    "ComparisonDemo": {
+      "type": "inline",
+      "description": "Left: slow red box ping-pongs at 7px/frame. Right: fast teal box ping-pongs at 53px/frame. Divider line at center. Same motion blur applied to both — slow stays sharp, fast streaks.",
+      "code": "function(props){var f=props.frame,W=props.layerSize.width,H=props.layerSize.height;function tri(n,p){var t=((n%p)+p)%p/p;return t<0.5?t*2:(1-t)*2;}var slowX=80+800*tri(f,240),fastX=1040+800*tri(f,30);return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0,overflow:'hidden'}},React.createElement('rect',{x:955,y:200,width:10,height:780,fill:'#333344'}),React.createElement('rect',{x:slowX,y:500,width:80,height:80,fill:'#ff6b6b',rx:8}),React.createElement('rect',{x:fastX,y:500,width:80,height:80,fill:'#4ecdc4',rx:8}));}"
+    }
   },
-  "inputs": [],
   "composition": {
-    "scenes": [
-      {
-        "id": "comparison",
-        "startFrame": 0,
-        "endFrame": 120,
-        "backgroundColor": "#0f0f1e",
-        "motionBlur": {
-          "enabled": false
+    "scenes": [{
+      "id": "comparison",
+      "startFrame": 0,
+      "endFrame": 120,
+      "layers": [
+        {
+          "id": "bg",
+          "type": "shape",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 1920, "height": 1080},
+          "props": {"shape": "rectangle", "fill": "#0f0f1e"}
         },
-        "layers": [
-          {
-            "id": "title",
-            "type": "text",
-            "position": { "x": 260, "y": 120 },
-            "size": { "width": 1400, "height": 100 },
-            "props": {
-              "text": "Motion Blur Comparison",
-              "fontSize": 52,
-              "fontWeight": "bold",
-              "textAlign": "center",
-              "color": "#ffffff"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 0,
-                "duration": 15
-              }
-            ]
+        {
+          "id": "anim",
+          "type": "custom",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 1920, "height": 1080},
+          "customComponent": {"name": "ComparisonDemo", "props": {}}
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "position": {"x": 260, "y": 60},
+          "size": {"width": 1400, "height": 100},
+          "props": {
+            "text": "Motion Blur — Speed Comparison",
+            "fontSize": 52,
+            "fontWeight": "bold",
+            "textAlign": "center",
+            "color": "#ffffff"
           },
-          {
-            "id": "left-label",
-            "type": "text",
-            "position": { "x": 130, "y": 270 },
-            "size": { "width": 700, "height": 80 },
-            "props": {
-              "text": "Without Motion Blur",
-              "fontSize": 32,
-              "textAlign": "center",
-              "color": "#ff6b6b"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 15,
-                "duration": 15
-              }
-            ]
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 121}]
+        },
+        {
+          "id": "left-label",
+          "type": "text",
+          "position": {"x": 130, "y": 250},
+          "size": {"width": 700, "height": 80},
+          "props": {
+            "text": "Slow  —  7 px / frame",
+            "fontSize": 36,
+            "textAlign": "center",
+            "color": "#ff6b6b"
           },
-          {
-            "id": "right-label",
-            "type": "text",
-            "position": { "x": 1090, "y": 270 },
-            "size": { "width": 700, "height": 80 },
-            "props": {
-              "text": "With Motion Blur",
-              "fontSize": 32,
-              "textAlign": "center",
-              "color": "#4ecdc4"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 15,
-                "duration": 15
-              }
-            ]
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 121}]
+        },
+        {
+          "id": "right-label",
+          "type": "text",
+          "position": {"x": 1090, "y": 250},
+          "size": {"width": 700, "height": 80},
+          "props": {
+            "text": "Fast  —  53 px / frame",
+            "fontSize": 36,
+            "textAlign": "center",
+            "color": "#4ecdc4"
           },
-          {
-            "id": "divider",
-            "type": "shape",
-            "position": { "x": 955, "y": 200 },
-            "size": { "width": 10, "height": 800 },
-            "props": {
-              "type": "rectangle",
-              "color": "#333344"
-            }
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 121}]
+        },
+        {
+          "id": "description",
+          "type": "text",
+          "position": {"x": 260, "y": 940},
+          "size": {"width": 1400, "height": 80},
+          "props": {
+            "text": "Same motion blur applied to both — slow objects stay sharp, fast objects streak",
+            "fontSize": 28,
+            "textAlign": "center",
+            "color": "#aaaaaa"
           },
-          {
-            "id": "left-box",
-            "type": "shape",
-            "position": { "x": 180, "y": 500 },
-            "size": { "width": 80, "height": 80 },
-            "props": {
-              "type": "rectangle",
-              "color": "#ff6b6b",
-              "borderRadius": 8
-            },
-            "motionBlur": {
-              "enabled": false
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 30,
-                    "properties": {
-                      "position": { "x": 180, "y": 500 }
-                    }
-                  },
-                  {
-                    "frame": 90,
-                    "properties": {
-                      "position": { "x": 780, "y": 500 }
-                    }
-                  }
-                ],
-                "easing": "easeInOutCubic"
-              }
-            ]
-          },
-          {
-            "id": "right-box",
-            "type": "shape",
-            "position": { "x": 1140, "y": 500 },
-            "size": { "width": 80, "height": 80 },
-            "props": {
-              "type": "rectangle",
-              "color": "#4ecdc4",
-              "borderRadius": 8
-            },
-            "motionBlur": {
-              "enabled": true,
-              "quality": "high"
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 30,
-                    "properties": {
-                      "position": { "x": 1140, "y": 500 }
-                    }
-                  },
-                  {
-                    "frame": 90,
-                    "properties": {
-                      "position": { "x": 1740, "y": 500 }
-                    }
-                  }
-                ],
-                "easing": "easeInOutCubic"
-              }
-            ]
-          },
-          {
-            "id": "description",
-            "type": "text",
-            "position": { "x": 260, "y": 920 },
-            "size": { "width": 1400, "height": 100 },
-            "props": {
-              "text": "Notice the smooth, natural blur on the right vs. sharp strobing on the left",
-              "fontSize": 26,
-              "textAlign": "center",
-              "color": "#aaaaaa"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 30,
-                "duration": 20
-              }
-            ]
-          }
-        ]
-      }
-    ]
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 121}]
+        }
+      ]
+    }]
   }
 }

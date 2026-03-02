@@ -148,7 +148,7 @@ for (let i = 0; i < examples.length; i++) {
       outputPath: mp4Path,
       hardwareAcceleration: { enabled: false },
       bitrate: '8M',
-      preset: 'medium',
+      preset: 'slow',
       motionBlur: example.motionBlur,
       onProgress: (progress) => {
         if (progress.phase === 'rendering' && progress.currentFrame % 10 === 0) {

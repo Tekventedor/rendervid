@@ -1,129 +1,89 @@
 {
   "name": "Motion Blur - Basic Example",
-  "description": "Simple example showing motion blur effect on moving shapes",
-  "version": "1.0.0",
-  "output": {
-    "type": "video",
-    "width": 1920,
-    "height": 1080,
-    "fps": 30,
-    "duration": 3
+  "description": "Fast-moving box and rotating square rendered with temporal supersampling for visible motion blur",
+  "version": "2.0.0",
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 3},
+  "customComponents": {
+    "MotionBlurBasic": {
+      "type": "inline",
+      "description": "Fast horizontal red box (24.7px/frame) + continuously rotating teal square (8deg/frame). Both positions computed from fractional frame number — temporal supersampling creates visible blur.",
+      "code": "function(props){var f=props.frame,W=props.layerSize.width,H=props.layerSize.height,bx=-100+f*(2220/90),rot=f*8,cx=910,cy=700,sz=150;return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0,overflow:'hidden'}},React.createElement('rect',{x:bx,y:400,width:100,height:100,fill:'#ff6b6b',rx:10}),React.createElement('rect',{x:cx-sz/2,y:cy-sz/2,width:sz,height:sz,fill:'#4ecdc4',rx:5,transform:'rotate('+rot+','+cx+','+cy+')'}));}"
+    }
   },
-  "inputs": [],
   "composition": {
-    "scenes": [
-      {
-        "id": "main",
-        "startFrame": 0,
-        "endFrame": 90,
-        "backgroundColor": "#1a1a2e",
-        "layers": [
-          {
-            "id": "title",
-            "type": "text",
-            "position": { "x": 260, "y": 120 },
-            "size": { "width": 1400, "height": 100 },
-            "props": {
-              "text": "Motion Blur Demonstration",
-              "fontSize": 56,
-              "fontWeight": "bold",
-              "textAlign": "center",
-              "color": "#ffffff"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 0,
-                "duration": 20
-              }
-            ]
+    "scenes": [{
+      "id": "main",
+      "startFrame": 0,
+      "endFrame": 90,
+      "layers": [
+        {
+          "id": "bg",
+          "type": "shape",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 1920, "height": 1080},
+          "props": {"shape": "rectangle", "fill": "#1a1a2e"}
+        },
+        {
+          "id": "anim",
+          "type": "custom",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 1920, "height": 1080},
+          "customComponent": {"name": "MotionBlurBasic", "props": {}}
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "position": {"x": 260, "y": 120},
+          "size": {"width": 1400, "height": 100},
+          "props": {
+            "text": "Motion Blur Demonstration",
+            "fontSize": 56,
+            "fontWeight": "bold",
+            "textAlign": "center",
+            "color": "#ffffff"
           },
-          {
-            "id": "fast-box",
-            "type": "shape",
-            "position": { "x": -100, "y": 400 },
-            "size": { "width": 100, "height": 100 },
-            "props": {
-              "type": "rectangle",
-              "color": "#ff6b6b",
-              "borderRadius": 10
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 30,
-                    "properties": {
-                      "position": { "x": -100, "y": 400 }
-                    }
-                  },
-                  {
-                    "frame": 60,
-                    "properties": {
-                      "position": { "x": 1920, "y": 400 }
-                    }
-                  }
-                ],
-                "easing": "linear"
-              }
-            ]
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 91}]
+        },
+        {
+          "id": "box-label",
+          "type": "text",
+          "position": {"x": 260, "y": 380},
+          "size": {"width": 600, "height": 60},
+          "props": {
+            "text": "24.7 px / frame",
+            "fontSize": 28,
+            "textAlign": "left",
+            "color": "#ff6b6b"
           },
-          {
-            "id": "rotating-square",
-            "type": "shape",
-            "position": { "x": 260, "y": 700 },
-            "size": { "width": 150, "height": 150 },
-            "rotation": 0,
-            "props": {
-              "type": "rectangle",
-              "color": "#4ecdc4",
-              "borderRadius": 5
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 30,
-                    "properties": {
-                      "rotation": 0
-                    }
-                  },
-                  {
-                    "frame": 60,
-                    "properties": {
-                      "rotation": 360
-                    }
-                  }
-                ],
-                "easing": "linear"
-              }
-            ]
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 91}]
+        },
+        {
+          "id": "rot-label",
+          "type": "text",
+          "position": {"x": 760, "y": 670},
+          "size": {"width": 400, "height": 60},
+          "props": {
+            "text": "8° / frame",
+            "fontSize": 28,
+            "textAlign": "center",
+            "color": "#4ecdc4"
           },
-          {
-            "id": "instructions",
-            "type": "text",
-            "position": { "x": 260, "y": 920 },
-            "size": { "width": 1400, "height": 100 },
-            "props": {
-              "text": "Enable motion blur to see smooth, natural motion instead of strobing",
-              "fontSize": 28,
-              "textAlign": "center",
-              "color": "#aaaaaa"
-            },
-            "animations": [
-              {
-                "type": "entrance",
-                "effect": "fadeIn",
-                "delay": 20,
-                "duration": 20
-              }
-            ]
-          }
-        ]
-      }
-    ]
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 91}]
+        },
+        {
+          "id": "instructions",
+          "type": "text",
+          "position": {"x": 260, "y": 960},
+          "size": {"width": 1400, "height": 80},
+          "props": {
+            "text": "Enable motion blur to see smooth, natural motion instead of strobing",
+            "fontSize": 28,
+            "textAlign": "center",
+            "color": "#aaaaaa"
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 91}]
+        }
+      ]
+    }]
   }
 }

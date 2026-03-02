@@ -1,79 +1,71 @@
 {
   "name": "Motion Blur - Advanced Features",
-  "description": "Showcase of all advanced motion blur features",
-  "version": "1.0.0",
-  "output": {
-    "type": "video",
-    "width": 1920,
-    "height": 1080,
-    "fps": 30,
-    "duration": 8
+  "description": "Four scenes: stochastic sampling, accelerating motion, multi-speed comparison, and directional blur",
+  "version": "2.0.0",
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 8},
+  "customComponents": {
+    "AdvancedScene1": {
+      "type": "inline",
+      "description": "Stochastic demo: large red bar sweeps right at 40px/frame — wide area of motion blur shows stochastic sampling in action",
+      "code": "function(props){var f=props.frame,W=props.layerSize.width,H=props.layerSize.height,bx=-200+(f/60)*2400;return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0,overflow:'hidden'}},React.createElement('rect',{x:bx,y:340,width:1200,height:200,fill:'#ff6b6b',rx:20}));}"
+    },
+    "AdvancedScene2": {
+      "type": "inline",
+      "description": "Accelerating motion: cubic easing from 0 to 86px/frame — blur intensity increases as object accelerates across screen",
+      "code": "function(props){var lf=props.frame-60,W=props.layerSize.width,H=props.layerSize.height,t=Math.max(0,Math.min(1,lf/60)),bx=100+1720*t*t*t;return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0,overflow:'hidden'}},React.createElement('rect',{x:bx,y:450,width:100,height:100,fill:'#4ecdc4',rx:10}));}"
+    },
+    "AdvancedScene3": {
+      "type": "inline",
+      "description": "Three objects at different speeds: slow 10px/f, medium 30px/f, fast 60px/f — blur intensity scales with velocity",
+      "code": "function(props){var lf=props.frame-120,W=props.layerSize.width,H=props.layerSize.height;function tri(n,p){var t=((n%p)+p)%p/p;return t<0.5?t*2:(1-t)*2;}var x1=100+1720*tri(lf,344),x2=100+1720*tri(lf,115),x3=100+1720*tri(lf,57);return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0,overflow:'hidden'}},React.createElement('rect',{x:x1,y:300,width:80,height:80,fill:'#ff6b6b',rx:8}),React.createElement('rect',{x:x2,y:490,width:80,height:80,fill:'#4ecdc4',rx:8}),React.createElement('rect',{x:x3,y:680,width:80,height:80,fill:'#f7b731',rx:8}));}"
+    },
+    "AdvancedScene4": {
+      "type": "inline",
+      "description": "Directional motion: red box moves purely horizontal, teal box moves diagonally — blur direction follows motion vector",
+      "code": "function(props){var lf=props.frame-180,W=props.layerSize.width,H=props.layerSize.height,t=lf/60,x=100+1720*t;return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0,overflow:'hidden'}},React.createElement('rect',{x:x,y:350,width:80,height:80,fill:'#ff6b6b',rx:8}),React.createElement('rect',{x:x,y:650-250*t,width:80,height:80,fill:'#4ecdc4',rx:8}));}"
+    }
   },
-  "inputs": [],
   "composition": {
     "scenes": [
       {
         "id": "stochastic-demo",
         "startFrame": 0,
         "endFrame": 60,
-        "backgroundColor": "#0a0a1e",
-        "motionBlur": {
-          "enabled": true,
-          "quality": "high",
-          "stochastic": true
-        },
         "layers": [
+          {
+            "id": "bg1",
+            "type": "shape",
+            "position": {"x": 0, "y": 0},
+            "size": {"width": 1920, "height": 1080},
+            "props": {"shape": "rectangle", "fill": "#0a0a1e"}
+          },
+          {
+            "id": "anim1",
+            "type": "custom",
+            "position": {"x": 0, "y": 0},
+            "size": {"width": 1920, "height": 1080},
+            "customComponent": {"name": "AdvancedScene1", "props": {}}
+          },
           {
             "id": "title1",
             "type": "text",
-            "position": { "x": 260, "y": 120 },
-            "size": { "width": 1400, "height": 100 },
+            "position": {"x": 260, "y": 120},
+            "size": {"width": 1400, "height": 100},
             "props": {
-              "text": "Stochastic Sampling - Reduces Banding",
+              "text": "Stochastic Sampling — Reduces Banding",
               "fontSize": 44,
               "fontWeight": "bold",
               "textAlign": "center",
               "color": "#ffffff"
             }
-          },
-          {
-            "id": "gradient-box",
-            "type": "shape",
-            "position": { "x": 360, "y": 400 },
-            "size": { "width": 1200, "height": 200 },
-            "props": {
-              "type": "rectangle",
-              "color": "#ff6b6b",
-              "borderRadius": 20
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 10,
-                    "properties": {
-                      "position": { "x": 360, "y": 400 }
-                    }
-                  },
-                  {
-                    "frame": 50,
-                    "properties": {
-                      "position": { "x": 360, "y": 500 }
-                    }
-                  }
-                ],
-                "easing": "easeInOutCubic"
-              }
-            ]
           },
           {
             "id": "subtitle1",
             "type": "text",
-            "position": { "x": 260, "y": 700 },
-            "size": { "width": 1400, "height": 80 },
+            "position": {"x": 260, "y": 700},
+            "size": {"width": 1400, "height": 80},
             "props": {
-              "text": "Random jitter reduces visible banding in motion blur",
+              "text": "Large bar at 40 px/frame — random jitter removes visible banding artifacts",
               "fontSize": 26,
               "textAlign": "center",
               "color": "#aaaaaa"
@@ -82,68 +74,44 @@
         ]
       },
       {
-        "id": "variable-rate-demo",
+        "id": "accelerating-demo",
         "startFrame": 60,
         "endFrame": 120,
-        "backgroundColor": "#0a0a1e",
-        "motionBlur": {
-          "enabled": true,
-          "samples": 6,
-          "maxSamples": 20,
-          "variableSampleRate": true
-        },
         "layers": [
+          {
+            "id": "bg2",
+            "type": "shape",
+            "position": {"x": 0, "y": 0},
+            "size": {"width": 1920, "height": 1080},
+            "props": {"shape": "rectangle", "fill": "#0a0a1e"}
+          },
+          {
+            "id": "anim2",
+            "type": "custom",
+            "position": {"x": 0, "y": 0},
+            "size": {"width": 1920, "height": 1080},
+            "customComponent": {"name": "AdvancedScene2", "props": {}}
+          },
           {
             "id": "title2",
             "type": "text",
-            "position": { "x": 260, "y": 120 },
-            "size": { "width": 1400, "height": 100 },
+            "position": {"x": 260, "y": 120},
+            "size": {"width": 1400, "height": 100},
             "props": {
-              "text": "Variable Sample Rate - Auto Optimization",
+              "text": "Accelerating Motion — Blur Grows with Speed",
               "fontSize": 44,
               "fontWeight": "bold",
               "textAlign": "center",
               "color": "#ffffff"
             }
-          },
-          {
-            "id": "accelerating-box",
-            "type": "shape",
-            "position": { "x": 100, "y": 450 },
-            "size": { "width": 100, "height": 100 },
-            "props": {
-              "type": "rectangle",
-              "color": "#4ecdc4",
-              "borderRadius": 10
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 70,
-                    "properties": {
-                      "position": { "x": 100, "y": 450 }
-                    }
-                  },
-                  {
-                    "frame": 110,
-                    "properties": {
-                      "position": { "x": 1720, "y": 450 }
-                    }
-                  }
-                ],
-                "easing": "easeInCubic"
-              }
-            ]
           },
           {
             "id": "subtitle2",
             "type": "text",
-            "position": { "x": 260, "y": 700 },
-            "size": { "width": 1400, "height": 80 },
+            "position": {"x": 260, "y": 700},
+            "size": {"width": 1400, "height": 80},
             "props": {
-              "text": "Fewer samples at start, more samples during fast motion",
+              "text": "Cubic easing: 0 → 86 px/frame — blur trail grows as box accelerates across screen",
               "fontSize": 26,
               "textAlign": "center",
               "color": "#aaaaaa"
@@ -152,18 +120,31 @@
         ]
       },
       {
-        "id": "blur-amount-demo",
+        "id": "speed-comparison",
         "startFrame": 120,
         "endFrame": 180,
-        "backgroundColor": "#0a0a1e",
         "layers": [
+          {
+            "id": "bg3",
+            "type": "shape",
+            "position": {"x": 0, "y": 0},
+            "size": {"width": 1920, "height": 1080},
+            "props": {"shape": "rectangle", "fill": "#0a0a1e"}
+          },
+          {
+            "id": "anim3",
+            "type": "custom",
+            "position": {"x": 0, "y": 0},
+            "size": {"width": 1920, "height": 1080},
+            "customComponent": {"name": "AdvancedScene3", "props": {}}
+          },
           {
             "id": "title3",
             "type": "text",
-            "position": { "x": 260, "y": 120 },
-            "size": { "width": 1400, "height": 100 },
+            "position": {"x": 260, "y": 120},
+            "size": {"width": 1400, "height": 100},
             "props": {
-              "text": "Blur Amount Control - Per Layer",
+              "text": "Blur Intensity — Scales with Velocity",
               "fontSize": 44,
               "fontWeight": "bold",
               "textAlign": "center",
@@ -171,161 +152,54 @@
             }
           },
           {
-            "id": "low-blur",
-            "type": "shape",
-            "position": { "x": 100, "y": 300 },
-            "size": { "width": 80, "height": 80 },
-            "props": {
-              "type": "rectangle",
-              "color": "#ff6b6b",
-              "borderRadius": 8
-            },
-            "motionBlur": {
-              "enabled": true,
-              "quality": "medium",
-              "blurAmount": 0.5
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 130,
-                    "properties": {
-                      "position": { "x": 100, "y": 300 }
-                    }
-                  },
-                  {
-                    "frame": 170,
-                    "properties": {
-                      "position": { "x": 1740, "y": 300 }
-                    }
-                  }
-                ],
-                "easing": "linear"
-              }
-            ]
-          },
-          {
-            "id": "normal-blur",
-            "type": "shape",
-            "position": { "x": 100, "y": 490 },
-            "size": { "width": 80, "height": 80 },
-            "props": {
-              "type": "rectangle",
-              "color": "#4ecdc4",
-              "borderRadius": 8
-            },
-            "motionBlur": {
-              "enabled": true,
-              "quality": "medium",
-              "blurAmount": 1.0
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 130,
-                    "properties": {
-                      "position": { "x": 100, "y": 490 }
-                    }
-                  },
-                  {
-                    "frame": 170,
-                    "properties": {
-                      "position": { "x": 1740, "y": 490 }
-                    }
-                  }
-                ],
-                "easing": "linear"
-              }
-            ]
-          },
-          {
-            "id": "high-blur",
-            "type": "shape",
-            "position": { "x": 100, "y": 680 },
-            "size": { "width": 80, "height": 80 },
-            "props": {
-              "type": "rectangle",
-              "color": "#f7b731",
-              "borderRadius": 8
-            },
-            "motionBlur": {
-              "enabled": true,
-              "quality": "medium",
-              "blurAmount": 1.8
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 130,
-                    "properties": {
-                      "position": { "x": 100, "y": 680 }
-                    }
-                  },
-                  {
-                    "frame": 170,
-                    "properties": {
-                      "position": { "x": 1740, "y": 680 }
-                    }
-                  }
-                ],
-                "easing": "linear"
-              }
-            ]
-          },
-          {
-            "id": "label-low",
+            "id": "label-slow",
             "type": "text",
-            "position": { "x": 150, "y": 240 },
-            "size": { "width": 200, "height": 40 },
-            "props": {
-              "text": "50% blur",
-              "fontSize": 24,
-              "color": "#ffffff"
-            }
+            "position": {"x": 150, "y": 245},
+            "size": {"width": 300, "height": 40},
+            "props": {"text": "10 px/f — subtle", "fontSize": 22, "color": "#ff6b6b"}
           },
           {
-            "id": "label-normal",
+            "id": "label-medium",
             "type": "text",
-            "position": { "x": 150, "y": 430 },
-            "size": { "width": 200, "height": 40 },
-            "props": {
-              "text": "100% blur",
-              "fontSize": 24,
-              "color": "#ffffff"
-            }
+            "position": {"x": 150, "y": 435},
+            "size": {"width": 300, "height": 40},
+            "props": {"text": "30 px/f — visible", "fontSize": 22, "color": "#4ecdc4"}
           },
           {
-            "id": "label-high",
+            "id": "label-fast",
             "type": "text",
-            "position": { "x": 150, "y": 620 },
-            "size": { "width": 200, "height": 40 },
-            "props": {
-              "text": "180% blur",
-              "fontSize": 24,
-              "color": "#ffffff"
-            }
+            "position": {"x": 150, "y": 625},
+            "size": {"width": 300, "height": 40},
+            "props": {"text": "60 px/f — heavy", "fontSize": 22, "color": "#f7b731"}
           }
         ]
       },
       {
-        "id": "axis-demo",
+        "id": "directional-demo",
         "startFrame": 180,
         "endFrame": 240,
-        "backgroundColor": "#0a0a1e",
         "layers": [
+          {
+            "id": "bg4",
+            "type": "shape",
+            "position": {"x": 0, "y": 0},
+            "size": {"width": 1920, "height": 1080},
+            "props": {"shape": "rectangle", "fill": "#0a0a1e"}
+          },
+          {
+            "id": "anim4",
+            "type": "custom",
+            "position": {"x": 0, "y": 0},
+            "size": {"width": 1920, "height": 1080},
+            "customComponent": {"name": "AdvancedScene4", "props": {}}
+          },
           {
             "id": "title4",
             "type": "text",
-            "position": { "x": 260, "y": 120 },
-            "size": { "width": 1400, "height": 100 },
+            "position": {"x": 260, "y": 120},
+            "size": {"width": 1400, "height": 100},
             "props": {
-              "text": "Blur Axis Control - Directional Blur",
+              "text": "Directional Blur — Follows Motion Vector",
               "fontSize": 44,
               "fontWeight": "bold",
               "textAlign": "center",
@@ -333,97 +207,29 @@
             }
           },
           {
-            "id": "x-only",
-            "type": "shape",
-            "position": { "x": 100, "y": 400 },
-            "size": { "width": 80, "height": 80 },
-            "props": {
-              "type": "rectangle",
-              "color": "#ff6b6b",
-              "borderRadius": 8
-            },
-            "motionBlur": {
-              "enabled": true,
-              "quality": "medium",
-              "blurAxis": "x"
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 190,
-                    "properties": {
-                      "position": { "x": 100, "y": 400 }
-                    }
-                  },
-                  {
-                    "frame": 230,
-                    "properties": {
-                      "position": { "x": 1740, "y": 400 }
-                    }
-                  }
-                ],
-                "easing": "linear"
-              }
-            ]
-          },
-          {
-            "id": "both-axes",
-            "type": "shape",
-            "position": { "x": 100, "y": 650 },
-            "size": { "width": 80, "height": 80 },
-            "props": {
-              "type": "rectangle",
-              "color": "#4ecdc4",
-              "borderRadius": 8
-            },
-            "motionBlur": {
-              "enabled": true,
-              "quality": "medium",
-              "blurAxis": "both"
-            },
-            "animations": [
-              {
-                "type": "custom",
-                "keyframes": [
-                  {
-                    "frame": 190,
-                    "properties": {
-                      "position": { "x": 100, "y": 650 }
-                    }
-                  },
-                  {
-                    "frame": 230,
-                    "properties": {
-                      "position": { "x": 1740, "y": 650 }
-                    }
-                  }
-                ],
-                "easing": "linear"
-              }
-            ]
-          },
-          {
-            "id": "label-x",
+            "id": "label-horiz",
             "type": "text",
-            "position": { "x": 150, "y": 340 },
-            "size": { "width": 200, "height": 40 },
-            "props": {
-              "text": "X-axis only",
-              "fontSize": 24,
-              "color": "#ffffff"
-            }
+            "position": {"x": 150, "y": 300},
+            "size": {"width": 300, "height": 40},
+            "props": {"text": "Horizontal only", "fontSize": 22, "color": "#ff6b6b"}
           },
           {
-            "id": "label-both",
+            "id": "label-diag",
             "type": "text",
-            "position": { "x": 150, "y": 590 },
-            "size": { "width": 200, "height": 40 },
+            "position": {"x": 150, "y": 560},
+            "size": {"width": 300, "height": 40},
+            "props": {"text": "Diagonal motion", "fontSize": 22, "color": "#4ecdc4"}
+          },
+          {
+            "id": "subtitle4",
+            "type": "text",
+            "position": {"x": 260, "y": 940},
+            "size": {"width": 1400, "height": 80},
             "props": {
-              "text": "Both axes",
-              "fontSize": 24,
-              "color": "#ffffff"
+              "text": "Blur direction matches the actual motion path of each object",
+              "fontSize": 26,
+              "textAlign": "center",
+              "color": "#aaaaaa"
             }
           }
         ]
