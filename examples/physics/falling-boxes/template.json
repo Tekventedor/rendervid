@@ -1,59 +1,64 @@
 {
-  "name": "Physics - Falling Boxes (2D Demo)",
+  "name": "Physics - Falling Boxes",
+  "description": "Real 2D gravity physics simulation — boxes fall under constant acceleration, bounce off ground with energy loss, rotate continuously.",
+  "version": "2.0.0",
   "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
+  "customComponents": {
+    "FallingBoxes": {
+      "type": "inline",
+      "description": "Gravity simulation: y(t) = y0 + 0.5*g*t², bounce with restitution coefficient on ground impact, continuous rotation.",
+      "code": "function(props){var f=props.frame,W=props.layerSize.width,H=props.layerSize.height,g=0.8,BSZ=100,GY=940,GR=840;function sim(n,y0,rs,rr){var y=y0,vy=0;for(var t=0;t<n;t++){vy+=g;y+=vy;if(y>=GR){y=GR;vy=-vy*rs;if(Math.abs(vy)<0.5)vy=0;}}return{y:y,rot:(rr*n)%360};}var boxes=[{x:400,y0:150,fill:'#ff6b6b',rs:0.65,rr:5},{x:910,y0:80,fill:'#4ecdc4',rs:0.75,rr:-4},{x:1420,y0:220,fill:'#ffe66d',rs:0.55,rr:3}],els=[];boxes.forEach(function(b){var s=sim(f,b.y0,b.rs,b.rr),cx=b.x+BSZ/2,cy=s.y+BSZ/2;els.push(React.createElement('rect',{key:b.x,x:b.x,y:s.y,width:BSZ,height:BSZ,fill:b.fill,transform:'rotate('+s.rot+','+cx+','+cy+')'}));});els.push(React.createElement('rect',{key:'g',x:160,y:GY,width:1600,height:40,fill:'#2d3561'}));return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0}},...els);}"
+    }
+  },
   "composition": {
     "scenes": [{
       "id": "main",
       "startFrame": 0,
       "endFrame": 150,
-      "backgroundColor": "#1a1a2e",
       "layers": [
+        {
+          "id": "bg",
+          "type": "shape",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 1920, "height": 1080},
+          "props": {"shape": "rectangle", "fill": "#1a1a2e"}
+        },
+        {
+          "id": "physics",
+          "type": "custom",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 1920, "height": 1080},
+          "customComponent": {
+            "name": "FallingBoxes",
+            "props": {}
+          }
+        },
         {
           "id": "title",
           "type": "text",
-          "position": {"x": 160, "y": 50},
+          "position": {"x": 160, "y": 40},
           "size": {"width": 1600, "height": 80},
-          "props": {"text": "Physics Simulation - Gravity + Rotation", "fontSize": 48, "color": "#ffffff", "fontWeight": "bold", "textAlign": "center"}
+          "props": {
+            "text": "Physics Simulation — Gravity + Bounce + Rotation",
+            "fontSize": 44,
+            "color": "#ffffff",
+            "fontWeight": "bold",
+            "textAlign": "center"
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 151}]
         },
         {
-          "id": "box1",
-          "type": "shape",
-          "position": {"x": 400, "y": 200},
-          "size": {"width": 100, "height": 100},
-          "props": {"shape": "rectangle", "fill": "#ff6b6b"},
-          "animations": [
-            {"type": "custom", "property": "position.y", "keyframes": [{"frame": 0, "value": 200}, {"frame": 90, "value": 880}], "easing": "easeInQuad"},
-            {"type": "custom", "property": "rotation", "keyframes": [{"frame": 0, "value": 0}, {"frame": 90, "value": 360}], "easing": "linear"}
-          ]
-        },
-        {
-          "id": "box2",
-          "type": "shape",
-          "position": {"x": 910, "y": 150},
-          "size": {"width": 100, "height": 100},
-          "props": {"shape": "rectangle", "fill": "#4ecdc4"},
-          "animations": [
-            {"type": "custom", "property": "position.y", "keyframes": [{"frame": 0, "value": 150}, {"frame": 100, "value": 880}], "easing": "easeInQuad"},
-            {"type": "custom", "property": "rotation", "keyframes": [{"frame": 0, "value": 0}, {"frame": 100, "value": -360}], "easing": "linear"}
-          ]
-        },
-        {
-          "id": "box3",
-          "type": "shape",
-          "position": {"x": 1420, "y": 250},
-          "size": {"width": 100, "height": 100},
-          "props": {"shape": "rectangle", "fill": "#ffe66d"},
-          "animations": [
-            {"type": "custom", "property": "position.y", "keyframes": [{"frame": 0, "value": 250}, {"frame": 80, "value": 880}], "easing": "easeInQuad"},
-            {"type": "custom", "property": "rotation", "keyframes": [{"frame": 0, "value": 0}, {"frame": 80, "value": 540}], "easing": "linear"}
-          ]
-        },
-        {
-          "id": "ground",
-          "type": "shape",
-          "position": {"x": 160, "y": 980},
-          "size": {"width": 1600, "height": 40},
-          "props": {"shape": "rectangle", "fill": "#2d3561"}
+          "id": "subtitle",
+          "type": "text",
+          "position": {"x": 160, "y": 990},
+          "size": {"width": 1600, "height": 60},
+          "props": {
+            "text": "g = 0.8 px/f²   •   restitution: 0.65 / 0.75 / 0.55   •   frame-by-frame integration",
+            "fontSize": 28,
+            "color": "#445577",
+            "textAlign": "center"
+          },
+          "animations": [{"type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 121}]
         }
       ]
     }]
