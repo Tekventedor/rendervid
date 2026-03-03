@@ -1,54 +1,59 @@
 # Pie Chart
 
-Animated pie chart with segment reveal.
+> Animated pie chart with segment reveals.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A dynamic pie chart animation where segments appear one by one with rotation and scale effects. Features a legend, percentage labels, and smooth transitions between segments.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- Sequential segment reveals
-- Rotation animations
-- Percentage labels
-- Animated legend
-- 6-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 5s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `title` | string | Yes | "Budget Allocation" | Chart title |
-| `segment1Label` | string | No | "Marketing" | First segment label |
-| `segment1Value` | number | No | 35 | First segment value (%) |
-| `segment2Label` | string | No | "Development" | Second segment label |
-| `segment2Value` | number | No | 40 | Second segment value (%) |
-| `segment3Label` | string | No | "Operations" | Third segment label |
-| `segment3Value` | number | No | 25 | Third segment value (%) |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `title` | string | `"Revenue Distribution"` | Chart Title *(required)* |
+| `segment1Label` | string | `"Product Sales"` | Segment 1 Label |
+| `segment1Value` | string | `"45%"` | Segment 1 Value |
+| `segment2Label` | string | `"Services"` | Segment 2 Label |
+| `segment2Value` | string | `"35%"` | Segment 2 Value |
+| `segment3Label` | string | `"Licensing"` | Segment 3 Label |
+| `segment3Value` | string | `"20%"` | Segment 3 Value |
+| `backgroundColor` | color | `"#09090b"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render data-visualization/pie-chart
+# Render this example
+node examples/render-all.mjs "data-visualization/pie-chart"
 
-# Render with custom data
-pnpm run examples:render data-visualization/pie-chart \
-  --input.title "Time Spent" \
-  --input.segment1Label "Work" \
-  --input.segment1Value 50
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 6 seconds
+```json
+{
+  "inputs": {
+    "title": "Revenue Distribution",
+    "segment1Label": "Product Sales",
+    "segment1Value": "45%"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

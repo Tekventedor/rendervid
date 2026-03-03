@@ -1,81 +1,56 @@
 # MetaBalls Intro
 
-Fluid metaballs animation with vibrant colors and orbital movement, perfect for modern intros and creative content.
+> Fluid metaballs animation with vibrant colors and orbital movement, perfect for modern intros and creative content.
 
 ## Preview
 
-![Preview](./preview.gif)
+![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Features
+---
 
-- Smooth metaballs effect using SVG filters
-- Orbital movement pattern for organic flow
-- 6 balls with breathing size variation
-- Vibrant gradient colors (customizable)
-- Dark background with gradient overlays
-- Modern typography with text shadows
-- Animated title, underline, and CTA
-- Professional staggered entrance effects
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+
+## Inputs
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `title` | string | `"CREATIVE STUDIO"` | Title Text |
+| `subtitle` | string | `"Where Ideas Flow"` | Subtitle Text |
+| `primaryColor` | color | `"#ff0080"` | Primary Color |
+| `secondaryColor` | color | `"#7928ca"` | Secondary Color |
+| `tertiaryColor` | color | `"#4c00ff"` | Tertiary Color |
 
 ## Usage
 
 ```bash
-pnpm run examples:render effects/metaballs-intro
+# Render this example
+node examples/render-all.mjs "effects/metaballs-intro"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Inputs
+Customize inputs via the MCP server or by editing `template.json`:
 
-| Input | Type | Required | Default |
-|-------|------|----------|---------|
-| `title` | string | No | CREATIVE STUDIO |
-| `subtitle` | string | No | Where Ideas Flow |
-| `primaryColor` | color | No | #ff0080 (pink) |
-| `secondaryColor` | color | No | #7928ca (purple) |
-| `tertiaryColor` | color | No | #4c00ff (blue) |
+```json
+{
+  "inputs": {
+    "title": "CREATIVE STUDIO",
+    "subtitle": "Where Ideas Flow",
+    "primaryColor": "#ff0080"
+  }
+}
+```
 
-## Technical Details
+---
 
-- **Duration**: 6 seconds at 30fps (180 frames)
-- **Resolution**: 1920x1080 (Full HD)
-- **Component**: MetaBalls with orbit movement
-- **Ball Count**: 6 balls
-- **Ball Size**: 100px base with breathing variation
-- **Speed**: 0.8x for smooth, elegant motion
-- **Blur**: 50px for strong merging effect
-- **Movement**: Orbit pattern with phase offsets
-
-## Design Elements
-
-The template features:
-- **Dark Background**: Deep purple (#0a0014)
-- **Vibrant Metaballs**: Pink, purple, and blue gradients
-- **Top/Bottom Gradients**: Subtle overlays for depth
-- **Text Shadows**: Enhanced readability
-- **Accent Underline**: Color-matched to primary
-- **Staggered Animations**: Professional reveal sequence
-
-## Customization
-
-Modify the template to:
-- Change colors for different brand moods
-- Adjust ball count (3-8 recommended)
-- Try different movement patterns:
-  - `orbit`: Circular motion (used here)
-  - `bounce`: Bouncing balls
-  - `float`: Organic floating (Lissajous curves)
-- Increase/decrease blur for merge intensity
-- Adjust speed for faster/slower animation
-- Change ball size for different visual weight
-
-## Use Cases
-
-- Channel intros for creative content
-- Studio/agency presentations
-- Product launch teasers
-- Modern brand videos
-- Event opening sequences
-- Podcast intros
-- Web design showcases
-- Tech company content
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

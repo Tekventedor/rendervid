@@ -1,53 +1,58 @@
-# Before & After
+# Before After Comparison
 
-Compelling before/after comparison video for transformations.
+> Before/after transformation showcase - perfect for fitness, design, or software demos.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A split-screen comparison video showing before and after states. Features a sliding reveal animation, bold labels, and dramatic transitions. Perfect for fitness, home renovation, product improvements, and any transformation content.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- Split-screen layout
-- Sliding reveal animation
-- Bold before/after labels
-- Customizable comparison text
-- 6-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `beforeLabel` | string | No | "BEFORE" | Left side label |
-| `afterLabel` | string | No | "AFTER" | Right side label |
-| `headline` | string | No | "The Transformation" | Main headline |
-| `subtext` | string | No | "See the difference" | Supporting text |
-| `beforeColor` | color | No | #64748b | Before side color |
-| `afterColor` | color | No | #22c55e | After side color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `beforeLabel` | string | `"BEFORE"` | Before Label |
+| `afterLabel` | string | `"AFTER"` | After Label |
+| `headline` | string | `"The Transformation"` | Headline |
+| `ctaText` | string | `"Get Started Today"` | CTA Text |
+| `beforeColor` | color | `"#71717a"` | Before Color |
+| `afterColor` | color | `"#22c55e"` | After Color |
+| `backgroundColor` | color | `"#09090b"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render marketing/before-after
+# Render this example
+node examples/render-all.mjs "marketing/before-after"
 
-# Render with custom labels
-pnpm run examples:render marketing/before-after \
-  --input.headline "Kitchen Renovation" \
-  --input.beforeLabel "OLD" \
-  --input.afterLabel "NEW"
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 6 seconds
+```json
+{
+  "inputs": {
+    "beforeLabel": "BEFORE",
+    "afterLabel": "AFTER",
+    "headline": "The Transformation"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

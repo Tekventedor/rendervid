@@ -1,71 +1,59 @@
 # Progress Dashboard
 
-Animated dashboard with multiple progress indicators.
+> Dashboard with animated progress indicators and KPIs.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A comprehensive dashboard animation featuring multiple progress indicators including circular gauges, progress bars, and statistics. All elements animate in with staggered timing for a professional presentation effect.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- Multiple progress indicators
-- Circular gauge animations
-- Linear progress bars
-- Staggered reveal timing
-- 8-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `title` | string | Yes | "Performance Dashboard" | Dashboard title |
-| `metric1Label` | string | No | "Completion" | First metric label |
-| `metric1Value` | number | No | 85 | First metric value (%) |
-| `metric2Label` | string | No | "Efficiency" | Second metric label |
-| `metric2Value` | number | No | 92 | Second metric value (%) |
-| `metric3Label` | string | No | "Growth" | Third metric label |
-| `metric3Value` | number | No | 67 | Third metric value (%) |
-| `primaryColor` | color | No | #3b82f6 | Primary accent color |
-| `backgroundColor` | color | No | #0f172a | Background color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `title` | string | `"Q4 Performance"` | Dashboard Title *(required)* |
+| `kpi1Label` | string | `"Revenue Target"` | KPI 1 Label |
+| `kpi1Value` | string | `"87%"` | KPI 1 Value |
+| `kpi2Label` | string | `"Customer Satisfaction"` | KPI 2 Label |
+| `kpi2Value` | string | `"94%"` | KPI 2 Value |
+| `kpi3Label` | string | `"Team Efficiency"` | KPI 3 Label |
+| `kpi3Value` | string | `"78%"` | KPI 3 Value |
+| `backgroundColor` | color | `"#0a0a0a"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render data-visualization/progress-dashboard
+# Render this example
+node examples/render-all.mjs "data-visualization/progress-dashboard"
 
-# Render with custom metrics
-pnpm run examples:render data-visualization/progress-dashboard \
-  --input.title "Q4 Results" \
-  --input.metric1Label "Sales Target" \
-  --input.metric1Value 95
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 8 seconds
-
-## Dashboard Layout
-
+```json
+{
+  "inputs": {
+    "title": "Q4 Performance",
+    "kpi1Label": "Revenue Target",
+    "kpi1Value": "87%"
+  }
+}
 ```
-┌─────────────────────────────────────────┐
-│           Performance Dashboard          │
-├─────────────────────────────────────────┤
-│   ┌─────────┐  ┌─────────┐  ┌─────────┐ │
-│   │  85%    │  │  92%    │  │  67%    │ │
-│   │Completion│ │Efficiency│ │ Growth  │ │
-│   └─────────┘  └─────────┘  └─────────┘ │
-├─────────────────────────────────────────┤
-│   Progress Bars with Labels             │
-└─────────────────────────────────────────┘
-```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

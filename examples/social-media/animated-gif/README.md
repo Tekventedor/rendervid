@@ -1,41 +1,53 @@
 # Animated GIF
 
-Optimized animated GIF template for social media and web use.
+> Optimized animated GIF template for social media and web use.
 
-## Description
+## Preview
 
-Compact animated GIF with bold typography and smooth entrance animations. Optimized for small file sizes while maintaining visual quality, making it ideal for social media posts, email campaigns, and web content.
+*Run `node examples/render-all.mjs` to generate the preview GIF and MP4.*
 
-## Features
+---
 
-- 1:1 aspect ratio (480x480)
-- Optimized for GIF format (15fps, reduced colors)
-- Smooth entrance animations
-- Customizable colors and text
-- 3-second duration
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 480 × 480 |
+| **Duration** | 3s |
+| **FPS** | 15 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `headline` | string | Yes | "Check This Out" | Main headline |
-| `subtitle` | string | No | "Something amazing is happening" | Supporting text |
-| `accentColor` | color | No | #f97316 | Accent color |
-| `backgroundColor` | color | No | #18181b | Background |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `headline` | string | `"Check This Out"` | Headline *(required)* |
+| `subtitle` | string | `"Something amazing is happening"` | Subtitle |
+| `accentColor` | color | `"#f97316"` | Accent Color |
+| `backgroundColor` | color | `"#18181b"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render social-media/animated-gif
+# Render this example
+node examples/render-all.mjs "social-media/animated-gif"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## GIF Optimization
+Customize inputs via the MCP server or by editing `template.json`:
 
-This example uses the `getGifOptimizationPreset('social')` preset which configures:
+```json
+{
+  "inputs": {
+    "headline": "Check This Out",
+    "subtitle": "Something amazing is happening",
+    "accentColor": "#f97316"
+  }
+}
+```
 
-- **Max file size**: 8MB (Twitter/X limit)
-- **Colors**: 128 (good balance of quality and size)
-- **FPS**: 15 (smooth enough for most animations)
-- **Dither**: Floyd-Steinberg (best quality dithering)
+---
 
-You can also use `'web'` or `'email'` presets for different use cases.
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

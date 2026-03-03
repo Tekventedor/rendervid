@@ -1,24 +1,55 @@
 # Open House
 
-Open house announcement with date, time, and address.
+> Open house announcement with date, time, and address.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
+
+---
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+
+## Inputs
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `eventDate` | string | `"Saturday, March 15"` | Event Date *(required)* |
+| `eventTime` | string | `"1:00 PM - 4:00 PM"` | Event Time *(required)* |
+| `address` | string | `"456 Maple Avenue, Santa Monica, CA"` | Address *(required)* |
+| `propertyImage` | url | `"house.jpg"` | Property Image |
 
 ## Usage
 
 ```bash
-pnpm run examples:render real-estate/open-house
+# Render this example
+node examples/render-all.mjs "real-estate/open-house"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Inputs
+Customize inputs via the MCP server or by editing `template.json`:
 
-| Key | Type | Default |
-|-----|------|---------|
-| `title` | string | "OPEN HOUSE" |
-| `date` | string | "Saturday, March 15th" |
-| `time` | string | "1:00 PM - 4:00 PM" |
-| `address` | string | "789 Pine Boulevard" |
+```json
+{
+  "inputs": {
+    "eventDate": "Saturday, March 15",
+    "eventTime": "1:00 PM - 4:00 PM",
+    "address": "456 Maple Avenue, Santa Monica, CA"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

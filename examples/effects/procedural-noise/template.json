@@ -1,7 +1,7 @@
 {
   "name": "Procedural Noise",
-  "description": "Animated procedural noise backgrounds using simplex, Perlin, Worley, and value noise algorithms with fBm layering.",
-  "version": "1.0.0",
+  "description": "Animated procedural noise backgrounds using value noise with fBm layering — organic shifting color patterns.",
+  "version": "2.0.0",
   "output": {
     "type": "video",
     "width": 1920,
@@ -23,43 +23,18 @@
       "label": "Subtitle Text",
       "required": false,
       "default": "Organic Patterns in Motion"
-    },
-    {
-      "key": "noiseType",
-      "type": "string",
-      "label": "Noise Type (simplex, perlin, worley, value)",
-      "required": false,
-      "default": "simplex"
-    },
-    {
-      "key": "primaryColor",
-      "type": "color",
-      "label": "Primary Color",
-      "required": false,
-      "default": "#000000"
-    },
-    {
-      "key": "secondaryColor",
-      "type": "color",
-      "label": "Secondary Color",
-      "required": false,
-      "default": "#1a237e"
-    },
-    {
-      "key": "accentColor",
-      "type": "color",
-      "label": "Accent Color",
-      "required": false,
-      "default": "#e91e63"
     }
   ],
   "defaults": {
     "title": "PROCEDURAL NOISE",
-    "subtitle": "Organic Patterns in Motion",
-    "noiseType": "simplex",
-    "primaryColor": "#000000",
-    "secondaryColor": "#1a237e",
-    "accentColor": "#e91e63"
+    "subtitle": "Organic Patterns in Motion"
+  },
+  "customComponents": {
+    "ProceduralNoise": {
+      "type": "inline",
+      "description": "Animated value noise with fBm: 2 octaves of smooth hash noise, blurred 28x16 grid, cycling through dark/indigo/purple/pink palette",
+      "code": "function(props){var f=props.frame,W=props.layerSize.width,H=props.layerSize.height,t=f*0.035,N=16,M=28,cw=W/M,ch=H/N;function sm(x){return x*x*(3-2*x);}function h(a,b){var v=Math.sin(a*127.1+b*311.7)*43758.5453;return v-Math.floor(v);}function noise(x,y){var ix=Math.floor(x),iy=Math.floor(y),fx=x-ix,fy=y-iy,ux=sm(fx),uy=sm(fy);return h(ix,iy)*(1-ux)*(1-uy)+h(ix+1,iy)*ux*(1-uy)+h(ix,iy+1)*(1-ux)*uy+h(ix+1,iy+1)*ux*uy;}var cells=[];for(var r=0;r<N;r++){for(var c=0;c<M;c++){var v1=noise(c*0.38+t*0.9,r*0.42+t*0.5),v2=noise(c*0.21+t*0.4+5.3,r*0.31+t*0.7+7.1)*0.5;var v=v1*0.65+v2*0.35;var col=v>0.68?'#e91e63':v>0.5?'#4a148c':v>0.3?'#1a237e':'#000000';cells.push(React.createElement('rect',{key:r*M+c,x:Math.floor(c*cw),y:Math.floor(r*ch),width:Math.ceil(cw)+1,height:Math.ceil(ch)+1,fill:col}));}}return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H},React.createElement('defs',null,React.createElement('filter',{id:'pnb'},React.createElement('feGaussianBlur',{stdDeviation:'28'}))),React.createElement('rect',{x:0,y:0,width:W,height:H,fill:'#000000'}),React.createElement('g',{filter:'url(#pnb)'},cells));}"
+    }
   },
   "composition": {
     "scenes": [
@@ -70,7 +45,7 @@
         "layers": [
           {
             "id": "noise-bg",
-            "type": "NoiseBackground",
+            "type": "custom",
             "position": {
               "x": 0,
               "y": 0
@@ -79,19 +54,9 @@
               "width": 1920,
               "height": 1080
             },
-            "props": {
-              "noiseType": "{{noiseType}}",
-              "seed": 42,
-              "scale": 0.005,
-              "speed": 1,
-              "colors": [
-                "{{primaryColor}}",
-                "{{secondaryColor}}",
-                "#4a148c",
-                "{{accentColor}}"
-              ],
-              "octaves": 4,
-              "resolution": 6
+            "customComponent": {
+              "name": "ProceduralNoise",
+              "props": {}
             }
           },
           {
@@ -119,7 +84,7 @@
                 "type": "entrance",
                 "effect": "fadeIn",
                 "delay": 15,
-                "duration": 30,
+                "duration": 170,
                 "easing": "easeOutCubic"
               }
             ]
@@ -149,7 +114,7 @@
                 "type": "entrance",
                 "effect": "fadeIn",
                 "delay": 45,
-                "duration": 25
+                "duration": 140
               }
             ]
           },

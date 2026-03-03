@@ -1,44 +1,56 @@
 # Instagram Story
 
-Vertical video template optimized for Instagram Stories and Reels.
+> Vertical video template optimized for Instagram Stories and Reels.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Eye-catching vertical video with gradient glows, animated text, and a pulsing CTA button. Perfect for product launches, announcements, and promotional content.
+## Details
 
-## Features
-
-- 9:16 aspect ratio (1080x1920)
-- Gradient glow effects
-- Staggered text animations
-- Pulsing CTA button
-- 6-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1080 × 1920 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `headline` | string | Yes | "New Drop" | Main headline |
-| `subheadline` | string | No | "Limited Edition" | Supporting text |
-| `ctaText` | string | No | "Swipe Up" | CTA button text |
-| `primaryColor` | color | No | #ec4899 | Accent color |
-| `backgroundColor` | color | No | #0f0f0f | Background |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `headline` | string | `"New Drop"` | Headline *(required)* |
+| `subheadline` | string | `"Limited Edition"` | Subheadline |
+| `ctaText` | string | `"Swipe Up"` | Call to Action |
+| `primaryColor` | color | `"#ec4899"` | Primary Color |
+| `backgroundColor` | color | `"#0f0f0f"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render social-media/instagram-story
+# Render this example
+node examples/render-all.mjs "social-media/instagram-story"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1080x1920
-- **Frame Rate**: 30 fps
-- **Duration**: 6 seconds
+```json
+{
+  "inputs": {
+    "headline": "New Drop",
+    "subheadline": "Limited Edition",
+    "ctaText": "Swipe Up"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

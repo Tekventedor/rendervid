@@ -1,53 +1,57 @@
 # Sale Announcement
 
-Eye-catching promotional video for sales and special offers.
+> Flash sale or discount announcement with urgency-driven design.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A dynamic sale announcement video with bold typography, animated discount display, and urgency-building elements. Features gradient backgrounds, pulsing effects, and staggered text reveals.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- Bold, attention-grabbing typography
-- Animated percentage display
-- Pulsing emphasis effects
-- Gradient backgrounds
-- 6-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `headline` | string | Yes | "MEGA SALE" | Main headline |
-| `discount` | string | No | "50% OFF" | Discount amount |
-| `subtext` | string | No | "Limited Time Only" | Supporting text |
-| `ctaText` | string | No | "Shop Now" | Call to action |
-| `primaryColor` | color | No | #ef4444 | Accent color |
-| `backgroundColor` | color | No | #0f0f0f | Background color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `discount` | string | `"50% OFF"` | Discount *(required)* |
+| `headline` | string | `"FLASH SALE"` | Headline *(required)* |
+| `subheadline` | string | `"Limited Time Only"` | Subheadline |
+| `ctaText` | string | `"SHOP NOW"` | CTA Text |
+| `primaryColor` | color | `"#ef4444"` | Primary Color |
+| `backgroundColor` | color | `"#0a0a0a"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render marketing/sale-announcement
+# Render this example
+node examples/render-all.mjs "marketing/sale-announcement"
 
-# Render with custom sale
-pnpm run examples:render marketing/sale-announcement \
-  --input.headline "BLACK FRIDAY" \
-  --input.discount "70% OFF" \
-  --input.subtext "This Weekend Only"
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 6 seconds
+```json
+{
+  "inputs": {
+    "discount": "50% OFF",
+    "headline": "FLASH SALE",
+    "subheadline": "Limited Time Only"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

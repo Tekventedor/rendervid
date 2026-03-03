@@ -1,40 +1,34 @@
 # All Fonts Showcase
 
-Demonstrates all available fonts in Rendervid, each displayed for 1.5 seconds.
+> Showcases all available fonts, each displayed for 1.5 seconds.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
+
+---
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 24s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Usage
 
 ```bash
-pnpm run examples:render showcase/all-fonts
+# Render this example
+node examples/render-all.mjs "showcase/all-fonts"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Featured Fonts
+---
 
-| Font | Category | Best For |
-|------|----------|----------|
-| Inter | Sans-serif | UI, body text |
-| Poppins | Sans-serif | Headlines, modern |
-| Playfair Display | Serif | Elegant, editorial |
-| Space Grotesk | Sans-serif | Tech, futuristic |
-| Bebas Neue | Display | Headlines, impact |
-| Orbitron | Display | Sci-fi, tech |
-| JetBrains Mono | Monospace | Code, terminal |
-| Cormorant Garamond | Serif | Luxury, elegant |
-| Nunito | Sans-serif | Friendly, organic |
-| DM Sans | Sans-serif | Clean, minimal |
-| Plus Jakarta Sans | Sans-serif | Modern, professional |
-| Outfit | Sans-serif | Contemporary |
-| Sora | Sans-serif | Geometric, modern |
-| Quicksand | Sans-serif | Playful, rounded |
-| Fira Code | Monospace | Code with ligatures |
-| IBM Plex Mono | Monospace | Technical, precise |
-
-## Duration
-
-- 16 fonts × 1.5 seconds = 24 seconds total
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

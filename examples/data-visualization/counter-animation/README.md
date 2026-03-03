@@ -1,54 +1,60 @@
 # Counter Animation
 
-Animated counting numbers with formatting.
+> Animated counting numbers for statistics and metrics.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Dynamic number counter animation that counts up from zero to a target value. Features large typography, optional formatting (currency, percentage), and smooth easing. Perfect for showcasing statistics, achievements, and KPIs.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- Smooth counting animation
-- Number formatting support
-- Large, impactful typography
-- Optional prefix/suffix
-- 5-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 5s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `title` | string | Yes | "Total Revenue" | Counter title |
-| `targetValue` | number | Yes | 1000000 | Target number |
-| `prefix` | string | No | "$" | Number prefix |
-| `suffix` | string | No | "" | Number suffix |
-| `primaryColor` | color | No | #22c55e | Number color |
-| `backgroundColor` | color | No | #0f172a | Background color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `title` | string | `"Our Impact"` | Title |
+| `stat1Value` | string | `"10M+"` | Stat 1 Value |
+| `stat1Label` | string | `"Users"` | Stat 1 Label |
+| `stat2Value` | string | `"150+"` | Stat 2 Value |
+| `stat2Label` | string | `"Countries"` | Stat 2 Label |
+| `stat3Value` | string | `"99.9%"` | Stat 3 Value |
+| `stat3Label` | string | `"Uptime"` | Stat 3 Label |
+| `primaryColor` | color | `"#06b6d4"` | Primary Color |
+| `backgroundColor` | color | `"#0f172a"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render data-visualization/counter-animation
+# Render this example
+node examples/render-all.mjs "data-visualization/counter-animation"
 
-# Render with custom counter
-pnpm run examples:render data-visualization/counter-animation \
-  --input.title "Happy Customers" \
-  --input.targetValue 50000 \
-  --input.prefix "" \
-  --input.suffix "+"
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 5 seconds
+```json
+{
+  "inputs": {
+    "title": "Our Impact",
+    "stat1Value": "10M+",
+    "stat1Label": "Users"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

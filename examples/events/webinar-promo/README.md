@@ -1,22 +1,56 @@
 # Webinar Promo
 
-Professional webinar announcement featuring speaker, topic, and date.
+> Professional webinar announcement featuring speaker, topic, and date.
 
 ## Preview
-![Preview](./preview.gif)
 
-[View animated SVG](preview.svg)
+![Preview](preview.gif)
 
-## Usage
-```bash
-pnpm run examples:render events/webinar-promo
-```
+**[📥 Download MP4](output.mp4)**
+
+---
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 8s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
-| Input | Type | Required | Default |
-|-------|------|----------|---------|
-| `topic` | string | Yes | Mastering AI for Business Growth |
-| `description` | string | No | Learn how to leverage AI tools... |
-| `speakerName` | string | No | Dr. Sarah Chen |
-| `date` | string | Yes | March 20, 2024 |
-| `time` | string | No | 2:00 PM EST |
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `topic` | string | `"Mastering AI for Business Growth"` | Topic *(required)* |
+| `description` | string | `"Learn how to leverage AI tools to scale your business"` | Description |
+| `speakerName` | string | `"Dr. Sarah Chen"` | Speaker Name |
+| `date` | string | `"March 20, 2024"` | Date *(required)* |
+| `time` | string | `"2:00 PM EST"` | Time |
+
+## Usage
+
+```bash
+# Render this example
+node examples/render-all.mjs "events/webinar-promo"
+
+# Or render all examples
+node examples/render-all.mjs
+```
+
+Customize inputs via the MCP server or by editing `template.json`:
+
+```json
+{
+  "inputs": {
+    "topic": "Mastering AI for Business Growth",
+    "description": "Learn how to leverage AI tools to scale your business",
+    "speakerName": "Dr. Sarah Chen"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

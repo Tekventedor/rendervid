@@ -1,41 +1,54 @@
 # YouTube Subscribe Lower Third
 
-Transparent lower third overlay with channel avatar, name, subscriber count and animated subscribe button.
+> Transparent lower third with channel avatar, name, subscriber count and animated subscribe button
 
 ## Preview
 
-[View animated SVG](preview.svg)
+*Run `node examples/render-all.mjs` to generate the preview GIF and MP4.*
 
-## Description
+---
 
-A transparent lower third with channel avatar, name, subscriber count and animated subscribe button. Uses a custom React component for the animated UI. Perfect for YouTube video overlays.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Transparent background for overlay use
-- Animated subscribe button
-- Custom React component (LowerThird)
-- 6-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+| **Custom Components** | LowerThird |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `channelName` | string | "FlowHunt" | Channel Name |
-| `subscriberCount` | string | "202 subscribers" | Subscriber Count |
-| `avatarUrl` | url | *(YouTube avatar URL)* | Avatar URL |
-| `videoTitle` | string | "" | Video Title |
+| `channelName` | string | `"FlowHunt"` | Channel Name *(required)* |
+| `subscriberCount` | string | `"202 subscribers"` | Subscriber Count *(required)* |
+| `avatarUrl` | url | `"https://yt3.googleusercontent.com/nq4JoCO94W0R6672Mlnla3SZcO83IAaM12lh36O942v1NnHRGWo55dTyqWqaY0vv6sm_k8K7FQ=s240-c-k-c0x00ffffff-no-rj"` | Avatar URL *(required)* |
+| `videoTitle` | string | `""` | Video Title |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render youtube-lower-third
+# Render this example
+node examples/render-all.mjs "youtube-lower-third"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 6 seconds
+```json
+{
+  "inputs": {
+    "channelName": "FlowHunt",
+    "subscriberCount": "202 subscribers",
+    "avatarUrl": "https://yt3.googleusercontent.com/nq4JoCO94W0R6672Mlnla3SZcO83IAaM12lh36O942v1NnHRGWo55dTyqWqaY0vv6sm_k8K7FQ=s240-c-k-c0x00ffffff-no-rj"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../README.md) · [RenderVid](../../README.md)*

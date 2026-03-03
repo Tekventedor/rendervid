@@ -1,53 +1,57 @@
 # Testimonial Video
 
-Display customer testimonials with professional styling.
+> Customer testimonial with quote, author info, and star rating.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A professional testimonial video template featuring customer quotes with attribution. Includes decorative quote marks, fade-in animations, and clean typography for maximum readability and impact.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- Large decorative quote marks
-- Professional typography
-- Fade-in text animations
-- Customer attribution
-- 7-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 7s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `quote` | string | Yes | "This product changed..." | Customer quote |
-| `customerName` | string | No | "Sarah Johnson" | Customer name |
-| `customerTitle` | string | No | "CEO, TechCorp" | Customer title |
-| `rating` | number | No | 5 | Star rating (1-5) |
-| `primaryColor` | color | No | #f59e0b | Accent color |
-| `backgroundColor` | color | No | #0c0a09 | Background color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `quote` | string | `"This product completely transformed how we work. The results have been incredible!"` | Quote *(required)* |
+| `authorName` | string | `"Sarah Johnson"` | Author Name *(required)* |
+| `authorTitle` | string | `"CEO, TechCorp Inc."` | Author Title |
+| `rating` | number | `5` | Star Rating (1-5) |
+| `primaryColor` | color | `"#fbbf24"` | Primary Color |
+| `backgroundColor` | color | `"#0c0a09"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render marketing/testimonial-video
+# Render this example
+node examples/render-all.mjs "marketing/testimonial-video"
 
-# Render with custom testimonial
-pnpm run examples:render marketing/testimonial-video \
-  --input.quote "Absolutely incredible service!" \
-  --input.customerName "John Smith" \
-  --input.customerTitle "Product Manager"
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 7 seconds
+```json
+{
+  "inputs": {
+    "quote": "This product completely transformed how we work. The results have been incredible!",
+    "authorName": "Sarah Johnson",
+    "authorTitle": "CEO, TechCorp Inc."
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

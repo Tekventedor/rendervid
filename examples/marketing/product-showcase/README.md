@@ -1,63 +1,59 @@
 # Product Showcase
 
-Feature your product with stunning visuals, key features, and pricing.
+> Feature your product with stunning visuals, key features, and pricing.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A professional product showcase video with three scenes: intro with product name and tagline, features display with staggered animations, and pricing with call-to-action. Perfect for product launches and promotional content.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- 3-scene structure (intro, features, pricing)
-- Radial gradient glow effects
-- Staggered slide-in animations
-- Scale-in text effects
-- 8-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 8s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `productName` | string | Yes | "Premium Headphones" | Product name |
-| `tagline` | string | No | "Experience Pure Sound" | Product tagline |
-| `price` | string | No | "$299" | Product price |
-| `feature1` | string | No | "Active Noise Cancellation" | First feature |
-| `feature2` | string | No | "40-Hour Battery Life" | Second feature |
-| `feature3` | string | No | "Premium Materials" | Third feature |
-| `primaryColor` | color | No | #8b5cf6 | Accent color |
-| `backgroundColor` | color | No | #09090b | Background color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `productName` | string | `"Premium Headphones"` | Product Name *(required)* |
+| `tagline` | string | `"Experience Pure Sound"` | Tagline |
+| `price` | string | `"$299"` | Price |
+| `feature1` | string | `"Active Noise Cancellation"` | Feature 1 |
+| `feature2` | string | `"40-Hour Battery Life"` | Feature 2 |
+| `feature3` | string | `"Premium Materials"` | Feature 3 |
+| `primaryColor` | color | `"#8b5cf6"` | Primary Color |
+| `backgroundColor` | color | `"#09090b"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render marketing/product-showcase
+# Render this example
+node examples/render-all.mjs "marketing/product-showcase"
 
-# Render with custom product
-pnpm run examples:render marketing/product-showcase \
-  --input.productName "Smart Watch Pro" \
-  --input.tagline "Your Life, Simplified" \
-  --input.price "$399"
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 8 seconds
+```json
+{
+  "inputs": {
+    "productName": "Premium Headphones",
+    "tagline": "Experience Pure Sound",
+    "price": "$299"
+  }
+}
+```
 
-## Scene Structure
+---
 
-| Scene | Frames | Description |
-|-------|--------|-------------|
-| Intro | 0-90 | Product name with glow effect and tagline |
-| Features | 90-180 | Three features with staggered slide-in |
-| Pricing | 180-240 | Price display with CTA |
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

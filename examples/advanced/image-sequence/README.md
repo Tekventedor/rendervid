@@ -1,35 +1,48 @@
-# Image Sequence Export Example
+# Image Sequence Demo
 
-Export a template as a sequence of individual image frames.
+> A simple template for demonstrating image sequence export.
+
+## Preview
+
+*Run `node examples/render-all.mjs` to generate the preview GIF and MP4.*
+
+---
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1280 × 720 |
+| **Duration** | 2s |
+| **FPS** | 24 |
+| **Output** | Video (MP4) |
+
+## Inputs
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `title` | string | `"Image Sequence Export"` | Title |
 
 ## Usage
 
 ```bash
-# Export as PNG (default)
-npx tsx render.ts
+# Render this example
+node examples/render-all.mjs "advanced/image-sequence"
 
-# Export as JPEG with custom quality
-npx tsx render.ts --format jpeg --quality 85
-
-# Export as WebP
-npx tsx render.ts --format webp --quality 90
-
-# Custom naming pattern with manifest
-npx tsx render.ts --pattern "shot-{number}" --manifest
-
-# Export specific frame range
-npx tsx render.ts --start 0 --end 24
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Naming Patterns
+Customize inputs via the MCP server or by editing `template.json`:
 
-The `namingPattern` option supports the following tokens:
+```json
+{
+  "inputs": {
+    "title": "Image Sequence Export"
+  }
+}
+```
 
-- `{number}` - Zero-padded frame number (e.g., `00042`)
-- `{name}` - Sanitized template name
-- `{hash}` - Short MD5 hash unique to each frame
-- `%05d` - Printf-style frame number formatting
+---
 
-## Manifest
-
-When `--manifest` is passed, a `manifest.json` file is generated in the output directory containing metadata about all exported frames.
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

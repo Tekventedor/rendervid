@@ -1,45 +1,57 @@
 # Gradient Mesh Background
 
-A mesmerizing animated gradient mesh with overlapping colorful ellipses that float and pulse organically.
+> A mesmerizing animated gradient mesh with overlapping colorful ellipses that float and pulse organically. Features centered text overlay perfect for brand presentations, creative intros, and artistic backgrounds.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A mesmerizing animated gradient mesh with overlapping colorful ellipses that float and pulse organically. Features centered text overlay perfect for brand presentations, creative intros, and artistic backgrounds.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Multi-color radial gradient blobs with float and pulse animations
-- Bold centered text with scale-in entrance
-- Customizable pink, purple, blue, and teal accent colors
-- 10-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 10s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| companyName | string | AURORA STUDIO | Company Name |
-| tagline | string | Design Beyond Boundaries | Tagline |
-| colorPink | color | #ec4899 | Pink Accent |
-| colorPurple | color | #8b5cf6 | Purple Accent |
-| colorBlue | color | #3b82f6 | Blue Accent |
-| colorTeal | color | #14b8a6 | Teal Accent |
+| `companyName` | string | `"AURORA STUDIO"` | Company Name *(required)* |
+| `tagline` | string | `"Design Beyond Boundaries"` | Tagline |
+| `colorPink` | color | `"#ec4899"` | Pink Accent |
+| `colorPurple` | color | `"#8b5cf6"` | Purple Accent |
+| `colorBlue` | color | `"#3b82f6"` | Blue Accent |
+| `colorTeal` | color | `"#14b8a6"` | Teal Accent |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render cinematic/gradient-mesh
+# Render this example
+node examples/render-all.mjs "cinematic/gradient-mesh"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 10 seconds
+```json
+{
+  "inputs": {
+    "companyName": "AURORA STUDIO",
+    "tagline": "Design Beyond Boundaries",
+    "colorPink": "#ec4899"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

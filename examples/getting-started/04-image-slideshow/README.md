@@ -1,43 +1,54 @@
 # Image Slideshow
 
-A beautiful slideshow with smooth fade transitions between images.
+> Create a beautiful slideshow with smooth fade transitions between images.
 
 ## Preview
 
-![Preview](./preview.gif)
+![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-[Download MP4](./video.mp4)
+---
 
-## Features
+## Details
 
-- Smooth fade transitions between images
-- Ken Burns zoom effect on each slide
-- Supports 3 images
-- Perfect for portfolios, galleries, and memories
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 12s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+
+## Inputs
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `image1` | url | `"https://www.photomaticai.com/images/processed/ai-generated-images/models_flux-dev_ai-image-generator_soft-retro_1970s_Soft_Retro_Living_Room.webp"` | First Image *(required)* |
+| `image2` | url | `"https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v3-balanced_ai-image-generator_pen_Whimsical_Pencil_Cityscape.webp"` | Second Image *(required)* |
+| `image3` | url | `"https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp"` | Third Image *(required)* |
 
 ## Usage
 
 ```bash
-npx tsx examples/getting-started/04-image-slideshow/render.ts
+# Render this example
+node examples/render-all.mjs "getting-started/04-image-slideshow"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Inputs
+Customize inputs via the MCP server or by editing `template.json`:
 
-| Input | Type | Required | Default |
-|-------|------|----------|---------|
-| `image1` | string | Yes | photomaticai.com sample image |
-| `image2` | string | Yes | photomaticai.com sample image |
-| `image3` | string | Yes | photomaticai.com sample image |
-
-## Customization
-
-Replace the default images with your own URLs:
-
-```bash
-pnpm run examples:render getting-started/04-image-slideshow \
-  --input image1="https://example.com/photo1.jpg" \
-  --input image2="https://example.com/photo2.jpg" \
-  --input image3="https://example.com/photo3.jpg"
+```json
+{
+  "inputs": {
+    "image1": "https://www.photomaticai.com/images/processed/ai-generated-images/models_flux-dev_ai-image-generator_soft-retro_1970s_Soft_Retro_Living_Room.webp",
+    "image2": "https://www.photomaticai.com/images/processed/ai-generated-images/models_ideogram-v3-balanced_ai-image-generator_pen_Whimsical_Pencil_Cityscape.webp",
+    "image3": "https://www.photomaticai.com/images/processed/styles/foqzv_Abstract_Portrait_for_a_Modern_Art_Gallery.webp"
+  }
+}
 ```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

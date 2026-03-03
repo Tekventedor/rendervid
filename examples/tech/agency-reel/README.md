@@ -1,44 +1,56 @@
 # Agency Portfolio Reel
 
-A dynamic 3-scene agency portfolio reel with bold typography, geometric accents, and staggered animations.
+> A dynamic 3-scene agency portfolio reel with bold typography, geometric accents, and staggered animations. Scene 1: Agency intro, Scene 2: Services showcase, Scene 3: Contact CTA. Perfect for digital agencies, design studios, and creative portfolios.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A dynamic 3-scene agency portfolio reel with bold typography, geometric accents, and staggered animations. Scene 1: Agency intro, Scene 2: Services showcase, Scene 3: Contact CTA. Perfect for digital agencies, design studios, and creative portfolios.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Three-scene layout: intro, services, and contact CTA
-- Bold typography with geometric circle and dot accents
-- Service showcase with Strategy, Design, and Development highlights
-- 9-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 9s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| agencyName | string | PIXEL FORGE | Agency Name |
-| tagline | string | We Create Digital Experiences | Tagline |
-| email | string | hello@pixelforge.studio | Email |
-| website | string | pixelforge.studio | Website |
-| accentColor | color | #3b82f6 | Accent Color |
+| `agencyName` | string | `"PIXEL FORGE"` | Agency Name *(required)* |
+| `tagline` | string | `"We Create Digital Experiences"` | Tagline |
+| `email` | string | `"hello@pixelforge.studio"` | Email |
+| `website` | string | `"pixelforge.studio"` | Website |
+| `accentColor` | color | `"#3b82f6"` | Accent Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render tech/agency-reel
+# Render this example
+node examples/render-all.mjs "tech/agency-reel"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 9 seconds
+```json
+{
+  "inputs": {
+    "agencyName": "PIXEL FORGE",
+    "tagline": "We Create Digital Experiences",
+    "email": "hello@pixelforge.studio"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

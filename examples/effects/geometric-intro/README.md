@@ -1,42 +1,54 @@
 # Geometric Pattern Intro
 
-A mesmerizing intro with scattered geometric shapes that rotate in and float, followed by a bold title reveal.
+> A mesmerizing intro with scattered geometric shapes that rotate in and float, followed by a bold title reveal. Modern, abstract, tech-conference aesthetic with staggered polygon animations.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A mesmerizing intro with scattered geometric shapes that rotate in and float, followed by a bold title reveal. Modern, abstract, tech-conference aesthetic with staggered polygon animations.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Hexagons, triangles, and circles with rotate-in and float animations
-- Bold title with scale-in and glowing text shadow
-- Gradient accent lines and corner bracket decorations
-- 7-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 7s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| title | string | FUTURE FORWARD | Main Title |
-| subtitle | string | Design Conference 2025 | Subtitle |
-| accentColor | color | #6366f1 | Accent Color |
+| `title` | string | `"FUTURE FORWARD"` | Main Title *(required)* |
+| `subtitle` | string | `"Design Conference 2025"` | Subtitle |
+| `accentColor` | color | `"#6366f1"` | Accent Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render effects/geometric-intro
+# Render this example
+node examples/render-all.mjs "effects/geometric-intro"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 7 seconds
+```json
+{
+  "inputs": {
+    "title": "FUTURE FORWARD",
+    "subtitle": "Design Conference 2025",
+    "accentColor": "#6366f1"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

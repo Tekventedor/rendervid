@@ -1,52 +1,57 @@
 # Line Graph
 
-Animated line graph with point-by-point reveal.
+> Animated line graph with trend visualization.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-An animated line graph that draws progressively, revealing data points one by one. Features grid lines, axis labels, and smooth line drawing animation. Ideal for showing trends, growth metrics, and time-series data.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- Progressive line drawing
-- Animated data points
-- Grid background
-- Axis labels
-- 7-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 5s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `title` | string | Yes | "Revenue Growth" | Chart title |
-| `yAxisLabel` | string | No | "Revenue ($M)" | Y-axis label |
-| `xAxisLabel` | string | No | "Quarter" | X-axis label |
-| `lineColor` | color | No | #22c55e | Line color |
-| `backgroundColor` | color | No | #0f172a | Background color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `title` | string | `"Growth Over Time"` | Chart Title *(required)* |
+| `subtitle` | string | `"Monthly Active Users"` | Subtitle |
+| `metric` | string | `"+127%"` | Key Metric |
+| `metricLabel` | string | `"Year over Year"` | Metric Label |
+| `primaryColor` | color | `"#10b981"` | Primary Color |
+| `backgroundColor` | color | `"#0f172a"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render data-visualization/line-graph
+# Render this example
+node examples/render-all.mjs "data-visualization/line-graph"
 
-# Render with custom labels
-pnpm run examples:render data-visualization/line-graph \
-  --input.title "User Growth" \
-  --input.yAxisLabel "Users (K)" \
-  --input.xAxisLabel "Month"
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 7 seconds
+```json
+{
+  "inputs": {
+    "title": "Growth Over Time",
+    "subtitle": "Monthly Active Users",
+    "metric": "+127%"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

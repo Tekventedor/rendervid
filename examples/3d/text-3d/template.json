@@ -204,7 +204,7 @@
             "position": { "x": 600, "y": 600 },
             "size": { "width": 40, "height": 40 },
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "#ff6b6b",
               "opacity": 0.6
             },
@@ -223,7 +223,7 @@
             "position": { "x": 3240, "y": 600 },
             "size": { "width": 40, "height": 40 },
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "#4c00ff",
               "opacity": 0.6
             },
@@ -242,7 +242,7 @@
             "position": { "x": 300, "y": 1400 },
             "size": { "width": 30, "height": 30 },
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "#51cf66",
               "opacity": 0.5
             },
@@ -261,7 +261,7 @@
             "position": { "x": 3540, "y": 1400 },
             "size": { "width": 30, "height": 30 },
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "#ffd43b",
               "opacity": 0.5
             },

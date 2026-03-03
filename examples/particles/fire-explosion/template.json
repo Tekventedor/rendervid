@@ -1,6 +1,15 @@
 {
-  "name": "Fire Explosion",
+  "name": "Fire Explosion - Particle Burst",
+  "description": "Explosive particle burst: 180 fire particles fly outward from center with physics (gravity, drag), color-shifting from white-hot core through yellow, orange and red to dark embers.",
+  "version": "2.0.0",
   "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
+  "customComponents": {
+    "FireExplosion": {
+      "type": "inline",
+      "description": "180 particles burst from center with seeded pseudo-random angles/speeds. Per-particle: age drives position (ballistic + gravity), color (white→yellow→orange→red→ember), opacity (quick fade-in, slow fade-out) and shrinking radius.",
+      "code": "function(props){var f=props.frame,W=props.layerSize.width,H=props.layerSize.height,cx=W/2,cy=H/2,t=f/30,N=180,elems=[],PI=Math.PI;function h(n){var v=Math.sin(n*127.1+37.4)*43758.5;return v-Math.floor(v);}for(var i=0;i<N;i++){var s=i*7.13,ang=h(s)*PI*2,spd=(h(s+1)*0.6+0.4)*680,life=h(s+2)*2+1.5,sz=h(s+3)*10+6,del=h(s+4)*0.2;var age=t-del;if(age<0||age>life)continue;var p=age/life,vx=Math.cos(ang)*spd,vy=Math.sin(ang)*spd,grav=220,drag=0.85;var ad=Math.pow(drag,age*30),x=cx+vx*age*ad,y=cy+vy*age*ad+0.5*grav*age*age;var rv,gc,bv;if(p<0.15){rv=255;gc=255;bv=180;}else if(p<0.4){rv=255;gc=Math.round(255*(1-(p-0.15)/0.25));bv=0;}else if(p<0.7){rv=255;gc=0;bv=0;}else{rv=Math.round(255*(1-(p-0.7)/0.3)*0.55);gc=0;bv=0;}var op=p<0.08?p/0.08:Math.max(0,1-Math.pow((p-0.08)/0.92,0.45));var cr=Math.max(1,Math.round(sz*(1-p*0.55)));elems.push(React.createElement('circle',{key:i,cx:Math.round(x),cy:Math.round(y),r:cr,fill:'rgb('+rv+','+gc+','+bv+')',opacity:Math.round(op*100)/100}));}var go=Math.max(0,1-f/10);if(go>0){elems.push(React.createElement('circle',{key:'g1',cx:cx,cy:cy,r:Math.round(120*go),fill:'white',opacity:Math.round(go*0.9*100)/100}));elems.push(React.createElement('circle',{key:'g2',cx:cx,cy:cy,r:Math.round(60*go),fill:'#ffffaa',opacity:Math.round(go*100)/100}));}return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0}},elems);}"
+    }
+  },
   "composition": {
     "scenes": [{
       "id": "main",
@@ -13,41 +22,15 @@
           "type": "text",
           "position": {"x": 160, "y": 50},
           "size": {"width": 1600, "height": 100},
-          "props": {"text": "Fire Explosion - 5000 Particles", "fontSize": 48, "color": "#ff6600", "fontWeight": "bold", "textAlign": "center"},
-          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 20}]
+          "props": {"text": "Fire Explosion — 180 Physics Particles", "fontSize": 48, "color": "#ff6600", "fontWeight": "bold", "textAlign": "center"},
+          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 155}]
         },
         {
-          "id": "center",
-          "type": "shape",
-          "position": {"x": 910, "y": 490},
-          "size": {"width": 100, "height": 100},
-          "props": {"shape": "circle", "fill": "#ffff00"},
-          "animations": [
-            {"type": "custom", "property": "scale", "from": 0.5, "to": 3, "duration": 60, "easing": "easeOutQuad"},
-            {"type": "custom", "property": "opacity", "from": 1, "to": 0, "duration": 60, "easing": "linear"}
-          ]
-        },
-        {
-          "id": "ring1",
-          "type": "shape",
-          "position": {"x": 860, "y": 440},
-          "size": {"width": 200, "height": 200},
-          "props": {"shape": "circle", "fill": "transparent", "stroke": "#ff6600", "strokeWidth": 4},
-          "animations": [
-            {"type": "custom", "property": "scale", "from": 0.3, "to": 2.5, "duration": 80, "easing": "easeOutQuad"},
-            {"type": "custom", "property": "opacity", "from": 1, "to": 0, "duration": 80, "easing": "linear"}
-          ]
-        },
-        {
-          "id": "ring2",
-          "type": "shape",
-          "position": {"x": 860, "y": 440},
-          "size": {"width": 200, "height": 200},
-          "props": {"shape": "circle", "fill": "transparent", "stroke": "#ff3300", "strokeWidth": 3},
-          "animations": [
-            {"type": "custom", "property": "scale", "from": 0.5, "to": 2, "duration": 70, "easing": "easeOutQuad"},
-            {"type": "custom", "property": "opacity", "from": 1, "to": 0, "duration": 70, "easing": "linear"}
-          ]
+          "id": "explosion",
+          "type": "custom",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 1920, "height": 1080},
+          "customComponent": {"name": "FireExplosion", "props": {}}
         }
       ]
     }]

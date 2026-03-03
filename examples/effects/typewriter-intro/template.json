@@ -66,7 +66,8 @@
             "props": {
               "shape": "rectangle",
               "fill": "#0a0a0a"
-            }
+            },
+            "animations": []
           },
           {
             "id": "terminal-border",
@@ -176,7 +177,7 @@
           },
           {
             "id": "line1",
-            "type": "typewriter",
+            "type": "custom",
             "position": {
               "x": 250,
               "y": 300
@@ -185,21 +186,25 @@
               "width": 1400,
               "height": 50
             },
-            "props": {
-              "text": "{{line1}}",
-              "fontSize": 32,
-              "color": "#00ff00",
-              "fontFamily": "monospace",
-              "speed": "normal",
-              "cursor": true,
-              "cursorStyle": "block",
-              "cursorColor": "{{cursorColor}}",
-              "startDelay": 40
-            }
+            "customComponent": {
+              "name": "TypewriterEffect",
+              "props": {
+                "text": "{{line1}}",
+                "fontSize": 32,
+                "color": "#00ff00",
+                "fontFamily": "monospace",
+                "speed": "normal",
+                "cursor": true,
+                "cursorStyle": "block",
+                "cursorColor": "{{cursorColor}}",
+                "startDelay": 40
+              }
+            },
+            "animations": []
           },
           {
             "id": "line2",
-            "type": "typewriter",
+            "type": "custom",
             "position": {
               "x": 200,
               "y": 400
@@ -208,21 +213,25 @@
               "width": 1500,
               "height": 50
             },
-            "props": {
-              "text": "{{line2}}",
-              "fontSize": 32,
-              "color": "#00cc00",
-              "fontFamily": "monospace",
-              "speed": "fast",
-              "cursor": true,
-              "cursorStyle": "block",
-              "cursorColor": "{{cursorColor}}",
-              "startDelay": 110
-            }
+            "customComponent": {
+              "name": "TypewriterEffect",
+              "props": {
+                "text": "{{line2}}",
+                "fontSize": 32,
+                "color": "#00cc00",
+                "fontFamily": "monospace",
+                "speed": "fast",
+                "cursor": true,
+                "cursorStyle": "block",
+                "cursorColor": "{{cursorColor}}",
+                "startDelay": 110
+              }
+            },
+            "animations": []
           },
           {
             "id": "line3",
-            "type": "typewriter",
+            "type": "custom",
             "position": {
               "x": 200,
               "y": 500
@@ -231,19 +240,23 @@
               "width": 1500,
               "height": 50
             },
-            "props": {
-              "text": "{{line3}}",
-              "fontSize": 36,
-              "fontWeight": "bold",
-              "color": "#00ff00",
-              "fontFamily": "monospace",
-              "speed": "slow",
-              "cursor": true,
-              "cursorStyle": "block",
-              "cursorColor": "{{cursorColor}}",
-              "startDelay": 160,
-              "soundPulse": true
-            }
+            "customComponent": {
+              "name": "TypewriterEffect",
+              "props": {
+                "text": "{{line3}}",
+                "fontSize": 36,
+                "fontWeight": "bold",
+                "color": "#00ff00",
+                "fontFamily": "monospace",
+                "speed": "slow",
+                "cursor": true,
+                "cursorStyle": "block",
+                "cursorColor": "{{cursorColor}}",
+                "startDelay": 160,
+                "soundPulse": true
+              }
+            },
+            "animations": []
           },
           {
             "id": "scan-line",
@@ -261,14 +274,7 @@
               "shape": "rectangle",
               "fill": "#00ff00"
             },
-            "animations": [
-              {
-                "type": "continuous",
-                "effect": "panDown",
-                "distance": 700,
-                "duration": 240
-              }
-            ]
+            "animations": []
           },
           {
             "id": "watermark",
@@ -290,7 +296,8 @@
               "lineHeight": 1.3,
               "opacity": 0.7,
               "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
+            },
+            "animations": []
           }
         ]
       }

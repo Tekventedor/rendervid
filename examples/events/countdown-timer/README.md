@@ -1,44 +1,57 @@
 # Event Countdown Timer
 
-Animated event countdown with flip-style time display, decorative star particles, gradient background, and event details.
+> Animated event countdown with flip-style time display, decorative star particles, gradient background, and event details. Uses a custom component for the countdown cards.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Animated event countdown with flip-style time display, decorative star particles, gradient background, and event details. Uses a custom component for the countdown cards.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Custom flip-style countdown component with days, hours, minutes, and seconds
-- Decorative star particles with pulsing animations
-- Gradient background with purple-to-blue color scheme
-- 8-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 8s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+| **Custom Components** | CountdownDisplay |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| eventName | string | INNOVATION SUMMIT | Event Name |
-| eventDate | string | MARCH 15, 2026 | Event Date |
-| venue | string | Moscone Center, San Francisco | Venue |
-| website | string | innovationsummit.io | Website |
-| accentColor | color | #a855f7 | Accent Color |
+| `eventName` | string | `"INNOVATION SUMMIT"` | Event Name *(required)* |
+| `eventDate` | string | `"MARCH 15, 2026"` | Event Date *(required)* |
+| `venue` | string | `"Moscone Center, San Francisco"` | Venue *(required)* |
+| `website` | string | `"innovationsummit.io"` | Website |
+| `accentColor` | color | `"#a855f7"` | Accent Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render events/countdown-timer
+# Render this example
+node examples/render-all.mjs "events/countdown-timer"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 8 seconds
+```json
+{
+  "inputs": {
+    "eventName": "INNOVATION SUMMIT",
+    "eventDate": "MARCH 15, 2026",
+    "venue": "Moscone Center, San Francisco"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

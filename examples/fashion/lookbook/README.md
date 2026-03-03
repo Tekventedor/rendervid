@@ -1,47 +1,59 @@
 # Fashion Lookbook
 
-Elegant high-fashion editorial lookbook with three scenes: hero reveal, collection details, and shop CTA.
+> Elegant high-fashion editorial lookbook with three scenes: hero reveal, collection details, and shop CTA. Minimal design with serif typography and gold accents.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Elegant high-fashion editorial lookbook with three scenes: hero reveal, collection details, and shop CTA. Minimal design with serif typography and gold accents.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Three-scene editorial layout with hero, details, and CTA
-- Gold accent lines and elegant corner decorations
-- Serif typography with wide letter spacing and image support
-- 9-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 9s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| collectionName | string | ETHEREAL | Collection Name |
-| season | string | AUTUMN / WINTER | Season |
-| year | string | 2026 | Year |
-| designerName | string | CLAIRE FONTAINE | Designer Name |
-| description | string | A meditation on texture and form. Flowing silhouettes meet structured tailoring in a palette inspired by autumn's quiet elegance. | Collection Description |
-| heroImage | url | hero.jpg | Hero Image |
-| detailImage | url | detail.jpg | Detail Image |
-| website | string | www.maisoneclat.com | Website URL |
+| `collectionName` | string | `"ETHEREAL"` | Collection Name *(required)* |
+| `season` | string | `"AUTUMN / WINTER"` | Season *(required)* |
+| `year` | string | `"2026"` | Year *(required)* |
+| `designerName` | string | `"CLAIRE FONTAINE"` | Designer Name *(required)* |
+| `description` | string | `"A meditation on texture and form. Flowing silhouettes meet structured tailoring in a palette inspired by autumn's quiet elegance."` | Collection Description |
+| `heroImage` | url | `"hero.jpg"` | Hero Image |
+| `detailImage` | url | `"detail.jpg"` | Detail Image |
+| `website` | string | `"www.maisoneclat.com"` | Website URL |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render fashion/lookbook
+# Render this example
+node examples/render-all.mjs "fashion/lookbook"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 9 seconds
+```json
+{
+  "inputs": {
+    "collectionName": "ETHEREAL",
+    "season": "AUTUMN / WINTER",
+    "year": "2026"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

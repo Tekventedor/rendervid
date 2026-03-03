@@ -1,41 +1,52 @@
 # Code Showcase
 
-Developer-focused code presentation mimicking a VS Code editor with syntax-highlighted code lines, title bar with window controls, file tabs, line numbers, and staggered typewriter-style entrance animations.
+> Developer-focused code presentation mimicking a VS Code editor with syntax-highlighted code lines, title bar with window controls, file tabs, line numbers, and staggered typewriter-style entrance animations.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Developer-focused code presentation mimicking a VS Code editor with syntax-highlighted code lines, title bar with window controls, file tabs, line numbers, and staggered typewriter-style entrance animations.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- VS Code-style editor with sidebar, tabs, and status bar
-- Syntax-highlighted code with staggered typewriter entrance
-- Blinking cursor with line highlight and minimap
-- 8-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 8s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| title | string | app.tsx | Title / Filename |
-| language | string | TypeScript React | Language |
+| `title` | string | `"app.tsx"` | Title / Filename *(required)* |
+| `language` | string | `"TypeScript React"` | Language |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render tech/code-showcase
+# Render this example
+node examples/render-all.mjs "tech/code-showcase"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 8 seconds
+```json
+{
+  "inputs": {
+    "title": "app.tsx",
+    "language": "TypeScript React"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

@@ -1,43 +1,55 @@
 # Minimalist Brand Reveal
 
-A clean, Apple-inspired minimalist brand reveal with elegant typography, subtle animations, and refined whitespace.
+> A clean, Apple-inspired minimalist brand reveal with elegant typography, subtle animations, and refined whitespace. Perfect for luxury brands, design agencies, and premium product launches.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A clean, Apple-inspired minimalist brand reveal with elegant typography, subtle animations, and refined whitespace. Perfect for luxury brands, design agencies, and premium product launches.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Elegant serif typography with wide letter spacing
-- Subtle accent lines and corner decorations
-- Smooth fade-in and slide-up entrance animations
-- 5-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 5s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| brandName | string | Lumiere | Brand Name |
-| tagline | string | Crafted with intention | Tagline |
-| website | string | www.lumiere.design | Website URL |
-| accentColor | color | #1a1a1a | Accent Color |
+| `brandName` | string | `"Lumiere"` | Brand Name *(required)* |
+| `tagline` | string | `"Crafted with intention"` | Tagline |
+| `website` | string | `"www.lumiere.design"` | Website URL |
+| `accentColor` | color | `"#1a1a1a"` | Accent Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render cinematic/brand-reveal
+# Render this example
+node examples/render-all.mjs "cinematic/brand-reveal"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 5 seconds
+```json
+{
+  "inputs": {
+    "brandName": "Lumiere",
+    "tagline": "Crafted with intention",
+    "website": "www.lumiere.design"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

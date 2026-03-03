@@ -1,41 +1,53 @@
 # Matrix Digital Rain
 
-Iconic Matrix-style digital rain effect with cascading green characters over a dark background.
+> Iconic Matrix-style digital rain effect with cascading green characters over a dark background. Features a custom animated rain component with centered glowing title text. Perfect for tech, hacker, or sci-fi themed content.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Iconic Matrix-style digital rain effect with cascading green characters over a dark background. Features a custom animated rain component with centered glowing title text. Perfect for tech, hacker, or sci-fi themed content.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Custom animated falling character rain component
-- Glowing green title with blinking cursor effect
-- Terminal-style HUD elements and hex code overlays
-- 8-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 8s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+| **Custom Components** | MatrixRain |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| title | string | ENTER THE SYSTEM | Main Title |
-| subtitle | string | The Matrix has you... | Subtitle |
+| `title` | string | `"ENTER THE SYSTEM"` | Main Title *(required)* |
+| `subtitle` | string | `"The Matrix has you..."` | Subtitle |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render effects/matrix-rain
+# Render this example
+node examples/render-all.mjs "effects/matrix-rain"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 8 seconds
+```json
+{
+  "inputs": {
+    "title": "ENTER THE SYSTEM",
+    "subtitle": "The Matrix has you..."
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

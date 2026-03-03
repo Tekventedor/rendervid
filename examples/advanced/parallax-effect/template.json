@@ -66,7 +66,8 @@
             "props": {
               "shape": "rectangle",
               "fill": "#1a1a2e"
-            }
+            },
+            "animations": []
           },
           {
             "id": "bg-shape-1",
@@ -84,14 +85,7 @@
               "shape": "rectangle",
               "fill": "#16213e"
             },
-            "animations": [
-              {
-                "type": "continuous",
-                "effect": "panRight",
-                "distance": 100,
-                "duration": 240
-              }
-            ]
+            "animations": []
           },
           {
             "id": "bg-shape-2",
@@ -109,14 +103,7 @@
               "shape": "rectangle",
               "fill": "#0f3460"
             },
-            "animations": [
-              {
-                "type": "continuous",
-                "effect": "panLeft",
-                "distance": 150,
-                "duration": 240
-              }
-            ]
+            "animations": []
           },
           {
             "id": "midground-shape",
@@ -134,14 +121,7 @@
               "shape": "rectangle",
               "fill": "#16213e"
             },
-            "animations": [
-              {
-                "type": "continuous",
-                "effect": "panRight",
-                "distance": 200,
-                "duration": 240
-              }
-            ]
+            "animations": []
           },
           {
             "id": "foreground-bar",
@@ -269,7 +249,8 @@
               "lineHeight": 1.3,
               "opacity": 0.7,
               "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
+            },
+            "animations": []
           }
         ]
       }

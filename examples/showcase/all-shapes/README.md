@@ -1,42 +1,34 @@
 # All Shapes Showcase
 
-Demonstrates all available shape types and gradients in Rendervid.
+> Demonstrates all available shape types in Rendervid.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
+
+---
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 12s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Usage
 
 ```bash
-pnpm run examples:render showcase/all-shapes
+# Render this example
+node examples/render-all.mjs "showcase/all-shapes"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Featured Shapes
+---
 
-| Shape | Description |
-|-------|-------------|
-| Rectangle | Basic rectangle with optional border radius |
-| Rounded Rectangle | Rectangle with large border radius |
-| Ellipse | Oval/elliptical shape |
-| Circle | Equal width/height ellipse |
-
-## Gradient Types
-
-| Type | Description |
-|------|-------------|
-| Linear | Directional gradient with angle control |
-| Radial | Center-based circular gradient |
-
-## Shape Properties
-
-- **fill**: Solid color fill
-- **gradient**: Linear or radial gradient
-- **borderRadius**: Corner rounding (rectangles)
-- **stroke**: Border color and width
-
-## Duration
-
-- 6 shapes × 2 seconds = 12 seconds total
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

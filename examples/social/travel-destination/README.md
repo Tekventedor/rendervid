@@ -1,44 +1,56 @@
 # Travel Destination Card
 
-Full HD travel destination showcase with large background image, dark overlay gradient, location details, star ratings, pricing, and a Book Now CTA.
+> Full HD travel destination showcase with large background image, dark overlay gradient, location details, star ratings, pricing, and a Book Now CTA.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Full HD travel destination showcase with large background image, dark overlay gradient, location details, star ratings, pricing, and a Book Now CTA.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Full-bleed background image with dark gradient overlays
-- Animated star rating display with amber accents
-- Price card with glassmorphism effect and Book Now CTA
-- 7-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 7s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| destination | string | Santorini | Destination Name |
-| country | string | Greece, Mediterranean | Country / Region |
-| price | string | From $299/night | Price |
-| rating | string | 4.8 | Rating (e.g. 4.8) |
-| backgroundImage | url | https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1920&h=1080&fit=crop | Destination Photo |
+| `destination` | string | `"Santorini"` | Destination Name *(required)* |
+| `country` | string | `"Greece, Mediterranean"` | Country / Region |
+| `price` | string | `"From $299/night"` | Price |
+| `rating` | string | `"4.8"` | Rating (e.g. 4.8) |
+| `backgroundImage` | url | `"https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1920&h=1080&fit=crop"` | Destination Photo |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render social/travel-destination
+# Render this example
+node examples/render-all.mjs "social/travel-destination"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 7 seconds
+```json
+{
+  "inputs": {
+    "destination": "Santorini",
+    "country": "Greece, Mediterranean",
+    "price": "From $299/night"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

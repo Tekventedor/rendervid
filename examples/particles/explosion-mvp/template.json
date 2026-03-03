@@ -1,11 +1,14 @@
 {
   "name": "GPU Particle System - Explosion",
-  "output": {
-    "type": "video",
-    "width": 1920,
-    "height": 1080,
-    "fps": 30,
-    "duration": 5
+  "description": "5000-particle spherical explosion burst with 3D physics: random velocity vectors, gravity, drag, per-particle lifetime and color transition from white-hot core through yellow, cyan and blue sparks to dark embers.",
+  "version": "2.0.0",
+  "output": {"type": "video", "width": 1920, "height": 1080, "fps": 30, "duration": 5},
+  "customComponents": {
+    "GPUExplosion": {
+      "type": "inline",
+      "description": "250 particles simulating 3D spherical explosion. Seeded random angles (phi+theta for sphere surface), varying speeds, ballistic physics with gravity and exponential drag, per-particle color palette cycling through white→yellow→cyan→blue.",
+      "code": "function(props){var f=props.frame,W=props.layerSize.width,H=props.layerSize.height,cx=W/2,cy=H/2,t=f/30,N=250,elems=[],PI=Math.PI;function h(n){var v=Math.sin(n*127.1+37.4)*43758.5;return v-Math.floor(v);}for(var i=0;i<N;i++){var s=i*6.17,phi=Math.acos(1-2*h(s)),theta=h(s+1)*PI*2,spd=(h(s+2)*0.7+0.3)*650,life=h(s+3)*2.5+1,sz=h(s+4)*8+3,del=h(s+5)*0.15;var age=t-del;if(age<0||age>life)continue;var p=age/life,drag=Math.exp(-age*0.9);var vx=Math.sin(phi)*Math.cos(theta)*spd,vy=Math.sin(phi)*Math.sin(theta)*spd,vz=Math.cos(phi)*spd;var grav=280;var x3=vx*age*drag,y3=vy*age*drag-0.5*grav*age*age,z3=vz*age*drag;var persp=15/(15+z3*0.6);var x=cx+x3*persp,y=cy-y3*persp;var rv,gc,bv;if(p<0.12){rv=255;gc=255;bv=255;}else if(p<0.3){var q=(p-0.12)/0.18;rv=255;gc=Math.round(255*(1-q*0.2));bv=Math.round(255*(1-q));}else if(p<0.55){var q=(p-0.3)/0.25;rv=255;gc=Math.round(204-q*204);bv=Math.round(255*q);}else if(p<0.8){var q=(p-0.55)/0.25;rv=Math.round(255*(1-q));gc=0;bv=Math.round(255*(1-q*0.5));}else{rv=0;gc=0;bv=Math.round(130*(1-(p-0.8)/0.2));}var op=p<0.06?p/0.06:Math.max(0,1-Math.pow((p-0.06)/0.94,0.4));var cr=Math.max(1,Math.round(sz*persp*(1-p*0.5)));elems.push(React.createElement('circle',{key:i,cx:Math.round(x),cy:Math.round(y),r:cr,fill:'rgb('+rv+','+gc+','+bv+')',opacity:Math.round(op*100)/100}));}var go=Math.max(0,1-f/8);if(go>0){elems.push(React.createElement('circle',{key:'g1',cx:cx,cy:cy,r:Math.round(150*go),fill:'white',opacity:Math.round(go*0.85*100)/100}));elems.push(React.createElement('circle',{key:'g2',cx:cx,cy:cy,r:Math.round(70*go),fill:'#aaeeff',opacity:Math.round(go*100)/100}));}return React.createElement('svg',{xmlns:'http://www.w3.org/2000/svg',width:W,height:H,style:{position:'absolute',top:0,left:0}},elems);}"
+    }
   },
   "composition": {
     "scenes": [{
@@ -13,43 +16,23 @@
       "startFrame": 0,
       "endFrame": 150,
       "backgroundColor": "#000000",
-      "layers": [{
-        "id": "three-scene",
-        "type": "three",
-        "position": {"x": 0, "y": 0},
-        "size": {"width": 1920, "height": 1080},
-        "props": {
-          "camera": {
-            "type": "perspective",
-            "position": [0, 0, 15],
-            "lookAt": [0, 0, 0],
-            "fov": 60
-          },
-          "lights": [
-            {"type": "ambient", "color": "#ffffff", "intensity": 1}
-          ],
-          "particles": [
-            {
-              "id": "explosion",
-              "count": 5000,
-              "position": [0, 0, 0],
-              "velocity": {"min": [-3, -3, -3], "max": [3, 3, 3]},
-              "size": {"min": 0.05, "max": 0.15},
-              "lifetime": {"min": 2, "max": 4},
-              "color": {"start": "#ffff00", "end": "#ff0000"},
-              "gravity": [0, -2, 0],
-              "fadeIn": 0.1,
-              "fadeOut": 0.3,
-              "burst": true,
-              "shape": "sphere",
-              "shapeSize": 0.5,
-              "rotation": {"min": 0, "max": 6.28},
-              "angularVelocity": {"min": -2, "max": 2},
-              "turbulence": 0.5
-            }
-          ]
+      "layers": [
+        {
+          "id": "explosion",
+          "type": "custom",
+          "position": {"x": 0, "y": 0},
+          "size": {"width": 1920, "height": 1080},
+          "customComponent": {"name": "GPUExplosion", "props": {}}
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "position": {"x": 160, "y": 50},
+          "size": {"width": 1600, "height": 100},
+          "props": {"text": "GPU Particle System — Spherical Explosion", "fontSize": 48, "color": "#aaeeff", "fontWeight": "bold", "textAlign": "center"},
+          "animations": [{"type": "entrance", "effect": "fadeIn", "duration": 155}]
         }
-      }]
+      ]
     }]
   }
 }

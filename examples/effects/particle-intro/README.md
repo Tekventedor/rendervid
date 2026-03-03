@@ -1,60 +1,56 @@
 # Particle Intro Animation
 
+> Particle-based intro animation with aurora background, floating particles with connections, and title text appearing through particles.
+
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-A stunning particle-based intro animation featuring an aurora background with floating particles connected by lines, and title text appearing through the particle field.
+---
 
-## Features
+## Details
 
-- **Aurora Background**: Flowing gradient background with organic motion
-- **Particle System**: Floating particles with random movement
-- **Particle Connections**: Lines drawn between nearby particles
-- **Text Reveal**: Title and subtitle appearing with scale and fade animations
-- **Customizable**: Adjust particle count, colors, and text
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+| **Custom Components** | aurora-background, particle-system |
 
 ## Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `title` | string | "WELCOME" | Main title text |
-| `subtitle` | string | "To the Future" | Subtitle text |
-| `particleColor` | color | #ffffff | Color of particles and connections |
-| `particleCount` | number | 80 | Number of particles to render |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `title` | string | `"WELCOME"` | Title Text *(required)* |
+| `subtitle` | string | `"To the Future"` | Subtitle Text |
+| `particleColor` | color | `"#ffffff"` | Particle Color |
+| `particleCount` | number | `80` | Particle Count |
 
-## Customization
+## Usage
 
-### Changing Colors
+```bash
+# Render this example
+node examples/render-all.mjs "effects/particle-intro"
 
-You can customize the aurora background colors by modifying the `colors` array in the aurora-background component:
-
-```json
-"colors": ["#667eea", "#764ba2", "#f093fb", "#4facfe"]
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-### Adjusting Particle Behavior
+Customize inputs via the MCP server or by editing `template.json`:
 
-Modify these properties in the particle-system component:
-- `speed`: Control particle movement speed
-- `connectionDistance`: Adjust when particles connect
-- `size`: Change particle size range
-- `opacity`: Adjust particle visibility
+```json
+{
+  "inputs": {
+    "title": "WELCOME",
+    "subtitle": "To the Future",
+    "particleColor": "#ffffff"
+  }
+}
+```
 
-## Technical Details
+---
 
-- **Duration**: 6 seconds (180 frames at 30fps)
-- **Resolution**: 1920x1080
-- **Components Used**:
-  - `aurora-background` - Animated gradient background
-  - `particle-system` - Particle effects with connections
-
-## Use Cases
-
-- Product launches
-- Brand introductions
-- Event opening sequences
-- YouTube intro sequences
-- Presentation openings
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

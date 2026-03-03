@@ -1,32 +1,34 @@
 # All Layer Types Showcase
 
-Demonstrates all available layer types in Rendervid.
+> Demonstrates all available layer types in Rendervid.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
+
+---
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 12s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Usage
 
 ```bash
-pnpm run examples:render showcase/all-layer-types
+# Render this example
+node examples/render-all.mjs "showcase/all-layer-types"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Featured Layer Types
+---
 
-| Layer Type | Description |
-|------------|-------------|
-| Shape | Rectangles, circles, gradients, paths |
-| Text | Rich typography with fonts and styles |
-| Image | Photos and graphics with fit modes |
-| Video | Video playback with loop and trim |
-| Group | Container for organizing layers |
-| Audio | Background music and sound effects |
-| Lottie | Lottie animation support |
-| Custom | Custom React components |
-
-## Duration
-
-- 6 layer types × 2 seconds = 12 seconds total
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

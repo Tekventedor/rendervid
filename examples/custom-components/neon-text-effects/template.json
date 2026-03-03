@@ -90,7 +90,8 @@
             "anchor": {
               "x": 0.5,
               "y": 0.5
-            }
+            },
+            "animations": []
           },
           {
             "id": "border-frame",
@@ -203,7 +204,8 @@
             "customComponent": {
               "name": "ScanLine",
               "props": {}
-            }
+            },
+            "animations": []
           },
           {
             "id": "electric-sparks",
@@ -221,7 +223,8 @@
               "props": {
                 "color": "#00ffff"
               }
-            }
+            },
+            "animations": []
           },
           {
             "id": "corner-accent-1",
@@ -247,11 +250,6 @@
                 "effect": "fadeIn",
                 "duration": 30,
                 "delay": 80
-              },
-              {
-                "type": "continuous",
-                "effect": "pulse",
-                "duration": 120
               }
             ]
           },
@@ -279,12 +277,6 @@
                 "effect": "fadeIn",
                 "duration": 30,
                 "delay": 85
-              },
-              {
-                "type": "continuous",
-                "effect": "pulse",
-                "duration": 120,
-                "delay": 60
               }
             ]
           }

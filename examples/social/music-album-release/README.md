@@ -1,43 +1,55 @@
 # Music Album Release
 
-Square format album release announcement with album art, pulsing glow effects, artist info, and streaming platform badges.
+> Square format album release announcement with album art, pulsing glow effects, artist info, and streaming platform badges.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Square format album release announcement with album art, pulsing glow effects, artist info, and streaming platform badges.
+## Details
 
-## Features
-
-- 1080x1080 (1:1)
-- Album artwork display with layered pulsing glow rings
-- Artist name and album title with text shadow effects
-- Streaming platform badges for Spotify, Apple Music, YouTube Music, and Tidal
-- 6-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1080 × 1080 |
+| **Duration** | 6s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| artistName | string | AURORA WAVES | Artist Name |
-| albumTitle | string | Midnight Echoes | Album Title |
-| albumArt | url | https://images.unsplash.com/photo-1614149162883-504ce4d13909?w=800&h=800&fit=crop | Album Artwork |
-| accentColor | color | #f43f5e | Accent Color |
+| `artistName` | string | `"AURORA WAVES"` | Artist Name *(required)* |
+| `albumTitle` | string | `"Midnight Echoes"` | Album Title *(required)* |
+| `albumArt` | url | `"https://images.unsplash.com/photo-1614149162883-504ce4d13909?w=800&h=800&fit=crop"` | Album Artwork |
+| `accentColor` | color | `"#f43f5e"` | Accent Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render social/music-album-release
+# Render this example
+node examples/render-all.mjs "social/music-album-release"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1080x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 6 seconds
+```json
+{
+  "inputs": {
+    "artistName": "AURORA WAVES",
+    "albumTitle": "Midnight Echoes",
+    "albumArt": "https://images.unsplash.com/photo-1614149162883-504ce4d13909?w=800&h=800&fit=crop"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

@@ -1,48 +1,60 @@
 # Luxury Property Listing
 
-Cinematic luxury real estate listing with hero property image, dark gradient overlays, gold accents, feature cards grid, and agent contact details.
+> Cinematic luxury real estate listing with hero property image, dark gradient overlays, gold accents, feature cards grid, and agent contact details. Two-scene premium presentation.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Cinematic luxury real estate listing with hero property image, dark gradient overlays, gold accents, feature cards grid, and agent contact details. Two-scene premium presentation.
+## Details
 
-## Features
-
-- 1920x1080 (16:9)
-- Two-scene layout with hero image and property details grid
-- Gold accent theme with dark gradient overlays
-- Agent contact card with call-to-action button
-- 10-second duration at 30 fps
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 10s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| propertyName | string | The Belmont Estate | Property Name |
-| location | string | Pacific Palisades, California | Location |
-| price | string | $4,500,000 | Price |
-| bedrooms | string | 5 | Bedrooms |
-| bathrooms | string | 4 | Bathrooms |
-| sqft | string | 6,200 | Square Feet |
-| agentName | string | Victoria Sterling | Agent Name |
-| agentPhone | string | +1 (310) 555-0182 | Agent Phone |
-| propertyImage | url | property.jpg | Property Image |
+| `propertyName` | string | `"The Belmont Estate"` | Property Name *(required)* |
+| `location` | string | `"Pacific Palisades, California"` | Location *(required)* |
+| `price` | string | `"$4,500,000"` | Price *(required)* |
+| `bedrooms` | string | `"5"` | Bedrooms *(required)* |
+| `bathrooms` | string | `"4"` | Bathrooms *(required)* |
+| `sqft` | string | `"6,200"` | Square Feet *(required)* |
+| `agentName` | string | `"Victoria Sterling"` | Agent Name *(required)* |
+| `agentPhone` | string | `"+1 (310) 555-0182"` | Agent Phone *(required)* |
+| `propertyImage` | url | `"property.jpg"` | Property Image |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render real-estate/luxury-property
+# Render this example
+node examples/render-all.mjs "real-estate/luxury-property"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080
-- **Frame Rate**: 30 fps
-- **Duration**: 10 seconds
+```json
+{
+  "inputs": {
+    "propertyName": "The Belmont Estate",
+    "location": "Pacific Palisades, California",
+    "price": "$4,500,000"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

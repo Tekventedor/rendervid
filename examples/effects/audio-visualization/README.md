@@ -1,45 +1,55 @@
 # Audio Visualization
 
+> Audio-reactive waveform and spectrum visualization with beat detection, frequency analysis, and multiple display styles.
+
 ## Preview
 
-![Preview](preview.gif)
+*Run `node examples/render-all.mjs` to generate the preview GIF and MP4.*
 
-Audio-reactive waveform and spectrum visualization with animated bars, frequency analysis display, and multiple visual styles.
+---
 
-## Features
+## Details
 
-- **Spectrum Display**: Frequency spectrum bars with gradient coloring from warm to cool tones
-- **Waveform Display**: Mirror-style waveform bars showing audio amplitude
-- **Animated Visuals**: Smooth sine-wave based animation simulating audio reactivity
-- **Background Audio**: Public domain music track (Flight of the Bumblebee)
-- **Customizable Colors**: All visualization colors are template inputs
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 10s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+| **Custom Components** | WaveformDisplay, SpectrumDisplay |
 
 ## Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `title` | string | "AUDIO VISUALIZER" | Main title text |
-| `waveformColor` | color | #00ff88 | Color of waveform bars |
-| `spectrumColor1` | color | #ff0066 | Spectrum gradient start color |
-| `spectrumColor2` | color | #00ccff | Spectrum gradient end color |
-| `backgroundColor` | color | #0a0a0a | Background color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `title` | string | `"AUDIO VISUALIZER"` | Title Text |
+| `waveformColor` | string | `"#00ff88"` | Waveform Color |
+| `spectrumColor1` | string | `"#ff0066"` | Spectrum Start Color |
+| `spectrumColor2` | string | `"#00ccff"` | Spectrum End Color |
+| `backgroundColor` | string | `"#0a0a0a"` | Background Color |
 
-## Audio
+## Usage
 
-The example includes a public domain MP3 file (Flight of the Bumblebee by The US Army Band) in the `assets/` directory. You can replace it with any MP3 or WAV file.
+```bash
+# Render this example
+node examples/render-all.mjs "effects/audio-visualization"
 
-## Technical Details
+# Or render all examples
+node examples/render-all.mjs
+```
 
-- **Duration**: 10 seconds (300 frames at 30fps)
-- **Resolution**: 1920x1080
-- **Custom Components**:
-  - `WaveformDisplay` - Mirror-style animated waveform bars (inline SVG)
-  - `SpectrumDisplay` - Frequency spectrum bars with color gradient (inline SVG)
-- **Audio Layer**: Background music with fade in/out
+Customize inputs via the MCP server or by editing `template.json`:
 
-## Use Cases
+```json
+{
+  "inputs": {
+    "title": "AUDIO VISUALIZER",
+    "waveformColor": "#00ff88",
+    "spectrumColor1": "#ff0066"
+  }
+}
+```
 
-- Music video intros
-- Podcast visualizations
-- DJ/streaming overlays
-- Audio brand content
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

@@ -1,37 +1,56 @@
 # Instagram Post
 
-Square video template optimized for Instagram feed posts.
+> Square video template optimized for Instagram feed posts.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-Professional square format video with clean typography and subtle animations. Great for tips, quotes, and educational content.
+## Details
 
-## Features
-
-- 1:1 aspect ratio (1080x1080)
-- Clean typography
-- Accent decorations
-- Social handle integration
-- 5-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1080 × 1080 |
+| **Duration** | 5s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `headline` | string | Yes | "Did You Know?" | Main headline |
-| `body` | string | No | "This is an interesting fact..." | Body text |
-| `handle` | string | No | "@yourbrand" | Your social handle |
-| `primaryColor` | color | No | #6366f1 | Accent color |
-| `backgroundColor` | color | No | #0f172a | Background |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `headline` | string | `"Did You Know?"` | Headline *(required)* |
+| `body` | string | `"This is an interesting fact that your audience will love to learn about."` | Body Text |
+| `handle` | string | `"@yourbrand"` | Handle |
+| `primaryColor` | color | `"#6366f1"` | Primary Color |
+| `backgroundColor` | color | `"#0f172a"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render social-media/instagram-post
+# Render this example
+node examples/render-all.mjs "social-media/instagram-post"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
+
+Customize inputs via the MCP server or by editing `template.json`:
+
+```json
+{
+  "inputs": {
+    "headline": "Did You Know?",
+    "body": "This is an interesting fact that your audience will love to learn about.",
+    "handle": "@yourbrand"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

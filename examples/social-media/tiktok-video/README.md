@@ -1,34 +1,57 @@
 # TikTok Video
 
-Vertical video with trendy multi-scene animations for TikTok.
+> Vertical video template optimized for TikTok with trendy animations.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Features
+---
 
-- 9:16 aspect ratio (1080x1920)
-- 3-scene structure (hook, main, reveal)
-- Scene transitions
-- TikTok-style colors
-- 8-second duration
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1080 × 1920 |
+| **Duration** | 8s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default |
-|-----|------|----------|---------|
-| `hookText` | string | Yes | "Wait for it..." |
-| `mainText` | string | Yes | "The secret is..." |
-| `revealText` | string | Yes | "Consistency!" |
-| `handle` | string | No | "@yourtiktok" |
-| `primaryColor` | color | No | #00f2ea |
-| `secondaryColor` | color | No | #ff0050 |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `hookText` | string | `"Wait for it..."` | Hook Text *(required)* |
+| `mainText` | string | `"The secret is..."` | Main Text *(required)* |
+| `revealText` | string | `"Consistency!"` | Reveal Text *(required)* |
+| `handle` | string | `"@yourtiktok"` | Handle |
+| `primaryColor` | color | `"#00f2ea"` | Primary Color |
+| `secondaryColor` | color | `"#ff0050"` | Secondary Color |
 
-## Quick Start
+## Usage
 
 ```bash
-pnpm run examples:render social-media/tiktok-video
+# Render this example
+node examples/render-all.mjs "social-media/tiktok-video"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
+
+Customize inputs via the MCP server or by editing `template.json`:
+
+```json
+{
+  "inputs": {
+    "hookText": "Wait for it...",
+    "mainText": "The secret is...",
+    "revealText": "Consistency!"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

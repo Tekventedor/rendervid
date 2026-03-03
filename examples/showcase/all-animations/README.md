@@ -1,54 +1,34 @@
 # All Animations Showcase
 
-Demonstrates all available animation effects in Rendervid.
+> Demonstrates all available animation effects in Rendervid.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
+
+---
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 30s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Usage
 
 ```bash
-pnpm run examples:render showcase/all-animations
+# Render this example
+node examples/render-all.mjs "showcase/all-animations"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Featured Animations
+---
 
-### Entrance Animations (9 shown)
-| Animation | Description |
-|-----------|-------------|
-| fadeIn | Fade from transparent to opaque |
-| scaleIn | Grow from zero to full size |
-| slideInUp | Slide up from bottom |
-| slideInDown | Slide down from top |
-| slideInLeft | Slide in from left |
-| slideInRight | Slide in from right |
-| zoomIn | Zoom from 30% to 100% |
-| bounceIn | Elastic bounce effect |
-| rotateIn | Rotate 180° while fading in |
-
-### Exit Animations (3 shown)
-| Animation | Description |
-|-----------|-------------|
-| fadeOut | Fade to transparent |
-| scaleOut | Shrink to zero |
-| zoomOut | Zoom from 100% to 30% |
-
-### Emphasis Animations (2 shown)
-| Animation | Description |
-|-----------|-------------|
-| pulse | Scale up and down repeatedly |
-| shake | Horizontal shaking motion |
-
-## Additional Animations Available
-
-- fadeInUp, fadeInDown, fadeInLeft, fadeInRight
-- fadeOutUp, fadeOutDown, fadeOutLeft, fadeOutRight
-- slideOutUp, slideOutDown, slideOutLeft, slideOutRight
-- bounce, spin, heartbeat, float
-
-## Duration
-
-- 14 animations × ~2 seconds = 30 seconds total
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

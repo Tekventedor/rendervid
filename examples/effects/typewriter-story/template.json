@@ -58,7 +58,8 @@
             "props": {
               "shape": "rectangle",
               "fill": "#1e1b4b"
-            }
+            },
+            "animations": []
           },
           {
             "id": "aurora-blob-1",
@@ -73,17 +74,10 @@
             },
             "opacity": 0.3,
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "#8b5cf6"
             },
-            "animations": [
-              {
-                "type": "continuous",
-                "effect": "panRight",
-                "distance": 400,
-                "duration": 240
-              }
-            ]
+            "animations": []
           },
           {
             "id": "aurora-blob-2",
@@ -98,17 +92,10 @@
             },
             "opacity": 0.2,
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "#ec4899"
             },
-            "animations": [
-              {
-                "type": "continuous",
-                "effect": "panLeft",
-                "distance": 300,
-                "duration": 240
-              }
-            ]
+            "animations": []
           },
           {
             "id": "aurora-blob-3",
@@ -123,17 +110,10 @@
             },
             "opacity": 0.25,
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "#06b6d4"
             },
-            "animations": [
-              {
-                "type": "continuous",
-                "effect": "panDown",
-                "distance": 200,
-                "duration": 240
-              }
-            ]
+            "animations": []
           },
           {
             "id": "quote-mark-open",
@@ -166,7 +146,7 @@
           },
           {
             "id": "quote-text",
-            "type": "typewriter",
+            "type": "custom",
             "position": {
               "x": 360,
               "y": 420
@@ -175,20 +155,24 @@
               "width": 1200,
               "height": 200
             },
-            "props": {
-              "text": "{{quote}}",
-              "fontSize": 48,
-              "fontWeight": "500",
-              "color": "#ffffff",
-              "fontFamily": "serif",
-              "textAlign": "center",
-              "speed": "normal",
-              "cursor": true,
-              "cursorStyle": "bar",
-              "cursorColor": "{{accentColor}}",
-              "startDelay": 50,
-              "lineHeight": 1.6
-            }
+            "customComponent": {
+              "name": "TypewriterEffect",
+              "props": {
+                "text": "{{quote}}",
+                "fontSize": 48,
+                "fontWeight": "500",
+                "color": "#ffffff",
+                "fontFamily": "serif",
+                "textAlign": "center",
+                "speed": "normal",
+                "cursor": true,
+                "cursorStyle": "bar",
+                "cursorColor": "{{accentColor}}",
+                "startDelay": 50,
+                "lineHeight": 1.6
+              }
+            },
+            "animations": []
           },
           {
             "id": "quote-mark-close",
@@ -255,7 +239,7 @@
               "height": 60
             },
             "props": {
-              "text": "— {{author}}",
+              "text": "\u2014 {{author}}",
               "fontSize": 32,
               "fontWeight": "300",
               "color": "#e2e8f0",
@@ -292,7 +276,8 @@
               "lineHeight": 1.3,
               "opacity": 0.7,
               "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
+            },
+            "animations": []
           }
         ]
       }

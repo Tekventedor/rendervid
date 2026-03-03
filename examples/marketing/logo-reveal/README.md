@@ -1,59 +1,56 @@
 # Logo Reveal
 
-Animated logo reveal with professional effects.
+> Animated logo reveal with dramatic entrance effects.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Description
+---
 
-A sleek logo reveal animation with particle effects, glow, and smooth scaling. Features a building anticipation with light streaks before the logo appears, followed by a tagline fade-in. Perfect for brand intros and video openings.
+## Details
 
-## Features
-
-- 16:9 aspect ratio (1920x1080)
-- Particle/light streak effects
-- Scale-in logo animation
-- Glow effect behind logo
-- Tagline fade-in
-- 5-second duration
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 5s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
 
-| Key | Type | Required | Default | Description |
-|-----|------|----------|---------|-------------|
-| `brandName` | string | Yes | "BRAND" | Brand/company name |
-| `tagline` | string | No | "Innovation Redefined" | Brand tagline |
-| `primaryColor` | color | No | #3b82f6 | Accent color |
-| `backgroundColor` | color | No | #030712 | Background color |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `brandName` | string | `"BRAND"` | Brand Name *(required)* |
+| `tagline` | string | `"Your tagline here"` | Tagline |
+| `style` | string | `"minimal"` | Style |
+| `primaryColor` | color | `"#3b82f6"` | Primary Color |
+| `backgroundColor` | color | `"#030712"` | Background Color |
 
-## Quick Start
+## Usage
 
 ```bash
-# Render with defaults
-pnpm run examples:render marketing/logo-reveal
+# Render this example
+node examples/render-all.mjs "marketing/logo-reveal"
 
-# Render with custom brand
-pnpm run examples:render marketing/logo-reveal \
-  --input.brandName "ACME" \
-  --input.tagline "Building Tomorrow"
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Output
+Customize inputs via the MCP server or by editing `template.json`:
 
-- **Format**: MP4 video
-- **Resolution**: 1920x1080 (Full HD)
-- **Frame Rate**: 30 fps
-- **Duration**: 5 seconds
+```json
+{
+  "inputs": {
+    "brandName": "BRAND",
+    "tagline": "Your tagline here",
+    "style": "minimal"
+  }
+}
+```
 
-## Animation Timeline
+---
 
-| Time | Element | Animation |
-|------|---------|-----------|
-| 0.0s | Light streaks | Fade in and move |
-| 0.5s | Glow effect | Scale and pulse |
-| 1.0s | Brand name | Scale in with bounce |
-| 2.0s | Tagline | Fade in |
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

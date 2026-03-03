@@ -69,7 +69,7 @@
             "size": { "width": 1600, "height": 1600 },
             "opacity": 0.1,
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "{{accentColor}}"
             }
           },
@@ -80,7 +80,7 @@
             "size": { "width": 1200, "height": 1200 },
             "opacity": 0.08,
             "props": {
-              "shape": "circle",
+              "shape": "ellipse",
               "fill": "{{sphereColor}}"
             }
           },

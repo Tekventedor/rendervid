@@ -1,57 +1,54 @@
 # Typewriter Story
 
-Elegant story or quote display with gradient background and typewriter effect.
+> Elegant story or quote display with gradient background and typewriter effect.
 
 ## Preview
 
-![Preview](./preview.gif)
+![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
 
-## Features
+---
 
-- Beautiful aurora gradient background with animated blobs
-- Elegant serif typography for quotes
-- Typewriter effect with bar cursor
-- Decorative quotation marks
-- Animated divider line
-- Author attribution with fade-in
-- Perfect for inspirational content
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 8s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
+
+## Inputs
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `quote` | string | `"The only way to do great work is to love what you do."` | Quote Text *(required)* |
+| `author` | string | `"Steve Jobs"` | Author Name *(required)* |
+| `accentColor` | color | `"#8b5cf6"` | Accent Color |
 
 ## Usage
 
 ```bash
-pnpm run examples:render effects/typewriter-story
+# Render this example
+node examples/render-all.mjs "effects/typewriter-story"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Inputs
+Customize inputs via the MCP server or by editing `template.json`:
 
-| Input | Type | Required | Default |
-|-------|------|----------|---------|
-| `quote` | string | Yes | The only way to do great work is to love what you do. |
-| `author` | string | Yes | Steve Jobs |
-| `accentColor` | color | No | #8b5cf6 |
+```json
+{
+  "inputs": {
+    "quote": "The only way to do great work is to love what you do.",
+    "author": "Steve Jobs",
+    "accentColor": "#8b5cf6"
+  }
+}
+```
 
-## Use Cases
+---
 
-- Inspirational quotes
-- Story introductions
-- Book excerpts
-- Testimonials
-- Philosophical content
-- Poetry displays
-- Motivational videos
-- Literary content
-
-## Customization Tips
-
-- Use serif fonts for classic elegance
-- Adjust accent color to match your brand
-- Experiment with different gradient colors
-- Perfect for Instagram stories and TikTok
-- Try different quote lengths (works best with 10-20 words)
-- Adjust typing speed for dramatic effect
-
-## Design Notes
-
-This template uses a sophisticated aurora-style background with animated color blobs that create a dreamy, ethereal atmosphere. The serif typography and elegant spacing make it perfect for high-quality quote displays and storytelling content.
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

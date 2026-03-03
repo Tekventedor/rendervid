@@ -76,7 +76,8 @@
             "props": {
               "shape": "rectangle",
               "fill": "#000000"
-            }
+            },
+            "animations": []
           },
           {
             "id": "image-1",
@@ -99,26 +100,6 @@
                 "effect": "fadeIn",
                 "delay": 0,
                 "duration": 30
-              },
-              {
-                "type": "keyframe",
-                "duration": 120,
-                "keyframes": [
-                  {
-                    "frame": 0,
-                    "properties": {
-                      "scaleX": 1,
-                      "scaleY": 1
-                    }
-                  },
-                  {
-                    "frame": 120,
-                    "properties": {
-                      "scaleX": 1.1,
-                      "scaleY": 1.1
-                    }
-                  }
-                ]
               }
             ]
           },
@@ -142,7 +123,8 @@
               "lineHeight": 1.3,
               "opacity": 0.7,
               "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
+            },
+            "animations": []
           }
         ]
       },
@@ -169,7 +151,8 @@
             "props": {
               "shape": "rectangle",
               "fill": "#000000"
-            }
+            },
+            "animations": []
           },
           {
             "id": "image-2",
@@ -186,28 +169,7 @@
               "src": "{{image2}}",
               "fit": "cover"
             },
-            "animations": [
-              {
-                "type": "keyframe",
-                "duration": 120,
-                "keyframes": [
-                  {
-                    "frame": 0,
-                    "properties": {
-                      "scaleX": 1,
-                      "scaleY": 1
-                    }
-                  },
-                  {
-                    "frame": 120,
-                    "properties": {
-                      "scaleX": 1.1,
-                      "scaleY": 1.1
-                    }
-                  }
-                ]
-              }
-            ]
+            "animations": []
           },
           {
             "id": "watermark",
@@ -229,7 +191,8 @@
               "lineHeight": 1.3,
               "opacity": 0.7,
               "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
+            },
+            "animations": []
           }
         ]
       },
@@ -256,7 +219,8 @@
             "props": {
               "shape": "rectangle",
               "fill": "#000000"
-            }
+            },
+            "animations": []
           },
           {
             "id": "image-3",
@@ -274,26 +238,6 @@
               "fit": "cover"
             },
             "animations": [
-              {
-                "type": "keyframe",
-                "duration": 120,
-                "keyframes": [
-                  {
-                    "frame": 0,
-                    "properties": {
-                      "scaleX": 1,
-                      "scaleY": 1
-                    }
-                  },
-                  {
-                    "frame": 120,
-                    "properties": {
-                      "scaleX": 1.1,
-                      "scaleY": 1.1
-                    }
-                  }
-                ]
-              },
               {
                 "type": "exit",
                 "effect": "fadeOut",
@@ -322,7 +266,8 @@
               "lineHeight": 1.3,
               "opacity": 0.7,
               "textShadow": "0 2px 4px rgba(0,0,0,0.5)"
-            }
+            },
+            "animations": []
           }
         ]
       }

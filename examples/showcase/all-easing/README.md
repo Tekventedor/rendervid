@@ -1,58 +1,34 @@
 # All Easing Functions Showcase
 
-Demonstrates all available easing functions in Rendervid.
+> Side-by-side comparison of all easing functions in Rendervid.
 
 ## Preview
 
 ![Preview](preview.gif)
 
-[View animated SVG](preview.svg)
+**[📥 Download MP4](output.mp4)**
+
+---
+
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 4s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Usage
 
 ```bash
-pnpm run examples:render showcase/all-easing
+# Render this example
+node examples/render-all.mjs "showcase/all-easing"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Featured Easing Functions
+---
 
-| Easing | Description |
-|--------|-------------|
-| linear | Constant speed |
-| easeInOutCubic | Slow start/end, fast middle |
-| easeOutQuart | Fast start, gradual deceleration |
-| easeInQuart | Slow start, gradual acceleration |
-| easeOutBack | Overshoot then settle |
-| easeOutElastic | Spring-like bounce |
-| easeOutBounce | Ball bouncing effect |
-| easeInExpo | Exponential acceleration |
-| easeOutCirc | Circular deceleration |
-| easeInOutSine | Gentle sinusoidal |
-
-## All Available Easing Functions (31 total)
-
-**Basic:** linear
-
-**Quad:** easeInQuad, easeOutQuad, easeInOutQuad
-
-**Cubic:** easeInCubic, easeOutCubic, easeInOutCubic
-
-**Quart:** easeInQuart, easeOutQuart, easeInOutQuart
-
-**Quint:** easeInQuint, easeOutQuint, easeInOutQuint
-
-**Sine:** easeInSine, easeOutSine, easeInOutSine
-
-**Expo:** easeInExpo, easeOutExpo, easeInOutExpo
-
-**Circ:** easeInCirc, easeOutCirc, easeInOutCirc
-
-**Back:** easeInBack, easeOutBack, easeInOutBack
-
-**Elastic:** easeInElastic, easeOutElastic, easeInOutElastic
-
-**Bounce:** easeInBounce, easeOutBounce, easeInOutBounce
-
-## Duration
-
-- 10 easing functions × 2 seconds = 20 seconds total
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*

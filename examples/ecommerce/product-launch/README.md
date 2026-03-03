@@ -1,40 +1,56 @@
 # Product Launch
 
-Dramatic new product announcement with video background and reveal animation.
+> Dramatic new product announcement with video background and reveal animation.
 
 ## Preview
-![Preview](./preview.gif)
 
-[View animated SVG](preview.svg)
+![Preview](preview.gif)
 
-## Features
+**[📥 Download MP4](output.mp4)**
 
-- Dynamic video background layer
-- Radial gradient overlay for text readability
-- Animated text reveals with scale and slide effects
-- Customizable product name, tagline, and launch date
+---
 
-## Usage
-```bash
-pnpm run examples:render ecommerce/product-launch
-```
+## Details
+
+| Property | Value |
+|----------|-------|
+| **Resolution** | 1920 × 1080 |
+| **Duration** | 8s |
+| **FPS** | 30 |
+| **Output** | Video (MP4) |
 
 ## Inputs
-| Input | Type | Required | Default |
-|-------|------|----------|---------|
-| `backgroundVideo` | video | No | ./background.mp4 |
-| `productName` | string | Yes | NEXUS PRO |
-| `tagline` | string | No | The future of productivity is here |
-| `launchDate` | string | No | Available March 15, 2024 |
 
-## Custom Video Background
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `backgroundVideo` | url | `"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"` | Background Video |
+| `productImage` | url | `"product.jpg"` | Product Image |
+| `productName` | string | `"NEXUS PRO"` | Product Name *(required)* |
+| `tagline` | string | `"The future of productivity is here"` | Tagline |
+| `launchDate` | string | `"Available March 15, 2024"` | Launch Date |
+
+## Usage
 
 ```bash
-pnpm run examples:render ecommerce/product-launch \
-  --input backgroundVideo="https://example.com/my-video.mp4" \
-  --input productName="MY PRODUCT"
+# Render this example
+node examples/render-all.mjs "ecommerce/product-launch"
+
+# Or render all examples
+node examples/render-all.mjs
 ```
 
-## Included Assets
+Customize inputs via the MCP server or by editing `template.json`:
 
-- `background.mp4` - Sample abstract background video
+```json
+{
+  "inputs": {
+    "backgroundVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    "productImage": "product.jpg",
+    "productName": "NEXUS PRO"
+  }
+}
+```
+
+---
+
+*Part of the [RenderVid examples](../../README.md) · [RenderVid](../../../README.md)*
