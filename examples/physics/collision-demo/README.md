@@ -6,6 +6,8 @@
 
 ![Preview](preview.gif)
 
+**[📥 Download MP4](output.mp4)**
+
 ---
 
 ## Details
@@ -21,11 +23,7 @@
 ## Usage
 
 ```bash
-# Render this example
 node examples/render-all.mjs "physics/collision-demo"
-
-# Or render all examples
-node examples/render-all.mjs
 ```
 
 ---
