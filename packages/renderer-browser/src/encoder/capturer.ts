@@ -107,8 +107,142 @@ function applyWebGLSnapshots(
   }
 }
 
+// Cache for inlined CSS (rebuilt once per capturer instance)
+let _inlinedCssCache: string | null = null;
+let _inlinedCssPromise: Promise<string> | null = null;
+
 /**
- * Frame capturer using html2canvas for DOM-to-canvas conversion.
+ * Fetch a font URL as base64 data URI.
+ */
+async function fetchFontAsDataUri(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, { mode: 'cors' });
+    if (!res.ok) return null;
+    const buf = await res.arrayBuffer();
+    const bytes = new Uint8Array(buf);
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+    const base64 = btoa(binary);
+    const ext = (url.match(/\.([a-z0-9]+)(\?|$)/i)?.[1] || 'woff2').toLowerCase();
+    const mime =
+      ext === 'woff2' ? 'font/woff2' :
+      ext === 'woff' ? 'font/woff' :
+      ext === 'ttf' ? 'font/ttf' :
+      ext === 'otf' ? 'font/otf' : 'application/octet-stream';
+    return `data:${mime};base64,${base64}`;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Collect all CSS rules from document stylesheets, inlining @font-face URLs as
+ * base64 data URIs so the resulting CSS has no cross-origin references.
+ */
+async function collectInlinedCss(): Promise<string> {
+  if (_inlinedCssCache !== null) return _inlinedCssCache;
+  if (_inlinedCssPromise) return _inlinedCssPromise;
+
+  _inlinedCssPromise = (async () => {
+    const parts: string[] = [];
+    for (const sheet of Array.from(document.styleSheets)) {
+      let rules: CSSRule[] = [];
+      try {
+        rules = Array.from(sheet.cssRules || []);
+      } catch {
+        continue; // cross-origin stylesheet, skip
+      }
+      for (const rule of rules) {
+        if (rule.constructor.name === 'CSSFontFaceRule' || rule.cssText.startsWith('@font-face')) {
+          let inlined = rule.cssText;
+          const urlRegex = /url\((['"]?)(https?:\/\/[^'")]+)\1\)/g;
+          const matches: { full: string; url: string }[] = [];
+          let m: RegExpExecArray | null;
+          while ((m = urlRegex.exec(rule.cssText)) !== null) {
+            matches.push({ full: m[0], url: m[2] });
+          }
+          for (const { full, url } of matches) {
+            const dataUri = await fetchFontAsDataUri(url);
+            if (dataUri) {
+              inlined = inlined.replace(full, `url("${dataUri}")`);
+            }
+          }
+          parts.push(inlined);
+        } else {
+          parts.push(rule.cssText);
+        }
+      }
+    }
+    const result = parts.join('\n');
+    _inlinedCssCache = result;
+    return result;
+  })();
+
+  return _inlinedCssPromise;
+}
+
+/**
+ * Native DOM-to-canvas using SVG foreignObject. Bypasses html2canvas entirely.
+ * Inlines all CSS (including @font-face) so the resulting SVG has no
+ * cross-origin references and the canvas is never tainted.
+ */
+async function nativeDomToCanvas(
+  element: HTMLElement,
+  width: number,
+  height: number,
+  scale: number = 1
+): Promise<HTMLCanvasElement> {
+  const inlinedCss = await collectInlinedCss();
+  const clone = element.cloneNode(true) as HTMLElement;
+
+  // Serialize the cloned element using XMLSerializer for valid XHTML
+  const serializer = new XMLSerializer();
+  let cloneXml: string;
+  try {
+    cloneXml = serializer.serializeToString(clone);
+  } catch {
+    cloneXml = clone.outerHTML;
+  }
+
+  // Build the SVG wrapping the DOM in a foreignObject
+  const svgString =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '">' +
+    '<foreignObject x="0" y="0" width="' + width + '" height="' + height + '">' +
+    '<div xmlns="http://www.w3.org/1999/xhtml" style="width:' + width + 'px;height:' + height + 'px;font-family:Inter,system-ui,sans-serif;">' +
+    '<style>' + inlinedCss + '</style>' +
+    cloneXml +
+    '</div>' +
+    '</foreignObject>' +
+    '</svg>';
+
+  // Load via Blob URL to avoid data URL size/encoding issues
+  const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+
+  try {
+    const img = new Image();
+    img.decoding = 'sync';
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = (e) => reject(new Error('Failed to load SVG image: ' + e));
+      img.src = url;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(width * scale);
+    canvas.height = Math.round(height * scale);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Failed to get 2D context');
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    return canvas;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+/**
+ * Frame capturer using a native DOM→SVG→canvas pipeline (with html2canvas
+ * fallback for edge cases).
  */
 export function createFrameCapturer(): FrameCapturer {
   async function captureFrame(options: CaptureOptions): Promise<CaptureResult> {
@@ -117,11 +251,16 @@ export function createFrameCapturer(): FrameCapturer {
     // Snapshot WebGL canvases from the live DOM before html2canvas clones it
     const snapshots = snapshotWebGLCanvases(options.element);
 
-    const canvas = await html2canvas(options.element, {
-      width: options.width,
-      height: options.height,
+    const scale = options.scale ?? 1;
+    // html2canvas treats `width`/`height` as the SOURCE area to capture and
+    // creates a canvas of (width*scale) × (height*scale). However when both
+    // width and scale are provided, content can end up rendering at 1:1 in the
+    // top-left of an oversized canvas. The reliable way to get a high-DPI
+    // capture is to omit width/height and rely on the element's bounding box,
+    // letting `scale` do all the DPI multiplication.
+    let canvas = await html2canvas(options.element, {
       backgroundColor: options.backgroundColor ?? null,
-      scale: options.scale ?? 1,
+      scale,
       useCORS: options.useCORS ?? true,
       proxy: options.proxy,
       logging: false,
@@ -130,10 +269,35 @@ export function createFrameCapturer(): FrameCapturer {
       imageTimeout: 15000,
       removeContainer: true,
       onclone: (_doc: Document, clonedElement: HTMLElement) => {
-        // Paint WebGL snapshots onto the cloned canvases
+        // Force the cloned root to be fully visible for capture, in case the
+        // live element is hidden / opacity:0 (e.g. an off-screen render
+        // container). html2canvas otherwise returns an empty canvas.
+        const cloneRoot = clonedElement as HTMLElement;
+        cloneRoot.style.opacity = '1';
+        cloneRoot.style.visibility = 'visible';
+        cloneRoot.style.display = 'block';
         applyWebGLSnapshots(options.element, clonedElement, snapshots);
       },
     });
+
+    // Verify the canvas dims match the requested target. If html2canvas
+    // produced something smaller (e.g. when the source element has zero
+    // computed dimensions), upscale to the target via drawImage so the
+    // encoder gets the resolution it expects.
+    const targetW = Math.round(options.width * scale);
+    const targetH = Math.round(options.height * scale);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      const upscaled = document.createElement('canvas');
+      upscaled.width = targetW;
+      upscaled.height = targetH;
+      const upCtx = upscaled.getContext('2d');
+      if (upCtx) {
+        upCtx.imageSmoothingEnabled = true;
+        upCtx.imageSmoothingQuality = 'high';
+        upCtx.drawImage(canvas, 0, 0, targetW, targetH);
+        canvas = upscaled;
+      }
+    }
 
     const captureTime = performance.now() - startTime;
 

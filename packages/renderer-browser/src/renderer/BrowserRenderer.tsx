@@ -28,6 +28,12 @@ export interface RenderVideoOptions {
   format?: 'mp4' | 'webm';
   /** Video bitrate in bits per second */
   bitrate?: number;
+  /**
+   * Render scale (DPI multiplier). The DOM is rendered at the template's
+   * native dimensions but rasterized and encoded at width*scale × height*scale.
+   * Use 2 for crisp 4K output from a 1080p template. Default: 1.
+   */
+  renderScale?: number;
   /** Progress callback */
   onProgress?: (progress: RenderProgress) => void;
   /** Frame callback (called after each frame is captured) */
@@ -109,12 +115,14 @@ export class BrowserRenderer {
 
   private createContainer(): HTMLElement {
     const container = document.createElement('div');
+    // Position the render container off-screen but fully visible, so
+    // html2canvas can capture it. opacity:0 / display:none / visibility:hidden
+    // would all cause html2canvas to return an empty canvas.
     container.style.cssText = `
       position: fixed;
-      left: 0;
+      left: -100000px;
       top: 0;
       pointer-events: none;
-      opacity: 0;
       z-index: -9999;
     `;
     document.body.appendChild(container);
@@ -154,7 +162,7 @@ export class BrowserRenderer {
     this.isRendering = true;
 
     try {
-      const { template, inputs = {}, format = 'mp4', bitrate, onProgress, onFrame } = options;
+      const { template, inputs = {}, format = 'mp4', bitrate, renderScale = 1, onProgress, onFrame } = options;
 
       // Process custom components and inputs
       await this.processor.loadCustomComponents(template, this.registry);
@@ -192,7 +200,7 @@ export class BrowserRenderer {
         result = await this.renderWithWebCodecs(
           scenes,
           renderContainer,
-          { width, height, fps, totalFrames, duration, bitrate },
+          { width, height, fps, totalFrames, duration, bitrate, renderScale },
           capturer,
           onProgress,
           onFrame
@@ -201,7 +209,7 @@ export class BrowserRenderer {
         result = await this.renderWithMediaRecorder(
           scenes,
           renderContainer,
-          { width, height, fps, totalFrames, duration },
+          { width, height, fps, totalFrames, duration, renderScale },
           capturer,
           onProgress,
           onFrame
@@ -222,27 +230,50 @@ export class BrowserRenderer {
   private async renderWithWebCodecs(
     scenes: Scene[],
     container: HTMLElement,
-    config: { width: number; height: number; fps: number; totalFrames: number; duration: number; bitrate?: number },
+    config: { width: number; height: number; fps: number; totalFrames: number; duration: number; bitrate?: number; renderScale?: number },
     capturer: ReturnType<typeof createFrameCapturer>,
     onProgress?: (progress: RenderProgress) => void,
     onFrame?: (frame: number, totalFrames: number) => void
   ): Promise<VideoResult> {
-    const { width, height, fps, totalFrames, duration, bitrate } = config;
+    const { width, height, fps, totalFrames, duration, bitrate, renderScale = 1 } = config;
 
-    // Initialize encoder
+    // Encoder/muxer dimensions are scaled (e.g. 1080p × 2 = 4K).
+    // The DOM is still rendered at native (width, height); html2canvas
+    // rasterizes at high DPI for crisp text/edges.
+    const encWidth = Math.round(width * renderScale);
+    const encHeight = Math.round(height * renderScale);
+
+    // Initialize encoder at scaled dimensions
     const encoder = createWebCodecsEncoder({
-      width,
-      height,
+      width: encWidth,
+      height: encHeight,
       fps,
       bitrate,
     });
     await encoder.initialize();
 
-    // Initialize muxer
+    // The encoder may have fallen back to a different codec than requested
+    // (e.g. on Linux Chrome H.264 software encoding is usually unavailable
+    // and we fall back to VP9). The muxer must be told the *actual* codec
+    // that will be in the chunks, otherwise the resulting mp4 has a header
+    // saying H.264 but VP9 NAL data inside, which makes the file unplayable.
+    const actualCodec = encoder.getConfig().codec;
+    const muxerCodec: 'avc' | 'hevc' | 'vp9' | 'av1' = actualCodec.startsWith('avc1')
+      ? 'avc'
+      : actualCodec.startsWith('hev1') || actualCodec.startsWith('hvc1')
+      ? 'hevc'
+      : actualCodec.startsWith('vp09')
+      ? 'vp9'
+      : actualCodec.startsWith('av01')
+      ? 'av1'
+      : 'avc';
+
+    // Initialize muxer at scaled dimensions, with the codec actually selected
     const muxer = createMp4Muxer({
-      width,
-      height,
+      width: encWidth,
+      height: encHeight,
       fps,
+      videoCodec: muxerCodec,
     });
 
     const startTime = performance.now();
@@ -252,17 +283,18 @@ export class BrowserRenderer {
     for (let frame = 0; frame < totalFrames; frame++) {
       const frameStartTime = performance.now();
 
-      // Render frame to DOM
+      // Render frame to DOM at native template dimensions
       await this.renderFrame(scenes, frame, fps, width, height);
 
       // Wait for DOM update
       await new Promise((resolve) => requestAnimationFrame(resolve));
 
-      // Capture frame
+      // Capture frame at scaled DPI for crisp output
       const { canvas } = await capturer.captureFrame({
         element: container,
         width,
         height,
+        scale: renderScale,
       });
 
       // Encode frame
@@ -306,7 +338,11 @@ export class BrowserRenderer {
       phase: 'muxing',
     });
 
-    for (const chunk of encoder.getChunks()) {
+    // Sort chunks by timestamp before muxing.
+    // Hardware H.264 encoders with B-frames may emit chunks in encode order,
+    // not presentation order, which violates the muxer's monotonic DTS requirement.
+    const sortedChunks = [...encoder.getChunks()].sort((a, b) => a.timestamp - b.timestamp);
+    for (const chunk of sortedChunks) {
       muxer.addVideoChunk(chunk);
     }
 
@@ -335,17 +371,20 @@ export class BrowserRenderer {
   private async renderWithMediaRecorder(
     scenes: Scene[],
     container: HTMLElement,
-    config: { width: number; height: number; fps: number; totalFrames: number; duration: number },
+    config: { width: number; height: number; fps: number; totalFrames: number; duration: number; renderScale?: number },
     capturer: ReturnType<typeof createFrameCapturer>,
     onProgress?: (progress: RenderProgress) => void,
     onFrame?: (frame: number, totalFrames: number) => void
   ): Promise<VideoResult> {
-    const { width, height, fps, totalFrames, duration } = config;
+    const { width, height, fps, totalFrames, duration, renderScale = 1 } = config;
 
-    // Create a canvas for MediaRecorder
+    const encWidth = Math.round(width * renderScale);
+    const encHeight = Math.round(height * renderScale);
+
+    // Create a canvas for MediaRecorder at scaled dimensions
     const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = encWidth;
+    canvas.height = encHeight;
     const ctx = canvas.getContext('2d');
     if (!ctx) {
       throw new Error('Failed to get 2D context from canvas for MediaRecorder export');
@@ -355,7 +394,7 @@ export class BrowserRenderer {
     const stream = canvas.captureStream(fps);
     const mediaRecorder = new MediaRecorder(stream, {
       mimeType: 'video/webm;codecs=vp9',
-      videoBitsPerSecond: width * height * fps * 0.1,
+      videoBitsPerSecond: encWidth * encHeight * fps * 0.5,
     });
 
     const chunks: Blob[] = [];
@@ -385,15 +424,16 @@ export class BrowserRenderer {
       // Wait for DOM update
       await new Promise((resolve) => requestAnimationFrame(resolve));
 
-      // Capture frame
+      // Capture frame at scaled DPI
       const { canvas: capturedCanvas } = await capturer.captureFrame({
         element: container,
         width,
         height,
+        scale: renderScale,
       });
 
       // Draw to MediaRecorder canvas
-      ctx.drawImage(capturedCanvas, 0, 0);
+      ctx.drawImage(capturedCanvas, 0, 0, encWidth, encHeight);
 
       // Wait for frame timing
       const targetFrameTime = 1000 / fps;

@@ -93,6 +93,7 @@ export function App() {
   const [exporting, setExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
   const [exportError, setExportError] = useState<string | null>(null);
+  const [exportQuality, setExportQuality] = useState<'1080p' | '1440p' | '4k'>('1080p');
   const frameCount = useRef(0);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [viewportSize, setViewportSize] = useState({ width: 800, height: 600 });
@@ -144,18 +145,41 @@ export function App() {
     setExportProgress(0);
     setExportError(null);
     try {
+      // Render scale (DPI multiplier). The DOM stays at template native dims;
+      // html2canvas rasterizes at this scale and the encoder runs at the
+      // scaled resolution. This is the right way to get crisp 4K from a 1080p
+      // template — the layout stays correct, every pixel is just rasterized
+      // at higher DPI.
+      const renderScale = exportQuality === '4k' ? 2 : exportQuality === '1440p' ? 1.333 : 1;
+      const w = (tmpl.output.width ?? 1920) * renderScale;
+      const h = (tmpl.output.height ?? 1080) * renderScale;
+      const fps = tmpl.output.fps ?? 30;
+      // Generous bitrate for crisp UI / text — ~50% of raw bitrate.
+      const targetBitrate = Math.round(w * h * fps * 0.5);
+
       const renderer = createBrowserRenderer({
         preferWebCodecs: isWebCodecsSupported(),
       });
+      // Pre-register inline components we already evaluated locally for the
+      // live preview. Core's DefaultComponentRegistry throws on registerFromCode,
+      // so without this the export path would fail on any template that uses
+      // inline customComponents. TemplateProcessor.loadCustomComponents skips
+      // components that are already registered, so pre-registering bypasses
+      // the throwing path entirely.
+      for (const [name, component] of componentRegistry) {
+        renderer.registerComponent(name, component);
+      }
       const format = isWebCodecsSupported() ? 'mp4' as const : 'webm' as const;
       const result = await renderer.renderVideo({
         template: tmpl,
         inputs: inputValues,
         format,
+        bitrate: targetBitrate,
+        renderScale,
         onProgress: (p) => setExportProgress(Math.round(p.percentage)),
       });
       const ext = format === 'mp4' ? 'mp4' : 'webm';
-      const filename = `${tmpl.name || 'video'}.${ext}`.replace(/\s+/g, '-').toLowerCase();
+      const filename = `${tmpl.name || 'video'}-${exportQuality}.${ext}`.replace(/\s+/g, '-').toLowerCase();
       downloadBlob(result.blob, filename);
       renderer.dispose();
     } catch (err) {
@@ -163,7 +187,7 @@ export function App() {
     } finally {
       setExporting(false);
     }
-  }, [exporting, inputValues]);
+  }, [exporting, inputValues, exportQuality, componentRegistry]);
 
   // SVG export handler
   const handleExportSvg = useCallback((tmpl: Template) => {
@@ -212,10 +236,13 @@ export function App() {
             (s) => frame >= s.startFrame && frame < s.endFrame
           );
           const sceneDuration = scene ? scene.endFrame - scene.startFrame : totalFrames;
+          // Pass scene-local frame so each component's timeline starts at 0
+          const localFrame = scene ? frame - scene.startFrame : frame;
           return (
             <Component
               {...(customComponent.props ?? {})}
-              frame={frame}
+              frame={localFrame}
+              globalFrame={frame}
               fps={fps}
               sceneDuration={sceneDuration}
               layerSize={layer.size}
@@ -419,6 +446,18 @@ export function App() {
             </div>
           ) : (
             <>
+              <div style={{ marginBottom: '8px' }}>
+                <div style={{ fontSize: '11px', color: '#a1a1aa', marginBottom: '4px' }}>Quality</div>
+                <select
+                  value={exportQuality}
+                  onChange={(e) => setExportQuality(e.target.value as '1080p' | '1440p' | '4k')}
+                  style={selectStyle}
+                >
+                  <option value="1080p">1080p (native, fastest)</option>
+                  <option value="1440p">1440p (1.33x upscale)</option>
+                  <option value="4k">4K (2x upscale, best quality)</option>
+                </select>
+              </div>
               <button
                 onClick={() => template && handleExport(template)}
                 style={{
@@ -427,7 +466,7 @@ export function App() {
                   borderRadius: '6px', cursor: 'pointer',
                 }}
               >
-                Export {isWebCodecsSupported() ? 'MP4' : 'WebM'}
+                Export {isWebCodecsSupported() ? 'MP4' : 'WebM'} ({exportQuality})
               </button>
               <button
                 onClick={() => template && handleExportSvg(template)}

@@ -83,7 +83,9 @@ export function createWebCodecsEncoder(options: WebCodecsEncoderOptions): WebCod
     bitrate = width * height * fps * 0.1, // ~10% of raw bitrate
     codec = getRecommendedCodec(width, height),
     hardwareAcceleration = 'prefer-hardware',
-    latencyMode = 'quality',
+    // Use realtime latency mode to discourage B-frames, which can cause
+    // out-of-order chunk delivery and break the mp4 muxer.
+    latencyMode = 'realtime',
   } = options;
 
   const chunks: EncodedChunk[] = [];
