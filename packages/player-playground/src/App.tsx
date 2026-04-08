@@ -160,6 +160,15 @@ export function App() {
       const renderer = createBrowserRenderer({
         preferWebCodecs: isWebCodecsSupported(),
       });
+      // Pre-register inline components we already evaluated locally for the
+      // live preview. Core's DefaultComponentRegistry throws on registerFromCode,
+      // so without this the export path would fail on any template that uses
+      // inline customComponents. TemplateProcessor.loadCustomComponents skips
+      // components that are already registered, so pre-registering bypasses
+      // the throwing path entirely.
+      for (const [name, component] of componentRegistry) {
+        renderer.registerComponent(name, component);
+      }
       const format = isWebCodecsSupported() ? 'mp4' as const : 'webm' as const;
       const result = await renderer.renderVideo({
         template: tmpl,
@@ -178,7 +187,7 @@ export function App() {
     } finally {
       setExporting(false);
     }
-  }, [exporting, inputValues, exportQuality]);
+  }, [exporting, inputValues, exportQuality, componentRegistry]);
 
   // SVG export handler
   const handleExportSvg = useCallback((tmpl: Template) => {

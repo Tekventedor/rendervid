@@ -252,11 +252,28 @@ export class BrowserRenderer {
     });
     await encoder.initialize();
 
-    // Initialize muxer at scaled dimensions
+    // The encoder may have fallen back to a different codec than requested
+    // (e.g. on Linux Chrome H.264 software encoding is usually unavailable
+    // and we fall back to VP9). The muxer must be told the *actual* codec
+    // that will be in the chunks, otherwise the resulting mp4 has a header
+    // saying H.264 but VP9 NAL data inside, which makes the file unplayable.
+    const actualCodec = encoder.getConfig().codec;
+    const muxerCodec: 'avc' | 'hevc' | 'vp9' | 'av1' = actualCodec.startsWith('avc1')
+      ? 'avc'
+      : actualCodec.startsWith('hev1') || actualCodec.startsWith('hvc1')
+      ? 'hevc'
+      : actualCodec.startsWith('vp09')
+      ? 'vp9'
+      : actualCodec.startsWith('av01')
+      ? 'av1'
+      : 'avc';
+
+    // Initialize muxer at scaled dimensions, with the codec actually selected
     const muxer = createMp4Muxer({
       width: encWidth,
       height: encHeight,
       fps,
+      videoCodec: muxerCodec,
     });
 
     const startTime = performance.now();
