@@ -1,55 +1,55 @@
 {
-  "name": "AmICited — EU Organizations Promo",
-  "description": "60-second institutional promo video for AmICited targeting EU organizations",
-  "version": "1.0.0",
+  "name": "AmICited — EU Organizations Promo v2",
+  "description": "60-second EU institutional promo — light theme, accurate app UI",
+  "version": "2.0.0",
   "output": {
     "type": "video",
     "width": 1920,
     "height": 1080,
     "fps": 30,
     "duration": 60,
-    "backgroundColor": "#0b0f1a"
+    "backgroundColor": "#F9FAFB"
   },
   "customComponents": {
-    "TypewriterQuestion": {
+    "AppSidebar": {
       "type": "inline",
-      "code": "function TypewriterQuestion(props){var f=props.frame,fps=props.fps||30,text=props.text||'',cps=props.cps||14,n=Math.min(text.length,Math.floor(f*cps/fps)),vis=text.slice(0,n),blink=Math.floor(f*2/fps)%2===0,fs=props.fontSize||50,col=props.color||'#e8eaf0',ff=props.fontFamily||'Georgia, serif';return React.createElement('div',{style:{color:col,fontSize:fs+'px',fontFamily:ff,lineHeight:1.4,display:'inline-flex',alignItems:'flex-start',flexWrap:'wrap',wordBreak:'break-word',width:'100%'}},React.createElement('span',null,vis),React.createElement('span',{style:{display:'inline-block',width:'3px',height:fs*1.2+'px',background:col,opacity:blink?1:0,marginLeft:'3px',verticalAlign:'bottom',flexShrink:0}}));}"
+      "code": "function AppSidebar(props){var active=props.activePage||'Overview',items=['Overview','Prompts','Prompt Suggestions','Source Mentions','Tags','Competitors','AI Articles','Reports','Subscription'];return React.createElement('div',{style:{width:'100%',height:'100%',background:'#FFFFFF',borderRight:'1px solid #E5E7EB',display:'flex',flexDirection:'column',fontFamily:'system-ui,-apple-system,sans-serif',boxSizing:'border-box'}},React.createElement('div',{style:{padding:'18px 20px',borderBottom:'1px solid #F3F4F6',flexShrink:0}},React.createElement('div',{style:{fontSize:'19px',fontWeight:'800',color:'#0B64F4',letterSpacing:'-0.5px'}},'AmICited')),React.createElement('div',{style:{flex:1,padding:'8px',overflow:'hidden'}},items.map(function(item,i){var isAct=item===active;return React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',gap:'8px',padding:'7px 10px',borderRadius:'6px',background:isAct?'#EFF6FF':'transparent',color:isAct?'#1D4ED8':'#374151',fontWeight:isAct?'600':'400',fontSize:'13px',marginBottom:'2px'}},React.createElement('div',{style:{width:'5px',height:'5px',borderRadius:'50%',background:isAct?'#0B64F4':'#D1D5DB',flexShrink:0}}),React.createElement('span',null,item));})),React.createElement('div',{style:{padding:'10px 14px',borderTop:'1px solid #F3F4F6',flexShrink:0}},React.createElement('div',{style:{marginBottom:'8px'}},React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:'11px',color:'#6B7280',marginBottom:'3px'}},React.createElement('span',null,'AI Responses'),React.createElement('span',null,'0 / 50')),React.createElement('div',{style:{height:'5px',background:'#F3F4F6',borderRadius:'999px',overflow:'hidden'}},React.createElement('div',{style:{width:'0%',height:'100%',background:'#22C55E',borderRadius:'999px'}}))),React.createElement('div',null,React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:'11px',color:'#6B7280',marginBottom:'3px'}},React.createElement('span',null,'Prompts'),React.createElement('span',null,'3 / 3')),React.createElement('div',{style:{height:'5px',background:'#F3F4F6',borderRadius:'999px',overflow:'hidden'}},React.createElement('div',{style:{width:'100%',height:'100%',background:'#EF4444',borderRadius:'999px'}})))),React.createElement('div',{style:{padding:'6px',borderTop:'1px solid #F3F4F6',flexShrink:0}},React.createElement('div',{style:{display:'flex',alignItems:'center',gap:'8px',padding:'8px',borderRadius:'8px',background:'#F9FAFB'}},React.createElement('div',{style:{width:'32px',height:'32px',background:'#E5E7EB',borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'11px',fontWeight:'700',color:'#374151',flexShrink:0}},'HU'),React.createElement('div',null,React.createElement('div',{style:{fontSize:'12px',fontWeight:'600',color:'#111827'}},'hugolewis007'),React.createElement('div',{style:{fontSize:'10px',color:'#9CA3AF'}},'hugolewis007@gmail.com')))));}",
+      "isDefault": false
     },
-    "AIPanel": {
+    "HookScene": {
       "type": "inline",
-      "code": "function AIPanel(props){var f=props.frame,d=props.delayFrames||0,fps=props.fps||30,prog=Math.max(0,Math.min(1,(f-d)/22)),name=props.platformName||'ChatGPT',nameColor=props.nameColor||'#10a37f',text=props.text||'',highlights=props.highlights||[],parts=[],remaining=text;highlights.forEach(function(h){var idx=remaining.indexOf(h);if(idx>=0){if(idx>0)parts.push(React.createElement('span',{key:'pre'+h,style:{color:'#bcc5d6'}},remaining.slice(0,idx)));parts.push(React.createElement('span',{key:'hl'+h,style:{background:'rgba(245,197,58,0.18)',color:'#f5c53a',padding:'0 4px',borderRadius:'3px',fontWeight:'600'}},h));remaining=remaining.slice(idx+h.length);}});if(remaining)parts.push(React.createElement('span',{key:'end',style:{color:'#bcc5d6'}},remaining));return React.createElement('div',{style:{opacity:prog,transform:'translateY('+(14*(1-prog))+'px)',background:'#0e1622',border:'1px solid #1c2b42',borderRadius:'10px',padding:'16px 22px',width:'100%',boxSizing:'border-box'}},React.createElement('div',{style:{display:'flex',alignItems:'center',marginBottom:'10px',gap:'8px'}},React.createElement('div',{style:{width:'9px',height:'9px',borderRadius:'50%',background:nameColor,flexShrink:0}}),React.createElement('span',{style:{color:nameColor,fontSize:'12px',fontWeight:'700',fontFamily:'system-ui, sans-serif',letterSpacing:'0.8px',textTransform:'uppercase'}},'via '+name)),React.createElement('p',{style:{color:'#bcc5d6',fontSize:'15px',lineHeight:'1.7',margin:0,fontFamily:'Georgia, serif'}},parts.length>0?parts:text));}"
+      "code": "function HookScene(props){var f=props.frame,fps=props.fps||30,text='What does AI say about your organisation?',n=Math.min(text.length,Math.floor(Math.max(0,f-22)*11/fps)),typed=text.slice(0,n),blink=Math.floor(f*2/fps)%2===0,fadeIn=Math.min(1,f/25),sub1=Math.max(0,Math.min(1,(f-115)/22)),sub2=Math.max(0,Math.min(1,(f-145)/22));return React.createElement('div',{style:{width:'100%',height:'100%',background:'linear-gradient(135deg,#0B64F4 0%,#1D4ED8 55%,#1E3A8A 100%)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',fontFamily:'system-ui,-apple-system,sans-serif',position:'relative',overflow:'hidden'}},React.createElement('div',{style:{position:'absolute',top:0,left:0,right:0,bottom:0,backgroundImage:'radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0%, transparent 50%)'}}),React.createElement('div',{style:{textAlign:'center',maxWidth:'1000px',padding:'0 80px',position:'relative'}},React.createElement('div',{style:{fontSize:'13px',fontWeight:'600',color:'rgba(255,255,255,0.55)',letterSpacing:'3px',textTransform:'uppercase',marginBottom:'28px',opacity:fadeIn}},'Powered by AmICited'),React.createElement('div',{style:{fontSize:'54px',fontWeight:'700',color:'white',lineHeight:'1.2',marginBottom:'40px',minHeight:'135px',letterSpacing:'-1px'}},typed,React.createElement('span',{style:{display:'inline-block',width:'3px',height:'54px',background:'white',opacity:blink?0.85:0,marginLeft:'4px',verticalAlign:'middle'}})),React.createElement('div',{style:{fontSize:'20px',color:'rgba(255,255,255,0.75)',lineHeight:'1.6',opacity:sub1,transform:'translateY('+(8*(1-sub1))+'px)'}},'Track your visibility across ChatGPT, Perplexity, Google AI, Gemini and more'),React.createElement('div',{style:{display:'flex',gap:'12px',justifyContent:'center',marginTop:'28px',opacity:sub2}},['ChatGPT','Perplexity','Google AI','Gemini','Copilot'].map(function(p,i){return React.createElement('span',{key:i,style:{background:'rgba(255,255,255,0.12)',border:'1px solid rgba(255,255,255,0.2)',color:'rgba(255,255,255,0.85)',fontSize:'13px',fontWeight:'500',padding:'6px 14px',borderRadius:'20px'}},p);}))));}",
+      "isDefault": false
     },
-    "LineChart": {
+    "PromptsContent": {
       "type": "inline",
-      "code": "function LineChart(props){var f=props.frame,d=props.delayFrames||0,fps=props.fps||30,prog=Math.max(0,Math.min(1,(f-d)/(fps*2.2))),w=props.layerSize?props.layerSize.width:680,h=props.layerSize?props.layerSize.height:260,pL=50,pR=20,pT=20,pB=38,cW=w-pL-pR,cH=h-pT-pB,data=[12,18,15,22,28,24,31,27,35,33,40,38,45,42,50,52,47,58,61,64,57,68,72,76,69,78,82,85,80,88],maxV=Math.max.apply(null,data),minV=Math.min.apply(null,data),pts=data.map(function(v,i){return{x:pL+(i/(data.length-1))*cW,y:pT+cH-((v-minV)/(maxV-minV))*cH};}),nPts=Math.max(2,Math.floor(prog*pts.length)),visPts=pts.slice(0,nPts),pathD=visPts.map(function(p,i){return(i===0?'M':'L')+p.x.toFixed(1)+','+p.y.toFixed(1);}).join(' '),areaD=pathD+' L'+visPts[visPts.length-1].x.toFixed(1)+','+(pT+cH)+' L'+pL+','+(pT+cH)+' Z',tipIdx=nPts-1,tipPt=pts[tipIdx]||pts[0],tipVal=data[tipIdx]||data[0],gridTs=[0.25,0.5,0.75,1];return React.createElement('svg',{width:w,height:h},React.createElement('defs',null,React.createElement('linearGradient',{id:'aGrad',x1:'0',y1:'0',x2:'0',y2:'1'},React.createElement('stop',{offset:'0%',stopColor:'#1a56db',stopOpacity:'0.45'}),React.createElement('stop',{offset:'100%',stopColor:'#1a56db',stopOpacity:'0'}))),gridTs.map(function(t,i){return React.createElement('line',{key:'g'+i,x1:pL,y1:(pT+cH*(1-t)).toFixed(1),x2:pL+cW,y2:(pT+cH*(1-t)).toFixed(1),stroke:'#1c2b42',strokeWidth:1,strokeDasharray:'4,4'});}),React.createElement('path',{d:areaD,fill:'url(#aGrad)'}),React.createElement('path',{d:pathD,stroke:'#1a56db',strokeWidth:2.5,fill:'none',strokeLinecap:'round',strokeLinejoin:'round'}),prog>0.08?React.createElement('circle',{cx:tipPt.x.toFixed(1),cy:tipPt.y.toFixed(1),r:5,fill:'#1a56db',stroke:'#e8eaf0',strokeWidth:2}):null,prog>0.08?React.createElement('g',null,React.createElement('rect',{x:(tipPt.x-44).toFixed(1),y:(tipPt.y-36).toFixed(1),width:88,height:24,rx:5,fill:'#1a56db',opacity:0.92}),React.createElement('text',{x:tipPt.x.toFixed(1),y:(tipPt.y-19).toFixed(1),textAnchor:'middle',fill:'white',fontSize:11,fontFamily:'system-ui',fontWeight:'700'},tipVal+' mentions')):null,React.createElement('text',{x:pL,y:h-6,fill:'#3d4f66',fontSize:11,fontFamily:'system-ui'},'Day 1'),React.createElement('text',{x:pL+cW,y:h-6,fill:'#3d4f66',fontSize:11,fontFamily:'system-ui',textAnchor:'end'},'Day 30'));}"
+      "code": "function PromptsContent(props){var f=props.frame,rows=[{q:'Does the EU Cybersecurity Act require AI audits?',date:'Apr 14, 2025',pl:['ChatGPT','Perplexity','Google AI']},{q:'ENISA role in NIS2 compliance for public bodies',date:'Apr 13, 2025',pl:['ChatGPT','Gemini']},{q:'What is digital sovereignty in EU policy 2025?',date:'Apr 12, 2025',pl:['Perplexity','Google AI']}];return React.createElement('div',{style:{width:'100%',height:'100%',background:'#F9FAFB',display:'flex',flexDirection:'column',fontFamily:'system-ui,-apple-system,sans-serif',boxSizing:'border-box',overflow:'hidden'}},React.createElement('header',{style:{height:'56px',background:'white',borderBottom:'1px solid #E5E7EB',display:'flex',alignItems:'center',padding:'0 24px',gap:'8px',flexShrink:0}},React.createElement('div',{style:{fontSize:'16px',fontWeight:'600',color:'#111827',flex:1}},'Prompts'),React.createElement('div',{style:{background:'#0B64F4',color:'white',fontSize:'13px',fontWeight:'500',padding:'7px 16px',borderRadius:'6px',display:'flex',alignItems:'center',gap:'4px'}},'+ New Prompt')),React.createElement('div',{style:{flex:1,padding:'20px',overflow:'hidden'}},React.createElement('div',{style:{background:'white',border:'1px solid #E5E7EB',borderRadius:'10px',overflow:'hidden',boxShadow:'0 1px 3px rgba(0,0,0,0.05)'}},React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 90px 130px 250px',padding:'10px 18px',borderBottom:'1px solid #F3F4F6',fontSize:'11px',fontWeight:'500',color:'#9CA3AF',textTransform:'uppercase',letterSpacing:'0.5px',gap:'8px'}},React.createElement('div',null,'Prompt'),React.createElement('div',null,'Status'),React.createElement('div',null,'Last Checked'),React.createElement('div',null,'Providers')),rows.map(function(row,i){var prog=Math.max(0,Math.min(1,(f-i*25)/22));return React.createElement('div',{key:i,style:{display:'grid',gridTemplateColumns:'1fr 90px 130px 250px',padding:'15px 18px',borderBottom:i<2?'1px solid #F9FAFB':'none',alignItems:'center',opacity:prog,transform:'translateY('+(8*(1-prog))+'px)',gap:'8px'}},React.createElement('div',{style:{fontSize:'14px',color:'#111827',lineHeight:'1.4',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},row.q),React.createElement('div',null,React.createElement('span',{style:{background:'#DCFCE7',color:'#15803D',fontSize:'11px',fontWeight:'600',padding:'3px 10px',borderRadius:'9999px'}},'Active')),React.createElement('div',{style:{fontSize:'12px',color:'#6B7280'}},row.date),React.createElement('div',{style:{display:'flex',gap:'4px',flexWrap:'wrap'}},row.pl.map(function(p,j){return React.createElement('span',{key:j,style:{background:'#F3F4F6',border:'1px solid #E5E7EB',color:'#374151',fontSize:'11px',padding:'2px 7px',borderRadius:'4px'}},p);})));}))));  }",
+      "isDefault": false
     },
-    "BarChart": {
+    "DashboardContent": {
       "type": "inline",
-      "code": "function BarChart(props){var f=props.frame,d=props.delayFrames||0,fps=props.fps||30,prog=Math.max(0,Math.min(1,(f-d)/(fps*1.8))),w=props.layerSize?props.layerSize.width:580,h=props.layerSize?props.layerSize.height:320,bars=[{label:'enisa.europa.eu',pct:72,color:'#1a56db'},{label:'Wikipedia',pct:54,color:'#6366f1'},{label:'EurActiv',pct:37,color:'#4a5568'},{label:'Politico EU',pct:28,color:'#4a5568'},{label:'CEPS Think Tank',pct:17,color:'#4a5568'}],pL=172,pR=65,pT=8,pB=8,cW=w-pL-pR,bH=(h-pT-pB)/bars.length-10,maxPct=72;return React.createElement('svg',{width:w,height:h},bars.map(function(bar,i){var bProg=Math.max(0,Math.min(1,(prog-i*0.13)/0.52)),bW=cW*(bar.pct/maxPct)*bProg,y=pT+i*(bH+10);return React.createElement('g',{key:i},React.createElement('text',{x:pL-10,y:y+bH/2+5,textAnchor:'end',fill:i===0?'#e8eaf0':'#7a8898',fontSize:13,fontFamily:'system-ui, sans-serif'},bar.label),React.createElement('rect',{x:pL,y:y,width:cW,height:bH,rx:3,fill:'#1c2b42',opacity:0.5}),React.createElement('rect',{x:pL,y:y,width:bW,height:bH,rx:3,fill:bar.color}),bProg>0.85?React.createElement('text',{x:pL+bW+8,y:y+bH/2+5,fill:bar.color,fontSize:13,fontFamily:'system-ui',fontWeight:'700'},bar.pct+'%'):null);}));}"
+      "code": "function DashboardContent(props){var f=props.frame,fps=props.fps||30,metrics=[{label:'Total Mentions',value:247,color:'#0B64F4',suffix:''},{label:'Avg Visibility',value:68,color:'#7C3AED',suffix:'%'},{label:'Active Prompts',value:3,color:'#059669',suffix:''},{label:'Sources Found',value:12,color:'#D97706',suffix:''}],data=[18,22,20,27,25,31,29,36,34,41,39,46,44,51,49,54,52,58,56,62,60,66,64,70,68,73,71,76];return React.createElement('div',{style:{width:'100%',height:'100%',background:'#F9FAFB',display:'flex',flexDirection:'column',fontFamily:'system-ui,-apple-system,sans-serif',boxSizing:'border-box',overflow:'hidden'}},React.createElement('header',{style:{height:'56px',background:'white',borderBottom:'1px solid #E5E7EB',display:'flex',alignItems:'center',padding:'0 24px',flexShrink:0}},React.createElement('div',{style:{fontSize:'16px',fontWeight:'600',color:'#111827',flex:1}},'Overview'),React.createElement('div',{style:{display:'flex',alignItems:'center',gap:'8px',fontSize:'13px',color:'#6B7280',background:'#F9FAFB',border:'1px solid #E5E7EB',padding:'5px 12px',borderRadius:'6px'}},'Last 30 days')),React.createElement('div',{style:{flex:1,padding:'20px',overflow:'hidden',display:'flex',flexDirection:'column',gap:'16px'}},React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'14px',flexShrink:0}},metrics.map(function(m,i){var prog=Math.max(0,Math.min(1,(f-i*18)/28));var val=Math.round(m.value*prog);return React.createElement('div',{key:i,style:{background:'white',border:'1px solid #E5E7EB',borderRadius:'10px',padding:'18px',boxShadow:'0 1px 2px rgba(0,0,0,0.04)',opacity:prog,transform:'translateY('+(8*(1-prog))+'px)'}},React.createElement('div',{style:{fontSize:'11px',color:'#6B7280',marginBottom:'8px',textTransform:'uppercase',letterSpacing:'0.5px',fontWeight:'500'}},m.label),React.createElement('div',{style:{fontSize:'30px',fontWeight:'700',color:m.color,lineHeight:'1'}},val+m.suffix));})),React.createElement('div',{style:{background:'white',border:'1px solid #E5E7EB',borderRadius:'10px',padding:'18px',boxShadow:'0 1px 2px rgba(0,0,0,0.04)',flex:1,overflow:'hidden'}},React.createElement('div',{style:{fontSize:'13px',fontWeight:'600',color:'#111827',marginBottom:'14px'}},'Mention Trend — Last 30 Days'),(function(){var w=1580,h=200,pL=16,pR=16,pT=12,pB=28,cW=w-pL-pR,cH=h-pT-pB,prog2=Math.max(0,Math.min(1,(f-80)/(fps*1.5))),nPts=Math.max(2,Math.floor(prog2*data.length)),vis=data.slice(0,nPts),mx=Math.max.apply(null,data),mn=Math.min.apply(null,data),pts=vis.map(function(v,i){return{x:pL+(i/(data.length-1))*cW,y:pT+cH-((v-mn)/(mx-mn))*cH};}),pd=pts.map(function(p,i){return(i===0?'M':'L')+p.x.toFixed(1)+','+p.y.toFixed(1);}).join(' '),ad=pd+' L'+pts[pts.length-1].x.toFixed(1)+','+(pT+cH)+' L'+pL+','+(pT+cH)+' Z',last=pts[pts.length-1];return React.createElement('svg',{width:w,height:h,viewBox:'0 0 '+w+' '+h},React.createElement('defs',null,React.createElement('linearGradient',{id:'dashGrad',x1:'0',y1:'0',x2:'0',y2:'1'},React.createElement('stop',{offset:'0%',stopColor:'#0B64F4',stopOpacity:'0.15'}),React.createElement('stop',{offset:'100%',stopColor:'#0B64F4',stopOpacity:'0'}))),React.createElement('path',{d:ad,fill:'url(#dashGrad)'}),React.createElement('path',{d:pd,stroke:'#0B64F4',strokeWidth:'2.5',fill:'none',strokeLinecap:'round',strokeLinejoin:'round'}),pts.length>1?React.createElement('circle',{cx:last.x.toFixed(1),cy:last.y.toFixed(1),r:'5',fill:'#0B64F4',stroke:'white',strokeWidth:'2'}):null,pts.length>1?React.createElement('g',null,React.createElement('rect',{x:(last.x-36).toFixed(1),y:(last.y-28).toFixed(1),width:'72',height:'20',rx:'4',fill:'#0B64F4'}),React.createElement('text',{x:last.x.toFixed(1),y:(last.y-13).toFixed(1),textAnchor:'middle',fill:'white',fontSize:'11',fontFamily:'system-ui',fontWeight:'700'},Math.round(mn+(mx-mn)*prog2)+' mentions')):null);})()));}",
+      "isDefault": false
     },
-    "AlignmentGauge": {
+    "SuggestionsContent": {
       "type": "inline",
-      "code": "function AlignmentGauge(props){var f=props.frame,d=props.delayFrames||0,fps=props.fps||30,prog=Math.max(0,Math.min(1,(f-d)/(fps*2.2))),target=props.targetScore||73,score=Math.round(target*prog),sz=220,cx=110,cy=115,r=82,startDeg=-215,sweepDeg=250,curDeg=startDeg+sweepDeg*(score/100),toRad=function(deg){return deg*Math.PI/180;},arc=function(s,e,radius){var large=(e-s)>180?1:0,x1=cx+radius*Math.cos(toRad(s)),y1=cy+radius*Math.sin(toRad(s)),x2=cx+radius*Math.cos(toRad(e)),y2=cy+radius*Math.sin(toRad(e));return'M'+x1.toFixed(2)+','+y1.toFixed(2)+' A'+radius+','+radius+' 0 '+large+',1 '+x2.toFixed(2)+','+y2.toFixed(2);},endDeg=startDeg+sweepDeg,scoreColor=score>=70?'#16a34a':score>=40?'#d97706':'#dc2626',label=score>=70?'Strong':score>=40?'Moderate':'Developing';return React.createElement('div',{style:{display:'flex',flexDirection:'column',alignItems:'center',fontFamily:'system-ui, sans-serif'}},React.createElement('svg',{width:sz,height:sz},React.createElement('path',{d:arc(startDeg,endDeg,r),stroke:'#1c2b42',strokeWidth:14,fill:'none',strokeLinecap:'round'}),prog>0?React.createElement('path',{d:arc(startDeg,curDeg,r),stroke:scoreColor,strokeWidth:14,fill:'none',strokeLinecap:'round'}):null,React.createElement('text',{x:cx,y:cy+12,textAnchor:'middle',fill:'#e8eaf0',fontSize:36,fontWeight:'700',fontFamily:'system-ui'},score),React.createElement('text',{x:cx,y:cy+30,textAnchor:'middle',fill:'#4a5568',fontSize:10,letterSpacing:'1.5',fontFamily:'system-ui'},'ALIGNMENT SCORE')),React.createElement('div',{style:{color:scoreColor,fontSize:'11px',fontWeight:'700',letterSpacing:'1.2px',textTransform:'uppercase',marginTop:'-18px'}},label));}"
+      "code": "function SuggestionsContent(props){var f=props.frame,suggestions=[{text:'EU AI Act enforcement timeline 2025',type:'People Also Ask'},{text:'ENISA vs EDPB — who handles AI complaints?',type:'Related Search'},{text:'NIS2 compliance checklist for government bodies',type:'Search Suggestion'},{text:'Digital sovereignty EU strategy explained',type:'People Also Ask'},{text:'Cybersecurity framework EU public sector 2025',type:'Related Search'}];return React.createElement('div',{style:{width:'100%',height:'100%',background:'#F9FAFB',display:'flex',flexDirection:'column',fontFamily:'system-ui,-apple-system,sans-serif',boxSizing:'border-box',overflow:'hidden'}},React.createElement('header',{style:{height:'56px',background:'white',borderBottom:'1px solid #E5E7EB',display:'flex',alignItems:'center',padding:'0 24px',gap:'10px',flexShrink:0}},React.createElement('div',{style:{fontSize:'16px',fontWeight:'600',color:'#111827',flex:1}},'Prompt Suggestions'),React.createElement('div',{style:{display:'flex',gap:'8px'}},['Last 90 days','All Providers','All Tags'].map(function(label,i){return React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',gap:'4px',background:'white',border:'1px solid #E5E7EB',borderRadius:'6px',padding:'5px 10px',fontSize:'12px',color:'#374151',boxShadow:'0 1px 2px rgba(0,0,0,0.04)'}},label);}))),React.createElement('div',{style:{flex:1,padding:'20px',overflow:'hidden'}},React.createElement('div',{style:{background:'white',border:'1px solid #E5E7EB',borderRadius:'10px',overflow:'hidden',boxShadow:'0 1px 3px rgba(0,0,0,0.05)'}},React.createElement('div',{style:{padding:'16px 20px',borderBottom:'1px solid #F3F4F6'}},React.createElement('div',{style:{fontSize:'14px',fontWeight:'600',color:'#111827',marginBottom:'3px'}},'Prompt Suggestions'),React.createElement('div',{style:{fontSize:'12px',color:'#6B7280'}},'Discover new prompts from Google Search — People Also Ask, Related Searches, and Search Suggestions')),React.createElement('div',{style:{padding:'14px 20px'}},suggestions.map(function(s,i){var prog=Math.max(0,Math.min(1,(f-i*20)/20)),isHighlighted=i===1,clicked=f>100&&i===1;return React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'11px 14px',borderRadius:'8px',border:'1px solid '+(clicked?'#BFDBFE':'#F3F4F6'),marginBottom:'8px',opacity:prog,transform:'translateY('+(6*(1-prog))+'px)',background:clicked?'#EFF6FF':'transparent'}},React.createElement('div',null,React.createElement('div',{style:{fontSize:'13px',color:clicked?'#1D4ED8':'#111827',fontWeight:clicked?'500':'400',marginBottom:'3px'}},s.text),React.createElement('span',{style:{fontSize:'11px',color:'#6B7280',background:'#F9FAFB',padding:'2px 8px',borderRadius:'4px',border:'1px solid #E5E7EB'}},s.type)),React.createElement('div',{style:{background:clicked?'#0B64F4':'#F3F4F6',color:clicked?'white':'#374151',border:'1px solid '+(clicked?'#0B64F4':'#E5E7EB'),fontSize:'12px',fontWeight:'500',padding:'5px 12px',borderRadius:'6px',flexShrink:0,marginLeft:'12px'}},clicked?'+ Track':'+ Track'));  })))));  }",
+      "isDefault": false
     },
-    "PlatformCard": {
+    "SourceContent": {
       "type": "inline",
-      "code": "function PlatformCard(props){var f=props.frame,d=props.delayFrames||0,fps=props.fps||30,prog=Math.max(0,Math.min(1,(f-d)/22)),active=props.isActive!==false,plat=props.platform||'ChatGPT',platColor=props.platformColor||'#10a37f',vis=props.visibility||72,align=props.alignment||68,desc=props.description||'',alignColor=align>=70?'#16a34a':align>=40?'#d97706':'#dc2626';return React.createElement('div',{style:{opacity:prog,transform:'translateY('+(18*(1-prog))+'px)',background:active?'#0e1622':'#0b0f1a',border:'1px solid '+(active?platColor+'55':'#1c2b42'),borderRadius:'12px',padding:'24px',width:'100%',boxSizing:'border-box',height:'100%'}},React.createElement('div',{style:{display:'flex',alignItems:'center',gap:'10px',marginBottom:'14px'}},React.createElement('div',{style:{width:'10px',height:'10px',borderRadius:'50%',background:platColor}}),React.createElement('span',{style:{color:platColor,fontSize:'12px',fontWeight:'700',fontFamily:'system-ui',letterSpacing:'1px',textTransform:'uppercase'}},plat)),React.createElement('p',{style:{color:'#b0bac8',fontSize:'14px',lineHeight:'1.7',margin:'0 0 20px',fontFamily:'Georgia, serif'}},desc),React.createElement('div',{style:{display:'flex',gap:'24px'}},React.createElement('div',null,React.createElement('div',{style:{color:'#3d4f66',fontSize:'10px',fontFamily:'system-ui',letterSpacing:'1px',textTransform:'uppercase',marginBottom:'4px'}},'Visibility'),React.createElement('div',{style:{color:'#e8eaf0',fontSize:'22px',fontWeight:'700',fontFamily:'system-ui'}},vis+'%')),React.createElement('div',{style:{width:'1px',background:'#1c2b42'}}),React.createElement('div',null,React.createElement('div',{style:{color:'#3d4f66',fontSize:'10px',fontFamily:'system-ui',letterSpacing:'1px',textTransform:'uppercase',marginBottom:'4px'}},'Alignment'),React.createElement('div',{style:{color:alignColor,fontSize:'22px',fontWeight:'700',fontFamily:'system-ui'}},align+'%'))));}"
+      "code": "function SourceContent(props){var f=props.frame,fps=props.fps||30,sources=[{name:'European Commission',pct:82,mentions:64,color:'#0B64F4'},{name:'ENISA Official Site',pct:71,mentions:55,color:'#3B82F6'},{name:'EurActiv',pct:58,mentions:45,color:'#60A5FA'},{name:'Politico EU',pct:44,mentions:34,color:'#93C5FD'},{name:'Wikipedia',pct:37,mentions:29,color:'#BFDBFE'}],visScore=Math.round(68*Math.min(1,f/(fps*1.2)));return React.createElement('div',{style:{width:'100%',height:'100%',background:'#F9FAFB',display:'flex',flexDirection:'column',fontFamily:'system-ui,-apple-system,sans-serif',boxSizing:'border-box',overflow:'hidden'}},React.createElement('header',{style:{height:'56px',background:'white',borderBottom:'1px solid #E5E7EB',display:'flex',alignItems:'center',padding:'0 24px',flexShrink:0}},React.createElement('div',{style:{fontSize:'16px',fontWeight:'600',color:'#111827',flex:1}},'Source Mentions'),React.createElement('div',{style:{fontSize:'13px',color:'#6B7280',background:'#F9FAFB',border:'1px solid #E5E7EB',padding:'5px 12px',borderRadius:'6px'}},'Last 30 days')),React.createElement('div',{style:{flex:1,padding:'20px',overflow:'hidden',display:'flex',gap:'16px'}},React.createElement('div',{style:{flex:1,background:'white',border:'1px solid #E5E7EB',borderRadius:'10px',padding:'20px',boxShadow:'0 1px 2px rgba(0,0,0,0.04)',overflow:'hidden'}},React.createElement('div',{style:{fontSize:'13px',fontWeight:'600',color:'#111827',marginBottom:'18px'}},'Top Sources by AI Mention'),sources.map(function(src,i){var prog=Math.max(0,Math.min(1,(f-i*22)/25)),barProg=Math.max(0,Math.min(1,(f-i*22-12)/(fps*0.7)));return React.createElement('div',{key:i,style:{marginBottom:'16px',opacity:prog,transform:'translateX('+(-6*(1-prog))+'px)'}},React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:'13px',marginBottom:'5px'}},React.createElement('span',{style:{color:'#374151',fontWeight:i===0?'600':'400'}},src.name),React.createElement('span',{style:{color:'#0B64F4',fontWeight:'600',fontSize:'12px'}},src.mentions+' mentions')),React.createElement('div',{style:{height:'8px',background:'#F3F4F6',borderRadius:'999px',overflow:'hidden'}},React.createElement('div',{style:{height:'100%',width:(src.pct*barProg)+'%',background:src.color,borderRadius:'999px'}})));})),React.createElement('div',{style:{width:'300px',display:'flex',flexDirection:'column',gap:'14px'}},React.createElement('div',{style:{background:'white',border:'1px solid #E5E7EB',borderRadius:'10px',padding:'20px',boxShadow:'0 1px 2px rgba(0,0,0,0.04)',textAlign:'center'}},React.createElement('div',{style:{fontSize:'12px',color:'#6B7280',marginBottom:'8px',textTransform:'uppercase',letterSpacing:'0.5px',fontWeight:'500'}},'Avg Visibility Score'),React.createElement('div',{style:{fontSize:'56px',fontWeight:'700',color:'#0B64F4',lineHeight:'1',marginBottom:'6px'}},visScore+'%'),React.createElement('div',{style:{fontSize:'12px',color:'#6B7280'}},'Across all AI platforms')),React.createElement('div',{style:{background:'white',border:'1px solid #E5E7EB',borderRadius:'10px',padding:'20px',boxShadow:'0 1px 2px rgba(0,0,0,0.04)',flex:1}},React.createElement('div',{style:{fontSize:'13px',fontWeight:'600',color:'#111827',marginBottom:'12px'}},'By Platform'),['ChatGPT','Perplexity','Google AI','Gemini'].map(function(p,i){var sc=[72,65,71,58][i],prog=Math.max(0,Math.min(1,(f-i*18)/20));return React.createElement('div',{key:i,style:{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'8px 0',borderTop:i>0?'1px solid #F9FAFB':'none',opacity:prog}},React.createElement('span',{style:{fontSize:'13px',color:'#374151'}},p),React.createElement('span',{style:{fontSize:'13px',fontWeight:'600',color:'#0B64F4'}},sc+'%'));}))));  }",
+      "isDefault": false
     },
-    "AppMockRow": {
+    "PlatformGrid": {
       "type": "inline",
-      "code": "function AppMockRow(props){var f=props.frame,d=props.delayFrames||0,prog=Math.max(0,Math.min(1,(f-d)/18)),text=props.text||'',w=props.layerSize?props.layerSize.width:1400,h=props.layerSize?props.layerSize.height:56;return React.createElement('div',{style:{opacity:prog,transform:'translateY('+(10*(1-prog))+'px)',display:'flex',alignItems:'center',background:'#0e1622',border:'1px solid #1c2b42',borderRadius:'8px',padding:'0 20px',height:h+'px',boxSizing:'border-box',width:w+'px',gap:'20px'}},React.createElement('div',{style:{width:'10px',height:'10px',borderRadius:'50%',background:'#16a34a',flexShrink:0}}),React.createElement('span',{style:{color:'#d0d8e8',fontSize:'14px',fontFamily:'Georgia, serif',flex:1}},text),React.createElement('span',{style:{color:'#3d4f66',fontSize:'12px',fontFamily:'system-ui'}},'Apr 14, 2025'),React.createElement('div',{style:{display:'flex',gap:'8px'}},['ChatGPT','Perplexity','Google AI'].map(function(p,i){return React.createElement('span',{key:i,style:{background:'#1c2b42',borderRadius:'4px',padding:'3px 8px',color:'#5a7090',fontSize:'11px',fontFamily:'system-ui'}},p);})),React.createElement('div',{style:{background:'rgba(22,163,74,0.15)',border:'1px solid rgba(22,163,74,0.3)',borderRadius:'12px',padding:'3px 10px',color:'#16a34a',fontSize:'11px',fontFamily:'system-ui',fontWeight:'600'}}, 'Active'));}"
+      "code": "function PlatformGrid(props){var f=props.frame,fps=props.fps||30,platforms=[{name:'ChatGPT',letter:'C',color:'#10A37F',bg:'#F0FDF4',border:'#BBF7D0',score:72},{name:'Perplexity',letter:'P',color:'#7C3AED',bg:'#F5F3FF',border:'#DDD6FE',score:65},{name:'Google AI',letter:'G',color:'#4285F4',bg:'#EFF6FF',border:'#BFDBFE',score:71},{name:'Gemini',letter:'G',color:'#EA4335',bg:'#FEF2F2',border:'#FECACA',score:58},{name:'Copilot',letter:'M',color:'#00A4EF',bg:'#EFF6FF',border:'#BAE6FD',score:63}],titleProg=Math.min(1,f/25);return React.createElement('div',{style:{width:'100%',height:'100%',background:'#F9FAFB',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',fontFamily:'system-ui,-apple-system,sans-serif',padding:'48px'}},React.createElement('div',{style:{fontSize:'13px',fontWeight:'600',color:'#6B7280',letterSpacing:'2.5px',textTransform:'uppercase',marginBottom:'12px',opacity:titleProg}},'Monitor across all major AI platforms'),React.createElement('div',{style:{fontSize:'36px',fontWeight:'700',color:'#111827',marginBottom:'44px',letterSpacing:'-0.5px',opacity:titleProg}},'One platform. Every AI source.'),React.createElement('div',{style:{display:'flex',gap:'18px',justifyContent:'center'}},platforms.map(function(p,i){var prog=Math.max(0,Math.min(1,(f-i*20)/25)),scoreProg=Math.max(0,Math.min(1,(f-i*20-20)/30));return React.createElement('div',{key:i,style:{background:'white',border:'2px solid '+p.border,borderRadius:'16px',padding:'28px 20px',textAlign:'center',width:'230px',opacity:prog,transform:'translateY('+(20*(1-prog))+'px)',boxShadow:'0 4px 14px rgba(0,0,0,0.06)'}},React.createElement('div',{style:{width:'52px',height:'52px',borderRadius:'14px',background:p.bg,border:'1px solid '+p.border,display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 14px',fontSize:'20px',fontWeight:'800',color:p.color}},p.letter),React.createElement('div',{style:{fontSize:'15px',fontWeight:'600',color:'#111827',marginBottom:'10px'}},p.name),React.createElement('div',{style:{fontSize:'11px',color:'#6B7280',marginBottom:'8px',textTransform:'uppercase',letterSpacing:'0.5px'}},'Visibility'),React.createElement('div',{style:{fontSize:'32px',fontWeight:'700',color:p.color}},Math.round(p.score*scoreProg)+'%'));  })));  }",
+      "isDefault": false
     },
-    "ModalInputBox": {
+    "CTAScene": {
       "type": "inline",
-      "code": "function ModalInputBox(props){var f=props.frame,d=props.delayFrames||0,fps=props.fps||30,prog=Math.max(0,Math.min(1,(f-d)/18)),text=props.text||'',cps=props.cps||12,chars=Math.min(text.length,Math.floor(Math.max(0,f-d-25)*cps/fps)),vis=text.slice(0,chars),blink=Math.floor((f-d)*2/fps)%2===0,showSave=chars>=text.length&&chars>0,saveProg=Math.max(0,Math.min(1,(f-d-25-(text.length*fps/cps))/15));return React.createElement('div',{style:{opacity:prog,transform:'scale('+(0.96+0.04*prog)+')',background:'#111827',border:'1px solid #2a3a52',borderRadius:'14px',padding:'32px',width:'100%',height:'100%',boxSizing:'border-box'}},React.createElement('div',{style:{color:'#c8a84b',fontSize:'11px',fontFamily:'system-ui',letterSpacing:'1.5px',textTransform:'uppercase',marginBottom:'6px'}},'Add Tracked Prompt'),React.createElement('h3',{style:{color:'#e8eaf0',fontSize:'18px',fontFamily:'Georgia, serif',margin:'0 0 24px',fontWeight:'400'}},'What question should we monitor?'),React.createElement('div',{style:{background:'#0b0f1a',border:'1px solid '+(chars>0?'#1a56db':'#1c2b42'),borderRadius:'8px',padding:'14px 16px',minHeight:'76px',fontSize:'15px',color:'#e8eaf0',fontFamily:'Georgia, serif',lineHeight:'1.55',transition:'none'}},vis,React.createElement('span',{style:{display:'inline-block',width:'2px',height:'18px',background:'#1a56db',opacity:blink?1:0,marginLeft:'2px',verticalAlign:'middle'}})),React.createElement('div',{style:{display:'flex',gap:'10px',marginTop:'18px',flexWrap:'wrap'}},['ChatGPT','Perplexity','Google AI Overviews'].map(function(p,i){return React.createElement('div',{key:i,style:{background:'#1c2b42',borderRadius:'20px',padding:'6px 14px',color:'#7a8898',fontSize:'12px',fontFamily:'system-ui'}},p);})),showSave?React.createElement('div',{style:{marginTop:'22px',background:'#1a56db',borderRadius:'8px',padding:'12px',textAlign:'center',color:'white',fontSize:'14px',fontWeight:'600',fontFamily:'system-ui',opacity:saveProg}},'Save Prompt'):null);}"
-    },
-    "SuggestionPanel": {
-      "type": "inline",
-      "code": "function SuggestionPanel(props){var f=props.frame,d=props.delayFrames||0,fps=props.fps||30,prog=Math.max(0,Math.min(1,(f-d)/28)),items=[{text:'EU AI Act enforcement bodies',delay:20},{text:'ENISA vs national regulators',delay:45},{text:'Recent ENISA cybersecurity initiatives',delay:70},{text:'Digital sovereignty EU policy 2025',delay:95},{text:'ENISA threat landscape report',delay:120}],w=props.layerSize?props.layerSize.width:480,h=props.layerSize?props.layerSize.height:560;return React.createElement('div',{style:{opacity:prog,transform:'translateX('+(30*(1-prog))+'px)',background:'#0e1622',border:'1px solid #1c2b42',borderRadius:'14px',padding:'24px',width:w+'px',height:h+'px',boxSizing:'border-box',overflow:'hidden'}},React.createElement('div',{style:{color:'#c8a84b',fontSize:'11px',fontFamily:'system-ui',letterSpacing:'1.5px',textTransform:'uppercase',marginBottom:'6px'}},'AI-Generated'),React.createElement('h3',{style:{color:'#e8eaf0',fontSize:'16px',fontFamily:'Georgia, serif',margin:'0 0 20px',fontWeight:'400'}},'Suggested Prompts'),items.map(function(item,i){var iProg=Math.max(0,Math.min(1,(f-d-item.delay)/15)),clicked=i===1&&f-d>155;return React.createElement('div',{key:i,style:{opacity:iProg,transform:'translateY('+(8*(1-iProg))+'px)',display:'flex',alignItems:'center',justifyContent:'space-between',background:clicked?'rgba(26,86,219,0.08)':'transparent',border:'1px solid '+(clicked?'rgba(26,86,219,0.3)':'#1c2b42'),borderRadius:'8px',padding:'10px 14px',marginBottom:'8px'}},React.createElement('span',{style:{color:'#c8d0df',fontSize:'13px',fontFamily:'system-ui',flex:1}},item.text),React.createElement('div',{style:{background:clicked?'#1a56db':'#1c2b42',borderRadius:'5px',padding:'4px 10px',color:clicked?'white':'#5a7090',fontSize:'11px',fontFamily:'system-ui',fontWeight:'600',flexShrink:0,marginLeft:'10px'}},clicked?'✓ Added':'+ Track'));})  );}"
-    },
-    "InsightCards": {
-      "type": "inline",
-      "code": "function InsightCards(props){var f=props.frame,d=props.delayFrames||0,fps=props.fps||30,cards=[{text:'Update mandate page — current language is not retrieved by AI platforms',tag:'Content',delay:0,checked:true},{text:'Publish clarifying brief on ENISA role in AI Act enforcement',tag:'Publication',delay:35,checked:false},{text:'Strengthen inbound citations on official cybersecurity framework document',tag:'Authority',delay:70,checked:false}],w=props.layerSize?props.layerSize.width:900,h=props.layerSize?props.layerSize.height:480;return React.createElement('div',{style:{width:w+'px',height:h+'px'}},cards.map(function(card,i){var cProg=Math.max(0,Math.min(1,(f-d-card.delay)/20)),tickProg=card.checked?Math.max(0,Math.min(1,(f-d-card.delay-30)/15)):0;return React.createElement('div',{key:i,style:{opacity:cProg,transform:'translateY('+(12*(1-cProg))+'px)',display:'flex',alignItems:'flex-start',gap:'16px',background:'#0e1622',border:'1px solid '+(card.checked?'rgba(22,163,74,0.35)':'#1c2b42'),borderRadius:'10px',padding:'18px 22px',marginBottom:'12px'}},React.createElement('div',{style:{width:'22px',height:'22px',borderRadius:'6px',border:'2px solid '+(card.checked&&tickProg>0.5?'#16a34a':'#2a3a52'),background:card.checked&&tickProg>0.5?'rgba(22,163,74,0.15)':'transparent',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:'1px'}},card.checked&&tickProg>0.5?React.createElement('span',{style:{color:'#16a34a',fontSize:'13px',fontWeight:'700'}},'✓'):null),React.createElement('div',{style:{flex:1}},React.createElement('span',{style:{background:'rgba(200,168,75,0.12)',color:'#c8a84b',fontSize:'10px',fontFamily:'system-ui',letterSpacing:'1px',textTransform:'uppercase',padding:'2px 8px',borderRadius:'4px',fontWeight:'600',marginBottom:'8px',display:'inline-block'}},card.tag),React.createElement('p',{style:{color:card.checked&&tickProg>0.5?'#7a8898':'#d0d8e8',fontSize:'15px',fontFamily:'Georgia, serif',lineHeight:'1.6',margin:0,textDecoration:card.checked&&tickProg>0.5?'line-through':'none'}},card.text)));})  );}"
+      "code": "function CTAScene(props){var f=props.frame,fps=props.fps||30,prog=Math.min(1,f/22),sub=Math.max(0,Math.min(1,(f-18)/22)),btn=Math.max(0,Math.min(1,(f-30)/22)),pulse=(Math.sin(f*0.12)+1)/2;return React.createElement('div',{style:{width:'100%',height:'100%',background:'linear-gradient(135deg,#0B64F4 0%,#1D4ED8 55%,#1E3A8A 100%)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',fontFamily:'system-ui,-apple-system,sans-serif',gap:'0',position:'relative',overflow:'hidden'}},React.createElement('div',{style:{position:'absolute',top:0,left:0,right:0,bottom:0,backgroundImage:'radial-gradient(circle at 15% 20%, rgba(255,255,255,0.06) 0%, transparent 45%), radial-gradient(circle at 85% 80%, rgba(255,255,255,0.04) 0%, transparent 45%)'}}),React.createElement('div',{style:{textAlign:'center',position:'relative',maxWidth:'900px',padding:'0 60px'}},React.createElement('div',{style:{fontSize:'14px',fontWeight:'600',color:'rgba(255,255,255,0.55)',letterSpacing:'3px',textTransform:'uppercase',marginBottom:'24px',opacity:prog}},'Start today — it\'s free'),React.createElement('div',{style:{fontSize:'58px',fontWeight:'800',color:'white',lineHeight:'1.1',marginBottom:'16px',letterSpacing:'-1.5px',opacity:prog,transform:'translateY('+(12*(1-prog))+'px)'}},'Know what AI says'),React.createElement('div',{style:{fontSize:'58px',fontWeight:'800',color:'#BFDBFE',lineHeight:'1.1',marginBottom:'36px',letterSpacing:'-1.5px',opacity:prog,transform:'translateY('+(12*(1-prog))+'px)'}},'about your brand'),React.createElement('div',{style:{fontSize:'20px',color:'rgba(255,255,255,0.8)',marginBottom:'36px',opacity:sub}},'amicited.com'),React.createElement('div',{style:{display:'flex',gap:'12px',justifyContent:'center',opacity:btn}},React.createElement('div',{style:{background:'white',color:'#0B64F4',fontSize:'16px',fontWeight:'700',padding:'14px 44px',borderRadius:'10px',boxShadow:'0 0 0 '+(4+4*pulse)+'px rgba(255,255,255,0.15)'}},'Start Free Trial'),React.createElement('div',{style:{background:'transparent',color:'white',fontSize:'16px',fontWeight:'500',padding:'14px 32px',borderRadius:'10px',border:'2px solid rgba(255,255,255,0.3)'}},'See how it works'))));  }",
+      "isDefault": false
     }
   },
   "composition": {
@@ -58,134 +58,15 @@
         "id": "s1-hook",
         "startFrame": 0,
         "endFrame": 270,
-        "backgroundColor": "#0b0f1a",
+        "backgroundColor": "#0B64F4",
         "transition": { "type": "fade", "duration": 18 },
         "layers": [
           {
-            "id": "s1-bg",
-            "type": "shape",
+            "id": "s1-hook-scene",
+            "type": "custom",
             "position": { "x": 0, "y": 0 },
             "size": { "width": 1920, "height": 1080 },
-            "props": {
-              "shape": "rectangle",
-              "gradient": {
-                "type": "radial",
-                "colors": [
-                  { "offset": 0, "color": "#0d1424" },
-                  { "offset": 1, "color": "#080b12" }
-                ]
-              }
-            }
-          },
-          {
-            "id": "s1-top-border",
-            "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 3 },
-            "props": { "shape": "rectangle", "fill": "#1a3a6b" },
-            "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 5, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s1-label",
-            "type": "text",
-            "position": { "x": 160, "y": 108 },
-            "size": { "width": 800, "height": 36 },
-            "props": {
-              "text": "WHAT AI SAYS ABOUT YOUR AGENCY",
-              "fontSize": 13,
-              "fontWeight": "600",
-              "color": "#c8a84b",
-              "fontFamily": "system-ui, sans-serif",
-              "letterSpacing": 2,
-              "textTransform": "uppercase"
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 10, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s1-question",
-            "type": "custom",
-            "position": { "x": 160, "y": 158 },
-            "size": { "width": 1300, "height": 140 },
-            "customComponent": {
-              "name": "TypewriterQuestion",
-              "props": {
-                "text": "What does the European Agency for Cybersecurity do?",
-                "fontSize": 50,
-                "cps": 13,
-                "color": "#e8eaf0",
-                "fontFamily": "Georgia, serif"
-              }
-            }
-          },
-          {
-            "id": "s1-divider",
-            "type": "shape",
-            "position": { "x": 160, "y": 318 },
-            "size": { "width": 1600, "height": 1 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" },
-            "animations": [{ "type": "entrance", "effect": "revealLeft", "delay": 65, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s1-panel1",
-            "type": "custom",
-            "position": { "x": 160, "y": 336 },
-            "size": { "width": 1600, "height": 140 },
-            "customComponent": {
-              "name": "AIPanel",
-              "props": {
-                "platformName": "ChatGPT",
-                "nameColor": "#10a37f",
-                "text": "ENISA is the regulatory body of the European Union tasked with achieving a high common level of cybersecurity across Europe, supporting member states and EU institutions in preventing and responding to cyber threats.",
-                "highlights": ["regulatory body"],
-                "delayFrames": 80
-              }
-            }
-          },
-          {
-            "id": "s1-panel2",
-            "type": "custom",
-            "position": { "x": 160, "y": 490 },
-            "size": { "width": 1600, "height": 140 },
-            "customComponent": {
-              "name": "AIPanel",
-              "props": {
-                "platformName": "Perplexity",
-                "nameColor": "#8b5cf6",
-                "text": "The European Agency for Cybersecurity, ENISA, serves primarily as an advisory committee providing guidance on digital security matters. It publishes reports and recommendations but holds limited enforcement authority.",
-                "highlights": ["advisory committee"],
-                "delayFrames": 122
-              }
-            }
-          },
-          {
-            "id": "s1-panel3",
-            "type": "custom",
-            "position": { "x": 160, "y": 644 },
-            "size": { "width": 1600, "height": 140 },
-            "customComponent": {
-              "name": "AIPanel",
-              "props": {
-                "platformName": "Google AI Overview",
-                "nameColor": "#4285f4",
-                "text": "ENISA functions as a policy coordinator between European institutions and national governments, facilitating cooperation frameworks and supporting implementation of the EU Cybersecurity Act across member states.",
-                "highlights": ["policy coordinator"],
-                "delayFrames": 164
-              }
-            }
-          },
-          {
-            "id": "s1-footnote",
-            "type": "text",
-            "position": { "x": 160, "y": 820 },
-            "size": { "width": 1200, "height": 30 },
-            "props": {
-              "text": "Three different characterisations. Same agency. Same mandate.",
-              "fontSize": 15,
-              "color": "#4a5568",
-              "fontFamily": "Georgia, serif",
-              "fontStyle": "italic"
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 210, "duration": 25, "easing": "easeOutCubic" }]
+            "customComponent": { "name": "HookScene", "props": {} }
           }
         ]
       },
@@ -193,243 +74,22 @@
         "id": "s2-prompts",
         "startFrame": 270,
         "endFrame": 630,
-        "backgroundColor": "#0b0f1a",
+        "backgroundColor": "#F9FAFB",
         "transition": { "type": "fade", "duration": 18 },
         "layers": [
           {
-            "id": "s2-bg",
-            "type": "shape",
+            "id": "s2-sidebar",
+            "type": "custom",
             "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "props": { "shape": "rectangle", "fill": "#0b0f1a" }
+            "size": { "width": 280, "height": 1080 },
+            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Prompts" } }
           },
           {
-            "id": "s2-nav",
-            "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 60 },
-            "props": { "shape": "rectangle", "fill": "#0d1220" }
-          },
-          {
-            "id": "s2-nav-border",
-            "type": "shape",
-            "position": { "x": 0, "y": 60 },
-            "size": { "width": 1920, "height": 1 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" }
-          },
-          {
-            "id": "s2-nav-logo",
-            "type": "text",
-            "position": { "x": 40, "y": 16 },
-            "size": { "width": 200, "height": 32 },
-            "props": {
-              "text": "AmICited",
-              "fontSize": 22,
-              "fontWeight": "700",
-              "color": "#e8eaf0",
-              "fontFamily": "Georgia, serif"
-            }
-          },
-          {
-            "id": "s2-nav-dot",
-            "type": "shape",
-            "position": { "x": 152, "y": 24 },
-            "size": { "width": 8, "height": 8 },
-            "props": { "shape": "ellipse", "fill": "#c8a84b" }
-          },
-          {
-            "id": "s2-nav-items",
-            "type": "text",
-            "position": { "x": 280, "y": 19 },
-            "size": { "width": 600, "height": 26 },
-            "props": {
-              "text": "Dashboard      Prompts      Reports      Settings",
-              "fontSize": 14,
-              "color": "#4a5568",
-              "fontFamily": "system-ui, sans-serif"
-            }
-          },
-          {
-            "id": "s2-nav-prompts-active",
-            "type": "text",
-            "position": { "x": 360, "y": 19 },
-            "size": { "width": 100, "height": 26 },
-            "props": {
-              "text": "Prompts",
-              "fontSize": 14,
-              "color": "#e8eaf0",
-              "fontFamily": "system-ui, sans-serif",
-              "fontWeight": "600"
-            }
-          },
-          {
-            "id": "s2-nav-active-indicator",
-            "type": "shape",
-            "position": { "x": 360, "y": 59 },
-            "size": { "width": 68, "height": 2 },
-            "props": { "shape": "rectangle", "fill": "#1a56db" }
-          },
-          {
-            "id": "s2-page-title",
-            "type": "text",
-            "position": { "x": 160, "y": 108 },
-            "size": { "width": 600, "height": 48 },
-            "props": {
-              "text": "Tracked Prompts",
-              "fontSize": 32,
-              "fontWeight": "400",
-              "color": "#e8eaf0",
-              "fontFamily": "Georgia, serif"
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 8, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s2-add-btn",
-            "type": "shape",
-            "position": { "x": 1600, "y": 106 },
-            "size": { "width": 166, "height": 44 },
-            "props": { "shape": "rectangle", "fill": "#1a56db", "borderRadius": 8 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 12, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s2-add-btn-text",
-            "type": "text",
-            "position": { "x": 1600, "y": 116 },
-            "size": { "width": 166, "height": 26 },
-            "props": {
-              "text": "+ Add Prompt",
-              "fontSize": 14,
-              "fontWeight": "600",
-              "color": "#ffffff",
-              "textAlign": "center",
-              "fontFamily": "system-ui, sans-serif"
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 12, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s2-table-header",
-            "type": "shape",
-            "position": { "x": 160, "y": 172 },
-            "size": { "width": 1600, "height": 44 },
-            "props": { "shape": "rectangle", "fill": "#0d1220", "borderRadius": 8 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 16, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s2-table-header-text",
-            "type": "text",
-            "position": { "x": 200, "y": 183 },
-            "size": { "width": 1200, "height": 22 },
-            "props": {
-              "text": "PROMPT",
-              "fontSize": 11,
-              "fontWeight": "700",
-              "color": "#3d4f66",
-              "fontFamily": "system-ui, sans-serif",
-              "letterSpacing": 1.2
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 16, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s2-cursor-click",
-            "type": "shape",
-            "position": { "x": 1683, "y": 128 },
-            "size": { "width": 32, "height": 32 },
-            "anchor": { "x": 0.5, "y": 0.5 },
-            "opacity": 0,
-            "props": { "shape": "ellipse", "fill": "rgba(255,255,255,0.25)" },
-            "from": 38,
-            "duration": 18,
-            "animations": [
-              { "type": "keyframe", "duration": 18, "keyframes": [
-                { "frame": 0, "properties": { "opacity": 0, "scaleX": 0.3, "scaleY": 0.3 }, "easing": "easeOutCubic" },
-                { "frame": 6, "properties": { "opacity": 0.7, "scaleX": 1, "scaleY": 1 }, "easing": "easeOutCubic" },
-                { "frame": 18, "properties": { "opacity": 0, "scaleX": 1.8, "scaleY": 1.8 } }
-              ]}
-            ]
-          },
-          {
-            "id": "s2-modal-overlay",
-            "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "opacity": 0,
-            "props": { "shape": "rectangle", "fill": "rgba(0,0,0,0.65)" },
-            "from": 45,
-            "duration": 220,
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 18, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s2-modal-box",
+            "id": "s2-content",
             "type": "custom",
-            "position": { "x": 560, "y": 240 },
-            "size": { "width": 800, "height": 440 },
-            "from": 45,
-            "duration": 220,
-            "customComponent": {
-              "name": "ModalInputBox",
-              "props": {
-                "text": "What is the role of ENISA in digital policy?",
-                "cps": 11,
-                "delayFrames": 0
-              }
-            }
-          },
-          {
-            "id": "s2-row1",
-            "type": "custom",
-            "position": { "x": 160, "y": 228 },
-            "size": { "width": 1600, "height": 52 },
-            "from": 210,
-            "customComponent": {
-              "name": "AppMockRow",
-              "props": {
-                "text": "What is the role of ENISA in digital policy?",
-                "delayFrames": 0
-              }
-            }
-          },
-          {
-            "id": "s2-row2",
-            "type": "custom",
-            "position": { "x": 160, "y": 292 },
-            "size": { "width": 1600, "height": 52 },
-            "from": 248,
-            "customComponent": {
-              "name": "AppMockRow",
-              "props": {
-                "text": "Who regulates AI in the EU?",
-                "delayFrames": 0
-              }
-            }
-          },
-          {
-            "id": "s2-row3",
-            "type": "custom",
-            "position": { "x": 160, "y": 356 },
-            "size": { "width": 1600, "height": 52 },
-            "from": 288,
-            "customComponent": {
-              "name": "AppMockRow",
-              "props": {
-                "text": "How does ENISA support member states on cybersecurity?",
-                "delayFrames": 0
-              }
-            }
-          },
-          {
-            "id": "s2-vo-label",
-            "type": "text",
-            "position": { "x": 160, "y": 460 },
-            "size": { "width": 900, "height": 60 },
-            "from": 300,
-            "props": {
-              "text": "Monitor the answers your stakeholders actually receive.",
-              "fontSize": 22,
-              "color": "#4a5568",
-              "fontFamily": "Georgia, serif",
-              "fontStyle": "italic"
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 0, "duration": 28, "easing": "easeOutCubic" }]
+            "position": { "x": 280, "y": 0 },
+            "size": { "width": 1640, "height": 1080 },
+            "customComponent": { "name": "PromptsContent", "props": {} }
           }
         ]
       },
@@ -437,241 +97,22 @@
         "id": "s3-dashboard",
         "startFrame": 630,
         "endFrame": 1050,
-        "backgroundColor": "#0b0f1a",
+        "backgroundColor": "#F9FAFB",
         "transition": { "type": "fade", "duration": 18 },
         "layers": [
           {
-            "id": "s3-bg",
-            "type": "shape",
+            "id": "s3-sidebar",
+            "type": "custom",
             "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "props": { "shape": "rectangle", "fill": "#0b0f1a" }
+            "size": { "width": 280, "height": 1080 },
+            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Overview" } }
           },
           {
-            "id": "s3-nav",
-            "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 60 },
-            "props": { "shape": "rectangle", "fill": "#0d1220" }
-          },
-          {
-            "id": "s3-nav-border",
-            "type": "shape",
-            "position": { "x": 0, "y": 60 },
-            "size": { "width": 1920, "height": 1 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" }
-          },
-          {
-            "id": "s3-nav-logo",
-            "type": "text",
-            "position": { "x": 40, "y": 16 },
-            "size": { "width": 200, "height": 32 },
-            "props": { "text": "AmICited", "fontSize": 22, "fontWeight": "700", "color": "#e8eaf0", "fontFamily": "Georgia, serif" }
-          },
-          {
-            "id": "s3-nav-dot",
-            "type": "shape",
-            "position": { "x": 152, "y": 24 },
-            "size": { "width": 8, "height": 8 },
-            "props": { "shape": "ellipse", "fill": "#c8a84b" }
-          },
-          {
-            "id": "s3-page-title",
-            "type": "text",
-            "position": { "x": 160, "y": 108 },
-            "size": { "width": 500, "height": 40 },
-            "props": { "text": "Dashboard", "fontSize": 28, "fontWeight": "400", "color": "#e8eaf0", "fontFamily": "Georgia, serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 8, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-date-range",
-            "type": "text",
-            "position": { "x": 160, "y": 150 },
-            "size": { "width": 400, "height": 24 },
-            "props": { "text": "Last 30 days  ·  ENISA  ·  All platforms", "fontSize": 13, "color": "#3d4f66", "fontFamily": "system-ui, sans-serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 16, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-card-mentions",
-            "type": "shape",
-            "position": { "x": 160, "y": 192 },
-            "size": { "width": 740, "height": 360 },
-            "props": { "shape": "rectangle", "fill": "#0e1622", "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 20, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-mentions-border",
-            "type": "shape",
-            "position": { "x": 160, "y": 192 },
-            "size": { "width": 740, "height": 360 },
-            "props": { "shape": "rectangle", "fill": "transparent", "stroke": "#1c2b42", "strokeWidth": 1, "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 20, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-mentions-title",
-            "type": "text",
-            "position": { "x": 186, "y": 214 },
-            "size": { "width": 400, "height": 24 },
-            "props": { "text": "MENTIONS OVER TIME", "fontSize": 11, "fontWeight": "700", "color": "#3d4f66", "fontFamily": "system-ui, sans-serif", "letterSpacing": 1.2 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 28, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-chart-line",
+            "id": "s3-content",
             "type": "custom",
-            "position": { "x": 168, "y": 248 },
-            "size": { "width": 716, "height": 284 },
-            "customComponent": {
-              "name": "LineChart",
-              "props": { "delayFrames": 35 }
-            }
-          },
-          {
-            "id": "s3-card-sources",
-            "type": "shape",
-            "position": { "x": 928, "y": 192 },
-            "size": { "width": 680, "height": 360 },
-            "props": { "shape": "rectangle", "fill": "#0e1622", "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 30, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-sources-border",
-            "type": "shape",
-            "position": { "x": 928, "y": 192 },
-            "size": { "width": 680, "height": 360 },
-            "props": { "shape": "rectangle", "fill": "transparent", "stroke": "#1c2b42", "strokeWidth": 1, "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 30, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-sources-title",
-            "type": "text",
-            "position": { "x": 954, "y": 214 },
-            "size": { "width": 400, "height": 24 },
-            "props": { "text": "CITED SOURCES", "fontSize": 11, "fontWeight": "700", "color": "#3d4f66", "fontFamily": "system-ui, sans-serif", "letterSpacing": 1.2 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 38, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-chart-bar",
-            "type": "custom",
-            "position": { "x": 936, "y": 250 },
-            "size": { "width": 652, "height": 290 },
-            "customComponent": {
-              "name": "BarChart",
-              "props": { "delayFrames": 55 }
-            }
-          },
-          {
-            "id": "s3-card-gauge",
-            "type": "shape",
-            "position": { "x": 1636, "y": 192 },
-            "size": { "width": 246, "height": 360 },
-            "props": { "shape": "rectangle", "fill": "#0e1622", "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 40, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-gauge-border",
-            "type": "shape",
-            "position": { "x": 1636, "y": 192 },
-            "size": { "width": 246, "height": 360 },
-            "props": { "shape": "rectangle", "fill": "transparent", "stroke": "#1c2b42", "strokeWidth": 1, "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 40, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-gauge-title",
-            "type": "text",
-            "position": { "x": 1650, "y": 214 },
-            "size": { "width": 220, "height": 24 },
-            "props": { "text": "ALIGNMENT", "fontSize": 11, "fontWeight": "700", "color": "#3d4f66", "fontFamily": "system-ui, sans-serif", "letterSpacing": 1.2 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 48, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-gauge",
-            "type": "custom",
-            "position": { "x": 1648, "y": 244 },
-            "size": { "width": 220, "height": 260 },
-            "customComponent": {
-              "name": "AlignmentGauge",
-              "props": { "targetScore": 73, "delayFrames": 65 }
-            }
-          },
-          {
-            "id": "s3-stats-row",
-            "type": "shape",
-            "position": { "x": 160, "y": 580 },
-            "size": { "width": 1722, "height": 96 },
-            "props": { "shape": "rectangle", "fill": "#0e1622", "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 80, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stats-border",
-            "type": "shape",
-            "position": { "x": 160, "y": 580 },
-            "size": { "width": 1722, "height": 96 },
-            "props": { "shape": "rectangle", "fill": "transparent", "stroke": "#1c2b42", "strokeWidth": 1, "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 80, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stat1-val",
-            "type": "text",
-            "position": { "x": 260, "y": 596 },
-            "size": { "width": 200, "height": 44 },
-            "props": { "text": "88", "fontSize": 36, "fontWeight": "700", "color": "#e8eaf0", "fontFamily": "system-ui, sans-serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 92, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stat1-label",
-            "type": "text",
-            "position": { "x": 260, "y": 640 },
-            "size": { "width": 200, "height": 22 },
-            "props": { "text": "Total mentions", "fontSize": 12, "color": "#3d4f66", "fontFamily": "system-ui, sans-serif", "letterSpacing": 0.5 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 96, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stat-div1",
-            "type": "shape",
-            "position": { "x": 500, "y": 596 },
-            "size": { "width": 1, "height": 64 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 92, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stat2-val",
-            "type": "text",
-            "position": { "x": 580, "y": 596 },
-            "size": { "width": 200, "height": 44 },
-            "props": { "text": "3 / 3", "fontSize": 36, "fontWeight": "700", "color": "#e8eaf0", "fontFamily": "system-ui, sans-serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 98, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stat2-label",
-            "type": "text",
-            "position": { "x": 580, "y": 640 },
-            "size": { "width": 250, "height": 22 },
-            "props": { "text": "Platforms covering your agency", "fontSize": 12, "color": "#3d4f66", "fontFamily": "system-ui, sans-serif", "letterSpacing": 0.5 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 102, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stat-div2",
-            "type": "shape",
-            "position": { "x": 870, "y": 596 },
-            "size": { "width": 1, "height": 64 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 96, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stat3-val",
-            "type": "text",
-            "position": { "x": 950, "y": 596 },
-            "size": { "width": 200, "height": 44 },
-            "props": { "text": "73%", "fontSize": 36, "fontWeight": "700", "color": "#16a34a", "fontFamily": "system-ui, sans-serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 104, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s3-stat3-label",
-            "type": "text",
-            "position": { "x": 950, "y": 640 },
-            "size": { "width": 250, "height": 22 },
-            "props": { "text": "Alignment with official mandate", "fontSize": 12, "color": "#3d4f66", "fontFamily": "system-ui, sans-serif", "letterSpacing": 0.5 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 108, "duration": 22, "easing": "easeOutCubic" }]
+            "position": { "x": 280, "y": 0 },
+            "size": { "width": 1640, "height": 1080 },
+            "customComponent": { "name": "DashboardContent", "props": {} }
           }
         ]
       },
@@ -679,121 +120,15 @@
         "id": "s4-platforms",
         "startFrame": 1050,
         "endFrame": 1290,
-        "backgroundColor": "#0b0f1a",
+        "backgroundColor": "#F9FAFB",
         "transition": { "type": "fade", "duration": 18 },
         "layers": [
           {
-            "id": "s4-bg",
-            "type": "shape",
+            "id": "s4-platform-grid",
+            "type": "custom",
             "position": { "x": 0, "y": 0 },
             "size": { "width": 1920, "height": 1080 },
-            "props": { "shape": "rectangle", "fill": "#0b0f1a" }
-          },
-          {
-            "id": "s4-nav",
-            "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 60 },
-            "props": { "shape": "rectangle", "fill": "#0d1220" }
-          },
-          {
-            "id": "s4-nav-border",
-            "type": "shape",
-            "position": { "x": 0, "y": 60 },
-            "size": { "width": 1920, "height": 1 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" }
-          },
-          {
-            "id": "s4-nav-logo",
-            "type": "text",
-            "position": { "x": 40, "y": 16 },
-            "size": { "width": 200, "height": 32 },
-            "props": { "text": "AmICited", "fontSize": 22, "fontWeight": "700", "color": "#e8eaf0", "fontFamily": "Georgia, serif" }
-          },
-          {
-            "id": "s4-nav-dot",
-            "type": "shape",
-            "position": { "x": 152, "y": 24 },
-            "size": { "width": 8, "height": 8 },
-            "props": { "shape": "ellipse", "fill": "#c8a84b" }
-          },
-          {
-            "id": "s4-label",
-            "type": "text",
-            "position": { "x": 160, "y": 100 },
-            "size": { "width": 600, "height": 28 },
-            "props": { "text": "CROSS-PLATFORM COVERAGE", "fontSize": 13, "fontWeight": "700", "color": "#c8a84b", "fontFamily": "system-ui, sans-serif", "letterSpacing": 2 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 8, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s4-subtitle",
-            "type": "text",
-            "position": { "x": 160, "y": 136 },
-            "size": { "width": 900, "height": 44 },
-            "props": { "text": "How each platform represents your mandate", "fontSize": 30, "fontWeight": "400", "color": "#e8eaf0", "fontFamily": "Georgia, serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 14, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s4-card1",
-            "type": "custom",
-            "position": { "x": 160, "y": 216 },
-            "size": { "width": 510, "height": 760 },
-            "customComponent": {
-              "name": "PlatformCard",
-              "props": {
-                "platform": "ChatGPT",
-                "platformColor": "#10a37f",
-                "visibility": 86,
-                "alignment": 71,
-                "isActive": true,
-                "description": "ENISA is the EU's central cybersecurity regulatory body, providing strategic direction and operational support to member states. Its mandate covers threat intelligence, policy development, and certification frameworks under the EU Cybersecurity Act.",
-                "delayFrames": 22
-              }
-            }
-          },
-          {
-            "id": "s4-card2",
-            "type": "custom",
-            "position": { "x": 705, "y": 216 },
-            "size": { "width": 510, "height": 760 },
-            "customComponent": {
-              "name": "PlatformCard",
-              "props": {
-                "platform": "Perplexity",
-                "platformColor": "#8b5cf6",
-                "visibility": 74,
-                "alignment": 58,
-                "isActive": false,
-                "description": "The European Agency for Cybersecurity advises EU institutions and member states on cybersecurity matters. It publishes annual threat landscapes and coordinates incident response frameworks, though enforcement authority rests with national bodies.",
-                "delayFrames": 40
-              }
-            }
-          },
-          {
-            "id": "s4-card3",
-            "type": "custom",
-            "position": { "x": 1250, "y": 216 },
-            "size": { "width": 510, "height": 760 },
-            "customComponent": {
-              "name": "PlatformCard",
-              "props": {
-                "platform": "Google AI Overview",
-                "platformColor": "#4285f4",
-                "visibility": 68,
-                "alignment": 63,
-                "isActive": false,
-                "description": "ENISA coordinates cybersecurity policy across the European Union, facilitating cooperation between member states and supporting the implementation of the NIS2 Directive and EU Cybersecurity Act certification schemes.",
-                "delayFrames": 58
-              }
-            }
-          },
-          {
-            "id": "s4-divergence-note",
-            "type": "text",
-            "position": { "x": 160, "y": 1000 },
-            "size": { "width": 1200, "height": 32 },
-            "props": { "text": "Alignment gap of 28 percentage points between highest and lowest scoring platforms.", "fontSize": 16, "color": "#4a5568", "fontFamily": "Georgia, serif", "fontStyle": "italic" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 120, "duration": 28, "easing": "easeOutCubic" }]
+            "customComponent": { "name": "PlatformGrid", "props": {} }
           }
         ]
       },
@@ -801,240 +136,45 @@
         "id": "s5-suggestions",
         "startFrame": 1290,
         "endFrame": 1530,
-        "backgroundColor": "#0b0f1a",
+        "backgroundColor": "#F9FAFB",
         "transition": { "type": "fade", "duration": 18 },
         "layers": [
           {
-            "id": "s5-bg",
-            "type": "shape",
+            "id": "s5-sidebar",
+            "type": "custom",
             "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "props": { "shape": "rectangle", "fill": "#0b0f1a" }
+            "size": { "width": 280, "height": 1080 },
+            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Prompt Suggestions" } }
           },
           {
-            "id": "s5-nav",
-            "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 60 },
-            "props": { "shape": "rectangle", "fill": "#0d1220" }
-          },
-          {
-            "id": "s5-nav-border",
-            "type": "shape",
-            "position": { "x": 0, "y": 60 },
-            "size": { "width": 1920, "height": 1 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" }
-          },
-          {
-            "id": "s5-nav-logo",
-            "type": "text",
-            "position": { "x": 40, "y": 16 },
-            "size": { "width": 200, "height": 32 },
-            "props": { "text": "AmICited", "fontSize": 22, "fontWeight": "700", "color": "#e8eaf0", "fontFamily": "Georgia, serif" }
-          },
-          {
-            "id": "s5-nav-dot",
-            "type": "shape",
-            "position": { "x": 152, "y": 24 },
-            "size": { "width": 8, "height": 8 },
-            "props": { "shape": "ellipse", "fill": "#c8a84b" }
-          },
-          {
-            "id": "s5-main-content",
-            "type": "shape",
-            "position": { "x": 160, "y": 88 },
-            "size": { "width": 1260, "height": 920 },
-            "props": { "shape": "rectangle", "fill": "#0e1622", "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 8, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s5-main-border",
-            "type": "shape",
-            "position": { "x": 160, "y": 88 },
-            "size": { "width": 1260, "height": 920 },
-            "props": { "shape": "rectangle", "fill": "transparent", "stroke": "#1c2b42", "strokeWidth": 1, "borderRadius": 12 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 8, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s5-main-label",
-            "type": "text",
-            "position": { "x": 194, "y": 114 },
-            "size": { "width": 300, "height": 22 },
-            "props": { "text": "TRACKED PROMPTS", "fontSize": 11, "fontWeight": "700", "color": "#3d4f66", "fontFamily": "system-ui, sans-serif", "letterSpacing": 1.2 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 16, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s5-main-row1",
+            "id": "s5-content",
             "type": "custom",
-            "position": { "x": 178, "y": 148 },
-            "size": { "width": 1220, "height": 52 },
-            "customComponent": {
-              "name": "AppMockRow",
-              "props": { "text": "What is the role of ENISA in digital policy?", "delayFrames": 20 }
-            }
-          },
-          {
-            "id": "s5-main-row2",
-            "type": "custom",
-            "position": { "x": 178, "y": 212 },
-            "size": { "width": 1220, "height": 52 },
-            "customComponent": {
-              "name": "AppMockRow",
-              "props": { "text": "Who regulates AI in the EU?", "delayFrames": 28 }
-            }
-          },
-          {
-            "id": "s5-main-row3",
-            "type": "custom",
-            "position": { "x": 178, "y": 276 },
-            "size": { "width": 1220, "height": 52 },
-            "customComponent": {
-              "name": "AppMockRow",
-              "props": { "text": "How does ENISA support member states on cybersecurity?", "delayFrames": 36 }
-            }
-          },
-          {
-            "id": "s5-panel",
-            "type": "custom",
-            "position": { "x": 1448, "y": 88 },
-            "size": { "width": 440, "height": 620 },
-            "customComponent": {
-              "name": "SuggestionPanel",
-              "props": { "delayFrames": 30 }
-            }
-          },
-          {
-            "id": "s5-new-row",
-            "type": "custom",
-            "position": { "x": 178, "y": 340 },
-            "size": { "width": 1220, "height": 52 },
-            "from": 175,
-            "customComponent": {
-              "name": "AppMockRow",
-              "props": { "text": "ENISA vs national regulators — who holds authority?", "delayFrames": 0 }
-            }
+            "position": { "x": 280, "y": 0 },
+            "size": { "width": 1640, "height": 1080 },
+            "customComponent": { "name": "SuggestionsContent", "props": {} }
           }
         ]
       },
       {
-        "id": "s6-insights",
+        "id": "s6-sources",
         "startFrame": 1530,
         "endFrame": 1710,
-        "backgroundColor": "#0b0f1a",
+        "backgroundColor": "#F9FAFB",
         "transition": { "type": "fade", "duration": 18 },
         "layers": [
           {
-            "id": "s6-bg",
-            "type": "shape",
+            "id": "s6-sidebar",
+            "type": "custom",
             "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "props": { "shape": "rectangle", "fill": "#0b0f1a" }
+            "size": { "width": 280, "height": 1080 },
+            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Source Mentions" } }
           },
           {
-            "id": "s6-nav",
-            "type": "shape",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 60 },
-            "props": { "shape": "rectangle", "fill": "#0d1220" }
-          },
-          {
-            "id": "s6-nav-border",
-            "type": "shape",
-            "position": { "x": 0, "y": 60 },
-            "size": { "width": 1920, "height": 1 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" }
-          },
-          {
-            "id": "s6-nav-logo",
-            "type": "text",
-            "position": { "x": 40, "y": 16 },
-            "size": { "width": 200, "height": 32 },
-            "props": { "text": "AmICited", "fontSize": 22, "fontWeight": "700", "color": "#e8eaf0", "fontFamily": "Georgia, serif" }
-          },
-          {
-            "id": "s6-nav-dot",
-            "type": "shape",
-            "position": { "x": 152, "y": 24 },
-            "size": { "width": 8, "height": 8 },
-            "props": { "shape": "ellipse", "fill": "#c8a84b" }
-          },
-          {
-            "id": "s6-label",
-            "type": "text",
-            "position": { "x": 160, "y": 100 },
-            "size": { "width": 500, "height": 28 },
-            "props": { "text": "ACTIONABLE INSIGHTS", "fontSize": 13, "fontWeight": "700", "color": "#c8a84b", "fontFamily": "system-ui, sans-serif", "letterSpacing": 2 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 8, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s6-subtitle",
-            "type": "text",
-            "position": { "x": 160, "y": 136 },
-            "size": { "width": 900, "height": 44 },
-            "props": { "text": "Steps to bring AI narratives into alignment", "fontSize": 30, "fontWeight": "400", "color": "#e8eaf0", "fontFamily": "Georgia, serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeInUp", "delay": 14, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s6-cards",
+            "id": "s6-content",
             "type": "custom",
-            "position": { "x": 160, "y": 210 },
-            "size": { "width": 1080, "height": 520 },
-            "customComponent": {
-              "name": "InsightCards",
-              "props": { "delayFrames": 25 }
-            }
-          },
-          {
-            "id": "s6-gauge-label",
-            "type": "text",
-            "position": { "x": 1360, "y": 210 },
-            "size": { "width": 400, "height": 24 },
-            "props": { "text": "ALIGNMENT SCORE", "fontSize": 11, "fontWeight": "700", "color": "#3d4f66", "fontFamily": "system-ui, sans-serif", "letterSpacing": 1.2 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 30, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s6-gauge-before",
-            "type": "text",
-            "position": { "x": 1360, "y": 242 },
-            "size": { "width": 180, "height": 24 },
-            "props": { "text": "Before", "fontSize": 13, "color": "#3d4f66", "fontFamily": "system-ui, sans-serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s6-gauge1",
-            "type": "custom",
-            "position": { "x": 1360, "y": 260 },
-            "size": { "width": 220, "height": 260 },
-            "customComponent": {
-              "name": "AlignmentGauge",
-              "props": { "targetScore": 73, "delayFrames": 35 }
-            }
-          },
-          {
-            "id": "s6-gauge-arrow",
-            "type": "text",
-            "position": { "x": 1595, "y": 350 },
-            "size": { "width": 60, "height": 60 },
-            "props": { "text": "→", "fontSize": 32, "color": "#1a56db", "fontFamily": "system-ui, sans-serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 80, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s6-gauge-after",
-            "type": "text",
-            "position": { "x": 1658, "y": 242 },
-            "size": { "width": 180, "height": 24 },
-            "props": { "text": "After", "fontSize": 13, "color": "#16a34a", "fontFamily": "system-ui, sans-serif" },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 80, "duration": 22, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s6-gauge2",
-            "type": "custom",
-            "position": { "x": 1660, "y": 260 },
-            "size": { "width": 220, "height": 260 },
-            "customComponent": {
-              "name": "AlignmentGauge",
-              "props": { "targetScore": 94, "delayFrames": 85 }
-            }
+            "position": { "x": 280, "y": 0 },
+            "size": { "width": 1640, "height": 1080 },
+            "customComponent": { "name": "SourceContent", "props": {} }
           }
         ]
       },
@@ -1042,120 +182,15 @@
         "id": "s7-cta",
         "startFrame": 1710,
         "endFrame": 1800,
-        "backgroundColor": "#08101e",
-        "transition": { "type": "fade", "duration": 20 },
+        "backgroundColor": "#0B64F4",
+        "transition": { "type": "fade", "duration": 18 },
         "layers": [
           {
-            "id": "s7-bg",
-            "type": "shape",
+            "id": "s7-cta-scene",
+            "type": "custom",
             "position": { "x": 0, "y": 0 },
             "size": { "width": 1920, "height": 1080 },
-            "props": {
-              "shape": "rectangle",
-              "gradient": {
-                "type": "linear",
-                "colors": [
-                  { "offset": 0, "color": "#08101e" },
-                  { "offset": 0.5, "color": "#0c1a30" },
-                  { "offset": 1, "color": "#08101e" }
-                ],
-                "angle": 135
-              }
-            }
-          },
-          {
-            "id": "s7-top-line",
-            "type": "shape",
-            "position": { "x": 760, "y": 320 },
-            "size": { "width": 400, "height": 1 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" },
-            "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 5, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s7-logo",
-            "type": "text",
-            "position": { "x": 360, "y": 340 },
-            "size": { "width": 1200, "height": 140 },
-            "props": {
-              "text": "AmICited",
-              "fontSize": 116,
-              "fontWeight": "400",
-              "color": "#e8eaf0",
-              "textAlign": "center",
-              "fontFamily": "Georgia, serif"
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 8, "duration": 28, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s7-logo-dot",
-            "type": "shape",
-            "position": { "x": 1113, "y": 398 },
-            "size": { "width": 14, "height": 14 },
-            "props": { "shape": "ellipse", "fill": "#c8a84b" },
-            "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 18, "duration": 22, "easing": "easeOutBack" }]
-          },
-          {
-            "id": "s7-bottom-line",
-            "type": "shape",
-            "position": { "x": 760, "y": 495 },
-            "size": { "width": 400, "height": 1 },
-            "props": { "shape": "rectangle", "fill": "#1c2b42" },
-            "animations": [{ "type": "entrance", "effect": "scaleIn", "delay": 22, "duration": 20, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s7-tagline",
-            "type": "text",
-            "position": { "x": 360, "y": 514 },
-            "size": { "width": 1200, "height": 56 },
-            "props": {
-              "text": "The answer, aligned.",
-              "fontSize": 28,
-              "fontWeight": "400",
-              "color": "#7a8898",
-              "textAlign": "center",
-              "fontFamily": "Georgia, serif",
-              "fontStyle": "italic"
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 28, "duration": 28, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s7-url",
-            "type": "text",
-            "position": { "x": 360, "y": 598 },
-            "size": { "width": 1200, "height": 32 },
-            "props": {
-              "text": "amicited.com",
-              "fontSize": 18,
-              "color": "#3d4f66",
-              "textAlign": "center",
-              "fontFamily": "system-ui, sans-serif",
-              "letterSpacing": 1
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 40, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s7-cta-bg",
-            "type": "shape",
-            "position": { "x": 760, "y": 654 },
-            "size": { "width": 400, "height": 56 },
-            "props": { "shape": "rectangle", "fill": "transparent", "stroke": "#1a56db", "strokeWidth": 1, "borderRadius": 6 },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 25, "easing": "easeOutCubic" }]
-          },
-          {
-            "id": "s7-cta-text",
-            "type": "text",
-            "position": { "x": 760, "y": 666 },
-            "size": { "width": 400, "height": 32 },
-            "props": {
-              "text": "Request a demo",
-              "fontSize": 16,
-              "fontWeight": "600",
-              "color": "#1a56db",
-              "textAlign": "center",
-              "fontFamily": "system-ui, sans-serif",
-              "letterSpacing": 0.5
-            },
-            "animations": [{ "type": "entrance", "effect": "fadeIn", "delay": 50, "duration": 25, "easing": "easeOutCubic" }]
+            "customComponent": { "name": "CTAScene", "props": {} }
           }
         ]
       }
