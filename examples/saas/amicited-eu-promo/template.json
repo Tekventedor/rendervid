@@ -33,7 +33,7 @@
     },
     "SuggestionsContent": {
       "type": "inline",
-      "code": "function SuggestionsContent(props){var f=props.frame,suggestions=[{text:'Posted Workers Directive enforcement 2026',type:'People Also Ask'},{text:'ELA vs national labour inspectorates — who leads?',type:'Related Search'},{text:'Cross-border workers compliance checklist 2026',type:'Search Suggestion'},{text:'Fair labour mobility EU strategy explained',type:'People Also Ask'},{text:'Undeclared work enforcement framework 2026',type:'Related Search'}];return React.createElement('div',{style:{width:'100%',height:'100%',background:'#F9FAFB',display:'flex',flexDirection:'column',fontFamily:'system-ui,-apple-system,sans-serif',boxSizing:'border-box',overflow:'hidden'}},React.createElement('header',{style:{height:'68px',background:'white',borderBottom:'1px solid #E5E7EB',display:'flex',alignItems:'center',padding:'0 24px',gap:'10px',flexShrink:0}},React.createElement('div',{style:{fontSize:'16px',fontWeight:'600',color:'#111827',flex:1}},'Prompt Suggestions'),React.createElement('div',{style:{display:'flex',gap:'8px'}},['Last 90 days','All Providers','All Tags'].map(function(label,i){return React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',gap:'4px',background:'white',border:'1px solid #E5E7EB',borderRadius:'6px',padding:'5px 10px',fontSize:'12px',color:'#374151',boxShadow:'0 1px 2px rgba(0,0,0,0.04)'}},label);}))),React.createElement('div',{style:{flex:1,padding:'20px',overflow:'hidden'}},React.createElement('div',{style:{background:'white',border:'1px solid #E5E7EB',borderRadius:'10px',overflow:'hidden',boxShadow:'0 1px 3px rgba(0,0,0,0.05)'}},React.createElement('div',{style:{padding:'16px 20px',borderBottom:'1px solid #F3F4F6'}},React.createElement('div',{style:{fontSize:'14px',fontWeight:'600',color:'#111827',marginBottom:'3px'}},'Prompt Suggestions'),React.createElement('div',{style:{fontSize:'12px',color:'#6B7280'}},'Discover new prompts from Google Search — People Also Ask, Related Searches, and Search Suggestions')),React.createElement('div',{style:{padding:'14px 20px'}},suggestions.map(function(s,i){var prog=Math.max(0,Math.min(1,(f-i*20)/20)),isHighlighted=i===1,clicked=f>100&&i===1;return React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'11px 14px',borderRadius:'8px',border:'1px solid '+(clicked?'#BFDBFE':'#F3F4F6'),marginBottom:'8px',opacity:prog,transform:'translateY('+(6*(1-prog))+'px)',background:clicked?'#EFF6FF':'transparent'}},React.createElement('div',null,React.createElement('div',{style:{fontSize:'13px',color:clicked?'#1D4ED8':'#111827',fontWeight:clicked?'500':'400',marginBottom:'3px'}},s.text),React.createElement('span',{style:{fontSize:'11px',color:'#6B7280',background:'#F9FAFB',padding:'2px 8px',borderRadius:'4px',border:'1px solid #E5E7EB'}},s.type)),React.createElement('div',{style:{background:clicked?'#0B64F4':'#F3F4F6',color:clicked?'white':'#374151',border:'1px solid '+(clicked?'#0B64F4':'#E5E7EB'),fontSize:'12px',fontWeight:'500',padding:'5px 12px',borderRadius:'6px',flexShrink:0,marginLeft:'12px'}},clicked?'+ Track':'+ Track'));  })))));  }",
+      "code": "function SuggestionsContent(props){var f=props.frame,suggestions=[{text:'Posted Workers Directive enforcement 2026',type:'People Also Ask',typeColor:'#7C3AED'},{text:'ELA vs national labour inspectorates — who leads?',type:'Related Search',typeColor:'#0B64F4'},{text:'Cross-border workers compliance checklist',type:'Search Suggestion',typeColor:'#059669'},{text:'Fair labour mobility EU strategy explained',type:'People Also Ask',typeColor:'#7C3AED'},{text:'Undeclared work enforcement framework',type:'Related Search',typeColor:'#0B64F4'}],filters=[{label:'Last 90 days',icon:[['path',{d:'M8 2v4'}],['path',{d:'M16 2v4'}],['rect',{width:'18',height:'18',x:'3',y:'4',rx:'2'}],['path',{d:'M3 10h18'}]]},{label:'All Providers',icon:[['path',{d:'M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z'}]]},{label:'All Tags',icon:[['path',{d:'M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z'}],['circle',{cx:'7.5',cy:'7.5',r:'.5',fill:'currentColor'}]]}],headerProg=Math.max(0,Math.min(1,f/14)),filtersProg=Math.max(0,Math.min(1,(f-10)/20)),cardProg=Math.max(0,Math.min(1,(f-24)/22)),barProg=Math.max(0,Math.min(1,(f-46)/18)),clickedIdx=1;return React.createElement('div',{style:{width:'100%',height:'100%',background:'#F9FAFB',display:'flex',flexDirection:'column',fontFamily:'system-ui,-apple-system,sans-serif',boxSizing:'border-box',overflow:'hidden'}},React.createElement('header',{style:{height:'68px',background:'white',borderBottom:'1px solid #E5E7EB',display:'flex',alignItems:'center',padding:'0 24px',gap:'10px',flexShrink:0}},React.createElement('svg',{width:'18',height:'18',viewBox:'0 0 24 24',fill:'none',stroke:'#6B7280',strokeWidth:'2',strokeLinecap:'round',strokeLinejoin:'round',style:{opacity:headerProg}},React.createElement('rect',{width:'18',height:'18',x:'3',y:'3',rx:'2'}),React.createElement('path',{d:'M9 3v18'})),React.createElement('div',{style:{width:'1px',height:'18px',background:'#E5E7EB',margin:'0 6px',opacity:headerProg}}),React.createElement('h1',{style:{fontSize:'16px',fontWeight:'600',color:'#111827',flex:1,margin:0,opacity:headerProg}},'Prompt Suggestions'),filters.map(function(fl,i){var kids=fl.icon.map(function(it,j){return React.createElement(it[0],Object.assign({key:j},it[1]));});return React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',gap:'8px',background:'white',border:'1px solid #E5E7EB',borderRadius:'8px',padding:'7px 12px',fontSize:'13px',color:'#374151',boxShadow:'0 1px 2px rgba(0,0,0,0.04)',opacity:filtersProg}},React.createElement('svg',{width:'14',height:'14',viewBox:'0 0 24 24',fill:'none',stroke:'#6B7280',strokeWidth:'2',strokeLinecap:'round',strokeLinejoin:'round'},kids),React.createElement('span',null,fl.label),React.createElement('span',{style:{color:'#9CA3AF',fontSize:'10px'}},'▾'));})),React.createElement('div',{style:{flex:1,padding:'32px 24px 24px',overflow:'hidden'}},React.createElement('div',{style:{maxWidth:'1280px',margin:'0 auto',width:'100%',opacity:cardProg,transform:'translateY('+(10*(1-cardProg))+'px)'}},React.createElement('div',{style:{background:'white',border:'1px solid #E5E7EB',borderRadius:'14px',boxShadow:'0 1px 3px rgba(0,0,0,0.05)',padding:'24px 0',display:'flex',flexDirection:'column',gap:'20px'}},React.createElement('div',{style:{padding:'0 24px',display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:'24px'}},React.createElement('div',{style:{flex:1}},React.createElement('div',{style:{fontSize:'18px',fontWeight:'600',color:'#111827',lineHeight:1.2,marginBottom:'4px'}},'Prompt Suggestions'),React.createElement('div',{style:{fontSize:'13px',color:'#6B7280',lineHeight:1.45}},'Discover new prompts from Google Search results — People Also Ask, Related Searches, and Search Suggestions')),React.createElement('div',{style:{width:'36px',height:'36px',border:'1px solid #E5E7EB',borderRadius:'8px',background:'white',boxShadow:'0 1px 2px rgba(0,0,0,0.04)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}},React.createElement('svg',{width:'15',height:'15',viewBox:'0 0 24 24',fill:'none',stroke:'#6B7280',strokeWidth:'2',strokeLinecap:'round',strokeLinejoin:'round'},React.createElement('path',{d:'M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'}),React.createElement('path',{d:'M21 3v5h-5'}),React.createElement('path',{d:'M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16'}),React.createElement('path',{d:'M8 16H3v5'})))),React.createElement('div',{style:{padding:'0 24px',display:'flex',alignItems:'center',gap:'16px',opacity:barProg,transform:'translateY('+(6*(1-barProg))+'px)'}},React.createElement('div',{style:{position:'relative',flex:1,maxWidth:'380px'}},React.createElement('svg',{width:'16',height:'16',viewBox:'0 0 24 24',fill:'none',stroke:'#9CA3AF',strokeWidth:'2',strokeLinecap:'round',strokeLinejoin:'round',style:{position:'absolute',left:'12px',top:'50%',transform:'translateY(-50%)',zIndex:1}},React.createElement('path',{d:'m21 21-4.34-4.34'}),React.createElement('circle',{cx:'11',cy:'11',r:'8'})),React.createElement('div',{style:{height:'36px',border:'1px solid #E5E7EB',borderRadius:'8px',background:'white',padding:'0 12px 0 38px',display:'flex',alignItems:'center',fontSize:'13px',color:'#9CA3AF',boxShadow:'0 1px 2px rgba(0,0,0,0.04)'}},'Search suggestions...')),React.createElement('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'8px',width:'200px',height:'36px',border:'1px solid #E5E7EB',borderRadius:'8px',background:'white',padding:'0 12px',fontSize:'13px',color:'#374151',boxShadow:'0 1px 2px rgba(0,0,0,0.04)'}},React.createElement('span',null,'All Types'),React.createElement('span',{style:{color:'#9CA3AF',fontSize:'10px'}},'▾')),React.createElement('div',{style:{display:'flex',alignItems:'center',gap:'8px'}},React.createElement('div',{style:{width:'16px',height:'16px',borderRadius:'4px',border:'2px solid #0B64F4',background:'white'}}),React.createElement('span',{style:{fontSize:'13px',color:'#6B7280'}},'Show tracked'))),React.createElement('div',{style:{padding:'0 24px',display:'flex',flexDirection:'column',gap:'10px'}},suggestions.map(function(s,i){var rowProg=Math.max(0,Math.min(1,(f-(60+i*12))/20)),isClicked=i===clickedIdx&&f>=140;return React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 16px',borderRadius:'10px',border:'1px solid '+(isClicked?'#93C5FD':'#F3F4F6'),background:isClicked?'#EFF6FF':'white',opacity:rowProg,transform:'translateY('+(6*(1-rowProg))+'px)',gap:'16px'}},React.createElement('div',{style:{flex:1,display:'flex',flexDirection:'column',gap:'6px',minWidth:0}},React.createElement('div',{style:{fontSize:'14px',color:isClicked?'#1D4ED8':'#111827',fontWeight:isClicked?'600':'500',lineHeight:1.3,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},s.text),React.createElement('span',{style:{fontSize:'11px',fontWeight:'600',color:s.typeColor,background:s.typeColor+'15',padding:'3px 8px',borderRadius:'5px',alignSelf:'flex-start',letterSpacing:'0.3px'}},s.type)),React.createElement('div',{style:{display:'flex',alignItems:'center',gap:'6px',padding:'7px 14px',borderRadius:'8px',border:'1px solid '+(isClicked?'#0B64F4':'#E5E7EB'),background:isClicked?'#0B64F4':'white',color:isClicked?'white':'#374151',fontSize:'12px',fontWeight:'600',flexShrink:0,boxShadow:isClicked?'0 1px 3px rgba(11,100,244,0.25)':'0 1px 2px rgba(0,0,0,0.04)'}},React.createElement('span',{style:{fontSize:'13px',lineHeight:1}},isClicked?'✓':'+'),React.createElement('span',null,isClicked?'Tracked':'Track')));}))))));}",
       "isDefault": false
     },
     "InsightsContent": {
@@ -64,14 +64,26 @@
         "startFrame": 0,
         "endFrame": 270,
         "backgroundColor": "#0B64F4",
-        "transition": { "type": "fade", "duration": 18 },
+        "transition": {
+          "type": "fade",
+          "duration": 18
+        },
         "layers": [
           {
             "id": "s1-hook-scene",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "customComponent": { "name": "HookScene", "props": {} }
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "HookScene",
+              "props": {}
+            }
           }
         ]
       },
@@ -80,21 +92,44 @@
         "startFrame": 270,
         "endFrame": 570,
         "backgroundColor": "#F9FAFB",
-        "transition": { "type": "fade", "duration": 18 },
+        "transition": {
+          "type": "fade",
+          "duration": 18
+        },
         "layers": [
           {
             "id": "s2-sidebar",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 280, "height": 1080 },
-            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Prompts" } }
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 280,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "AppSidebar",
+              "props": {
+                "activePage": "Prompts"
+              }
+            }
           },
           {
             "id": "s2-content",
             "type": "custom",
-            "position": { "x": 280, "y": 0 },
-            "size": { "width": 1640, "height": 1080 },
-            "customComponent": { "name": "PromptsContent", "props": {} }
+            "position": {
+              "x": 280,
+              "y": 0
+            },
+            "size": {
+              "width": 1640,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "PromptsContent",
+              "props": {}
+            }
           }
         ]
       },
@@ -103,21 +138,44 @@
         "startFrame": 570,
         "endFrame": 960,
         "backgroundColor": "#F9FAFB",
-        "transition": { "type": "fade", "duration": 18 },
+        "transition": {
+          "type": "fade",
+          "duration": 18
+        },
         "layers": [
           {
             "id": "s3-sidebar",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 280, "height": 1080 },
-            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Overview" } }
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 280,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "AppSidebar",
+              "props": {
+                "activePage": "Overview"
+              }
+            }
           },
           {
             "id": "s3-content",
             "type": "custom",
-            "position": { "x": 280, "y": 0 },
-            "size": { "width": 1640, "height": 1080 },
-            "customComponent": { "name": "DashboardContent", "props": {} }
+            "position": {
+              "x": 280,
+              "y": 0
+            },
+            "size": {
+              "width": 1640,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "DashboardContent",
+              "props": {}
+            }
           }
         ]
       },
@@ -126,21 +184,44 @@
         "startFrame": 960,
         "endFrame": 1170,
         "backgroundColor": "#F9FAFB",
-        "transition": { "type": "fade", "duration": 18 },
+        "transition": {
+          "type": "fade",
+          "duration": 18
+        },
         "layers": [
           {
             "id": "s3b-sidebar",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 280, "height": 1080 },
-            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Peer Agencies" } }
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 280,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "AppSidebar",
+              "props": {
+                "activePage": "Peer Agencies"
+              }
+            }
           },
           {
             "id": "s3b-content",
             "type": "custom",
-            "position": { "x": 280, "y": 0 },
-            "size": { "width": 1640, "height": 1080 },
-            "customComponent": { "name": "PeerAgenciesContent", "props": {} }
+            "position": {
+              "x": 280,
+              "y": 0
+            },
+            "size": {
+              "width": 1640,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "PeerAgenciesContent",
+              "props": {}
+            }
           }
         ]
       },
@@ -149,14 +230,26 @@
         "startFrame": 1170,
         "endFrame": 1380,
         "backgroundColor": "#F9FAFB",
-        "transition": { "type": "fade", "duration": 18 },
+        "transition": {
+          "type": "fade",
+          "duration": 18
+        },
         "layers": [
           {
             "id": "s4-platform-grid",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "customComponent": { "name": "PlatformGrid", "props": {} }
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "PlatformGrid",
+              "props": {}
+            }
           }
         ]
       },
@@ -165,21 +258,44 @@
         "startFrame": 1380,
         "endFrame": 1560,
         "backgroundColor": "#F9FAFB",
-        "transition": { "type": "fade", "duration": 18 },
+        "transition": {
+          "type": "fade",
+          "duration": 18
+        },
         "layers": [
           {
             "id": "s5-sidebar",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 280, "height": 1080 },
-            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Prompt Suggestions" } }
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 280,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "AppSidebar",
+              "props": {
+                "activePage": "Prompt Suggestions"
+              }
+            }
           },
           {
             "id": "s5-content",
             "type": "custom",
-            "position": { "x": 280, "y": 0 },
-            "size": { "width": 1640, "height": 1080 },
-            "customComponent": { "name": "SuggestionsContent", "props": {} }
+            "position": {
+              "x": 280,
+              "y": 0
+            },
+            "size": {
+              "width": 1640,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "SuggestionsContent",
+              "props": {}
+            }
           }
         ]
       },
@@ -188,21 +304,44 @@
         "startFrame": 1560,
         "endFrame": 1710,
         "backgroundColor": "#F9FAFB",
-        "transition": { "type": "fade", "duration": 18 },
+        "transition": {
+          "type": "fade",
+          "duration": 18
+        },
         "layers": [
           {
             "id": "s6-sidebar",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 280, "height": 1080 },
-            "customComponent": { "name": "AppSidebar", "props": { "activePage": "Reports" } }
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 280,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "AppSidebar",
+              "props": {
+                "activePage": "Reports"
+              }
+            }
           },
           {
             "id": "s6-content",
             "type": "custom",
-            "position": { "x": 280, "y": 0 },
-            "size": { "width": 1640, "height": 1080 },
-            "customComponent": { "name": "InsightsContent", "props": {} }
+            "position": {
+              "x": 280,
+              "y": 0
+            },
+            "size": {
+              "width": 1640,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "InsightsContent",
+              "props": {}
+            }
           }
         ]
       },
@@ -211,14 +350,26 @@
         "startFrame": 1710,
         "endFrame": 1800,
         "backgroundColor": "#0B64F4",
-        "transition": { "type": "fade", "duration": 18 },
+        "transition": {
+          "type": "fade",
+          "duration": 18
+        },
         "layers": [
           {
             "id": "s7-cta-scene",
             "type": "custom",
-            "position": { "x": 0, "y": 0 },
-            "size": { "width": 1920, "height": 1080 },
-            "customComponent": { "name": "CTAScene", "props": {} }
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 1920,
+              "height": 1080
+            },
+            "customComponent": {
+              "name": "CTAScene",
+              "props": {}
+            }
           }
         ]
       }
