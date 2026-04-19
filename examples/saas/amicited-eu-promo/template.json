@@ -1,13 +1,13 @@
 {
   "name": "AmICited — EU Organizations Promo v2",
   "description": "61-second EU institutional promo — light theme, accurate app UI",
-  "version": "2.9.10",
+  "version": "2.9.11",
   "output": {
     "type": "video",
     "width": 1920,
     "height": 1080,
     "fps": 30,
-    "duration": 70,
+    "duration": 70.5,
     "backgroundColor": "#F9FAFB"
   },
   "customComponents": {
@@ -182,7 +182,7 @@
       {
         "id": "s4-platforms",
         "startFrame": 840,
-        "endFrame": 1020,
+        "endFrame": 1035,
         "backgroundColor": "#F9FAFB",
         "transition": {
           "type": "fade",
@@ -209,8 +209,8 @@
       },
       {
         "id": "s5-suggestions",
-        "startFrame": 1020,
-        "endFrame": 1260,
+        "startFrame": 1035,
+        "endFrame": 1275,
         "backgroundColor": "#F9FAFB",
         "transition": {
           "type": "fade",
@@ -255,8 +255,8 @@
       },
       {
         "id": "s6-knowledge",
-        "startFrame": 1260,
-        "endFrame": 1470,
+        "startFrame": 1275,
+        "endFrame": 1485,
         "backgroundColor": "#FAFAFA",
         "transition": {
           "type": "fade",
@@ -283,8 +283,8 @@
       },
       {
         "id": "s7-reports",
-        "startFrame": 1470,
-        "endFrame": 1920,
+        "startFrame": 1485,
+        "endFrame": 1935,
         "backgroundColor": "#F9FAFB",
         "transition": {
           "type": "fade",
@@ -329,8 +329,8 @@
       },
       {
         "id": "s8-cta",
-        "startFrame": 1920,
-        "endFrame": 2100,
+        "startFrame": 1935,
+        "endFrame": 2115,
         "backgroundColor": "#0B64F4",
         "transition": {
           "type": "fade",
